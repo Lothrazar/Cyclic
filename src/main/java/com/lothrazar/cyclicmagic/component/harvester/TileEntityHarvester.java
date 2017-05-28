@@ -16,20 +16,19 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle,ITilePreviewToggle, ITickable {
+public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
- 
-  private int timer;
-  public static int TIMER_FULL = 80;
+  public final static int TIMER_FULL = 100;
   private HarvestSetting conf;
   private int needsRedstone = 1;
   private int renderParticles = 0;
   public static enum Fields {
-    TIMER, REDSTONE, SIZE,RENDERPARTICLES;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
   }
   public TileEntityHarvester() {
-    super(0);
+    super(1);
+    this.setFuelSlot(0);
     this.timer = TIMER_FULL;
     conf = new HarvestSetting();
     conf.doesCrops = true;
@@ -41,9 +40,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
-  public void setHarvestConf(HarvestSetting c) {
-    conf = c;
-  }
+//  public void setHarvestConf(HarvestSetting c) {
+//    conf = c;
+//  }
   public HarvestSetting getHarvestConf() {
     return conf;
   }
@@ -51,13 +50,11 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    timer = tagCompound.getInteger(NBT_TIMER);
     size = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_RENDER, renderParticles);
@@ -68,33 +65,21 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
-    if (!isRunning()) {
-      // it works ONLY if its powered
-      this.markDirty();
-      return;
-    }
+    if (!isRunning()) { return; }
     this.spawnParticlesAbove();
-    boolean trigger = false;
-    // center of the block
-    timer -= this.getSpeed();
-    if (timer <= 0) {
-      timer = TIMER_FULL;
-      trigger = true;
-    }
-    if (trigger) {
+    this.updateFuelIsBurning();
+    if (this.updateTimerIsZero()) {
+      timer = TIMER_FULL;//harvest worked!
+      this.spawnParticlesAbove();
       BlockPos harvest = getTargetPos();
       if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
         UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
-        timer = TIMER_FULL;//harvest worked!
       }
-      else {
-        timer = 1;//harvest didnt work, try again really quick
-      }
+      //      else {
+      //        timer = 1;//harvest didnt work, try again really quick
+      //      }
+      this.markDirty();
     }
-    else {
-      this.spawnParticlesAbove();
-    }
-    this.markDirty();
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
@@ -105,20 +90,22 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int getField(int id) {
-
-      switch (Fields.values()[id]) {
-        case TIMER:
-          return timer;
-        case REDSTONE:
-          return this.needsRedstone;
-        case SIZE:
-          return this.size;
-        case RENDERPARTICLES:
-          return this.renderParticles;
-        default:
-        break;
-      }
-
+    switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.needsRedstone;
+      case SIZE:
+        return this.size;
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      default:
+      break;
+    }
     return -1;
   }
   @Override
@@ -136,6 +123,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         break;
         case RENDERPARTICLES:
           this.renderParticles = value % 2;
+        break;
+        case FUEL:
+          this.setFuelCurrent(value);
+        break;
+        case FUELMAX:
+          this.setFuelMax(value);
         break;
         default:
         break;
@@ -169,18 +162,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void togglePreview() {
-    this.renderParticles = (renderParticles+1)%2;
-//    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-//    for (BlockPos pos : allPos) {
-//      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-//    }
+    this.renderParticles = (renderParticles + 1) % 2;
   }
   @Override
   public List<BlockPos> getShape() {
-    return  UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+    return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
   }
   @Override
   public boolean isPreviewVisible() {
-    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

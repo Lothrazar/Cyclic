@@ -11,7 +11,7 @@ public class ButtonUserAction extends GuiButtonTooltip {
   public ButtonUserAction(int buttonId, int x, int y, BlockPos p) {
     super(buttonId, x, y, 40, 20, "");
     this.pos = p;
-    this.setTooltip("button.useraction.tooltip");
+    this.setTooltip("button.block_user.tooltip");
   }
   @SideOnly(Side.CLIENT)
   @Override

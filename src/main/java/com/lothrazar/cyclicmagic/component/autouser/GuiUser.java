@@ -13,8 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContainer {
-  public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_coal.png");
-  private TileEntityUser tile;
+private TileEntityUser tile;
   private ButtonUserAction actionBtn;
   private GuiButtonToggleSize btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
@@ -50,7 +49,7 @@ public class GuiUser extends GuiBaseContainer {
     for (int k = 0; k < tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    this.mc.getTextureManager().bindTexture(SLOT_COAL);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_FUEL - 1, this.guiTop + ContainerUser.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)

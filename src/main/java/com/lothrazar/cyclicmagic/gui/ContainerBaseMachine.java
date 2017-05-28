@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerBaseMachine extends ContainerBase {
   private int[] tileMap;
-  private TileEntityBaseMachineInvo te;
+  protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   public ContainerBaseMachine() {}
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
@@ -25,8 +25,8 @@ public class ContainerBaseMachine extends ContainerBase {
     bindPlayerHotbar(inventoryPlayer);
   }
   protected void setTile(TileEntityBaseMachineInvo tile) {
-    this.te = tile;
-    this.tileMap = new int[te.getFieldOrdinals().length];
+    this.tile = tile;
+    this.tileMap = new int[tile.getFieldOrdinals().length];
   }
   protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 9; i++) {
@@ -37,16 +37,16 @@ public class ContainerBaseMachine extends ContainerBase {
     int fieldId;
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = this.listeners.get(i);
-      for (int j = 0; j < te.getFieldOrdinals().length; j++) {
-        fieldId = te.getFieldOrdinals()[j];
-        if (this.tileMap[j] != this.te.getField(fieldId)) {
-          icontainerlistener.sendProgressBarUpdate(this, fieldId, this.te.getField(fieldId));
+      for (int j = 0; j < tile.getFieldOrdinals().length; j++) {
+        fieldId = tile.getFieldOrdinals()[j];
+        if (this.tileMap[j] != this.tile.getField(fieldId)) {
+          icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tile.getField(fieldId));
         }
       }
     }
-    for (int j = 0; j < te.getFieldOrdinals().length; j++) {
-      fieldId = te.getFieldOrdinals()[j];
-      this.tileMap[j] = this.te.getField(fieldId);
+    for (int j = 0; j < tile.getFieldOrdinals().length; j++) {
+      fieldId = tile.getFieldOrdinals()[j];
+      this.tileMap[j] = this.tile.getField(fieldId);
     }
   }
   @Override

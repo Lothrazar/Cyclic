@@ -33,6 +33,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private int fuelSlot = -1;
   private int currentFuel;
   private int speed = 1;
+  protected int timer;
   private boolean usesFuel = false;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
@@ -56,9 +57,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.currentFuel = f;
   }
   public double getPercentFormatted() {
-    if( this.currentMaxFuel == 0){
-      return 0.0;
-    }
+    if (this.currentMaxFuel == 0) { return 0.0; }
     double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
@@ -84,24 +83,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private boolean isItemFuel(ItemStack itemstack) {
     return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
   }
-  @Override
-  public boolean isRunning() {
+  public boolean updateFuelIsBurning() {
     if (usesFuel) {
-      //it DOES need fuel
-      if (super.isRunning()) {
-        this.consumeFuel();
-        //so its rnning if redstone is on AND fuel nonempty
-        //NEW PLAN: if it has no fuel. still let it run just nerf the speed super low
-        return super.isRunning();// && (this.currentFuel > 0);
-      }
-      else {
-        return false;
-      }
+      this.consumeFuel();
+      return this.currentFuel > 0;
     }
-    else {
-      return super.isRunning();
-    }
+    return true;
   }
+  protected boolean updateTimerIsZero() {
+    timer -= this.getSpeed();
+    if (timer < 0) {
+      timer = 0;
+    }
+    return timer == 0;
+  }
+
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
@@ -227,6 +223,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
+    timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
     this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
@@ -248,6 +245,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_FUEL, getFuelCurrent());
     compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
+    compound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {
@@ -297,15 +295,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
   public int getSpeed() {
-    if(this.usesFuel == false){
+    if (this.usesFuel == false) {
       return this.speed;
     }
-    else{
-
-      if(this.currentFuel == 0){
+    else {
+      if (this.currentFuel == 0) {
         return 1;
       }
-      else{
+      else {
         return 5;
       }
     }

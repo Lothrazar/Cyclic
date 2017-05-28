@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,7 +25,7 @@ public class ContainerUser extends ContainerBaseMachine {
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    addSlotToContainer(new Slot(tileEntity, tileEntity.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    addSlotToContainer(new SlotFurnaceFuel(tileEntity, tileEntity.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

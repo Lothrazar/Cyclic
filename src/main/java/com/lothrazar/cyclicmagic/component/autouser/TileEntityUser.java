@@ -55,7 +55,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
-  private int timer;
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int toolSlot = 0;
@@ -74,8 +73,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
+    if (!isRunning()) { return; }
     // this.shiftAllUp();
-    if (isRunning()) {
+    this.updateFuelIsBurning();
+    boolean triggered = this.updateTimerIsZero();
+    if (triggered) {
       this.spawnParticlesAbove();
     }
     if (world instanceof WorldServer) {
@@ -88,30 +90,24 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
       tryEquipItem();
-      if (isRunning()) {
-        timer -= this.getSpeed();
-        if (timer <= 0) {
-          timer = 0;
+      if (triggered) {
+        timer = TIMER_FULL;
+        try {
+          BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
+          if (rightClickIfZero == 0) {//right click entities and blocks
+            this.rightClickBlock(targetPos);
+          }
+          interactEntities(targetPos);
         }
-        if (timer == 0) {
-          try {
-            timer = TIMER_FULL;
-            BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
-            if (rightClickIfZero == 0) {//right click entities and blocks
-              this.rightClickBlock(targetPos);
-            }
-            interactEntities(targetPos);
-          }
-          catch (Exception e) {
-            ModCyclic.logger.error("Automated User Error");
-            ModCyclic.logger.error(e.getLocalizedMessage());
-            e.printStackTrace();
-          }
-        } //timer == 0 block
-      }
-      else {
-        timer = 1;//allows it to run on a pulse
-      }
+        catch (Exception e) {//exception could come from external third party block/mod/etc
+          ModCyclic.logger.error("Automated User Error");
+          ModCyclic.logger.error(e.getLocalizedMessage());
+          e.printStackTrace();
+        }
+      } //timer == 0 block
+      //      else {
+      //        timer = 1;//allows it to run on a pulse
+      //      }
     }
   }
   private void interactEntities(BlockPos targetPos) {
@@ -216,32 +212,30 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (uuid != null) {
-      tagCompound.setString(NBTPLAYERID, uuid.toString());
+      compound.setString(NBTPLAYERID, uuid.toString());
     }
-    tagCompound.setInteger(NBT_REDST, needsRedstone);
-    tagCompound.setInteger(NBT_LR, rightClickIfZero);
-    tagCompound.setInteger(NBT_SIZE, size);
-    tagCompound.setInteger(NBT_RENDER, renderParticles);
-    return super.writeToNBT(tagCompound);
+    compound.setInteger(NBT_REDST, needsRedstone);
+    compound.setInteger(NBT_LR, rightClickIfZero);
+    compound.setInteger(NBT_SIZE, size);
+    compound.setInteger(NBT_RENDER, renderParticles);
+    return super.writeToNBT(compound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    timer = tagCompound.getInteger(NBT_TIMER);
-    if (tagCompound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    if (compound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
-    needsRedstone = tagCompound.getInteger(NBT_REDST);
-    rightClickIfZero = tagCompound.getInteger(NBT_LR);
-    size = tagCompound.getInteger(NBT_SIZE);
-    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    rightClickIfZero = compound.getInteger(NBT_LR);
+    size = compound.getInteger(NBT_SIZE);
+    this.renderParticles = compound.getInteger(NBT_RENDER);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if(side == EnumFacing.UP)
+    if (side == EnumFacing.UP)
       return hopperInputFuel;
     return hopperInput;
   }
