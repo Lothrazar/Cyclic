@@ -30,6 +30,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super(inventorySlotsIn);
     this.tile = null;
   }
+  protected void setScreenSize( Const.ScreenSize ss ){
+    this.screenSize = ss;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
+  }
   protected void setFieldFuel(int ordinal) {
     this.fieldFuel = ordinal;
     this.fieldMaxFuel = ordinal + 1;

@@ -15,20 +15,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle,ITickable {
+public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+  private static final int spotsSkippablePerTrigger = 50;
 
-  private static final  int spotsSkippablePerTrigger = 50;
-  private static final int maxSpeed = 1;
-  public static final int TIMER_FULL = 10;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
-  private int timer;
   private int buildType;
-  private int buildSpeed;
   private int buildSize = 3;
   private int buildHeight = 3;
   private int needsRedstone = 1;
@@ -37,7 +32,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public static int maxSize;
   public static int maxHeight = 10;
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX;
   }
   public enum BuildType {
     FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE;
@@ -56,7 +51,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
   }
   public TileEntityStructureBuilder() {
-    super(9);
+    super(10);
+    this.setFuelSlot(9);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -109,7 +105,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         case BUILDTYPE:
           return this.buildType;
         case SPEED:
-          return this.buildSpeed;
+          return this.speed;
         case SIZE:
           return this.buildSize;
         case HEIGHT:
@@ -118,6 +114,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.needsRedstone;
         case RENDERPARTICLES:
           return this.renderParticles;
+        case FUEL:
+          return this.getFuelCurrent();
+        case FUELMAX:
+          return this.getFuelMax();
       }
     }
     return -1;
@@ -133,7 +133,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.buildType = value;
         break;
         case SPEED:
-          this.buildSpeed = value;
+          this.speed = value;
         break;
         case SIZE:
           this.buildSize = value;
@@ -149,6 +149,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         break;
         case RENDERPARTICLES:
           this.renderParticles = value;
+        break;
+        case FUEL:
+          this.setFuelCurrent(value);
+        break;
+        case FUELMAX:
+          this.setFuelMax(value);
         break;
       }
     }
@@ -174,23 +180,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public BuildType getBuildTypeEnum() {
     int bt = Math.min(this.getBuildType(), BuildType.values().length - 1);
     return BuildType.values()[bt];
-  }
-  public void setSpeed(int s) {
-    if (s <= 0) {
-      s = 1;
-    }
-    if (s >= maxSpeed) {
-      s = maxSpeed;
-    }
-    this.setField(Fields.SPEED.ordinal(), s);
-  }
-  public int getSpeed() {
-    int s = this.getField(Fields.SPEED.ordinal());
-    if (s <= 0) {
-      s = 1;
-    }
-    return s;
-  }
+  } 
   public void setSize(int s) {
     if (s <= 0) {
       s = 1;
@@ -218,7 +208,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     timer = tagCompound.getInteger(NBT_TIMER);
     shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
-    this.buildSpeed = tagCompound.getInteger(NBT_SPEED);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
@@ -228,30 +217,20 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
-    tagCompound.setInteger(NBT_SPEED, this.getSpeed());
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isFuelBurning() {
-    return this.timer > 0 && this.timer < TIMER_FULL;
-  }
   @Override
   public void update() {
-    shiftAllUp();
-    boolean trigger = false;
     if (!isRunning()) { return; }
-    this.spawnParticlesAbove();
-    World world = getWorld();
-    ItemStack stack = getStackInSlot(0);
-    if (stack != ItemStack.EMPTY) {
-      timer -= this.getSpeed();
-      if (timer <= 0) {
-        timer = TIMER_FULL;
-        trigger = true;
-      }
-    }
-    if (trigger) {
+    this.shiftAllUp(1);
+    this.updateFuelIsBurning();
+    if (this.updateTimerIsZero()) {
+      timer = TIMER_FULL;
+      this.spawnParticlesAbove();
+      ItemStack stack = getStackInSlot(0);
+      if (stack.isEmpty()) { return; }
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
         List<BlockPos> shape = this.getShape();
@@ -298,10 +277,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
   @Override
@@ -315,9 +291,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-
   @Override
   public boolean isPreviewVisible() {
-    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

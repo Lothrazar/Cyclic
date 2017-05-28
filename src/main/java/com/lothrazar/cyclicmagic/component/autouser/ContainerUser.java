@@ -12,20 +12,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerUser extends ContainerBaseMachine {
-  public static final int SLOTX_FUEL = 8 * Const.SQ + Const.PAD;
-  public static final int SLOTY_FUEL = Const.PAD;
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 94;
-  protected TileEntityUser tileEntity;
+ 
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
-    tileEntity = te;
+ 
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
-    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
-      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
+      addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    addSlotToContainer(new SlotFurnaceFuel(tileEntity, tileEntity.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -38,12 +36,12 @@ public class ContainerUser extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
@@ -62,11 +60,11 @@ public class ContainerUser extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

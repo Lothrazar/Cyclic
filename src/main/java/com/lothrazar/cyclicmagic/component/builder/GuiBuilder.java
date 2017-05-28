@@ -1,10 +1,11 @@
 package com.lothrazar.cyclicmagic.component.builder;
+import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,9 +26,12 @@ public class GuiBuilder extends GuiBaseContainer {
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+
+    setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 9 + 3 * Const.SQ + 10, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
+    this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
+    this.setFieldFuel(TileEntityStructureBuilder.Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
@@ -42,7 +46,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.buttonList.add(btn);
     width = 15;
     //size buttons
-    xSizeTextbox = 176 - 24;
+    xSizeTextbox = 176 - 52;
     btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
@@ -50,16 +54,13 @@ public class GuiBuilder extends GuiBaseContainer {
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
     //HEIGHT BUTTONS
-    xHeightTextbox = 176 - 48;
+    xHeightTextbox = xSizeTextbox - 28;
     btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
-  }
-  public String getTitle() {
-    return "tile.builder_block.name";
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -95,8 +96,12 @@ public class GuiBuilder extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
+    for (int k = 0; k < this.tile.getSizeInventory()- 1; k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+ 
   }
 }

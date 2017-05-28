@@ -8,7 +8,9 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerBaseMachine extends ContainerBase {
+public class ContainerBaseMachine extends ContainerBase { 
+  public static final int SLOTX_FUEL = 8 * Const.SQ + Const.PAD;
+  public static final int SLOTY_FUEL = Const.PAD;
   private int[] tileMap;
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;

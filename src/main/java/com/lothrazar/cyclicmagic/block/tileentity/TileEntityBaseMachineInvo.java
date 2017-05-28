@@ -32,7 +32,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private int currentMaxFuel;
   private int fuelSlot = -1;
   private int currentFuel;
-  private int speed = 1;
+  protected int speed = 1;
   protected int timer;
   private boolean usesFuel = false;
   public TileEntityBaseMachineInvo(int invoSize) {
@@ -151,7 +151,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
   }
   protected void shiftAllUp() {
-    for (int i = 0; i < this.getSizeInventory() - 1; i++) {
+    shiftAllUp(0);
+  }
+  /**
+   * pass in how many slots on the end ( right ) to skip
+   * @param endOffset
+   */
+  protected void shiftAllUp(int endOffset) {
+    for (int i = 0; i < this.getSizeInventory() - endOffset - 1; i++) {
       shiftPairUp(i, i + 1);
     }
   }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -19,9 +20,7 @@ private TileEntityUser tile;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.screenSize = ScreenSize.LARGE;
-    this.xSize = screenSize.width();
-    this.ySize = screenSize.height();
+    setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
@@ -50,7 +49,7 @@ private TileEntityUser tile;
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_FUEL - 1, this.guiTop + ContainerUser.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override

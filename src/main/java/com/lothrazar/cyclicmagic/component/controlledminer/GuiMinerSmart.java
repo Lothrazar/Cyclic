@@ -22,9 +22,8 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnWhitelist; 
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
-    this.screenSize=ScreenSize.LARGE;
-    this.xSize = screenSize.width();
-    this.ySize = screenSize.height();
+
+    setScreenSize(ScreenSize.LARGE);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
  this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
