@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -19,16 +17,14 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonToggleSize btnSize;
-  private ButtonMinerHeight btnWhitelist; 
+  private ButtonMinerHeight btnWhitelist;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
-
     setScreenSize(ScreenSize.LARGE);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
- this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
+    this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
   }
-
   @Override
   public void initGui() {
     super.initGui();
@@ -42,18 +38,17 @@ public class GuiMinerSmart extends GuiBaseContainer {
         this.guiTop + yHeightTxtbox - yOffset, true, TileEntityControlledMiner.Fields.HEIGHT);
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
-    int y = this.guiTop + ContainerMinerSmart.SLOTY-24;
+    int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
     btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++,
         x, y, true, TileEntityControlledMiner.Fields.LISTTYPE);
     btnWhitelist.width = 46;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
-    x = this.guiLeft + Const.PAD*4;
-    y = this.guiTop + Const.PAD * 3+2 ;
+    x = this.guiLeft + Const.PAD * 4;
+    y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
- 
   }
   private void updateDisabledButtons() {
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
@@ -79,7 +74,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //    int x = ContainerMinerSmart.SLOTX_START - 2, 
     //    this.fontRendererObj.drawString(s, x, y, 4210752);
     int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
-    int y = ContainerMinerSmart.SLOTEQUIP_Y-14;
+    int y = ContainerMinerSmart.SLOTEQUIP_Y - 14;
     String s = UtilChat.lang("tile.block_miner_smart.tool");
     this.fontRendererObj.drawString(s, x, y, 4210752);
     String display = "" + this.tile.getHeight();

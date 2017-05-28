@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
-
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private static final String NBT_BUILDTYPE = "build";
@@ -180,7 +179,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public BuildType getBuildTypeEnum() {
     int bt = Math.min(this.getBuildType(), BuildType.values().length - 1);
     return BuildType.values()[bt];
-  } 
+  }
   public void setSize(int s) {
     if (s <= 0) {
       s = 1;

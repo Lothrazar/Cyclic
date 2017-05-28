@@ -35,13 +35,12 @@ public class GuiHarvester extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-//    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-//    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-//      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHarvester.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHarvester.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-//    }
+    //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    //    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
+    //      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHarvester.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHarvester.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    //    }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_FUEL - 1, this.guiTop + ContainerUser.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
   }
   @SideOnly(Side.CLIENT)
   @Override

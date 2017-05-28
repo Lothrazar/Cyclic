@@ -23,7 +23,6 @@ public class ContainerBuilder extends ContainerBaseMachine {
       addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
-    
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

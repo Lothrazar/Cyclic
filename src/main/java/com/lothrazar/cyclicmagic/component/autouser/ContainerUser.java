@@ -15,9 +15,7 @@ public class ContainerUser extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 94;
- 
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
- 
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
     for (int i = 0; i < tile.getSizeInventory() - 1; i++) {

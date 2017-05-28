@@ -97,7 +97,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return timer == 0;
   }
-
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
@@ -155,6 +154,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   /**
    * pass in how many slots on the end ( right ) to skip
+   * 
    * @param endOffset
    */
   protected void shiftAllUp(int endOffset) {

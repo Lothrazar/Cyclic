@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -40,9 +39,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
-//  public void setHarvestConf(HarvestSetting c) {
-//    conf = c;
-//  }
+  //  public void setHarvestConf(HarvestSetting c) {
+  //    conf = c;
+  //  }
   public HarvestSetting getHarvestConf() {
     return conf;
   }

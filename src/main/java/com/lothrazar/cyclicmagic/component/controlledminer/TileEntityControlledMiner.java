@@ -8,10 +8,8 @@ import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,7 +20,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,7 +31,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle,ITilePreviewToggle, ITickable {
+public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -61,7 +58,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE,RENDERPARTICLES;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
@@ -251,7 +248,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     tagCompound.setInteger(NBTHEIGHT, height);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_LIST, this.blacklistIfZero);
-
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
@@ -273,7 +269,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     height = tagCompound.getInteger(NBTHEIGHT);
     blacklistIfZero = tagCompound.getInteger(NBT_LIST);
-
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -384,20 +379,18 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public void togglePreview() {
-    this.renderParticles = (renderParticles+1)%2;
-
+    this.renderParticles = (renderParticles + 1) % 2;
   }
   @Override
   public List<BlockPos> getShape() {
-    List<BlockPos> allPos=new    ArrayList<BlockPos>();
+    List<BlockPos> allPos = new ArrayList<BlockPos>();
     for (int i = 0; i < this.getHeight(); i++) {
-      allPos.addAll( UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size)   );
-
+      allPos.addAll(UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size));
     }
     return allPos;
   }
   @Override
   public boolean isPreviewVisible() {
-    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

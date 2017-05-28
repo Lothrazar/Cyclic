@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonTogglePreview extends GuiButtonTexture {
   private BlockPos tilePos;
   public GuiButtonTogglePreview(int buttonId, int x, int y, BlockPos p) {
-    super(buttonId, x, y,  "textures/gui/buttons.png");//44, 20,
+    super(buttonId, x, y, "textures/gui/buttons.png");//44, 20,
     this.tilePos = p;
     this.setTextureIndex(3);
   }
@@ -25,7 +25,6 @@ public class GuiButtonTogglePreview extends GuiButtonTexture {
     }
     return pressed;
   }
-
   public void setStateOn() {
     this.setTextureIndex(3);
     this.setTooltips(Arrays.asList(UtilChat.lang("tile.preview.button.on")));

@@ -25,7 +25,6 @@ public class GuiPattern extends GuiBaseContainer {
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
-
     this.fieldPreviewBtn = TileEntityPatternBuilder.Fields.RENDERPARTICLES.ordinal();
   }
   @Override
@@ -66,10 +65,10 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[2], this.tile.getPos());
     this.buttonList.add(bt);
     // ButtonToggleRender
-//    ButtonToggleRender btn = new ButtonToggleRender(id++,
-//        this.guiLeft + screenSize.width() - 20 - Const.PAD,
-//        this.guiTop + Const.PAD, this.tile.getPos());
-//    this.buttonList.add(btn);
+    //    ButtonToggleRender btn = new ButtonToggleRender(id++,
+    //        this.guiLeft + screenSize.width() - 20 - Const.PAD,
+    //        this.guiTop + Const.PAD, this.tile.getPos());
+    //    this.buttonList.add(btn);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id,

@@ -30,7 +30,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super(inventorySlotsIn);
     this.tile = null;
   }
-  protected void setScreenSize( Const.ScreenSize ss ){
+  protected void setScreenSize(Const.ScreenSize ss) {
     this.screenSize = ss;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
@@ -80,12 +80,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       if (tile.getPercentFormatted() > 0) {
         this.drawString(tile.getPercentFormatted() + "%", this.xSize - 30, 28);
       }
-      
-      
     }
-    
-    
-    
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }

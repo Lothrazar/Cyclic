@@ -14,7 +14,6 @@ public class Const {
     public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_coal.png");
-    
   }
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;

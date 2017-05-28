@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonToggleSize extends GuiButtonTooltip {
   private BlockPos tilePos;
-  public GuiButtonToggleSize(int buttonId, int x, int y,  BlockPos p) {
+  public GuiButtonToggleSize(int buttonId, int x, int y, BlockPos p) {
     super(buttonId, x, y, 44, 20, "");
     this.tilePos = p;
     this.setTooltip("button.size.tooltip");

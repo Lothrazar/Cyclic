@@ -16,12 +16,12 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = 88;
   public static final int SLOTID_EQUIP = 4;
-  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ ;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileEntityControlledMiner tileEntity;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
-    this.screenSize=ScreenSize.LARGE;
+    this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
