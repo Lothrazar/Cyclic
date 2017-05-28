@@ -58,6 +58,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.buttonList.add(btnPreview);
     }
   }
+  protected int fuelX=-30;//temp hax might be progress bar later?
+  protected int fuely=28;//fuel GUI???
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
    * 
@@ -78,7 +80,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       // double pctOneDecimal = getPercentFormatted();
       // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
       if (tile.getPercentFormatted() > 0) {
-        this.drawString(tile.getPercentFormatted() + "%", this.xSize - 30, 28);
+        this.drawString(tile.getPercentFormatted() + "%", this.xSize +fuelX, fuely);
       }
     }
     if (redstoneBtn != null) {

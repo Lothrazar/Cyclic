@@ -16,7 +16,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
-  private static final int MAX_SPEED = 10;
+  private static final int SPEED_DEFAULT = 1;
+  private static final int SPEED_FUELED = 8;
+  private static final int MAX_SPEED = 10;//unused mostly
   private static final int FUEL_FACTOR = 2;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -307,10 +309,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     else {
       if (this.currentFuel == 0) {
-        return 1;
+        return SPEED_DEFAULT;
       }
       else {
-        return 5;
+        return SPEED_FUELED;
       }
     }
   }
