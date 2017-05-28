@@ -2,37 +2,44 @@ package com.lothrazar.cyclicmagic.component.uncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+/**
+ * This was my first GUI, be gentle
+ * @author Sam
+ *
+ */
 public class ContainerUncrafting extends ContainerBaseMachine {
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY = 40;
-  protected TileEntityUncrafter tileEntity;
+  public static final int SLOTX_INPUT = 8;
+  public static final int SLOTY_INPUT = 68; 
   private int tileRedstone;
   private int tileTimer;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
-    tileEntity = te;
+ 
+    this.screenSize=ScreenSize.LARGE;
     this.setTile(te);
-    addSlotToContainer(new Slot(tileEntity, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_START, SLOTY));
+    addSlotToContainer(new Slot(tile, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_INPUT, SLOTY_INPUT));
     int slot = 1;
     int xPrefix = 2 * Const.SQ + Const.PAD;
-    int yPrefix = 16;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
-        addSlotToContainer(new SlotOutputOnly(tileEntity, slot,
-            xPrefix + j * Const.SQ, /// X
-            yPrefix + i * Const.SQ// Y
+        addSlotToContainer(new SlotOutputOnly(tile, slot,
+            xPrefix + j * Const.SQ, 
+             SLOTY_INPUT+ (i-1) * Const.SQ 
         ));
         slot++;
       }
     }
+    
+    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -45,12 +52,12 @@ public class ContainerUncrafting extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
@@ -68,25 +75,25 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
       int idx = TileEntityUncrafter.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      if (this.tileTimer != this.tile.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tile.getField(idx));
       }
       idx = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      if (this.tileRedstone != this.tile.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tile.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileEntityUncrafter.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityUncrafter.Fields.REDSTONE.ordinal());
+    this.tileTimer = this.tile.getField(TileEntityUncrafter.Fields.TIMER.ordinal());
+    this.tileRedstone = this.tile.getField(TileEntityUncrafter.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

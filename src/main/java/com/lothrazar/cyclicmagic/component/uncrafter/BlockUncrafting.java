@@ -55,7 +55,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.uncrafter;
-    TileEntityUncrafter.TIMER_FULL = config.getInt("GrindngTime", category, 200, 10, 9999, "Number of ticks it takes to uncraft one time, so lower is faster");
     UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
     UtilUncraft.resetBlacklists();
     config.addCustomCategoryComment(category, "Blacklists and other tweaks for the Uncrafting Grinder.   (Use F3+H to see the details, it is always 'modid:item')");
