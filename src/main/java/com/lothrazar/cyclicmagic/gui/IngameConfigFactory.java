@@ -21,4 +21,12 @@ public class IngameConfigFactory implements IModGuiFactory {
   public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
     return null;
   }
+  @Override
+  public boolean hasConfigGui() {
+    return true;
+  }
+  @Override
+  public GuiScreen createConfigGui(GuiScreen parentScreen) {
+    return new IngameConfigGui(parentScreen);
+  }
 }
