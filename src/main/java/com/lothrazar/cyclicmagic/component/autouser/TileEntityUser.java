@@ -160,45 +160,52 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
-    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
-    if (maybeTool != null &&
-        maybeTool.getItem() instanceof ItemBucket) {
-      TileEntity tank = world.getTileEntity(targetPos);
-      IFluidHandler f = UtilFluid.getFluidHandler(tank, this.getCurrentFacing().getOpposite());
-      if (f != null) {
-        int sizeBefore = maybeTool.getCount();
-        boolean success = (FluidUtil.interactWithFluidHandler(maybeTool, f, fakePlayer.get()) != FluidActionResult.FAILURE);
-        int AFTER = maybeTool.getCount();
-        if (success) {
-          if (sizeBefore == AFTER) {//if it turned one empty into one full, then force the drop else it happens anyway
-            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), maybeTool.splitStack(1));
-          }
-          //          //
-          //          maybeTool.stackSize--;
-          this.tryDumpFakePlayerInvo();
-        }
-      }
-      else {
-        ItemStack resultStack = UtilFluid.dispenseStack(world, targetPos, maybeTool, this.getCurrentFacing());
-       
-        if (resultStack != null && resultStack.getItem() != maybeTool.getItem() ) {//non null meaning success, and r is the NEW full or empty bucket
- 
-          maybeTool.shrink(1);//same item so it got consumed ( full bucket )
-          
-           
-          UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), resultStack);
-          
-        }
-        else{//not same item, something like a multi-bucket
-          //copy new fluid in ignoring stack and such
-          maybeTool.deserializeNBT(resultStack.serializeNBT());
-        }
-      }
+    //    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    if (rightClickFluidAttempt(targetPos)) {
+      return;
     }
     else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non bucket item
       //dont ever place a block. they want to use it on an entity
       fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     }
+  }
+  private boolean rightClickFluidAttempt(BlockPos targetPos) {
+    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
+      if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
+        int sizeBefore = maybeTool.getCount();
+        boolean success = UtilFluid.interactWithFluidHandler(fakePlayer.get(), this.world, targetPos, this.getCurrentFacing().getOpposite());
+        maybeTool = fakePlayer.get().getHeldItemMainhand();
+        int AFTER = maybeTool.getCount();
+        if (success) {
+          if (sizeBefore == AFTER) {//if it turned one empty into one full, then force the drop else it happens anyway
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), maybeTool.splitStack(1));
+          }
+          this.tryDumpFakePlayerInvo();
+          return true;
+        }
+      }
+      else {//no tank, just open world
+        //dispense stack so either pickup or place liquid
+        if (UtilFluid.isEmptyOfFluid(maybeTool)) {
+          FluidActionResult res = UtilFluid.fillContainer(world, targetPos, maybeTool, this.getCurrentFacing());
+          if (res != FluidActionResult.FAILURE) {
+            maybeTool.shrink(1);
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), res.getResult());
+            return true;
+          }
+        }
+        else {
+          ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, maybeTool);
+          if (drainedStackOrNull != null) {
+            maybeTool.shrink(1);
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drainedStackOrNull);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
   }
   private void tryDumpFakePlayerInvo() {
     for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
@@ -372,9 +379,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
-//    if (world.isAirBlock(targetPos)) {
-//      targetPos = targetPos.down();
-//    }
+    //    if (world.isAirBlock(targetPos)) {
+    //      targetPos = targetPos.down();
+    //    }
     return targetPos;
   }
   public BlockPos getTargetCenter() {
