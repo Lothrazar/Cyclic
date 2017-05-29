@@ -168,6 +168,25 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       //dont ever place a block. they want to use it on an entity
       fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     }
+    //TODO: if processRight fails try this other crap too hey
+    /* ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    //    if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
+    //      if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
+    EnumFacing side = this.getCurrentFacing().getOpposite();
+    final float hitX = (float) (this.fakePlayer.get().posX - pos.getX());
+    final float hitY = (float) (this.fakePlayer.get().posY - pos.getY());
+    final float hitZ = (float) (this.fakePlayer.get().posZ - pos.getZ());
+    final PlayerInteractEvent.RightClickBlock event = ForgeHooks.onRightClickBlock(fakePlayer.get(), EnumHand.MAIN_HAND, targetPos, this.getCurrentFacing().getOpposite(), ForgeHooks.rayTraceEyeHitVec(this.fakePlayer.get(), 2.0));
+    if (!event.isCanceled() && event.getUseItem() != Event.Result.DENY &&
+    //            maybeTool.getItem().onItemUseFirst(player, world, targetPos, side, hitX, hitY, hitZ, hand)
+        maybeTool.getItem().onItemUseFirst(this.fakePlayer.get(), this.world, targetPos, side, hitX, hitY, hitZ, EnumHand.MAIN_HAND) == EnumActionResult.PASS) {
+      maybeTool.onItemUse(this.fakePlayer.get(), this.world, pos, EnumHand.MAIN_HAND, side, hitX, hitY, hitZ);
+     
+    }
+    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non bucket item
+      //dont ever place a block. they want to use it on an entity
+      fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    }//?? player.interactOn(*/
   }
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
