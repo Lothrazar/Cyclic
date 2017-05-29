@@ -44,8 +44,8 @@ public class UtilFluid {
   /**
    * Drains a filled container and places the fluid.
    * 
-   * RETURN new item stack that has been drained after placing in world if it works
-   * null otherwise
+   * RETURN new item stack that has been drained after placing in world if it
+   * works null otherwise
    */
   public static ItemStack dumpContainer(World world, BlockPos pos, ItemStack stackIn) {
     //    BlockSourceImpl blocksourceimpl = new BlockSourceImpl(world, pos);
@@ -55,8 +55,8 @@ public class UtilFluid {
     if (fluidHandler == null) { return null; }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
     if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
-//      FluidActionResult placeResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack);
-      if ( FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack).isSuccess()) {
+      //      FluidActionResult placeResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack);
+      if (FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack).isSuccess()) {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
         fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
         ItemStack returnMe = fluidHandler.getContainer();
@@ -65,6 +65,12 @@ public class UtilFluid {
       }
     }
     return null;
+  }
+  public static ItemStack drainOneBucket(ItemStack d) {
+    IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(d);
+    if (fluidHandler == null) { return d; }//its empty, ok no problem
+    fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
+    return fluidHandler.getContainer();
   }
   //  public static boolean isFullOfFluid(ItemStack returnMe) {
   //    IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(returnMe);

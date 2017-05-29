@@ -173,16 +173,22 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
     if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
       if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
-        int sizeBefore = maybeTool.getCount();
+        //        int sizeBefore = maybeTool.getCount();
         boolean success = UtilFluid.interactWithFluidHandler(fakePlayer.get(), this.world, targetPos, this.getCurrentFacing().getOpposite());
-        maybeTool = fakePlayer.get().getHeldItemMainhand();
-        int AFTER = maybeTool.getCount();
+        //        maybeTool = fakePlayer.get().getHeldItemMainhand();
+        //        int AFTER = maybeTool.getCount();
         if (success) {
-          if (sizeBefore == AFTER) {//if it turned one empty into one full, then force the drop else it happens anyway
-            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), maybeTool.splitStack(1));
+          ItemStack drained;//if you had one empty bucket let from stack, dont do splitStack into zero
+          if (maybeTool.getCount() == 1) {
+            drained = maybeTool.copy();
+            maybeTool.shrink(1);
+          }
+          else {
+            drained = UtilFluid.drainOneBucket(maybeTool.splitStack(1));
           }
           this.tryDumpFakePlayerInvo();
-          return true;
+          UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
+     
         }
       }
       else {//no tank, just open world
