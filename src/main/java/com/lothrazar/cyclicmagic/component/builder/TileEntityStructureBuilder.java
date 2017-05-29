@@ -254,7 +254,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
               this.decrStackSize(0, 1);
               SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, nextPos);
               if (type != null && type.getPlaceSound() != null) {
-                int dim = this.getDimension();// this.world.provider.getDimension();
+                int dim = this.getDimension();
                 int range = 18;
                 UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, nextPos, dim, range);
               }
