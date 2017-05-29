@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -26,10 +27,12 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -40,6 +43,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
@@ -78,7 +84,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     this.spawnParticlesAbove();
     this.updateFuelIsBurning();
     boolean triggered = this.updateTimerIsZero();
-    
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
@@ -155,9 +160,45 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
-    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) != Blocks.AIR) { return; }
-    //dont ever place a block. they want to use it on an entity
-    fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    if (maybeTool != null &&
+        maybeTool.getItem() instanceof ItemBucket) {
+      TileEntity tank = world.getTileEntity(targetPos);
+      IFluidHandler f = UtilFluid.getFluidHandler(tank, this.getCurrentFacing().getOpposite());
+      if (f != null) {
+        int sizeBefore = maybeTool.getCount();
+        boolean success = (FluidUtil.interactWithFluidHandler(maybeTool, f, fakePlayer.get()) != FluidActionResult.FAILURE);
+        int AFTER = maybeTool.getCount();
+        if (success) {
+          if (sizeBefore == AFTER) {//if it turned one empty into one full, then force the drop else it happens anyway
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), maybeTool.splitStack(1));
+          }
+          //          //
+          //          maybeTool.stackSize--;
+          this.tryDumpFakePlayerInvo();
+        }
+      }
+      else {
+        ItemStack resultStack = UtilFluid.dispenseStack(world, targetPos, maybeTool, this.getCurrentFacing());
+       
+        if (resultStack != null && resultStack.getItem() != maybeTool.getItem() ) {//non null meaning success, and r is the NEW full or empty bucket
+ 
+          maybeTool.shrink(1);//same item so it got consumed ( full bucket )
+          
+           
+          UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), resultStack);
+          
+        }
+        else{//not same item, something like a multi-bucket
+          //copy new fluid in ignoring stack and such
+          maybeTool.deserializeNBT(resultStack.serializeNBT());
+        }
+      }
+    }
+    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non bucket item
+      //dont ever place a block. they want to use it on an entity
+      fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    }
   }
   private void tryDumpFakePlayerInvo() {
     for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
@@ -331,9 +372,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
-    if (world.isAirBlock(targetPos)) {
-      targetPos = targetPos.down();
-    }
+//    if (world.isAirBlock(targetPos)) {
+//      targetPos = targetPos.down();
+//    }
     return targetPos;
   }
   public BlockPos getTargetCenter() {
