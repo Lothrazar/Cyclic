@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.net.PacketQuickStack;
 import com.lothrazar.cyclicmagic.net.PacketRandomize;
 import com.lothrazar.cyclicmagic.net.PacketRestockContainerToPlayer;
 import com.lothrazar.cyclicmagic.net.PacketSleepClient;
+import com.lothrazar.cyclicmagic.net.PacketSound;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
@@ -97,6 +98,8 @@ public class PacketRegistry {
     //    network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
     //    network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
-    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+    
+    network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
+    
   }
 }

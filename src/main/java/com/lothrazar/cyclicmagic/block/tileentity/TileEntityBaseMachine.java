@@ -70,4 +70,10 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     this.writeToNBT(syncData);//this calls writeInternal
     return syncData;
   }
+  protected int getDimension() {
+    if(this.world == null || this.world.provider==null){
+      return 0;
+    }
+    return this.world.provider.getDimension();
+  }
 }

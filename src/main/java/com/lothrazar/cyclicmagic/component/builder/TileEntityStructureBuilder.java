@@ -4,17 +4,23 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.net.PacketSound;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
@@ -246,6 +252,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
             IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
             if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
               this.decrStackSize(0, 1);
+              SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, nextPos);
+              if (type != null && type.getPlaceSound() != null) {
+                int dim = this.getDimension();// this.world.provider.getDimension();
+                int range = 18;
+                UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, nextPos, dim, range);
+              }
             }
             break;//ok , target position is valid, we can build only into air
           }

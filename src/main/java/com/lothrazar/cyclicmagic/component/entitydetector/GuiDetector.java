@@ -21,9 +21,6 @@ public class GuiDetector extends GuiBaseContainer {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
-  public String getTitle() {
-    return "tile.entity_detector.name";
-  }
   @Override
   public void initGui() {
     super.initGui();
