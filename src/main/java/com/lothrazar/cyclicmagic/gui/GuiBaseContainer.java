@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -99,15 +100,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
-  public void drawFuelText() {
-    if (this.fieldFuel > -1) {
-      // double pctOneDecimal = getPercentFormatted();
-      // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
-      if (tile.getPercentFormatted() > 0) {
-        this.drawString(tile.getPercentFormatted() + "%", this.xSize + fuelX, fuely);
-      }
-    }
-  }
   public void drawString(String s, int x, int y) {
     this.fontRendererObj.drawString(s, x, y, FONTCOLOR);
   }
@@ -130,7 +122,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
         screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
-    // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
     if (this.progressBar != null) {
       drawProgressBar();
     }
@@ -138,25 +129,32 @@ public abstract class GuiBaseContainer extends GuiContainer {
       drawFuelBar();
     }
   }
+  public void drawFuelText() {
+    if (this.fieldFuel > -1) {
+
+      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
+      if (percent > 0) {
+        float fontScale = 0.5F;
+        GL11.glScalef(fontScale, fontScale, fontScale);
+        this.drawString(percent + "", this.xSize * 2 + 20, fuely - 4);
+      }
+    }
+  }
   public void drawFuelBar() {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + Const.PAD / 2,
+        this.guiLeft + screenSize.width() + 1,
         this.guiTop, u, v,
         24, 83,
         24, 83);
-
     this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
-    //16x70
-
-    float percent = ((float) tile.getField(this.fieldFuel)) / ((float)tile.getField(this.fieldMaxFuel));
+    float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + 5+ Const.PAD / 2,
-        this.guiTop+6, u, v,
-        14, (int)(70*percent),
-        14, 70);
-    
+        this.guiLeft + screenSize.width() + Const.PAD,
+        this.guiTop + Const.PAD, u, v,
+        10, (int) (67 * percent),
+        10, 67);
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
