@@ -18,9 +18,9 @@ public class GuiCrafter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
-    this.fuelX=-52;
-    this.fuely=14;
-    }
+    this.fuelX = -52;
+    this.fuely = 14;
+  }
   @Override
   public void initGui() {
     super.initGui();
@@ -63,7 +63,6 @@ public class GuiCrafter extends GuiBaseContainer {
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-  
   }
   @SideOnly(Side.CLIENT)
   @Override

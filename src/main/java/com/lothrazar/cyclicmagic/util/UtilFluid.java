@@ -1,13 +1,9 @@
 package com.lothrazar.cyclicmagic.util;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.BlockSourceImpl;
-import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -68,7 +64,7 @@ public class UtilFluid {
   }
   public static ItemStack drainOneBucket(ItemStack d) {
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(d);
-    if (fluidHandler == null) { return d; }//its empty, ok no problem
+    if (fluidHandler == null) { return d; } //its empty, ok no problem
     fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
     return fluidHandler.getContainer();
   }

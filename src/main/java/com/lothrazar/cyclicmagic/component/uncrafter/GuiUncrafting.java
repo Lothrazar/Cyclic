@@ -1,14 +1,13 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -26,7 +25,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
     this.setFieldFuel(TileEntityUncrafter.Fields.FUEL.ordinal());
     this.progressBar = new ProgressBar(this, 10,
-        ContainerUncrafting.SLOTY_INPUT + 2*Const.SQ +Const.PAD  , 
+        ContainerUncrafting.SLOTY_INPUT + 2 * Const.SQ + Const.PAD,
         TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
   }
   @Override
@@ -34,7 +33,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     super.initGui();
     GuiButton helpBtn = new GuiButton(2,
         this.guiLeft + Const.SQ + Const.PAD + 2,
-        this.guiTop +  ContainerUncrafting.SLOTY_INPUT-2 , 12, 20, "?");
+        this.guiTop + ContainerUncrafting.SLOTY_INPUT - 2, 12, 20, "?");
     this.buttonList.add(helpBtn);
   }
   @SideOnly(Side.CLIENT)
@@ -60,14 +59,12 @@ public class GuiUncrafting extends GuiBaseContainer {
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         Gui.drawModalRectWithCustomSizedTexture(
-            this.guiLeft + xPrefix - 1 + j * Const.SQ, 
-            this.guiTop +  ContainerUncrafting.SLOTY_INPUT+ (i-1) * Const.SQ -1,
+            this.guiLeft + xPrefix - 1 + j * Const.SQ,
+            this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1,
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
- 
   }
 }

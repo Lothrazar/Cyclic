@@ -71,9 +71,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return syncData;
   }
   protected int getDimension() {
-    if(this.world == null || this.world.provider==null){
-      return 0;
-    }
+    if (this.world == null || this.world.provider == null) { return 0; }
     return this.world.provider.getDimension();
   }
 }

@@ -61,7 +61,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
       }
     }
     addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
-    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

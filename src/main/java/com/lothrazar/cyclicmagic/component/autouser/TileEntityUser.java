@@ -27,12 +27,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -44,8 +42,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
@@ -214,8 +210,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           }
           else {//original had fluid in it. so make sure we drain it now hey
             ItemStack drained = UtilFluid.drainOneBucket(maybeTool.splitStack(1));
-           // drained.setCount(1);
-           // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
+            // drained.setCount(1);
+            // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
             maybeTool.shrink(1 + hack);
           }
           this.tryDumpFakePlayerInvo();

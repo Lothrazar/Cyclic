@@ -56,7 +56,7 @@ public class GuiDetector extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y,
         isUp, f, w, h);
-    btn.displayString = (isUp) ? "+":"-";
+    btn.displayString = (isUp) ? "+" : "-";
     this.buttonList.add(btn);
     return btn;
   }

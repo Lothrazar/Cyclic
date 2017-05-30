@@ -127,7 +127,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
-   
     }
     return -7;
   }

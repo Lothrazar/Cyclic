@@ -28,7 +28,6 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
     }
     addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
     addSlotToContainer(new SlotFurnaceFuel(tile, 5, SLOTX_FUEL, SLOTY_FUEL));
-    
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

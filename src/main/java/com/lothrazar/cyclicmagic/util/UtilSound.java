@@ -62,7 +62,7 @@ public class UtilSound {
   public static SoundType getSoundFromBlockstate(IBlockState placeState, World world, BlockPos pos) {
     return placeState.getBlock().getSoundType(placeState, world, pos, null);
   }
-  public static void playSoundFromServer(SoundEvent soundEvent, SoundCategory cat,BlockPos nextPos, int dim, int range) {
+  public static void playSoundFromServer(SoundEvent soundEvent, SoundCategory cat, BlockPos nextPos, int dim, int range) {
     ModCyclic.network.sendToAllAround(new PacketSound(nextPos, soundEvent, cat),
         new NetworkRegistry.TargetPoint(dim, nextPos.getX(), nextPos.getY(), nextPos.getZ(), range));
   }

@@ -98,8 +98,6 @@ public class PacketRegistry {
     //    network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
     //    network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
-    
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
-    
   }
 }
