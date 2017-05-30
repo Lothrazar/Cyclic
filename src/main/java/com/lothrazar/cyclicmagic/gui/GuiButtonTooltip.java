@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ITooltipButton;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 
 public abstract class GuiButtonTooltip extends GuiButton implements ITooltipButton {
@@ -18,7 +19,7 @@ public abstract class GuiButtonTooltip extends GuiButton implements ITooltipButt
   }
   public void setTooltip(final String t) {
     List<String> remake = new ArrayList<String>();
-    remake.add(t);
+    remake.add(UtilChat.lang(t));
     tooltip = remake;
   }
 }

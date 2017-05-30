@@ -11,7 +11,7 @@ public class ButtonBuilderType extends GuiButtonTooltip {
   public ButtonBuilderType(BlockPos current, int buttonId, int x, int y, int width) {
     super(buttonId, x, y, width, 20, "");
     tilePos = current;
-    this.setTooltip("button.builder.meta");
+    this.setTooltip("button.builder.tooltip");
   }
   @SideOnly(Side.CLIENT)
   @Override

@@ -1,19 +1,13 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonBuildSize extends GuiButton implements ITooltipButton {
+public class ButtonBuildSize extends GuiButtonTooltip {
   private final BlockPos tilePos;
-  private final List<String> tooltips = new ArrayList<String>();
   boolean goUp;
   private String type;
   public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up, String strType) {
@@ -21,7 +15,7 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
     tilePos = current;
     goUp = up;
     type = strType;
-    tooltips.add(TextFormatting.GRAY + UtilChat.lang("button." + type + "." + (goUp ? "up" : "down")));
+    this.setTooltip("button." + type + "." + (goUp ? "up" : "down"));
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -32,9 +26,5 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
       ModCyclic.network.sendToServer(new PacketTileBuildSize(tilePos, size, type));
     }
     return pressed;
-  }
-  @Override
-  public List<String> getTooltips() {
-    return tooltips;
   }
 }

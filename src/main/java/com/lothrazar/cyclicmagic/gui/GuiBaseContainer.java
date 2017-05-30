@@ -59,8 +59,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.buttonList.add(btnPreview);
     }
   }
-  protected int fuelX = -30;//temp hax might be progress bar later?
-  protected int fuely = 28;//fuel GUI???
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
    * 
@@ -131,12 +129,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   public void drawFuelText() {
     if (this.fieldFuel > -1) {
-
       int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
-      if (percent > 0) {
+      double pct = tile.getPercentFormatted();
+      if (pct > 0) {
+        GL11.glPushMatrix();
         float fontScale = 0.5F;
         GL11.glScalef(fontScale, fontScale, fontScale);
-        this.drawString(percent + "", this.xSize * 2 + 20, fuely - 4);
+        this.drawString(pct + "", this.xSize * 2 + 20, 24);
+        GL11.glPopMatrix();
       }
     }
   }
@@ -146,15 +146,15 @@ public abstract class GuiBaseContainer extends GuiContainer {
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + screenSize.width() + 1,
         this.guiTop, u, v,
-        24, 83,
-        24, 83);
+        28, 100,
+        28, 100);
     this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + screenSize.width() + Const.PAD,
         this.guiTop + Const.PAD, u, v,
-        10, (int) (67 * percent),
-        10, 67);
+        14, (int) (84 * percent),
+        14, 84);
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {

@@ -58,12 +58,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected void setFuelCurrent(int f) {
     this.currentFuel = f;
   }
-//  public double getPercentFormatted() {
-//    if (this.currentMaxFuel == 0) { return 0.0; }
-//    double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
-//    double pctOneDecimal = Math.floor(percent * 1000) / 10;
-//    return pctOneDecimal;
-//  }
+  public double getPercentFormatted() {
+    if (this.currentMaxFuel == 0) { return 0.0; }
+    double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
+    double pctOneDecimal = Math.floor(percent * 1000) / 10;
+    return pctOneDecimal;
+  }
   public void consumeFuel() {
     if (usesFuel && !this.world.isRemote) {
       if (this.currentFuel > 0) {
@@ -74,6 +74,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
           this.currentMaxFuel = this.currentFuel;//100% full
+          
           itemstack.shrink(1);
         }
       }
