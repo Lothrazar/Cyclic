@@ -76,13 +76,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (this.fieldFuel > -1) {
-      // double pctOneDecimal = getPercentFormatted();
-      // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
-      if (tile.getPercentFormatted() > 0) {
-        this.drawString(tile.getPercentFormatted() + "%", this.xSize + fuelX, fuely);
-      }
+    drawNameText();
+    drawFuelText();
+    updateToggleButtonStates();
+  }
+  public void drawNameText() {
+    if (tile != null) {
+      String s = UtilChat.lang(tile.getName());
+      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
     }
+  }
+  public void updateToggleButtonStates() {
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }
@@ -94,9 +98,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
         btnPreview.setStateOff();
       }
     }
-    if (tile != null) {
-      String s = UtilChat.lang(tile.getName());
-      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
+  }
+  public void drawFuelText() {
+    if (this.fieldFuel > -1) {
+      // double pctOneDecimal = getPercentFormatted();
+      // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
+      if (tile.getPercentFormatted() > 0) {
+        this.drawString(tile.getPercentFormatted() + "%", this.xSize + fuelX, fuely);
+      }
     }
   }
   public void drawString(String s, int x, int y) {
@@ -124,6 +133,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
     // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
     if (this.progressBar != null) {
       drawProgressBar();
+    }
+    
+
+    if(this.fieldFuel > -1 && this.tile.getFuelCurrent() > 0){
+    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR); 
+
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft+screenSize.width() + Const.PAD/2,
+        this.guiTop, u, v,
+        24, 79,
+        24, 79);
     }
   }
   @Override
