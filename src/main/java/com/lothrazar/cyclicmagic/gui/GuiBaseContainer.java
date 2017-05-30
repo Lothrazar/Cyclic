@@ -144,18 +144,18 @@ public abstract class GuiBaseContainer extends GuiContainer {
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + screenSize.width() + Const.PAD / 2,
         this.guiTop, u, v,
-        24, 90,
-        24, 90);
+        24, 83,
+        24, 83);
 
     this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
     //16x70
 
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float)tile.getField(this.fieldMaxFuel));
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + 4+ Const.PAD / 2,
+        this.guiLeft + screenSize.width() + 5+ Const.PAD / 2,
         this.guiTop+6, u, v,
-        16, (int)(70*percent),
-        16, 70);
+        14, (int)(70*percent),
+        14, 70);
     
   }
   @Override
