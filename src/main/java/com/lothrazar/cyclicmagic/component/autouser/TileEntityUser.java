@@ -214,7 +214,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           }
           else {//original had fluid in it. so make sure we drain it now hey
             ItemStack drained = UtilFluid.drainOneBucket(maybeTool.splitStack(1));
-            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
+           // drained.setCount(1);
+           // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
+            maybeTool.shrink(1 + hack);
           }
           this.tryDumpFakePlayerInvo();
         }
