@@ -7,13 +7,14 @@ public class Const {
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
     public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
-    public static final ResourceLocation FUEL = new ResourceLocation(Const.MODID, folder + "progress.png");
-    public static final ResourceLocation FUELCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
     public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
     public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-    public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_coal.png");
+    public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
+    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
+    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
+
   }
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;

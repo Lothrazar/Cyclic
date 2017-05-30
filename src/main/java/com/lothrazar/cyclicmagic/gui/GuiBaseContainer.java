@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -58,8 +59,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.buttonList.add(btnPreview);
     }
   }
-  protected int fuelX = -30;//temp hax might be progress bar later?
-  protected int fuely = 28;//fuel GUI???
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
    * 
@@ -76,13 +75,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (this.fieldFuel > -1) {
-      // double pctOneDecimal = getPercentFormatted();
-      // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
-      if (tile.getPercentFormatted() > 0) {
-        this.drawString(tile.getPercentFormatted() + "%", this.xSize + fuelX, fuely);
-      }
+    drawNameText();
+    drawFuelText();
+    updateToggleButtonStates();
+  }
+  public void drawNameText() {
+    if (tile != null) {
+      String s = UtilChat.lang(tile.getName());
+      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
     }
+  }
+  public void updateToggleButtonStates() {
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }
@@ -93,10 +96,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       else {
         btnPreview.setStateOff();
       }
-    }
-    if (tile != null) {
-      String s = UtilChat.lang(tile.getName());
-      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
     }
   }
   public void drawString(String s, int x, int y) {
@@ -121,10 +120,41 @@ public abstract class GuiBaseContainer extends GuiContainer {
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
         screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
-    // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
     if (this.progressBar != null) {
       drawProgressBar();
     }
+    if (this.fieldFuel > -1 && this.tile.getFuelCurrent() > 0) {
+      drawFuelBar();
+    }
+  }
+  public void drawFuelText() {
+    if (this.fieldFuel > -1) {
+      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
+      double pct = tile.getPercentFormatted();
+      if (pct > 0) {
+        GL11.glPushMatrix();
+        float fontScale = 0.5F;
+        GL11.glScalef(fontScale, fontScale, fontScale);
+        this.drawString(pct + "", this.xSize * 2 + 20, 24);
+        GL11.glPopMatrix();
+      }
+    }
+  }
+  public void drawFuelBar() {
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + screenSize.width() + 1,
+        this.guiTop, u, v,
+        28, 100,
+        28, 100);
+    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
+    float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + screenSize.width() + Const.PAD,
+        this.guiTop + Const.PAD, u, v,
+        14, (int) (84 * percent),
+        14, 84);
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {

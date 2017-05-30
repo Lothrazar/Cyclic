@@ -74,6 +74,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
           this.currentMaxFuel = this.currentFuel;//100% full
+          
           itemstack.shrink(1);
         }
       }
