@@ -1,19 +1,13 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonMinerHeight extends GuiButton implements ITooltipButton {
+public class ButtonMinerHeight extends GuiButtonTooltip{
   private final BlockPos tilePos;
-  private final List<String> tooltips = new ArrayList<String>();
   boolean goUp;
   private String stype;//TODO: should be field ordinal/int not string but meh
   public ButtonMinerHeight(BlockPos current, int buttonId, int x, int y, boolean up, TileEntityControlledMiner.Fields list) {
@@ -21,7 +15,7 @@ public class ButtonMinerHeight extends GuiButton implements ITooltipButton {
     tilePos = current;
     goUp = up;
     stype = list.name().toLowerCase();
-    tooltips.add(TextFormatting.GRAY + UtilChat.lang("button." + stype + "." + (goUp ? "up" : "down")));
+    setTooltip( "button." + stype + "." + (goUp ? "up" : "down"));
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -32,9 +26,5 @@ public class ButtonMinerHeight extends GuiButton implements ITooltipButton {
       ModCyclic.network.sendToServer(new PacketTileMineHeight(tilePos, size, stype));
     }
     return pressed;
-  }
-  @Override
-  public List<String> getTooltips() {
-    return tooltips;
   }
 }

@@ -80,6 +80,7 @@ button.harvester.size7=15x15
 button.size.tooltip=Change Size
 button.height.down=Decrease height
 button.height.up=Increase height
+button.listtype.up=Whitelist or Blacklist
 button.reset.name=Reset
 button.reset.tooltip=Reset position to first slot
 button.size.down=Decrease size
