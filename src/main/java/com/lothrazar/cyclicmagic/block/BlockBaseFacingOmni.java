@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block;
-
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
@@ -14,16 +13,12 @@ import net.minecraft.world.World;
 
 public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   public static final PropertyDirection PROPERTYFACING = BlockDirectional.FACING;
-
-
   public BlockBaseFacingOmni(Material materialIn) {
     super(materialIn);
   }
-
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.getFront(meta & 7));
-    
   }
   public EnumFacing getFacingFromState(IBlockState state) {
     EnumFacing facing = EnumFacing.NORTH;//dont want to be null to break stuff

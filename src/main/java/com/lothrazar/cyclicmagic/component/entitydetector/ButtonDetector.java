@@ -1,13 +1,8 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,7 +20,7 @@ public class ButtonDetector extends GuiButtonTooltip {
     if (type != Fields.ENTITYTYPE && type != Fields.GREATERTHAN) {
       ud = (up) ? "up" : "down";
     }
-   setTooltip("tile.entity_detector." + t.name().toLowerCase() + ud);
+    setTooltip("tile.entity_detector." + t.name().toLowerCase() + ud);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -35,5 +30,5 @@ public class ButtonDetector extends GuiButtonTooltip {
       ModCyclic.network.sendToServer(new PacketTileDetector(tilePos, goUp, type));
     }
     return pressed;
-  } 
+  }
 }

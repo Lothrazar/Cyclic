@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.vector;
 import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
 import net.minecraft.util.math.BlockPos;
 
-public class ButtonVector extends GuiButtonTooltip{
+public class ButtonVector extends GuiButtonTooltip {
   private int fieldId;
   private int value;
   public ButtonVector(BlockPos current, int buttonId, int x, int y, int val, int t) {

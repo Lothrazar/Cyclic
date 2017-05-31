@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonMinerHeight extends GuiButtonTooltip{
+public class ButtonMinerHeight extends GuiButtonTooltip {
   private final BlockPos tilePos;
   boolean goUp;
   private String stype;//TODO: should be field ordinal/int not string but meh
@@ -15,7 +15,7 @@ public class ButtonMinerHeight extends GuiButtonTooltip{
     tilePos = current;
     goUp = up;
     stype = list.name().toLowerCase();
-    setTooltip( "button." + stype + "." + (goUp ? "up" : "down"));
+    setTooltip("button." + stype + "." + (goUp ? "up" : "down"));
   }
   @SideOnly(Side.CLIENT)
   @Override

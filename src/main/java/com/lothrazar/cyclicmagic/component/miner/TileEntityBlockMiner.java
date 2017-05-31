@@ -119,14 +119,13 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
         }
       }
       tryEquipItem();
-//      BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
+      //      BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
       }
       if (isRunning()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
-   
           if (!world.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -177,7 +176,6 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       fakePlayer.get().setItemStackToSlot(EntityEquipmentSlot.MAINHAND, unbreakingPickaxe);
     }
   }
-
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";

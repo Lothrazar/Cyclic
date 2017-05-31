@@ -14,7 +14,6 @@ public class Const {
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
     public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
     public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
-
   }
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;

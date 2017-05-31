@@ -18,7 +18,6 @@ public class GuiCrafter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
-
   }
   @Override
   public void initGui() {
