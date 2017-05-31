@@ -36,6 +36,7 @@ public class UtilHarvestCrops {
     public boolean doesCactus = false;
     public boolean doesReeds = false;
     public boolean dropInPlace = true;//if false -> then ret
+    public List<ItemStack> drops;
     @Override
     public String toString() {
       String s = "";
@@ -48,6 +49,10 @@ public class UtilHarvestCrops {
       s += "doesCrops = " + doesCrops + System.lineSeparator();
       s += "doesHarvestTallgrass = " + doesTallgrass + System.lineSeparator();
       return s;
+    }
+    public void setDrops(List<ItemStack> d) {
+     this.drops=d;
+      
     }
   }
   private static String[] blacklist;
@@ -234,9 +239,14 @@ public class UtilHarvestCrops {
           e.printStackTrace();
         }
         //now we can upgrade this to also drop in front wooo!
-        for (ItemStack drop : drops) {
-          UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-          //           dropItem(drop, world, blockPos);
+        if (conf.dropInPlace) {
+          for (ItemStack drop : drops) {
+            UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
+          }
+        }
+        else {
+          conf.setDrops(drops);
+          
         }
       }
       else {

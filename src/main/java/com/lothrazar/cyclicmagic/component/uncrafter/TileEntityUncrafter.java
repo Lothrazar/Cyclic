@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
@@ -94,7 +95,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     } //end of timer go
   }
-  private void setOutputItems(ArrayList<ItemStack> output) {
+  private void setOutputItems(List<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {

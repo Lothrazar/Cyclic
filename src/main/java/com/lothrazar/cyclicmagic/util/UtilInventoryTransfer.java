@@ -175,12 +175,12 @@ public class UtilInventoryTransfer {
   private static int getInvoEnd(EntityPlayer p) {
     return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
-  public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot) {
+  public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot, int maxSlot) {
     //and return the remainder after dumping
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
     for (ItemStack current : stacks) {
-      for (int i = startingSlot; i < inventory.getSizeInventory(); i++) {
+      for (int i = startingSlot; i < maxSlot; i++) {
         if (current.isEmpty()) {
           continue;
         }
@@ -207,6 +207,9 @@ public class UtilInventoryTransfer {
       }
     }
     return remaining;
+  }
+  public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot) {
+    return dumpToIInventory(stacks, inventory, startingSlot, inventory.getSizeInventory());
   }
   public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
