@@ -15,15 +15,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolHarvest extends BaseTool implements IHasRecipe {
-  private static final int range = 6;
-  private static final int durability = 1000;
+  private static final int RADIUS = 6;//13x13
+  private static final int RADIUS_SNEAKING = 2;//2x2
   private HarvestSetting conf;
   public enum HarvestType {
     WEEDS, LEAVES, CROPS;
   }
   private HarvestType harvestType;
   public ItemToolHarvest(HarvestType c) {
-    super(durability);
+    super(1000);
     harvestType = c;
     conf = new HarvestSetting();//by default all are set false
     switch (harvestType) {
@@ -54,11 +54,12 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     if (side != null) {
       offset = pos.offset(side);
     }
-    UtilHarvestCrops.harvestArea(worldObj, offset.down().down(), range - 2, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.down(), range - 2, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset, range, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.up(), range - 2, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.up().up(), range - 2, conf);
+    int r = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
+    UtilHarvestCrops.harvestArea(worldObj, offset.down().down(), r, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.down(), r, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset, r, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.up(), r, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.up().up(), r, conf);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
