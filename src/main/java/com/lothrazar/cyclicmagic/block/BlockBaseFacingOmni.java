@@ -13,12 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
+  public static final PropertyDirection PROPERTYFACING = BlockDirectional.FACING;
 
 
   public BlockBaseFacingOmni(Material materialIn) {
     super(materialIn);
   }
-  public static final PropertyDirection PROPERTYFACING = BlockDirectional.FACING;
 
   @Override
   public IBlockState getStateFromMeta(int meta) {

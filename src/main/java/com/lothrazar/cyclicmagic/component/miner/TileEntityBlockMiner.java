@@ -3,6 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -219,6 +220,15 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     if (uuid != null) {
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
+    }
+  }
+  @Override
+  protected EnumFacing getCurrentFacing() {
+    try {
+      return this.getWorld().getBlockState(this.getPos()).getValue(BlockBaseFacingOmni.PROPERTYFACING);
+    }
+    catch (Exception e) {//only BC legacy states will fail this
+      return EnumFacing.NORTH;
     }
   }
   @Override
