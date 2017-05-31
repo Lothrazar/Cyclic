@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, IBlockHasTESR {
+public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe {
    
   public BlockMiner() {
     super(Material.IRON);
@@ -46,12 +46,7 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, IBloc
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBlockMiner();
   }
-  @SideOnly(Side.CLIENT)
-  public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockMiner.class, new MachineTESR(this.getUnlocalizedName(), 0));
-  }
+
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     ((TileEntityBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);

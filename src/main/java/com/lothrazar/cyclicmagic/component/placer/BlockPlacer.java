@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, IBlockHasTESR {
+public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe {
   public BlockPlacer() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -34,12 +34,7 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, IBlo
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPlacer();
   }
-  @SideOnly(Side.CLIENT)
-  public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlacer.class, new MachineTESR(this.getUnlocalizedName(), 0));
-  }
+
   @Override
   public IRecipe addRecipe() {
     return GameRegistry.addShapedRecipe(new ItemStack(this),
