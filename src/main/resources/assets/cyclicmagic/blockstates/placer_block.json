@@ -3,6 +3,8 @@
         "facing=north": { "model": "cyclicmagic:placer_block_north"},
         "facing=east":  { "model": "cyclicmagic:placer_block_east"},
         "facing=south": { "model": "cyclicmagic:placer_block_south"},
+        "facing=up": { "model": "cyclicmagic:placer_block_up"},
+        "facing=down": { "model": "cyclicmagic:placer_block_down"},
         "facing=west":  { "model": "cyclicmagic:placer_block_west" }
     }
 }

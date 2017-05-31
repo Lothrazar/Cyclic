@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.placer;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -110,6 +111,15 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     }
     this.markDirty();
+  }
+  @Override
+  protected EnumFacing getCurrentFacing() {
+    try {
+      return this.getWorld().getBlockState(this.getPos()).getValue(BlockBaseFacingOmni.PROPERTYFACING);
+    }
+    catch (Exception e) {//only BC legacy states will fail this
+      return EnumFacing.NORTH;
+    }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

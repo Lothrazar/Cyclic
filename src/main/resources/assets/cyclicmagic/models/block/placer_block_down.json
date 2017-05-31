@@ -1,0 +1,10 @@
+{
+ 	"parent": "cyclicmagic:parent/machine_vertical",
+	"textures":{
+        "0": "blocks/dispenser_front_vertical",
+        "1": "blocks/furnace_top",
+        "2": "blocks/stone",
+        "3": "blocks/cobblestone",
+        "particle": "blocks/iron_block"
+	}
+}
