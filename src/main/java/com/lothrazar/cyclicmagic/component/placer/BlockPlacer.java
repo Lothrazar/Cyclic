@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.placer;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -21,12 +22,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, IBlockHasTESR {
   public BlockPlacer() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_PLACER);
+    super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
+    this.setGuiId( ModGuiHandler.GUI_INDEX_PLACER);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

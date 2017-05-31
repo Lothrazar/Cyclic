@@ -65,7 +65,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
     }
     if (enableMiner) {
-      BlockMiner miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
+      BlockMiner miner_block = new BlockMiner();
       BlockRegistry.registerBlock(miner_block, "block_miner", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
     }
