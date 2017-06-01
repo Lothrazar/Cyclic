@@ -1,49 +1,37 @@
 package com.lothrazar.cyclicmagic.component.pattern;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
-  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
-  static final int WIDTH = 176;
-  static final int HEIGHT = 212;
+  //  static final int WIDTH = 176;
+  //  static final int HEIGHT = 212;
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
   private int[] yRows = new int[3];
   private int rightColX;
   private int sizeY;
-  private GuiButtonMachineRedstone redstoneBtn;
   private int sizeColX;
   private int heightColX;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.xSize = WIDTH;
-    this.ySize = HEIGHT;
-  }
-  //  public String getTitle() {
-  //    return "tile.builder_pattern.name";
-  //  }
-  @Override
-  public ResourceLocation getBackground() {
-    return GUI;
+    screenSize = ScreenSize.LARGE;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
+    this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileEntityPatternBuilder.Fields.RENDERPARTICLES.ordinal();
   }
   @Override
-  public void initGui() { //BUTTON TO SWAP SOURCE AND DEST
+  public void initGui() {
     super.initGui();
-    int id = 1;
+    int id = 2;
     /////redstone button
-    redstoneBtn = new GuiButtonMachineRedstone(id++,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
     leftColX = 176 - 148;
@@ -73,20 +61,22 @@ public class GuiPattern extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
     //flip button in bottom center
     ButtonFlipRegions bt = new ButtonFlipRegions(id++,
-        this.guiLeft + 176 / 2 - 10,
+        this.guiLeft + screenSize.width() / 2 - 10,
         this.guiTop + yRows[2], this.tile.getPos());
+    bt.displayString = "<->";
     this.buttonList.add(bt);
     // ButtonToggleRender
-    ButtonToggleRender btn = new ButtonToggleRender(id++,
-        this.guiLeft + 176 - 20 - Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(btn);
+    //    ButtonToggleRender btn = new ButtonToggleRender(id++,
+    //        this.guiLeft + screenSize.width() - 20 - Const.PAD,
+    //        this.guiTop + Const.PAD, this.tile.getPos());
+    //    this.buttonList.add(btn);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id,
         this.guiLeft + x,
         this.guiTop + y,
         isUp, f);
+    btn.displayString = (isUp) ? "+" : "-";
     this.buttonList.add(btn);
   }
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
@@ -95,7 +85,6 @@ public class GuiPattern extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
     drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
@@ -110,12 +99,13 @@ public class GuiPattern extends GuiBaseContainer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(getBackground());
-    int thisX = this.getMiddleX();
-    int thisY = this.getMiddleY();
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    //GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    //    this.mc.getTextureManager().bindTexture(getBackground());
+    //    int thisX = this.getMiddleX();
+    //    int thisY = this.getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
+    //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

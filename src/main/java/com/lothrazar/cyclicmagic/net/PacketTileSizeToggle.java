@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,14 +45,15 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
   public IMessage onMessage(PacketTileSizeToggle message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
-    if (tile != null && tile instanceof ITileSizeToggle) {
+    if (tile != null && tile instanceof ITileSizeToggle
+        && message.type == ActionType.SIZE.ordinal()) {
       ITileSizeToggle te = ((ITileSizeToggle) tile);
-      if (message.type == ActionType.SIZE.ordinal()) {
-        te.toggleSizeShape();
-      }
-      else if (message.type == ActionType.PREVIEW.ordinal()) {
-        te.displayPreview();
-      }
+      te.toggleSizeShape();
+    }
+    if (tile != null && tile instanceof ITilePreviewToggle
+        && message.type == ActionType.PREVIEW.ordinal()) {
+      ITilePreviewToggle te = ((ITilePreviewToggle) tile);
+      te.togglePreview();
     }
     return null;
   }

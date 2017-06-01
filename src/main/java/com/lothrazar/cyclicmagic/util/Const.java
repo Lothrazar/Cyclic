@@ -9,6 +9,71 @@ public class Const {
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
     public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
+    public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
+    public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
+    public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
+    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
+    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
+  }
+  public static enum ScreenSize {
+    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;
+    public int width() {
+      switch (this) {
+        case STANDARD:
+        case STANDARDPLAIN:
+        case LARGE:
+          return 176;
+        case LARGEWIDE:
+          return 250;
+      }
+      return 0;
+    }
+    public int height() {
+      switch (this) {
+        case STANDARD:
+        case STANDARDPLAIN:
+          return 166;
+        case LARGE:
+        case LARGEWIDE:
+          return 212;
+      }
+      return 0;
+    }
+    public int playerOffsetY() {
+      switch (this) {
+        case STANDARD:
+        case STANDARDPLAIN:
+          return 84;
+        case LARGE:
+        case LARGEWIDE:
+          return 130;
+      }
+      return 0;
+    }
+    public int playerOffsetX() {
+      switch (this) {
+        case LARGE:
+        case STANDARD:
+        case STANDARDPLAIN:
+          return Const.PAD;
+        case LARGEWIDE:
+          return 48;//currently just merchant
+      }
+      return 0;
+    }
+    public ResourceLocation texture() {
+      switch (this) {
+        case STANDARD:
+          return Res.TABLEDEFAULT;
+        case STANDARDPLAIN:
+          return Res.TABLEPLAIN;
+        case LARGE:
+          return Res.TABLELARGE;
+        case LARGEWIDE:
+          return Res.VILLAGER;
+      }
+      return null;
+    }
   }
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";

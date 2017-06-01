@@ -3,6 +3,8 @@
         "facing=north": { "model": "cyclicmagic:block_miner_north"},
         "facing=east":  { "model": "cyclicmagic:block_miner_east"},
         "facing=south": { "model": "cyclicmagic:block_miner_south"},
+        "facing=up": { "model": "cyclicmagic:block_miner_up"},
+        "facing=down": { "model": "cyclicmagic:block_miner_down"},
         "facing=west":  { "model": "cyclicmagic:block_miner_west" }
     }
 }

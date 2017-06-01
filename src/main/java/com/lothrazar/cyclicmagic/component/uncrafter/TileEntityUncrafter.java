@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -25,58 +26,49 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_UNCRAFTME = 0;
   public static final int SLOT_ROWS = 3;
   public static final int SLOT_COLS = 7;
-  public static int TIMER_FULL;
-  private int timer;
+  public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
   private int[] hopperInput = { 0 };
   private int[] hopperOutput;
   public static enum Fields {
-    TIMER, REDSTONE;//, UNCRAFTRESULT;
+    TIMER, REDSTONE, FUEL, FUELMAX;
   }
   public TileEntityUncrafter() {
-    super(SLOT_ROWS * SLOT_COLS + 1);
+    super(SLOT_ROWS * SLOT_COLS + 2);
     timer = TIMER_FULL;
     hopperOutput = new int[SLOT_ROWS * SLOT_COLS];
     for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
       hopperOutput[i - 1] = i;
     }
+    this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    timer = tagCompound.getInteger(NBT_TIMER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
-  public int getTimer() {
-    return timer;
-  }
-  public boolean isBurning() {
-    return this.timer > 0 && this.timer < TIMER_FULL;
-  }
   @Override
   public void update() {
-    if (!this.isRunning()) {
-      //it works ONLY if its powered
-      return;
-    }
+    if (!this.isRunning()) { return; }
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
     if (stack.isEmpty()) { return; }
     this.spawnParticlesAbove();// its processing
-    this.decrTimer();
-    if (timer <= 0) {
+    this.updateFuelIsBurning();
+    if (this.updateTimerIsZero()) {
       timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
-      boolean success = false;
       try {
-        success = (uncrafter.process(stack) == UncraftResultType.SUCCESS);
-        if (success) {
+        if (uncrafter.process(stack) == UncraftResultType.SUCCESS) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
@@ -103,12 +95,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     } //end of timer go
   }
-  private void decrTimer() {
-    if (this.getWorld().isRemote == false) {
-      timer--;
-    }
-  }
-  private void setOutputItems(ArrayList<ItemStack> output) {
+  private void setOutputItems(List<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {
@@ -129,42 +116,39 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount()) {
-      switch (Fields.values()[id]) {
-        case TIMER:
-          return timer;
-        case REDSTONE:
-          if (needsRedstone != 1 && needsRedstone != 0) {
-            needsRedstone = 0;
-          }
-          return this.needsRedstone;
-        //      case UNCRAFTRESULT:
-        //        return this.uncraftResult ;
-        default:
-        break;
-      }
+    switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        if (needsRedstone != 1 && needsRedstone != 0) {
+          needsRedstone = 0;
+        }
+        return this.needsRedstone;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
     }
     return -7;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount()) {
-      switch (Fields.values()[id]) {
-        case TIMER:
-          this.timer = value;
-        break;
-        case REDSTONE:
-          if (value != 1 && value != 0) {
-            value = 0;
-          }
-          this.needsRedstone = value;
-        break;
-        //      case UNCRAFTRESULT:
-        //        this.uncraftResult = value;
-        //        break;
-        default:
-        break;
-      }
+    switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        if (value != 1 && value != 0) {
+          value = 0;
+        }
+        this.needsRedstone = value;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
     }
   }
   @Override
@@ -173,10 +157,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
   public boolean onlyRunIfPowered() {

@@ -106,7 +106,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public void update() {
     World world = this.getWorld();
     Random rand = world.rand;
-    if (rand.nextDouble() < this.getSpeed() &&
+    if (rand.nextDouble() < this.getFishSpeed() &&
         isValidPosition() && isEquipmentValid() &&
         world instanceof WorldServer && world != null &&
         world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
@@ -151,7 +151,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
-  public double getSpeed() {
+  public double getFishSpeed() {
     //flowing water is usually zero, unless water levels are constantly fluctuating then it spikes
     int mult = this.countWaterFlowing() * 4 + this.countWater();// water in motion worth more so it varies a bit
     double randFact = 0;

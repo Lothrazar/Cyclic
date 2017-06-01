@@ -1,23 +1,17 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonBuilderType extends GuiButton implements ITooltipButton {
+public class ButtonBuilderType extends GuiButtonTooltip {
   private final BlockPos tilePos;
-  private final List<String> tooltips = new ArrayList<String>();
   public ButtonBuilderType(BlockPos current, int buttonId, int x, int y, int width) {
     super(buttonId, x, y, width, 20, "");
     tilePos = current;
-    tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.builder.meta"));
+    this.setTooltip("button.builder.tooltip");
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -27,9 +21,5 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
       ModCyclic.network.sendToServer(new PacketTileBuildType(tilePos));
     }
     return pressed;
-  }
-  @Override
-  public List<String> getTooltips() {
-    return tooltips;
   }
 }

@@ -1,32 +1,27 @@
 package com.lothrazar.cyclicmagic.component.crafter;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiCrafter extends GuiBaseContanerProgress {
-  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
-  public static final int WIDTH = 176;
-  public static final int HEIGHT = 212;
-  private TileEntityCrafter tile;
-  private GuiButtonMachineRedstone redstoneBtn;
+public class GuiCrafter extends GuiBaseContainer {
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
-    this.xSize = WIDTH;
-    this.ySize = HEIGHT;
+    screenSize = ScreenSize.LARGE;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
+    this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
+    this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.PAD / 2,
-        this.guiTop + Const.PAD / 2, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -45,7 +40,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     }
     //grid
     rows = cols = 3;
-    xPrefix = (WIDTH / 2 - (Const.SQ * 3) / 2);//calculate exact center
+    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
     yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -64,26 +59,12 @@ public class GuiCrafter extends GuiBaseContanerProgress {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityCrafter.Fields.REDSTONE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-  public int getProgressX() {
-    return this.guiLeft + Const.PAD + 2;
-  }
-  public int getProgressY() {
-    return this.guiTop + 6 * Const.SQ + 10;
-  }
-  public int getProgressCurrent() {
-    return tile.getField(TileEntityCrafter.Fields.TIMER.ordinal());
-  }
-  public int getProgressMax() {
-    return TileEntityCrafter.TIMER_FULL;
-  }
-  public ResourceLocation getBackground() {
-    return GUI;
   }
 }

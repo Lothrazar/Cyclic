@@ -1,12 +1,16 @@
 package com.lothrazar.cyclicmagic.util;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class UtilSound {
   //REF BROKEN http://www.minecraftforge.net/forum/index.php?topic=37547.0
@@ -54,5 +58,12 @@ public class UtilSound {
   }
   public static void playSound(EntityLivingBase villager, SoundEvent sound) {
     villager.playSound(sound, VOLUME, PITCH);
+  }
+  public static SoundType getSoundFromBlockstate(IBlockState placeState, World world, BlockPos pos) {
+    return placeState.getBlock().getSoundType(placeState, world, pos, null);
+  }
+  public static void playSoundFromServer(SoundEvent soundEvent, SoundCategory cat, BlockPos nextPos, int dim, int range) {
+    ModCyclic.network.sendToAllAround(new PacketSound(nextPos, soundEvent, cat),
+        new NetworkRegistry.TargetPoint(dim, nextPos.getX(), nextPos.getY(), nextPos.getZ(), range));
   }
 }

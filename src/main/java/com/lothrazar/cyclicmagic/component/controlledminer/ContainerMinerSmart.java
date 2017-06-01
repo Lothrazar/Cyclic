@@ -2,33 +2,32 @@ package com.lothrazar.cyclicmagic.component.controlledminer;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMinerSmart extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 10;
-  public static final int SLOTY = 42;
-  public static final int SLOTID_EQUIP = 4;
-  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
+  public static final int SLOTX_START = Const.PAD;
+  public static final int SLOTY = 92;
+  public static final int SLOTID_EQUIP = TileEntityControlledMiner.TOOLSLOT_INDEX;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ;
   public static final int SLOTEQUIP_Y = SLOTY;
-  protected TileEntityControlledMiner tileEntity;
-  private int tileHeight;
-  private int tileRedstone;
-  private int tileSize;
-  private int tileblacklist;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
-    tileEntity = te;
-    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
-      addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+    tile = te;
+    this.screenSize = ScreenSize.LARGE;
+    this.setTile(te);
+    for (int i = 0; i < SLOTID_EQUIP; i++) {
+      addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    addSlotToContainer(new SlotSingleStack(tileEntity, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
-    // commonly used vanilla code that adds the player's inventory
+    addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
+    addSlotToContainer(new SlotFurnaceFuel(tile, 5, SLOTX_FUEL, SLOTY_FUEL));
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
@@ -40,12 +39,12 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
@@ -58,40 +57,13 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
     return stack;
   }
   @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityControlledMiner.Fields.HEIGHT.ordinal();
-      if (this.tileHeight != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.LISTTYPE.ordinal();
-      if (this.tileblacklist != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileHeight = this.tileEntity.getField(TileEntityControlledMiner.Fields.HEIGHT.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityControlledMiner.Fields.REDSTONE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileEntityControlledMiner.Fields.SIZE.ordinal());
-    this.tileblacklist = this.tileEntity.getField(TileEntityControlledMiner.Fields.LISTTYPE.ordinal());
-  }
-  @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

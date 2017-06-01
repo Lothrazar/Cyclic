@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,10 +15,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
   private final static int MAXIMUM = 32;
   private static final String NBT_REDST = "redstone";
   private static final int TIMER_FULL = 20;
@@ -37,6 +40,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public TileEntityPatternBuilder() {
     super(18);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public int getFieldCount() {
@@ -89,8 +96,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       zOffset = posSrc.getZ() - centerSrc.getZ();
       BlockPos centerTarget = this.getCenterTarget();
       BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
+      if (this.renderParticles == 1) {
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
+      }
       IBlockState stateToMatch;
       int slot;
       if (!world.isAirBlock(posSrc)) {
@@ -100,7 +109,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         if (world.isAirBlock(posTarget)) { //now we want target to be air
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);
-          UtilSound.playSoundPlaceBlock(world, posTarget, stateToMatch.getBlock());
+          SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
+          if (type != null && type.getPlaceSound() != null) {
+            int dim = this.getDimension();
+            int range = 18;
+            UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, posTarget, dim, range);
+          }
         }
         else { //does NOT MATCH, so skip ahead
           timer = TIMER_SKIP;
@@ -251,11 +265,17 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  public void swapShowRender() {
+  @Override
+  public void togglePreview() {
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-  public boolean renderOn() { // sed by TESR
+  @Override
+  public boolean isPreviewVisible() {
     return renderParticles == 1;
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return getTargetShape();//special case for this block, not used here
   }
 }

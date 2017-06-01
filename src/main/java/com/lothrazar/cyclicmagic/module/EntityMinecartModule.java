@@ -13,8 +13,8 @@ import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 

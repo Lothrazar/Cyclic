@@ -8,9 +8,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonMachineRedstone extends GuiButtonTexture {
+public class GuiButtonToggleRedstone extends GuiButtonTexture {
   private BlockPos tilePos;
-  public GuiButtonMachineRedstone(int buttonId, int x, int y, BlockPos p) {
+  public GuiButtonToggleRedstone(int buttonId, int x, int y, BlockPos p) {
     super(buttonId, x, y, "textures/gui/buttons.png");
     this.tilePos = p;
   }

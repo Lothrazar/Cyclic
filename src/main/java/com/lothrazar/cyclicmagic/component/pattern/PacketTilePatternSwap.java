@@ -44,8 +44,8 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     if (tile != null) {
       if (message.type == SwapType.POSITION.ordinal())
         tile.swapTargetSource();
-      else if (message.type == SwapType.RENDER.ordinal())
-        tile.swapShowRender();
+      //      else if (message.type == SwapType.RENDER.ordinal())
+      //        tile.swapShowRender();
     }
     return null;
   }

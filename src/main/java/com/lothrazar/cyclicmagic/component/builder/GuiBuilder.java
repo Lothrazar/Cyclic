@@ -1,17 +1,16 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiBaseContanerProgress {
-  static final int padding = 8;
+public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
@@ -22,36 +21,30 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int ySizeTxtbox;
   private int xHeightTextbox;
   private int yHeightTxtbox;
-  private int yOffset = 10 + padding;
-  private GuiButtonMachineRedstone redstoneBtn;
+  private int yOffset = 10 + Const.PAD;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    setScreenSize(ScreenSize.LARGE);
+    this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
+    this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
+    this.setFieldFuel(TileEntityStructureBuilder.Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int width = 50;
     int id = 2;
-    int y = this.guiTop + yOffset + 12;
+    int y = this.guiTop + yOffset + Const.PAD;
     btn = new ButtonBuilderType(tile.getPos(), id++,
-        this.guiLeft + padding,
+        this.guiLeft + Const.PAD + 20,
         y, width);
     this.buttonList.add(btn);
-    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
-        this.guiLeft + Const.PAD * 2 + 46,
-        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.PREVIEW);
-    btnPreview.setTooltip(UtilChat.lang("tile.builder_pattern.togglerender"));
-    this.buttonList.add(btnPreview);
     width = 15;
     //size buttons
-    xSizeTextbox = 176 - 24;
+    xSizeTextbox = 176 - 52;
     btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
@@ -59,16 +52,13 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
     //HEIGHT BUTTONS
-    xHeightTextbox = 176 - 48;
+    xHeightTextbox = xSizeTextbox - 28;
     btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
-  }
-  public String getTitle() {
-    return "tile.builder_block.name";
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -87,8 +77,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
-    int needsRed = tile.getField(TileEntityStructureBuilder.Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }
@@ -106,20 +94,10 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
+    for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {  
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-  }
-  public int getProgressX() {
-    return this.guiLeft + 10;
-  }
-  public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 10;
-  }
-  public int getProgressCurrent() {
-    return tile.getTimer();
-  }
-  public int getProgressMax() {
-    return TileEntityStructureBuilder.TIMER_FULL;
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 }

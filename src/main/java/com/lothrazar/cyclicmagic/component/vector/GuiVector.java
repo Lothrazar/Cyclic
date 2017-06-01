@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,28 +26,21 @@ public class GuiVector extends GuiBaseContainer {
   private int yYaw = 60;
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   private ButtonVector soundBtn;
-  private GuiButtonMachineRedstone redstoneBtn;
   private GuiTextFieldInteger txtYaw;
   private GuiTextFieldInteger txtAngle;
   public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    screenSize = ScreenSize.STANDARDPLAIN;
+    this.fieldRedstoneBtn = TileEntityVector.Fields.REDSTONE.ordinal();
   }
-  public String getTitle() {
-    return "tile.plate_vector.name";
-  }
-  @Override
-  public ResourceLocation getBackground() {
-    return Const.Res.TABLEPLAIN;
-  }
+  //  public String getTitle() {
+  //    return "tile.plate_vector.name";
+  //  }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 6,
-        this.guiTop + 6, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
-    int id = 1;
+    int id = 2;
     //angle text box
     txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
@@ -136,7 +127,6 @@ public class GuiVector extends GuiBaseContainer {
         }
       }
     }
-    redstoneBtn.setState(tile.getField(TileEntityVector.Fields.REDSTONE.ordinal()));
     soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
     renderString("tile.plate_vector.gui.power", xPower + 14, yPower + 26);
     renderString("tile.plate_vector.gui.angle", xAngle + 18, yAngle + 26);

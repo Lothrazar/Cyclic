@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,7 +9,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiFan extends GuiBaseContainer {
   private TileEntityFan tile;
   boolean debugLabels = false;
-  private GuiButtonMachineRedstone redstoneBtn;
   private ButtonFan btnHeightDown;
   private ButtonFan btnHeightUp;
   private int xHeightTextbox = 176 - 25;
@@ -20,15 +18,12 @@ public class GuiFan extends GuiBaseContainer {
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn = TileEntityFan.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
-    int id = 0;
-    redstoneBtn = new GuiButtonMachineRedstone(id++,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
+    int id = 2;
     int w = 15, h = 10;
     int yOffset = 14;
     int x = this.guiLeft + xHeightTextbox;
@@ -68,7 +63,6 @@ public class GuiFan extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
     btnTogglePrt.updateDisplayStringWith(tile);
     btnTogglePush.updateDisplayStringWith(tile);
     String display = "" + this.tile.getRange();

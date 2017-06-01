@@ -3,14 +3,15 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -34,50 +35,51 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fluids.FluidActionResult;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  private static final String NBTPLAYERID = "uuid";
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_REDST = "redstone";
-  private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public static int maxHeight = 10;
-  public static int TIMER_FULL = 80;
+  public final static int TIMER_FULL = 120;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  private int[] hopperInputFuel = { 9 };// all slots for all faces
   //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
-  private int speed = 1;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
-  private int timer;
   private int needsRedstone = 1;
-  int toolSlot = 0;
+  private int renderParticles = 0;
+  private int toolSlot = 0;
   private int size;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
   }
   public TileEntityUser() {
-    super(9);
+    super(10);
     timer = TIMER_FULL;
-    speed = 1;
+    this.setFuelSlot(9);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void update() {
-    this.shiftAllUp();
-    if (isRunning()) {
-      this.spawnParticlesAbove();
-    }
+    if (!isRunning()) { return; }
+    this.shiftAllUp(1);
+    this.spawnParticlesAbove();
+    this.updateFuelIsBurning();
+    boolean triggered = this.updateTimerIsZero();
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
@@ -88,30 +90,24 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
       tryEquipItem();
-      if (isRunning()) {
-        timer -= this.getSpeed();
-        if (timer <= 0) {
-          timer = 0;
+      if (triggered) {
+        timer = TIMER_FULL;
+        try {
+          BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
+          if (rightClickIfZero == 0) {//right click entities and blocks
+            this.rightClickBlock(targetPos);
+          }
+          interactEntities(targetPos);
         }
-        if (timer == 0) {
-          try {
-            timer = TIMER_FULL;
-            BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
-            if (rightClickIfZero == 0) {//right click entities and blocks
-              this.rightClickBlock(targetPos);
-            }
-            interactEntities(targetPos);
-          }
-          catch (Exception e) {
-            ModCyclic.logger.error("Automated User Error");
-            ModCyclic.logger.error(e.getLocalizedMessage());
-            e.printStackTrace();
-          }
-        } //timer == 0 block
-      }
-      else {
-        timer = 1;//allows it to run on a pulse
-      }
+        catch (Exception e) {//exception could come from external third party block/mod/etc
+          ModCyclic.logger.error("Automated User Error");
+          ModCyclic.logger.error(e.getLocalizedMessage());
+          e.printStackTrace();
+        }
+      } //timer == 0 block
+      //      else {
+      //        timer = 1;//allows it to run on a pulse
+      //      }
     }
   }
   private void interactEntities(BlockPos targetPos) {
@@ -160,9 +156,88 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
-    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) != Blocks.AIR) { return; }
-    //dont ever place a block. they want to use it on an entity
-    fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    //    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    if (rightClickFluidAttempt(targetPos)) {
+      return;
+    }
+    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non bucket item
+      //dont ever place a block. they want to use it on an entity
+      fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    }
+    //TODO: if processRight fails try this other crap too hey
+    /*
+     * ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand(); // if
+     * (maybeTool != null && !maybeTool.isEmpty() &&
+     * UtilFluid.stackHasFluidHandler(maybeTool)) { // if
+     * (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos),
+     * this.getCurrentFacing().getOpposite())) {//tile has fluid EnumFacing side
+     * = this.getCurrentFacing().getOpposite(); final float hitX = (float)
+     * (this.fakePlayer.get().posX - pos.getX()); final float hitY = (float)
+     * (this.fakePlayer.get().posY - pos.getY()); final float hitZ = (float)
+     * (this.fakePlayer.get().posZ - pos.getZ()); final
+     * PlayerInteractEvent.RightClickBlock event =
+     * ForgeHooks.onRightClickBlock(fakePlayer.get(), EnumHand.MAIN_HAND,
+     * targetPos, this.getCurrentFacing().getOpposite(),
+     * ForgeHooks.rayTraceEyeHitVec(this.fakePlayer.get(), 2.0)); if
+     * (!event.isCanceled() && event.getUseItem() != Event.Result.DENY && //
+     * maybeTool.getItem().onItemUseFirst(player, world, targetPos, side, hitX,
+     * hitY, hitZ, hand)
+     * maybeTool.getItem().onItemUseFirst(this.fakePlayer.get(), this.world,
+     * targetPos, side, hitX, hitY, hitZ, EnumHand.MAIN_HAND) ==
+     * EnumActionResult.PASS) { maybeTool.onItemUse(this.fakePlayer.get(),
+     * this.world, pos, EnumHand.MAIN_HAND, side, hitX, hitY, hitZ);
+     * 
+     * } else if
+     * (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem())
+     * == Blocks.AIR) { //a non bucket item //dont ever place a block. they want
+     * to use it on an entity
+     * fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get
+     * (), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND,
+     * targetPos, EnumFacing.UP, .5F, .5F, .5F); }//?? player.interactOn(
+     */
+  }
+  private boolean rightClickFluidAttempt(BlockPos targetPos) {
+    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
+    if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
+      if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
+        ItemStack originalRef = maybeTool.copy();
+        int hack = (maybeTool.getCount() == 1) ? 1 : 0;//HAX: if bucket stack size is 1, it somehow doesnt work so yeah. good enough EH?
+        maybeTool.grow(hack);
+        boolean success = UtilFluid.interactWithFluidHandler(fakePlayer.get(), this.world, targetPos, this.getCurrentFacing().getOpposite());
+        if (success) {
+          if (UtilFluid.isEmptyOfFluid(originalRef)) { //original was empty.. maybe its full now IDK
+            maybeTool.shrink(1 + hack);
+          }
+          else {//original had fluid in it. so make sure we drain it now hey
+            ItemStack drained = UtilFluid.drainOneBucket(maybeTool.splitStack(1));
+            // drained.setCount(1);
+            // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
+            maybeTool.shrink(1 + hack);
+          }
+          this.tryDumpFakePlayerInvo();
+        }
+      }
+      else {//no tank, just open world
+        //dispense stack so either pickup or place liquid
+        if (UtilFluid.isEmptyOfFluid(maybeTool)) {
+          FluidActionResult res = UtilFluid.fillContainer(world, targetPos, maybeTool, this.getCurrentFacing());
+          if (res != FluidActionResult.FAILURE) {
+            maybeTool.shrink(1);
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), res.getResult());
+            return true;
+          }
+        }
+        else {
+          ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, maybeTool);
+          if (drainedStackOrNull != null) {
+            maybeTool.shrink(1);
+            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drainedStackOrNull);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
   }
   private void tryDumpFakePlayerInvo() {
     for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
@@ -216,31 +291,31 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (uuid != null) {
-      tagCompound.setString(NBTPLAYERID, uuid.toString());
+      compound.setString(NBTPLAYERID, uuid.toString());
     }
-    tagCompound.setInteger(NBT_REDST, needsRedstone);
-    tagCompound.setInteger(NBT_SPEED, speed);
-    tagCompound.setInteger(NBT_LR, rightClickIfZero);
-    tagCompound.setInteger(NBT_SIZE, size);
-    return super.writeToNBT(tagCompound);
+    compound.setInteger(NBT_REDST, needsRedstone);
+    compound.setInteger(NBT_LR, rightClickIfZero);
+    compound.setInteger(NBT_SIZE, size);
+    compound.setInteger(NBT_RENDER, renderParticles);
+    return super.writeToNBT(compound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    timer = tagCompound.getInteger(NBT_TIMER);
-    if (tagCompound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    if (compound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
-    needsRedstone = tagCompound.getInteger(NBT_REDST);
-    rightClickIfZero = tagCompound.getInteger(NBT_LR);
-    speed = tagCompound.getInteger(NBT_SPEED);
-    size = tagCompound.getInteger(NBT_SIZE);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    rightClickIfZero = compound.getInteger(NBT_LR);
+    size = compound.getInteger(NBT_SIZE);
+    this.renderParticles = compound.getInteger(NBT_RENDER);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
+    if (side == EnumFacing.UP)
+      return hopperInputFuel;
     return hopperInput;
   }
   @Override
@@ -256,6 +331,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      default:
+      break;
     }
     return 0;
   }
@@ -263,19 +346,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
       case SPEED:
-        if (value > maxHeight) {
-          value = maxHeight;
-        }
-        setSpeed(value);
+        this.setSpeed(value);
       break;
       case TIMER:
-        timer = value;
-        if (timer > TIMER_FULL) {
-          timer = TIMER_FULL;
+        if (value < 0) {
+          value = 0;
         }
-        if (timer < 0) {
-          timer = 0;
-        }
+        timer = Math.min(value, TIMER_FULL);
       break;
       case REDSTONE:
         this.needsRedstone = value;
@@ -286,13 +363,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       case SIZE:
         this.size = value;
       break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
+      default:
+      break;
     }
-  }
-  public int getSpeed() {
-    return this.speed;//this.getField(Fields.HEIGHT.ordinal());
-  }
-  public void setSpeed(int val) {
-    this.speed = val;
   }
   @Override
   public int getFieldCount() {
@@ -329,9 +411,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
-    if (world.isAirBlock(targetPos)) {
-      targetPos = targetPos.down();
-    }
+    //    if (world.isAirBlock(targetPos)) {
+    //      targetPos = targetPos.down();
+    //    }
     return targetPos;
   }
   public BlockPos getTargetCenter() {
@@ -339,10 +421,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
   @Override
-  public void displayPreview() {
-    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-    for (BlockPos pos : allPos) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-    }
+  public void togglePreview() {
+    this.renderParticles = (renderParticles + 1) % 2;
+    //    
+    //    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+    //    for (BlockPos pos : allPos) {
+    //      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    //    }
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+  }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

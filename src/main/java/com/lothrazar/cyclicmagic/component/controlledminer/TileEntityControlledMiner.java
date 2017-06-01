@@ -1,14 +1,15 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +20,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,7 +31,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -44,8 +44,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final String NBT_SIZE = "size";
   private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
-  private static final int INVENTORY_SIZE = 5;
-  private static final int TOOLSLOT_INDEX = INVENTORY_SIZE - 1;
+  private static final int INVENTORY_SIZE = 6;
+  public static final int TOOLSLOT_INDEX = 4;
+  public final static int TIMER_FULL = 200;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -54,20 +55,25 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private int needsRedstone = 1;
   private int height = 6;
   private int blacklistIfZero = 0;
+  private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
+    this.setFuelSlot(5);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid);
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
-        return;
       }
     }
   }
@@ -76,7 +82,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
-    World world = getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -85,30 +90,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (isRunning()) {
-        if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
-          updateTargetPos();
-        }
-        if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
-          isCurrentlyMining = true;
-        }
-        else { // no valid target, back out
-          isCurrentlyMining = false;
-          updateTargetPos();
-          resetProgress(targetPos);
-        }
-        //currentlyMining may have changed, and we are still turned on:
-        if (isCurrentlyMining) {
-          IBlockState targetState = world.getBlockState(targetPos);
-          curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
-          if (curBlockDamage >= 1.0f) {
-            isCurrentlyMining = false;
-            resetProgress(targetPos);
-            if (fakePlayer.get() != null) {
-              fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-            }
-          }
-          else {
-            world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+        this.updateFuelIsBurning();
+        if (this.updateTimerIsZero()) {
+          if (updateMiningProgress()) {
+            this.timer = TIMER_FULL;
           }
         }
       }
@@ -119,6 +104,36 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
       }
     }
+  }
+  /**
+   * return true if block is harvested/broken
+   */
+  private boolean updateMiningProgress() {
+    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
+      updateTargetPos();
+    }
+    if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
+      isCurrentlyMining = true;
+    }
+    else { // no valid target, back out
+      isCurrentlyMining = false;
+      updateTargetPos();
+      resetProgress(targetPos);
+    }
+    //currentlyMining may have changed, and we are still turned on:
+    if (isCurrentlyMining) {
+      IBlockState targetState = world.getBlockState(targetPos);
+      curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
+      if (curBlockDamage >= 1.0f) {
+        isCurrentlyMining = false;
+        resetProgress(targetPos);
+        if (fakePlayer.get() != null) { return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos); }
+      }
+      else {
+        world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+      }
+    }
+    return false;
   }
   private void tryEquipItem() {
     ItemStack equip = this.getStackInSlot(TOOLSLOT_INDEX);
@@ -243,22 +258,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     tagCompound.setInteger(NBTHEIGHT, height);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_LIST, this.blacklistIfZero);
-    //<<<<<<< HEAD
-    //=======
-    //   
-    //    //invo stuff
-    //    NBTTagList itemList = new NBTTagList();
-    //    for (int i = 0; i < inv.length; i++) {
-    //      ItemStack stack = inv[i];
-    //      if (stack != null) {
-    //        NBTTagCompound tag = new NBTTagCompound();
-    //        tag.setByte(NBT_SLOT, (byte) i);
-    //        stack.writeToNBT(tag);
-    //        itemList.appendTag(tag);
-    //      }
-    //    }
-    //    tagCompound.setTag(NBT_INV, itemList);
-    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -279,18 +279,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     height = tagCompound.getInteger(NBTHEIGHT);
     blacklistIfZero = tagCompound.getInteger(NBT_LIST);
-    //<<<<<<< HEAD
-    //=======
-    //    //invo stuff
-    //    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    //    for (int i = 0; i < tagList.tagCount(); i++) {
-    //      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-    //      byte slot = tag.getByte(NBT_SLOT);
-    //      if (slot >= 0 && slot < inv.length) {
-    //        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-    //      }
-    //    }
-    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
@@ -319,6 +308,14 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return this.size;
       case LISTTYPE:
         return blacklistIfZero;
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case TIMER:
+        return this.timer;
       default:
       break;
     }
@@ -341,6 +338,17 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       case LISTTYPE:
         blacklistIfZero = value % 2;
       break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      case TIMER:
+        this.timer = value;
       default:
       break;
     }
@@ -394,12 +402,19 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
   }
   @Override
-  public void displayPreview() {
+  public void togglePreview() {
+    this.renderParticles = (renderParticles + 1) % 2;
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> allPos = new ArrayList<BlockPos>();
     for (int i = 0; i < this.getHeight(); i++) {
-      List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size);
-      for (BlockPos pos : allPos) {
-        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-      }
+      allPos.addAll(UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size));
     }
+    return allPos;
+  }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

@@ -21,9 +21,6 @@ public class GuiDetector extends GuiBaseContainer {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
-  public String getTitle() {
-    return "tile.entity_detector.name";
-  }
   @Override
   public void initGui() {
     super.initGui();
@@ -59,6 +56,7 @@ public class GuiDetector extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y,
         isUp, f, w, h);
+    btn.displayString = (isUp) ? "+" : "-";
     this.buttonList.add(btn);
     return btn;
   }

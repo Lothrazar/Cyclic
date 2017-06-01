@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.enderbook;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook.BookLocation;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.gui.GuiButton;
@@ -82,7 +82,9 @@ public class GuiEnderBook extends GuiScreen {
       int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer, bookStack, loc.id);
       btn.addTooltipLine(list.get(i).coordsDisplay());
       btn.addTooltipLine(UtilChat.lang("button.waypoint.distance") + " " + distance);
-      btn.addTooltipLine(UtilChat.lang("button.waypoint.cost") + " " + cost);
+      if (cost > 0) {
+        btn.addTooltipLine(UtilChat.lang("button.waypoint.cost") + " " + cost);
+      }
       btn.enabled = (loc.dimension == this.entityPlayer.dimension);
       buttonList.add(btn);
       del = new ButtonWaypointDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);

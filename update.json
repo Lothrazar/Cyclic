@@ -5,10 +5,10 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.23",
-    "1.10.2-recommended": "1.10.23",
-    "1.11.2-latest": "1.4.7",
-    "1.11.2-recommended": "1.4.7"
+    "1.10.2-latest":  "1.10.24",
+    "1.10.2-recommended": "1.10.24",
+    "1.11.2-latest": "1.5.0",
+    "1.11.2-recommended": "1.5.0"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -127,6 +127,7 @@
 	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks or Pixelmon apricorns. "
 	,"1.10.22":"Fix a client side crash when the mod thinks you are trying to right click an item to turn a bauble off"
 	,"1.10.23":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
+	,"1.10.24":"Automated User now correctly uses empty and full buckets with liquids placed in the world.  Added Automated User integration with tile entities that use the forge Fluid Capability system (for example, it can now use full & empty buckets with the Fluid Tank & Reservoir from Ender IO)"
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
@@ -160,5 +161,6 @@
 	,"1.4.5":"Reduced speed of Player->Faster Ladder option by a factor of six to prevent launching you if the ladder is really tall.  Fixed an item loss bug in Uncrafting Grinder if it was working on a valid recipe with less items than required at the end of a stack.  Add HarvesterBlacklist in config file, by default it contains 'terraqueous:pergola' so harvester and garden scythe can be blocked from harvesting blocks that are coded to be food/bushes, but are not intended to be.  	"
  	,"1.4.6":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
   	,"1.4.7":"Fix crashed caused by using scythe on certain leaves (caused by the config blacklist added in v1.4.5)"
+	,"1.5.0":"Now requires Forge version 13.20.0.2309 or higher.  Block Miner and Block Placer can now face up and down, in addition to horizontal directions.  Harvester now captures drops in its inventory.  Automatic User now works with all forge buckets and fluid tanks.  Updated a few machine GUIs.  Many machines that act on an area now render their preview area using ghost blocks and a toggle button.  Many machines now optionally can consume furnace-fuel, which increases their speed.  Fixed Structure Builder and Pattern Replicator not playing block placing sounds.  For all three Scythes (Brush, Tree, Garden) you can hold shift to reduce the range by half.  "
   }
 }

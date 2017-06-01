@@ -34,6 +34,10 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     LESS, GREATER, EQUAL;
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void update() {
     World world = this.getWorld();
     List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1)).expand(rangeX, rangeY, rangeZ));

@@ -28,6 +28,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
+    this.setTile(te);
     tileEntity = te;
     this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;
@@ -37,7 +38,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     int cols = TileEntityWorkbench.COLS;
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

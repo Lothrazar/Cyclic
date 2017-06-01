@@ -37,6 +37,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     super(2);
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void update() {
     if (this.collect == 1) {
       updateCollection();

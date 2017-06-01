@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.miner.BlockMiner.MinerType;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
@@ -100,6 +100,10 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     REDSTONE
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void update() {
     if (isRunning()) {
       this.spawnParticlesAbove();
@@ -115,14 +119,13 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
         }
       }
       tryEquipItem();
-      BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
+      //      BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
       }
       if (isRunning()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
-          this.updateTargetPos(start, minerType);
           if (!world.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -173,56 +176,6 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       fakePlayer.get().setItemStackToSlot(EntityEquipmentSlot.MAINHAND, unbreakingPickaxe);
     }
   }
-  private void updateTargetPos(BlockPos start, MinerType minerType) {
-    targetPos = start;//always restart here so we dont offset out of bounds
-    if (minerType == MinerType.SINGLE) {// stay on target
-      return;
-    }
-    EnumFacing facing = this.getCurrentFacing();
-    BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
-    //else we do a 3x3 
-    int rollFull = getWorld().rand.nextInt(9 * 3);
-    int rollHeight = rollFull / 9;
-    int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
-    //then do the area
-    // 1 2 3
-    // 4 - 5
-    // 6 7 8
-    switch (rollDice) {
-      case 0:
-        targetPos = center;
-      break;
-      case 1:
-        targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST);
-      break;
-      case 2:
-        targetPos = center.offset(EnumFacing.NORTH);
-      break;
-      case 3:
-        targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST);
-      break;
-      case 4:
-        targetPos = center.offset(EnumFacing.WEST);
-      break;
-      case 5:
-        targetPos = center.offset(EnumFacing.EAST);
-      break;
-      case 6:
-        targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST);
-      break;
-      case 7:
-        targetPos = center.offset(EnumFacing.SOUTH);
-      break;
-      case 8:
-        targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST);
-      break;
-    }
-    //now do the vertical
-    if (rollHeight > 0) {
-      targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
-    }
-    return;
-  }
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
@@ -265,6 +218,15 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     if (uuid != null) {
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
+    }
+  }
+  @Override
+  protected EnumFacing getCurrentFacing() {
+    try {
+      return this.getWorld().getBlockState(this.getPos()).getValue(BlockBaseFacingOmni.PROPERTYFACING);
+    }
+    catch (Exception e) {//only BC legacy states will fail this
+      return EnumFacing.NORTH;
     }
   }
   @Override
