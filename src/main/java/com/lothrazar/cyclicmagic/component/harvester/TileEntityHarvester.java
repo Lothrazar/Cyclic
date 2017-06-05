@@ -54,7 +54,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    size = tagCompound.getInteger(NBT_SIZE);
+    this.size = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   @Override

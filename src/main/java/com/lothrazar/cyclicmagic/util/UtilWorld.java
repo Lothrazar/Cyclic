@@ -88,18 +88,8 @@ public class UtilWorld {
       UtilChat.addChatMessage(player, "command.gethome.bed");
       return false;
     }
-    IBlockState state = world.getBlockState(pos);
-    Block block = (state == null) ? null : world.getBlockState(pos).getBlock();
-    if (block != null && block.isBed(state, world, pos, player)) {
-      // then move over according to how/where the bed wants me to spawn
-      pos = block.getBedSpawnPosition(state, world, pos, null);
-    }
-    else {
-      // spawn point was set, so the coords were not null, but player broke the
-      // bed (probably recently)
-      UtilChat.addChatMessage(player, "command.gethome.bed");
-      return false;
-    }
+    //  if player data says your bed location is set, then its set
+    //so now. if   spawn was set for any reason (bed/sleepingmat/other) then this TP works the same way as /kill
     UtilEntity.teleportWallSafe(player, world, pos);
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
     return true;

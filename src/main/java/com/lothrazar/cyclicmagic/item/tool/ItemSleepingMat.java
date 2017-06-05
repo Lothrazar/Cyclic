@@ -39,6 +39,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   private static int seconds;
   public static boolean doPotions;
+  private boolean doesSetSpawn;
   public ItemSleepingMat() {
     super(100);
   }
@@ -77,6 +78,10 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
           mp.connection.sendPacket(sleepPacket);
           //                mp.setRenderOffsetForSleep(player.getHorizontalFacing());//is private
           ItemSleepingMat.setRenderOffsetForSleep(player, player.getHorizontalFacing());
+          if (doesSetSpawn) {
+            System.out.println("settingspawn");
+            player.setSpawnPoint(player.getPosition(), true);//true means it wont check for bed block
+          }
         }
         else {
           //					ModMain.logger.error("NULL IPlayerExtendedProperties found");
@@ -140,6 +145,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   public void syncConfig(Configuration config) {
     doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
+    doesSetSpawn = config.getBoolean("SleepingMatSetsSpawn", Const.ConfigCategory.items, false, "True means using this at night will set your spawn point, just like a bed.");
   }
   @Override
   public IRecipe addRecipe() {

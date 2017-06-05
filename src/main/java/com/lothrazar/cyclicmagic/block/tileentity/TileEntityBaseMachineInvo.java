@@ -5,8 +5,10 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -74,7 +76,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
           this.currentMaxFuel = this.currentFuel;//100% full
-          itemstack.shrink(1);
+          if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
+            this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
+          }
+          else {
+            itemstack.shrink(1);
+          }
         }
       }
     }
