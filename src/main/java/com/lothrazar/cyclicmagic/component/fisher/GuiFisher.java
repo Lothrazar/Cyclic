@@ -41,7 +41,9 @@ public class GuiFisher extends GuiBaseContainer {
       int y = 50;
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
-      this.fontRendererObj.drawString("(" + String.format("%.2f", (tile.getSpeed()) * 100) + " Hz)", x, y, 4210752);
+      double fs = tile.getFishSpeed() * 100.0;
+      String displaySp = String.format("%.2f", fs);//split up in case crashes again.  //java.util.IllegalFormatConversionException: f != java.lang.Integer
+      this.fontRendererObj.drawString("(" + displaySp + " Hz)", x, y, 4210752);
     }
   }
   @Override
