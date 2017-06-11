@@ -38,6 +38,12 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
     this.setMaxDamage(9000);
   }
   @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    ItemStack mat = new ItemStack(Blocks.OBSIDIAN);
+    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) { return true; }
+    return super.getIsRepairable(toRepair, repair);
+  }
+  @Override
   public Set<String> getToolClasses(ItemStack stack) {
     return com.google.common.collect.ImmutableSet.of(Const.ToolStrings.shovel, Const.ToolStrings.pickaxe);
   }

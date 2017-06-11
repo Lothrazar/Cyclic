@@ -403,6 +403,7 @@ item.tool_swap.name=Standard Exchange Scepter
 item.tool_swap.jei=Swaps out blocks in the current area with ones in your inventory.  Renders a simple HUD in the corner of the screen showing which block will be used (location changed in config).  Ignores block times in the area.  Left click to change the size of the current area.  
 item.tool_swap.tooltip=Replaces blocks with your inventory contents. Left click to change size
 item.tool_swap_match.name=Gentle Exchange Scepter
+item.tool_swap_match.tooltip=Replaces blocks that match the target. Left click to change size
 item.tool_swap_match.jei=Swaps out blocks in the current area with ones in your inventory.  Renders a simple HUD in the corner of the screen showing which block will be used (location changed in config).  Only replaces blocks in the area that match the one clicked.  Left click to change the size of the current area.  
 item.tool_torch_launcher.name=Torch launcher
 item.tool_torch_launcher.tooltip=Reuseable ender torch

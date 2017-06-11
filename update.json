@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.24",
     "1.10.2-recommended": "1.10.24",
-    "1.11.2-latest": "1.5.2",
-    "1.11.2-recommended": "1.5.2"
+    "1.11.2-latest": "1.5.3",
+    "1.11.2-recommended": "1.5.3"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -164,5 +164,6 @@
 	,"1.5.0":"Now requires Forge version 13.20.0.2300 or higher.  Block Miner and Block Placer can now face up and down, in addition to horizontal directions (so full 6 directional placement just like a Dispenser).  Harvester now captures drops in its inventory.  Automatic User now works with all forge buckets and fluid tanks.  Updated a few machine GUIs.  Many machines that act on an area now render their preview area using ghost blocks and a toggle button.  Many machines now optionally can consume furnace-fuel, which increases their speed.  Fixed Structure Builder and Pattern Replicator not playing block placing sounds.  For all three Scythes (Brush, Tree, Garden) you can hold shift to reduce the range by half.  "
 	,"1.5.1":"Fix the new fuel slots machines destroying the empty bucket when consuming lava as fuel.  Add new config option to Sleeping Mat that makes it set players spawn point just like a bed (defaults false).  "
   	,"1.5.2":"Fix client-side game crash in Auto Fishing Net.  "
+  	,"1.5.3":"Fix missing item tooltip.  Mattock now repairable in an anvil using obsidian.  "
   }
 }
