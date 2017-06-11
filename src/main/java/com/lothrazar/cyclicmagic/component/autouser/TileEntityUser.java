@@ -15,6 +15,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -25,17 +26,24 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -160,41 +168,31 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
-    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non bucket item
+    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non block item
       //dont ever place a block. they want to use it on an entity
-      fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+      EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+      if (r != EnumActionResult.SUCCESS) {
+        r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+        if (r != EnumActionResult.SUCCESS) {
+          ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
+          if (res == null || res.getType() != EnumActionResult.SUCCESS) {
+            //this item onrightclick would/should/could work for GLASS_BOTTLE...except
+            //it uses player Ray Trace to get target. which is null for fakes
+            //TODO: maybe one solution is to extend FakePlayer to run a rayrace somehow
+            //but how to set/manage current lookpos
+            //so hakcy time
+            if (fakePlayer.get().getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE && world.getBlockState(targetPos).getMaterial() == Material.WATER) {
+              ItemStack itemstack = fakePlayer.get().getHeldItemMainhand();
+              EntityPlayer p = fakePlayer.get();
+              world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+              //  return new ActionResult(EnumActionResult.SUCCESS,
+              UtilItemStack.turnBottleIntoItem(itemstack, p, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER));
+              //);
+            }
+          }
+        }
+      }
     }
-    //TODO: if processRight fails try this other crap too hey
-    /*
-     * ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand(); // if
-     * (maybeTool != null && !maybeTool.isEmpty() &&
-     * UtilFluid.stackHasFluidHandler(maybeTool)) { // if
-     * (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos),
-     * this.getCurrentFacing().getOpposite())) {//tile has fluid EnumFacing side
-     * = this.getCurrentFacing().getOpposite(); final float hitX = (float)
-     * (this.fakePlayer.get().posX - pos.getX()); final float hitY = (float)
-     * (this.fakePlayer.get().posY - pos.getY()); final float hitZ = (float)
-     * (this.fakePlayer.get().posZ - pos.getZ()); final
-     * PlayerInteractEvent.RightClickBlock event =
-     * ForgeHooks.onRightClickBlock(fakePlayer.get(), EnumHand.MAIN_HAND,
-     * targetPos, this.getCurrentFacing().getOpposite(),
-     * ForgeHooks.rayTraceEyeHitVec(this.fakePlayer.get(), 2.0)); if
-     * (!event.isCanceled() && event.getUseItem() != Event.Result.DENY && //
-     * maybeTool.getItem().onItemUseFirst(player, world, targetPos, side, hitX,
-     * hitY, hitZ, hand)
-     * maybeTool.getItem().onItemUseFirst(this.fakePlayer.get(), this.world,
-     * targetPos, side, hitX, hitY, hitZ, EnumHand.MAIN_HAND) ==
-     * EnumActionResult.PASS) { maybeTool.onItemUse(this.fakePlayer.get(),
-     * this.world, pos, EnumHand.MAIN_HAND, side, hitX, hitY, hitZ);
-     * 
-     * } else if
-     * (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem())
-     * == Blocks.AIR) { //a non bucket item //dont ever place a block. they want
-     * to use it on an entity
-     * fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get
-     * (), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND,
-     * targetPos, EnumFacing.UP, .5F, .5F, .5F); }//?? player.interactOn(
-     */
   }
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
@@ -240,9 +238,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     return false;
   }
   private void tryDumpFakePlayerInvo() {
+    BlockPos dropHere = getTargetPos();
     for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
       if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
-        EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), s.copy());
+        EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
         if (entityItem != null) {
           entityItem.setVelocity(0, 0, 0);
         }
