@@ -42,8 +42,23 @@ public class GuiUser extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < tile.getSizeInventory() - 1; k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    for (int k = 0; k < 3; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ,
+          this.guiTop + ContainerUser.SLOTY - 1, u, v,
+          Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    for (int k = 3; k < 6; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerUser.SLOTX_START - 1 + (k + 3) * Const.SQ,
+          this.guiTop + ContainerUser.SLOTY - 1, u, v,
+          Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    for (int k = 6; k < 9; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ,
+          this.guiTop + ContainerUser.SLOTY - 1 - Const.SQ, u, v,
+          Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
@@ -51,6 +66,8 @@ public class GuiUser extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    this.drawString("tile.block_user.input", 12, 82);
+    this.drawString("tile.block_user.output", 122, 64);
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

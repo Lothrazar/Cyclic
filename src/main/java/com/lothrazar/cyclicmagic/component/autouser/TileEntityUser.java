@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ITilePreviewToggle;
@@ -11,6 +12,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -59,7 +61,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final int MAX_SIZE = 4;//9x9 area 
   public static int maxHeight = 10;
   public final static int TIMER_FULL = 120;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
+  private int[] hopperOutput = { 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private int[] hopperInputFuel = { 9 };// all slots for all faces
   //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int rightClickIfZero = 0;
@@ -84,7 +87,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void update() {
     if (!isRunning()) { return; }
-    this.shiftAllUp(1);
+    this.shiftAllUp(7);
     this.spawnParticlesAbove();
     this.updateFuelIsBurning();
     boolean triggered = this.updateTimerIsZero();
@@ -186,13 +189,34 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
               EntityPlayer p = fakePlayer.get();
               world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
               //  return new ActionResult(EnumActionResult.SUCCESS,
-              UtilItemStack.turnBottleIntoItem(itemstack, p, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER));
+              itemstack.shrink(1);
+              //UtilItemStack.turnBottleIntoItem(itemstack, p,
+              ItemStack is = new ItemStack(Items.POTIONITEM);
+              PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
+              this.tryDumpStacks(Arrays.asList(is));
               //);
             }
           }
         }
       }
     }
+  }
+  private void tryDumpStacks(List<ItemStack> toDump) {
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(toDump, this, 3, 9);
+    ///only drop now that its full
+    BlockPos dropHere = getTargetPos();
+    for (ItemStack s : toDrop) {
+      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+        EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
+        if (entityItem != null) {
+          entityItem.setVelocity(0, 0, 0);
+        }
+        s.setCount(0);
+      }
+    }
+  }
+  private void tryDumpFakePlayerInvo() {
+    tryDumpStacks(fakePlayer.get().inventory.mainInventory);
   }
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
@@ -236,18 +260,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
     return false;
-  }
-  private void tryDumpFakePlayerInvo() {
-    BlockPos dropHere = getTargetPos();
-    for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
-      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
-        EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
-        if (entityItem != null) {
-          entityItem.setVelocity(0, 0, 0);
-        }
-        s.setCount(0);
-      }
-    }
   }
   /**
    * detect if tool stack is empty or destroyed and reruns equip
@@ -315,6 +327,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
       return hopperInputFuel;
+    if (side == EnumFacing.DOWN)
+      return hopperOutput;
     return hopperInput;
   }
   @Override
@@ -422,11 +436,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
-    //    
-    //    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-    //    for (BlockPos pos : allPos) {
-    //      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-    //    }
   }
   @Override
   public List<BlockPos> getShape() {

@@ -148,23 +148,23 @@ public class UtilItemStack {
  * @param stack
  * @return
  */
-  public static ItemStack turnBottleIntoItem(ItemStack is, EntityPlayer player, ItemStack stack)
-  {
-      is.shrink(1);
-      player.addStat(StatList.getObjectUseStats(is.getItem()));
-
-      if (is.isEmpty())
-      {
-          return stack;
-      }
-      else
-      {
-          if (!player.inventory.addItemStackToInventory(stack))
-          {
-              player.dropItem(stack, false);
-          }
-
-          return is;
-      }
-  }
+//  public static ItemStack turnBottleIntoItem(ItemStack is, EntityPlayer player, ItemStack stack)
+//  {
+//      is.shrink(1);
+//      player.addStat(StatList.getObjectUseStats(is.getItem()));
+//
+//      if (is.isEmpty())
+//      {
+//          return stack;
+//      }
+//      else
+//      {
+//          if (!player.inventory.addItemStackToInventory(stack))
+//          {
+//              player.dropItem(stack, false);
+//          }
+//
+//          return is;
+//      }
+//  }
 }

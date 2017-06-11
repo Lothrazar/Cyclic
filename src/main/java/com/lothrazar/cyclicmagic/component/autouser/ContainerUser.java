@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,10 +19,16 @@ public class ContainerUser extends ContainerBaseMachine {
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
-    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
+    for (int i = 0; i < 3; i++) {//0 1 2 
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    for (int i =3; i < 6; i++) {//345
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i+3) * Const.SQ, SLOTY));
+    }
+    for (int i = 6; i < 9; i++) {//678
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY-Const.SQ));
+    }
+    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));//fuel slot==9
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
