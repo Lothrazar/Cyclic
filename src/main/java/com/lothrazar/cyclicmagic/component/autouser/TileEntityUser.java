@@ -206,17 +206,24 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     ///only drop now that its full
     BlockPos dropHere = getTargetPos();
     for (ItemStack s : toDrop) {
-      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+      if (!s.isEmpty() ) {//&& !s.equals(fakePlayer.get().getHeldItemMainhand())
         EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
         if (entityItem != null) {
           entityItem.setVelocity(0, 0, 0);
         }
         s.setCount(0);
+        
       }
     }
   }
   private void tryDumpFakePlayerInvo() {
-    tryDumpStacks(fakePlayer.get().inventory.mainInventory);
+    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+    for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
+      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+        toDrop.add(s);
+      }
+    }
+    tryDumpStacks(toDrop);
   }
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();

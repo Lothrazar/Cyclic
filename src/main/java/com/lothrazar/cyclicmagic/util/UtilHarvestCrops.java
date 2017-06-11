@@ -89,11 +89,14 @@ public class UtilHarvestCrops {
     IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
     if (blockState == null) { return false; }
+    
     Block blockCheck = blockState.getBlock();
-    if (blockCheck == null) { return false; }
+   
+    if (blockCheck == Blocks.AIR) { return false; }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
+    //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     final List<ItemStack> drops = new ArrayList<ItemStack>();
@@ -213,8 +216,8 @@ public class UtilHarvestCrops {
     //    else  ModCyclic.logger.info("!"+blockClassString);
     // no , for now is fine, do not do blocks
     if (doBreak) {
-      // get the Actual drops
-      //super hack
+      //break with false so that we can get the drops our own way
+      world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
       if (blockCheck instanceof IShearable == false) {
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, 0));
       }
@@ -227,7 +230,6 @@ public class UtilHarvestCrops {
       }
       if (stateReplant != null) {// plant new seed
         //world.setBlockState(posCurrent, blockCheck.getDefaultState());// OLD WAY
-        world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
         world.setBlockState(posCurrent, stateReplant);// new way
         //whateveer it drops if it wasnt full grown, yeah thats the seed
         //but we cant fix runtime exception since its from somebody elses mod
@@ -252,10 +254,10 @@ public class UtilHarvestCrops {
           e.printStackTrace();
         }
       }
-      else {//else replant is null
-        //dont replant, but still doBreak. for non farming stuff like grass/leaves
-        world.destroyBlock(posCurrent, true);
-      }
+      //      else {//else replant is null
+      //        //dont replant, but still doBreak. for non farming stuff like grass/leaves
+      //        world.destroyBlock(posCurrent, true);
+      //      }
       //    //now we can upgrade this to also drop in front wooo!
       if (drops.size() > 0) {
         if (conf.dropInPlace) {
