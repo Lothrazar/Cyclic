@@ -26,6 +26,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
     super(Material.PISTON);
     this.setHardness(4.0F);
     this.setResistance(5.0F);
+    this.setTranslucent();
   }
   @Override
   public IRecipe addRecipe() {
@@ -50,9 +51,5 @@ public class BlockShears extends BlockBase implements IHasRecipe {
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return AABB;
-  }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) {
-    return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
 }
