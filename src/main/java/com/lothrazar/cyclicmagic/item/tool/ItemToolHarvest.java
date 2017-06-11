@@ -26,6 +26,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     super(1000);
     harvestType = c;
     conf = new HarvestSetting();//by default all are set false
+    conf.dropInPlace = true;
     switch (harvestType) {
       case CROPS:
         conf.doesPumpkinBlocks = true;
@@ -39,6 +40,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
         conf.doesMushroom = true;
         conf.doesTallgrass = true;
         conf.doesSapling = true;
+        conf.doesIShearable = true;
       break;
       case LEAVES:
         conf.doesLeaves = true;
