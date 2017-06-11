@@ -35,6 +35,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
+  
       if (slot < tile.getSizeInventory()) {
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
@@ -42,9 +43,10 @@ public class ContainerBuilder extends ContainerBaseMachine {
       // inventory
       else if (TileEntityFurnace.isItemFuel(stack)) {
         //fuel slot
-        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 18, true)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, 0,  tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+//        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
