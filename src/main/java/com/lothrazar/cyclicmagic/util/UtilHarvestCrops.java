@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -19,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvestCrops {
@@ -36,6 +38,7 @@ public class UtilHarvestCrops {
     public boolean doesCactus = false;
     public boolean doesReeds = false;
     public boolean dropInPlace = true;//if false -> then ret
+    public boolean doesIShearable = false;
     public List<ItemStack> drops;
     @Override
     public String toString() {
@@ -51,8 +54,7 @@ public class UtilHarvestCrops {
       return s;
     }
     public void setDrops(List<ItemStack> d) {
-     this.drops=d;
-      
+      this.drops = d;
     }
   }
   private static String[] blacklist;
@@ -87,13 +89,18 @@ public class UtilHarvestCrops {
     IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
     if (blockState == null) { return false; }
+    
     Block blockCheck = blockState.getBlock();
-    if (blockCheck == null) { return false; }
+   
+    if (blockCheck == Blocks.AIR) { return false; }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
+//    ModCyclic.logger.info(blockClassString);
+    //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
+    final List<ItemStack> drops = new ArrayList<ItemStack>();
     if (blockCheck instanceof BlockNetherWart) {
       if (conf.doesCrops) {
         int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
@@ -164,7 +171,11 @@ public class UtilHarvestCrops {
         || blockCheck instanceof BlockFlower
         || blockClassString.equals("shadows.plants.block.PlantBase")
         || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
-        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")) {//== Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
+        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")
+        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.BlockBlackLotus")
+        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
+        || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
+        || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
       if (conf.doesFlowers) {
         doBreak = true;
       }
@@ -200,11 +211,21 @@ public class UtilHarvestCrops {
         }
       }
     }
+    else if (blockCheck instanceof IShearable) {
+      if (conf.doesIShearable) {
+        drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
+        //        int test = drops.size();
+        doBreak = true;
+      }
+    }
     //    else  ModCyclic.logger.info("!"+blockClassString);
     // no , for now is fine, do not do blocks
     if (doBreak) {
-      // get the Actual drops
-      final List<ItemStack> drops = blockCheck.getDrops(world, posCurrent, blockState, 0);
+      //break with false so that we can get the drops our own way
+      world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
+      if (blockCheck instanceof IShearable == false) {
+        drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, 0));
+      }
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -214,7 +235,6 @@ public class UtilHarvestCrops {
       }
       if (stateReplant != null) {// plant new seed
         //world.setBlockState(posCurrent, blockCheck.getDefaultState());// OLD WAY
-        world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
         world.setBlockState(posCurrent, stateReplant);// new way
         //whateveer it drops if it wasnt full grown, yeah thats the seed
         //but we cant fix runtime exception since its from somebody elses mod
@@ -238,7 +258,13 @@ public class UtilHarvestCrops {
           ModCyclic.logger.error(e.getMessage());
           e.printStackTrace();
         }
-        //now we can upgrade this to also drop in front wooo!
+      }
+      //      else {//else replant is null
+      //        //dont replant, but still doBreak. for non farming stuff like grass/leaves
+      //        world.destroyBlock(posCurrent, true);
+      //      }
+      //    //now we can upgrade this to also drop in front wooo!
+      if (drops.size() > 0) {
         if (conf.dropInPlace) {
           for (ItemStack drop : drops) {
             UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
@@ -246,12 +272,7 @@ public class UtilHarvestCrops {
         }
         else {
           conf.setDrops(drops);
-          
         }
-      }
-      else {
-        //dont replant, but still doBreak. for non farming stuff like grass/leaves
-        world.destroyBlock(posCurrent, true);
       }
       return true;
     }

@@ -44,4 +44,16 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
   }
+  public static EnumFacing getCurrentFacing(World world, BlockPos pos) {
+    try {
+      EnumFacing f = world.getBlockState(pos).getValue(BlockBaseFacingOmni.PROPERTYFACING);
+      if (f != EnumFacing.UP && f != EnumFacing.DOWN) {
+        f = f.getOpposite();//backwards compatible hack
+      }
+      return f;
+    }
+    catch (Exception e) {//only BC legacy states will fail this
+      return EnumFacing.NORTH;
+    }
+  }
 }

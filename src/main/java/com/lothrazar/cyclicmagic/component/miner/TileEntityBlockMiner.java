@@ -222,12 +222,8 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
   }
   @Override
   protected EnumFacing getCurrentFacing() {
-    try {
-      return this.getWorld().getBlockState(this.getPos()).getValue(BlockBaseFacingOmni.PROPERTYFACING);
-    }
-    catch (Exception e) {//only BC legacy states will fail this
-      return EnumFacing.NORTH;
-    }
+
+    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {}

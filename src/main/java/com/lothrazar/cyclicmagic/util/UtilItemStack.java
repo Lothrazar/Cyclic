@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -140,4 +141,30 @@ public class UtilItemStack {
     }
     return new ItemStack(item, 1, i);
   }
+/**
+ * STOLEN from ItemGlassBottle which is for osme reason protected
+ * @param is
+ * @param player
+ * @param stack
+ * @return
+ */
+//  public static ItemStack turnBottleIntoItem(ItemStack is, EntityPlayer player, ItemStack stack)
+//  {
+//      is.shrink(1);
+//      player.addStat(StatList.getObjectUseStats(is.getItem()));
+//
+//      if (is.isEmpty())
+//      {
+//          return stack;
+//      }
+//      else
+//      {
+//          if (!player.inventory.addItemStackToInventory(stack))
+//          {
+//              player.dropItem(stack, false);
+//          }
+//
+//          return is;
+//      }
+//  }
 }

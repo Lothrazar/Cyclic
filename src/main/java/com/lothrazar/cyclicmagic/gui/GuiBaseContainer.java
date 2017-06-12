@@ -99,7 +99,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void drawString(String s, int x, int y) {
-    this.fontRendererObj.drawString(s, x, y, FONTCOLOR);
+    this.fontRendererObj.drawString(UtilChat.lang(s), x, y, FONTCOLOR);
   }
   public int getMiddleY() {
     int yMiddle = (this.height - this.ySize) / 2;

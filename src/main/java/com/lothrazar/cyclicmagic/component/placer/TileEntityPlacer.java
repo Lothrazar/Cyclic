@@ -114,12 +114,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   }
   @Override
   protected EnumFacing getCurrentFacing() {
-    try {
-      return this.getWorld().getBlockState(this.getPos()).getValue(BlockBaseFacingOmni.PROPERTYFACING);
-    }
-    catch (Exception e) {//only BC legacy states will fail this
-      return EnumFacing.NORTH;
-    }
+    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
