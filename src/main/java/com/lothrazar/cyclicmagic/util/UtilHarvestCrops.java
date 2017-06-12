@@ -96,6 +96,7 @@ public class UtilHarvestCrops {
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
+//    ModCyclic.logger.info(blockClassString);
     //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
@@ -170,7 +171,11 @@ public class UtilHarvestCrops {
         || blockCheck instanceof BlockFlower
         || blockClassString.equals("shadows.plants.block.PlantBase")
         || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
-        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")) {//== Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
+        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")
+        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.BlockBlackLotus")
+        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
+        || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
+        || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
       if (conf.doesFlowers) {
         doBreak = true;
       }
