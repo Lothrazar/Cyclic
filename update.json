@@ -5,10 +5,10 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.24",
-    "1.10.2-recommended": "1.10.24",
-    "1.11.2-latest": "1.5.3",
-    "1.11.2-recommended": "1.5.3"
+    "1.10.2-latest":  "1.10.25",
+    "1.10.2-recommended": "1.10.25",
+    "1.11.2-latest": "1.5.4",
+    "1.11.2-recommended": "1.5.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -128,6 +128,7 @@
 	,"1.10.22":"Fix a client side crash when the mod thinks you are trying to right click an item to turn a bauble off"
 	,"1.10.23":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
 	,"1.10.24":"Automated User now correctly uses empty and full buckets with liquids placed in the world.  Added Automated User integration with tile entities that use the forge Fluid Capability system (for example, it can now use full & empty buckets with the Fluid Tank & Reservoir from Ender IO)"
+	,"1.10.25":"Fixed a compatibility issue that was causing fall damage in certain situations that should not cause fall damage, while using Mekanism Jetpacks.  Fixed client-server desync with Launch enchantment, it now correctly resets your fall damage on use."
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
@@ -165,5 +166,6 @@
 	,"1.5.1":"Fix the new fuel slots machines destroying the empty bucket when consuming lava as fuel.  Add new config option to Sleeping Mat that makes it set players spawn point just like a bed (defaults false).  "
   	,"1.5.2":"Fix client-side game crash in Auto Fishing Net.  "
   	,"1.5.3":"Fix broken item tooltip.  Mattock now repairable in an anvil using obsidian.  Automated User now works empty glass bottles on water.   Automated User now has input and output slots for better automation (with hoppers/pipes).  Tweaked/optimized shift-clicking fuel into blocks with an inventory and a fuel slot.  Fix block transparency on a few things (example: grass will no longer die under a Fan or a Pylon).  Fix Block Miner and Block Placer affecting the opposite direction that they appear to be facing (you may have to break and replace existing blocks to fix).  Improved compatibility with plants, leaves, crops, and mushrooms for several mods including Biomes o Plenty, Actually Additions, and Rustic.  "
+	,"1.5.4":"Fixed a compatibility issue that was causing fall damage in certain situations that should not cause fall damage, while using Mekanism Jetpacks.  Fixed client-server desync with Launch enchantment, it now correctly resets your fall damage on use.  Updated zh_CN.lang translation file (thanks to TartaricAcid).  "
   }
 }

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -69,13 +71,13 @@ public class EnchantLaunch extends EnchantBase {
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer p = Minecraft.getMinecraft().player;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet.isEmpty()) { return; }
-    if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()
+    if (feet == null || feet.isEmpty()) { return; }
+    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
+    if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
+    if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
         && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
       //JUMP IS pressed and you are moving down
-      if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
-      if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       p.fallDistance = 0;
       UtilEntity.launch(p, rotationPitch, power);
@@ -91,6 +93,8 @@ public class EnchantLaunch extends EnchantBase {
         uses = 0;
       }
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
+      p.fallDistance = 0;
+      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
     }
   }
 }
