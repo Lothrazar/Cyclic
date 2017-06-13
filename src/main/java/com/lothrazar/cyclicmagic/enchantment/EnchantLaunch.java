@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -67,14 +69,17 @@ public class EnchantLaunch extends EnchantBase {
     EntityPlayer p = Minecraft.getMinecraft().thePlayer;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
     if (feet == null) { return; }
-    if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()
+    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
+    if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
+    //AHA: the mere act of checking isPressed() is not a simple getter/setter type method it actually DECREMENTS a press timer
+    //so isPressed does a -- on a timer thast why mekanism jetpack issues happening
+    //isKeyDown() does the check WITHOUT decrementing the tick
+    if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
         && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
-      //JUMP IS pressed and you are moving down
-      if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
+      //so plaer IS wearing boots enchanted with THIS 
+      //and they are pressing jump key while moving down, not grounded and not in water
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
-      if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
-      p.fallDistance = 0;
       UtilEntity.launch(p, rotationPitch, power);
       UtilParticle.spawnParticle(p.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, p.getPosition());
       UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
@@ -88,6 +93,8 @@ public class EnchantLaunch extends EnchantBase {
         uses = 0;
       }
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
+      p.fallDistance = 0;
+      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
     }
   }
 }
