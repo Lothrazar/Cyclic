@@ -554,6 +554,7 @@ tile.block_storewater.jei=Currently holding water.  This is not a tank; instead 
 tile.block_user.action0=Use
 tile.block_user.action1=Attack
 tile.block_user.action=Change action type
+tile.block_user.yoffset=Vertical Offset
 tile.block_user.input=Input
 tile.block_user.output=Output
 tile.block_user.name=Automated User

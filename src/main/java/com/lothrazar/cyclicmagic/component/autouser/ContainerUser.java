@@ -23,11 +23,11 @@ public class ContainerUser extends ContainerBaseMachine {
     for (int i = 0; i < 3; i++) {//0 1 2 
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    for (int i =3; i < 6; i++) {//345
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i+3) * Const.SQ, SLOTY));
+    for (int i = 3; i < 6; i++) {//345
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i + 3) * Const.SQ, SLOTY));
     }
     for (int i = 6; i < 9; i++) {//678
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY-Const.SQ));
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY - Const.SQ));
     }
     addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));//fuel slot==9
     bindPlayerInventory(inventoryPlayer);
@@ -46,8 +46,8 @@ public class ContainerUser extends ContainerBaseMachine {
       }
       else if (TileEntityFurnace.isItemFuel(stack)) {
         //fuel slot
-        if (!this.mergeItemStack(stackInSlot, 0,  tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
-//        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+        //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       }
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -14,12 +13,6 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
   private static final double CLIMB_SPEED = 0.288D;
   public ItemClimbingGlove() {
     super(6000);
-  }
-  @Override
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
   }
   @Override
   public IRecipe addRecipe() {

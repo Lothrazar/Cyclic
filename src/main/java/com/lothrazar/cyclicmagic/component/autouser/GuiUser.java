@@ -13,8 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContainer {
-  private ButtonUserAction actionBtn;
+  private ButtonIncrementField actionBtn;
   private GuiButtonToggleSize btnSize;
+  private ButtonIncrementField yOffsetBtn;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -31,11 +32,18 @@ public class GuiUser extends GuiBaseContainer {
         this.guiLeft + 24 + Const.PAD,
         this.guiTop + Const.PAD + 18, this.tile.getPos());
     this.buttonList.add(btnSize);
-    actionBtn = new ButtonUserAction(btnId++,
+    actionBtn = new ButtonIncrementField(btnId++,
         this.guiLeft + 24 + Const.PAD,
-        this.guiTop + Const.PAD * 6, this.tile.getPos());
+        this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());
     actionBtn.width = 44;
+    actionBtn.setTooltip("tile.block_user.action");
     this.buttonList.add(actionBtn);
+    yOffsetBtn = new ButtonIncrementField(btnId++,
+        this.guiLeft + Const.PAD / 2,
+        this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.Y_OFFSET.ordinal());
+    yOffsetBtn.width = Const.SQ;
+    yOffsetBtn.setTooltip("tile.block_user.yoffset");
+    this.buttonList.add(yOffsetBtn);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -70,6 +78,7 @@ public class GuiUser extends GuiBaseContainer {
     this.drawString("tile.block_user.output", 122, 64);
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
+    yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

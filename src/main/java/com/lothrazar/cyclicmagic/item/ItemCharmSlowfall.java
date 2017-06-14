@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -13,7 +12,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.World;
 
 public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   private final static int seconds = 30;
@@ -22,11 +20,6 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   private final static Potion potion = PotionEffectRegistry.SLOWFALL;
   public ItemCharmSlowfall() {
     super(durability);
-  }
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {

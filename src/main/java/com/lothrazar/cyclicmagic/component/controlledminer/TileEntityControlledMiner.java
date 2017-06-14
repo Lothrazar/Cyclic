@@ -32,6 +32,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * 
  */
 public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+  private static final int FUEL_SLOT = 5;
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -63,7 +64,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(5);
+    this.setFuelSlot(FUEL_SLOT);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -295,7 +296,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { TOOLSLOT_INDEX };// tell it to only use the tool slot
+    return new int[] { FUEL_SLOT };
   }
   @Override
   public int getField(int id) {

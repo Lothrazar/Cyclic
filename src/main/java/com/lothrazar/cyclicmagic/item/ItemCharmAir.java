@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,11 +16,6 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
   private static final int durability = 512;
   public ItemCharmAir() {
     super(durability);
-  }
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {

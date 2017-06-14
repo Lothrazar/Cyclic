@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.component.autouser.PacketTileUser;
+import com.lothrazar.cyclicmagic.component.autouser.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildSize;
 import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildType;
 import com.lothrazar.cyclicmagic.component.controlledminer.PacketTileMineHeight;
@@ -82,7 +82,7 @@ public class PacketRegistry {
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileUser.class, PacketTileUser.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternBuilder.class, PacketTilePatternBuilder.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileDetector.class, PacketTileDetector.class, packetID++, Side.SERVER);

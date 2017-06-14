@@ -89,14 +89,13 @@ public class UtilHarvestCrops {
     IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
     if (blockState == null) { return false; }
-    
+    boolean addDropsToList = true;
     Block blockCheck = blockState.getBlock();
-   
     if (blockCheck == Blocks.AIR) { return false; }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
-//    ModCyclic.logger.info(blockClassString);
+    //    ModCyclic.logger.info(blockClassString);
     //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
@@ -213,6 +212,7 @@ public class UtilHarvestCrops {
     }
     else if (blockCheck instanceof IShearable) {
       if (conf.doesIShearable) {
+        addDropsToList = false;
         drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
         //        int test = drops.size();
         doBreak = true;
@@ -223,7 +223,7 @@ public class UtilHarvestCrops {
     if (doBreak) {
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
-      if (blockCheck instanceof IShearable == false) {
+      if (addDropsToList) {
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, 0));
       }
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
@@ -259,11 +259,6 @@ public class UtilHarvestCrops {
           e.printStackTrace();
         }
       }
-      //      else {//else replant is null
-      //        //dont replant, but still doBreak. for non farming stuff like grass/leaves
-      //        world.destroyBlock(posCurrent, true);
-      //      }
-      //    //now we can upgrade this to also drop in front wooo!
       if (drops.size() > 0) {
         if (conf.dropInPlace) {
           for (ItemStack drop : drops) {

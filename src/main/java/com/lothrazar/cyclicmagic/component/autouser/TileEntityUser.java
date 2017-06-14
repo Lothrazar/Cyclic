@@ -59,8 +59,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
-  public static int maxHeight = 10;
   public final static int TIMER_FULL = 120;
+  public static int maxHeight = 10;
   private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
   private int[] hopperOutput = { 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private int[] hopperInputFuel = { 9 };// all slots for all faces
@@ -72,8 +72,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
+  public int yOffset = 0;//0,1,-1
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET;
   }
   public TileEntityUser() {
     super(10);
@@ -206,13 +207,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     ///only drop now that its full
     BlockPos dropHere = getTargetPos();
     for (ItemStack s : toDrop) {
-      if (!s.isEmpty() ) {//&& !s.equals(fakePlayer.get().getHeldItemMainhand())
+      if (!s.isEmpty()) {//&& !s.equals(fakePlayer.get().getHeldItemMainhand())
         EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
         if (entityItem != null) {
           entityItem.setVelocity(0, 0, 0);
         }
         s.setCount(0);
-        
       }
     }
   }
@@ -317,6 +317,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_LR, rightClickIfZero);
     compound.setInteger(NBT_SIZE, size);
     compound.setInteger(NBT_RENDER, renderParticles);
+    compound.setInteger("yoff", yOffset);
     return super.writeToNBT(compound);
   }
   @Override
@@ -328,15 +329,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     needsRedstone = compound.getInteger(NBT_REDST);
     rightClickIfZero = compound.getInteger(NBT_LR);
     size = compound.getInteger(NBT_SIZE);
-    this.renderParticles = compound.getInteger(NBT_RENDER);
+    renderParticles = compound.getInteger(NBT_RENDER);
+    yOffset = compound.getInteger("yoff");
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
-      return hopperInputFuel;
+      return hopperInput;
     if (side == EnumFacing.DOWN)
       return hopperOutput;
-    return hopperInput;
+    return hopperInputFuel;
   }
   @Override
   public int getField(int id) {
@@ -357,14 +359,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.getFuelMax();
       case RENDERPARTICLES:
         return this.renderParticles;
-      default:
-      break;
+      case Y_OFFSET:
+        return this.yOffset;
     }
     return 0;
   }
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case Y_OFFSET:
+        if (value > 1) {
+          value = -1;
+        }
+        this.yOffset = value;
+      break;
       case SPEED:
         this.setSpeed(value);
       break;
@@ -378,6 +386,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.needsRedstone = value;
       break;
       case LEFTRIGHT:
+        if (value > 1) {
+          value = 0;
+        }
         this.rightClickIfZero = value;
       break;
       case SIZE:
@@ -415,10 +426,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  public void toggleLeftRight() {
-    int val = (this.rightClickIfZero == 1) ? 0 : 1;
-    this.setField(Fields.LEFTRIGHT.ordinal(), val);
-  }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
@@ -431,14 +438,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
-    //    if (world.isAirBlock(targetPos)) {
-    //      targetPos = targetPos.down();
-    //    }
     return targetPos;
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
+    return this.getPos().offset(this.getCurrentFacing(), this.size + 1).offset(EnumFacing.UP, yOffset);
   }
   @Override
   public void togglePreview() {

@@ -81,7 +81,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //    this.fontRendererObj.drawString(s, x, y, 4210752);
     int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
     int y = ContainerMinerSmart.SLOTEQUIP_Y - 14;
- 
     this.drawString("tile.block_miner_smart.tool", x, y);
     String display = "" + this.tile.getHeight();
     //move it over if more than 1 digit

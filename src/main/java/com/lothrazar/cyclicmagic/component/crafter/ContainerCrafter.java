@@ -79,8 +79,8 @@ public class ContainerCrafter extends ContainerBaseMachine {
       }
       else if (TileEntityFurnace.isItemFuel(stack)) {
         //fuel slot
-        if (!this.mergeItemStack(stackInSlot, 0,  tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
-//        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+        //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       }
       else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {

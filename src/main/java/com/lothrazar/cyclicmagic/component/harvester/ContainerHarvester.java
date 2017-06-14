@@ -21,15 +21,15 @@ public class ContainerHarvester extends ContainerBaseMachine {
   public static final int SQ = 18;
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     this.setTile(te);
-    this.screenSize=ScreenSize.LARGE;
+    this.screenSize = ScreenSize.LARGE;
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     for (int i = 9; i < 18; i++) {//SlotOutputOnly
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i-9) * Const.SQ, SLOTY + Const.SQ ));
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 9) * Const.SQ, SLOTY + Const.SQ));
     }
     for (int i = 18; i < 27; i++) {//SlotOutputOnly
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i-18) * Const.SQ, SLOTY + 2*Const.SQ ));
+      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
     }
     addSlotToContainer(new SlotFurnaceFuel(tile, 27, SLOTX_FUEL, SLOTY_FUEL));
     bindPlayerInventory(inventoryPlayer);
