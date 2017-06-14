@@ -333,10 +333,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
-      return hopperInputFuel;
+      return hopperInput;
     if (side == EnumFacing.DOWN)
       return hopperOutput;
-    return hopperInput;
+    return hopperInputFuel;
   }
   @Override
   public int getField(int id) {

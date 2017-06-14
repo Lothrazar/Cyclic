@@ -22,7 +22,8 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
-  private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
+  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
+  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int buildType;
@@ -281,7 +282,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
+    if (side == EnumFacing.UP || side == EnumFacing.DOWN)
+      return hopperInput;
+    return hopperInputFuel;
   }
   @Override
   public void toggleNeedsRedstone() {

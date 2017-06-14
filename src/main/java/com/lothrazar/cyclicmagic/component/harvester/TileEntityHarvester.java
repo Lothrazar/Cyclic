@@ -26,7 +26,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private HarvestSetting conf;
   private int needsRedstone = 1;
   private int renderParticles = 0;
-  private static final int[] hopperInput = { 27 };// all slots
+  private static final int[] hopperInputFuel = { 27 };// all slots
   private static final int[] hopperOUTPUT = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
       18, 19, 20, 21, 22, 23, 24, 25, 26 };// all slots
   public static enum Fields {
@@ -158,12 +158,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return Fields.values().length;
   }
   /**
-   * facing DOWN means the hopper is facing down, so items are coming in through the top side
+   * facing DOWN means the hopper is facing down, so items are coming in through
+   * the top side
    */
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.DOWN) { return hopperOUTPUT; }
-    return hopperInput;
+    if (side == EnumFacing.DOWN) 
+      return hopperOUTPUT;
+    return hopperInputFuel;
   }
   public void toggleSizeShape() {
     this.size++;

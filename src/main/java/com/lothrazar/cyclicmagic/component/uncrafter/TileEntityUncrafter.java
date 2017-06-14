@@ -29,6 +29,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
   private int[] hopperInput = { 0 };
+  private int[] hopperInputfUEL = { SLOT_ROWS * SLOT_COLS + 1 };
   private int[] hopperOutput;
   public static enum Fields {
     TIMER, REDSTONE, FUEL, FUELMAX;
@@ -107,8 +108,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
       return hopperInput;//input through top side
-    else
+    if (side == EnumFacing.DOWN)
       return hopperOutput;
+    return hopperInputfUEL;
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {

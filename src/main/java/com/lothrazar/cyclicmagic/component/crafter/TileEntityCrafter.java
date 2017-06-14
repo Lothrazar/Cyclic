@@ -30,6 +30,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private IRecipe recipe;
   private int needsRedstone = 1;
   private InventoryCrafting crafter;
+  private int[] hopperInput = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  private int[] hopperInputfUEL = { SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT};
+  private int[] hopperOutput =new int[] { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 };
   public TileEntityCrafter() {
     super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
@@ -156,9 +159,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public int[] getSlotsForFace(EnumFacing side) {
     switch (side) {
       case DOWN:
-        return new int[] { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 };
-      default://UP side and also all others
-        return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        return hopperOutput;
+      case UP:
+      return  hopperInput;
+      default://FUELso all others
+        return hopperInputfUEL;
     }
   }
   @Override
