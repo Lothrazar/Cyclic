@@ -341,22 +341,19 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
-    if (capability ==  net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return true;
-    }
+    if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) { return true; }
     return super.hasCapability(capability, facing);
   }
   @SuppressWarnings("unchecked")
   @Override
-  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
-  {
-      if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-          if (facing == EnumFacing.DOWN)
-              return (T) handlerBottom;
-          else if (facing == EnumFacing.UP)
-              return (T) handlerTop;
-          else
-              return (T) handlerSide;
-      return super.getCapability(capability, facing);
+  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+      if (facing == EnumFacing.DOWN)
+        return (T) handlerBottom;
+      else if (facing == EnumFacing.UP)
+        return (T) handlerTop;
+      else
+        return (T) handlerSide;
+    return super.getCapability(capability, facing);
   }
 }
