@@ -335,4 +335,28 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void decrementSpeed() {
     this.setSpeed(this.getSpeed() + 1);
   }
+  //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
+  net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+  net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+  net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
+  @Override
+  public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
+    if (capability ==  net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return true;
+    }
+    return super.hasCapability(capability, facing);
+  }
+  @SuppressWarnings("unchecked")
+  @Override
+  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
+  {
+      if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+          if (facing == EnumFacing.DOWN)
+              return (T) handlerBottom;
+          else if (facing == EnumFacing.UP)
+              return (T) handlerTop;
+          else
+              return (T) handlerSide;
+      return super.getCapability(capability, facing);
+  }
 }
