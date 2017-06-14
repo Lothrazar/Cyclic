@@ -18,11 +18,6 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
   public ItemCharmAir() {
     super(durability);
   }
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
-  }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) { return; }

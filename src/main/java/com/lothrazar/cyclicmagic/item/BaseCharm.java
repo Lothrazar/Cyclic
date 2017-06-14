@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -47,6 +49,16 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
   }
   public IRecipe addRecipeAndRepair(Item craftItem) {
     return this.addRecipeAndRepair(new ItemStack(craftItem));
+  } 
+  /**
+   * Called each tick as long the item is on a player inventory. Uses by maps to
+   * check if is on a player hand and update it's contents.
+   */
+  @Override
+  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (entityIn instanceof EntityPlayer) {
+      onTick(stack, (EntityPlayer) entityIn);
+    }
   }
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
     GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);

@@ -13,11 +13,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
   public ItemCharmAntidote() {
     super(durability);
   }
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
-  }
+@Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) { return; }
     if (living.isPotionActive(MobEffects.POISON)) {

@@ -22,15 +22,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   public ItemCharmWater() {
     super(durability);
   }
-  /**
-   * Called each tick as long the item is on a player inventory. Uses by maps to
-   * check if is on a player hand and update it's contents.
-   */
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      this.onTick(stack, (EntityPlayer) entityIn);
-    }
-  }
+ 
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));

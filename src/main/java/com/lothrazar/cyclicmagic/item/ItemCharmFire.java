@@ -20,16 +20,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe {
   public ItemCharmFire() {
     super(durability);
   }
-  /**
-   * Called each tick as long the item is on a player inventory. Uses by maps to
-   * check if is on a player hand and update it's contents.
-   */
-  @Override
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
-  }
+ 
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) { return; }

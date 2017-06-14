@@ -15,12 +15,7 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
   public ItemClimbingGlove() {
     super(6000);
   }
-  @Override
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      onTick(stack, (EntityPlayer) entityIn);
-    }
-  }
+ 
   @Override
   public IRecipe addRecipe() {
     return GameRegistry.addShapedRecipe(new ItemStack(this, 1),
