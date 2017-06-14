@@ -94,7 +94,7 @@ public class GuiBuilder extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {  
+    for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);

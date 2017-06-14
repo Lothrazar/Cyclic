@@ -6,9 +6,9 @@ import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -163,7 +163,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
    */
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.DOWN) 
+    if (side == EnumFacing.DOWN)
       return hopperOUTPUT;
     return hopperInputFuel;
   }

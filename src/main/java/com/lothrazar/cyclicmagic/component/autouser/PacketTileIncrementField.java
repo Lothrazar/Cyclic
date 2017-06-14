@@ -16,7 +16,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
   public PacketTileIncrementField() {}
   public PacketTileIncrementField(BlockPos p, int f) {
     pos = p;
-  field = f;
+    field = f;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -42,7 +42,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null && tile instanceof TileEntityBaseMachineInvo) {
       TileEntityBaseMachineInvo te = ((TileEntityBaseMachineInvo) tile);
-      te.setField(message.field,te.getField(message.field)+1);
+      te.setField(message.field, te.getField(message.field) + 1);
     }
     return null;
   }

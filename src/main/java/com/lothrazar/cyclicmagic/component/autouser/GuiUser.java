@@ -39,7 +39,7 @@ public class GuiUser extends GuiBaseContainer {
     actionBtn.setTooltip("tile.block_user.action");
     this.buttonList.add(actionBtn);
     yOffsetBtn = new ButtonIncrementField(btnId++,
-        this.guiLeft +Const.PAD/2,
+        this.guiLeft + Const.PAD / 2,
         this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.Y_OFFSET.ordinal());
     yOffsetBtn.width = Const.SQ;
     yOffsetBtn.setTooltip("tile.block_user.yoffset");
@@ -78,7 +78,7 @@ public class GuiUser extends GuiBaseContainer {
     this.drawString("tile.block_user.output", 122, 64);
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
-    yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal())+"";
+    yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

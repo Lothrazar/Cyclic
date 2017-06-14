@@ -89,14 +89,13 @@ public class UtilHarvestCrops {
     IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
     if (blockState == null) { return false; }
-    boolean addDropsToList=true;
+    boolean addDropsToList = true;
     Block blockCheck = blockState.getBlock();
-   
     if (blockCheck == Blocks.AIR) { return false; }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
-//    ModCyclic.logger.info(blockClassString);
+    //    ModCyclic.logger.info(blockClassString);
     //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
@@ -224,9 +223,9 @@ public class UtilHarvestCrops {
     if (doBreak) {
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
-       if (addDropsToList) {
+      if (addDropsToList) {
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, 0));
-       }
+      }
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -260,7 +259,6 @@ public class UtilHarvestCrops {
           e.printStackTrace();
         }
       }
-
       if (drops.size() > 0) {
         if (conf.dropInPlace) {
           for (ItemStack drop : drops) {

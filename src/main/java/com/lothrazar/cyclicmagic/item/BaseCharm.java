@@ -49,7 +49,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
   }
   public IRecipe addRecipeAndRepair(Item craftItem) {
     return this.addRecipeAndRepair(new ItemStack(craftItem));
-  } 
+  }
   /**
    * Called each tick as long the item is on a player inventory. Uses by maps to
    * check if is on a player hand and update it's contents.

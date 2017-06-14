@@ -72,7 +72,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
-  public  int yOffset = 0;//0,1,-1
+  public int yOffset = 0;//0,1,-1
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET;
   }
@@ -342,7 +342,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public int getField(int id) {
- 
     switch (Fields.values()[id]) {
       case SPEED:
         return getSpeed();
@@ -369,7 +368,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
       case Y_OFFSET:
-        if(value > 1){
+        if (value > 1) {
           value = -1;
         }
         this.yOffset = value;
@@ -387,7 +386,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.needsRedstone = value;
       break;
       case LEFTRIGHT:
-        if(value > 1){
+        if (value > 1) {
           value = 0;
         }
         this.rightClickIfZero = value;
@@ -427,7 +426,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
- 
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
@@ -440,7 +438,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
- 
     return targetPos;
   }
   public BlockPos getTargetCenter() {

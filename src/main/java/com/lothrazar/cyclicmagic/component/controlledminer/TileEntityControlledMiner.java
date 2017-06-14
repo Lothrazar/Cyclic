@@ -296,7 +296,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { FUEL_SLOT }; 
+    return new int[] { FUEL_SLOT };
   }
   @Override
   public int getField(int id) {

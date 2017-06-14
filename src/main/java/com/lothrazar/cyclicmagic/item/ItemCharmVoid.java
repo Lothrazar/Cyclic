@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -20,7 +19,6 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   public ItemCharmVoid() {
     super(durability);
   }
- 
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.ENDER_EYE);

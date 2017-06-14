@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -15,7 +14,6 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
   public ItemClimbingGlove() {
     super(6000);
   }
- 
   @Override
   public IRecipe addRecipe() {
     return GameRegistry.addShapedRecipe(new ItemStack(this, 1),

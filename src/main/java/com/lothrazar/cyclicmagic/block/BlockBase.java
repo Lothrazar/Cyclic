@@ -20,7 +20,7 @@ public abstract class BlockBase extends Block {
   protected void setTranslucent() {
     this.translucent = true;
     this.isTransp = true;
-    this.setLightOpacity( 0);
+    this.setLightOpacity(0);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

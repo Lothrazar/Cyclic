@@ -1,19 +1,17 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.world.World;
 
 public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
   private static final int durability = 32;
   public ItemCharmAntidote() {
     super(durability);
   }
-@Override
+  @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) { return; }
     if (living.isPotionActive(MobEffects.POISON)) {

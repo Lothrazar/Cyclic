@@ -47,6 +47,6 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
-    lightLimit=config.getInt("AutoTorchLightLevel", Const.ConfigCategory.modpackMisc, 7, 1, 14, "At which light level will auto torch place.  Set to 7 means it will place a torch 7 or darker.  (15 is full light, 0 is full dark)");
+    lightLimit = config.getInt("AutoTorchLightLevel", Const.ConfigCategory.modpackMisc, 7, 1, 14, "At which light level will auto torch place.  Set to 7 means it will place a torch 7 or darker.  (15 is full light, 0 is full dark)");
   }
 }
