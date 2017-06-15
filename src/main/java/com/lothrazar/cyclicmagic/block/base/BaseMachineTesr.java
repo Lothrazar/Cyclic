@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;

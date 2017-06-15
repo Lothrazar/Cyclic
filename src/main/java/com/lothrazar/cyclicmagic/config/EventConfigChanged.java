@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.config;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

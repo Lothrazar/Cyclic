@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;

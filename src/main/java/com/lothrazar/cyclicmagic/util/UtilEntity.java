@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.Vector3;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

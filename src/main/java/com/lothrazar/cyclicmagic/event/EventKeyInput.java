@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbenc
 import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -13,7 +14,6 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

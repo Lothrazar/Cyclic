@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.lang.reflect.Field;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.AbstractHorse;
 

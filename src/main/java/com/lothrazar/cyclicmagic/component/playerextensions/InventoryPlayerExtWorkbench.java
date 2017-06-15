@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.playerextensions;
 import java.lang.ref.WeakReference;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;

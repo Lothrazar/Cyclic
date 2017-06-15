@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.command;
+package com.lothrazar.cyclicmagic.data;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

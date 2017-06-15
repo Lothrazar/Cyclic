@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 

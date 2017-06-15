@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.util;
+package com.lothrazar.cyclicmagic.data;
 /**
  * This class was created by <ChickenBones>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
