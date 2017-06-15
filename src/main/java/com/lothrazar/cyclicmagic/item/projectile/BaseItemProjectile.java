@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;

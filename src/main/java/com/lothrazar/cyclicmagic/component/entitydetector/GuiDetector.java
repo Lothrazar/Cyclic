@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.entitydetector;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;

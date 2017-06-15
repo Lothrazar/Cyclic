@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.password;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword.PacketType;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 
 public class ButtonPassword extends GuiButtonTooltip {
   public PacketType type;

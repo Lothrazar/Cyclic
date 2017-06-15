@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;

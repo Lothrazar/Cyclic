@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.ICyclicModule;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public abstract class BaseModule implements ICyclicModule {

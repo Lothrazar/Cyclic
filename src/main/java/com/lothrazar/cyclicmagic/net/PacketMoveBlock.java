@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolPiston;
+import com.lothrazar.cyclicmagic.item.ItemPistonWand;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,10 +16,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBlock, IMessage> {
   private BlockPos pos;
-  private ItemToolPiston.ActionType type;
+  private ItemPistonWand.ActionType type;
   private EnumFacing side;
   public PacketMoveBlock() {}
-  public PacketMoveBlock(BlockPos mouseover, ItemToolPiston.ActionType t, EnumFacing s) {
+  public PacketMoveBlock(BlockPos mouseover, ItemPistonWand.ActionType t, EnumFacing s) {
     pos = mouseover;
     type = t;
     side = s;
@@ -32,7 +32,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
     int t = tags.getInteger("t");
-    type = ItemToolPiston.ActionType.values()[t];
+    type = ItemPistonWand.ActionType.values()[t];
     int s = tags.getInteger("s");
     side = EnumFacing.values()[s];
   }

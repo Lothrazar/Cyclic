@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.magnetanti;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.crafter;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe {
   public BlockCrafter() {
-    super(Material.ROCK, ModGuiHandler.GUI_INDEX_CRAFTER);
+    super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_CRAFTER);
     this.setTranslucent();
   }
   @Override

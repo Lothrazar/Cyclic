@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle.ActionType;
 import net.minecraft.client.Minecraft;

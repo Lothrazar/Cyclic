@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseFacingOmni;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +19,7 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_BLOCKMINER);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_BLOCKMINER);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

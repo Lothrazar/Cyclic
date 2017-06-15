@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.BlockBase;
+import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;

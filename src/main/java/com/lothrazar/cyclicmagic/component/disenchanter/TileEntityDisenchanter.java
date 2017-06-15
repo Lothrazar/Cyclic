@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.disenchanter;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;

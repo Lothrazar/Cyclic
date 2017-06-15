@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.workbench;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -15,7 +15,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe {
   public BlockWorkbench() {
     super(Material.ROCK);
     this.setTranslucent();
-    this.setGuiId(ModGuiHandler.GUI_INDEX_WORKBENCH);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_WORKBENCH);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

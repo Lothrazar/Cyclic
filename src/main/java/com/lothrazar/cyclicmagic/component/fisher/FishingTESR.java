@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fisher;
-import com.lothrazar.cyclicmagic.block.tileentity.BaseMachineTesr;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

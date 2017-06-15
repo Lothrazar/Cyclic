@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.material.Material;

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;

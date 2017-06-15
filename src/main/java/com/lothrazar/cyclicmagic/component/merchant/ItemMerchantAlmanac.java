@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.merchant;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -25,7 +25,7 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     BlockPos p = player.getPosition();
     if (world.isRemote == false) {
-      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_VILLAGER, world, p.getX(), p.getY(), p.getZ());
+      player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_VILLAGER, world, p.getX(), p.getY(), p.getZ());
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }

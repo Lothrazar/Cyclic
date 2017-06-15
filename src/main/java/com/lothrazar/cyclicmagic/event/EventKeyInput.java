@@ -1,12 +1,12 @@
 package com.lothrazar.cyclicmagic.event;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;

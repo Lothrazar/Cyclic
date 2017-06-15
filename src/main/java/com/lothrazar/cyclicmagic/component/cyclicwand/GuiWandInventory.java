@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cyclicwand;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.storagesack;
-import com.lothrazar.cyclicmagic.gui.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

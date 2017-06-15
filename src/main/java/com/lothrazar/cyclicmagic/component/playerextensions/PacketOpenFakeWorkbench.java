@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.playerextensions;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,7 +14,7 @@ public class PacketOpenFakeWorkbench implements IMessage, IMessageHandler<Packet
   public void toBytes(ByteBuf buf) {}
   @Override
   public IMessage onMessage(PacketOpenFakeWorkbench message, MessageContext ctx) {
-    ctx.getServerHandler().playerEntity.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().playerEntity.getEntityWorld(), (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
+    ctx.getServerHandler().playerEntity.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().playerEntity.getEntityWorld(), (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
     return null;
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

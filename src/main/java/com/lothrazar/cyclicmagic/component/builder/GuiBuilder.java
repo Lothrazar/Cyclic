@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;

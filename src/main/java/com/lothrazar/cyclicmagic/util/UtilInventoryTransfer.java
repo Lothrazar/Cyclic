@@ -245,7 +245,7 @@ public class UtilInventoryTransfer {
           continue;//go to next chest item
         }
         //ok so chestItem is not nulll
-        if (UtilItemStack.isEmpty()) {
+        if (UtilItemStack.isEmpty(bagItem)) {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks.get(islotStacks);

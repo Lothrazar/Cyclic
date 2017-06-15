@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.playerextensions;
-import com.lothrazar.cyclicmagic.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

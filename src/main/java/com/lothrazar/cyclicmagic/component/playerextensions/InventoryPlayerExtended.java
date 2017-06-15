@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.playerextensions;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.item.EntityItem;

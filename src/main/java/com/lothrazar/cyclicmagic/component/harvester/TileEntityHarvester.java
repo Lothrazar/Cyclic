@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;

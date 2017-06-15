@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.base.MachineTESR;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +25,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockStructureBuilder() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_BUILDER);
+    super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);

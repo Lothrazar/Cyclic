@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.crafter;
-import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
-import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
+import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;

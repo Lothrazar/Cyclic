@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.fisher;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,7 +33,7 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_FISHER);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_FISHER);
     this.setTranslucent();
   }
   @Override

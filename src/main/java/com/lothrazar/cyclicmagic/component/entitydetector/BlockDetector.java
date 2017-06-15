@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -20,7 +20,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
     super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(5F);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_DETECTOR);
     this.setTranslucent();
   }
   @Override

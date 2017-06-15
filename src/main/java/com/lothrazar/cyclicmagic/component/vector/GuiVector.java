@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;

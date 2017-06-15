@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.storagesack;
-import com.lothrazar.cyclicmagic.gui.ContainerBase;
-import com.lothrazar.cyclicmagic.gui.SlotItemRestrictedInverse;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;

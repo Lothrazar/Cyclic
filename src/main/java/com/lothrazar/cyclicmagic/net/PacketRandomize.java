@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
+import com.lothrazar.cyclicmagic.item.ItemRandomizer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
@@ -19,10 +19,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomize, IMessage> {
   private BlockPos pos;
-  private ItemToolRandomize.ActionType actionType;
+  private ItemRandomizer.ActionType actionType;
   private EnumFacing side;
   public PacketRandomize() {}
-  public PacketRandomize(BlockPos mouseover, EnumFacing s, ItemToolRandomize.ActionType t) {
+  public PacketRandomize(BlockPos mouseover, EnumFacing s, ItemRandomizer.ActionType t) {
     pos = mouseover;
     actionType = t;
     side = s;
@@ -37,7 +37,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     int s = tags.getInteger("s");
     side = EnumFacing.values()[s];
     int t = tags.getInteger("t");
-    actionType = ItemToolRandomize.ActionType.values()[t];
+    actionType = ItemRandomizer.ActionType.values()[t];
   }
   @Override
   public void toBytes(ByteBuf buf) {

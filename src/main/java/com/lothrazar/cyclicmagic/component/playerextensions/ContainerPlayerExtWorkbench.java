@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.playerextensions;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

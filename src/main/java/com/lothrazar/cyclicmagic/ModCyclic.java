@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.log.ModLogger;
+import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -79,7 +81,7 @@ public class ModCyclic {
       module.onInit();
     }
     proxy.init();
-    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ForgeGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
     PermissionRegistry.register();
@@ -97,14 +99,4 @@ public class ModCyclic {
       module.onServerStarting(event);
     }
   }
-  /*
-   * REQUESTED FEATURES:
-   * 
-   * https://github.com/PrinceOfAmber/Cyclic/milestones
-   * 
-   * BUGS:
-   * 
-   * https://github.com/PrinceOfAmber/Cyclic/issues
-   * 
-   */
 }

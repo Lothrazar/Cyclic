@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
     this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
     this.setTranslucent();
-    this.setGuiId(ModGuiHandler.GUI_INDEX_PATTERN);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_PATTERN);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

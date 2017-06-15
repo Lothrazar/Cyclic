@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item.minecart;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
-import com.lothrazar.cyclicmagic.item.BaseItemMinecart;
+import com.lothrazar.cyclicmagic.item.base.BaseItemMinecart;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

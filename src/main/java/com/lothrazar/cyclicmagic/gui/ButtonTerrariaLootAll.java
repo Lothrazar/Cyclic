@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketDepositContainerToPlayer;
