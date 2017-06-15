@@ -1,8 +1,6 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -19,42 +17,36 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
   private static final int numFood = 10;
-  public ItemFoodInventory() {
+  public ItemFoodCrafting() {
     super(numFood, false);
     this.setAlwaysEdible();
   }
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
-    if (data.hasInventoryExtended()) {
+    if (data.hasInventoryCrafting()) {
       UtilSound.playSound(player, SoundRegistry.buzzp);
       return;
     }
-    data.setInventoryExtended(true);
+    data.setInventoryCrafting(true);
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
     UtilSound.playSound(player, SoundRegistry.bwewe);
     if (player.getEntityWorld().isRemote) {
-      UtilChat.addChatMessage(player, "unlocks.extended");
+      UtilChat.addChatMessage(player, "unlocks.crafting");
     }
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Blocks.ENDER_CHEST, Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, Items.DIAMOND, Items.EMERALD, Items.QUARTZ);
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Blocks.CRAFTING_TABLE, Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, Items.DIAMOND, Items.EMERALD, Items.QUARTZ);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.inventory;
-    EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
   }
 }

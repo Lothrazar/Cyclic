@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;

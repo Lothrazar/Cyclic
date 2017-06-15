@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -9,25 +10,25 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ButtonTabToggleInventory extends GuiButton {
+public class ButtonTabToggleCrafting extends GuiButton {
   private GuiScreen gui;
-  public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
-    super(51, x, y, 15, 10, "");
+  public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
+    super(256, x, y, 15, 10, "");
     gui = g;
-    if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.getDisplayName() != null &&
-        ClientProxy.keyExtraInvo.getDisplayName().equals("NONE") == false) {
-      this.displayString = ClientProxy.keyExtraInvo.getDisplayName();
+    if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.getDisplayName() != null &&
+        ClientProxy.keyExtraCraftin.getDisplayName().equals("NONE") == false) {
+      this.displayString = ClientProxy.keyExtraCraftin.getDisplayName();
     }
     else {
-      this.displayString = "I";//the legacy one. in case someone is just running with the key unbound
+      this.displayString = "C";//the legacy one. in case someone is just running with the key unbound
     }
   }
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtWorkbench) {
-        ModCyclic.network.sendToServer(new PacketOpenExtendedInventory());
+      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtended) {
+        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.player));

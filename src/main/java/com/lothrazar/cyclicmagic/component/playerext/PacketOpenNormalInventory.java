@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

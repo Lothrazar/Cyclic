@@ -1,5 +1,7 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.client.Minecraft;

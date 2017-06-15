@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.component.playerextensions.EventExtendedInventory;
-import com.lothrazar.cyclicmagic.component.playerextensions.EventGuiInvoButtons;
+import com.lothrazar.cyclicmagic.component.playerext.EventExtendedInventory;
+import com.lothrazar.cyclicmagic.component.playerext.EventGuiInvoButtons;
 import com.lothrazar.cyclicmagic.config.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventAchievement;
 import com.lothrazar.cyclicmagic.event.EventKeyInput;

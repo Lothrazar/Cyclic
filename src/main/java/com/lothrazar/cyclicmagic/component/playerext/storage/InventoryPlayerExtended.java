@@ -1,7 +1,8 @@
-package com.lothrazar.cyclicmagic.component.playerextensions;
+package com.lothrazar.cyclicmagic.component.playerext.storage;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.playerext.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
