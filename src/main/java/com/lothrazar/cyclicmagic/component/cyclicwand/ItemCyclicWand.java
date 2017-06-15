@@ -137,7 +137,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == ItemStack.EMPTY) { return 0; }
+      if (wand.isEmpty()) { return 0; }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -151,7 +151,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
       int slot = getSlot(wand);
-      if (InventoryWand.getFromSlot(wand, slot) == ItemStack.EMPTY || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
+      if (InventoryWand.getFromSlot(wand, slot).isEmpty() || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
         //try to move away from empty slot
         setNextSlot(wand);
       }

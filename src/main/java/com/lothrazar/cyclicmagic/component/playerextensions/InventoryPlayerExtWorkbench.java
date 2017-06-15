@@ -103,7 +103,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     NBTTagList tagList = new NBTTagList();
     NBTTagCompound invSlot;
     for (int i = 0; i < this.inv.size(); ++i) {
-      if (this.inv.get(i) != ItemStack.EMPTY) {
+      if (!this.inv.get(i).isEmpty()) {
         invSlot = new NBTTagCompound();
         invSlot.setByte("Slot", (byte) i);
         this.inv.get(i).writeToNBT(invSlot);

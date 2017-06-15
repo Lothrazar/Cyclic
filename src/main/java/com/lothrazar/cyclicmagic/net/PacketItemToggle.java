@@ -37,7 +37,7 @@ public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemTog
       if (message.slot >= scount) { return null; }
       Slot slotObj = player.openContainer.getSlot(message.slot);
       if (slotObj != null
-          && slotObj.getStack() != ItemStack.EMPTY) {
+          && !slotObj.getStack().isEmpty()) {
         ItemStack maybeCharm = slotObj.getStack();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something

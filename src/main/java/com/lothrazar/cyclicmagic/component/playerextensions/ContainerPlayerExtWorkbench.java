@@ -41,7 +41,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
         @Override
         public boolean isItemValid(ItemStack stack) {
-          if (stack == ItemStack.EMPTY) {
+          if (stack.isEmpty()) {
             return false;
           }
           else {
@@ -102,7 +102,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     //size of 9, but it starts after the five equip slots
     for (int i = 0; i < 9; ++i) {
       ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i);
-      if (itemstack != ItemStack.EMPTY) {
+      if (!itemstack.isEmpty()) {
         playerIn.dropItem(itemstack, false);
       }
     }

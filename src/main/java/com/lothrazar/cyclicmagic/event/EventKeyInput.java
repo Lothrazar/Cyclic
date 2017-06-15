@@ -116,7 +116,7 @@ public class EventKeyInput {
     }
     if (rightClickDown && gui.getSlotUnderMouse() != null) {
       int slot = gui.getSlotUnderMouse().slotNumber;
-      if (gui.inventorySlots.getSlot(slot) != null && gui.inventorySlots.getSlot(slot).getStack() != ItemStack.EMPTY) {
+      if (gui.inventorySlots.getSlot(slot) != null && !gui.inventorySlots.getSlot(slot).getStack().isEmpty()) {
         ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something

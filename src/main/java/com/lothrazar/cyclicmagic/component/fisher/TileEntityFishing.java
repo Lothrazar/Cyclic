@@ -143,11 +143,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void tryAddToInventory(ItemStack itemstack) {
     for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-      if (itemstack != ItemStack.EMPTY && itemstack.getMaxStackSize() != 0) {
+      if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
     }
-    if (itemstack != ItemStack.EMPTY && itemstack.getMaxStackSize() != 0) { //FULL
+    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) { //FULL
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
@@ -162,13 +162,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void attemptRepairTool() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (equip != ItemStack.EMPTY && equip.getItemDamage() > 0) {//if it has zero damage, its fully repaired already
+    if (!equip.isEmpty() && equip.getItemDamage() > 0) {//if it has zero damage, its fully repaired already
       equip.setItemDamage(equip.getItemDamage() - 1);//repair by one point
     }
   }
   private void damageTool() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (equip != ItemStack.EMPTY) {
+    if (!equip.isEmpty() ) {
       equip.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
       //IF enchanted and IF about to break, then spit it out
       int damageRem = equip.getMaxDamage() - equip.getItemDamage();

@@ -31,7 +31,7 @@ public class InventoryBase {
   }
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
-    if (stack != ItemStack.EMPTY) {
+    if (!stack.isEmpty()) {
       if (stack.getMaxStackSize() <= count) {
         setInventorySlotContents(index, ItemStack.EMPTY);
       }

@@ -155,7 +155,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     NBTTagList tagList = new NBTTagList();
     NBTTagCompound invSlot;
     for (int i = 0; i < this.inv.size(); ++i) {
-      if (this.inv.get(i) != ItemStack.EMPTY) {
+      if (!this.inv.get(i).isEmpty()) {
         invSlot = new NBTTagCompound();
         invSlot.setByte("Slot", (byte) i);
         this.inv.get(i).writeToNBT(invSlot);
@@ -174,14 +174,14 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
       NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
       ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
-      if (itemstack != ItemStack.EMPTY) {
+      if (!itemstack.isEmpty()) {
         this.inv.set(j, itemstack);
       }
     }
   }
   public void dropItems(List<EntityItem> drops, BlockPos pos) {
     for (int i = 0; i < this.getSizeInventory(); ++i) {
-      if (this.inv.get(i) != ItemStack.EMPTY) {
+      if (!this.inv.get(i).isEmpty()) {
         World world = player.get().getEntityWorld();
         EntityItem ei = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), this.inv.get(i).copy());
         ei.setPickupDelay(40);

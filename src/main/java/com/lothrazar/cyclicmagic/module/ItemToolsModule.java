@@ -379,7 +379,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     EntityPlayer player = Minecraft.getMinecraft().player;
     if (!player.isSneaking() || event.getDwheel() == 0) { return; }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == ItemStack.EMPTY) { return; }
+    if (wand.isEmpty()) { return; }
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
@@ -398,7 +398,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
     // special new case: no hud for this type
-    if (wand != ItemStack.EMPTY) {
+    if (!wand.isEmpty()) {
       spellHud.drawSpellWheel(wand);
     }
   }
@@ -408,10 +408,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand == ItemStack.EMPTY) { return; }
+    if (heldWand.isEmpty()) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
-    if (current != ItemStack.EMPTY) {
+    if (!current.isEmpty()) {
       //THE ITEM INSIDE THE BUILDY WHEEL
       int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
       int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);

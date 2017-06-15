@@ -147,7 +147,7 @@ public class ContainerPlayerExtended extends ContainerBase {
       while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
         slot = (Slot) this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
-        if (itemstack1 != ItemStack.EMPTY && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
+        if (!itemstack1.isEmpty() && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
           int l = itemstack1.getCount() + par1ItemStack.getCount();
           if (l <= par1ItemStack.getMaxStackSize()) {
             // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);

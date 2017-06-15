@@ -174,7 +174,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
-    if (main == ItemStack.EMPTY && second != ItemStack.EMPTY) { // if the one below this is not
+    if (main.isEmpty() && !second.isEmpty()) { // if the one below this is not
       // empty, move it up
       this.setInventorySlotContents(high, ItemStack.EMPTY);
       this.setInventorySlotContents(low, second);
@@ -195,7 +195,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
-    if (stack != ItemStack.EMPTY) {
+    if (!stack .isEmpty()) {
       if (stack.getMaxStackSize() <= count) {
         setInventorySlotContents(index, ItemStack.EMPTY);
       }
@@ -219,7 +219,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (stack == null) {
       stack = ItemStack.EMPTY;
     }
-    if (stack != ItemStack.EMPTY && stack.getMaxStackSize() > getInventoryStackLimit()) {
+    if (!stack.isEmpty() && stack.getMaxStackSize() > getInventoryStackLimit()) {
       stack.setCount(getInventoryStackLimit());
     }
     inv.set(index, stack);
@@ -268,7 +268,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.size(); i++) {
       ItemStack stack = inv.get(i);
-      if (stack != ItemStack.EMPTY) {
+      if (!stack.isEmpty()) {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setByte(NBT_SLOT, (byte) i);
         stack.writeToNBT(tag);

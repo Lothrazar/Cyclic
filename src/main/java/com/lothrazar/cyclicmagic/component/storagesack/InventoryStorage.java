@@ -86,13 +86,13 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   @Override
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
-      if (getStackInSlot(i) != ItemStack.EMPTY && getStackInSlot(i).getCount() == 0) {
+      if (!getStackInSlot(i).isEmpty() && getStackInSlot(i).getCount() == 0) {
         inv.set(i, ItemStack.EMPTY);
       }
     }
     // set any empty item stacks (red zeroes) to empty
     for (int i = 0; i < thePlayer.inventory.getSizeInventory(); i++) {
-      if (thePlayer.inventory.getStackInSlot(i) != ItemStack.EMPTY && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
+      if (!thePlayer.inventory.getStackInSlot(i).isEmpty() && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
         thePlayer.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
       }
     }
@@ -119,7 +119,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   }
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
     NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
-    if (stack == ItemStack.EMPTY) { return inv; }
+    if (stack.isEmpty()) { return inv; }
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
       // 1.7.2+ change to items.getCompoundTagAt(i)
@@ -138,10 +138,10 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     ItemStack stack;
     for (int i = 0; i < theInventory.size(); ++i) {
       stack = theInventory.get(i);
-      if (stack != ItemStack.EMPTY && stack.getCount() == 0) {
+      if (!stack.isEmpty() && stack.getCount() == 0) {
         stack = ItemStack.EMPTY;
       }
-      if (stack != ItemStack.EMPTY) {
+      if (!stack.isEmpty()) {
         // Make a new NBT Tag Compound to write the itemstack and slot
         // index to
         NBTTagCompound itemTags = new NBTTagCompound();

@@ -28,8 +28,5 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tileEntity);
   }
-  @Override
-  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    return ItemStack.EMPTY;
-  }
+  
 }

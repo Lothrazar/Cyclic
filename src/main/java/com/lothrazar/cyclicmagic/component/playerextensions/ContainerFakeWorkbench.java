@@ -24,7 +24,7 @@ public class ContainerFakeWorkbench extends ContainerWorkbench {
     if (!world.isRemote) {
       for (int var2 = 0; var2 < 9; ++var2) {
         ItemStack var3 = craftMatrix.getStackInSlot(var2);
-        if (var3 != ItemStack.EMPTY) {
+        if (!var3.isEmpty()) {
           par1EntityPlayer.dropItem(var3, true);
           //	par1EntityPlayer.dropPlayerItemWithRandomChoice(var3, true);
         }
