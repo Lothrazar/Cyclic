@@ -6,6 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -26,7 +27,6 @@ import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 2000;
@@ -88,7 +88,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " sg",
         " bs",
         "b  ",

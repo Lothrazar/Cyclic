@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRotateBlock extends BaseTool implements IHasRecipe {
   private static final int durability = 1024;
@@ -39,7 +39,7 @@ public class ItemRotateBlock extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+    RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gp",
         " bg",
         "b  ",

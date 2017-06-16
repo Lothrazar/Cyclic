@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

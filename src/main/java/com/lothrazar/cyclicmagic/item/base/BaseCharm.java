@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.base;
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -14,7 +15,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -61,8 +61,8 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
     }
   }
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
         "iir",

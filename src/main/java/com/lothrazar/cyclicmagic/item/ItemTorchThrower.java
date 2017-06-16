@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -14,7 +15,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemTorchThrower extends BaseTool implements IHasRecipe {
   private static final float VELOCITY_DEFAULT = 1.5F;
@@ -39,7 +39,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+    RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gi",
         " ig",
         "o  ",

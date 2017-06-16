@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -14,7 +15,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -90,7 +90,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     switch (warpType) {
       case BED:
         //goes to your BED (which can be anywhere)
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             " ft",
             "ggf",
             "dg ",
@@ -100,7 +100,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
             'd', new ItemStack(Items.ENDER_EYE));
       case SPAWN:
         //this one needs diamond but is cheaper. goes to worldspawn
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             " ff",
             "ggf",
             "dg ",

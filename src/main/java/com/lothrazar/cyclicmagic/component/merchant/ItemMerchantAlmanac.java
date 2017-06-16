@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -13,7 +14,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
   public static final int radius = 5;
@@ -31,11 +31,11 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
         'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.BROWN_MUSHROOM);
-    return GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
         'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.RED_MUSHROOM);

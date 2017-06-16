@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +15,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,6 +55,8 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this), " a ", "bsc", " d ", 's', Items.NETHER_STAR, 'a', Items.GOLDEN_APPLE, 'b', Items.POISONOUS_POTATO, 'c', Blocks.PURPUR_BLOCK, 'd', Items.EMERALD);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), 
+        " a ", "bsc", " d ", 's', Items.NETHER_STAR, 'a', Items.GOLDEN_APPLE, 
+        'b', Items.POISONOUS_POTATO, 'c', Blocks.PURPUR_BLOCK, 'd', Items.EMERALD);
   }
 }

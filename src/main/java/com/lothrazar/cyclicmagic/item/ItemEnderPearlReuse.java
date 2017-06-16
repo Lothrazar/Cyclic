@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -14,7 +15,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -50,23 +50,23 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     switch (orbType) {
       case MOUNTED:
-        GameRegistry.addShapedRecipe(new ItemStack(this),
+       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ere",
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
             'r', new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
             's', new ItemStack(Blocks.IRON_BLOCK));
-      break;
+    
       case NORMAL:
-        GameRegistry.addShapedRecipe(new ItemStack(this),
+        return  RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ere",
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
             'r', Items.REDSTONE,
             's', new ItemStack(Blocks.IRON_BLOCK));
-      break;
+  
       default:
       break;
     }

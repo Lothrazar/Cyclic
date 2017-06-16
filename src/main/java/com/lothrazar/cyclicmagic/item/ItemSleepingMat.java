@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketSleepClient;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
@@ -32,7 +33,6 @@ import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig {
   // thank you for the examples forge. player data storage based on API source
@@ -149,9 +149,9 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this),
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         Items.LEATHER);
-    return null;
+  
   }
 }

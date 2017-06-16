@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -27,7 +28,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemMattock extends ItemTool implements IHasRecipe {
   final static int RADIUS = 1;//radius 2 is 5x5 area square
@@ -135,18 +135,17 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
-        "ede", "oso", " s ",
-        'e', Items.EMERALD,
-        'o', Blocks.OBSIDIAN,
-        'd', Items.DIAMOND,
-        's', Items.BONE);
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+    RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ede", "oso", " s ",
         'e', Blocks.QUARTZ_BLOCK,
         'o', Blocks.OBSIDIAN,
         'd', Blocks.DIAMOND_BLOCK,
         's', Items.BONE);
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ede", "oso", " s ",
+        'e', Items.EMERALD,
+        'o', Blocks.OBSIDIAN,
+        'd', Items.DIAMOND,
+        's', Items.BONE);
   }
 }

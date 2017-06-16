@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -12,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
@@ -37,8 +37,8 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), Blocks.COAL_BLOCK, Blocks.COAL_BLOCK, Blocks.COAL_BLOCK);
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), Blocks.COAL_BLOCK, Blocks.COAL_BLOCK, Blocks.COAL_BLOCK);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "cic",
         " i ",
         "cic",

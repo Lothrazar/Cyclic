@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.net.PacketChestSack;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -18,7 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   public static final String name = "chest_sack_empty";
@@ -47,14 +47,14 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+    RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
         "lbl",
         "lll",
         'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.SLIME_BALL),
         's', new ItemStack(Items.STRING));
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
         "lbl",
         "lll",

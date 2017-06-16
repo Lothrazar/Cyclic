@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemScythe extends BaseTool implements IHasRecipe {
   private static final int RADIUS = 6;//13x13
@@ -69,7 +69,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     switch (harvestType) {
       case CROPS:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
@@ -77,7 +77,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
             'g', Items.QUARTZ,
             's', Items.STONE_HOE);
       case LEAVES:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
@@ -85,7 +85,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
             'g', Items.STRING,
             's', Items.STONE_AXE);
       case WEEDS:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",

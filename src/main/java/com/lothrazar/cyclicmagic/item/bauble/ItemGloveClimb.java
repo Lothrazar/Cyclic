@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.bauble;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -8,7 +9,6 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
   private static final double CLIMB_SPEED = 0.288D;
@@ -17,7 +17,7 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 1),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
         "ssl",
         "skl",
         "lli",
