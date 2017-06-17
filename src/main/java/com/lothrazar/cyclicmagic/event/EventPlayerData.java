@@ -40,7 +40,7 @@ public class EventPlayerData {
     }
   }
   @SubscribeEvent
-  public void onEntityConstruct(AttachCapabilitiesEvent.Entity event) {
+  public void onEntityConstruct(AttachCapabilitiesEvent event) {//was AttachCapabilitiesEvent.Entity
     if (event.getEntity() instanceof EntityPlayer) {
       ///?? no (EntityPlayer)event.getEntity()    in constructor?
       event.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new PlayerCapInstance());

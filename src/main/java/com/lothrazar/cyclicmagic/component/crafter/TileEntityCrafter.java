@@ -134,10 +134,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     recipe = null;//doesnt match
-    final List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-    for (final IRecipe rec : recipes) {
+//    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
+    for (final IRecipe rec :  CraftingManager.field_193380_a) {
       try {
-        if (rec.getRecipeSize() <= 9 && rec.matches(this.crafter, this.world)) {
+        // rec.getRecipeSize() <= 9 && 
+        if (rec.matches(this.crafter, this.world)) {
           this.recipe = rec;
           return;
         }

@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.component.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -66,13 +65,11 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
           new ItemStack(plate_launch_med),
           new ItemStack(Blocks.END_STONE)));
-      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
     }
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
       BlockRegistry.registerBlock(plate_push, "plate_push", null);
       GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
-      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
       page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_push, 8),
           "sbs",
           "bxb",

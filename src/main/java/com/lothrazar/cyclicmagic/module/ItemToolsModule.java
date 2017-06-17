@@ -40,7 +40,6 @@ import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
 import com.lothrazar.cyclicmagic.item.bauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -258,7 +257,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemEnderPearlReuse ender_pearl_mounted = new ItemEnderPearlReuse(ItemEnderPearlReuse.OrbType.MOUNTED);
       ItemRegistry.register(ender_pearl_mounted, "ender_pearl_mounted");
       LootTableRegistry.registerLoot(ender_pearl_mounted);
-      AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
+//      AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
       ItemRegistry.registerWithJeiDescription(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
@@ -271,7 +270,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemScythe tool_harvest_crops = new ItemScythe(ItemScythe.HarvestType.CROPS);
       ItemRegistry.register(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
-      AchievementRegistry.registerItemAchievement(tool_harvest_crops);
+//      AchievementRegistry.registerItemAchievement(tool_harvest_crops);
       ItemRegistry.registerWithJeiDescription(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
@@ -285,7 +284,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.register(tool_push, "tool_push");
       ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push);
-      AchievementRegistry.registerItemAchievement(tool_push);
+//      AchievementRegistry.registerItemAchievement(tool_push);
       ItemRegistry.registerWithJeiDescription(tool_push);
     }
     if (enableSleepingMat) {
@@ -302,7 +301,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ModCyclic.instance.events.register(this);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
-      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
+//      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
       ModCyclic.instance.setTabItemIfNull(cyclic_wand_build);
       ItemRegistry.registerWithJeiDescription(cyclic_wand_build);
     }
@@ -310,7 +309,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemEnderWing tool_warp_home = new ItemEnderWing(ItemEnderWing.WarpType.BED);
       ItemRegistry.register(tool_warp_home, "tool_warp_home", GuideCategory.TRANSPORT);
       LootTableRegistry.registerLoot(tool_warp_home);
-      AchievementRegistry.registerItemAchievement(tool_warp_home);
+//      AchievementRegistry.registerItemAchievement(tool_warp_home);
       ItemRegistry.registerWithJeiDescription(tool_warp_home);
     }
     if (enableWarpSpawnTool) {

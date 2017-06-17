@@ -10,8 +10,7 @@ import com.lothrazar.cyclicmagic.item.bauble.ItemCharmFire;
 import com.lothrazar.cyclicmagic.item.bauble.ItemCharmSlowfall;
 import com.lothrazar.cyclicmagic.item.bauble.ItemCharmSpeed;
 import com.lothrazar.cyclicmagic.item.bauble.ItemCharmVoid;
-import com.lothrazar.cyclicmagic.item.bauble.ItemCharmWater;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.item.bauble.ItemCharmWater; 
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -65,8 +64,7 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
     }
     if (slowfallCharm) {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
-      ItemRegistry.register(charm_wing, "charm_wing", GuideCategory.ITEMBAUBLES);
-      AchievementRegistry.registerItemAchievement(charm_wing);
+      ItemRegistry.register(charm_wing, "charm_wing", GuideCategory.ITEMBAUBLES); 
       LootTableRegistry.registerLoot(charm_wing);
       ItemRegistry.registerWithJeiDescription(charm_wing);
     }

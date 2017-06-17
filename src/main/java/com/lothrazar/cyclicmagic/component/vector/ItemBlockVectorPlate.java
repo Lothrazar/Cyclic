@@ -3,10 +3,12 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +19,7 @@ public class ItemBlockVectorPlate extends ItemBlock {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
     stack.getItem().updateItemStackNBT(stack.getTagCompound());
     String d = UtilNBT.getItemStackDisplayInteger(stack, TileEntityVector.NBT_ANGLE);
     if (d.length() > 0)

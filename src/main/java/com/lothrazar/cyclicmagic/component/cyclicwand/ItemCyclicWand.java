@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -59,7 +60,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     super.onCreated(stack, worldIn, playerIn);
   }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
     ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       tooltip.add(TextFormatting.GREEN + spell.getName() + " "

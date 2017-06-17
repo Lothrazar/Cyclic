@@ -54,7 +54,8 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventoryIn) {
-    this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+    //no more .getInstance()
+    this.craftResult.setInventorySlotContents(0, CraftingManager.findMatchingRecipe(this.craftMatrix, this.world));
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {

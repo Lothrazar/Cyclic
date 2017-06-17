@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.playerext.storage;
 import com.lothrazar.cyclicmagic.data.Const;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.achievement.GuiAchievements;
+import net.minecraft.client.gui.GuiButton; 
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
@@ -45,9 +44,9 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   }
   @Override
   protected void actionPerformed(GuiButton button) {
-    if (button.id == 0) {
-      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
-    }
+//    if (button.id == 0) {
+//      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
+//    }
     if (button.id == 1) {
       this.mc.displayGuiScreen(new GuiStats(this, this.mc.player.getStatFileWriter()));
     }
