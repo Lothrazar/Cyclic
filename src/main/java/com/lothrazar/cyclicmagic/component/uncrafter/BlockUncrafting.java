@@ -1,11 +1,12 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.base.MachineTESR;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.BlacklistType;
 import net.minecraft.block.SoundType;
@@ -21,14 +22,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockUncrafting() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_UNCRAFTING);
+    super(Material.IRON, ForgeGuiHandler.GUI_INDEX_UNCRAFTING);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
@@ -45,7 +45,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " d ",
         "fdf",
         "ooo",

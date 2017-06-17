@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.placer;
-import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;

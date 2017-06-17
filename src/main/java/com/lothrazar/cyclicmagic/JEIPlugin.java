@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
-import com.lothrazar.cyclicmagic.component.playerextensions.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import mezz.jei.api.BlankModPlugin;

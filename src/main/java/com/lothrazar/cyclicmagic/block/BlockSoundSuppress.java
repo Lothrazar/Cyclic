@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.material.Material;
@@ -19,7 +21,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -115,7 +116,7 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 8),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
         " s ",
         "sos",
         " s ",

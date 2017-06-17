@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartChest;
@@ -15,7 +16,6 @@ import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class EntityMinecartModule extends BaseEventModule implements IHasConfig {

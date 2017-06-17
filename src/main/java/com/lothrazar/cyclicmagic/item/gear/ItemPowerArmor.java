@@ -1,8 +1,9 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -22,7 +23,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
@@ -107,25 +107,25 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
   public IRecipe addRecipe() {
     switch (this.armorType) {
       case CHEST:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "p p", "oio", "ooo",
             'i', new ItemStack(Items.CHAINMAIL_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
             'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case FEET:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "   ", "p p", "oio",
             'i', new ItemStack(Items.CHAINMAIL_BOOTS, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
             'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case HEAD:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "   ",
             'i', new ItemStack(Items.CHAINMAIL_HELMET, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
             'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case LEGS:
-        return GameRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "o o",
             'i', new ItemStack(Items.CHAINMAIL_LEGGINGS, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,

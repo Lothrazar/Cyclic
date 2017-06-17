@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cyclicwand;
-import com.lothrazar.cyclicmagic.gui.ContainerBase;
-import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

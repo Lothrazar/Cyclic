@@ -3,11 +3,11 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -141,7 +141,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (equip.getCount() == 0) {
       this.setInventorySlotContents(TOOLSLOT_INDEX, ItemStack.EMPTY);
     }
-    if (equip == ItemStack.EMPTY) {
+    if (equip.isEmpty()) {
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
     }
     else if (!equip.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
@@ -165,7 +165,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     int listSize = this.getSizeInventory() - 1;
     if (this.blacklistIfZero == 0) {
       for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
-        if (inv.get(i) == ItemStack.EMPTY) {
+        if (inv.get(i).isEmpty()) {
           continue;
         }
         itemStack = inv.get(i);
@@ -176,17 +176,13 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     else {//check it as a WHITELIST
       int countEmpty = 0;
       for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
-        if (inv.get(i) == ItemStack.EMPTY) {
+        if (inv.get(i).isEmpty()) {
           countEmpty++;
           continue;
         }
         itemStack = inv.get(i);
         //its a whitelist, so if its found in the list, its good to go right away
-        //        ModCyclic.logger.info("checkingWhitelist... ? "+itemStack);
-        //        ModCyclic.logger.info(" Block.getBlockFromItem(item.getItem())... ? "+ Block.getBlockFromItem(itemStack.getItem()));
-        //        ModCyclic.logger.info("Item.REGISTRY... vs "+Item.REGISTRY.getNameForObject(itemStack.getItem()).toString()  );
-        //        ModCyclic.logger.info("Block.REGISTRY... ?? "+Block.REGISTRY.getNameForObject(target).toString());
-        //        ModCyclic.logger.info("WL NAMES... ? "+itemStack.getUnlocalizedName()+"__"+target.getUnlocalizedName());
+ 
         if (itemStack.getItem() == Item.getItemFromBlock(target)
             || Block.getBlockFromItem(itemStack.getItem()) == target
             || Item.REGISTRY.getNameForObject(itemStack.getItem()).toString().equals(Block.REGISTRY.getNameForObject(target).toString())) {
@@ -222,10 +218,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
-    //negative doesnt work ,but lets not. quarries already exist
-    //    else if(rollHeight < 0){
-    //      targetPos = targetPos.offset(EnumFacing.DOWN, -1*rollHeight);
-    //    }
+    //negative doesnt work ,but lets not. quarries already exist 
     //HORIZONTAL
     int randNS = world.rand.nextInt(size * 2 + 1) - size;
     int randEW = world.rand.nextInt(size * 2 + 1) - size;

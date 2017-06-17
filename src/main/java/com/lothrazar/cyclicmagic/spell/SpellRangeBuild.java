@@ -38,7 +38,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
         ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, sideMouseover, this.getID()));
       }
       ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
-      if (heldWand != ItemStack.EMPTY) {
+      if (!heldWand.isEmpty()) {
         int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
         IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
         if (state != null && state.getBlock() != null && offset != null) {
@@ -51,7 +51,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
-    if (heldWand == ItemStack.EMPTY) { return; }
+    if (heldWand.isEmpty()) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
     if (state == null || state.getBlock() == null) {

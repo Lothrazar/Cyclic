@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;

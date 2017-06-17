@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.entity;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
