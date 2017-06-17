@@ -3,9 +3,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.password.TileEntityPassword.UsersAllowed;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.SoundType;
@@ -25,7 +26,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
   public static final PropertyBool POWERED = PropertyBool.create("powered");
@@ -35,7 +35,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     this.setResistance(4F);
     this.setSoundType(SoundType.STONE);
     this.setHarvestLevel("pickaxe", 0);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_PASSWORD);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_PASSWORD);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
@@ -110,7 +110,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "sss",
         "trt",
         "sss",

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.vector;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import net.minecraft.util.math.BlockPos;
 
 public class ButtonVector extends GuiButtonTooltip {

@@ -4,10 +4,10 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -132,7 +132,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     ItemStack stack = entityPlayer.getHeldItem(hand);
     if (stack == null || stack.getItem() == null) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack); }
     //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
-    entityPlayer.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
+    entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
   }
   public static class BookLocation {

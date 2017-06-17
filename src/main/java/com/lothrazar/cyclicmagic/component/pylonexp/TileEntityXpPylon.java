@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Items;

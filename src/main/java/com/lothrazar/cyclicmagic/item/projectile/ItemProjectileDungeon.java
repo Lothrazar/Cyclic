@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;

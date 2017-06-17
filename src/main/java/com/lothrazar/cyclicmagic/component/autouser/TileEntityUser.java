@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -273,7 +273,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
    */
   private void validateTool() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
-    if (maybeTool != ItemStack.EMPTY && maybeTool.getCount() < 0) {
+    if (!maybeTool.isEmpty() && maybeTool.getCount() < 0) {
       maybeTool = ItemStack.EMPTY;
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
       inv.set(toolSlot, ItemStack.EMPTY);
@@ -281,7 +281,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private ItemStack tryEquipItem() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
-    if (maybeTool != ItemStack.EMPTY) {
+    if (!maybeTool.isEmpty()) {
       //do we need to make it null
       if (maybeTool.getCount() <= 0) {
         maybeTool = ItemStack.EMPTY;
@@ -289,7 +289,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
     fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
-    if (maybeTool == ItemStack.EMPTY) {//null for any reason
+    if (maybeTool.isEmpty()) {//null for any reason
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
       inv.set(toolSlot, ItemStack.EMPTY);
     }

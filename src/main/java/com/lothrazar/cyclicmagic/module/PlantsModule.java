@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.ItemMagicBean;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 

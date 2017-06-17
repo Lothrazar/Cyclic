@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.workbench;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 

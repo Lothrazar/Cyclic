@@ -38,6 +38,9 @@ public class UtilItemStack {
     }
     return moveover;
   }
+  public static boolean isEmpty(ItemStack is) {
+    return is == null || is.isEmpty() || is == ItemStack.EMPTY;
+  }
   public static int getMaxDmgFraction(Item tool, int d) {
     return tool.getMaxDamage() - (int) MathHelper.floor(tool.getMaxDamage() / d);
   }
@@ -107,9 +110,6 @@ public class UtilItemStack {
     for (ItemStack s : stacks) {
       UtilItemStack.dropItemStackInWorld(world, pos, s);
     }
-  }
-  public static boolean isEmpty(ItemStack is) {
-    return is == null || is.isEmpty() || is == ItemStack.EMPTY;
   }
   public static String getStringForItemStack(ItemStack itemStack) {
     Item item = itemStack.getItem();

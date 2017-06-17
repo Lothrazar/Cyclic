@@ -1,12 +1,12 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.component.playerext.EventExtendedInventory;
+import com.lothrazar.cyclicmagic.component.playerext.EventGuiInvoButtons;
+import com.lothrazar.cyclicmagic.config.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventAchievement;
-import com.lothrazar.cyclicmagic.event.EventConfigChanged;
-import com.lothrazar.cyclicmagic.event.EventExtendedInventory;
-import com.lothrazar.cyclicmagic.event.EventGuiInvoButtons;
 import com.lothrazar.cyclicmagic.event.EventKeyInput;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
-import com.lothrazar.cyclicmagic.event.EventPotionTick;
+import com.lothrazar.cyclicmagic.potion.EventPotionTick;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EventRegistry {

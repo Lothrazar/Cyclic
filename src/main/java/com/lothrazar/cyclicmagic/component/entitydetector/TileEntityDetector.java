@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

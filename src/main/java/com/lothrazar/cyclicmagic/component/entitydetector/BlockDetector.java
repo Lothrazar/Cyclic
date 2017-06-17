@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,14 +14,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
   public BlockDetector() {
     super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(5F);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_DETECTOR);
     this.setTranslucent();
   }
   @Override
@@ -43,7 +43,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "dcd",
         " q ",
         "r r",

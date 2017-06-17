@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;

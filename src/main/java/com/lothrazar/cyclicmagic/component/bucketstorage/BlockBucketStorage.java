@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.BlockBase;
+import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -120,7 +120,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (hand != EnumHand.MAIN_HAND) { return false; }
     ItemStack held = entityPlayer.getHeldItem(hand);
-    if (held != ItemStack.EMPTY) { return false; }
+    if (!held.isEmpty()) { return false; }
     Block blockClicked = state.getBlock();
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;

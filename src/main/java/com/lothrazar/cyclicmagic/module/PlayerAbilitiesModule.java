@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilFurnace;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
@@ -190,14 +190,14 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
     if (easyEnderChest) {
-      if (held != ItemStack.EMPTY && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
+      if (!held.isEmpty() && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
       }
     }
     if (editableSigns) {
       if (pos == null) { return; }
       TileEntity tile = worldObj.getTileEntity(pos);
-      if (held == ItemStack.EMPTY && tile instanceof TileEntitySign) {
+      if (held.isEmpty() && tile instanceof TileEntitySign) {
         TileEntitySign sign = (TileEntitySign) tile;
         if (worldObj.isRemote == true) {//this method has    @SideOnly(Side.CLIENT) flag
           sign.setEditable(true);

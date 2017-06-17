@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;

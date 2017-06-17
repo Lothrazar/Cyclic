@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ICyclicModule;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.module.BlockMachineModule;
 import com.lothrazar.cyclicmagic.module.BlockPlateModule;
@@ -17,6 +16,7 @@ import com.lothrazar.cyclicmagic.module.GearEmeraldModule;
 import com.lothrazar.cyclicmagic.module.GearPurpleModule;
 import com.lothrazar.cyclicmagic.module.GearSandstoneModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
+import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.ItemCharmModule;
 import com.lothrazar.cyclicmagic.module.ItemConsumeablesModule;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;

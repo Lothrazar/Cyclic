@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldGenModule;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

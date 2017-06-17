@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.tool.ItemSleepingMat;
+import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
