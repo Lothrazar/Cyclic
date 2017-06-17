@@ -6,8 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -155,7 +157,7 @@ public class UtilUncraft {
       outsize = 0;
       // outsize is 3 means the recipe makes three items total. so MINUS three from the toUncraft for EACH LOOP
       UncraftResultType result = UncraftResultType.NORECIPE;//assumption
-//      List<IRecipe> recipeList = CraftingManager.field_193380_a.getRecipeList();
+      //      List<IRecipe> recipeList = CraftingManager.field_193380_a.getRecipeList();
       for (IRecipe next : CraftingManager.field_193380_a) {
         if (next == null || next.getRecipeOutput() == null) {
           continue;//be careful
@@ -199,17 +201,19 @@ public class UtilUncraft {
      * @return
      */
     private List<? extends Object> getRecipeInput(IRecipe next) {
+      NonNullList<Ingredient> ingreds = next.func_192400_c();
       if (next instanceof ShapedOreRecipe) {
         ShapedOreRecipe r = (ShapedOreRecipe) next;
-        return new ArrayList<Object>(Arrays.asList(r.getInput()));
+        //        NonNullList<Ingredient> ingreds =  r.func_192400_c();
+        return new ArrayList<Object>(Arrays.asList(ingreds));
       }
       else if (next instanceof ShapelessOreRecipe) {
         ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-        return r.getInput();
+        return ingreds;//r.getInput();
       }
       else if (next instanceof ShapedRecipes) {
         ShapedRecipes r = (ShapedRecipes) next;
-        return new ArrayList<ItemStack>(Arrays.asList(r.recipeItems));
+        return r.recipeItems;
       }
       else if (next instanceof ShapelessRecipes) {
         ShapelessRecipes r = (ShapelessRecipes) next;
