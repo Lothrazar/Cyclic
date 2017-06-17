@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -95,7 +96,7 @@ public class ItemPotionCustom extends ItemFood {
     return hasEffect;
   }
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
     String n;
     for (int i = 0; i < potions.size(); i++) {
       n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());
@@ -106,5 +107,6 @@ public class ItemPotionCustom extends ItemFood {
     if (this.tooltip != null) {
       list.add(UtilChat.lang(tooltip));
     }
+    super.addInformation(held, player, list, par4);
   }
 }

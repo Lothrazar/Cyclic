@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic;
+/*
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,3 +150,4 @@ public class CyclicGuideBook implements IGuideBook {
     RecipeRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
   }
 }
+  */

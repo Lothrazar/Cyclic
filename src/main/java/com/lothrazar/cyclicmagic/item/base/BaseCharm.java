@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble, IHasClickToggle {
+public abstract class BaseCharm extends BaseItem implements IHasClickToggle{ //, baubles.api.IBauble{
   private final static String NBT_STATUS = "onoff";
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
@@ -85,7 +86,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
   @Optional.Method(modid = "baubles")
   public boolean canUnequip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
-  }
+  }/*
   @Optional.Method(modid = "baubles")
   public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
     try {
@@ -100,6 +101,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
       return baubles.api.BaubleType.RING;
     }
   }
+  */
   @Optional.Method(modid = "baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
   @Optional.Method(modid = "baubles")
@@ -112,7 +114,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
     }
   }
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
     super.addInformation(held, player, list, par4);
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));

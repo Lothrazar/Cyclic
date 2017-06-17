@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -98,10 +99,11 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
   }
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));
+    super.addInformation(held,player,list,par4);
   }
   @Override
   public IRecipe addRecipe() {

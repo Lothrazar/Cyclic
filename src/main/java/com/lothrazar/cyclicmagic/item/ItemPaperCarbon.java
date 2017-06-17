@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -83,7 +84,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     // entityPlayer.swingItem();
   }
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
       list.add("Use to copy a sign or noteblock");

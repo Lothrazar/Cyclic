@@ -120,8 +120,9 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     public int getRecipeIndex() {
       return recipeIndex;
     }
-    public void drawButton(Minecraft mc, int mouseX, int mouseY,float p) {
-      super.drawButton(mc, mouseX, mouseY,p);
+    @Override
+    public void func_191745_a(Minecraft mc, int mouseX, int mouseY,float p) {
+      super.func_191745_a(mc, mouseX, mouseY,p);
       if (this.visible) {
         MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
         if (merchantrecipelist == null) { return; }

@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
@@ -43,10 +44,11 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
     if (stack == null || stack.getItem() == null) { return; } // just being safe
     Item carrot = stack.getItem();
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
+    super.addInformation(stack, playerIn, tooltip, advanced);
   }
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);

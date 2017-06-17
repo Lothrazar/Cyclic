@@ -155,8 +155,8 @@ public class UtilUncraft {
       outsize = 0;
       // outsize is 3 means the recipe makes three items total. so MINUS three from the toUncraft for EACH LOOP
       UncraftResultType result = UncraftResultType.NORECIPE;//assumption
-      List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-      for (IRecipe next : recipeList) {
+//      List<IRecipe> recipeList = CraftingManager.field_193380_a.getRecipeList();
+      for (IRecipe next : CraftingManager.field_193380_a) {
         if (next == null || next.getRecipeOutput() == null) {
           continue;//be careful
         }

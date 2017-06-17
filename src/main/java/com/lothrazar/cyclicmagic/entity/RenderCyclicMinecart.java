@@ -138,9 +138,9 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
   protected ResourceLocation getEntityTexture(T entity) {
     return texture;
   }
-  protected void renderCartContents(T p_188319_1_, float partialTicks, IBlockState p_188319_3_) {
+  protected void renderCartContents(T klass, float partialTicks, IBlockState blockState) {
     GlStateManager.pushMatrix();
-    Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(p_188319_3_, p_188319_1_.getBrightness(partialTicks));
+    Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(blockState, klass.getBrightness());
     GlStateManager.popMatrix();
   }
 }

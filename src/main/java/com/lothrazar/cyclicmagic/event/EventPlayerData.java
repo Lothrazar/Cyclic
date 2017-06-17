@@ -40,11 +40,12 @@ public class EventPlayerData {
     }
   }
   @SubscribeEvent
-  public void onEntityConstruct(AttachCapabilitiesEvent event) {//was AttachCapabilitiesEvent.Entity
-    if (event.getEntity() instanceof EntityPlayer) {
+  public void onEntityConstruct(AttachCapabilitiesEvent<EntityPlayer> event) {//was AttachCapabilitiesEvent.Entity
+//    if (event.getEntity() instanceof EntityPlayer) {
+//      EntityPlayer p =  event.getObject();
       ///?? no (EntityPlayer)event.getEntity()    in constructor?
       event.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new PlayerCapInstance());
-    }
+//    }
   }
   class PlayerCapInstance implements ICapabilitySerializable<NBTTagCompound> {
     IPlayerExtendedProperties inst = ModCyclic.CAPABILITYSTORAGE.getDefaultInstance();
