@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
@@ -10,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
@@ -21,10 +23,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantBeheading extends EnchantBase {
+public class EnchantBeheading extends EnchantBase implements IHasConfig {
   private Map<String, String> mapClassToSkin;
   private Map<String, NBTTagCompound> mapClassToTag;
   public EnchantBeheading() {
@@ -56,7 +59,7 @@ public class EnchantBeheading extends EnchantBase {
     mapClassToSkin.put("net.minecraft.entity.monster.EntityWitherSkeleton", "MHF_WSkeleton");
     mapClassToSkin.put("net.minecraft.entity.boss.EntityWither", "MHF_Wither");
     mapClassToSkin.put("net.minecraft.entity.monster.EntityWitch", "MHF_Witch");//not in list but working
-//    mapClassToSkin.put("net.minecraft.entity.passive.EntityBat", "MHF_Bat");//??? might be missing
+    //    mapClassToSkin.put("net.minecraft.entity.passive.EntityBat", "MHF_Bat");//??? might be missing
     //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
     mapClassToSkin.put("net.minecraft.entity.boss.EntityGuardian", "Guardian");
     mapClassToSkin.put("net.minecraft.entity.boss.EntityElderGuardian", "Guardian");
@@ -65,8 +68,9 @@ public class EnchantBeheading extends EnchantBase {
     //TODO: LOAD IN CONFIGS or modded monsters with this format (class-playername)
     //use examples for like quark stuff-  vazkii
     //NBT image data from  http://www.minecraft-heads.com/custom/heads/animals/6746-llama
-    //EntityLlama
-    mapClassToTag.put("net.minecraft.entity.passive.EntityBat", UtilNBT.buildCustomSkull("LLama", "e2d4c388-42d5-4a96-b4c9-623df7f5e026", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNmMWIzYjNmNTM5ZDJmNjNjMTcyZTk0Y2FjZmFhMzkxZThiMzg1Y2RkNjMzZjNiOTkxYzc0ZTQ0YjI4In19fQ=="));
+    mapClassToTag.put("net.minecraft.entity.monster.EntityPolarBear", UtilNBT.buildCustomSkull("Polar Bear Head", "87324464-1700-468f-8333-e7779ec8c21e", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDQ2ZDIzZjA0ODQ2MzY5ZmEyYTM3MDJjMTBmNzU5MTAxYWY3YmZlODQxOTk2NjQyOTUzM2NkODFhMTFkMmIifX19"));
+    mapClassToTag.put("net.minecraft.entity.passive.EntityLlama", UtilNBT.buildCustomSkull("Llama's Head", "75fb08e5-2419-46fa-bf09-57362138f234", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNmMWIzYjNmNTM5ZDJmNjNjMTcyZTk0Y2FjZmFhMzkxZThiMzg1Y2RkNjMzZjNiOTkxYzc0ZTQ0YjI4In19fQ=="));
+    mapClassToTag.put("net.minecraft.entity.passive.EntityBat", UtilNBT.buildCustomSkull("Bat's Head", "e2d4c388-42d5-4a96-b4c9-623df7f5e026", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiMWVjZmY3N2ZmZTNiNTAzYzMwYTU0OGViMjNhMWEwOGZhMjZmZDY3Y2RmZjM4OTg1NWQ3NDkyMTM2OCJ9fX0="));
   }
   @Override
   public int getMaxLevel() {
@@ -87,34 +91,27 @@ public class EnchantBeheading extends EnchantBase {
         //first the hardcoded supported ones
         if (target instanceof EntityCreeper) {//4
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
-         
         }
         else if (target instanceof EntityZombie) {//2
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_zombie));
-    
         }
         else if (target instanceof EntitySkeleton) {//0
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_skeleton));
-         
         }
         else if (target instanceof EntityWitherSkeleton) {//1
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_wither));
-          
         }
         else if (target instanceof EntityDragon) {//5
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_dragon));
-     
         }
         else if (target instanceof EntityPlayer) {//player name
           UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
-    
         }
         else if (mapClassToSkin.containsKey(key)) {
           UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
         }
         else if (mapClassToTag.containsKey(key)) {
-          
-          UtilItemStack.dropItemStackInWorld(world, pos,UtilNBT.buildSkullFromTag(mapClassToTag.get(key)) );
+          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
         }
         else {
           ModCyclic.logger.info("beheading NOT FOUND " + target.getClass().getName());
@@ -122,6 +119,19 @@ public class EnchantBeheading extends EnchantBase {
         //we have
         //noooooooooooop didntt work 
         //UtilItemStack.dropItemStackInWorld(attacker.world, target.getPosition(), skull);
+      }
+    }
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    String[] defaultConf = new String[] { "net.minecraft.entity.monster.EntityVex-Vazkii" };
+    String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: classpath-player");
+    for (String s : mappings) {
+      if (s.contains("-")) {
+        String[] spl = s.split("-");
+        if (spl.length == 2) {
+          mapClassToSkin.put(spl[0], spl[1]);
+        }
       }
     }
   }

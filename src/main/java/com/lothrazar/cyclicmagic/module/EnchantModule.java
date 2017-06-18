@@ -1,8 +1,11 @@
 package com.lothrazar.cyclicmagic.module;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
+import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
@@ -15,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
+  public static List<EnchantBase> loadedChants = new ArrayList<EnchantBase>();
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
@@ -22,6 +26,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantAutoSmelt autosmelt;
   public static EnchantXpBoost xpboost;
   public static EnchantReach reach;
+  private static EnchantBeheading beheading;
   private static int reachid;
   private static int launchid;
   private static int magnetid;
@@ -29,6 +34,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static int lifeleechid;
   private static int autosmeltid;
   private static int xpboostid;
+  private int beheadingid;
   private static boolean enablexpboost;
   private static boolean enableLaunch;
   private static boolean enableMagnet;
@@ -36,9 +42,8 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static boolean enableLifeleech;
   private boolean enableautosmelt;
   private boolean enablereach;
-  private int beheadingid;
   private boolean enablebeheading;
-  private static EnchantBeheading beheading;
+  
   @Override
   public void onPreInit() {
     if (enablereach) {
@@ -49,37 +54,44 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     if (enablexpboost) {
       xpboost = new EnchantXpBoost();
       Enchantment.REGISTRY.register(xpboostid, new ResourceLocation(xpboost.getName()), xpboost);
-      ModCyclic.instance.events.register(EnchantModule.xpboost);
+      ModCyclic.instance.events.register(xpboost);
+      loadedChants.add(xpboost);
     }
     if (enableautosmelt) {
       autosmelt = new EnchantAutoSmelt();
       Enchantment.REGISTRY.register(autosmeltid, new ResourceLocation(autosmelt.getName()), autosmelt);
-      ModCyclic.instance.events.register(EnchantModule.autosmelt);
+      ModCyclic.instance.events.register(autosmelt);
+      loadedChants.add(autosmelt);
     }
     if (enableLaunch) {
       launch = new EnchantLaunch();
       Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
-      ModCyclic.instance.events.register(EnchantModule.launch);
+      ModCyclic.instance.events.register(launch);
+      loadedChants.add(launch);
     }
     if (enableMagnet) {
       magnet = new EnchantMagnet();
       Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
-      ModCyclic.instance.events.register(EnchantModule.magnet);
+      ModCyclic.instance.events.register(magnet);
+      loadedChants.add(magnet);
     }
     if (enableVenom) {
       venom = new EnchantVenom();
       Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
-      ModCyclic.instance.events.register(EnchantModule.venom);
+      ModCyclic.instance.events.register(venom);
+      loadedChants.add(venom);
     }
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
       Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
-      ModCyclic.instance.events.register(EnchantModule.lifeleech);
+      ModCyclic.instance.events.register(lifeleech);
+      loadedChants.add(lifeleech);
     }
     if (enablebeheading) {
       beheading = new EnchantBeheading();
       Enchantment.REGISTRY.register(beheadingid, new ResourceLocation(beheading.getName()), beheading);
-      ModCyclic.instance.events.register(EnchantModule.beheading);
+      ModCyclic.instance.events.register(beheading);
+      loadedChants.add(beheading);
     }
   }
   @Override
@@ -108,5 +120,10 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     beheadingid = c.getInt("enchant.beheading.id", Const.ConfigCategory.modpackMisc,
         93, 71, 999, "Id of the beheading.  Change this if you get id conflicts with other mods.");
+    for(EnchantBase b : loadedChants){
+      if(b instanceof IHasConfig){
+        ((IHasConfig)b).syncConfig(c);
+      }
+    }
   }
 }
