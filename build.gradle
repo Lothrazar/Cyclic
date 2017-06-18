@@ -26,11 +26,17 @@ minecraft {
 //Defines basic patterns for pulling various dependencies.
 repositories {
     maven {
+    	 name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
     maven { //Guide API
 		url "http://tehnut.info/maven/"
 	}
+	  maven {
+	    // location of a maven mirror for JEI files, as a fallback
+	    name = "ModMaven"
+	    url = "modmaven.k-4u.nl"
+	  }
 }
 
 dependencies {

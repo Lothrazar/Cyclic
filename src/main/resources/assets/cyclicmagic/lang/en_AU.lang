@@ -121,6 +121,7 @@ enchantment.lifeleech=Life Leech
 enchantment.reach=Block Reach
 enchantment.magnet=Magnet
 enchantment.venom=Venom
+enchantment.beheading=Beheading
 entity.Villager.druid=Druid
 entity.Villager.sage=Sage
 entity.cyclicmagic.goldminecart.name=Gold Minecart
