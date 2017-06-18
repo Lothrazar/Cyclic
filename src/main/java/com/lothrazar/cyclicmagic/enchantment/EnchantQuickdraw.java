@@ -3,6 +3,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,34 +31,9 @@ public class EnchantQuickdraw extends EnchantBase {
       ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
       if (heldItem != null && heldItem.getItem() instanceof ItemBow
           && player.isHandActive()) {
-        //     heldItem.getItem().getPropertyGetter(new ResourceLocation("pulling")).
-        //not working we need to speed up item getItemInUseCount()
-        //maybe 
         //     player.updateActiveHand();//BUT its protected bahhhh
-        try {
-          Method m = ReflectionHelper.findMethod(EntityLivingBase.class, "updateActiveHand", "updateActiveHand");
-          if (m != null) {
-            System.out.println("YSSS");
-            m.invoke(player, new Object[0]);
-            m.invoke(player, new Object[0]);
-          }
-          else{
-            System.out.println("NULL WAHHHHHH");
-          }
-        }
-        catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
- 
-        //...no i think these are just clientside??
-//        heldItem.getItem().getPropertyGetter(new ResourceLocation("pull")).apply(heldItem, player.world, player);
-//        heldItem.getItem().getPropertyGetter(new ResourceLocation("pull")).apply(heldItem, player.world, player);
-//        heldItem.getItem().getPropertyGetter(new ResourceLocation("pull")).apply(heldItem, player.world, player);
-//        heldItem.getItem().getPropertyGetter(new ResourceLocation("pull")).apply(heldItem, player.world, player);
-//        heldItem.getItem().getPropertyGetter(new ResourceLocation("pull")).apply(heldItem, player.world, player);
-        //heldItem.getItem().getPropertyGetter(new ResourceLocation("pulling")).apply(heldItem, player.world, player);
-        //     baseEvent.setCanceled(true);
+        UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "updateActiveHand", new Object[0]);
+        UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "updateActiveHand", new Object[0]);
       }
     }
   }
