@@ -23,6 +23,10 @@ public class EnchantQuickdraw extends EnchantBase {
     return stack.getItem() instanceof ItemBow
         || stack.getItem() == Items.BOOK;
   }
+  @Override
+  public int getMaxLevel() {
+    return 1;
+  }
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
@@ -31,6 +35,7 @@ public class EnchantQuickdraw extends EnchantBase {
       ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
       if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemBow
           && player.isHandActive()) {
+        this.tickHeldBow(player);
         this.tickHeldBow(player);
       }
     }
