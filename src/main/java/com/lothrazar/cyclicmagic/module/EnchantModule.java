@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
+import com.lothrazar.cyclicmagic.enchantment.EnchantQuickdraw;
 import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
@@ -27,6 +28,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantXpBoost xpboost;
   public static EnchantReach reach;
   private static EnchantBeheading beheading;
+  private static EnchantQuickdraw quickdraw;
   private static int reachid;
   private static int launchid;
   private static int magnetid;
@@ -93,6 +95,14 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(beheading);
       loadedChants.add(beheading);
     }
+    quickdraw = new EnchantQuickdraw();
+    Enchantment.REGISTRY.register(94, new ResourceLocation(quickdraw.getName()), quickdraw);
+    ModCyclic.instance.events.register(quickdraw);
+    loadedChants.add(quickdraw);
+    
+    
+    
+    
   }
   @Override
   public void syncConfig(Configuration c) {
