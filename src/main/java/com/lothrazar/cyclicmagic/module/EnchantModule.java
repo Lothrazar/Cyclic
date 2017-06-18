@@ -45,7 +45,8 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static boolean enableautosmelt;
   private static boolean enablereach;
   private static boolean enablebeheading;
-  
+  private int quickdrawid;
+  private boolean enableQuickdraw;
   @Override
   public void onPreInit() {
     if (enablereach) {
@@ -95,14 +96,12 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(beheading);
       loadedChants.add(beheading);
     }
-    quickdraw = new EnchantQuickdraw();
-    Enchantment.REGISTRY.register(94, new ResourceLocation(quickdraw.getName()), quickdraw);
-    ModCyclic.instance.events.register(quickdraw);
-    loadedChants.add(quickdraw);
-    
-    
-    
-    
+    if (enableQuickdraw) {
+      quickdraw = new EnchantQuickdraw();
+      Enchantment.REGISTRY.register(quickdrawid, new ResourceLocation(quickdraw.getName()), quickdraw);
+      ModCyclic.instance.events.register(quickdraw);
+      loadedChants.add(quickdraw);
+    }
   }
   @Override
   public void syncConfig(Configuration c) {
@@ -113,6 +112,8 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVenom = c.getBoolean("EnchantVenom", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableQuickdraw = c.getBoolean("EnchantQuickdraw", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchid = c.getInt("enchant.launch.id", Const.ConfigCategory.modpackMisc,
         86, 71, 999, "Id of the launch enchantment (double jump on boots).  Change this if you get id conflicts with other mods.");
     magnetid = c.getInt("enchant.magnet.id", Const.ConfigCategory.modpackMisc,
@@ -127,12 +128,13 @@ public class EnchantModule extends BaseModule implements IHasConfig {
         91, 71, 999, "Id of the xpboost enchantment.  Change this if you get id conflicts with other mods.");
     reachid = c.getInt("enchant.reach.id", Const.ConfigCategory.modpackMisc,
         92, 71, 999, "Id of the reach enchantment.  Change this if you get id conflicts with other mods.");
-    enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     beheadingid = c.getInt("enchant.beheading.id", Const.ConfigCategory.modpackMisc,
-        93, 71, 999, "Id of the beheading.  Change this if you get id conflicts with other mods.");
-    for(EnchantBase b : loadedChants){
-      if(b instanceof IHasConfig){
-        ((IHasConfig)b).syncConfig(c);
+        93, 71, 999, "Id of beheading.  Change this if you get id conflicts with other mods.");
+    quickdrawid = c.getInt("enchant.quickdraw.id", Const.ConfigCategory.modpackMisc,
+        94, 71, 999, "Id of quickdraw.  Change this if you get id conflicts with other mods.");
+    for (EnchantBase b : loadedChants) {
+      if (b instanceof IHasConfig) {
+        ((IHasConfig) b).syncConfig(c);
       }
     }
   }

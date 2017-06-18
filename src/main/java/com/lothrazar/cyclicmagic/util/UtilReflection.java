@@ -4,11 +4,11 @@ import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+@SuppressWarnings("rawtypes")
 public class UtilReflection {
   public static Field getPrivateField(String name, String mapping, Class c) {
     try {
