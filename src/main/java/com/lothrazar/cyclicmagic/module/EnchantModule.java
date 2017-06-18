@@ -34,15 +34,15 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static int lifeleechid;
   private static int autosmeltid;
   private static int xpboostid;
-  private int beheadingid;
+  private static int beheadingid;
   private static boolean enablexpboost;
   private static boolean enableLaunch;
   private static boolean enableMagnet;
   private static boolean enableVenom;
   private static boolean enableLifeleech;
-  private boolean enableautosmelt;
-  private boolean enablereach;
-  private boolean enablebeheading;
+  private static boolean enableautosmelt;
+  private static boolean enablereach;
+  private static boolean enablebeheading;
   
   @Override
   public void onPreInit() {

@@ -21,6 +21,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -29,8 +30,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantBeheading extends EnchantBase implements IHasConfig {
   private Map<String, String> mapClassToSkin;
   private Map<String, NBTTagCompound> mapClassToTag;
+  private int percentDrop;
   public EnchantBeheading() {
-    super("beheading", Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("beheading", Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
     buildDefaultHeadList();
   }
@@ -70,12 +72,16 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     mapClassToTag.put("net.minecraft.entity.monster.EntityZombieVillager", UtilNBT.buildCustomSkullTag("Zombie Villager Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2ZmMDQ4MmZkMzJmYWIyY2U5ZjVmYTJlMmQ5YjRkYzc1NjFkYTQyMjE1MmM5OWZjODA0YjkxMzljYWYyNTZiIn19fQ=="));
     mapClassToTag.put("net.minecraft.entity.monster.EntityVindicator", UtilNBT.buildCustomSkullTag("Vindicator Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTAwZDNmZmYxNmMyZGNhNTliOWM1OGYwOTY1MjVjODY5NzExNjZkYmFlMTMzYjFiMDUwZTVlZTcxNjQ0MyJ9fX0="));
     mapClassToTag.put("net.minecraft.entity.monster.EntityEvoker", UtilNBT.buildCustomSkullTag("Evoker Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTAwZDNmZmYxNmMyZGNhNTliOWM1OGYwOTY1MjVjODY5NzExNjZkYmFlMTMzYjFiMDUwZTVlZTcxNjQ0MyJ9fX0="));
-    mapClassToTag.put("net.minecraft.entity.passive.AbstractHorse", UtilNBT.buildCustomSkullTag("Horse Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE5MDI4OTgzMDg3MzBjNDc0NzI5OWNiNWE1ZGE5YzI1ODM4YjFkMDU5ZmU0NmZjMzY4OTZmZWU2NjI3MjkifX19"));
     mapClassToTag.put("net.minecraft.entity.monster.EntityShulker", UtilNBT.buildCustomSkullTag("Shulker Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhmYjk2YmY0YTlhMzFiMjU1MzhiNzEyMTdkYThiNjM0ZThjMDVkNGMzNWE2YWI4N2FjYjM3ZjkzYTZmMmMifX19"));
     mapClassToTag.put("net.minecraft.entity.passive.EntityRabbit", UtilNBT.buildCustomSkullTag("Rabbit Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM3YTMxN2VjNWMxZWQ3Nzg4Zjg5ZTdmMWE2YWYzZDJlZWI5MmQxZTk4NzljMDUzNDNjNTdmOWQ4NjNkZTEzMCJ9fX0="));
     mapClassToTag.put("net.minecraft.entity.monster.EntityPolarBear", UtilNBT.buildCustomSkullTag("Polar Bear Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDQ2ZDIzZjA0ODQ2MzY5ZmEyYTM3MDJjMTBmNzU5MTAxYWY3YmZlODQxOTk2NjQyOTUzM2NkODFhMTFkMmIifX19"));
     mapClassToTag.put("net.minecraft.entity.passive.EntityLlama", UtilNBT.buildCustomSkullTag("Llama Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNmMWIzYjNmNTM5ZDJmNjNjMTcyZTk0Y2FjZmFhMzkxZThiMzg1Y2RkNjMzZjNiOTkxYzc0ZTQ0YjI4In19fQ=="));
     mapClassToTag.put("net.minecraft.entity.passive.EntityBat", UtilNBT.buildCustomSkullTag("Bat Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiMWVjZmY3N2ZmZTNiNTAzYzMwYTU0OGViMjNhMWEwOGZhMjZmZDY3Y2RmZjM4OTg1NWQ3NDkyMTM2OCJ9fX0="));
+    NBTTagCompound horseTag = UtilNBT.buildCustomSkullTag("Horse Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE5MDI4OTgzMDg3MzBjNDc0NzI5OWNiNWE1ZGE5YzI1ODM4YjFkMDU5ZmU0NmZjMzY4OTZmZWU2NjI3MjkifX19");
+    mapClassToTag.put("net.minecraft.entity.passive.AbstractHorse", horseTag);
+    mapClassToTag.put("net.minecraft.entity.passive.EntityHorse", horseTag);
+    mapClassToTag.put("net.minecraft.entity.passive.EntitySkeletonHorse", horseTag);
+    mapClassToTag.put("net.minecraft.entity.passive.EntityZombieHorse", horseTag);
   }
   @Override
   public int getMaxLevel() {
@@ -89,10 +95,18 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
       int level = getCurrentLevelTool(attacker);
       if (level > 0) {
         World world = attacker.world;
+        if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
+        //else the random number was less than 10, so it passed the 10% chance req
         BlockPos pos = target.getPosition();
         String key = target.getClass().getName();
-        //first the hardcoded supported ones
-        if (target instanceof EntityCreeper) {//4
+        ////we allow all these, which include config, to override the vanilla skulls below
+        if (mapClassToSkin.containsKey(key)) {
+          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
+        }
+        else if (mapClassToTag.containsKey(key)) {
+          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
+        }
+        else if (target instanceof EntityCreeper) {//4
           UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
         }
         else if (target instanceof EntityZombie) {//2
@@ -110,13 +124,11 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
         else if (target instanceof EntityPlayer) {//player name
           UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
         }
-        else if (mapClassToSkin.containsKey(key)) {
-          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
-        }
-        else if (mapClassToTag.containsKey(key)) {
-          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
-        }
         else {
+          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
           ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
         }
       }
@@ -124,8 +136,9 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    this.percentDrop = config.getInt("BeheadingPercent", Const.ConfigCategory.modpackMisc, 10, 1, 100, "Percent chance that the beheading enchant will actually drop a head.");
     String[] defaultConf = new String[] {
-        "net.minecraft.entity.monster.EntityVex-Vazkii", "elucent.roots.entity.EntitySprite-Elucent" };
+        "net.minecraft.entity.monster.EntityVex-Vazkii", "elucent.roots.entity.EntitySprite-Darkosto" };
     String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: classpath-player");
     for (String s : mappings) {
       if (s.contains("-")) {
