@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
+import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
@@ -35,6 +36,9 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static boolean enableLifeleech;
   private boolean enableautosmelt;
   private boolean enablereach;
+  private int beheadingid;
+  private boolean enablebeheading;
+  private static EnchantBeheading beheading;
   @Override
   public void onPreInit() {
     if (enablereach) {
@@ -72,6 +76,11 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
       ModCyclic.instance.events.register(EnchantModule.lifeleech);
     }
+    if (enablebeheading) {
+      beheading = new EnchantBeheading();
+      Enchantment.REGISTRY.register(beheadingid, new ResourceLocation(beheading.getName()), beheading);
+      ModCyclic.instance.events.register(EnchantModule.beheading);
+    }
   }
   @Override
   public void syncConfig(Configuration c) {
@@ -96,5 +105,8 @@ public class EnchantModule extends BaseModule implements IHasConfig {
         91, 71, 999, "Id of the xpboost enchantment.  Change this if you get id conflicts with other mods.");
     reachid = c.getInt("enchant.reach.id", Const.ConfigCategory.modpackMisc,
         92, 71, 999, "Id of the reach enchantment.  Change this if you get id conflicts with other mods.");
+    enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    beheadingid = c.getInt("enchant.beheading.id", Const.ConfigCategory.modpackMisc,
+        93, 71, 999, "Id of the beheading.  Change this if you get id conflicts with other mods.");
   }
 }

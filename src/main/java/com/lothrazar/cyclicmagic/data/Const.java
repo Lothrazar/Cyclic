@@ -115,6 +115,7 @@ public class Const {
   public static final int skull_zombie = 2;
   public static final int skull_player = 3;
   public static final int skull_creeper = 4;
+  public static final int skull_dragon=5;
   //saplings
   public static final int sapling_oak = 0;
   public static final int sapling_spruce = 1;
