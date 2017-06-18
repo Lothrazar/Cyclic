@@ -107,6 +107,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableTrader;
   private boolean enableSoulstone;
   private boolean enablePlayerLauncher;
+  private boolean evokerFang;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -145,9 +146,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
-    ItemFangs evoker_fangs = new ItemFangs();
-    ItemRegistry.register(evoker_fangs, "evoker_fangs", GuideCategory.ITEM);
-    
+    if (evokerFang) {
+      ItemFangs evoker_fangs = new ItemFangs();
+      ItemRegistry.register(evoker_fangs, "evoker_fang", GuideCategory.ITEM);
+    }
     if (enablePlayerLauncher) {
       ItemPlayerLauncher tool_launcher = new ItemPlayerLauncher();
       ItemRegistry.register(tool_launcher, "tool_launcher", GuideCategory.TRANSPORT);
@@ -342,6 +344,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    evokerFang = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
