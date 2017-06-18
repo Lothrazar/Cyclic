@@ -29,12 +29,14 @@ public class EnchantQuickdraw extends EnchantBase {
       EntityPlayer player = (EntityPlayer) event.getEntity();
       if (getCurrentLevelTool(player) < 0) { return; }
       ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
-      if (heldItem != null && heldItem.getItem() instanceof ItemBow
+      if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemBow
           && player.isHandActive()) {
-        //     player.updateActiveHand();//BUT its protected bahhhh
-        UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "updateActiveHand", new Object[0]);
-        UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "updateActiveHand", new Object[0]);
+        this.tickHeldBow(player);
       }
     }
+  }
+  private void tickHeldBow(EntityPlayer player) {
+    //     player.updateActiveHand();//BUT its protected bahhhh
+    UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "func_184608_ct", new Object[0]);
   }
 }
