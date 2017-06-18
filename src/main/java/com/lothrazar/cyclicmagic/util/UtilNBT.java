@@ -29,7 +29,6 @@ public class UtilNBT {
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
     if (item.isEmpty()) { return; }
- 
     getItemStackNBT(item).setInteger(prop, value);
   }
   public static int getItemStackNBTVal(ItemStack held, String prop) {
@@ -154,18 +153,47 @@ public class UtilNBT {
     nameTag.setTagCompound(nbt);// put the data into the item stack
     return nameTag;
   }
+  public static ItemStack itemFromNBT(NBTTagCompound tag) {
+    return new ItemStack(tag);
+  }
   public static ItemStack buildNamedPlayerSkull(EntityPlayer player) {
     return buildNamedPlayerSkull(player.getDisplayNameString());
   }
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {
+//    ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
+//    if (skull.getTagCompound() == null) {
+//      skull.setTagCompound(new NBTTagCompound());
+//    }
+    NBTTagCompound t = new NBTTagCompound();
+    t.setString(Const.SkullOwner, displayNameString);
+    return buildSkullFromTag(t);
+  }
+  public static ItemStack buildSkullFromTag(NBTTagCompound player) {
     ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
-    if (skull.getTagCompound() == null) {
-      skull.setTagCompound(new NBTTagCompound());
-    }
-    skull.getTagCompound().setString(Const.SkullOwner, displayNameString);
+    skull.setTagCompound(player);
     return skull;
   }
-  public static ItemStack itemFromNBT(NBTTagCompound tag) {
-    return new ItemStack(tag);
+  public static NBTTagCompound buildCustomSkull(String displayName, String id, String textureData) {
+    //     ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
+    NBTTagCompound base = new NBTTagCompound();
+    NBTTagCompound display = new NBTTagCompound();
+    display.setString("Name", displayName);
+    base.setTag("display", display);
+    NBTTagCompound skullOwner = new NBTTagCompound();
+    skullOwner.setString("Id", id);
+    NBTTagCompound props = new NBTTagCompound();
+    NBTTagList list = new NBTTagList();
+    NBTTagCompound textureValue = new NBTTagCompound();
+    textureValue.setString("Value", textureData);
+    list.appendTag(textureValue);
+    //            props.setString("textures", p[]);
+    props.setTag("textures", list);
+    skullOwner.setTag("Properties", props);
+    // skullOwner.setString("LocName", "Bat Head");
+    base.setTag(Const.SkullOwner, skullOwner);
+    //            skull.setTagCompound(base);
+    //           
+    //       
+    return base;
   }
 }
