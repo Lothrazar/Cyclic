@@ -93,44 +93,43 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
       int level = getCurrentLevelTool(attacker);
-      if (level > 0) {
-        World world = attacker.world;
-        if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
-        //else the random number was less than 10, so it passed the 10% chance req
-        BlockPos pos = target.getPosition();
-        String key = target.getClass().getName();
-        ////we allow all these, which include config, to override the vanilla skulls below
-        if (mapClassToSkin.containsKey(key)) {
-          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
-        }
-        else if (mapClassToTag.containsKey(key)) {
-          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
-        }
-        else if (target instanceof EntityCreeper) {//4
-          UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
-        }
-        else if (target instanceof EntityZombie) {//2
-          UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_zombie));
-        }
-        else if (target instanceof EntitySkeleton) {//0
-          UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_skeleton));
-        }
-        else if (target instanceof EntityWitherSkeleton) {//1
-          UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_wither));
-        }
-        else if (target instanceof EntityDragon) {//5
-          UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_dragon));
-        }
-        else if (target instanceof EntityPlayer) {//player name
-          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
-        }
-        else {
-          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-          ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        }
+      if (level < 0) { return; }
+      World world = attacker.world;
+      if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
+      //else the random number was less than 10, so it passed the 10% chance req
+      BlockPos pos = target.getPosition();
+      String key = target.getClass().getName();
+      ////we allow all these, which include config, to override the vanilla skulls below
+      if (mapClassToSkin.containsKey(key)) {
+        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
+      }
+      else if (mapClassToTag.containsKey(key)) {
+        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
+      }
+      else if (target instanceof EntityCreeper) {//4
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
+      }
+      else if (target instanceof EntityZombie) {//2
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_zombie));
+      }
+      else if (target instanceof EntitySkeleton) {//0
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_skeleton));
+      }
+      else if (target instanceof EntityWitherSkeleton) {//1
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_wither));
+      }
+      else if (target instanceof EntityDragon) {//5
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_dragon));
+      }
+      else if (target instanceof EntityPlayer) {//player name
+        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
+      }
+      else {
+        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
       }
     }
   }
