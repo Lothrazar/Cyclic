@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -160,10 +161,6 @@ public class UtilNBT {
     return buildNamedPlayerSkull(player.getDisplayNameString());
   }
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {
-//    ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
-//    if (skull.getTagCompound() == null) {
-//      skull.setTagCompound(new NBTTagCompound());
-//    }
     NBTTagCompound t = new NBTTagCompound();
     t.setString(Const.SkullOwner, displayNameString);
     return buildSkullFromTag(t);
@@ -173,27 +170,21 @@ public class UtilNBT {
     skull.setTagCompound(player);
     return skull;
   }
-  public static NBTTagCompound buildCustomSkull(String displayName, String id, String textureData) {
-    //     ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
+  public static NBTTagCompound buildCustomSkullTag(String displayName, String textureData) {
     NBTTagCompound base = new NBTTagCompound();
     NBTTagCompound display = new NBTTagCompound();
     display.setString("Name", displayName);
     base.setTag("display", display);
     NBTTagCompound skullOwner = new NBTTagCompound();
-    skullOwner.setString("Id", id);
+    skullOwner.setString("Id", UUID.randomUUID().toString());
     NBTTagCompound props = new NBTTagCompound();
     NBTTagList list = new NBTTagList();
     NBTTagCompound textureValue = new NBTTagCompound();
     textureValue.setString("Value", textureData);
     list.appendTag(textureValue);
-    //            props.setString("textures", p[]);
     props.setTag("textures", list);
     skullOwner.setTag("Properties", props);
-    // skullOwner.setString("LocName", "Bat Head");
     base.setTag(Const.SkullOwner, skullOwner);
-    //            skull.setTagCompound(base);
-    //           
-    //       
     return base;
   }
 }
