@@ -21,6 +21,7 @@ import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
+import com.lothrazar.cyclicmagic.item.ItemFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
@@ -144,6 +145,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    ItemFangs evoker_fangs = new ItemFangs();
+    ItemRegistry.register(evoker_fangs, "evoker_fangs", GuideCategory.ITEM);
+    
     if (enablePlayerLauncher) {
       ItemPlayerLauncher tool_launcher = new ItemPlayerLauncher();
       ItemRegistry.register(tool_launcher, "tool_launcher", GuideCategory.TRANSPORT);
