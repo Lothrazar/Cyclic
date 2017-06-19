@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.potion;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;

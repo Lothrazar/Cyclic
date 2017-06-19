@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.magnet;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachine;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;

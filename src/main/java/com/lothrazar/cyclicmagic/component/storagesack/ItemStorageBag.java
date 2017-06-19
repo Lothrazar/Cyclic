@@ -2,8 +2,9 @@ package com.lothrazar.cyclicmagic.component.storagesack;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
@@ -26,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -153,7 +153,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (!world.isRemote) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+      player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
     return super.onItemRightClick(world, player, hand);
   }
@@ -166,7 +166,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
         'l', Items.LEATHER,
         's', Items.STRING,
         'r', Items.REDSTONE,

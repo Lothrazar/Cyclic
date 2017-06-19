@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.disenchanter;
-import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
-import com.lothrazar.cyclicmagic.gui.SlotOnlyEnchanted;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyEnchanted;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;

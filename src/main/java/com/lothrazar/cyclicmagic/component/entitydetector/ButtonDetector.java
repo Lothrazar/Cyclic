@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;

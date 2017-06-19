@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.cyclicwand;
 import java.util.ArrayList;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.gui.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;
@@ -52,7 +52,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
   @Override
   public ItemStack decrStackSize(int slot, int amount) {
     ItemStack stack = getStackInSlot(slot);
-    if (stack != ItemStack.EMPTY) {
+    if (!stack.isEmpty()) {
       if (stack.getCount() > amount) {
         stack = stack.splitStack(amount);
         // Don't forget this line or your inventory will not be saved!
@@ -76,7 +76,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
     inv.set(slot, stack);
-    if (stack != ItemStack.EMPTY && stack.getCount() > getInventoryStackLimit()) {
+    if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
       stack.setCount(getInventoryStackLimit());
     }
     markDirty();
@@ -88,13 +88,13 @@ public class InventoryWand extends InventoryBase implements IInventory {
   @Override
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
-      if (getStackInSlot(i) != ItemStack.EMPTY && getStackInSlot(i).getCount() == 0) {
+      if (!getStackInSlot(i).isEmpty() && getStackInSlot(i).getCount() == 0) {
         inv.set(i, ItemStack.EMPTY);
       }
     }
     // set any empty item stacks (red zeroes) to empty
     for (int i = 0; i < thePlayer.inventory.getSizeInventory(); i++) {
-      if (thePlayer.inventory.getStackInSlot(i) != ItemStack.EMPTY && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
+      if (!thePlayer.inventory.getStackInSlot(i).isEmpty() && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
         thePlayer.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
       }
     }
@@ -134,10 +134,10 @@ public class InventoryWand extends InventoryBase implements IInventory {
     ItemStack stack;
     for (int i = 0; i < theInventory.size(); ++i) {
       stack = theInventory.get(i);
-      if (stack != ItemStack.EMPTY && stack.getCount() == 0) {
+      if (!stack.isEmpty() && stack.getCount() == 0) {
         stack = ItemStack.EMPTY;
       }
-      if (stack != ItemStack.EMPTY) {
+      if (!stack.isEmpty()) {
         // Make a new NBT Tag Compound to write the itemstack and slot
         // index to
         NBTTagCompound itemTags = new NBTTagCompound();
@@ -193,11 +193,11 @@ public class InventoryWand extends InventoryBase implements IInventory {
     // brute forcing it. there is surely a more elegant way in each branch
     if (buildType == ItemCyclicWand.BuildType.FIRST.ordinal()) {
       //special rules: if my current slot is not empty; DONT MOVE
-      if (inv.get(itemSlot) == ItemStack.EMPTY) {
+      if (inv.get(itemSlot).isEmpty()) {
         //test every empty slot, and jump up to the next nonempty one. 
         // used for mode rotate always, and mode normal IF current is empty
         for (int trySlot : slotNonEmpty) {
-          if (inv.get(trySlot) != ItemStack.EMPTY) {
+          if (!inv.get(trySlot).isEmpty()) {
             itemSlot = trySlot;
             break;
           }
@@ -246,7 +246,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
   public void closeInventory(EntityPlayer player) {
     //called on gui close
     int slot = ItemCyclicWand.BuildType.getSlot(internalWand);
-    if (InventoryWand.getFromSlot(internalWand, slot) == ItemStack.EMPTY || InventoryWand.getToPlaceFromSlot(internalWand, slot) == null) {
+    if (InventoryWand.getFromSlot(internalWand, slot).isEmpty() || InventoryWand.getToPlaceFromSlot(internalWand, slot) == null) {
       //try to move away from empty slot
       ItemCyclicWand.BuildType.setNextSlot(internalWand);
     }

@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.log.ModLogger;
+import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -12,7 +15,6 @@ import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -31,7 +33,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.11.2,)", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.11.2,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
   @Instance(value = Const.MODID)
   public static ModCyclic instance;
@@ -79,7 +81,7 @@ public class ModCyclic {
       module.onInit();
     }
     proxy.init();
-    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ForgeGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
     PermissionRegistry.register();
@@ -97,14 +99,4 @@ public class ModCyclic {
       module.onServerStarting(event);
     }
   }
-  /*
-   * REQUESTED FEATURES:
-   * 
-   * https://github.com/PrinceOfAmber/Cyclic/milestones
-   * 
-   * BUGS:
-   * 
-   * https://github.com/PrinceOfAmber/Cyclic/issues
-   * 
-   */
 }

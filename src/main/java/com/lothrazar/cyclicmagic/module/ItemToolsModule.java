@@ -11,33 +11,35 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
+import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
+import com.lothrazar.cyclicmagic.item.ItemEnderWing;
+import com.lothrazar.cyclicmagic.item.ItemFangs;
+import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
+import com.lothrazar.cyclicmagic.item.ItemPistonWand;
+import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
+import com.lothrazar.cyclicmagic.item.ItemProspector;
+import com.lothrazar.cyclicmagic.item.ItemRandomizer;
+import com.lothrazar.cyclicmagic.item.ItemRotateBlock;
+import com.lothrazar.cyclicmagic.item.ItemScythe;
+import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemSoulstone;
-import com.lothrazar.cyclicmagic.item.tool.ItemSleepingMat;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolExtinguish;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolLaunch;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolPearlReuse;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolPiston;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolProspector;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolRotate;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSpawnInspect;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSpelunker;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolStirrups;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSurface;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolThrowTorch;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolWarp;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterIce;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterSpreader;
+import com.lothrazar.cyclicmagic.item.ItemSpawnInspect;
+import com.lothrazar.cyclicmagic.item.ItemStirrups;
+import com.lothrazar.cyclicmagic.item.ItemTorchThrower;
+import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
+import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
+import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
+import com.lothrazar.cyclicmagic.item.bauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -47,7 +49,6 @@ import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -106,6 +107,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableTrader;
   private boolean enableSoulstone;
   private boolean enablePlayerLauncher;
+  private boolean evokerFang;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -122,13 +124,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     EntityPlayerSP p = mc.player;
     ItemStack heldItem = p.getHeldItemMainhand();
     if (heldItem == null) { return; }
-    if (heldItem.getItem() instanceof ItemToolSwap) {
+    if (heldItem.getItem() instanceof ItemBuildSwapper) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
         IBlockState state = p.world.getBlockState(mouseOver.getBlockPos());
         Block block = state.getBlock();
         if (block != null && block.getMaterial(state) != Material.AIR) {
-          ItemToolSwap wandInstance = (ItemToolSwap) heldItem.getItem();
+          ItemBuildSwapper wandInstance = (ItemBuildSwapper) heldItem.getItem();
           IBlockState matched = null;
           if (wandInstance.getWandType() == WandType.MATCH) {
             matched = p.getEntityWorld().getBlockState(mouseOver.getBlockPos());
@@ -144,8 +146,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    if (evokerFang) {
+      ItemFangs evoker_fangs = new ItemFangs();
+      ItemRegistry.register(evoker_fangs, "evoker_fang", GuideCategory.ITEM);
+      LootTableRegistry.registerLoot(evoker_fangs);
+    }
     if (enablePlayerLauncher) {
-      ItemToolLaunch tool_launcher = new ItemToolLaunch();
+      ItemPlayerLauncher tool_launcher = new ItemPlayerLauncher();
       ItemRegistry.register(tool_launcher, "tool_launcher", GuideCategory.TRANSPORT);
       ModCyclic.instance.events.register(tool_launcher);
     }
@@ -163,29 +170,29 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.register(password_remote, "password_remote");
     }
     if (enableElevate) {
-      ItemToolSurface tool_elevate = new ItemToolSurface();
+      ItemWarpSurface tool_elevate = new ItemWarpSurface();
       ItemRegistry.register(tool_elevate, "tool_elevate", GuideCategory.TRANSPORT);
       LootTableRegistry.registerLoot(tool_elevate);
     }
     if (enableCGlove) {
-      ItemClimbingGlove glove_climb = new ItemClimbingGlove();
+      ItemGloveClimb glove_climb = new ItemGloveClimb();
       ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {
-      ItemToolRotate tool_rotate = new ItemToolRotate();
+      ItemRotateBlock tool_rotate = new ItemRotateBlock();
       ItemRegistry.register(tool_rotate, "tool_rotate");
     }
     if (enablewaterSpread) {
-      ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
+      ItemWaterSpreader water_spreader = new ItemWaterSpreader();
       ItemRegistry.register(water_spreader, "water_spreader");
     }
     if (enableFreezer) {
-      ItemToolWaterIce water_freezer = new ItemToolWaterIce();
+      ItemWaterToIce water_freezer = new ItemWaterToIce();
       ItemRegistry.register(water_freezer, "water_freezer");
     }
     if (enableFireKiller) {
-      ItemToolExtinguish fire_killer = new ItemToolExtinguish();
+      ItemFireExtinguish fire_killer = new ItemFireExtinguish();
       ItemRegistry.register(fire_killer, "fire_killer");
     }
     if (enderSack) {
@@ -195,11 +202,11 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(sack_ender);
     }
     if (enableTorchLauncher) {
-      ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
+      ItemTorchThrower tool_torch_launcher = new ItemTorchThrower();
       ItemRegistry.register(tool_torch_launcher, "tool_torch_launcher");
     }
     if (enableStirrups) {
-      ItemToolStirrups tool_mount = new ItemToolStirrups();
+      ItemStirrups tool_mount = new ItemStirrups();
       ItemRegistry.register(tool_mount, "tool_mount");
       ItemRegistry.registerWithJeiDescription(tool_mount);
     }
@@ -233,55 +240,55 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(carbon_paper);
     }
     if (enableProspector) {
-      ItemToolProspector tool_prospector = new ItemToolProspector();
+      ItemProspector tool_prospector = new ItemProspector();
       ItemRegistry.register(tool_prospector, "tool_prospector");
       LootTableRegistry.registerLoot(tool_prospector);
       ItemRegistry.registerWithJeiDescription(tool_prospector);
     }
     if (enableCavefinder) {
-      ItemToolSpelunker tool_spelunker = new ItemToolSpelunker();
+      ItemCaveFinder tool_spelunker = new ItemCaveFinder();
       ItemRegistry.register(tool_spelunker, "tool_spelunker");
       ItemRegistry.registerWithJeiDescription(tool_spelunker);
     }
     if (enableSpawnInspect) {
-      ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
+      ItemSpawnInspect tool_spawn_inspect = new ItemSpawnInspect();
       ItemRegistry.register(tool_spawn_inspect, "tool_spawn_inspect");
       ItemRegistry.registerWithJeiDescription(tool_spawn_inspect);
     }
     if (enablePearlReuse) {
-      ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
+      ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse(ItemEnderPearlReuse.OrbType.NORMAL);
       ItemRegistry.register(ender_pearl_reuse, "ender_pearl_reuse");
       LootTableRegistry.registerLoot(ender_pearl_reuse);
       ItemRegistry.registerWithJeiDescription(ender_pearl_reuse);
     }
     if (enablePearlReuseMounted) {
-      ItemToolPearlReuse ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
+      ItemEnderPearlReuse ender_pearl_mounted = new ItemEnderPearlReuse(ItemEnderPearlReuse.OrbType.MOUNTED);
       ItemRegistry.register(ender_pearl_mounted, "ender_pearl_mounted");
       LootTableRegistry.registerLoot(ender_pearl_mounted);
       AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
       ItemRegistry.registerWithJeiDescription(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
-      ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
+      ItemScythe tool_harvest_weeds = new ItemScythe(ItemScythe.HarvestType.WEEDS);
       ItemRegistry.register(tool_harvest_weeds, "tool_harvest_weeds");
       LootTableRegistry.registerLoot(tool_harvest_weeds, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(tool_harvest_weeds);
     }
     if (enableToolHarvest) {
-      ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
+      ItemScythe tool_harvest_crops = new ItemScythe(ItemScythe.HarvestType.CROPS);
       ItemRegistry.register(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
       AchievementRegistry.registerItemAchievement(tool_harvest_crops);
       ItemRegistry.registerWithJeiDescription(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
-      ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
+      ItemScythe tool_harvest_leaves = new ItemScythe(ItemScythe.HarvestType.LEAVES);
       ItemRegistry.register(tool_harvest_leaves, "tool_harvest_leaves");
       LootTableRegistry.registerLoot(tool_harvest_leaves, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(tool_harvest_leaves);
     }
     if (enableToolPush) {
-      ItemToolPiston tool_push = new ItemToolPiston();
+      ItemPistonWand tool_push = new ItemPistonWand();
       ItemRegistry.register(tool_push, "tool_push");
       ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push);
@@ -307,30 +314,30 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
-      ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
+      ItemEnderWing tool_warp_home = new ItemEnderWing(ItemEnderWing.WarpType.BED);
       ItemRegistry.register(tool_warp_home, "tool_warp_home", GuideCategory.TRANSPORT);
       LootTableRegistry.registerLoot(tool_warp_home);
       AchievementRegistry.registerItemAchievement(tool_warp_home);
       ItemRegistry.registerWithJeiDescription(tool_warp_home);
     }
     if (enableWarpSpawnTool) {
-      ItemToolWarp tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
+      ItemEnderWing tool_warp_spawn = new ItemEnderWing(ItemEnderWing.WarpType.SPAWN);
       ItemRegistry.register(tool_warp_spawn, "tool_warp_spawn", GuideCategory.TRANSPORT);
       LootTableRegistry.registerLoot(tool_warp_spawn);
       ItemRegistry.registerWithJeiDescription(tool_warp_spawn);
     }
     if (enableSwappers) {
-      ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
+      ItemBuildSwapper tool_swap = new ItemBuildSwapper(WandType.NORMAL);
       ItemRegistry.register(tool_swap, "tool_swap");
       ModCyclic.instance.events.register(tool_swap);
-      ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
+      ItemBuildSwapper tool_swap_match = new ItemBuildSwapper(WandType.MATCH);
       ItemRegistry.register(tool_swap_match, "tool_swap_match");
       ModCyclic.instance.events.register(tool_swap_match);
       ItemRegistry.registerWithJeiDescription(tool_swap_match);
       ItemRegistry.registerWithJeiDescription(tool_swap);
     }
     if (enableRando) {
-      ItemToolRandomize tool_randomize = new ItemToolRandomize();
+      ItemRandomizer tool_randomize = new ItemRandomizer();
       ItemRegistry.register(tool_randomize, "tool_randomize");
       ModCyclic.instance.events.register(tool_randomize);
       ItemRegistry.registerWithJeiDescription(tool_randomize);
@@ -338,6 +345,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    evokerFang = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -371,7 +379,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableStirrups = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
-    ItemToolSwap.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
+    ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -379,7 +387,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     EntityPlayer player = Minecraft.getMinecraft().player;
     if (!player.isSneaking() || event.getDwheel() == 0) { return; }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == ItemStack.EMPTY) { return; }
+    if (wand.isEmpty()) { return; }
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
@@ -398,7 +406,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
     // special new case: no hud for this type
-    if (wand != ItemStack.EMPTY) {
+    if (!wand.isEmpty()) {
       spellHud.drawSpellWheel(wand);
     }
   }
@@ -408,10 +416,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand == ItemStack.EMPTY) { return; }
+    if (heldWand.isEmpty()) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
-    if (current != ItemStack.EMPTY) {
+    if (!current.isEmpty()) {
       //THE ITEM INSIDE THE BUILDY WHEEL
       int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
       int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);

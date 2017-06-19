@@ -13,14 +13,14 @@ import net.minecraft.util.EnumHand;
 public class UtilPlayer {
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (wand == ItemStack.EMPTY) {
+    if (wand.isEmpty()) {
       wand = player.getHeldItemOffhand();
     }
     return wand;
   }
   public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
     ItemStack stack = player.inventory.getStackInSlot(slot);
-    if (stack != ItemStack.EMPTY &&
+    if (!stack.isEmpty() &&
         stack.getItem() != null &&
         Block.getBlockFromItem(stack.getItem()) != null) {
       Block b = Block.getBlockFromItem(stack.getItem());
@@ -33,7 +33,7 @@ public class UtilPlayer {
     ItemStack stack;
     for (int i = 9; i < 36; i++) {
       stack = player.inventory.getStackInSlot(i);
-      if (stack != ItemStack.EMPTY &&
+      if (!stack.isEmpty() &&
           stack.getItem() != null &&
           Block.getBlockFromItem(stack.getItem()) != Blocks.AIR) { return i; }
     }
@@ -143,7 +143,7 @@ public class UtilPlayer {
   public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
     ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
-    Item item = (inslot == ItemStack.EMPTY) ? null : inslot.getItem();
+    Item item = (inslot.isEmpty()) ? null : inslot.getItem();
     return item;
   }
 }

@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.UUID;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,14 +29,11 @@ public class UtilNBT {
     return new BlockPos(getItemStackNBTVal(item, "xpos"), getItemStackNBTVal(item, "ypos"), getItemStackNBTVal(item, "zpos"));
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
-    if (item == ItemStack.EMPTY) { return; }
-    if (item.getTagCompound() == null) {
-      item.setTagCompound(new NBTTagCompound());
-    }
-    item.getTagCompound().setInteger(prop, value);
+    if (item.isEmpty()) { return; }
+    getItemStackNBT(item).setInteger(prop, value);
   }
   public static int getItemStackNBTVal(ItemStack held, String prop) {
-    if (held == ItemStack.EMPTY) { return 0; }
+    if (held.isEmpty()) { return 0; }
     NBTTagCompound tags = getItemStackNBT(held);
     if (!tags.hasKey(prop)) { return 0; }
     return tags.getInteger(prop);
@@ -48,7 +47,7 @@ public class UtilNBT {
    * @return
    */
   public static String getItemStackDisplayInteger(ItemStack held, String prop) {
-    if (held == ItemStack.EMPTY) { return ""; }
+    if (held.isEmpty()) { return ""; }
     NBTTagCompound tags = getItemStackNBT(held);
     if (!tags.hasKey(prop)) { return ""; }
     return tags.getInteger(prop) + "";
@@ -99,7 +98,7 @@ public class UtilNBT {
     for (int i = 0; i < invo.getSizeInventory(); i++) {
       // zeroes to avoid nulls, and signify nothing goes there
       chestItem = invo.getStackInSlot(i);
-      if (chestItem == ItemStack.EMPTY || chestItem.getCount() == 0) {
+      if (chestItem.isEmpty() || chestItem.getCount() == 0) {
         continue;
       } // not an error; empty chest slot
       itemTag = chestItem.writeToNBT(new NBTTagCompound());
@@ -155,18 +154,37 @@ public class UtilNBT {
     nameTag.setTagCompound(nbt);// put the data into the item stack
     return nameTag;
   }
+  public static ItemStack itemFromNBT(NBTTagCompound tag) {
+    return new ItemStack(tag);
+  }
   public static ItemStack buildNamedPlayerSkull(EntityPlayer player) {
     return buildNamedPlayerSkull(player.getDisplayNameString());
   }
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {
+    NBTTagCompound t = new NBTTagCompound();
+    t.setString(Const.SkullOwner, displayNameString);
+    return buildSkullFromTag(t);
+  }
+  public static ItemStack buildSkullFromTag(NBTTagCompound player) {
     ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
-    if (skull.getTagCompound() == null) {
-      skull.setTagCompound(new NBTTagCompound());
-    }
-    skull.getTagCompound().setString(Const.SkullOwner, displayNameString);
+    skull.setTagCompound(player);
     return skull;
   }
-  public static ItemStack itemFromNBT(NBTTagCompound tag) {
-    return new ItemStack(tag);
+  public static NBTTagCompound buildCustomSkullTag(String displayName, String textureData) {
+    NBTTagCompound base = new NBTTagCompound();
+    NBTTagCompound display = new NBTTagCompound();
+    display.setString("Name", displayName);
+    base.setTag("display", display);
+    NBTTagCompound skullOwner = new NBTTagCompound();
+    skullOwner.setString("Id", UUID.randomUUID().toString());
+    NBTTagCompound props = new NBTTagCompound();
+    NBTTagList list = new NBTTagList();
+    NBTTagCompound textureValue = new NBTTagCompound();
+    textureValue.setString("Value", textureData);
+    list.appendTag(textureValue);
+    props.setTag("textures", list);
+    skullOwner.setTag("Properties", props);
+    base.setTag(Const.SkullOwner, skullOwner);
+    return base;
   }
 }

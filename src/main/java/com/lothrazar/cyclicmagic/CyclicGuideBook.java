@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
@@ -27,7 +28,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
@@ -146,6 +146,6 @@ public class CyclicGuideBook implements IGuideBook {
   }
   @Override
   public void handlePost(ItemStack bookStack) {
-    GameRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
+    RecipeRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
   }
 }

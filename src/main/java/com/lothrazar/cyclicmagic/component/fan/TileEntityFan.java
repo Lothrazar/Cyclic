@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.Entity;
@@ -32,6 +32,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int range = 16;
   public TileEntityFan() {
     super(0);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void update() {

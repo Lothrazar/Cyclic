@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
+import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
@@ -33,11 +33,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBlock, IMessage> {
   private BlockPos pos;
-  private ItemToolSwap.ActionType actionType;
-  private ItemToolSwap.WandType wandType;
+  private ItemBuildSwapper.ActionType actionType;
+  private ItemBuildSwapper.WandType wandType;
   private EnumFacing side;
   public PacketSwapBlock() {}
-  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemToolSwap.ActionType t, ItemToolSwap.WandType w) {
+  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemBuildSwapper.ActionType t, ItemBuildSwapper.WandType w) {
     pos = mouseover;
     actionType = t;
     wandType = w;
@@ -53,9 +53,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     int s = tags.getInteger("s");
     side = EnumFacing.values()[s];
     int t = tags.getInteger("t");
-    actionType = ItemToolSwap.ActionType.values()[t];
+    actionType = ItemBuildSwapper.ActionType.values()[t];
     int w = tags.getInteger("w");
-    wandType = ItemToolSwap.WandType.values()[w];
+    wandType = ItemBuildSwapper.WandType.values()[w];
   }
   @Override
   public void toBytes(ByteBuf buf) {
@@ -130,7 +130,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //TODO: CLEANUP/REFACTOR THIS
           String itemName = UtilItemStack.getStringForBlock(replacedBlock);
           boolean isInBlacklist = false;
-          for (String s : ItemToolSwap.swapBlacklist) {//dont use .contains on the list. must use .equals on string
+          for (String s : ItemBuildSwapper.swapBlacklist) {//dont use .contains on the list. must use .equals on string
             if (s != null && s.equals(itemName)) {
               isInBlacklist = true;
               break;
@@ -150,7 +150,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           ItemStack cur = player.inventory.getStackInSlot(slot);
-          if (cur == ItemStack.EMPTY || cur.getCount() <= 0) {
+          if (cur.isEmpty() || cur.getCount() <= 0) {
             continue;
           }
           world.setBlockToAir(curPos);
@@ -177,12 +177,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //damage once per block 
             //TODO: CLEANUP?REFACTOR THIS
             ItemStack held = player.getHeldItemMainhand();
-            if (held != ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
+            if (held != ItemStack.EMPTY && held.getItem() instanceof ItemBuildSwapper) {
               UtilItemStack.damageItem(player, held);
             }
             else {
               held = player.getHeldItemOffhand();
-              if (held != ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
+              if (held != ItemStack.EMPTY && held.getItem() instanceof ItemBuildSwapper) {
                 UtilItemStack.damageItem(player, held);
               }
             }

@@ -15,14 +15,11 @@ public class UtilFurnace {
   public final static int SLOT_OUTPUT = 2;
   public static void tryMergeStackIntoSlot(TileEntityFurnace furnace, EntityPlayer entityPlayer, int playerSlot, int furnaceSlot) {
     ItemStack current = furnace.getStackInSlot(furnaceSlot);
-    //removeStackFromSlot//why the FFFFFFFFFF was i using this garbage funtion
     ItemStack held = entityPlayer.inventory.getStackInSlot(playerSlot);
-    // ModMain.logger.info("held!!!:" + held.getUnlocalizedName());
     boolean success = false;
     World worldObj = entityPlayer.getEntityWorld();
-    if (current == ItemStack.EMPTY) {
+    if (current.isEmpty()) {
       // just done
-      // ModMain.logger.info("slot is empty");
       if (worldObj.isRemote == false) {
         furnace.setInventorySlotContents(furnaceSlot, held.copy());
         held = ItemStack.EMPTY;
@@ -38,9 +35,8 @@ public class UtilFurnace {
       }
     }
     if (success) {
-      //  ModMain.logger.info("success!!!");
       if (worldObj.isRemote == false) {
-        if (held != ItemStack.EMPTY && held.getCount() == 0) {// so now we just fix if something is size zero
+        if (!held.isEmpty() && held.getCount() == 0) {// so now we just fix if something is size zero
           held = ItemStack.EMPTY;
         }
         entityPlayer.inventory.setInventorySlotContents(playerSlot, held);
@@ -50,9 +46,8 @@ public class UtilFurnace {
     }
   }
   public static void extractFurnaceOutput(TileEntityFurnace furnace, EntityPlayer player) {
-    // ModMain.logger.info("extractFurnaceOutput");
     ItemStack current = furnace.removeStackFromSlot(SLOT_OUTPUT);
-    if (current != ItemStack.EMPTY) {
+    if (!current.isEmpty()) {
       BlockPos pos = player.getPosition();
       if (player.getEntityWorld().isRemote == false) {
         player.dropItemAndGetStack(new EntityItem(player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), current));
@@ -64,7 +59,7 @@ public class UtilFurnace {
   public static boolean canBeSmelted(ItemStack input) {
     // we literally get the smelt recipe instance to test if it has one
     ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(input);
-    return (itemstack != ItemStack.EMPTY);
+    return (!itemstack.isEmpty());
   }
   public static boolean isFuel(ItemStack input) {
     // how long does it burn for? zero means it isnt fuel

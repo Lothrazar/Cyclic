@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -43,7 +43,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setGuiId(ModGuiHandler.GUI_INDEX_VECTOR);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_VECTOR);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

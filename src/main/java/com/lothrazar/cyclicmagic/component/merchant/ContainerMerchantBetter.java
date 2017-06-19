@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.merchant;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -113,7 +113,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
     if (trade.isRecipeDisabled()) { return; }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
-    ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == ItemStack.EMPTY) ? ItemStack.EMPTY : trade.getSecondItemToBuy().copy();
+    ItemStack itemSecondBuy = (trade.getSecondItemToBuy().isEmpty()) ? ItemStack.EMPTY : trade.getSecondItemToBuy().copy();
     ItemStack firstItem = ItemStack.EMPTY;
     ItemStack secondItem = ItemStack.EMPTY;
     int firstSlot = -1, secondSlot = -1;
@@ -121,21 +121,21 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     boolean canTrade = false;
     for (int i = 0; i <= 3 * 9; i++) {
       iStack = player.inventory.getStackInSlot(i);
-      if (iStack == ItemStack.EMPTY) {
+      if (iStack.isEmpty()) {
         continue;
       }
-      if (firstItem == ItemStack.EMPTY &&
+      if (firstItem.isEmpty() &&
           iStack.getItem() == itemToBuy.getItem() && iStack.getCount() >= itemToBuy.getCount()) {
         firstItem = iStack;
         firstSlot = i;
       }
-      if (secondItem == ItemStack.EMPTY && itemSecondBuy != ItemStack.EMPTY) {
+      if (secondItem.isEmpty() && !itemSecondBuy.isEmpty()) {
         if (itemSecondBuy.getItem() == iStack.getItem() && iStack.getCount() >= itemSecondBuy.getCount()) {
           secondItem = iStack;
           secondSlot = i;
         }
       }
-      canTrade = (firstItem != ItemStack.EMPTY && (itemSecondBuy == ItemStack.EMPTY || secondItem != ItemStack.EMPTY));
+      canTrade = (!firstItem.isEmpty() && (itemSecondBuy.isEmpty() || !secondItem.isEmpty()));
       if (canTrade) {
         break;
       }

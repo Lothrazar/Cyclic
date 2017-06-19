@@ -3,12 +3,13 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.module.ItemToolsModule.RenderLoc;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -28,7 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -137,7 +137,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == ItemStack.EMPTY) { return 0; }
+      if (wand.isEmpty()) { return 0; }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -151,7 +151,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
       int slot = getSlot(wand);
-      if (InventoryWand.getFromSlot(wand, slot) == ItemStack.EMPTY || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
+      if (InventoryWand.getFromSlot(wand, slot).isEmpty() || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
         //try to move away from empty slot
         setNextSlot(wand);
       }
@@ -213,7 +213,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "sds",
         " o ",
         "gog",
