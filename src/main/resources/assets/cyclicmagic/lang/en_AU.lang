@@ -873,3 +873,8 @@ item.stone_minecart.guide=Think of this as a single-slot chest.  The Stone Minec
 
 item.tool_launcher.guide=Aim and then charge this up like a bow and then release it to get launched into the air.  It has two modes, forward and reverse, that you can toggle with attack (left-click).  Forward means you need to aim up into the air, and you fly the exact direction and angle that you look.  Reverse means you have to aim down at the ground and you get launched backwards.  Using this gives you the "bouncy" potion effect, which makes anything you land on bounce you up like a slime block.  
 
+
+enchantment.quickdraw.guide=This triples the speed that your bow draws up to full power.
+enchantment.beheading.guide=This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.
+item.evoker_fang.guide=Summons a beam of Evoker Fangs in whatever direction youre facing.  Must be used on an entity or a block.
+

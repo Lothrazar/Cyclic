@@ -149,6 +149,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (evokerFang) {
       ItemFangs evoker_fangs = new ItemFangs();
       ItemRegistry.register(evoker_fangs, "evoker_fang", GuideCategory.ITEM);
+      LootTableRegistry.registerLoot(evoker_fangs);
     }
     if (enablePlayerLauncher) {
       ItemPlayerLauncher tool_launcher = new ItemPlayerLauncher();

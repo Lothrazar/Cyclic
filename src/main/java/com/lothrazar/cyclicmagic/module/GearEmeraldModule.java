@@ -70,9 +70,9 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
       Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
       ItemRegistry.register(emerald_legs, "emerald_leggings", null);
       Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.register(emerald_boots, "emerald_boots");
+      ItemRegistry.register(emerald_boots, "emerald_boots", null);
       Item emerald_sword = new ItemEmeraldSword();
-      ItemRegistry.register(emerald_sword, "emerald_sword");
+      ItemRegistry.register(emerald_sword, "emerald_sword", null);
       Item emerald_pickaxe = new ItemEmeraldPickaxe();
       ItemRegistry.register(emerald_pickaxe, "emerald_pickaxe", null);
       Item emerald_axe = new ItemEmeraldAxe();
