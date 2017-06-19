@@ -385,4 +385,13 @@ public class UtilWorld {
       tessellator.draw();
     }
   }
+  public static boolean isBlockTorch(World world, BlockPos pos) {
+    IBlockState blockState = world.getBlockState(pos);
+    Block blockHit = blockState.getBlock();
+    String blockId = UtilItemStack.getStringForItemStack(new ItemStack(blockHit));
+    return (blockHit == Blocks.TORCH ||
+    //          blockHit == Blocks.REDSTONE_TORCH ||//nah. gives bad light & dont want to break actual circuitry
+        blockId.equals("tconstruct:stone_torch/0") ||
+        blockId.equals("actuallyadditions:block_tiny_torch/0"));
+  }
 }

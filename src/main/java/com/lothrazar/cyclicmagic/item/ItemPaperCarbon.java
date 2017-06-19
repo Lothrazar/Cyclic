@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -87,7 +88,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
-      list.add("Use to copy a sign or noteblock");
+      list.add(UtilChat.lang("item.carbon_paper.tooltip"));
       return;
     }
     String sign = getItemStackNBT(held, KEY_SIGN0) + getItemStackNBT(held, KEY_SIGN1) + getItemStackNBT(held, KEY_SIGN2) + getItemStackNBT(held, KEY_SIGN3);
@@ -99,7 +100,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     String s = noteToString(held.getTagCompound().getByte(KEY_NOTE));
     if (s != null) {
-      list.add("Note: " + s);
+      list.add(UtilChat.lang("item.carbon_paper.note") + s);
     }
   }
   //onItemUse

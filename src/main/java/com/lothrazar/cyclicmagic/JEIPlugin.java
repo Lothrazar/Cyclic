@@ -3,13 +3,12 @@ import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
-import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 @mezz.jei.api.JEIPlugin
-public class JEIPlugin extends BlankModPlugin {
+public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's

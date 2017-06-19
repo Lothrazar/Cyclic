@@ -15,14 +15,11 @@ public class UtilFurnace {
   public final static int SLOT_OUTPUT = 2;
   public static void tryMergeStackIntoSlot(TileEntityFurnace furnace, EntityPlayer entityPlayer, int playerSlot, int furnaceSlot) {
     ItemStack current = furnace.getStackInSlot(furnaceSlot);
- 
     ItemStack held = entityPlayer.inventory.getStackInSlot(playerSlot);
- 
     boolean success = false;
     World worldObj = entityPlayer.getEntityWorld();
     if (current.isEmpty()) {
       // just done
- 
       if (worldObj.isRemote == false) {
         furnace.setInventorySlotContents(furnaceSlot, held.copy());
         held = ItemStack.EMPTY;
@@ -49,7 +46,6 @@ public class UtilFurnace {
     }
   }
   public static void extractFurnaceOutput(TileEntityFurnace furnace, EntityPlayer player) {
-     
     ItemStack current = furnace.removeStackFromSlot(SLOT_OUTPUT);
     if (!current.isEmpty()) {
       BlockPos pos = player.getPosition();

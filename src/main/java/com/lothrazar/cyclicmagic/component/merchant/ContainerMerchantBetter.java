@@ -135,7 +135,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
           secondSlot = i;
         }
       }
-      canTrade = (!firstItem.isEmpty() && (itemSecondBuy.isEmpty()|| !secondItem.isEmpty()));
+      canTrade = (!firstItem.isEmpty() && (itemSecondBuy.isEmpty() || !secondItem.isEmpty()));
       if (canTrade) {
         break;
       }

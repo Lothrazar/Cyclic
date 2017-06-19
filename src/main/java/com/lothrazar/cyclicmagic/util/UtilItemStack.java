@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.List;
+import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -111,7 +112,7 @@ public class UtilItemStack {
       UtilItemStack.dropItemStackInWorld(world, pos, s);
     }
   }
-  public static String getStringForItemStack(ItemStack itemStack) {
+  public static @Nonnull String getStringForItemStack(ItemStack itemStack) {
     Item item = itemStack.getItem();
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath() + "/" + itemStack.getMetadata();
   }

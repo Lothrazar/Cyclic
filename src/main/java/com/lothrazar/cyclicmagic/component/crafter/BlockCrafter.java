@@ -33,6 +33,5 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
         'y', new ItemStack(Blocks.PISTON),
         'c', new ItemStack(Blocks.CRAFTING_TABLE),
         'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
-   
   }
 }

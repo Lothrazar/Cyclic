@@ -134,7 +134,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     ItemStack stack;
     for (int i = 0; i < theInventory.size(); ++i) {
       stack = theInventory.get(i);
-      if (!stack.isEmpty()&& stack.getCount() == 0) {
+      if (!stack.isEmpty() && stack.getCount() == 0) {
         stack = ItemStack.EMPTY;
       }
       if (!stack.isEmpty()) {

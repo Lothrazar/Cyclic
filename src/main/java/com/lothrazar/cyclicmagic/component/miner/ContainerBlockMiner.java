@@ -26,5 +26,4 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tileEntity);
   }
-  
 }

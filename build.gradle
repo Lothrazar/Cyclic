@@ -30,6 +30,7 @@ minecraft {
 //Defines basic patterns for pulling various dependencies.
 repositories {
     maven {
+    	 name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
     maven { //Guide API

@@ -50,23 +50,21 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     switch (orbType) {
       case MOUNTED:
-       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ere",
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
             'r', new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
             's', new ItemStack(Blocks.IRON_BLOCK));
-    
       case NORMAL:
-        return  RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ere",
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
             'r', Items.REDSTONE,
             's', new ItemStack(Blocks.IRON_BLOCK));
-  
       default:
       break;
     }
