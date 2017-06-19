@@ -11,7 +11,6 @@ public abstract class EnchantBase extends Enchantment {
     super(rarityIn, typeIn, slots);
     this.setName(name);
   }
-
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) { return -1; }
     ItemStack main = player.getHeldItemMainhand();

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
-import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry; 
+import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;

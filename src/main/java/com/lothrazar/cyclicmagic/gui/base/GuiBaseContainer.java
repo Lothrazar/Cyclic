@@ -132,7 +132,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   public void drawFuelText() {
     if (this.fieldFuel > -1) {
-//      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
+      //      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
       double pct = tile.getPercentFormatted();
       if (pct > 0) {
         GL11.glPushMatrix();

@@ -168,7 +168,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void damageTool() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (!equip.isEmpty() ) {
+    if (!equip.isEmpty()) {
       equip.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
       //IF enchanted and IF about to break, then spit it out
       int damageRem = equip.getMaxDamage() - equip.getItemDamage();

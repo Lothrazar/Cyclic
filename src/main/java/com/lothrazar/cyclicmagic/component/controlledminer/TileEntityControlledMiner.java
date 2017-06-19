@@ -182,7 +182,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
         itemStack = inv.get(i);
         //its a whitelist, so if its found in the list, its good to go right away
- 
         if (itemStack.getItem() == Item.getItemFromBlock(target)
             || Block.getBlockFromItem(itemStack.getItem()) == target
             || Item.REGISTRY.getNameForObject(itemStack.getItem()).toString().equals(Block.REGISTRY.getNameForObject(target).toString())) {

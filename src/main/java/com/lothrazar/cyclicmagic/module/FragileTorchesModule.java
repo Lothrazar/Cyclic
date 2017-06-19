@@ -25,7 +25,7 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
       if (ent instanceof EntityLiving == false) { return; }
       EntityLivingBase living = (EntityLivingBase) event.getEntity();
       if (living == null) { return; }
-      if (living instanceof EntityPlayer && ((EntityPlayer) living).isSneaking()) { return; }//if you are a player, then cancel if sneaking
+      if (living instanceof EntityPlayer && ((EntityPlayer) living).isSneaking()) { return; } //if you are a player, then cancel if sneaking
       if (world.getGameRules().getBoolean("mobGriefing") == false) { return; }
       if (UtilWorld.isBlockTorch(world, living.getPosition())) {
         world.destroyBlock(living.getPosition(), true);
