@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "cyclicmagic:glowing_chorus",
+    "count": 3
+  },
+  "pattern": [
+    "lal",
+    "lal",
+    "lal"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "l": {
+      "item": "minecraft:glowstone_dust"
+    }
+  }
+}

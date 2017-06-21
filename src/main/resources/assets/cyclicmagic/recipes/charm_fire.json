@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_fire"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:charm_fire",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

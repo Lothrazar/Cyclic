@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:magnet_block",
+    "count": 4
+  },
+  "pattern": [
+    "sbs",
+    "bxb",
+    "sbs"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:coal",
+      "data": 0
+    },
+    "s": {
+      "item": "minecraft:iron_ingot"
+    },
+    "x": {
+      "item": "minecraft:dye",
+      "data": 5
+    }
+  }
+}

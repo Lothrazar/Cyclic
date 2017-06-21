@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "cyclicmagic:soulstone"
+  },
+  "pattern": [
+    " a ",
+    "bsc",
+    " d "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:golden_apple",
+      "data": 0
+    },
+    "b": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "s": {
+      "item": "minecraft:nether_star"
+    },
+    "c": {
+      "item": "minecraft:purpur_block"
+    },
+    "d": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

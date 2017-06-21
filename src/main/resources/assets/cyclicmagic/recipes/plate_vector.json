@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_vector",
+    "count": 6
+  },
+  "pattern": [
+    "ttt",
+    "idi",
+    "bbb"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "cyclicmagic:plate_push_fast"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "t": {
+      "item": "cyclicmagic:plate_launch_med"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

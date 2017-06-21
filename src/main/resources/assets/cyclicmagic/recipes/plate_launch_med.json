@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_launch_med"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_launch_small"
+    },
+    {
+      "item": "minecraft:quartz"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

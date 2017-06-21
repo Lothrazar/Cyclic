@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_push_slowest"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_push"
+    },
+    {
+      "item": "minecraft:dye",
+      "data": 12
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

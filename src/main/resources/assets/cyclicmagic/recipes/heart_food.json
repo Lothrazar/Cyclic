@@ -1,0 +1,37 @@
+{
+  "result": {
+    "item": "cyclicmagic:heart_food"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:rabbit"
+    },
+    {
+      "item": "minecraft:pumpkin_pie"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:cake"
+    },
+    {
+      "item": "minecraft:emerald_block"
+    },
+    {
+      "item": "minecraft:fish",
+      "data": 1
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "data": 0
+    },
+    {
+      "item": "minecraft:poisonous_potato"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

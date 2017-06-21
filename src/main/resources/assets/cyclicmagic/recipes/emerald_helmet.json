@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_helmet"
+  },
+  "pattern": [
+    "eee",
+    "e e",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

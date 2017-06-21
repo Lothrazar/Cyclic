@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_warp_spawn"
+  },
+  "pattern": [
+    " ff",
+    "ggf",
+    "dg "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "f": {
+      "item": "minecraft:feather"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    }
+  }
+}

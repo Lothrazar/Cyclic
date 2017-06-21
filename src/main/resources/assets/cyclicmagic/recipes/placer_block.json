@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "cyclicmagic:placer_block"
+  },
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:stone",
+      "data": 0
+    },
+    "b": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "item": "minecraft:cobblestone"
+    }
+  }
+}

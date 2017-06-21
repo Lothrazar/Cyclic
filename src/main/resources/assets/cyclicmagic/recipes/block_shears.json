@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_shears"
+  },
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:shears",
+      "data": 32767
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

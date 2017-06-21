@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_snow",
+    "count": 32
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    {
+      "item": "minecraft:ice"
+    },
+    {
+      "item": "minecraft:snowball"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

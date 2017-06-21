@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_push_fast"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_push"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_rotate"
+  },
+  "pattern": [
+    " gp",
+    " bg",
+    "b  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:stone_brick_stairs"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "g": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    }
+  }
+}

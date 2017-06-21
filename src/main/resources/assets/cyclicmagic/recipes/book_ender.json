@@ -1,0 +1,11 @@
+{
+  "result": {
+    "item": "cyclicmagic:book_ender"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:book_ender"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

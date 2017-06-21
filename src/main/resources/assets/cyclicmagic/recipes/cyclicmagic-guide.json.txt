@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "guideapi:cyclicmagic-guide"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:coal",
+      "data": 0
+    },
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:wooden_button"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

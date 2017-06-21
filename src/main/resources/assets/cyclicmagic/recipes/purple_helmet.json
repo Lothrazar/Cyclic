@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:purple_helmet"
+  },
+  "pattern": [
+    "oio",
+    "p p",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:dye",
+      "data": 5
+    },
+    "i": {
+      "item": "minecraft:chainmail_helmet",
+      "data": 32767
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

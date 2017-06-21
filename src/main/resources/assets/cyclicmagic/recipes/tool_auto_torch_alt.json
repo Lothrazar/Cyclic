@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_auto_torch"
+  },
+  "pattern": [
+    "cic",
+    " i ",
+    "cic"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "c": {
+      "item": "minecraft:coal_block"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:apple_emerald"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:harvester_block"
+  },
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:emerald"
+    },
+    "b": {
+      "item": "minecraft:diamond"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:quartz"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

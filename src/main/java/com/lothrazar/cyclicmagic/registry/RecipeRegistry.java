@@ -103,10 +103,9 @@ public class RecipeRegistry {
     }
     ResourceLocation location = Util1pt12.buildName(stack);
     ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), stack, Util1pt12.convertToNonNullList(recipeComponents));
-    recipe.setRegistryName(location);
-    GameRegistry.register(recipe);
-    //    IRecipe recipe = new ShapelessRecipes(stack, list);
-    //    GameRegistry.addRecipe(recipe);
+    //recipe.setRegistryName(location);
+  //  GameRegistry.register(recipe);
+ 
     return recipe;
   }
   /**
@@ -120,11 +119,11 @@ public class RecipeRegistry {
   //    return GameRegistry.addShapedRecipe(output, params);
   //  }
   public static IRecipe addShapedRecipe(ItemStack output, Object... params) {
-    ResourceLocation location = Util1pt12.buildName(output);
+  //  ResourceLocation location = Util1pt12.buildName(output);
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);
     ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
-    recipe.setRegistryName(location);
-    GameRegistry.register(recipe);
+  //  recipe.setRegistryName(location);
+ //   GameRegistry.register(recipe);
     return recipe;
   }
   public static IRecipe addRecipe(@Nonnull ItemStack output, Object... params) {

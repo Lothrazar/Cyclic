@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_tnt_1",
+    "count": 12
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

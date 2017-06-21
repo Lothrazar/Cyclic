@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:book_ender"
+  },
+  "pattern": [
+    "ene",
+    "ebe",
+    "eee"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:book"
+    },
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
+    "n": {
+      "item": "minecraft:emerald_block"
+    }
+  }
+}

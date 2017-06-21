@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "cyclicmagic:auto_crafter"
+  },
+  "pattern": [
+    "pcp",
+    "y x",
+    "pkp"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:dye",
+      "data": 5
+    },
+    "c": {
+      "item": "minecraft:crafting_table"
+    },
+    "x": {
+      "item": "minecraft:observer"
+    },
+    "y": {
+      "item": "minecraft:piston"
+    },
+    "k": {
+      "item": "minecraft:bone_block"
+    }
+  }
+}
