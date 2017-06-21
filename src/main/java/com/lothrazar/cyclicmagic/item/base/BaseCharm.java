@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public abstract class BaseCharm extends BaseItem implements IHasClickToggle{ //, baubles.api.IBauble{
+public abstract class BaseCharm extends BaseItem implements IHasClickToggle { //, baubles.api.IBauble{
   private final static String NBT_STATUS = "onoff";
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
@@ -87,21 +86,13 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle{ //,
   public boolean canUnequip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
   }/*
-  @Optional.Method(modid = "baubles")
-  public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
-    try {
-      if (baubles.api.BaubleType.values().length >= 4) { //length is 4 if trinket exists
-        return baubles.api.BaubleType.TRINKET;
-      }
-      else {
-        return baubles.api.BaubleType.RING;
-      }
-    }
-    catch (Exception e) {
-      return baubles.api.BaubleType.RING;
-    }
-  }
-  */
+    * @Optional.Method(modid = "baubles") public baubles.api.BaubleType
+    * getBaubleType(ItemStack arg0) { try { if
+    * (baubles.api.BaubleType.values().length >= 4) { //length is 4 if trinket
+    * exists return baubles.api.BaubleType.TRINKET; } else { return
+    * baubles.api.BaubleType.RING; } } catch (Exception e) { return
+    * baubles.api.BaubleType.RING; } }
+    */
   @Optional.Method(modid = "baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
   @Optional.Method(modid = "baubles")
@@ -113,8 +104,9 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle{ //,
       this.onTick(stack, (EntityPlayer) arg1);
     }
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
+  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
     super.addInformation(held, player, list, par4);
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));

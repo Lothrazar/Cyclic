@@ -259,7 +259,7 @@ public class UtilWorld {
     private static void renderOutlines(Set<BlockPos> coordinates, int r, int g, int b, int thickness) {
       Tessellator tessellator = Tessellator.getInstance();
       //    net.minecraft.client.renderer.VertexBuffer
-   BufferBuilder buffer = tessellator.getBuffer();
+      BufferBuilder buffer = tessellator.getBuffer();
       buffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
       //    GlStateManager.color(r / 255.0f, g / 255.0f, b / 255.0f);
       GL11.glLineWidth(thickness);

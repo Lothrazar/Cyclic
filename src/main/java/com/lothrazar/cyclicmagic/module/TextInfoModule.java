@@ -92,8 +92,8 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
     BlockPos spawn = player.getEntityWorld().getSpawnPoint();
     BlockPos here = player.getPosition();
     Chunk chunkHere = player.getEntityWorld().getChunkFromBlockCoords(here);
-    int xCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE / 2;
-    int zCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE / 2;
+    int xCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.x) + Const.CHUNK_SIZE / 2;
+    int zCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.z) + Const.CHUNK_SIZE / 2;
     //end border
     //start spawnchunk
     //actually its the distance not from ME but from my current chunk.

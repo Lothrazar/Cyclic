@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -23,6 +22,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionCustom extends ItemFood {
   private ArrayList<Potion> potions = new ArrayList<Potion>();
@@ -95,8 +96,9 @@ public class ItemPotionCustom extends ItemFood {
   public boolean hasEffect(ItemStack par1ItemStack) {
     return hasEffect;
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
+  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
     String n;
     for (int i = 0; i < potions.size(); i++) {
       n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());

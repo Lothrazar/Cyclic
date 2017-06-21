@@ -32,10 +32,10 @@ public class CommonProxy {
   }
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {}
   public IThreadListener getThreadFromContext(MessageContext ctx) {
-    return ctx.getServerHandler().playerEntity.getServer();
+    return ctx.getServerHandler().player.getServer();
   }
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
-    return ctx.getServerHandler().playerEntity;
+    return ctx.getServerHandler().player;
   }
   public BlockPos getBlockMouseoverSingle() {
     return null;

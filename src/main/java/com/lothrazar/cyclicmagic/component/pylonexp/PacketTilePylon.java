@@ -42,7 +42,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
   }
   @Override
   public IMessage onMessage(PacketTilePylon message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityXpPylon tile = (TileEntityXpPylon) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       int pylonHas = tile.getField(message.type.ordinal());

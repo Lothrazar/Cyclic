@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilItemStack; 
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -43,10 +43,10 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     melonToSlice = config.get(category, "Melon Block Slices",
         true, "Craft a Melon block into nine slices").getBoolean();
     category = Const.ConfigCategory.recipes;
-//    difficultEarlygameRecipes = config.get(category, "Altered Stone",
-//        false,
-//        "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
-//        .getBoolean();
+    //    difficultEarlygameRecipes = config.get(category, "Altered Stone",
+    //        false,
+    //        "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
+    //        .getBoolean();
     snowBlocksToBalls = config.get(category, "SnowBlockBalls",
         true, "Craft Snow blocks back into snowballs").getBoolean();
     quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
@@ -91,10 +91,10 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     if (melonToSlice) {
       melonToSlice();
     }
-//    if (difficultEarlygameRecipes) {
-//      smoothstoneRequired();
-//      furnaceNeedsCoal();
-//    }
+    //    if (difficultEarlygameRecipes) {
+    //      smoothstoneRequired();
+    //      furnaceNeedsCoal();
+    //    }
     if (netherwartBlockReverse) {
       netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
@@ -160,5 +160,4 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
   }
-
 }

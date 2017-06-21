@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -30,7 +29,8 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
     this.setMaxStackSize(1);
   }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
     if (pointer != null) {
       tooltip.add(TextFormatting.RED + UtilChat.blockPosToString(pointer));

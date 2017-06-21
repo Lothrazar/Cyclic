@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.Potions;
-import com.lothrazar.cyclicmagic.item.ItemPotionCustom; 
+import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
@@ -63,7 +63,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       //      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
       ItemRegistry.register(potion_viscous, "potion_viscous", null);
       GuideItem guide = GuideRegistry.register(GuideCategory.POTION, potion_viscous);
- 
       guide.addRecipePage(addBrewingRecipe(
           PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), //   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),

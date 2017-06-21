@@ -71,19 +71,19 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
-      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO); 
+      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
       ItemRegistry.registerWithJeiDescription(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
-      LootTableRegistry.registerLoot(crafting_food); 
+      LootTableRegistry.registerLoot(crafting_food);
       ItemRegistry.registerWithJeiDescription(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
-      LootTableRegistry.registerLoot(inventory_food); 
+      LootTableRegistry.registerLoot(inventory_food);
       ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
@@ -91,7 +91,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.register(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
-      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY); 
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
       ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
     if (enableGlowingChorus) {

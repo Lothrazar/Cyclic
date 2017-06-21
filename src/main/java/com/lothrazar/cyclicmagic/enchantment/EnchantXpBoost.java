@@ -28,8 +28,8 @@ public class EnchantXpBoost extends EnchantBase {
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource() == null) { return; }
-    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
-      EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
+    if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
+      EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       int level = getCurrentLevelTool(attacker);
       if (level <= 0) { return; }
       EntityLivingBase target = (EntityLivingBase) event.getEntity();

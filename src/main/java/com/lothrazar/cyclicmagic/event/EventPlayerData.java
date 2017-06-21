@@ -57,7 +57,6 @@ public class EventPlayerData {
     if (event.getObject() instanceof EntityPlayer) {
       event.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new PlayerCapInstance());
     }
- 
   }
   class PlayerCapInstance implements ICapabilitySerializable<NBTTagCompound> {
     IPlayerExtendedProperties inst = ModCyclic.CAPABILITYSTORAGE.getDefaultInstance();

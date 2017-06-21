@@ -16,16 +16,16 @@ public class GuiButtonTexture extends GuiButtonTooltip {
     textureIndex = i;
   }
   @Override
-  public void func_191745_a(Minecraft mc, int mouseX, int mouseY,float p) {
+  public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
     if (this.visible) {
-      super.func_191745_a(mc, mouseX, mouseY,p);
+      super.drawButton(mc, mouseX, mouseY, p);
       mc.getTextureManager().bindTexture(icon);
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       GlStateManager.enableBlend();
       GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-      this.drawTexturedModalRect(this.xPosition + 1, // +1 since button is 18 wide and texture is 16
-          this.yPosition,
+      this.drawTexturedModalRect(this.x + 1, // +1 since button is 18 wide and texture is 16
+          this.y,
           textureIndex * textureSize, 0,
           textureSize, textureSize);
       this.mouseDragged(mc, mouseX, mouseY);

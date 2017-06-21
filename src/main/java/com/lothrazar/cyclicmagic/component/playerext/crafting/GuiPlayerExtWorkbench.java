@@ -49,9 +49,9 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   }
   @Override
   protected void actionPerformed(GuiButton button) {
-//    if (button.id == 0) {
-//      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
-//    }
+    //    if (button.id == 0) {
+    //      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
+    //    }
     if (button.id == 1) {
       this.mc.displayGuiScreen(new GuiStats(this, this.mc.player.getStatFileWriter()));
     }

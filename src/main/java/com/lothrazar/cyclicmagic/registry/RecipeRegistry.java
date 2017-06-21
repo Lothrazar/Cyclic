@@ -16,69 +16,66 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-/** 
+/**
  * 
- * parts of this entire file as of 1.12 (not just this subclass) are from OSS 
+ * parts of this entire file as of 1.12 (not just this subclass) are from OSS
  * https://github.com/TechReborn/RebornCore/blob/1.12/src/main/java/reborncore/common/util/RebornCraftingHelper.java
- * copy pasted their notice here
- *  * Copyright (c) 2017 modmuss50 and Gigabit101
-*
-*
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-*
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-*
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
+ * copy pasted their notice here * Copyright (c) 2017 modmuss50 and Gigabit101
+ *
+ *
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ *
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ *
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
  * @author Sam
  *
  */
 public class RecipeRegistry {
-  public static class Util1pt12{
-  private static ResourceLocation  buildName(ItemStack output){
-    
-    ResourceLocation firstTry =new ResourceLocation(  Const.MODID, output.getUnlocalizedName());
-    int index = 0;
-    while (CraftingManager.field_193380_a.containsKey(firstTry)) { // REGISTRY
-      index++;
-      firstTry = new ResourceLocation(Const.MODID, firstTry.getResourcePath() + "_" + index);
-    }
-    
-    
-    return firstTry;
-    
-  }
-  private static NonNullList<Ingredient> convertToNonNullList (Object[] input) {
-    NonNullList<Ingredient> list = NonNullList.create();
-    for(Object any : input){
-      if(any instanceof Ingredient){
-        list.add((Ingredient) any);
-      } else {
-        Ingredient ing = CraftingHelper.getIngredient(any);
-        if(ing == null){
-          ing = Ingredient.field_193370_a;// EMPTY/.. same as new Ingredient(new ItemStack[0])
-        }
-        list.add(ing);
+  public static class Util1pt12 {
+    private static ResourceLocation buildName(ItemStack output) {
+      ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
+      int index = 0;
+      while (CraftingManager.REGISTRY.containsKey(firstTry)) { // REGISTRY
+        index++;
+        firstTry = new ResourceLocation(Const.MODID, firstTry.getResourcePath() + "_" + index);
       }
+      return firstTry;
     }
-    return list;
-  }
+    private static NonNullList<Ingredient> convertToNonNullList(Object[] input) {
+      NonNullList<Ingredient> list = NonNullList.create();
+      for (Object any : input) {
+        if (any instanceof Ingredient) {
+          list.add((Ingredient) any);
+        }
+        else {
+          Ingredient ing = CraftingHelper.getIngredient(any);
+          if (ing == null) {
+            ing = Ingredient.EMPTY;// EMPTY/.. same as new Ingredient(new ItemStack[0])
+          }
+          list.add(ing);
+        }
+      }
+      return list;
+    }
   }
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
@@ -104,16 +101,12 @@ public class RecipeRegistry {
         list.add(new ItemStack((Block) object));
       }
     }
-    
     ResourceLocation location = Util1pt12.buildName(stack);
     ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), stack, Util1pt12.convertToNonNullList(recipeComponents));
     recipe.setRegistryName(location);
     GameRegistry.register(recipe);
-    
-    
-    
-//    IRecipe recipe = new ShapelessRecipes(stack, list);
-//    GameRegistry.addRecipe(recipe);
+    //    IRecipe recipe = new ShapelessRecipes(stack, list);
+    //    GameRegistry.addRecipe(recipe);
     return recipe;
   }
   /**
@@ -123,9 +116,9 @@ public class RecipeRegistry {
    * @param params
    * @return
    */
-//  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
-//    return GameRegistry.addShapedRecipe(output, params);
-//  }
+  //  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
+  //    return GameRegistry.addShapedRecipe(output, params);
+  //  }
   public static IRecipe addShapedRecipe(ItemStack output, Object... params) {
     ResourceLocation location = Util1pt12.buildName(output);
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);

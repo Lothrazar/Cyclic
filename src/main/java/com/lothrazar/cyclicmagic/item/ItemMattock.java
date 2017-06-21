@@ -10,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -29,6 +28,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMattock extends ItemTool implements IHasRecipe {
   final static int RADIUS = 1;//radius 2 is 5x5 area square
@@ -130,8 +131,9 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
     }
     return super.onBlockStartBreak(stack, posHit, player);
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
+  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     super.addInformation(held, player, list, par4);
   }

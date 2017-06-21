@@ -57,7 +57,6 @@ public class CommandModule extends BaseModule implements IHasConfig {
     if (configToggle.get(CommandPing.name)) {
       event.registerServerCommand(new CommandPing(commandNeedsOp.get(CommandPing.name)));
     }
- 
     if (configToggle.get(CommandSearchItem.name)) {
       event.registerServerCommand(new CommandSearchItem(commandNeedsOp.get(CommandSearchItem.name)));
     }
@@ -70,7 +69,6 @@ public class CommandModule extends BaseModule implements IHasConfig {
     if (configToggle.get(CommandTodoList.name)) {
       event.registerServerCommand(new CommandTodoList(commandNeedsOp.get(CommandTodoList.name)));
     }
- 
     if (configToggle.get(CommandVillageInfo.name)) {
       event.registerServerCommand(new CommandVillageInfo(commandNeedsOp.get(CommandVillageInfo.name)));
     }
@@ -96,12 +94,12 @@ public class CommandModule extends BaseModule implements IHasConfig {
     syncCommandConfig(config, CommandHearts.name, true, "Increase the maximum hearts of a target player (lasts until death)");
     syncCommandConfig(config, CommandHome.name, true, "Teleport you to your current spawn (if its set)");
     syncCommandConfig(config, CommandPing.name, false, "Display your current coordinates");
-//    syncCommandConfig(config, CommandRecipe.name, false, "Find recipes for an item");
+    //    syncCommandConfig(config, CommandRecipe.name, false, "Find recipes for an item");
     syncCommandConfig(config, CommandSearchItem.name, false, "Search for an item in nearby containers");
     syncCommandConfig(config, CommandSearchSpawner.name, true, "Search the world nearby for spawners (dungeons, etc)");
     syncCommandConfig(config, CommandSearchTrades.name, false, "Search nearby villagers for trades based on item names");
     syncCommandConfig(config, CommandTodoList.name, false, "Set reminders on screen for yourself");
-//    syncCommandConfig(config, CommandUses.name, false, "Find how an item is used in other recipes");
+    //    syncCommandConfig(config, CommandUses.name, false, "Find how an item is used in other recipes");
     syncCommandConfig(config, CommandVillageInfo.name, false, "Get the stats on the nearest village (if any)");
     syncCommandConfig(config, CommandWorldHome.name, true, "Teleport to true worldspawn");
   }

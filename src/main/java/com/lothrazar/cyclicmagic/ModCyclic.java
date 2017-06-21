@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.proxy.CommonProxy; 
+import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.crafter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -134,8 +133,8 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     recipe = null;//doesnt match
-//    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
-    for (final IRecipe rec :  CraftingManager.field_193380_a) {
+    //    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
+    for (final IRecipe rec : CraftingManager.REGISTRY) {
       try {
         // rec.getRecipeSize() <= 9 && 
         if (rec.matches(this.crafter, this.world)) {

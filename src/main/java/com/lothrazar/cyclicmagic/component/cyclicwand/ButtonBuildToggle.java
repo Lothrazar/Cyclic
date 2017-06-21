@@ -28,9 +28,9 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void func_191745_a(Minecraft mc, int mouseX, int mouseY,float p) {
+  public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
     this.displayString = UtilChat.lang(ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)));
-    super.func_191745_a(mc, mouseX, mouseY, p);
+    super.drawButton(mc, mouseX, mouseY, p);
   }
   @Override
   public List<String> getTooltips() {

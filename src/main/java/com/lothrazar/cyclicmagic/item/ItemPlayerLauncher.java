@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -103,9 +102,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
     Vec3d vec = player.getLookVec().normalize();
     int rev = (ActionType.isForward(stack)) ? 1 : -1;
     power *= rev;//flip it the other way if we are going backwards
-    player.addVelocity(vec.xCoord * power,
-        vec.yCoord * power / VERTICAL_FACTOR,
-        vec.zCoord * power);
+    player.addVelocity(vec.x * power,
+        vec.y * power / VERTICAL_FACTOR,
+        vec.z * power);
     player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
     UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, 0.1F);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
@@ -131,9 +130,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
       }
     }
   }
-  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }

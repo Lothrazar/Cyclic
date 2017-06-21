@@ -3,8 +3,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -19,7 +17,7 @@ public class ItemBlockBucket extends ItemBlock {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack item, World player, List<String> tooltip, ITooltipFlag  advanced) {
+  public void addInformation(ItemStack item, World player, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     if (item.getItem() != Item.getItemFromBlock(BlockRegistry.block_storeempty))
       tooltip.add(UtilChat.lang("tile.block_storeany.tooltip") + BlockBucketStorage.getBucketsStored(item));
     else

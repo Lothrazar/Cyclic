@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -86,8 +85,9 @@ public class ItemChestSack extends BaseItem {
     heldChestSack.setTagCompound(null);
     return true;
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag advanced) {
+  public void addInformation(ItemStack itemStack, World player, List<String> list,net.minecraft.client.util.ITooltipFlag advanced) {
     if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {

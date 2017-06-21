@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -25,6 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public static final String name = "carbon_paper";
@@ -80,12 +81,10 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) { return; } // nothing ot paste
     if (held.getTagCompound().getByte(KEY_NOTE) == NOTE_EMPTY) { return; }
     noteblock.note = held.getTagCompound().getByte(KEY_NOTE);
-    // world.markBlockForUpdate(noteblock.getPos());//so update is refreshed on
-    // client side
-    // entityPlayer.swingItem();
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list, ITooltipFlag par4) {
+  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
       list.add(UtilChat.lang("item.carbon_paper.tooltip"));

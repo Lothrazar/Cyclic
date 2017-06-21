@@ -21,9 +21,8 @@ public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
     this(block, -1);
   }
   @Override
-  public void renderTileEntityFast(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage
-      ,float p   , net.minecraft.client.renderer.BufferBuilder buffer) {
-    super.renderTileEntityFast(te, x, y, z, partialTicks, destroyStage,p,buffer);
+  public void renderTileEntityFast(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p, net.minecraft.client.renderer.BufferBuilder buffer) {
+    super.renderTileEntityFast(te, x, y, z, partialTicks, destroyStage, p, buffer);
     if (te instanceof ITilePreviewToggle) {
       ITilePreviewToggle tilePreview = (ITilePreviewToggle) te;
       if (tilePreview.isPreviewVisible()) {
