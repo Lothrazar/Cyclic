@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RecipeRegistry {
+  public static final boolean WRITE_JSON = false;
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
    * returns it after registering it
@@ -34,6 +35,13 @@ public class RecipeRegistry {
     }
     IRecipe recipe = new ShapelessRecipes(stack, list);
     GameRegistry.addRecipe(recipe);
+    
+ 
+
+    if(WRITE_JSON){
+      RecipeFileWriter.addShapelessRecipe(stack, recipeComponents);
+    }
+    
     return recipe;
   }
   /**
@@ -44,6 +52,12 @@ public class RecipeRegistry {
    * @return
    */
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
+    
+    if(WRITE_JSON){
+      RecipeFileWriter.addShapedRecipe(output, params);
+    }
+    
+    
     return GameRegistry.addShapedRecipe(output, params);
   }
   public static IRecipe addRecipe(@Nonnull ItemStack output, Object... params) {
