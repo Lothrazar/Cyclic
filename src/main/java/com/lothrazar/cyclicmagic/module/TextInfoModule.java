@@ -28,6 +28,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   private boolean horseInfoEnabled;
   private boolean foodDetails;
   private boolean fuelDetails;
+  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onItemTooltipEvent(ItemTooltipEvent event) {
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
@@ -62,6 +63,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       addHorseInfo(event);
     }
   }
+  @SideOnly(Side.CLIENT)
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
     if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
@@ -76,6 +78,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       event.getLeft().add(UtilChat.lang("debug.horsejump") + df.format(jumpHeight));
     }
   }
+  @SideOnly(Side.CLIENT)
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
     /*
