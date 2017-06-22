@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.25",
     "1.11.2-latest": "1.5.6",
     "1.11.2-recommended": "1.5.6",
-    "1.12-latest": "1.5.7",
-    "1.12-recommended": "1.5.7"
+    "1.12-latest": "1.5.8",
+    "1.12-recommended": "1.5.8"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -175,5 +175,6 @@
   "1.12":{
   	"1.5.6":"Initial port from 1.11.2-1.5.6"
   	,"1.5.7":"Fixed the server subscribing to tooltip render events which prevented server startup.  Recipes have been converted to new JSON system.  Needs forge 14.21.0.2338 higher.  "
+  	,"1.5.8":"Guide API compatibility added back in, get it here https://mods.curse.com/mc-mods/minecraft/228832-guide-api"
   }
 }

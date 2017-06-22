@@ -52,7 +52,7 @@ dependencies {
 
   //compile files("lib/Baubles-${mc_version}-${baubles_version}.jar")
   
-//  deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+  deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 }
 
 processResources {
