@@ -51,7 +51,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class RecipeRegistry {
   public static class Util1pt12 {
-    private static ResourceLocation buildName(ItemStack output) {
+    public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
       int index = 0;
       while (CraftingManager.REGISTRY.containsKey(firstTry)) { // REGISTRY
