@@ -111,20 +111,29 @@ public class EventKeyInput {
     try {
       rightClickDown = Mouse.isButtonDown(1);
     }
-    catch (Exception e) {//array oob?
+    catch (Exception e) {//array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
+      //EXAMPLE:  mod.chiselsandbits.bitbag.BagGui
+      // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410
       rightClickDown = Mouse.isButtonDown(0);//rare to have a one button mouse. but not impossible i guess.
     }
-    if (rightClickDown && gui.getSlotUnderMouse() != null) {
-      int slot = gui.getSlotUnderMouse().slotNumber;
-      if (gui.inventorySlots.getSlot(slot) != null && !gui.inventorySlots.getSlot(slot).getStack().isEmpty()) {
-        ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
-        if (maybeCharm.getItem() instanceof IHasClickToggle) {
-          //example: is a charm or something
-          ModCyclic.network.sendToServer(new PacketItemToggle(slot));
-          UtilSound.playSound(Minecraft.getMinecraft().player, SoundEvents.UI_BUTTON_CLICK);
-          event.setCanceled(true);
+    try {
+      if (rightClickDown && gui.getSlotUnderMouse() != null) {
+        int slot = gui.getSlotUnderMouse().slotNumber;
+        if (gui.inventorySlots != null && slot < gui.inventorySlots.inventorySlots.size() &&
+            gui.inventorySlots.getSlot(slot) != null && !gui.inventorySlots.getSlot(slot).getStack().isEmpty()) {
+          ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
+          if (maybeCharm.getItem() instanceof IHasClickToggle) {
+            //example: is a charm or something
+            ModCyclic.network.sendToServer(new PacketItemToggle(slot));
+            UtilSound.playSound(Minecraft.getMinecraft().player, SoundEvents.UI_BUTTON_CLICK);
+            event.setCanceled(true);
+          }
         }
       }
+    }
+    catch (Exception e) {//array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
+      //EXAMPLE:  mod.chiselsandbits.bitbag.BagGui
+      // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410
     }
   }
   @SideOnly(Side.CLIENT)
