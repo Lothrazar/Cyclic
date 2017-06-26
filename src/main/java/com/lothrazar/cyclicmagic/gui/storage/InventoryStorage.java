@@ -79,6 +79,7 @@ public class InventoryStorage implements IInventory {
   }
   @Override
   public void markDirty() {
+    if (internalWand == null) { return; } //yes this somehow actually ahppened once // https://pastebin.com/4YWdQhUk https://github.com/PrinceOfAmber/Cyclic/issues/413
     for (int i = 0; i < getSizeInventory(); ++i) {
       if (getStackInSlot(i) != null && getStackInSlot(i).stackSize == 0) {
         inventory[i] = null;

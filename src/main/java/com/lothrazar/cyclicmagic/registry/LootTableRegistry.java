@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.Item;
 
 public class LootTableRegistry {
@@ -19,6 +20,7 @@ public class LootTableRegistry {
     registerLoot(i, type, lootChanceDefault);
   }
   public static void registerLoot(Item i, ChestType type, int random) {
+    ModCyclic.logger.info("Loot table entry : "+ i.getUnlocalizedName());
     switch (type) {
       case BONUS:
         bonusChest.put(i, random * 2);//nobody uses this anyway, so just for fun we x2
