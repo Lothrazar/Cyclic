@@ -126,6 +126,7 @@ public class InventoryStorage implements IInventory {
     return inv;
   }
   public static void writeToNBT(ItemStack item, ItemStack[] theInventory) {
+    if (item == null) { return; }
     NBTTagCompound tagcompound = UtilNBT.getItemStackNBT(item);
     // Create a new NBT Tag List to store itemstacks as NBT Tags
     NBTTagList items = new NBTTagList();

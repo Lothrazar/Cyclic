@@ -115,6 +115,7 @@ public class ModGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
+       // if (s == null) { return null; }
         return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
       case GUI_INDEX_WAYPOINT:
         return null;
@@ -201,6 +202,7 @@ public class ModGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_STORAGE:
           ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
+         // if (s == null) { return null; }
           return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
@@ -238,7 +240,6 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_FAN:
           if (te != null && te instanceof TileEntityFan) { return new GuiFan(player.inventory, (TileEntityFan) te); }
         break;
-
         case GUI_INDEX_XP:
           if (te instanceof TileEntityXpPylon) { return new GuiPylon(player.inventory, (TileEntityXpPylon) te); }
         break;

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -14,9 +15,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
   public static String posToStringCSV(BlockPos position) {
-    if(position == null){
-      return "";
-    }
+    if (position == null) { return ""; }
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
@@ -56,7 +55,7 @@ public class UtilNBT {
     if (!tags.hasKey(prop)) { return ""; }
     return tags.getInteger(prop) + "";
   }
-  public static NBTTagCompound getItemStackNBT(ItemStack held) {
+  public static NBTTagCompound getItemStackNBT(@Nonnull ItemStack held) {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }

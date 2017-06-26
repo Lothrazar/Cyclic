@@ -164,7 +164,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       //four 3s is two 4s is one 5
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
-      LootTableRegistry.registerLoot(ender_tnt_6);
+       
     }
   }
   @Override
