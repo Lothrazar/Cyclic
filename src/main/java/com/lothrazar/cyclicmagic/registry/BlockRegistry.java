@@ -23,19 +23,17 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-  //  public static void registerBlock(Block b, String name) {
-  //    registerBlock(b, new ItemBlock(b), name, null);
-  //  }
+
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, null, name, cat);
   }
   public static void registerBlock(Block b, ItemBlock ib, String name, @Nullable GuideCategory cat) {
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
     b.setUnlocalizedName(name);
-    ib.setRegistryName(b.getRegistryName());
-//    GameRegistry.register(ib);
-    if(ib!=null){
-      ModCyclic.logger.error("item block registry fix "+name);
+    if (ib != null) {
+      ib.setRegistryName(b.getRegistryName());
+      ModCyclic.logger.error("item block registry TEST ME " + name);
+      ItemRegistry.itemMap.put(name, ib);
     }
     b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
@@ -53,12 +51,11 @@ public class BlockRegistry {
       JeiDescriptionRegistry.registerWithJeiDescription(b);
     }
   }
-
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
-    for(Block b : blocks){
-
+    for (Block b : blocks) {
       event.getRegistry().register(b);
+      
     }
   }
 }

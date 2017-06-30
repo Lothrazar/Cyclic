@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
@@ -16,6 +17,7 @@ import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -80,6 +82,8 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
     MinecraftForge.EVENT_BUS.register(SoundRegistry.class);
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);
+    MinecraftForge.EVENT_BUS.register(VillagerProfRegistry.class);
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
