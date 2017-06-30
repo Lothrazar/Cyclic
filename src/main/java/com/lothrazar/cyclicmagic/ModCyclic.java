@@ -85,7 +85,6 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);
     MinecraftForge.EVENT_BUS.register(VillagerProfRegistry.class);
-    MinecraftForge.EVENT_BUS.register(ClientProxy.class);
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
