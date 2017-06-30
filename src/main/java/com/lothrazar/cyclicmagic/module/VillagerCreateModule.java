@@ -91,7 +91,6 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
         Const.MODRES + "textures/entity/villager/" + name + ".png",
         "minecraft:textures/entity/zombie_villager/zombie_villager.png");
     VillagerProfRegistry.register(prof);
-    ModCyclic.logger.error("FIX VILLAGER PROF "+name);
     VillagerCareer villager = new VillagerCareer(prof, name);
     for (int i = 0; i < trades.length; i++) {
       villager.addTrade(i + 1, trades[i]);

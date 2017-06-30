@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantRegistry {
   public static ArrayList<Enchantment> enchants = new ArrayList<Enchantment>();
   public static void register(ResourceLocation resourceLocation, Enchantment quickdraw) {
+
     quickdraw.setRegistryName(resourceLocation);
     enchants.add(quickdraw);
   }

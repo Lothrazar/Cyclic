@@ -23,16 +23,15 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
-    registerBlock(b, null, name, cat);
+    registerBlock(b, new ItemBlock(b), name, cat);
   }
   public static void registerBlock(Block b, ItemBlock ib, String name, @Nullable GuideCategory cat) {
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
     b.setUnlocalizedName(name);
     if (ib != null) {
-      ib.setRegistryName(b.getRegistryName());
-      ModCyclic.logger.error("item block registry TEST ME " + name);
+      ib.setRegistryName(b.getRegistryName()); // ok good this should work yes? yes! http://mcforge.readthedocs.io/en/latest/blocks/blocks/#registering-a-block
+ 
       ItemRegistry.itemMap.put(name, ib);
     }
     b.setCreativeTab(ModCyclic.TAB);
@@ -53,9 +52,6 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
-    for (Block b : blocks) {
-      event.getRegistry().register(b);
-      
-    }
+    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
   }
 }

@@ -26,7 +26,7 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     //itemsJei
     for (ItemStack s : JeiDescriptionRegistry.itemsJei) {
       lang = s.getUnlocalizedName() + ".jei";
-      registry.addDescription(s, lang);
+//      registry.addDescription(s, lang);
     }
     //    for (Block item : BlockRegistry.itemsJei) {
     //      lang = item.getUnlocalizedName() + ".jei";
