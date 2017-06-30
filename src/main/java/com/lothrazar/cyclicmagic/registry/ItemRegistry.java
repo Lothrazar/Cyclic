@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -74,17 +75,21 @@ public class ItemRegistry {
 //      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
 //      
       
-
+//
 System.out.println("registerModelsr   "+item);
 System.out.println("registerModelsr   "+name);
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
       
       if (b instanceof IBlockHasTESR) {
         ((IBlockHasTESR) b).initModel();
       }
     }
     for (String key : ItemRegistry.itemMap.keySet()) {
+      
       item = ItemRegistry.itemMap.get(key);
+      
+      if(item instanceof ItemBlock){continue;}
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
       
 
