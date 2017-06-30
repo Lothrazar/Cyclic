@@ -160,6 +160,7 @@ public class CyclicGuideBook implements IGuideBook {
         Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
     ResourceLocation location = Util1pt12.buildName(bookStack);
     recipe.setRegistryName(location);
-    GameRegistry.register(recipe);
+//    GameRegistry.register(recipe); 
+    ModCyclic.logger.error("fix recipe for guidebook ");
   }
 }

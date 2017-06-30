@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
@@ -88,7 +89,8 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     VillagerProfession prof = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",
         "minecraft:textures/entity/zombie_villager/zombie_villager.png");
-    VillagerRegistry.instance().register(prof);
+//    VillagerRegistry.instance().register(prof);
+    ModCyclic.logger.error("FIX VILLAGER PROF "+name);
     VillagerCareer villager = new VillagerCareer(prof, name);
     for (int i = 0; i < trades.length; i++) {
       villager.addTrade(i + 1, trades[i]);
