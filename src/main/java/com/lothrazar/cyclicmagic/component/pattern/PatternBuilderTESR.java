@@ -11,10 +11,12 @@ public class PatternBuilderTESR extends BaseMachineTesr<TileEntityPatternBuilder
     super();
   }
   @Override
-  public void render(TileEntityBaseMachineInvo te) {}
+  public void renderBasic(TileEntityBaseMachineInvo te) {}
   @Override
-  public void renderTileEntityFast(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p, net.minecraft.client.renderer.BufferBuilder buffer) {
-    super.renderTileEntityFast(te, x, y, z, partialTicks, destroyStage, p, buffer);
+  public void render(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p
+  
+      ) {
+    super.render(te, x, y, z, partialTicks, destroyStage, p);
     if (te instanceof TileEntityPatternBuilder == false) { return; }
     TileEntityPatternBuilder tile = ((TileEntityPatternBuilder) te);
     if (tile.isPreviewVisible()) {

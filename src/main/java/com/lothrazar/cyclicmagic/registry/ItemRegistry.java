@@ -50,13 +50,8 @@ public class ItemRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
-
     event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
- 
   }
-  
-   
-
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
@@ -66,37 +61,25 @@ public class ItemRegistry {
     // More info on proxy rendering
     // http://www.minecraftforge.net/forum/index.php?topic=27684.0
     // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
-//    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+    //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     String name;
     Item item;
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
-//      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
-//      
-      
-//
-System.out.println("registerModelsr   "+item);
-System.out.println("registerModelsr   "+name);
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
-      
       if (b instanceof IBlockHasTESR) {
         ((IBlockHasTESR) b).initModel();
       }
     }
     for (String key : ItemRegistry.itemMap.keySet()) {
-      
       item = ItemRegistry.itemMap.get(key);
-      
-      if(item instanceof ItemBlock){continue;}
+      if (item instanceof ItemBlock) {
+        continue;
+      }
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
-      
-
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
-      
-//      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
     }
   }
-  
 }

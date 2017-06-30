@@ -51,7 +51,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
    * 
    * @param te
    */
-  public abstract void render(TileEntityBaseMachineInvo te);
+  public abstract void renderBasic(TileEntityBaseMachineInvo te);
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
     if (bakedModel == null && resource != null) {
@@ -72,14 +72,17 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     return bakedModel;
   }
   @Override
-  public void renderTileEntityFast(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p, net.minecraft.client.renderer.BufferBuilder buffer) {
+  public void render(TileEntityBaseMachineInvo te, double x, double y, double z, 
+      float partialTicks, int destroyStage, float alpha
+      //, net.minecraft.client.renderer.BufferBuilder buffer
+      ) {
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
     if (te.isRunning()) {
-      this.render(te);
+      this.renderBasic(te);
     }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
