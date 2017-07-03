@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -174,11 +175,12 @@ public class UtilUncraft {
             continue;//keep looking but save the result type
           }
           outsize = next.getRecipeOutput().getCount();
-          List<? extends Object> input = getRecipeInput(next);
+          List<ItemStack> input = getRecipeInput(next);
           if (input == null) {
             result = UncraftResultType.UNKNOWN;
             continue;
           } //getRecipeInput can be null
+          
           for (Object maybeOres : input) {
             if (maybeOres instanceof ItemStack) {
               tryAddTrop((ItemStack) maybeOres);
@@ -200,30 +202,37 @@ public class UtilUncraft {
      * @param next
      * @return
      */
-    private List<? extends Object> getRecipeInput(IRecipe next) {
+    private List<ItemStack> getRecipeInput(IRecipe next) {
       NonNullList<Ingredient> ingreds = next.getIngredients();
-      if (next instanceof ShapedOreRecipe) {
-        ShapedOreRecipe r = (ShapedOreRecipe) next;
-        //        NonNullList<Ingredient> ingreds =  r.func_192400_c();
-        return new ArrayList<Object>(Arrays.asList(ingreds));
+      List<ItemStack> inputs = new ArrayList<ItemStack>();
+      for(Ingredient i : ingreds){
+        if(i != null && i.getMatchingStacks() != null && i.getMatchingStacks().length > 0)
+        inputs.add(i.getMatchingStacks()[0]);
       }
-      else if (next instanceof ShapelessOreRecipe) {
-        ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-        return ingreds;//r.getInput();
-      }
-      else if (next instanceof ShapedRecipes) {
-        ShapedRecipes r = (ShapedRecipes) next;
-        return r.recipeItems;
-      }
-      else if (next instanceof ShapelessRecipes) {
-        ShapelessRecipes r = (ShapelessRecipes) next;
-        return r.recipeItems;
-      }
-      else {
-        this.setErrorString(" " + next.getClass().getName());
-      }
-      //else it could be anything from a custom mod ex: solderer
-      return null;
+      return inputs;
+//      if (next instanceof ShapedOreRecipe) {
+//        ShapedOreRecipe r = (ShapedOreRecipe) next;
+//        //        NonNullList<Ingredient> ingreds =  r.func_192400_c();
+//        
+//        return new ArrayList<Object>(Arrays.asList(ingreds));
+//      }
+//      else if (next instanceof ShapelessOreRecipe) {
+//        ShapelessOreRecipe r = (ShapelessOreRecipe) next;
+//        return ingreds;//r.getInput();
+//      }
+//      else if (next instanceof ShapedRecipes) {
+//        ShapedRecipes r = (ShapedRecipes) next;
+//        return r.recipeItems;
+//      }
+//      else if (next instanceof ShapelessRecipes) {
+//        ShapelessRecipes r = (ShapelessRecipes) next;
+//        return r.recipeItems;
+//      }
+//      else {
+//        this.setErrorString(" " + next.getClass().getName());
+//      }
+//      //else it could be anything from a custom mod ex: solderer
+//      return null;
     }
     public String getErrorString() {
       return errorString;
