@@ -97,10 +97,10 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public void onCraftMatrixChanged(IInventory inventory) {
     IRecipe r = CraftingManager.findMatchingRecipe(craftMatrix, this.thePlayer.getEntityWorld());
     if (r == null) {
-      craftResult.setInventorySlotContents(0, r.getRecipeOutput());
+      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     }
     else {
-      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+      craftResult.setInventorySlotContents(0, r.getRecipeOutput());
     }
   }
   @Override

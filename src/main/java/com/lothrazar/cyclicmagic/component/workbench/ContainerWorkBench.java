@@ -53,19 +53,14 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     bindPlayerInventory(inventoryPlayer);
     this.onCraftMatrixChanged(this.craftMatrix);
   }
-//  @Override
-//  public void onCraftMatrixChanged(IInventory inventoryIn) {
-//    //no more .getInstance()
-//    this.craftResult.setInventorySlotContents(0, CraftingManager.findMatchingRecipe(this.craftMatrix, this.world));
-//  }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     IRecipe r = CraftingManager.findMatchingRecipe(craftMatrix, this.world);
     if (r == null) {
-      craftResult.setInventorySlotContents(0, r.getRecipeOutput());
+      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     }
     else {
-      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+      craftResult.setInventorySlotContents(0, r.getRecipeOutput());
     }
   }
   @Override
