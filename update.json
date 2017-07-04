@@ -133,7 +133,7 @@
 	,"1.10.25":"Fixed a compatibility issue that was causing fall damage in certain situations that should not cause fall damage, while using Mekanism Jetpacks.  Fixed client-server desync with Launch enchantment, it now correctly resets your fall damage on use."
 	,"1.10.26":"Automated user now (again) milks cows using empty bucket.  Fixed a rare client crash with Merchant Almanac if trading too fast and the trade list desyncs.  "
   	,"1.10.27":"No longer adds Dynamite VI to dungeon loot tables.  Fixed uncommon crash that happens when a Sack of Storage is spawned in from a loot table instead of being crafted (somehow gets created with bad data, hard to explain and replicate, example given is new world bonus chest)"
- 	,"1.10.28":"Harvester now works on Resourceful Crops mod "
+ 	,"1.10.28":"Minimum forge version changed to 12.18.3.2316.  Harvester now works on Resourceful Crops mod. "
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
