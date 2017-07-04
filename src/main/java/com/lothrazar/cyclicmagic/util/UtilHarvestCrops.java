@@ -15,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -184,11 +185,33 @@ public class UtilHarvestCrops {
         }
       }
     }
+    else if (blockCheck.getClass().toString().replaceAll("class ", "").equals("tehnut.resourceful.crops.block.BlockResourcefulCrop")) {
+      // https://minecraft.curseforge.com/projects/resourcefulcrops
+      int maybeAge = blockCheck.getMetaFromState(blockState);
+      if (maybeAge == 7) {//age 7 just like vanilla crops 
+        doBreak = true;
+      }
+    }
+    final Item seedItem = getSeedItem(world, blockCheck);
+    List<ItemStack> drops;
+    try {
+      drops = blockCheck.getDrops(world, posCurrent, blockState, 0);
+    }
+    catch (Exception e) {
+      return false;// i did see this happen a few times yes. error in the other mod
+    }
+    //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
+//    if (blockCheck.getClass().toString().replaceAll("class ", "").equals("com.infinityraider.agricraft.blocks.BlockCrop")) {
+//      // https://minecraft.curseforge.com/projects/agricraft
+//     // int maybeAge = blockCheck.getMetaFromState(blockState);
+//      //age is always zero. so i suppose 100% its in the tile entity data? so we need to manage dependency if theres no api?
+//      //drop this for now
+//      return false;
+//    }
+    // age is the problem int age = ((Integer) blockState.getValue(BlockCocoa.AGE)).intValue();
     // no , for now is fine, do not do blocks
     if (doBreak) {
       // get the Actual drops
-      final List<ItemStack> drops = blockCheck.getDrops(world, posCurrent, blockState, 0);
-      //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
       }
@@ -200,7 +223,6 @@ public class UtilHarvestCrops {
         world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
         world.setBlockState(posCurrent, stateReplant);// new way
         //whateveer it drops if it wasnt full grown, yeah thats the seed
-        final Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
         if (drops.size() > 1 && seedItem != null) {
           //  if it dropped more than one ( seed and a thing)
           for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
@@ -225,5 +247,9 @@ public class UtilHarvestCrops {
       return true;
     }
     return false;
+  }
+  private static Item getSeedItem(World world, Block blockCheck) {
+    final Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
+    return seedItem;
   }
 }
