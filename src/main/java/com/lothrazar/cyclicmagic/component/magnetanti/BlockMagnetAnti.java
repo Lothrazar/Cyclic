@@ -61,6 +61,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
         'b', new ItemStack(Blocks.NETHER_WART_BLOCK), //netherwart block
         'x', new ItemStack(Blocks.BEACON));
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     String s = UtilChat.lang("tile.magnet_anti_block.tooltip").replace("$t$", TileEntityMagnetAnti.TIMER_FULL + "");

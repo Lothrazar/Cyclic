@@ -24,6 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public static final String name = "carbon_paper";
@@ -84,6 +86,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     // entityPlayer.swingItem();
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {

@@ -22,6 +22,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionCustom extends ItemFood {
   private ArrayList<Potion> potions = new ArrayList<Potion>();
@@ -95,6 +97,7 @@ public class ItemPotionCustom extends ItemFood {
     return hasEffect;
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     String n;
     for (int i = 0; i < potions.size(); i++) {

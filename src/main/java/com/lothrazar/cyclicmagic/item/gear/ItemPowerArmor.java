@@ -23,6 +23,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
@@ -98,6 +100,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";

@@ -82,6 +82,7 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
       }
     }
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));

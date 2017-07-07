@@ -28,6 +28,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   public ItemPasswordRemote() {
     this.setMaxStackSize(1);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);

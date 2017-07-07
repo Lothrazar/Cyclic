@@ -72,6 +72,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     switch (warpType) {

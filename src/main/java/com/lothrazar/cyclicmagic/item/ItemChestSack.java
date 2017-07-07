@@ -86,6 +86,7 @@ public class ItemChestSack extends BaseItem {
     return true;
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
     if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);

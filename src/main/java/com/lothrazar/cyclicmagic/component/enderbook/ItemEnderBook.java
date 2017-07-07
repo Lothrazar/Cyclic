@@ -55,6 +55,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   private static int getLocationsCount(ItemStack itemStack) {
     return getLocations(itemStack).size();
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));

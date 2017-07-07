@@ -58,6 +58,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
     super.onCreated(stack, worldIn, playerIn);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));

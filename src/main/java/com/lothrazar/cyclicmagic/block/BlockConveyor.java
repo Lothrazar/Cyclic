@@ -138,6 +138,7 @@ public class BlockConveyor extends BlockBasePressurePlate {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int speed = (int) (this.power * 100);

@@ -38,6 +38,7 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     setPlayerGhostMode(player, world);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));

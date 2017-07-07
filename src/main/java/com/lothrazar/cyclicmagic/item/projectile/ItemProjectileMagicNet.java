@@ -38,10 +38,12 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return hasEntity(stack);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     if (hasEffect(stack)) {

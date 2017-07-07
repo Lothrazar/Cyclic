@@ -51,6 +51,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
     UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int fakePower = (int) Math.round(this.power * 10); //  String.format("%.1f", this.power))

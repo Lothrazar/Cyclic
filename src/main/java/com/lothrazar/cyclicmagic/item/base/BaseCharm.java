@@ -112,6 +112,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
     }
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     super.addInformation(held, player, list, par4);
     String onoff = this.isOn(held) ? "on" : "off";

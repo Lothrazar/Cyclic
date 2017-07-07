@@ -80,6 +80,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
