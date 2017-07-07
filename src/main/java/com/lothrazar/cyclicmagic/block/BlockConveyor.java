@@ -138,8 +138,9 @@ public class BlockConveyor extends BlockBasePressurePlate {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     int speed = (int) (this.power * 100);
     tooltip.add(UtilChat.lang("tile.plate_push.tooltip") + speed);
   }

@@ -150,8 +150,8 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(hand));
   }
-  @SideOnly(Side.CLIENT)
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);

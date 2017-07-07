@@ -84,7 +84,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
+  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag advanced) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
       list.add(UtilChat.lang("item.carbon_paper.tooltip"));

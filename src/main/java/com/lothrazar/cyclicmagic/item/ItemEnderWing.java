@@ -72,8 +72,9 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     switch (warpType) {
       case BED:
         tooltip.add(UtilChat.lang("item.tool_warp_home.tooltip"));

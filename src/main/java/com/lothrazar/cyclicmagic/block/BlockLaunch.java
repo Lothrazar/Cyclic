@@ -51,8 +51,9 @@ public class BlockLaunch extends BlockBasePressurePlate {
     UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     int fakePower = (int) Math.round(this.power * 10); //  String.format("%.1f", this.power))
     tooltip.add(UtilChat.lang("tile.plate_launch.tooltip" + fakePower));
   }

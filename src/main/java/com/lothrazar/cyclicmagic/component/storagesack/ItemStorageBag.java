@@ -80,8 +80,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
   }
-  @SideOnly(Side.CLIENT)
   @Override
+  @SideOnly(Side.CLIENT)
+  
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);

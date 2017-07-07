@@ -58,8 +58,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
     super.onCreated(stack, worldIn, playerIn);
   }
-  @SideOnly(Side.CLIENT)
   @Override
+  @SideOnly(Side.CLIENT)
+  
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {

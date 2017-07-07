@@ -55,8 +55,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   private static int getLocationsCount(ItemStack itemStack) {
     return getLocations(itemStack).size();
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));
   }
   public static int getLargestSlot(ItemStack itemStack) {

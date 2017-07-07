@@ -34,6 +34,7 @@ public abstract class BlockBase extends Block {
   public boolean isOpaqueCube(IBlockState state) {
     return !this.isTransp; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     if (this.isTransp)

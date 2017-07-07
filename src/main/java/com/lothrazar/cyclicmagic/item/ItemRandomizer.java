@@ -107,8 +107,8 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
     this.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
-  @SideOnly(Side.CLIENT)
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);

@@ -98,7 +98,9 @@ public class ItemPotionCustom extends ItemFood {
   }
   @SideOnly(Side.CLIENT)
   @Override
+ 
   public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
+ 
     String n;
     for (int i = 0; i < potions.size(); i++) {
       n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());
