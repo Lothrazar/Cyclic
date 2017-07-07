@@ -13,7 +13,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeRegistry {
-  public static final boolean WRITE_JSON = false;
+  public static final boolean WRITE_JSON = true;
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
    * returns it after registering it

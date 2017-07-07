@@ -151,8 +151,10 @@ public class RecipeFileWriter {
    }
    if (thing instanceof String) {
      Map<String, Object> ret = new HashMap<>();
-     ret.put("item", "#" + ((String) thing)); // NOTE you need to add this to your _constants.json!
+     ret.put("type","forge:ore_dict");
+     ret.put("ore", ((String) thing)); // NOTE you need to add this to your _constants.json!
      // todo autogenerate constants.json as well
+     //False. well, if its an exiting OreDict entry it does NOT need the "#" + 
      return ret;
    }
    throw new IllegalArgumentException("Not a block, item, stack, or od name : " + thing);
