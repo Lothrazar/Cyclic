@@ -112,8 +112,9 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
     //lock as success for https://github.com/PrinceOfAmber/Cyclic/issues/180
     //    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag  advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
   }
   @Override
