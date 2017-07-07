@@ -34,6 +34,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean fragileEnabled;
@@ -51,6 +52,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+      OreDictionary.registerOre("workbench", workbench);
     }
     if (soundproofing) {
       BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
@@ -77,13 +79,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_shears, "block_shears", GuideCategory.BLOCK);
     }
     if (fragileEnabled) {
-      //<<<<<<< HEAD
       BlockScaffolding block_fragile = new BlockScaffolding(true);
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile", GuideCategory.BLOCK);
-      //=======
-      //      BlockScaffolding block_fragile = new BlockScaffolding(true);
-      //      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
-      //>>>>>>> bbeb49c0fa1ca7b0defc4c391c93d873df9406e6
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
       BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto", GuideCategory.BLOCK);
