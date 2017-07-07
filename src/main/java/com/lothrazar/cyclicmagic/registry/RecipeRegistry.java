@@ -13,23 +13,20 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeRegistry {
-  public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
-    IRecipe r = new ShapelessOreRecipe(stack, recipeComponents);
-    GameRegistry.addRecipe(r);
-    return r;
-  }
+  public static final boolean WRITE_JSON = false;
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
    * returns it after registering it
    * 
-   * @param stack
+   * @param output
    * @param recipeComponents
    * @return
    */
-  public static IRecipe addShapelessRecipe(ItemStack stack, Object... recipeComponents) {
+  public static IRecipe addShapelessRecipe(ItemStack output, Object... recipeComponents) {
+  if(WRITE_JSON) { RecipeFileWriter.addShapelessRecipe(output, recipeComponents);}
     List<ItemStack> list = Lists.<ItemStack> newArrayList();
     for (Object object : recipeComponents) {
-      if (object instanceof String) { return addShapelessOreRecipe(stack, recipeComponents); }
+      if (object instanceof String) { return addShapelessOreRecipe(output, recipeComponents); }
       if (object instanceof ItemStack) {
         list.add(((ItemStack) object).copy());
       }
@@ -41,7 +38,7 @@ public class RecipeRegistry {
         list.add(new ItemStack((Block) object));
       }
     }
-    IRecipe recipe = new ShapelessRecipes(stack, list);
+    IRecipe recipe = new ShapelessRecipes(output, list);
     GameRegistry.addRecipe(recipe);
     return recipe;
   }
@@ -53,13 +50,19 @@ public class RecipeRegistry {
    * @return
    */
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
+    if(WRITE_JSON){ RecipeFileWriter.addShapedRecipe(output, recipeComponents);}
     for (Object object : recipeComponents) {
       if (object instanceof String) { return addShapedOreRecipe(output, recipeComponents); }
     }
     return GameRegistry.addShapedRecipe(output, recipeComponents);
   }
-  public static IRecipe addShapedOreRecipe(ItemStack stack, Object... recipeComponents) {
+  private static IRecipe addShapedOreRecipe(ItemStack stack, Object... recipeComponents) {
     IRecipe r = new ShapedOreRecipe(stack, recipeComponents);
+    GameRegistry.addRecipe(r);
+    return r;
+  }
+  private static IRecipe addShapelessOreRecipe(ItemStack output, Object... recipeComponents) {
+    IRecipe r = new ShapelessOreRecipe(output, recipeComponents);
     GameRegistry.addRecipe(r);
     return r;
   }

@@ -48,6 +48,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   }
   @Override
   public IRecipe addRecipe() {
+ 
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "vhv",
         "grg",
