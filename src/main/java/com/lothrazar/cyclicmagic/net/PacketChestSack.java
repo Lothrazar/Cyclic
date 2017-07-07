@@ -55,7 +55,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
       thread.addScheduledTask(new Runnable() {
         public void run() {
           BlockPos position = message.pos;
-          EntityPlayer player = ctx.getServerHandler().player;
+          EntityPlayer player = ctx.getServerHandler().playerEntity;
           World world = player.getEntityWorld();
           TileEntity tile = world.getTileEntity(position);
           IBlockState state = world.getBlockState(position);

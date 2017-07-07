@@ -1,15 +1,10 @@
 package com.lothrazar.cyclicmagic.registry;
-import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.data.Const;
-import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SoundRegistry {
-  public static ArrayList<SoundEvent> sounds = new ArrayList<SoundEvent>();
   public static SoundEvent crackle;
   public static SoundEvent basey;
   public static SoundEvent bip;
@@ -42,13 +37,7 @@ public class SoundRegistry {
     final ResourceLocation res = new ResourceLocation(Const.MODID, name);//new ResourceLocation(Const.MODID, "sounds/" + UtilSound.Own.crackle+".ogg");
     SoundEvent sound = new SoundEvent(res);
     sound.setRegistryName(res);
-    sounds.add(sound);
+    GameRegistry.register(sound);
     return sound;
-  }
-  @SubscribeEvent
-  public static void onRegistryEvent(RegistryEvent.Register<SoundEvent> event) {
-    for (SoundEvent b : sounds) {
-      event.getRegistry().register(b);
-    }
   }
 }

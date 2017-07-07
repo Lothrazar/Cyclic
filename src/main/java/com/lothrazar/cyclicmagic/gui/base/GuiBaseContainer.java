@@ -85,7 +85,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public void drawNameText() {
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
-      this.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6);
+      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
     }
   }
   public void updateToggleButtonStates() {
@@ -102,7 +102,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void drawString(String s, int x, int y) {
-    this.fontRenderer.drawString(UtilChat.lang(s), x, y, FONTCOLOR);
+    this.fontRendererObj.drawString(UtilChat.lang(s), x, y, FONTCOLOR);
   }
   public int getMiddleY() {
     int yMiddle = (this.height - this.ySize) / 2;
@@ -167,7 +167,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         btn = (ITooltipButton) buttonList.get(i);
         if (btn.getTooltips() != null) {
-          drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRenderer);
+          drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
         }
         break;// cant hover on 2 at once
       }

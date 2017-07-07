@@ -14,7 +14,7 @@ public class PacketOpenExtendedInventory implements IMessage, IMessageHandler<Pa
   public void fromBytes(ByteBuf buffer) {}
   @Override
   public IMessage onMessage(PacketOpenExtendedInventory message, MessageContext ctx) {
-    ctx.getServerHandler().player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_EXTENDED, ctx.getServerHandler().player.getEntityWorld(), (int) ctx.getServerHandler().player.posX, (int) ctx.getServerHandler().player.posY, (int) ctx.getServerHandler().player.posZ);
+    ctx.getServerHandler().playerEntity.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_EXTENDED, ctx.getServerHandler().playerEntity.getEntityWorld(), (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
     return null;
   }
 }

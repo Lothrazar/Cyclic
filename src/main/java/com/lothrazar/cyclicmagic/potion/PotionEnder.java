@@ -32,8 +32,8 @@ public class PotionEnder extends PotionBase {
   }
   @SubscribeEvent
   public void onLivingKill(LivingDeathEvent event) {
-    if (event.getSource().getTrueSource() instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) event.getSource().getSourceOfDamage();
       Entity target = event.getEntity();
       if (player.isPotionActive(this) && target instanceof EntityEnderman) {
         World world = player.getEntityWorld();

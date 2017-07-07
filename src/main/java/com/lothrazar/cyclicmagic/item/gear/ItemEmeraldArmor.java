@@ -16,15 +16,15 @@ public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
   public IRecipe addRecipe() {
     switch (this.armorType) {
       case CHEST:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', "gemEmerald");
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(Items.EMERALD));
       case FEET:
-        RecipeRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', "gemEmerald");
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', "gemEmerald");
+        RecipeRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       case HEAD:
-        RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', "gemEmerald");
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', "gemEmerald");
+        RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(Items.EMERALD));
       case LEGS:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', "gemEmerald");
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       case MAINHAND:
       break;
       case OFFHAND:

@@ -52,7 +52,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
   @Override
   public IMessage onMessage(PacketRandomize message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer player = ctx.getServerHandler().player;
+      EntityPlayer player = ctx.getServerHandler().playerEntity;
       World worldObj = player.getEntityWorld();
       List<BlockPos> places = new ArrayList<BlockPos>();
       int xMin = message.pos.getX();

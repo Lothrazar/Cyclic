@@ -43,7 +43,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
   }
   @Override
   public IMessage onMessage(PacketTileSizeToggle message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null && tile instanceof ITileSizeToggle
         && message.type == ActionType.SIZE.ordinal()) {

@@ -88,9 +88,9 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     return 1;
   }
   @SubscribeEvent
-  public void onEntityKill(LivingDeathEvent event) { 
-    if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
-      EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
+  public void onEntityKill(LivingDeathEvent event) {
+    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
+      EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
       int level = getCurrentLevelTool(attacker);
       if (level < 0) { return; }

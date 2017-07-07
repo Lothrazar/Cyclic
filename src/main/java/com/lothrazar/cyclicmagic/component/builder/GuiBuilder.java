@@ -69,13 +69,13 @@ public class GuiBuilder extends GuiBaseContainer {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
-      this.fontRenderer.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
+      this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
     if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
-      this.fontRenderer.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
+      this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();

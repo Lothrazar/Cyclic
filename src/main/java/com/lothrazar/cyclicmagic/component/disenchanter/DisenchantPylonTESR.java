@@ -10,7 +10,7 @@ public class DisenchantPylonTESR extends BaseMachineTesr<TileEntityDisenchanter>
     super();
   }
   @Override
-  public void renderBasic(TileEntityBaseMachineInvo te) {
+  public void render(TileEntityBaseMachineInvo te) {
     renderItem(te, te.getStackInSlot(1), 0, 0.5F, 1);
     renderItem(te, te.getStackInSlot(2), 1, 0.5F, 1);
     renderItem(te, te.getStackInSlot(3), 1, 0.5F, 0);

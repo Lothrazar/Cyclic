@@ -43,7 +43,7 @@ public class ItemRotateBlock extends BaseTool implements IHasRecipe {
         " gp",
         " bg",
         "b  ",
-        'b', "stickWood",
+        'b', Items.STICK,
         'g', Blocks.STONE_SLAB,
         'p', Blocks.STONE_BRICK_STAIRS);
     return null;

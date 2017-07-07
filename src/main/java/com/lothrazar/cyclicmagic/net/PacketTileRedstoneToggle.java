@@ -34,7 +34,7 @@ public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<Packe
   }
   @Override
   public IMessage onMessage(PacketTileRedstoneToggle message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null && tile instanceof ITileRedstoneToggle) {
       ITileRedstoneToggle te = ((ITileRedstoneToggle) tile);

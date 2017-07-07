@@ -23,8 +23,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
@@ -99,13 +97,11 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
     //flag it so we know the purple glow was from this item, not something else
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
   }
-  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
+  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));
-    super.addInformation(held, player, list, par4);
   }
   @Override
   public IRecipe addRecipe() {
@@ -114,26 +110,26 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "p p", "oio", "ooo",
             'i', new ItemStack(Items.CHAINMAIL_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
-            'o', "obsidian",
-            'p', "dyePurple");
+            'o', Blocks.OBSIDIAN,
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case FEET:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "   ", "p p", "oio",
             'i', new ItemStack(Items.CHAINMAIL_BOOTS, 1, OreDictionary.WILDCARD_VALUE),
-            'o', "obsidian",
-            'p', "dyePurple");
+            'o', Blocks.OBSIDIAN,
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case HEAD:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "   ",
             'i', new ItemStack(Items.CHAINMAIL_HELMET, 1, OreDictionary.WILDCARD_VALUE),
-            'o', "obsidian",
-            'p', "dyePurple");
+            'o', Blocks.OBSIDIAN,
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       case LEGS:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "o o",
             'i', new ItemStack(Items.CHAINMAIL_LEGGINGS, 1, OreDictionary.WILDCARD_VALUE),
-            'o', "obsidian",
-            'p', "dyePurple");
+            'o', Blocks.OBSIDIAN,
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
     }
     return null;
   }

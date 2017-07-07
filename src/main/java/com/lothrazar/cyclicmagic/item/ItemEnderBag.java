@@ -32,7 +32,7 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
         " l ",
         "lsl",
         " l ",
-        'l', "leather",
-        's', "chestEnder");
+        'l', Items.LEATHER,
+        's', Blocks.ENDER_CHEST);
   }
 }

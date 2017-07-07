@@ -13,8 +13,6 @@ public class ItemEmeraldPickaxe extends ItemPickaxe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 
-        'e', "gemEmerald",
-        's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
   }
 }

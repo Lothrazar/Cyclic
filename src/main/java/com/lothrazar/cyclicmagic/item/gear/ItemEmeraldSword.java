@@ -13,6 +13,6 @@ public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', "gemEmerald", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
   }
 }

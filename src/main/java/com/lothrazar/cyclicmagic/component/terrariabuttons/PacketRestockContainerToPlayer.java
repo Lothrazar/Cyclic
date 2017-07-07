@@ -27,7 +27,7 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
   }
   @Override
   public IMessage onMessage(PacketRestockContainerToPlayer message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().player;
+    EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (UtilPlayer.hasValidOpenContainer(p)) {
       IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
       UtilInventoryTransfer.sortFromInventoryToPlayer(p.getEntityWorld(), openInventory, p, GuiTerrariaButtonsModule.restockLeaveOne);

@@ -40,7 +40,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
   }
   @Override
   public IMessage onMessage(PacketTileVector message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityVector tile = (TileEntityVector) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.setField(message.tileFieldId, message.value);

@@ -69,9 +69,9 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
         " sg",
         " bs",
         "b  ",
-        'b', "stickWood",
+        'b', new ItemStack(Items.STICK),
         's', new ItemStack(Items.FLINT),
-        'g', "dyeBlue");
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.BLUE.getMetadata()));
   }
   @Override
   public void syncConfig(Configuration config) {

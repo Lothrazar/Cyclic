@@ -19,8 +19,6 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 
-        'e', "sandstone", 
-        's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
   }
 }

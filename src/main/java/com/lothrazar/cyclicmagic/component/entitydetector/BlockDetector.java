@@ -47,9 +47,9 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
         "dcd",
         " q ",
         "r r",
-        'r', "dustRedstone",
-        'q', "gemQuartz",
-        'c', "blockCoal",
-        'd', "gemDiamond");
+        'r', Items.REDSTONE,
+        'q', Blocks.QUARTZ_BLOCK,
+        'c', Blocks.COAL_BLOCK,
+        'd', Items.DIAMOND);
   }
 }

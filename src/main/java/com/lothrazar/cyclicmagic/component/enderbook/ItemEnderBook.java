@@ -114,8 +114,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
       // try and force chunk loading
-   //   player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified()
-      player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
+      player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified();
       UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     }
     return true;
@@ -123,9 +122,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
-        'e', "enderpearl",
+        'e', Items.ENDER_PEARL,
         'b', Items.BOOK,
-        'n', "blockEmerald");
+        'n', Blocks.EMERALD_BLOCK);
     // if you want to clean out the book and start over
   }
   @Override

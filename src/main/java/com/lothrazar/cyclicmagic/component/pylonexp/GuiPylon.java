@@ -101,7 +101,7 @@ public class GuiPylon extends GuiBaseContainer {
         else if (button.id == btnDepositAll.id) {
           tt = "button.exp_pylon.depositall.tooltip";
         }
-        this.drawHoveringText(Arrays.asList(UtilChat.lang(tt)), mouseX, mouseY, fontRenderer);
+        this.drawHoveringText(Arrays.asList(UtilChat.lang(tt)), mouseX, mouseY, fontRendererObj);
         break;// cant hover on 2 at once
       }
     }

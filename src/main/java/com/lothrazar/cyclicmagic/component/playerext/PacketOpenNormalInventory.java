@@ -14,8 +14,8 @@ public class PacketOpenNormalInventory implements IMessage, IMessageHandler<Pack
   public void fromBytes(ByteBuf buffer) {}
   @Override
   public IMessage onMessage(PacketOpenNormalInventory message, MessageContext ctx) {
-    ctx.getServerHandler().player.openContainer.onContainerClosed(ctx.getServerHandler().player);
-    ctx.getServerHandler().player.openContainer = ctx.getServerHandler().player.inventoryContainer;
+    ctx.getServerHandler().playerEntity.openContainer.onContainerClosed(ctx.getServerHandler().playerEntity);
+    ctx.getServerHandler().playerEntity.openContainer = ctx.getServerHandler().playerEntity.inventoryContainer;
     return null;
   }
 }

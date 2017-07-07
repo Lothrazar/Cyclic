@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.util.UtilExperience;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,8 +28,8 @@ public class EnchantXpBoost extends EnchantBase {
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource() == null) { return; }
-    if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
-      EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
+    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
+      EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       int level = getCurrentLevelTool(attacker);
       if (level <= 0) { return; }
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
@@ -50,10 +48,7 @@ public class EnchantXpBoost extends EnchantBase {
     if (level <= 0) { return; }
     Block block = event.getState().getBlock();
     int xpDropped = block.getExpDrop(event.getState(), world, pos, 0);
-    int bonus = xpDropped * XP_PER_LVL * level;
-    ModCyclic.logger.info("bonus exp : "+bonus);
-    UtilExperience.incrementExp(player, bonus );
-//    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
+    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
   }
   private void dropExp(World world, BlockPos pos, int xp) {
     if (world.isRemote == false) {

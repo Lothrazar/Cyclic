@@ -19,7 +19,7 @@ public class ItemGoldMinecart extends BaseItemMinecart implements IHasRecipe {
         "   ",
         "gmg",
         "ggg",
-        'g', "ingotGold",
+        'g', Items.GOLD_INGOT,
         'm', Items.MINECART);
   }
   @Override

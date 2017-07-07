@@ -50,11 +50,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -75,6 +73,7 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public void init() {
+    registerModels();
     registerKeys();
   }
   @Override
@@ -171,9 +170,30 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
- 
-
-  
+  private void registerModels() {
+    // with help from
+    // http://www.minecraftforge.net/forum/index.php?topic=32492.0
+    // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
+    // More info on proxy rendering
+    // http://www.minecraftforge.net/forum/index.php?topic=27684.0
+    // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
+    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+    String name;
+    Item item;
+    for (Block b : BlockRegistry.blocks) {
+      item = Item.getItemFromBlock(b);
+      name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
+      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
+      if (b instanceof IBlockHasTESR) {
+        ((IBlockHasTESR) b).initModel();
+      }
+    }
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
+      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
+    }
+  }
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
     EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;

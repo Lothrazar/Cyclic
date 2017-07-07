@@ -24,26 +24,26 @@ public class GuiFisher extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
       String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
-      int x = 13 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
+      int x = 13 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 42;
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
       s = s + TileEntityFishing.MINIMUM_WET_SIDES + "+";
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.fontRendererObj.drawString(s, x, y, 4210752);
     }
     if (tile.isEquipmentValid() && tile.isValidPosition()) {
       String s = UtilChat.lang("tile.block_fishing.progress");
-      int x = 4 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
+      int x = 4 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 50;
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       double fs = tile.getFishSpeed() * 100.0;
       String displaySp = String.format("%.2f", fs);//split up in case crashes again.  //java.util.IllegalFormatConversionException: f != java.lang.Integer
-      this.fontRenderer.drawString("(" + displaySp + " Hz)", x, y, 4210752);
+      this.fontRendererObj.drawString("(" + displaySp + " Hz)", x, y, 4210752);
     }
   }
   @Override

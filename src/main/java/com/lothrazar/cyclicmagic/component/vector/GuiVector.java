@@ -102,7 +102,7 @@ public class GuiVector extends GuiBaseContainer {
   }
   private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
-    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
+    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRendererObj, x, y, width, height);
     txt.setMaxStringLength(maxLen);
     txt.setText(text);
     txtBoxes.add(txt);
@@ -134,8 +134,8 @@ public class GuiVector extends GuiBaseContainer {
   }
   private void renderString(String s, int x, int y) {
     String str = UtilChat.lang(s);
-    int strWidth = this.fontRenderer.getStringWidth(str);
-    this.fontRenderer.drawString(str, x - strWidth / 2, y, 4210752);
+    int strWidth = this.fontRendererObj.getStringWidth(str);
+    this.fontRendererObj.drawString(str, x - strWidth / 2, y, 4210752);
   }
   @Override
   public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -175,8 +175,8 @@ public class GuiVector extends GuiBaseContainer {
     for (GuiTextField txt : txtBoxes) {
       txt.mouseClicked(mouseX, mouseY, btn);
       if (btn == 0) {//basically left click
-        boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
-            && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
+        boolean flag = mouseX >= this.guiLeft + txt.xPosition && mouseX < this.guiLeft + txt.xPosition + txt.width
+            && mouseY >= this.guiTop + txt.yPosition && mouseY < this.guiTop + txt.yPosition + txt.height;
         txt.setFocused(flag);
       }
     }

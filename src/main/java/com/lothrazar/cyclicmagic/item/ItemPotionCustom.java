@@ -22,8 +22,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionCustom extends ItemFood {
   private ArrayList<Potion> potions = new ArrayList<Potion>();
@@ -96,9 +94,8 @@ public class ItemPotionCustom extends ItemFood {
   public boolean hasEffect(ItemStack par1ItemStack) {
     return hasEffect;
   }
-  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
+  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     String n;
     for (int i = 0; i < potions.size(); i++) {
       n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());
@@ -109,6 +106,5 @@ public class ItemPotionCustom extends ItemFood {
     if (this.tooltip != null) {
       list.add(UtilChat.lang(tooltip));
     }
-    super.addInformation(held, player, list, par4);
   }
 }

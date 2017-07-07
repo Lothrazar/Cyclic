@@ -12,9 +12,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
@@ -258,8 +258,7 @@ public class UtilWorld {
     }
     private static void renderOutlines(Set<BlockPos> coordinates, int r, int g, int b, int thickness) {
       Tessellator tessellator = Tessellator.getInstance();
-      //    net.minecraft.client.renderer.VertexBuffer
-      BufferBuilder buffer = tessellator.getBuffer();
+      net.minecraft.client.renderer.VertexBuffer buffer = tessellator.getBuffer();
       buffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
       //    GlStateManager.color(r / 255.0f, g / 255.0f, b / 255.0f);
       GL11.glLineWidth(thickness);
@@ -271,7 +270,7 @@ public class UtilWorld {
       }
       tessellator.draw();
     }
-    public static void renderHighLightedBlocksOutline(BufferBuilder buffer, float mx, float my, float mz, float r, float g, float b, float a) {
+    public static void renderHighLightedBlocksOutline(VertexBuffer buffer, float mx, float my, float mz, float r, float g, float b, float a) {
       buffer.pos(mx, my, mz).color(r, g, b, a).endVertex();
       buffer.pos(mx + 1, my, mz).color(r, g, b, a).endVertex();
       buffer.pos(mx, my, mz).color(r, g, b, a).endVertex();
@@ -348,7 +347,7 @@ public class UtilWorld {
     private static void shadedCube(float scale) {
       float size = 1.0F * scale;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldRenderer = tessellator.getBuffer();
+      VertexBuffer worldRenderer = tessellator.getBuffer();
       // Front - anticlockwise vertices
       // Back - clockwise vertices
       worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);

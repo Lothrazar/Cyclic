@@ -21,10 +21,10 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
         "ssl",
         "skl",
         "lli",
-        's', "slimeball",
-        'i', "ingotIron",
-        'k', "dyeBlack",
-        'l', "leather");
+        's', Items.SLIME_BALL,
+        'i', Items.IRON_INGOT,
+        'k', new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()),
+        'l', Items.LEATHER);
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {

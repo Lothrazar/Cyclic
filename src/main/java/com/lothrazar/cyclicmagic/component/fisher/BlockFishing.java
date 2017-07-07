@@ -76,13 +76,13 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
         "pwp",
         'w', Blocks.WEB,
         'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),
-        'p', "chestTrapped");
+        'p', Blocks.TRAPPED_CHEST);
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "pwp",
         "wfw",
         "pwp",
         'w', Blocks.WEB,
         'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
-        'p', "chestTrapped");
+        'p', Blocks.TRAPPED_CHEST);
   }
 }

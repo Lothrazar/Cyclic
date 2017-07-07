@@ -57,13 +57,17 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   @Override
   public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer p = ctx.getServerHandler().player;
-     
+      EntityPlayer p = ctx.getServerHandler().playerEntity;
+      // if(
+      // p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
+      // message.pos)){
       ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
       if (spell != null && spell instanceof ISpellFromServer) {
         ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
       }
-  
+      //      else {
+      //        ModCyclic.logger.error("WARNING: Message from server: spell not found" + message.spellID);
+      //      }
     }
     return null;
   }

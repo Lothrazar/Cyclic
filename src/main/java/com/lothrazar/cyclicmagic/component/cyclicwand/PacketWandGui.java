@@ -32,7 +32,7 @@ public class PacketWandGui implements IMessage, IMessageHandler<PacketWandGui, I
   }
   @Override
   public IMessage onMessage(PacketWandGui message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().player;
+    EntityPlayer player = ctx.getServerHandler().playerEntity;
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
     if (wand == null) { return null; }
     if (message.type == WandAction.BUILDTYPE) {

@@ -31,7 +31,7 @@ public class FakeWorld extends World {
     this(entityMinecartBase.world, entityMinecartBase);
   }
   public FakeWorld(World world, EntityGoldMinecartDispenser entityMinecartBase) {
-    super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.profiler, world.isRemote);
+    super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.theProfiler, world.isRemote);
     this.setEntityMinecartBase(entityMinecartBase);
   }
   //MFR grabs TE's just a bit different than most

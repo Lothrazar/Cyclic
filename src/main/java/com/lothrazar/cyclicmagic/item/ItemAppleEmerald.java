@@ -27,7 +27,7 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
-        "gemEmerald",
+        Items.EMERALD,
         Items.GOLDEN_APPLE);
   }
   @Override

@@ -24,8 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public static final String name = "carbon_paper";
@@ -81,10 +79,12 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) { return; } // nothing ot paste
     if (held.getTagCompound().getByte(KEY_NOTE) == NOTE_EMPTY) { return; }
     noteblock.note = held.getTagCompound().getByte(KEY_NOTE);
+    // world.markBlockForUpdate(noteblock.getPos());//so update is refreshed on
+    // client side
+    // entityPlayer.swingItem();
   }
-  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag par4) {
+  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
       list.add(UtilChat.lang("item.carbon_paper.tooltip"));
@@ -229,9 +229,8 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 
-        'c', new ItemStack(Items.COAL, 1, 1), // charcoal
-        'p', "paper");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
+        'p', Items.PAPER);
     //also let you clean off the paper , make one with no NBT
   }
 }

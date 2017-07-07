@@ -40,7 +40,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
   }
   @Override
   public IMessage onMessage(PacketTileBuildSize message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityStructureBuilder tile = (TileEntityStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       if (message.type.equals("size"))

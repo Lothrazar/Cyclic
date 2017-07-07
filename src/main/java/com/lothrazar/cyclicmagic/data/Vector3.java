@@ -54,9 +54,9 @@ public class Vector3 {
     z = vec.z;
   }
   public Vector3(Vec3d vec) {
-    x = vec.x;
-    y = vec.y;
-    z = vec.z;
+    x = vec.xCoord;
+    y = vec.yCoord;
+    z = vec.zCoord;
   }
   public Vector3 copy() {
     return new Vector3(this);

@@ -51,16 +51,16 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
         " s ",
         "lbl",
         "lll",
-        'l', "leather",
-        'b', "slimeball",
-        's', "string");
+        'l', new ItemStack(Items.LEATHER),
+        'b', new ItemStack(Items.SLIME_BALL),
+        's', new ItemStack(Items.STRING));
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
         "lbl",
         "lll",
-        'l', "leather",
+        'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.APPLE),
-        's', "string");
+        's', new ItemStack(Items.STRING));
   }
   private Item fullSack;
   public void setFullSack(Item item) {

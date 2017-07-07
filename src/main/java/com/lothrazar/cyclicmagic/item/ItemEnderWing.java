@@ -95,8 +95,8 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
             "ggf",
             "dg ",
             't', new ItemStack(Items.GHAST_TEAR),
-            'f', "feather",
-            'g', "ingotGold",
+            'f', new ItemStack(Items.FEATHER),
+            'g', new ItemStack(Items.GOLD_INGOT),
             'd', new ItemStack(Items.ENDER_EYE));
       case SPAWN:
         //this one needs diamond but is cheaper. goes to worldspawn
@@ -104,9 +104,9 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
             " ff",
             "ggf",
             "dg ",
-            'f', "feather",
-            'g', "nuggetGold",
-            'd', "gemDiamond");
+            'f', new ItemStack(Items.FEATHER),
+            'g', new ItemStack(Items.GOLD_NUGGET),
+            'd', new ItemStack(Items.DIAMOND));
       default:
         return null;
     }

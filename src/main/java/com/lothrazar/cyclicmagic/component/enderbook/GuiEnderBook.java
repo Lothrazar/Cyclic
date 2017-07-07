@@ -52,7 +52,7 @@ public class GuiEnderBook extends GuiScreen {
     if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
       buttonNew.enabled = false;// also a tooltip?
     }
-    txtNew = new GuiTextField(buttonID++, this.fontRenderer, buttonNew.x + buttonNew.width + 20, buttonNew.y, w, h);
+    txtNew = new GuiTextField(buttonID++, this.fontRendererObj, buttonNew.xPosition + buttonNew.width + 20, buttonNew.yPosition, w, h);
     txtNew.setMaxStringLength(maxNameLen);
     // default to the current biome
     txtNew.setText(entityPlayer.getEntityWorld().getBiome(entityPlayer.getPosition()).getBiomeName());
@@ -94,7 +94,7 @@ public class GuiEnderBook extends GuiScreen {
   @Override
   public void drawScreen(int x, int y, float par3) {
     drawDefaultBackground();
-    drawCenteredString(fontRenderer, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
+    drawCenteredString(fontRendererObj, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     // no idea why this is sometimes randomly null and only on world start if i
     // open it too quick??
@@ -105,7 +105,7 @@ public class GuiEnderBook extends GuiScreen {
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         ITooltipButton btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), x, y, fontRenderer);
+        drawHoveringText(btn.getTooltips(), x, y, fontRendererObj);
       }
     }
   }

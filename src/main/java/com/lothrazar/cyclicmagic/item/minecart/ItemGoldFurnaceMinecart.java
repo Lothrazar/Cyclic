@@ -19,7 +19,7 @@ public class ItemGoldFurnaceMinecart extends BaseItemMinecart implements IHasRec
         "   ",
         "gmg",
         "ggg",
-        'g', "ingotGold",
+        'g', Items.GOLD_INGOT,
         'm', Items.FURNACE_MINECART);
   }
   @Override

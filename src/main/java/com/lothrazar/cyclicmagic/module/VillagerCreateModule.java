@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.IMerchant;
@@ -90,14 +88,14 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     VillagerProfession prof = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",
         "minecraft:textures/entity/zombie_villager/zombie_villager.png");
-    VillagerProfRegistry.register(prof);
+    VillagerRegistry.instance().register(prof);
     VillagerCareer villager = new VillagerCareer(prof, name);
     for (int i = 0; i < trades.length; i++) {
       villager.addTrade(i + 1, trades[i]);
     }
   }
   @Override
-  public void onPreInit() {
+  public void onInit() {
     //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
     if (extraVillagersEnabled) {
       addVillager("sage", buildSageTrades());

@@ -32,11 +32,11 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
-        'e', "gemEmerald",
+        'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.BROWN_MUSHROOM);
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
-        'e', "gemEmerald",
+        'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.RED_MUSHROOM);
   }

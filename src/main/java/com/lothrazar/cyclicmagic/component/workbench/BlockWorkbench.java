@@ -27,7 +27,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe {
         " t ",
         "s s",
         "   ",
-        't', "workbench",
-        's', "cobblestone");
+        't', Blocks.CRAFTING_TABLE,
+        's', Blocks.COBBLESTONE);
   }
 }

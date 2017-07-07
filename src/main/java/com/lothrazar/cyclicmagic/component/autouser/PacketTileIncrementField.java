@@ -38,7 +38,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
   }
   @Override
   public IMessage onMessage(PacketTileIncrementField message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null && tile instanceof TileEntityBaseMachineInvo) {
       TileEntityBaseMachineInvo te = ((TileEntityBaseMachineInvo) tile);

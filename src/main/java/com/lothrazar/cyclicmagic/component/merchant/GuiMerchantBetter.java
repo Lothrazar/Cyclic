@@ -120,9 +120,8 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     public int getRecipeIndex() {
       return recipeIndex;
     }
-    @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
-      super.drawButton(mc, mouseX, mouseY, p);
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+      super.drawButton(mc, mouseX, mouseY);
       if (this.visible) {
         MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
         if (merchantrecipelist == null) { return; }
@@ -136,14 +135,14 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         this.visible = true;
         MerchantRecipe r = merchantrecipelist.get(recipeIndex);
         if (r == null) { return; }
-        int x = this.x + 2;
-        int y = this.y + 1;
+        int x = this.xPosition + 2;
+        int y = this.yPosition + 1;
         GlStateManager.pushMatrix();
-        ModCyclic.proxy.renderItemOnGui(r.getItemToBuy(), parent.itemRender, parent.fontRenderer, x, y);
+        ModCyclic.proxy.renderItemOnGui(r.getItemToBuy(), parent.itemRender, parent.fontRendererObj, x, y);
         x += spacing;
-        ModCyclic.proxy.renderItemOnGui(r.getSecondItemToBuy(), parent.itemRender, parent.fontRenderer, x, y);
+        ModCyclic.proxy.renderItemOnGui(r.getSecondItemToBuy(), parent.itemRender, parent.fontRendererObj, x, y);
         x += spacing;
-        ModCyclic.proxy.renderItemOnGui(r.getItemToSell(), parent.itemRender, parent.fontRenderer, x, y);
+        ModCyclic.proxy.renderItemOnGui(r.getItemToSell(), parent.itemRender, parent.fontRendererObj, x, y);
         GlStateManager.popMatrix();
         RenderHelper.enableGUIStandardItemLighting();//IMPORTANT: without this, any button with transparent item (glass) well have messed up shading
         if (r.isRecipeDisabled()) {

@@ -46,11 +46,11 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
         "rsr",
         "gbx",
         "ooo",
-        'o', "obsidian",
+        'o', Blocks.OBSIDIAN,
         'g', Items.DIAMOND_PICKAXE,
         'x', Items.DIAMOND_AXE,
         's', Blocks.DISPENSER,
-        'r', "blockLapis",
+        'r', Blocks.LAPIS_BLOCK,
         'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
   }
 }

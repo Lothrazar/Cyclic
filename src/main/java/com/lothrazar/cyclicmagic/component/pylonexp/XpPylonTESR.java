@@ -19,7 +19,7 @@ public class XpPylonTESR extends BaseMachineTesr<TileEntityXpPylon> {
     lowerSlot = ls;
   }
   @Override
-  public void renderBasic(TileEntityBaseMachineInvo te) {
+  public void render(TileEntityBaseMachineInvo te) {
     renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0, 0.5F, 1);
     renderItem(te, te.getStackInSlot(this.lowerSlot), 1, 0.5F, 0);
   }

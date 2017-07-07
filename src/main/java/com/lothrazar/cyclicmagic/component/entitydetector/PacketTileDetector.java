@@ -40,7 +40,7 @@ public class PacketTileDetector implements IMessage, IMessageHandler<PacketTileD
   }
   @Override
   public IMessage onMessage(PacketTileDetector message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityDetector tile = (TileEntityDetector) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.setField(message.type, tile.getField(message.type) + message.direction);

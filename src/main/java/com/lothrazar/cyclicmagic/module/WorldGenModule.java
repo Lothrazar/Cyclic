@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
@@ -24,7 +23,6 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class WorldGenModule extends BaseEventModule implements IHasConfig {
   final static int weightOre = 0;
@@ -165,79 +163,59 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     nether_redstone_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_redstone_ore, "nether_redstone_ore", null);
     nether_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
-
-    OreDictionary.registerOre("oreRedstone", nether_redstone_ore);
-
-    nether_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 12);//iron nugget
-
+    nether_iron_ore = new BlockDimensionOre(Items.field_191525_da, 0, 12);//iron nugget
     nether_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_iron_ore, "nether_iron_ore", null);
     nether_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
-    OreDictionary.registerOre("oreIron", nether_iron_ore);
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_gold_ore, "nether_gold_ore", null);
     nether_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
-    OreDictionary.registerOre("oreGold", nether_gold_ore);
     nether_coal_ore = new BlockDimensionOre(Items.COAL);
     nether_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_coal_ore, "nether_coal_ore", null);
     nether_coal_ore.registerSmeltingOutput(Items.COAL);
-    OreDictionary.registerOre("oreCoal", nether_coal_ore);
     nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     nether_lapis_ore.setPickaxeHarvestLevel(lapisHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_lapis_ore, "nether_lapis_ore", null);
     nether_lapis_ore.registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
-    OreDictionary.registerOre("oreLapis", nether_lapis_ore);
     nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     nether_emerald_ore.setPickaxeHarvestLevel(emeraldHarvest).setSpawnType(SpawnType.SILVERFISH, 5);
     BlockRegistry.registerBlock(nether_emerald_ore, "nether_emerald_ore", null);
     nether_emerald_ore.registerSmeltingOutput(Items.EMERALD);
-    OreDictionary.registerOre("oreEmerald", nether_emerald_ore);
     nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     nether_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.SILVERFISH, 8);
     BlockRegistry.registerBlock(nether_diamond_ore, "nether_diamond_ore", null);
     nether_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
-    OreDictionary.registerOre("oreDiamond", nether_diamond_ore);
     //end ores
     end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     end_redstone_ore.setPickaxeHarvestLevel(redstoneHarvest).setSpawnType(SpawnType.ENDERMITE, 3);
     BlockRegistry.registerBlock(end_redstone_ore, "end_redstone_ore", null);
     end_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
-    OreDictionary.registerOre("oreRedstone", end_redstone_ore);
     end_coal_ore = new BlockDimensionOre(Items.COAL);
     end_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.ENDERMITE, 1);
     BlockRegistry.registerBlock(end_coal_ore, "end_coal_ore", null);
     end_coal_ore.registerSmeltingOutput(Items.COAL);
-    OreDictionary.registerOre("oreCoal", end_coal_ore);
     end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     end_lapis_ore.setPickaxeHarvestLevel(lapisHarvest).setSpawnType(SpawnType.ENDERMITE, 5);
     BlockRegistry.registerBlock(end_lapis_ore, "end_lapis_ore", null);
     end_lapis_ore.registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
-    OreDictionary.registerOre("oreLapis", end_lapis_ore);
     end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     end_emerald_ore.setPickaxeHarvestLevel(emeraldHarvest).setSpawnType(SpawnType.ENDERMITE, 8);
     BlockRegistry.registerBlock(end_emerald_ore, "end_emerald_ore", null);
     end_emerald_ore.registerSmeltingOutput(Items.EMERALD);
-    OreDictionary.registerOre("oreEmerald", end_emerald_ore);
     end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.ENDERMITE, 8);
     BlockRegistry.registerBlock(end_diamond_ore, "end_diamond_ore", null);
     end_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
-    OreDictionary.registerOre("oreDiamond", end_diamond_ore);
     end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
     end_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_gold_ore, "end_gold_ore", null);
     end_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
-
-    OreDictionary.registerOre("oreGold", end_gold_ore);
-
-    end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
-
+    end_iron_ore = new BlockDimensionOre(Items.field_191525_da, 0, 16);//iron nugget
     end_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore", null);
     end_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
-    OreDictionary.registerOre("oreIron", end_iron_ore);
     GuideItem page = GuideRegistry.register(GuideCategory.WORLD, new ItemStack(nether_gold_ore), "world.netherore.title");
     page.addTextPage("world.netherore.guide");
     page = GuideRegistry.register(GuideCategory.WORLD, new ItemStack(end_redstone_ore), "world.endore.title");

@@ -4,25 +4,21 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-
 
 version = "${mc_version}-${mod_version}"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+srcCompat = JavaVersion.VERSION_1_8
+targetCompat = JavaVersion.VERSION_1_8
 
 minecraft {
     version = "${mc_version}-${forge_version}"
-    mappings = "snapshot_20170624"
+    mappings = "snapshot_20161220"
     runDir = "run"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     useDepAts = true
@@ -30,35 +26,26 @@ minecraft {
 //Defines basic patterns for pulling various dependencies.
 repositories {
     maven {
-    	name = "Progwml6 maven"
+    	 name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
     maven { //Guide API
 		url "http://tehnut.info/maven/"
 	}
-	maven {
+	  maven {
 	    // location of a maven mirror for JEI files, as a fallback
 	    name = "ModMaven"
 	    url = "modmaven.k-4u.nl"
-	}
-	maven { url "http://maven.amadornes.com/" }
-	ivy {
-		name 'asie dependency mirror'
-		artifactPattern "http://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
-	}
+	  }
 }
 
 dependencies {
-
   // compile against the JEI API
   deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
   // at runtime, use the full JEI jar
   runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
   //compile files("lib/Baubles-${mc_version}-${baubles_version}.jar")
-  
-  deobfCompile name: "Baubles", version: "1.12-1.4.5"
-  
   
   
   deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"

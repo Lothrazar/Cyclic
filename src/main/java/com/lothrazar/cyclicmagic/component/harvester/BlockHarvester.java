@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -35,11 +36,11 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', "obsidian",
-        'g', "gemQuartz",
+        'o', Blocks.OBSIDIAN,
+        'g', Items.QUARTZ,
         's', Blocks.DISPENSER,
-        'r', "gemEmerald",
-        'b', "gemDiamond");
+        'r', Items.EMERALD,
+        'b', Items.DIAMOND);
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {

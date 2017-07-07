@@ -27,7 +27,7 @@ public class PacketMovePlayerHotbar implements IMessage, IMessageHandler<PacketM
   }
   @Override
   public IMessage onMessage(PacketMovePlayerHotbar message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().player;
+    EntityPlayer player = ctx.getServerHandler().playerEntity;
     if (message.isDown) {
       UtilPlayer.shiftBarDown(player);
     }

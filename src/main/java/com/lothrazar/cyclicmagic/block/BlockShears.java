@@ -36,7 +36,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
         "sos",
         " s ",
         's', new ItemStack(Items.SHEARS, 1, OreDictionary.WILDCARD_VALUE),
-        'o', "obsidian");
+        'o', Blocks.OBSIDIAN);
   }
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {

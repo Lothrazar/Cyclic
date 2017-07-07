@@ -7,10 +7,10 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.28",
     "1.10.2-recommended": "1.10.28",
-    "1.11.2-latest": "1.5.8",
-    "1.11.2-recommended": "1.5.8",
-    "1.12-latest": "1.5.9",
-    "1.12-recommended": "1.5.9"
+    "1.11.2-latest": "1.5.7",
+    "1.11.2-recommended": "1.5.7",
+    "1.12-latest": "1.5.8",
+    "1.12-recommended": "1.5.8"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -174,18 +174,12 @@
 	,"1.5.4":"Fixed a compatibility issue that was causing fall damage in certain situations that should not cause fall damage, while using Mekanism Jetpacks.  Fixed client-server desync with Launch enchantment, it now correctly resets your fall damage on use.  Updated zh_CN.lang translation file (thanks to TartaricAcid).  "
 	,"1.5.5":"Fixed brush scythe and tree scythe sometimes not dropping items.  Improved how many cyclic machines interact with pipes and hoppers: fuel always comes in the side, top and bottom for in and output.  Auto-Torch now works from bauble slot.  New config entry AutoTorchLightLevel.  Cyclic machines now more compatible with pipes and transfer systems from other mods (example: Extra Utilities Transfer pipes; tech detail: supports forge CapabilityItemHandler).  Automated User now has a Y-offset button so you can aim it up or down one block."
 	,"1.5.6":"New Enchantments: Quickdraw and Beheading.  New Item: Evoker Fang.  Fragile Torches feature now affects Stone Torch and Tiny Torch (from Tinkers and AA respectively), and also it respects the 'mobGriefing' gamerule (this feature is still turned off by default in the blocks config category).  "
-
 	,"1.5.7":"Fix client side crash that sometimes happen when right clicking items inside Chizel and Bits bag (misfire of right click to turn charms on and off).  "
-	,"1.5.8":"Nether Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  "
-   
-  },
-
+   }
   "1.12":{
   	"1.5.6":"Initial port from 1.11.2-1.5.6"
   	,"1.5.7":"Fixed the server subscribing to tooltip render events which prevented server startup.  Recipes have been converted to new JSON system.  Needs forge 14.21.0.2338 higher.  "
   	,"1.5.8":"Guide API compatibility added back in, get it here https://mods.curse.com/mc-mods/minecraft/228832-guide-api"
-
   	,"1.5.9":"Fixed uncrafting grinder not giving out ingredients.  Fixed a crash when using the workbench.  Experience Boost enchantment now gives XP directly to player (when mining, not combat); this was done to avoid lag when using hammers or a vein miner.  Re-enabled Baubles API compatibility."
     }
-
 }

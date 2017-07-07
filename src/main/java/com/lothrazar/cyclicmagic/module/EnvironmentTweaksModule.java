@@ -34,7 +34,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
     if (saplingDespawnGrow) {
       EntityItem entityItem = event.getEntityItem();
       Entity entity = event.getEntity();
-      ItemStack is = entityItem.getItem();
+      ItemStack is = entityItem.getEntityItem();
       World world = entity.getEntityWorld();
       if (is.isEmpty()) { return; } // has not happened in the wild, yet
       Block blockhere = entity.getEntityWorld().getBlockState(entityItem.getPosition()).getBlock();

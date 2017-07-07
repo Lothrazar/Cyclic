@@ -25,7 +25,7 @@ public class PacketDeleteWaypoint implements IMessage, IMessageHandler<PacketDel
   }
   @Override
   public IMessage onMessage(PacketDeleteWaypoint message, MessageContext ctx) {
-    EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;
+    EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).playerEntity;
     ItemEnderBook.deleteWaypoint(player, message.slot);
     // http://minecraft.gamepedia.com/Sounds.json
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.PLAYERS);

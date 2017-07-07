@@ -39,7 +39,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
   }
   @Override
   public IMessage onMessage(PacketTilePatternSwap message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       if (message.type == SwapType.POSITION.ordinal())

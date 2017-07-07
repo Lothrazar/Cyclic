@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilRecipe;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -19,6 +20,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean notchApple;
   private boolean elytraRepair;
   private boolean melonToSlice;
+  private boolean difficultEarlygameRecipes;
   private boolean snowBlocksToBalls;
   private boolean quartzBlocksToItem;
   private boolean glowstoneBlockToDust;
@@ -43,10 +45,10 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     melonToSlice = config.get(category, "Melon Block Slices",
         true, "Craft a Melon block into nine slices").getBoolean();
     category = Const.ConfigCategory.recipes;
-    //    difficultEarlygameRecipes = config.get(category, "Altered Stone",
-    //        false,
-    //        "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
-    //        .getBoolean();
+    difficultEarlygameRecipes = config.get(category, "Altered Stone",
+        false,
+        "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
+        .getBoolean();
     snowBlocksToBalls = config.get(category, "SnowBlockBalls",
         true, "Craft Snow blocks back into snowballs").getBoolean();
     quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
@@ -91,10 +93,10 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     if (melonToSlice) {
       melonToSlice();
     }
-    //    if (difficultEarlygameRecipes) {
-    //      smoothstoneRequired();
-    //      furnaceNeedsCoal();
-    //    }
+    if (difficultEarlygameRecipes) {
+      smoothstoneRequired();
+      furnaceNeedsCoal();
+    }
     if (netherwartBlockReverse) {
       netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
@@ -127,7 +129,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   }
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
+    RecipeRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
   }
   private void playerSkull() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player),
@@ -137,27 +139,77 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         new ItemStack(Items.SKULL, 1, Const.skull_creeper));
   }
   private void mushroomBlocks() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.RED_MUSHROOM);
-    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
   }
   private void repeaterSimple() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.REPEATER),
+    RecipeRegistry.addRecipe(new ItemStack(Items.REPEATER),
         "r r", "srs", "ttt",
         't', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
   }
   private void minecartsSimple() {
     // normally you would need the minecart created in a different step. this is
     // faster
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
-    RecipeRegistry.addShapedRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
+    RecipeRegistry.addRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
+    RecipeRegistry.addRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
+    RecipeRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
+    RecipeRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
   }
   private void simpleDispenser() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.DISPENSER),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.DISPENSER),
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
+  }
+  private void furnaceNeedsCoal() {
+    UtilRecipe.removeRecipe(Blocks.FURNACE);
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.FURNACE), "bbb", "bcb", "bbb", 'b', Blocks.COBBLESTONE, 'c', Items.COAL);
+  }
+  private void smoothstoneRequired() {
+    UtilRecipe.removeRecipe(Items.STONE_PICKAXE);
+    //    GameRegistry.addRecipe(
+    //        new ItemStack(Items.STONE_PICKAXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_PICKAXE, 4)),
+    //        "sss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_PICKAXE, 4)), "sss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE),
+        "sss", " t ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    UtilRecipe.removeRecipe(Items.STONE_SWORD);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_SWORD, 1, UtilItem.getMaxDmgFraction(Items.STONE_SWORD, 4)), " s ", " s ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_SWORD), " s ", " s ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    UtilRecipe.removeRecipe(Items.STONE_AXE);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), "ss ", "st ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), " ss", " ts", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_AXE), "ss ", "st ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_AXE), " ss", " ts", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    UtilRecipe.removeRecipe(Items.STONE_HOE);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), "ss ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), " ss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_HOE), "ss ", " t ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_HOE), " ss", " t ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    UtilRecipe.removeRecipe(Items.STONE_SHOVEL);
+    //    GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL, 1, UtilItem.getMaxDmgFraction(Items.STONE_SHOVEL, 4)), " s ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ",
+        's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
+        't', Items.STICK);
+    //    GameRegistry.addRecipe(new ItemStack(Items.IRON_CHESTPLATE, 1, UtilItem.getMaxDmgFraction(Items.IRON_CHESTPLATE, 2)), 
+    //        "i i", "iii", "iii", 'i',Items.IRON_INGOT);
+    //
+    //    GameRegistry.addShapelessRecipe(new ItemStack(Items.IRON_CHESTPLATE),
+    //        new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
+    //        new ItemStack(Items.LEATHER_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE)
+    //        );
   }
 }
