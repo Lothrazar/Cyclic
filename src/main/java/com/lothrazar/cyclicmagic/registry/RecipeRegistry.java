@@ -8,8 +8,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeRegistry {
+  public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
+    IRecipe r = new ShapelessOreRecipe(stack, recipeComponents);
+    GameRegistry.addRecipe(r);
+    return r;
+  }
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
    * returns it after registering it
@@ -21,6 +29,7 @@ public class RecipeRegistry {
   public static IRecipe addShapelessRecipe(ItemStack stack, Object... recipeComponents) {
     List<ItemStack> list = Lists.<ItemStack> newArrayList();
     for (Object object : recipeComponents) {
+      if (object instanceof String) { return addShapelessOreRecipe(stack, recipeComponents); }
       if (object instanceof ItemStack) {
         list.add(((ItemStack) object).copy());
       }
@@ -43,10 +52,15 @@ public class RecipeRegistry {
    * @param params
    * @return
    */
-  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
-    return GameRegistry.addShapedRecipe(output, params);
+  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
+    for (Object object : recipeComponents) {
+      if (object instanceof String) { return addShapedOreRecipe(output, recipeComponents); }
+    }
+    return GameRegistry.addShapedRecipe(output, recipeComponents);
   }
-  public static IRecipe addRecipe(@Nonnull ItemStack output, Object... params) {
-    return addShapedRecipe(output, params);
+  public static IRecipe addShapedOreRecipe(ItemStack stack, Object... recipeComponents) {
+    IRecipe r = new ShapedOreRecipe(stack, recipeComponents);
+    GameRegistry.addRecipe(r);
+    return r;
   }
 }

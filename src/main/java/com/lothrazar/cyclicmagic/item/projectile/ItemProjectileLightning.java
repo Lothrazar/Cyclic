@@ -17,8 +17,8 @@ public class ItemProjectileLightning extends BaseItemProjectile implements IHasR
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 4),
-        new ItemStack(Items.ENDER_PEARL),
-        new ItemStack(Items.QUARTZ),
+        "enderpearl",
+        "gemQuartz",
         new ItemStack(Items.GHAST_TEAR));
   }
   @Override

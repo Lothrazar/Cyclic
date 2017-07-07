@@ -49,8 +49,10 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         " d ",
         "fdf",
         "ooo",
-        'o', Blocks.OBSIDIAN, 'f', Blocks.FURNACE, 'r', Blocks.DROPPER,
-        'd', Blocks.DIAMOND_BLOCK);
+        'o', "obsidian", 
+        'f', Blocks.FURNACE, 
+        'r', Blocks.DROPPER,
+        'd', "blockDiamond");
   }
   @Override
   public void syncConfig(Configuration config) {

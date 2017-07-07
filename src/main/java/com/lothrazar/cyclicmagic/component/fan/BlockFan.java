@@ -40,8 +40,8 @@ public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
         " i ",
         "iri",
         "sis",
-        'i', Items.IRON_INGOT,
+        'i', "ingotIron",
         'r', Items.REPEATER,
-        's', Blocks.STONE);
+        's', "stone");
   }
 }

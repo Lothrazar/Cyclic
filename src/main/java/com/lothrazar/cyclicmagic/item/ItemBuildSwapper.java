@@ -162,22 +162,22 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    ItemStack ingredient = ItemStack.EMPTY;
+    String ingredient = null;
     switch (this.getWandType()) {
       case MATCH:
-        ingredient = new ItemStack(Items.EMERALD);
+        ingredient = "gemEmerald";
       break;
       case NORMAL:
-        ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
+        ingredient = "blockLapis";
       break;
     }
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gi",
         "oig",
         "oo ",
-        'i', Blocks.IRON_BLOCK,
+        'i', "blockIron",
         'g', ingredient,
-        'o', Blocks.OBSIDIAN);
+        'o', "obsidian");
   }
   public WandType getWandType() {
     return wandType;

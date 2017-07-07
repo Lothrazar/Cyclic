@@ -43,9 +43,9 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", " b ", "ooo",
-        'o', Blocks.OBSIDIAN,
+        'o', "obsidian",
         's', Blocks.DISPENSER,
-        'r', Items.GOLD_INGOT,
+        'r', "ingotGold",
         'b', Blocks.MAGMA);
   }
 }

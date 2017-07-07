@@ -13,7 +13,7 @@ public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', "gemEmerald", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', "gemEmerald", 's', "stickWood");
   }
 }

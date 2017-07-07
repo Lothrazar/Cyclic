@@ -74,7 +74,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
             " bg",
             "b  ",
             'b', Items.BLAZE_ROD,
-            'g', Items.QUARTZ,
+            'g', "gemQuartz",
             's', Items.STONE_HOE);
       case LEAVES:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -82,7 +82,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
             " bg",
             "b  ",
             'b', Items.STICK,
-            'g', Items.STRING,
+            'g', "string",
             's', Items.STONE_AXE);
       case WEEDS:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -90,7 +90,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
             " bg",
             "b  ",
             'b', Items.STICK,
-            'g', Items.STRING,
+            'g', "string",
             's', Items.STONE_HOE);
       default:
       break;

@@ -30,9 +30,9 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
         "lal",
         "qiq",
         "lal",
-        'i', Items.IRON_INGOT,
+        'i', "ingotIron",
         'a', new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE),
-        'l', new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),
+        'l', "dyeCyan",
         'q', new ItemStack(Items.SNOWBALL));
   }
   public boolean hasEntity(ItemStack held) {

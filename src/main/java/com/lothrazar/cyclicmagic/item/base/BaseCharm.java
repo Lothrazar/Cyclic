@@ -67,9 +67,9 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
         "id ",
         "iir",
         'x', craftItem,
-        'd', Items.DIAMOND,
-        'r', Items.NETHER_WART,
-        'i', Items.IRON_INGOT);
+        'd', "gemDiamond",
+        'r', "cropNetherWart",
+        'i', "ingotIron");
   }
   /**
    * Fires while in inventory OR while in bauble slot

@@ -22,7 +22,7 @@ public class ItemTurretMinecart extends BaseItemMinecart implements IHasRecipe {
         "ggg",
         'd', Blocks.BONE_BLOCK,
         'b', Items.BOW,
-        'g', Items.GOLD_INGOT,
+        'g', "ingotGold",
         'm', Blocks.OBSERVER);
   }
   @Override

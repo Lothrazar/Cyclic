@@ -122,9 +122,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
-        'e', Items.ENDER_PEARL,
+        'e', "enderpearl",
         'b', Items.BOOK,
-        'n', Blocks.EMERALD_BLOCK);
+        'n', "blockEmerald");
     // if you want to clean out the book and start over
   }
   @Override

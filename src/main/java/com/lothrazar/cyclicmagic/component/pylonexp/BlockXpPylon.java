@@ -10,7 +10,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -53,11 +52,11 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
         "vhv",
         "grg",
         "sis",
-        'v', Blocks.VINE,
+        'v', "vine",
         'h', Blocks.HOPPER,
-        'i', Items.GOLD_INGOT,
-        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIME.getMetadata()),
+        'i', "ingotGold",
+        'g', "dyeLime",
         'r', Items.FIRE_CHARGE,
-        's', Items.NETHERBRICK);
+        's', "ingotBrickNether");
   }
 }

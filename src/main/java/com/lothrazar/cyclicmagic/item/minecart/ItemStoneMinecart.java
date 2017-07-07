@@ -20,7 +20,7 @@ public class ItemStoneMinecart extends BaseItemMinecart implements IHasRecipe {
         "   ",
         "gmg",
         "ggg",
-        'g', Blocks.COBBLESTONE,
+        'g', "cobblestone",
         'm', Items.MINECART);
   }
   @Override

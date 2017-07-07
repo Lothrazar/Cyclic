@@ -137,15 +137,15 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ede", "oso", " s ",
-        'e', Blocks.QUARTZ_BLOCK,
-        'o', Blocks.OBSIDIAN,
-        'd', Blocks.DIAMOND_BLOCK,
-        's', Items.BONE);
+        'e', "blockQuartz",
+        'o', "obsidian",
+        'd', "blockDiamond",
+        's', "bone");
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ede", "oso", " s ",
-        'e', Items.EMERALD,
-        'o', Blocks.OBSIDIAN,
-        'd', Items.DIAMOND,
-        's', Items.BONE);
+        'e', "gemEmerald",
+        'o', "obsidian",
+        'd', "gemDiamond",
+        's', "bone");
   }
 }

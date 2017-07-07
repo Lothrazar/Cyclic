@@ -58,7 +58,7 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, Items.DIAMOND, Items.CAKE, Blocks.EMERALD_BLOCK, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, "gemDiamond", Items.CAKE, "blockEmerald", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
   }
   @SubscribeEvent
   public void onPlayerWarp(PlayerChangedDimensionEvent event) {

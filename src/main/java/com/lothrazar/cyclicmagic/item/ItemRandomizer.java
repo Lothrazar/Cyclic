@@ -123,9 +123,9 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
         " gi",
         " ig",
         "o  ",
-        'i', Items.IRON_INGOT,
-        'g', Items.REDSTONE,
-        'o', Blocks.OBSIDIAN);
+        'i', "ingotIron",
+        'g', "dustRedstone",
+        'o', "obsidian");
     return null;
   }
 }

@@ -14,7 +14,7 @@ public class ItemSandstoneHoe extends ItemHoe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }
