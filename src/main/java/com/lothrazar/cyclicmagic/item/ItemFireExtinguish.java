@@ -69,7 +69,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
         " i ",
         'w', new ItemStack(Items.WATER_BUCKET),
         'm', new ItemStack(Blocks.MAGMA), //magma'm', new ItemStack(Blocks.MAGMA), 
-        'r', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()),
-        'i', new ItemStack(Items.IRON_INGOT));
+        'r', "dyeRed",
+        'i', "ingotIron");
   }
 }

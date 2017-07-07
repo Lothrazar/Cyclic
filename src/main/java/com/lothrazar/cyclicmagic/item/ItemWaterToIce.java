@@ -72,8 +72,8 @@ public class ItemWaterToIce extends BaseTool implements IHasRecipe {
         "iwi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
-        'd', new ItemStack(Items.NETHERBRICK),
-        'o', new ItemStack(Blocks.OBSIDIAN),
+        'd', "ingotBrickNether",
+        'o', "obsidian",
         'i', new ItemStack(Blocks.ICE));
   }
 }

@@ -155,12 +155,5 @@ public class CyclicGuideBook implements IGuideBook {
     GuideAPI.setModel(book);
   }
   @Override
-  public void handlePost(ItemStack bookStack) {
-    IRecipe recipe = RecipeRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK,
-        Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
-    ResourceLocation location = Util1pt12.buildName(bookStack);
-    recipe.setRegistryName(location);
-//    GameRegistry.register(recipe); 
-    ModCyclic.logger.error("fix recipe for guidebook ");
-  }
+  public void handlePost(ItemStack bookStack) {}
 }

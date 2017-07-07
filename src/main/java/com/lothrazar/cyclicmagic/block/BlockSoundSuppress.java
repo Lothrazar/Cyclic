@@ -120,7 +120,7 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
         " s ",
         "sos",
         " s ",
-        's', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.ORANGE.getMetadata()),
+        's', "dyeOrange",
         'o', Blocks.BONE_BLOCK);
   }
 }

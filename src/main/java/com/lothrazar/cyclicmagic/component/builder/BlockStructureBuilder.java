@@ -43,10 +43,10 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', Blocks.OBSIDIAN,
+        'o', "obsidian",
         'g', Items.GHAST_TEAR,
         's', Blocks.DISPENSER,
-        'r', Blocks.REDSTONE_BLOCK,
-        'b', Blocks.DIAMOND_BLOCK);
+        'r', "blockRedstone",
+        'b', "blockDiamond");
   }
 }

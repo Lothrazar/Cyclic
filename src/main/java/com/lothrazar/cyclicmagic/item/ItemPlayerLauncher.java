@@ -150,9 +150,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
         "rsq",
         " rs",
         "t r",
-        't', Items.STRING,
-        'r', Items.GLOWSTONE_DUST,
-        's', Items.SLIME_BALL,
-        'q', Items.QUARTZ);
+        't', "string",
+        'r', "dustGlowstone",
+        's', "slimeball",
+        'q', "gemQuartz");
   }
 }

@@ -64,9 +64,9 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
         "sbs",
         "bxb",
         "sbs",
-        's', new ItemStack(Items.IRON_INGOT),
+        's', "ingotIron",
         'b', new ItemStack(Items.COAL),
-        'x', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+        'x', "dyePurple");
   }
   @Override
   public void syncConfig(Configuration config) {

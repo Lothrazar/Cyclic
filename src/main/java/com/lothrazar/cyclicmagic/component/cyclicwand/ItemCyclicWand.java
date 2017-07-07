@@ -218,9 +218,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         "sds",
         " o ",
         "gog",
-        'd', new ItemStack(Items.DIAMOND),
-        'g', Blocks.QUARTZ_BLOCK,
-        'o', Blocks.OBSIDIAN,
+        'd', "gemDiamond",
+        'g', "gemQuartz",
+        'o', "obsidian",
         's', Blocks.BONE_BLOCK);
   }
 }

@@ -17,9 +17,12 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES2, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), 
+        new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE), 
+        "torch");
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), 
+        "treeLeaves", 
+        "torch");
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

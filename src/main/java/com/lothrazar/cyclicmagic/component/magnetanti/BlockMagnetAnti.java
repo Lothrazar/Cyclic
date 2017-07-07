@@ -57,7 +57,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
         "sbs",
         "bxb",
         "sbs",
-        's', new ItemStack(Items.DIAMOND),
+        's', "gemDiamond",
         'b', new ItemStack(Blocks.NETHER_WART_BLOCK), //netherwart block
         'x', new ItemStack(Blocks.BEACON));
   }
