@@ -114,7 +114,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
+  //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(screenSize.texture());
     int thisX = getMiddleX();
@@ -162,6 +162,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
+    this.renderHoveredToolTip(mouseX, mouseY);
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
@@ -192,4 +193,5 @@ public abstract class GuiBaseContainer extends GuiContainer {
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
   }
+  
 }
