@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
@@ -23,6 +24,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class WorldGenModule extends BaseEventModule implements IHasConfig {
   final static int weightOre = 0;
@@ -167,6 +169,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     nether_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_iron_ore, "nether_iron_ore", null);
     nether_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
+    OreDictionary.registerOre("oreIron", nether_iron_ore);
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_gold_ore, "nether_gold_ore", null);

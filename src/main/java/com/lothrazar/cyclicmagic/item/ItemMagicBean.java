@@ -42,7 +42,7 @@ public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
         "bEc",
         "wdw",
         'w', Items.WHEAT_SEEDS,
-        'E', Items.EMERALD,
+        'E', "gemEmerald",
         'a', Items.BEETROOT_SEEDS,
         'b', Items.MELON_SEEDS,
         'c', Items.PUMPKIN_SEEDS,

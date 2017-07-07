@@ -66,8 +66,8 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
         "iwi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
-        'd', new ItemStack(Items.DIAMOND),
-        'o', new ItemStack(Blocks.OBSIDIAN),
+        'd', "gemDiamond",
+        'o', "obsidian",
         'i', new ItemStack(Blocks.ICE));
   }
 }

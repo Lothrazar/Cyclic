@@ -158,7 +158,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       projectiles.add(dynamite_mining);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
           "gunpowder", 
-          "ironIngot",
+          "ingotIron",
           "gunpowder", 
           "paper",
           new ItemStack(Items.CLAY_BALL),

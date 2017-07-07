@@ -117,7 +117,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
           "i i",
           " o ",
           "i i",
-          'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
+          'o', "obsidian", 'i', "ingotIron");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, recipe, null);
     }
   }
