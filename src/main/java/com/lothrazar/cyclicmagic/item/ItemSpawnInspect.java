@@ -94,7 +94,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
         "b  ",
         'b', new ItemStack(Items.BLAZE_ROD),
         's', new ItemStack(Items.FLINT),
-        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.PURPLE.getMetadata()));
+        'g', "blockGlassPurple");
   }
   public static class SpawnDetail {
     private int itemWeight;

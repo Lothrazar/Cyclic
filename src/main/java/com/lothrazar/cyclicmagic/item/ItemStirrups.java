@@ -29,7 +29,7 @@ public class ItemStirrups extends BaseTool implements IHasRecipe {
         " sl",
         "ii ",
         'l', Items.LEAD,
-        'i', Items.IRON_INGOT,
-        's', Items.LEATHER);
+        'i', "ingotIron",
+        's', "leather");
   }
 }

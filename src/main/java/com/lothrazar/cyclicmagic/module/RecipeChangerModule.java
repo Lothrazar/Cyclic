@@ -127,7 +127,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   }
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
-    RecipeRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
   }
   private void playerSkull() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player),
@@ -137,26 +137,26 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         new ItemStack(Items.SKULL, 1, Const.skull_creeper));
   }
   private void mushroomBlocks() {
-    RecipeRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.RED_MUSHROOM);
-    RecipeRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
+    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
   }
   private void repeaterSimple() {
-    RecipeRegistry.addRecipe(new ItemStack(Items.REPEATER),
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.REPEATER),
         "r r", "srs", "ttt",
         't', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
   }
   private void minecartsSimple() {
     // normally you would need the minecart created in a different step. this is
     // faster
-    RecipeRegistry.addRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
-    RecipeRegistry.addRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
-    RecipeRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
-    RecipeRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
+    RecipeRegistry.addShapedRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
   }
   private void simpleDispenser() {
-    RecipeRegistry.addRecipe(new ItemStack(Blocks.DISPENSER),
+    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.DISPENSER),
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
   }

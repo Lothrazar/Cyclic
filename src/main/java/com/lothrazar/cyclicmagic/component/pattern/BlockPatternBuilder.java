@@ -51,10 +51,10 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
         "did",
         "rmr",
         'b', Blocks.STONE_BUTTON,
-        'd', Blocks.DIAMOND_BLOCK,
+        'd', "blockDiamond",
         'i', Blocks.ICE,
         'm', Blocks.MAGMA,
-        'r', Blocks.REDSTONE_BLOCK);
+        'r', "blockRedstone");
   }
   @SideOnly(Side.CLIENT)
   @Override

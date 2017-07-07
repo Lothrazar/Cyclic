@@ -31,10 +31,10 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe {
         "rsr",
         "gbg",
         "ooo",
-        'o', Blocks.COBBLESTONE,
-        'g', Items.IRON_INGOT,
+        'o', "cobblestone",
+        'g', "ingotIron",
         's', Blocks.DISPENSER,
-        'r', Blocks.STONE,
-        'b', Items.REDSTONE);
+        'r', "stone",
+        'b', "dustRedstone");
   }
 }

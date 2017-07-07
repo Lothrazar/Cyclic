@@ -128,7 +128,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
         " bg",
         "b  ",
         'b', Items.BLAZE_ROD,
-        'g', Items.QUARTZ,
+        'g', "gemQuartz",
         'p', Blocks.STICKY_PISTON);
   }
 }

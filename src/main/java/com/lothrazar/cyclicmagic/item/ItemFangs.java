@@ -84,15 +84,14 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "wpc",
         " dp",
         "r w",
         'w', Blocks.WEB,
         'r', Blocks.END_ROD,
-        //        's', Blocks.END_STONE,
         'c', Items.END_CRYSTAL,
         'p', Blocks.PACKED_ICE,
-        'd', Blocks.EMERALD_BLOCK);
+        'd', "blockEmerald");
   }
 }
