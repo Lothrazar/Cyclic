@@ -146,6 +146,6 @@ public class CyclicGuideBook implements IGuideBook {
   }
   @Override
   public void handlePost(ItemStack bookStack) {
-    RecipeRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
+    RecipeRegistry.addShapelessRecipe(bookStack, Items.BOOK, "stickWood", Items.COAL, "cobblestone", Blocks.WOODEN_BUTTON);
   }
 }

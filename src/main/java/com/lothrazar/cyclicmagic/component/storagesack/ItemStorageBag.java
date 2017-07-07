@@ -167,9 +167,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
-        'l', Items.LEATHER,
-        's', Items.STRING,
-        'r', Items.REDSTONE,
-        'd', Items.GOLD_INGOT);
+        'l', "leather",
+        's', "string",
+        'r', "dustRedstone",
+        'd', "ingotGold");
   }
 }

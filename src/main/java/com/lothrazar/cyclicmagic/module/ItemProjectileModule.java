@@ -130,9 +130,15 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
-          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR), new ItemStack(Items.GUNPOWDER),
-          new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
-          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)));
+          "gunpowder", 
+          new ItemStack(Items.SUGAR), 
+          "gunpowder",
+          "paper", 
+          new ItemStack(Items.CLAY_BALL), 
+          new ItemStack(Blocks.BROWN_MUSHROOM),
+          "feather", 
+          new ItemStack(Items.WHEAT_SEEDS), 
+           "cobblestone"));
     }
     if (magicNet) {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
@@ -151,10 +157,15 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
-          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
-          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER),
-          new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
-          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK)));
+          "gunpowder", 
+          "ironIngot",
+          "gunpowder", 
+          "paper",
+          new ItemStack(Items.CLAY_BALL),
+          new ItemStack(Blocks.RED_MUSHROOM),
+          "feather",
+          new ItemStack(Items.WHEAT_SEEDS),
+          "ingotBrickNether"));
     }
     if (enderBombsEnabled) {
       ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1, ExplosionType.NORMAL);
@@ -179,7 +190,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       projectiles.add(ender_tnt_5);
       projectiles.add(ender_tnt_6);
       //first the basic recipes
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL)));
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), "paper", new ItemStack(Items.CLAY_BALL), "enderpearl"));
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL)));
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL)));
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL)));

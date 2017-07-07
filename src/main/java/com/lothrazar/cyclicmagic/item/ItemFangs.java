@@ -84,7 +84,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "wpc",
         " dp",
         "r w",
