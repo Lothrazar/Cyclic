@@ -33,21 +33,17 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
   //  private boolean chat = false;
   @Override
   public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityStructureBuilder tile = (TileEntityStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.toggleSizeShape();
-      //      TileMachineStructureBuilder.BuildType old = tile.getBuildTypeEnum();
-      //      TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
-      //      tile.setBuildType(next.ordinal());
-      //      tile.rebuildShape();
+ 
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();
         player.sendAllWindowProperties(player.openContainer, tile);
       }
-      //      if (chat)
-      //        UtilChat.addChatMessage(player, UtilChat.lang("buildertype." + next.name().toLowerCase() + ".name"));
+ 
     }
     return null;
   }

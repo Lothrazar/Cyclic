@@ -23,7 +23,7 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
     World world = sender.getEntityWorld();
     int dX, dZ;
     int range = 64;
-    Village closest = world.villageCollectionObj.getNearestVillage(pos, range);
+    Village closest = world.villageCollection.getNearestVillage(pos, range);
     if (closest == null) {
       UtilChat.addChatMessage(sender, "command.villageinfo.none");
     }

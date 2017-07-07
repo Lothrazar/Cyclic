@@ -79,7 +79,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void updateCollection() {
-    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(RADIUS));
+    
+    
+    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expand(RADIUS,RADIUS,RADIUS));//expandXyz
     if (orbs != null) {
       //no timer just EAT
       for (EntityXPOrb orb : orbs) {

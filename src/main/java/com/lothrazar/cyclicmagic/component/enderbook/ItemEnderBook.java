@@ -114,7 +114,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
       // try and force chunk loading
-      player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified();
+   //   player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified()
+      player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
       UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     }
     return true;

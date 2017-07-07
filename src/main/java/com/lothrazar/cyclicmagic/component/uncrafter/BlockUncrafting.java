@@ -51,7 +51,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         "ooo",
         'o', "obsidian", 
         'f', Blocks.FURNACE, 
-        'r', Blocks.DROPPER,
         'd', "blockDiamond");
   }
   @Override

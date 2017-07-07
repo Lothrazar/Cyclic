@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_axe"
+  },
+  "pattern": [
+    " ee",
+    " se",
+    " s "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

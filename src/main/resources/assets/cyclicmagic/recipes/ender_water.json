@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_water",
+    "count": 8
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "minecraft:ice"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

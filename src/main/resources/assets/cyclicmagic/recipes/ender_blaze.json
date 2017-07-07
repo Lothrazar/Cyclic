@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_blaze",
+    "count": 16
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:fire_charge"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

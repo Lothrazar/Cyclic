@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:gold_furnace_minecart"
+  },
+  "pattern": [
+    "   ",
+    "gmg",
+    "ggg"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "m": {
+      "item": "minecraft:furnace_minecart"
+    }
+  }
+}

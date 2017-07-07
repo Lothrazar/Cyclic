@@ -40,7 +40,7 @@ public class PacketTileMineHeight implements IMessage, IMessageHandler<PacketTil
   }
   @Override
   public IMessage onMessage(PacketTileMineHeight message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityControlledMiner tile = (TileEntityControlledMiner) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       //currently the ONLY type

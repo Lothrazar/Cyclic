@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "cyclicmagic:inventory_food"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:ender_chest"
+    },
+    {
+      "item": "minecraft:pumpkin_pie"
+    },
+    {
+      "item": "minecraft:cake"
+    },
+    {
+      "item": "minecraft:cookie"
+    },
+    {
+      "item": "minecraft:fish",
+      "data": 1
+    },
+    {
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:quartz"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

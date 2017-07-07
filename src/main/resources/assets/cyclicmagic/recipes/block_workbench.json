@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_workbench"
+  },
+  "pattern": [
+    " t ",
+    "s s",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:cobblestone"
+    },
+    "t": {
+      "item": "minecraft:crafting_table"
+    }
+  }
+}

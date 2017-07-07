@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_torch_launcher"
+  },
+  "pattern": [
+    " gi",
+    " ig",
+    "o  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

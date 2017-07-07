@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:magnet_anti_block"
+  },
+  "pattern": [
+    "sbs",
+    "bxb",
+    "sbs"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:nether_wart_block"
+    },
+    "s": {
+      "item": "minecraft:diamond"
+    },
+    "x": {
+      "item": "minecraft:beacon"
+    }
+  }
+}

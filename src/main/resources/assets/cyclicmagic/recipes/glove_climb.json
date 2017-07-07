@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:glove_climb"
+  },
+  "pattern": [
+    "ssl",
+    "skl",
+    "lli"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:slime_ball"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "k": {
+      "item": "minecraft:dye",
+      "data": 0
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  }
+}

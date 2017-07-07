@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_air"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:charm_air",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

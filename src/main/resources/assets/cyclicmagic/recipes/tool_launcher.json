@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_launcher"
+  },
+  "pattern": [
+    "rsq",
+    " rs",
+    "t r"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "q": {
+      "item": "minecraft:quartz"
+    },
+    "r": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    },
+    "t": {
+      "item": "minecraft:string"
+    }
+  }
+}

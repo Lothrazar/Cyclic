@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:storage_bag"
+  },
+  "pattern": [
+    "lsl",
+    "ldl",
+    "lrl"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "d": {
+      "item": "minecraft:gold_ingot"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  }
+}

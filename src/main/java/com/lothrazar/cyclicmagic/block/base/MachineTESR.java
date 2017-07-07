@@ -21,8 +21,10 @@ public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
     this(block, -1);
   }
   @Override
-  public void renderTileEntityAt(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage) {
-    super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
+  public void render(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p
+    
+      ) {
+    super.render(te, x, y, z, partialTicks, destroyStage, p);
     if (te instanceof ITilePreviewToggle) {
       ITilePreviewToggle tilePreview = (ITilePreviewToggle) te;
       if (tilePreview.isPreviewVisible()) {
@@ -31,7 +33,8 @@ public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
     }
   }
   @Override
-  public void render(TileEntityBaseMachineInvo te) {
+  public void renderBasic(TileEntityBaseMachineInvo te) {
+ 
     renderAnimation(te);
     if (this.itemSlotAbove >= 0) {
       ItemStack stack = te.getStackInSlot(this.itemSlotAbove);

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:sack_ender"
+  },
+  "pattern": [
+    " l ",
+    "lsl",
+    " l "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:ender_chest"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  }
+}

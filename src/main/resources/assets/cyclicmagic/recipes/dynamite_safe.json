@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "cyclicmagic:dynamite_safe",
+    "count": 6
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

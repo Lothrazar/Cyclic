@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_spelunker"
+  },
+  "pattern": [
+    " sg",
+    " bs",
+    "b  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "minecraft:flint"
+    },
+    "g": {
+      "item": "minecraft:stained_glass",
+      "data": 11
+    }
+  }
+}

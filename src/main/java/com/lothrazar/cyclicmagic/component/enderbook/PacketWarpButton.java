@@ -24,7 +24,7 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
   }
   @Override
   public IMessage onMessage(PacketWarpButton message, MessageContext ctx) {
-    EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).playerEntity;
+    EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;
     int cost = (int) ItemEnderBook.getExpCostPerTeleport(player, ItemEnderBook.getPlayersBook(player), message.slot);
     if (player.isCreative()) {
       ItemEnderBook.teleport(player, message.slot);

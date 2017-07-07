@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "cyclicmagic:fan"
+  },
+  "pattern": [
+    " i ",
+    "iri",
+    "sis"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:repeater"
+    },
+    "s": {
+      "item": "minecraft:stone",
+      "data": 0
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

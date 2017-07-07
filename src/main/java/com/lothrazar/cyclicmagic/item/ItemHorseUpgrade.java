@@ -43,10 +43,11 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     if (stack == null || stack.getItem() == null) { return; } // just being safe
     Item carrot = stack.getItem();
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
+    super.addInformation(stack, playerIn, tooltip, advanced);
   }
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);

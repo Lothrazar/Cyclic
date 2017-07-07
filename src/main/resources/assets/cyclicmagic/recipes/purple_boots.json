@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:purple_boots"
+  },
+  "pattern": [
+    "   ",
+    "p p",
+    "oio"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:dye",
+      "data": 5
+    },
+    "i": {
+      "item": "minecraft:chainmail_boots",
+      "data": 32767
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

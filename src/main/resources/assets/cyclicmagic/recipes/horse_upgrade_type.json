@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:horse_upgrade_type"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:emerald"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

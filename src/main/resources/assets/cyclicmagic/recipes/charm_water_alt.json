@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_water"
+  },
+  "pattern": [
+    "r x",
+    "id ",
+    "iir"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:nether_wart"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "x": {
+      "item": "minecraft:fish",
+      "data": 1
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

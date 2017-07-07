@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_swap"
+  },
+  "pattern": [
+    " gi",
+    "oig",
+    "oo "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:lapis_block"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

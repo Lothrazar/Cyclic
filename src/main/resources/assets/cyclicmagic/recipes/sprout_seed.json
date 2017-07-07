@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "cyclicmagic:sprout_seed",
+    "count": 2
+  },
+  "pattern": [
+    "waw",
+    "bEc",
+    "wdw"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:beetroot_seeds"
+    },
+    "b": {
+      "item": "minecraft:melon_seeds"
+    },
+    "c": {
+      "item": "minecraft:pumpkin_seeds"
+    },
+    "d": {
+      "item": "minecraft:nether_wart"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "w": {
+      "item": "minecraft:wheat_seeds"
+    }
+  }
+}

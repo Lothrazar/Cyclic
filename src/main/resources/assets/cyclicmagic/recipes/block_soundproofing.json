@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_soundproofing",
+    "count": 8
+  },
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:wool",
+      "data": 1
+    },
+    "o": {
+      "item": "minecraft:bone_block"
+    }
+  }
+}

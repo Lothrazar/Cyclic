@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_pearl_reuse"
+  },
+  "pattern": [
+    "ere",
+    "rsr",
+    "ere"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "minecraft:iron_block"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    }
+  }
+}

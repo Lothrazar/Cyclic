@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:horse_upgrade_jump"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}
