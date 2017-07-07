@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_trade"
+  },
+  "pattern": [
+    " e ",
+    " b ",
+    " q "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "q": {
+      "item": "minecraft:red_mushroom"
+    },
+    "b": {
+      "item": "minecraft:book"
+    },
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

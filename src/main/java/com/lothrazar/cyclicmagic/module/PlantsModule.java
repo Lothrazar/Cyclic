@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.ItemMagicBean;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+//import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
@@ -22,7 +22,7 @@ public class PlantsModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);
-      AchievementRegistry.registerItemAchievement(sprout_seed);
+      //      AchievementRegistry.registerItemAchievement(sprout_seed);
       JeiDescriptionRegistry.registerWithJeiDescription(sprout_seed);
     }
   }

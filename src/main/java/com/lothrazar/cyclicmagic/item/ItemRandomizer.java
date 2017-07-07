@@ -108,7 +108,8 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
@@ -123,9 +124,9 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
         " gi",
         " ig",
         "o  ",
-        'i', Items.IRON_INGOT,
-        'g', Items.REDSTONE,
-        'o', Blocks.OBSIDIAN);
+        'i', "ingotIron",
+        'g', "dustRedstone",
+        'o', "obsidian");
     return null;
   }
 }

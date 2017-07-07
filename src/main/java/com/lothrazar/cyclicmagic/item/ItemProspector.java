@@ -107,8 +107,8 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
         " bs",
         "b  ",
         'b', new ItemStack(Items.BLAZE_ROD),
-        's', new ItemStack(Items.DIAMOND),
-        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIGHT_BLUE.getMetadata()));
+        's', "gemDiamond",
+        'g', "blockGlassLightBlue");
   }
   @Override
   public void syncConfig(Configuration config) {

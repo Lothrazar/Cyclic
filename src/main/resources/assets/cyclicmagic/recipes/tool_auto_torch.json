@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_auto_torch"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:tool_auto_torch",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:coal_block"
+    },
+    {
+      "item": "minecraft:coal_block"
+    },
+    {
+      "item": "minecraft:coal_block"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

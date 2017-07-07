@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_sword"
+  },
+  "pattern": [
+    " e ",
+    " e ",
+    " s "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

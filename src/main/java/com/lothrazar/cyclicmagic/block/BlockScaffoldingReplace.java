@@ -33,6 +33,6 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', new ItemStack(Items.STICK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', "stickWood");
   }
 }

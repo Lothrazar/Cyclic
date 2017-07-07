@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:carbon_paper",
+    "count": 8
+  },
+  "pattern": [
+    "ppp",
+    "pcp",
+    "ppp"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:paper"
+    },
+    "c": {
+      "item": "minecraft:coal",
+      "data": 1
+    }
+  }
+}

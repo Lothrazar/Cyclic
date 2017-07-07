@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.component.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -20,8 +19,9 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -54,43 +54,43 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small", null);
       page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_launch_small, 6),
           "sss", "ggg", "iii",
-          's', Blocks.SLIME_BLOCK,
+          's', "blockSlime",
           'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
           'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE));
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
           new ItemStack(plate_launch_small),
-          new ItemStack(Items.QUARTZ)));
+          "gemQuartz"));
       //large
       BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
           new ItemStack(plate_launch_med),
-          new ItemStack(Blocks.END_STONE)));
-      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
+
+          "endstone"));
+
     }
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
       BlockRegistry.registerBlock(plate_push, "plate_push", null);
       GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
-      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
       page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_push, 8),
           "sbs",
           "bxb",
           "sbs",
-          's', new ItemStack(Items.IRON_INGOT),
-          'x', new ItemStack(Blocks.SLIME_BLOCK),
-          'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage())));
+          's', "ingotIron",
+          'x', "blockSlime",
+          'b', "dyePurple"  )  );
       plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE));
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
-          new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
+         "dyeBlue"   ));
       BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
-          new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage())));
+          "dyeLightBlue" ));
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();

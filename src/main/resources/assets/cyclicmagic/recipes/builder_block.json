@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:builder_block"
+  },
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:redstone_block"
+    },
+    "b": {
+      "item": "minecraft:diamond_block"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:ghast_tear"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

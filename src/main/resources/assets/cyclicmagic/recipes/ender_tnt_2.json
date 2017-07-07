@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_tnt_2"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:ender_tnt_1"
+    },
+    {
+      "item": "cyclicmagic:ender_tnt_1"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

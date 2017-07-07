@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -138,7 +139,7 @@ public class UtilNBT {
     ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
     //NOT THIS: if you are putting it on a normal stack (sword/weapon) yeah then that way
     //		stack.addEnchantment(ench, level);
-    Items.ENCHANTED_BOOK.addEnchantment(stack, new EnchantmentData(ench, level));
+    ItemEnchantedBook.addEnchantment(stack, new EnchantmentData(ench, level));
     //just to test it
     return stack;
   }

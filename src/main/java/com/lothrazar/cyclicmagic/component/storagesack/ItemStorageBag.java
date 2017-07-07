@@ -81,7 +81,8 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return 1; // Without this method, your inventory will NOT work!!!
   }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
@@ -167,9 +168,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
-        'l', Items.LEATHER,
-        's', Items.STRING,
-        'r', Items.REDSTONE,
-        'd', Items.GOLD_INGOT);
+        'l', "leather",
+        's', "string",
+        'r', "dustRedstone",
+        'd', "ingotGold");
   }
 }

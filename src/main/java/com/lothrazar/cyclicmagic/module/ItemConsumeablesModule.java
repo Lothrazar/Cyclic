@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -47,8 +46,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.register(diamond_carrot, "horse_upgrade_health");
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
-      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
-      AchievementRegistry.registerItemAchievement(diamond_carrot);
+      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks 
       ItemRegistry.registerWithJeiDescription(emerald_carrot);
       ItemRegistry.registerWithJeiDescription(lapis_carrot);
       ItemRegistry.registerWithJeiDescription(diamond_carrot);
@@ -74,21 +72,18 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
-      AchievementRegistry.registerItemAchievement(heart_food);
       ItemRegistry.registerWithJeiDescription(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food);
-      AchievementRegistry.registerItemAchievement(crafting_food);
       ItemRegistry.registerWithJeiDescription(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food);
-      AchievementRegistry.registerItemAchievement(inventory_food);
       ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
@@ -97,7 +92,6 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
-      AchievementRegistry.registerItemAchievement(corrupted_chorus);
       ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
     if (enableGlowingChorus) {

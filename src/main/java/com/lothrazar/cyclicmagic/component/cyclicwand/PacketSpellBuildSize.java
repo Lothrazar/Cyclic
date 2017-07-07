@@ -28,9 +28,9 @@ public class PacketSpellBuildSize implements IMessage, IMessageHandler<PacketSpe
   }
   @Override
   public IMessage onMessage(PacketSpellBuildSize message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    EntityPlayer player = ctx.getServerHandler().player;
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand != null) {
+    if (wand != null && !wand.isEmpty()) {
       ItemCyclicWand.BuildType.setBuildSize(wand, message.size);
     }
     return null;

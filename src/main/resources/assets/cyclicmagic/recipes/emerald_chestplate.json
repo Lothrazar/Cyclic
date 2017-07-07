@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_chestplate"
+  },
+  "pattern": [
+    "e e",
+    "eee",
+    "eee"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

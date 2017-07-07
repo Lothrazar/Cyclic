@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_fire"
+  },
+  "pattern": [
+    "r x",
+    "id ",
+    "iir"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:nether_wart"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "x": {
+      "item": "minecraft:blaze_rod"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_harvest_weeds"
+  },
+  "pattern": [
+    " gs",
+    " bg",
+    "b  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "minecraft:stone_hoe"
+    },
+    "g": {
+      "item": "minecraft:string"
+    }
+  }
+}

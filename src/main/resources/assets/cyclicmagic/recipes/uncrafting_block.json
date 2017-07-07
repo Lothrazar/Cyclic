@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:uncrafting_block"
+  },
+  "pattern": [
+    " d ",
+    "fdf",
+    "ooo"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "d": {
+      "item": "minecraft:diamond_block"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

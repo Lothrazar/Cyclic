@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:cyclic_wand_build"
+  },
+  "pattern": [
+    "sds",
+    " o ",
+    "gog"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:bone_block"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "g": {
+      "item": "minecraft:quartz_block",
+      "data": 0
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

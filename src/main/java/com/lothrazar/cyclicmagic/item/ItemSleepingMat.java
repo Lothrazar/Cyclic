@@ -151,6 +151,6 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
-        Items.LEATHER);
+        "leather");
   }
 }

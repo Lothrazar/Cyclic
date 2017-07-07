@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:evoker_fang"
+  },
+  "pattern": [
+    "wpc",
+    " dp",
+    "r w"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:packed_ice"
+    },
+    "r": {
+      "item": "minecraft:end_rod"
+    },
+    "c": {
+      "item": "minecraft:end_crystal"
+    },
+    "d": {
+      "item": "minecraft:emerald_block"
+    },
+    "w": {
+      "item": "minecraft:web"
+    }
+  }
+}

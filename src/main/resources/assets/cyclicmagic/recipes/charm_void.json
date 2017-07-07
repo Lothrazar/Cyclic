@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_void"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:charm_void",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

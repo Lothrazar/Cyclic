@@ -42,7 +42,7 @@ public class ContainerBaseMachine extends ContainerBase {
       for (int j = 0; j < tile.getFieldOrdinals().length; j++) {
         fieldId = tile.getFieldOrdinals()[j];
         if (this.tileMap[j] != this.tile.getField(fieldId)) {
-          icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tile.getField(fieldId));
+          icontainerlistener.sendWindowProperty(this, fieldId, this.tile.getField(fieldId));
         }
       }
     }

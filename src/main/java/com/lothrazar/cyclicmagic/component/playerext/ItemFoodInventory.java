@@ -46,7 +46,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Blocks.ENDER_CHEST, Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, Items.DIAMOND, Items.EMERALD, Items.QUARTZ);
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), "chestEnder", Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, "gemDiamond", "gemEmerald", "gemQuartz");
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {

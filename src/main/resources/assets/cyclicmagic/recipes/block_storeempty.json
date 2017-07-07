@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_storeempty"
+  },
+  "pattern": [
+    "i i",
+    " o ",
+    "i i"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:purple_chestplate"
+  },
+  "pattern": [
+    "p p",
+    "oio",
+    "ooo"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:dye",
+      "data": 5
+    },
+    "i": {
+      "item": "minecraft:chainmail_chestplate",
+      "data": 32767
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

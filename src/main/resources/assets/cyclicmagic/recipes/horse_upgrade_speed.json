@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:horse_upgrade_speed"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

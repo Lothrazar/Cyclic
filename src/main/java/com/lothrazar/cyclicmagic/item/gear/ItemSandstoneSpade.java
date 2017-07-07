@@ -14,6 +14,6 @@ public class ItemSandstoneSpade extends ItemSpade implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }

@@ -15,7 +15,7 @@ public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', "sandstone", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }

@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_launch_large"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_launch_med"
+    },
+    {
+      "item": "minecraft:end_stone"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

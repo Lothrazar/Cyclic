@@ -72,7 +72,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', "stickWood");
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {

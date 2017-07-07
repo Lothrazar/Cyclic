@@ -151,7 +151,8 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(hand));
   }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
@@ -162,22 +163,22 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    ItemStack ingredient = ItemStack.EMPTY;
+    String ingredient = null;
     switch (this.getWandType()) {
       case MATCH:
-        ingredient = new ItemStack(Items.EMERALD);
+        ingredient = "gemEmerald";
       break;
       case NORMAL:
-        ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
+        ingredient = "blockLapis";
       break;
     }
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gi",
         "oig",
         "oo ",
-        'i', Blocks.IRON_BLOCK,
+        'i', "blockIron",
         'g', ingredient,
-        'o', Blocks.OBSIDIAN);
+        'o', "obsidian");
   }
   public WandType getWandType() {
     return wandType;

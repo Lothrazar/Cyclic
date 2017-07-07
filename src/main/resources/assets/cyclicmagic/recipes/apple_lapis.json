@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:apple_lapis"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "minecraft:lapis_block"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}
