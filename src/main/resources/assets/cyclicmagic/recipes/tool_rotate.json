@@ -7,13 +7,14 @@
     " bg",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
       "item": "minecraft:stone_brick_stairs"
     },
     "b": {
-      "item": "minecraft:stick"
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
     },
     "g": {
       "item": "minecraft:stone_slab",

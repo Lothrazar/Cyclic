@@ -7,16 +7,19 @@
     "ggf",
     "dg "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "f": {
-      "item": "minecraft:feather"
+      "ore": "feather",
+      "type": "forge:ore_dict"
     },
     "g": {
-      "item": "minecraft:gold_nugget"
+      "ore": "nuggetGold",
+      "type": "forge:ore_dict"
     }
   }
 }

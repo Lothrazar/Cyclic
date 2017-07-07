@@ -7,7 +7,7 @@
     "ggf",
     "dg "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "t": {
       "item": "minecraft:ghast_tear"
@@ -16,10 +16,12 @@
       "item": "minecraft:ender_eye"
     },
     "f": {
-      "item": "minecraft:feather"
+      "ore": "feather",
+      "type": "forge:ore_dict"
     },
     "g": {
-      "item": "minecraft:gold_ingot"
+      "ore": "ingotGold",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -8,10 +8,11 @@
     "ggg",
     "iii"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:slime"
+      "ore": "blockSlime",
+      "type": "forge:ore_dict"
     },
     "g": {
       "item": "minecraft:light_weighted_pressure_plate"

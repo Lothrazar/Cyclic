@@ -13,13 +13,15 @@
       "item": "minecraft:pumpkin_pie"
     },
     {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:cake"
     },
     {
-      "item": "minecraft:emerald_block"
+      "ore": "blockEmerald",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:fish",
@@ -33,5 +35,5 @@
       "item": "minecraft:poisonous_potato"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

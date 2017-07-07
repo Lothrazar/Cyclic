@@ -4,7 +4,8 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:ender_chest"
+      "ore": "chestEnder",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:pumpkin_pie"
@@ -23,14 +24,17 @@
       "item": "minecraft:poisonous_potato"
     },
     {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

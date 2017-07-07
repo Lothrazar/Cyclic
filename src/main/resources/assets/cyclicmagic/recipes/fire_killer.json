@@ -7,17 +7,18 @@
     "rwr",
     " i "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:dye",
-      "data": 1
+      "ore": "dyeRed",
+      "type": "forge:ore_dict"
     },
     "w": {
       "item": "minecraft:water_bucket"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     "m": {
       "item": "minecraft:magma"

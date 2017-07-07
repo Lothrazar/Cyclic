@@ -7,13 +7,15 @@
     " o ",
     "i i"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

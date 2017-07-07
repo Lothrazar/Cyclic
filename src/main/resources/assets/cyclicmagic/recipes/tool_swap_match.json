@@ -7,16 +7,19 @@
     "oig",
     "oo "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "g": {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     },
     "i": {
-      "item": "minecraft:iron_block"
+      "ore": "blockIron",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

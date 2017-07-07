@@ -7,17 +7,18 @@
     " bs",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:blaze_rod"
     },
     "s": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "g": {
-      "item": "minecraft:stained_glass",
-      "data": 3
+      "ore": "blockGlassLightBlue",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -7,9 +7,9 @@
       "item": "cyclicmagic:plate_push"
     },
     {
-      "item": "minecraft:dye",
-      "data": 12
+      "ore": "dyeLightBlue",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

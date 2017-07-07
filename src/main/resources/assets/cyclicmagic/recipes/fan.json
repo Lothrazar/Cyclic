@@ -7,17 +7,18 @@
     "iri",
     "sis"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
       "item": "minecraft:repeater"
     },
     "s": {
-      "item": "minecraft:stone",
-      "data": 0
+      "ore": "stone",
+      "type": "forge:ore_dict"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     }
   }
 }

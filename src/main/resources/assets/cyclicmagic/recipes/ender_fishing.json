@@ -5,14 +5,17 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:ender_pearl"
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:gunpowder"
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:string"
+      "ore": "string",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

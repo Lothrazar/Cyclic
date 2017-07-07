@@ -7,19 +7,23 @@
     " rs",
     "t r"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "q": {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     },
     "r": {
-      "item": "minecraft:glowstone_dust"
+      "ore": "dustGlowstone",
+      "type": "forge:ore_dict"
     },
     "s": {
-      "item": "minecraft:slime_ball"
+      "ore": "slimeball",
+      "type": "forge:ore_dict"
     },
     "t": {
-      "item": "minecraft:string"
+      "ore": "string",
+      "type": "forge:ore_dict"
     }
   }
 }

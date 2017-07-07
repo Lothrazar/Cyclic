@@ -7,22 +7,26 @@
     "gbg",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     },
     "b": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "s": {
       "item": "minecraft:dispenser"
     },
     "g": {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

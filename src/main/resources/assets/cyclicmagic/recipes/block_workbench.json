@@ -7,13 +7,15 @@
     "s s",
     "   "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:cobblestone"
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
     },
     "t": {
-      "item": "minecraft:crafting_table"
+      "ore": "workbench",
+      "type": "forge:ore_dict"
     }
   }
 }

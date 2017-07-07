@@ -7,14 +7,15 @@
     "es ",
     " s "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:stick"
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
     },
     "e": {
-      "item": "minecraft:sandstone",
-      "data": 0
+      "ore": "sandstone",
+      "type": "forge:ore_dict"
     }
   }
 }

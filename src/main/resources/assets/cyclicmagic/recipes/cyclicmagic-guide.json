@@ -7,18 +7,20 @@
       "item": "minecraft:book"
     },
     {
-      "item": "minecraft:stick"
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:coal",
       "data": 0
     },
     {
-      "item": "minecraft:cobblestone"
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:wooden_button"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

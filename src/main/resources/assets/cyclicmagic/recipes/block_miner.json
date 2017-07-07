@@ -7,10 +7,11 @@
     " g ",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:bone"
+      "ore": "bone",
+      "type": "forge:ore_dict"
     },
     "s": {
       "item": "minecraft:dispenser"

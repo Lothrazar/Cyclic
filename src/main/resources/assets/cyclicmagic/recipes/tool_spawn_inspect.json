@@ -7,7 +7,7 @@
     " bs",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:blaze_rod"
@@ -16,8 +16,8 @@
       "item": "minecraft:flint"
     },
     "g": {
-      "item": "minecraft:stained_glass",
-      "data": 10
+      "ore": "blockGlassPurple",
+      "type": "forge:ore_dict"
     }
   }
 }

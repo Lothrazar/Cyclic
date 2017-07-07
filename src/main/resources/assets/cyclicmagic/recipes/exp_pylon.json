@@ -7,26 +7,29 @@
     "grg",
     "sis"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
       "item": "minecraft:fire_charge"
     },
     "s": {
-      "item": "minecraft:netherbrick"
+      "ore": "ingotBrickNether",
+      "type": "forge:ore_dict"
     },
     "v": {
-      "item": "minecraft:vine"
+      "ore": "vine",
+      "type": "forge:ore_dict"
     },
     "g": {
-      "item": "minecraft:stained_glass",
-      "data": 5
+      "ore": "dyeLime",
+      "type": "forge:ore_dict"
     },
     "h": {
       "item": "minecraft:hopper"
     },
     "i": {
-      "item": "minecraft:gold_ingot"
+      "ore": "ingotGold",
+      "type": "forge:ore_dict"
     }
   }
 }

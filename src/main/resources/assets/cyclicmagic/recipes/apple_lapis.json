@@ -7,8 +7,9 @@
       "item": "minecraft:apple"
     },
     {
-      "item": "minecraft:lapis_block"
+      "ore": "blockLapis",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

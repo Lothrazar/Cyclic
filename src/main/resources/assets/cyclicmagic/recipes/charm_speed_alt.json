@@ -7,19 +7,22 @@
     "id ",
     "iir"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:nether_wart"
+      "ore": "cropNetherWart",
+      "type": "forge:ore_dict"
     },
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "x": {
       "item": "minecraft:emerald_block"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     }
   }
 }

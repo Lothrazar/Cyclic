@@ -7,7 +7,7 @@
     "bsc",
     " d "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "a": {
       "item": "minecraft:golden_apple",
@@ -17,13 +17,15 @@
       "item": "minecraft:poisonous_potato"
     },
     "s": {
-      "item": "minecraft:nether_star"
+      "ore": "netherStar",
+      "type": "forge:ore_dict"
     },
     "c": {
       "item": "minecraft:purpur_block"
     },
     "d": {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     }
   }
 }

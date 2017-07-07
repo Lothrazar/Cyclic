@@ -7,20 +7,23 @@
     "skl",
     "lli"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:slime_ball"
+      "ore": "slimeball",
+      "type": "forge:ore_dict"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     "k": {
-      "item": "minecraft:dye",
-      "data": 0
+      "ore": "dyeBlack",
+      "type": "forge:ore_dict"
     },
     "l": {
-      "item": "minecraft:leather"
+      "ore": "leather",
+      "type": "forge:ore_dict"
     }
   }
 }

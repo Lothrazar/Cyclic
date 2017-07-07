@@ -7,23 +7,26 @@
     "gbg",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:stone",
-      "data": 0
+      "ore": "stone",
+      "type": "forge:ore_dict"
     },
     "b": {
-      "item": "minecraft:redstone"
+      "ore": "dustRedstone",
+      "type": "forge:ore_dict"
     },
     "s": {
       "item": "minecraft:dispenser"
     },
     "g": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:cobblestone"
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -7,7 +7,7 @@
     " dp",
     "r w"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
       "item": "minecraft:packed_ice"
@@ -19,7 +19,8 @@
       "item": "minecraft:end_crystal"
     },
     "d": {
-      "item": "minecraft:emerald_block"
+      "ore": "blockEmerald",
+      "type": "forge:ore_dict"
     },
     "w": {
       "item": "minecraft:web"

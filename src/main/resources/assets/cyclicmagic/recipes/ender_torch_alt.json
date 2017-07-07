@@ -4,12 +4,13 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:leaves2",
-      "data": 32767
+      "ore": "treeLeaves",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:torch"
+      "ore": "torch",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

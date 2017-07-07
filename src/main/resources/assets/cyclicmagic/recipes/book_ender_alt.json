@@ -7,16 +7,18 @@
     "ebe",
     "eee"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:book"
     },
     "e": {
-      "item": "minecraft:ender_pearl"
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
     },
     "n": {
-      "item": "minecraft:emerald_block"
+      "ore": "blockEmerald",
+      "type": "forge:ore_dict"
     }
   }
 }

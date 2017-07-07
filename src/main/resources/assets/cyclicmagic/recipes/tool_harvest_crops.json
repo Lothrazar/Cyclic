@@ -7,7 +7,7 @@
     " bg",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:blaze_rod"
@@ -16,7 +16,8 @@
       "item": "minecraft:stone_hoe"
     },
     "g": {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -8,10 +8,11 @@
     "s s",
     "s s"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:stick"
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -8,14 +8,17 @@
       "data": 32767
     },
     {
-      "item": "minecraft:coal_block"
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:coal_block"
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:coal_block"
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

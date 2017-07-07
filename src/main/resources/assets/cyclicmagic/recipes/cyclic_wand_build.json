@@ -7,20 +7,22 @@
     " o ",
     "gog"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
       "item": "minecraft:bone_block"
     },
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "g": {
-      "item": "minecraft:quartz_block",
-      "data": 0
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

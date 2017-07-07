@@ -7,7 +7,7 @@
     "qiq",
     "lal"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "a": {
       "item": "minecraft:tallgrass",
@@ -17,11 +17,12 @@
       "item": "minecraft:snowball"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     "l": {
-      "item": "minecraft:dye",
-      "data": 6
+      "ore": "dyeCyan",
+      "type": "forge:ore_dict"
     }
   }
 }

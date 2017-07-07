@@ -7,7 +7,7 @@
     "gmg",
     "ggg"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:bow"
@@ -16,7 +16,8 @@
       "item": "minecraft:bone_block"
     },
     "g": {
-      "item": "minecraft:gold_ingot"
+      "ore": "ingotGold",
+      "type": "forge:ore_dict"
     },
     "m": {
       "item": "minecraft:observer"

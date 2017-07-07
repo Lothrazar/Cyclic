@@ -8,8 +8,9 @@
       "data": 14
     },
     {
-      "item": "minecraft:leather"
+      "ore": "leather",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

@@ -7,8 +7,9 @@
       "item": "cyclicmagic:plate_launch_small"
     },
     {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

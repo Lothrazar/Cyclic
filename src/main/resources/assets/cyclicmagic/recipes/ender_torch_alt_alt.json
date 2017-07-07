@@ -4,12 +4,13 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:leaves",
+      "item": "minecraft:tallgrass",
       "data": 32767
     },
     {
-      "item": "minecraft:torch"
+      "ore": "torch",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

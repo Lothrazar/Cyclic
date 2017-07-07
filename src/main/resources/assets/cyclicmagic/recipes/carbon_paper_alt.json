@@ -8,10 +8,11 @@
     "pcp",
     "ppp"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
-      "item": "minecraft:paper"
+      "ore": "paper",
+      "type": "forge:ore_dict"
     },
     "c": {
       "item": "minecraft:coal",

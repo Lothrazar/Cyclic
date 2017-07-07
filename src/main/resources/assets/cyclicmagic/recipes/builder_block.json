@@ -7,13 +7,15 @@
     "gbg",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:redstone_block"
+      "ore": "blockRedstone",
+      "type": "forge:ore_dict"
     },
     "b": {
-      "item": "minecraft:diamond_block"
+      "ore": "blockDiamond",
+      "type": "forge:ore_dict"
     },
     "s": {
       "item": "minecraft:dispenser"
@@ -22,7 +24,8 @@
       "item": "minecraft:ghast_tear"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

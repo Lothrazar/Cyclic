@@ -5,12 +5,13 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:dirt",
-      "data": 0
+      "ore": "dirt",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:stick"
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

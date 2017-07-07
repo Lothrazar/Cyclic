@@ -7,20 +7,23 @@
     " q ",
     "r r"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "q": {
-      "item": "minecraft:quartz_block",
-      "data": 0
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     },
     "r": {
-      "item": "minecraft:redstone"
+      "ore": "dustRedstone",
+      "type": "forge:ore_dict"
     },
     "c": {
-      "item": "minecraft:coal_block"
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
     },
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     }
   }
 }

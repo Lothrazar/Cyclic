@@ -7,10 +7,11 @@
     "iwi",
     " o "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "w": {
       "item": "minecraft:water_bucket"
@@ -19,7 +20,8 @@
       "item": "minecraft:ice"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -4,12 +4,13 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:golden_apple",
       "data": 0
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

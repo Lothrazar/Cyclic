@@ -7,10 +7,11 @@
     " i ",
     "cic"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "c": {
-      "item": "minecraft:coal_block"
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
     },
     "i": {
       "item": "minecraft:iron_bars"

@@ -7,13 +7,15 @@
     "rsr",
     "ere"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:redstone"
+      "ore": "dustRedstone",
+      "type": "forge:ore_dict"
     },
     "s": {
-      "item": "minecraft:iron_block"
+      "ore": "blockIron",
+      "type": "forge:ore_dict"
     },
     "e": {
       "item": "minecraft:ender_eye"

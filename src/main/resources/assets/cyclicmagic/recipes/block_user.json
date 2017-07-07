@@ -7,10 +7,11 @@
     " b ",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:gold_ingot"
+      "ore": "ingotGold",
+      "type": "forge:ore_dict"
     },
     "b": {
       "item": "minecraft:magma"
@@ -19,7 +20,8 @@
       "item": "minecraft:dispenser"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

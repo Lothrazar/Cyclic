@@ -8,13 +8,14 @@
     "lal",
     "lal"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "a": {
       "item": "minecraft:chorus_fruit"
     },
     "l": {
-      "item": "minecraft:glowstone_dust"
+      "ore": "dustGlowstone",
+      "type": "forge:ore_dict"
     }
   }
 }

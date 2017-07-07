@@ -7,13 +7,15 @@
     "lsl",
     " l "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:ender_chest"
+      "ore": "chestEnder",
+      "type": "forge:ore_dict"
     },
     "l": {
-      "item": "minecraft:leather"
+      "ore": "leather",
+      "type": "forge:ore_dict"
     }
   }
 }

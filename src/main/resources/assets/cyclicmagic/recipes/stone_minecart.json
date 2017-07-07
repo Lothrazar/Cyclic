@@ -7,10 +7,11 @@
     "gmg",
     "ggg"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "g": {
-      "item": "minecraft:cobblestone"
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
     },
     "m": {
       "item": "minecraft:minecart"

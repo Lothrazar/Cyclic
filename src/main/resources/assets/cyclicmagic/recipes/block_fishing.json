@@ -7,10 +7,11 @@
     "wfw",
     "pwp"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
-      "item": "minecraft:trapped_chest"
+      "ore": "chestTrapped",
+      "type": "forge:ore_dict"
     },
     "f": {
       "item": "minecraft:fish",

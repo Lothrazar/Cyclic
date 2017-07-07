@@ -7,16 +7,18 @@
     "did",
     "rmr"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:stone_button"
     },
     "r": {
-      "item": "minecraft:redstone_block"
+      "ore": "blockRedstone",
+      "type": "forge:ore_dict"
     },
     "d": {
-      "item": "minecraft:diamond_block"
+      "ore": "blockDiamond",
+      "type": "forge:ore_dict"
     },
     "i": {
       "item": "minecraft:ice"

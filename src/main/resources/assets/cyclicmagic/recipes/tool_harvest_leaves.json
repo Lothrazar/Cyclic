@@ -7,7 +7,7 @@
     " bg",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:stick"
@@ -16,7 +16,8 @@
       "item": "minecraft:stone_axe"
     },
     "g": {
-      "item": "minecraft:string"
+      "ore": "string",
+      "type": "forge:ore_dict"
     }
   }
 }

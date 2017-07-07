@@ -7,8 +7,9 @@
       "item": "cyclicmagic:plate_launch_med"
     },
     {
-      "item": "minecraft:end_stone"
+      "ore": "endstone",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

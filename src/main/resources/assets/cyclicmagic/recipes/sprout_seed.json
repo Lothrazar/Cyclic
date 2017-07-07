@@ -8,7 +8,7 @@
     "bEc",
     "wdw"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "a": {
       "item": "minecraft:beetroot_seeds"
@@ -23,7 +23,8 @@
       "item": "minecraft:nether_wart"
     },
     "E": {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     },
     "w": {
       "item": "minecraft:wheat_seeds"

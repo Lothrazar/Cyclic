@@ -8,11 +8,11 @@
     "sos",
     " s "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:wool",
-      "data": 1
+      "ore": "dyeOrange",
+      "type": "forge:ore_dict"
     },
     "o": {
       "item": "minecraft:bone_block"

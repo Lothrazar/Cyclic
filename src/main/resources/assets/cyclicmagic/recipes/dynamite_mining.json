@@ -5,16 +5,20 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:gunpowder"
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:gunpowder"
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:paper"
+      "ore": "paper",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:clay_ball"
@@ -23,14 +27,16 @@
       "item": "minecraft:red_mushroom"
     },
     {
-      "item": "minecraft:feather"
+      "ore": "feather",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:wheat_seeds"
     },
     {
-      "item": "minecraft:netherbrick"
+      "ore": "ingotBrickNether",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

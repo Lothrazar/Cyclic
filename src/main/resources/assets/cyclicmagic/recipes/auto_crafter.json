@@ -7,14 +7,15 @@
     "y x",
     "pkp"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
-      "item": "minecraft:dye",
-      "data": 5
+      "ore": "dyePurple",
+      "type": "forge:ore_dict"
     },
     "c": {
-      "item": "minecraft:crafting_table"
+      "ore": "workbench",
+      "type": "forge:ore_dict"
     },
     "x": {
       "item": "minecraft:observer"

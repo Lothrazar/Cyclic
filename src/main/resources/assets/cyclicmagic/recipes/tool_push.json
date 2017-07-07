@@ -7,7 +7,7 @@
     " bg",
     "b  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
       "item": "minecraft:sticky_piston"
@@ -16,7 +16,8 @@
       "item": "minecraft:blaze_rod"
     },
     "g": {
-      "item": "minecraft:quartz"
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -11,11 +11,13 @@
       "item": "minecraft:ice"
     },
     {
-      "item": "minecraft:paper"
+      "ore": "paper",
+      "type": "forge:ore_dict"
     },
     {
-      "item": "minecraft:string"
+      "ore": "string",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

@@ -7,13 +7,14 @@
     "bxb",
     "sbs"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "b": {
       "item": "minecraft:nether_wart_block"
     },
     "s": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "x": {
       "item": "minecraft:beacon"

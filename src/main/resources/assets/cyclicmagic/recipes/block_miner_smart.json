@@ -7,10 +7,11 @@
     "gbx",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "r": {
-      "item": "minecraft:lapis_block"
+      "ore": "blockLapis",
+      "type": "forge:ore_dict"
     },
     "b": {
       "item": "minecraft:magma"
@@ -25,7 +26,8 @@
       "item": "minecraft:diamond_axe"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

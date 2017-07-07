@@ -7,18 +7,19 @@
     "oio",
     "ooo"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
-      "item": "minecraft:dye",
-      "data": 5
+      "ore": "dyePurple",
+      "type": "forge:ore_dict"
     },
     "i": {
       "item": "minecraft:chainmail_chestplate",
       "data": 32767
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }

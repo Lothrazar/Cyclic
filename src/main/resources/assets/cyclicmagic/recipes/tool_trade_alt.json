@@ -7,7 +7,7 @@
     " b ",
     " q "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "q": {
       "item": "minecraft:red_mushroom"
@@ -16,7 +16,8 @@
       "item": "minecraft:book"
     },
     "e": {
-      "item": "minecraft:emerald"
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
     }
   }
 }

@@ -8,14 +8,16 @@
       "item": "minecraft:tnt"
     },
     {
-      "item": "minecraft:paper"
+      "ore": "paper",
+      "type": "forge:ore_dict"
     },
     {
       "item": "minecraft:clay_ball"
     },
     {
-      "item": "minecraft:ender_pearl"
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
     }
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shapeless"
 }

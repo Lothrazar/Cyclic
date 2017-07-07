@@ -7,13 +7,14 @@
     " gd",
     "s  "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
       "item": "minecraft:redstone_lamp"
     },
     "d": {
-      "item": "minecraft:diamond"
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
     },
     "e": {
       "item": "minecraft:ender_eye"

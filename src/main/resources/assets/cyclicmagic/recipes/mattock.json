@@ -7,20 +7,23 @@
     "oso",
     " s "
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "s": {
-      "item": "minecraft:bone"
+      "ore": "bone",
+      "type": "forge:ore_dict"
     },
     "d": {
-      "item": "minecraft:diamond_block"
+      "ore": "blockDiamond",
+      "type": "forge:ore_dict"
     },
     "e": {
-      "item": "minecraft:quartz_block",
-      "data": 0
+      "ore": "blockQuartz",
+      "type": "forge:ore_dict"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
     }
   }
 }
