@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.28",
     "1.11.2-latest": "1.5.8",
     "1.11.2-recommended": "1.5.8",
-    "1.12-latest": "1.5.9",
-    "1.12-recommended": "1.5.9"
+    "1.12-latest": "1.5.10",
+    "1.12-recommended": "1.5.10"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -182,5 +182,6 @@
   	,"1.5.7":"Fixed the server subscribing to tooltip render events which prevented server startup.  Recipes have been converted to new JSON system.  Needs forge 14.21.0.2338 higher.  "
   	,"1.5.8":"Guide API compatibility added back in, get it here https://mods.curse.com/mc-mods/minecraft/228832-guide-api"
   	,"1.5.9":"Fixed uncrafting grinder not giving out ingredients.  Fixed a crash when using the workbench.  Experience Boost enchantment now gives XP directly to player (when mining, not combat); this was done to avoid lag when using hammers or a vein miner.  Re-enabled Baubles API compatibility."
+  	,"1.5.10":"Nether Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  Fixed crafting bug in the workbench and inventory crafting that would temporarily disable recipes.  Fix fall damage desync bug with climbing gloves.  Fix many missing tooltips.  Fix item tooltip boxes not rendering in cyclic GUI's.  "
   }
 }

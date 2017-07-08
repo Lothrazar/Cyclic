@@ -3,8 +3,8 @@
     "item": "cyclicmagic:uncrafting_block"
   },
   "pattern": [
-    " d ",
-    "fdf",
+    "d d",
+    "frf",
     "ooo"
   ],
   "type": "forge:ore_shaped",
@@ -13,7 +13,7 @@
       "item": "minecraft:dropper"
     },
     "d": {
-      "ore": "blockDiamond",
+      "ore": "gemDiamond",
       "type": "forge:ore_dict"
     },
     "f": {
