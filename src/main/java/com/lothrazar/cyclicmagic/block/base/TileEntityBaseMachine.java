@@ -14,8 +14,15 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
+  /**
+   * thanks to darkhax
+   * @return
+   */
+  public boolean isValid() {
+    return !this.isInvalid() && this.getWorld().isBlockLoaded(this.getPos());
+  }
   public boolean isRunning() {
-    return !this.onlyRunIfPowered() || this.isPowered();//TODO: hotfix/sharedcode/baseclas
+    return this.isValid() && !this.onlyRunIfPowered() || this.isPowered();
   }
   public boolean onlyRunIfPowered() {
     return false;//default is no, dont only run if powered, just go
