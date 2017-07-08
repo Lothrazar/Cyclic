@@ -4,7 +4,9 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
@@ -13,6 +15,7 @@ import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -22,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
@@ -50,7 +54,22 @@ public class ItemRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
-    event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
+    // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
+    //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
+    for (Item b : ItemRegistry.itemMap.values()) {
+      event.getRegistry().register(b);
+      Block blockItem = Block.getBlockFromItem(b);
+      if (blockItem instanceof IHasOreDict) {
+        String oreName = ((IHasOreDict) blockItem).getOre();
+        OreDictionary.registerOre(oreName, blockItem);
+        ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
+      }
+      //hacky-ish way to register smelting.. we do not have ability do to this inside block class anymore
+      if (blockItem instanceof BlockDimensionOre) {
+        BlockDimensionOre ore = (BlockDimensionOre) blockItem;
+        GameRegistry.addSmelting(b, ore.getSmeltingOutput(), 1);
+      }
+    }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

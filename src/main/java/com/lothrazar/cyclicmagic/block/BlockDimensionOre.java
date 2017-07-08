@@ -16,12 +16,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockDimensionOre extends BlockOre {
+public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private Item dropped;
   private int droppedMeta;
   private int randomMax;
   private int spawnChance = 0;
   private SpawnType spawn = null;
+  ItemStack smeltOut;
+  String ore;
   public static enum SpawnType {
     ENDERMITE, SILVERFISH
   }
@@ -50,11 +52,21 @@ public class BlockDimensionOre extends BlockOre {
     this.spawnChance = chance;
   }
   public void registerSmeltingOutput(Item out) {
-    this.registerSmeltingOutput(new ItemStack(out));
+    smeltOut = new ItemStack(out);
   }
   public void registerSmeltingOutput(ItemStack out) {
-    GameRegistry.addSmelting(this, out, 1);
+    smeltOut = out;
   }
+  public ItemStack getSmeltingOutput() {
+   return smeltOut;
+  }
+  public void registerOre(String out) {
+    ore=out;
+  }
+  public String getOre() {
+   return ore;
+  }
+ 
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
     if (WorldGenModule.oreSpawns == false) { return; } //config has disabled spawning no matter what
     if (this.spawn != null) {

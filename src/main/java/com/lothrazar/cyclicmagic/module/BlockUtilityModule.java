@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -52,7 +51,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
-      OreDictionary.registerOre("workbench", workbench);
+  
     }
     if (soundproofing) {
       BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
