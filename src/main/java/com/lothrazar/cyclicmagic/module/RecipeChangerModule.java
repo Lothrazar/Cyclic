@@ -17,7 +17,6 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean repeaterSimple;
   private boolean minecartsSimple;
   private boolean notchApple;
-  private boolean elytraRepair;
   private boolean melonToSlice;
   private boolean snowBlocksToBalls;
   private boolean quartzBlocksToItem;
@@ -38,15 +37,11 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         true, "Craft the minecart combinations using five iron as well as minecarts").getBoolean();
     notchApple = config.get(category, "Notch Apple",
         true, "Craft a notch apple with golden blocks as usual").getBoolean();
-    elytraRepair = config.get(category, "Elytra Repair",
-        true, "You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
+ 
     melonToSlice = config.get(category, "Melon Block Slices",
         true, "Craft a Melon block into nine slices").getBoolean();
     category = Const.ConfigCategory.recipes;
-    //    difficultEarlygameRecipes = config.get(category, "Altered Stone",
-    //        false,
-    //        "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
-    //        .getBoolean();
+ 
     snowBlocksToBalls = config.get(category, "SnowBlockBalls",
         true, "Craft Snow blocks back into snowballs").getBoolean();
     quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
@@ -84,17 +79,11 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     }
     if (notchApple) {
       notchApple();
-    }
-    if (elytraRepair) {
-      elytraRepair();
-    }
+    } 
     if (melonToSlice) {
       melonToSlice();
     }
-    //    if (difficultEarlygameRecipes) {
-    //      smoothstoneRequired();
-    //      furnaceNeedsCoal();
-    //    }
+ 
     if (netherwartBlockReverse) {
       netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
@@ -120,11 +109,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
         new ItemStack(Blocks.MELON_BLOCK));
   }
-  private void elytraRepair() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItemStack.getMaxDmgFraction(Items.ELYTRA, 10)),
-        new ItemStack(Items.SKULL, 1, Const.skull_wither),
-        new ItemStack(Items.ELYTRA, 1, OreDictionary.WILDCARD_VALUE));
-  }
+ 
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
