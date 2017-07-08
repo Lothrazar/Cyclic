@@ -17,11 +17,11 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), 
-        new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE), 
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1),
+        new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE),
         "torch");
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1), 
-        "treeLeaves", 
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1),
+        "treeLeaves",
         "torch");
   }
   @Override

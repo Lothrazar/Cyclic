@@ -24,9 +24,9 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32), 
-        new ItemStack(Blocks.MOSSY_COBBLESTONE), 
-        new ItemStack(Blocks.WOOL), 
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32),
+        new ItemStack(Blocks.MOSSY_COBBLESTONE),
+        new ItemStack(Blocks.WOOL),
         new ItemStack(Items.SHEARS));
   }
   @Override

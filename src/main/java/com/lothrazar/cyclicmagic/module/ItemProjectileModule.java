@@ -130,15 +130,15 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
-          "gunpowder", 
-          new ItemStack(Items.SUGAR), 
           "gunpowder",
-          "paper", 
-          new ItemStack(Items.CLAY_BALL), 
+          new ItemStack(Items.SUGAR),
+          "gunpowder",
+          "paper",
+          new ItemStack(Items.CLAY_BALL),
           new ItemStack(Blocks.BROWN_MUSHROOM),
-          "feather", 
-          new ItemStack(Items.WHEAT_SEEDS), 
-           "cobblestone"));
+          "feather",
+          new ItemStack(Items.WHEAT_SEEDS),
+          "cobblestone"));
     }
     if (magicNet) {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
@@ -157,9 +157,9 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
-          "gunpowder", 
+          "gunpowder",
           "ingotIron",
-          "gunpowder", 
+          "gunpowder",
           "paper",
           new ItemStack(Items.CLAY_BALL),
           new ItemStack(Blocks.RED_MUSHROOM),

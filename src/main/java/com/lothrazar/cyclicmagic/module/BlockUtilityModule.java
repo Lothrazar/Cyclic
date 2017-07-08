@@ -33,7 +33,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean fragileEnabled;
@@ -51,7 +50,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
-  
     }
     if (soundproofing) {
       BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();

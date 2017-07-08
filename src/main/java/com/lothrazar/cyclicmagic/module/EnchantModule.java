@@ -15,7 +15,6 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
@@ -52,54 +51,54 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (enablereach) {
       reach = new EnchantReach();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, reach.getName()), reach);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, reach.getName()), reach);
       ModCyclic.instance.events.register(EnchantModule.reach);
     }
     if (enablexpboost) {
       xpboost = new EnchantXpBoost();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, xpboost.getName()), xpboost);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, xpboost.getName()), xpboost);
       ModCyclic.instance.events.register(xpboost);
       loadedChants.add(xpboost);
     }
     if (enableautosmelt) {
       autosmelt = new EnchantAutoSmelt();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, autosmelt.getName()), autosmelt);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, autosmelt.getName()), autosmelt);
       ModCyclic.instance.events.register(autosmelt);
       loadedChants.add(autosmelt);
     }
     if (enableLaunch) {
       launch = new EnchantLaunch();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, launch.getName()), launch);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, launch.getName()), launch);
       ModCyclic.instance.events.register(launch);
       loadedChants.add(launch);
     }
     if (enableMagnet) {
       magnet = new EnchantMagnet();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, magnet.getName()), magnet);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, magnet.getName()), magnet);
       ModCyclic.instance.events.register(magnet);
       loadedChants.add(magnet);
     }
     if (enableVenom) {
       venom = new EnchantVenom();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, venom.getName()), venom);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, venom.getName()), venom);
       ModCyclic.instance.events.register(venom);
       loadedChants.add(venom);
     }
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, lifeleech.getName()), lifeleech);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, lifeleech.getName()), lifeleech);
       ModCyclic.instance.events.register(lifeleech);
       loadedChants.add(lifeleech);
     }
     if (enablebeheading) {
       beheading = new EnchantBeheading();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, beheading.getName()), beheading);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, beheading.getName()), beheading);
       ModCyclic.instance.events.register(beheading);
       loadedChants.add(beheading);
     }
     if (enableQuickdraw) {
       quickdraw = new EnchantQuickdraw();
-      EnchantRegistry.register( new ResourceLocation(Const.MODID, quickdraw.getName()), quickdraw);
+      EnchantRegistry.register(new ResourceLocation(Const.MODID, quickdraw.getName()), quickdraw);
       ModCyclic.instance.events.register(quickdraw);
       loadedChants.add(quickdraw);
     }

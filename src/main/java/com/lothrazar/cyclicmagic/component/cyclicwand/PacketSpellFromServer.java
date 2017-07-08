@@ -58,12 +58,10 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       EntityPlayer p = ctx.getServerHandler().player;
-     
       ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
       if (spell != null && spell instanceof ISpellFromServer) {
         ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
       }
-  
     }
     return null;
   }

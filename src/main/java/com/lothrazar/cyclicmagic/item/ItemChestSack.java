@@ -87,7 +87,7 @@ public class ItemChestSack extends BaseItem {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack itemStack, World player, List<String> list,net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack itemStack, World player, List<String> list, net.minecraft.client.util.ITooltipFlag advanced) {
     if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {

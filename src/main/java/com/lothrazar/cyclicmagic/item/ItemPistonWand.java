@@ -114,7 +114,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
   }
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag  advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
   }
   @Override

@@ -84,7 +84,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, World player, List<String> list,net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag advanced) {
     boolean isEmpty = (held.getTagCompound() == null);
     if (isEmpty) {
       list.add(UtilChat.lang("item.carbon_paper.tooltip"));
@@ -229,7 +229,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp",
         'c', new ItemStack(Items.COAL, 1, 1), // charcoal
         'p', "paper");
     //also let you clean off the paper , make one with no NBT

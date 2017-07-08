@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -33,9 +32,9 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8), 
-        "enderpearl" , 
-        new ItemStack(Blocks.MOSSY_COBBLESTONE), 
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8),
+        "enderpearl",
+        new ItemStack(Blocks.MOSSY_COBBLESTONE),
         "cropNetherWart");// Blocks.iron_bars
   }
   @Override

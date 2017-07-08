@@ -25,7 +25,6 @@ public class PacketNewButton implements IMessage, IMessageHandler<PacketNewButto
   public IMessage onMessage(PacketNewButton message, MessageContext ctx) {
     // since we are on the server right now:
     EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;
- 
     // it now passes the stack, in case the players hand becomes null/empty at
     // some point during process
     ItemEnderBook.saveCurrentLocation(player, message.name);

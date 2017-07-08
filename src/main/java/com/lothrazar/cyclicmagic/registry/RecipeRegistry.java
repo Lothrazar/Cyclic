@@ -11,16 +11,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
- 
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
- 
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
- 
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**
  * 
@@ -56,7 +51,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
  *
  */
 public class RecipeRegistry {
-
   public static class Util1pt12 {
     public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
@@ -86,10 +80,9 @@ public class RecipeRegistry {
   }
   public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(stack);
-    IRecipe r = new ShapelessOreRecipe(location ,stack, recipeComponents);
-   // GameRegistry.addRecipe(r);
+    IRecipe r = new ShapelessOreRecipe(location, stack, recipeComponents);
+    // GameRegistry.addRecipe(r);
     return r;
-
   }
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
@@ -119,8 +112,7 @@ public class RecipeRegistry {
     ResourceLocation location = Util1pt12.buildName(stack);
     ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), stack, Util1pt12.convertToNonNullList(recipeComponents));
     //recipe.setRegistryName(location);
-  //  GameRegistry.register(recipe);
- 
+    //  GameRegistry.register(recipe);
     return recipe;
   }
   /**
@@ -130,16 +122,15 @@ public class RecipeRegistry {
    * @param params
    * @return
    */
-
   //  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
   //    return GameRegistry.addShapedRecipe(output, params);
   //  }
   private static IRecipe _addShapedRecipe(ItemStack output, Object... params) {
-  //  ResourceLocation location = Util1pt12.buildName(output);
+    //  ResourceLocation location = Util1pt12.buildName(output);
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);
     ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
-  //  recipe.setRegistryName(location);
- //   GameRegistry.register(recipe);
+    //  recipe.setRegistryName(location);
+    //   GameRegistry.register(recipe);
     return recipe;
   }
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
@@ -147,12 +138,11 @@ public class RecipeRegistry {
       if (object instanceof String) { return addShapedOreRecipe(output, recipeComponents); }
     }
     return _addShapedRecipe(output, recipeComponents);
-
   }
   public static IRecipe addShapedOreRecipe(ItemStack stack, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(stack);
     IRecipe r = new ShapedOreRecipe(location, stack, recipeComponents);
-//    GameRegistry.addRecipe(r);
+    //    GameRegistry.addRecipe(r);
     return r;
   }
 }

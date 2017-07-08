@@ -94,7 +94,6 @@ public class ExplosionBlockSafe extends Explosion {
                 float f2 = this.exploder != null ? this.exploder.getExplosionResistance(this, this.world, blockpos, iblockstate) : iblockstate.getBlock().getExplosionResistance(world, blockpos, (Entity) null, this);
                 f -= (f2 + 0.3F) * 0.3F;
               }
-            
               if (f > 0.0F && (this.exploder == null || this.exploder.canExplosionDestroyBlock(this, this.world, blockpos, iblockstate, f))) {
                 set.add(blockpos);
               }

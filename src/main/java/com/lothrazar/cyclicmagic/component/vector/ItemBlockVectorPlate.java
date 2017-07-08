@@ -17,7 +17,7 @@ public class ItemBlockVectorPlate extends ItemBlock {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, World player, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     stack.getItem().updateItemStackNBT(stack.getTagCompound());
     String d = UtilNBT.getItemStackDisplayInteger(stack, TileEntityVector.NBT_ANGLE);
     if (d.length() > 0)

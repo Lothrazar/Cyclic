@@ -19,8 +19,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
- 
- 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -64,9 +62,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
           new ItemStack(plate_launch_med),
- 
           "endstone"));
- 
     }
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
@@ -78,18 +74,18 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           "sbs",
           's', "ingotIron",
           'x', "blockSlime",
-          'b', "dyePurple"  )  );
+          'b', "dyePurple"));
       plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE));
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
-         "dyeBlue"   ));
+          "dyeBlue"));
       BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
-          "dyeLightBlue" ));
+          "dyeLightBlue"));
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();

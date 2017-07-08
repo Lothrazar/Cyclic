@@ -159,5 +159,5 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.DISPENSER),
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
-  } 
+  }
 }

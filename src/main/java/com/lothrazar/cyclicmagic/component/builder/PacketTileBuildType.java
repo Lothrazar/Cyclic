@@ -37,13 +37,11 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
     TileEntityStructureBuilder tile = (TileEntityStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.toggleSizeShape();
- 
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();
         player.sendAllWindowProperties(player.openContainer, tile);
       }
- 
     }
     return null;
   }

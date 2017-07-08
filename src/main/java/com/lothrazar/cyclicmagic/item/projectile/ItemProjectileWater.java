@@ -17,10 +17,10 @@ public class ItemProjectileWater extends BaseItemProjectile implements IHasRecip
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8), 
-        new ItemStack(Items.WATER_BUCKET), 
-        Blocks.ICE, 
-        "paper", 
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8),
+        new ItemStack(Items.WATER_BUCKET),
+        Blocks.ICE,
+        "paper",
         "string");
   }
   @Override

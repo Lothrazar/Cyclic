@@ -35,7 +35,7 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
       if (world.isRemote && //setting fall distance on clientside wont work
           player instanceof EntityPlayer && player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-         ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
+        ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
       }
     }
   }

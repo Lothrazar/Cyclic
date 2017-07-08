@@ -14,7 +14,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -115,7 +114,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
       // try and force chunk loading
-   //   player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified()
+      //   player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified()
       player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
       UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     }

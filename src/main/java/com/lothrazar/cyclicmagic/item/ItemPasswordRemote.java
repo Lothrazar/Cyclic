@@ -30,7 +30,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   }
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip,net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
     if (pointer != null) {
       tooltip.add(TextFormatting.RED + UtilChat.blockPosToString(pointer));

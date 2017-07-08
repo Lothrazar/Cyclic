@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -19,8 +18,8 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 
-        'e', "sandstone", 
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ",
+        'e', "sandstone",
         's', "stickWood");
   }
 }

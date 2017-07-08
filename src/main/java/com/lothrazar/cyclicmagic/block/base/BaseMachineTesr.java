@@ -72,10 +72,10 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     return bakedModel;
   }
   @Override
-  public void render(TileEntityBaseMachineInvo te, double x, double y, double z, 
+  public void render(TileEntityBaseMachineInvo te, double x, double y, double z,
       float partialTicks, int destroyStage, float alpha
-      //, net.minecraft.client.renderer.BufferBuilder buffer
-      ) {
+  //, net.minecraft.client.renderer.BufferBuilder buffer
+  ) {
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity

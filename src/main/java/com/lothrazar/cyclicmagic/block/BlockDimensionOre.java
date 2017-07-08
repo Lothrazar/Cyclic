@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private Item dropped;
@@ -58,15 +57,14 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     smeltOut = out;
   }
   public ItemStack getSmeltingOutput() {
-   return smeltOut;
+    return smeltOut;
   }
   public void registerOre(String out) {
-    ore=out;
+    ore = out;
   }
   public String getOre() {
-   return ore;
+    return ore;
   }
- 
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
     if (WorldGenModule.oreSpawns == false) { return; } //config has disabled spawning no matter what
     if (this.spawn != null) {
