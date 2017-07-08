@@ -9,8 +9,6 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry.Util1pt12;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
@@ -24,15 +22,9 @@ import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
-import amerifrance.guideapi.page.PageText;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
@@ -98,7 +90,6 @@ public class CyclicGuideBook implements IGuideBook {
       List<IPage> pages = new ArrayList<IPage>();
       for (GuidePage p : item.pages) {
         if (p.text != null) {
-          pages.add(new PageText(p.text));
           for (IPage textPage : PageHelper.pagesForLongText(p.text, MAX_PAGE_LENGTH)) {
             pages.add(textPage);
           }
