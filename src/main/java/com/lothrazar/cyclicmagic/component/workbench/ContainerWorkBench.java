@@ -60,7 +60,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
       craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     }
     else {
-      craftResult.setInventorySlotContents(0, r.getRecipeOutput());
+      craftResult.setInventorySlotContents(0, r.getRecipeOutput().copy());
     }
   }
   @Override
