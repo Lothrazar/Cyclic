@@ -58,4 +58,7 @@ public class UtilExperience {
     int next = getXpForLevel(player.experienceLevel);
     player.experience = (float) (player.experienceTotal - next) / (float) player.xpBarCap();
   }
+  public static void incrementExp(EntityPlayer player, int xp) {
+    setXp(player, (int) getExpTotal(player) + xp);
+  }
 }

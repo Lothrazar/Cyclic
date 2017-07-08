@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilExperience;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -48,7 +49,9 @@ public class EnchantXpBoost extends EnchantBase {
     if (level <= 0) { return; }
     Block block = event.getState().getBlock();
     int xpDropped = block.getExpDrop(event.getState(), world, pos, 0);
-    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
+    // dropExp(world, pos, xpDropped * XP_PER_LVL * level);
+    int bonus = xpDropped * XP_PER_LVL * level;
+    UtilExperience.incrementExp(player, bonus);
   }
   private void dropExp(World world, BlockPos pos, int xp) {
     if (world.isRemote == false) {
