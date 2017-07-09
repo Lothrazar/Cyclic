@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -20,6 +21,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -29,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantBeheading extends EnchantBase implements IHasConfig {
   private Map<String, String> mapClassToSkin;
+  private Map<String, String> mapResourceToSkin;
   private Map<String, NBTTagCompound> mapClassToTag;
   private int percentDrop;
   public EnchantBeheading() {
@@ -38,6 +41,7 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
   }
   private void buildDefaultHeadList() {
     mapClassToSkin = new HashMap<String, String>();
+    mapResourceToSkin = new HashMap<String, String>();
     mapClassToTag = new HashMap<String, NBTTagCompound>();
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
     //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
@@ -92,6 +96,7 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
+      String resourcelocation = EntityList.getKey(target).toString();
       int level = getCurrentLevelTool(attacker);
       if (level < 0) { return; }
       World world = attacker.world;
@@ -100,7 +105,10 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
       BlockPos pos = target.getPosition();
       String key = target.getClass().getName();
       ////we allow all these, which include config, to override the vanilla skulls below
-      if (mapClassToSkin.containsKey(key)) {
+      if (mapResourceToSkin.containsKey(resourcelocation)) {
+        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapResourceToSkin.get(resourcelocation)));
+      }
+      else if (mapClassToSkin.containsKey(key)) {
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
       }
       else if (mapClassToTag.containsKey(key)) {
@@ -125,21 +133,20 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
       }
       else {
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+        ModCyclic.logger.error("beheading mob not found " + target.getClass().getName());
       }
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     this.percentDrop = config.getInt("BeheadingPercent", Const.ConfigCategory.modpackMisc, 10, 1, 100, "Percent chance that the beheading enchant will actually drop a head.");
-    String[] defaultConf = new String[] {
-        "net.minecraft.entity.monster.EntityVex-Vazkii", "elucent.roots.entity.EntitySprite-Darkosto" };
-    String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: classpath-player");
+    String[] defaultConf = new String[] { "roots:fairy-Elucent" };
+    String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: mod:monster-player, see the /summon command for mod data. ");
     for (String s : mappings) {
       if (s.contains("-")) {
         String[] spl = s.split("-");
         if (spl.length == 2) {
-          mapClassToSkin.put(spl[0], spl[1]);
+          mapResourceToSkin.put(spl[0], spl[1]);
         }
       }
     }
