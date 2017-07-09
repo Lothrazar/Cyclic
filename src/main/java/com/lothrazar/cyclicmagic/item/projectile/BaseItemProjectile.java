@@ -19,7 +19,8 @@ public abstract class BaseItemProjectile extends BaseItem {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack h = playerIn.getHeldItem(hand);
     onItemThrow(h, worldIn, playerIn, hand);
-    return new ActionResult<ItemStack>(EnumActionResult.PASS, h);
+    playerIn.swingArm(hand);
+    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, h);
   }
   abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
   public abstract EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z);//, double accelX, double accelY, double accelZ
@@ -41,18 +42,4 @@ public abstract class BaseItemProjectile extends BaseItem {
   protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
     this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);
   }
-  // backup in case function is renamed or removed -> ItemEnderPearl
-  /*
-   * public void func_184538_a(Entity p_184538_1_, float p_184538_2_, float
-   * p_184538_3_, float p_184538_4_, float p_184538_5_, float p_184538_6_) {
-   * float f = -MathHelper.sin(p_184538_3_ * 0.017453292F) *
-   * MathHelper.cos(p_184538_2_ * 0.017453292F); float f1 =
-   * -MathHelper.sin((p_184538_2_ + p_184538_4_) * 0.017453292F); float f2 =
-   * MathHelper.cos(p_184538_3_ * 0.017453292F) * MathHelper.cos(p_184538_2_ *
-   * 0.017453292F); this.setThrowableHeading((double)f, (double)f1, (double)f2,
-   * p_184538_5_, p_184538_6_); this.motionX += p_184538_1_.motionX;
-   * this.motionZ += p_184538_1_.motionZ;
-   * 
-   * if (!p_184538_1_.onGround) { this.motionY += p_184538_1_.motionY; } }
-   */
 }

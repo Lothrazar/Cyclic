@@ -49,7 +49,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
       tooltip.add(stack.getTagCompound().getString(NBT_ENTITYID));
     }
     else {
-      tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+      super.addInformation(stack, playerIn, tooltip, advanced);
     }
   }
   @Override
@@ -58,7 +58,6 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
       this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
       held.getTagCompound().removeTag(NBT_ENTITYID);
       held.setTagCompound(null);
-      //      held = null;
     }
     else {
       this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));
