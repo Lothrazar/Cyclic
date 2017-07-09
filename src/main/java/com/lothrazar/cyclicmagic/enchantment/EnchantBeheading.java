@@ -126,10 +126,6 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
       }
       else {
         ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
       }
     }
   }

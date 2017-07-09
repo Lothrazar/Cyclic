@@ -51,7 +51,6 @@ public class EnchantXpBoost extends EnchantBase {
     Block block = event.getState().getBlock();
     int xpDropped = block.getExpDrop(event.getState(), world, pos, 0);
     int bonus = xpDropped * XP_PER_LVL * level;
-    ModCyclic.logger.info("bonus exp : " + bonus);
     UtilExperience.incrementExp(player, bonus);
     //    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
   }
