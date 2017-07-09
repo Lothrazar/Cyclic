@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ItemCharmAir extends BaseCharm implements IHasRecipe {
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
-  private static final int durability = 512;
+  private static final int durability = 4096;
   public ItemCharmAir() {
     super(durability);
   }
