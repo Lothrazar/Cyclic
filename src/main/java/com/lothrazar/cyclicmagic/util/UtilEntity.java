@@ -176,24 +176,20 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
-  public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-    double x = center.getX();
-    double y = center.getY();
-    double z = center.getZ();
+  public static AxisAlignedBB makeBoundingBox(BlockPos center, int hRadius, int vRadius) {
+    //so if radius is 1, it goes 1 in each direction, and boom, 3x3 selected
+    return new AxisAlignedBB(center).expand(hRadius, vRadius, hRadius);
+  }
+  public static AxisAlignedBB makeBoundingBox(double x, double y, double z, int hRadius, int vRadius) {
     return new AxisAlignedBB(
-        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
-        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+        x - hRadius, y - vRadius, z - hRadius,
+        x + hRadius, y + vRadius, z + hRadius);
   }
-  public static AxisAlignedBB makeBoundingBox(double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-    return new AxisAlignedBB(
-        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
-        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+  public static int moveEntityItemsInRegion(World world, BlockPos pos, int hRadius, int vRadius) {
+    return moveEntityItemsInRegion(world, pos.getX(), pos.getY(), pos.getZ(), hRadius, vRadius, true);
   }
-  public static int moveEntityItemsInRegion(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-    return moveEntityItemsInRegion(world, pos.getX(), pos.getY(), pos.getZ(), ITEM_HRADIUS, ITEM_VRADIUS, true);
-  }
-  public static int moveEntityItemsInRegion(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
-    AxisAlignedBB range = makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+  public static int moveEntityItemsInRegion(World world, double x, double y, double z, int hRadius, int vRadius, boolean towardsPos) {
+    AxisAlignedBB range = makeBoundingBox(x, y, z, hRadius, vRadius);
     List<Entity> all = getItemExp(world, range);
     return pullEntityList(x, y, z, towardsPos, all);
   }
