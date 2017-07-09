@@ -104,7 +104,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     if (csv == null || csv.isEmpty()) { return false; }
     BookLocation loc = getLocation(book, slot);
     if (player.dimension != loc.dimension) { return false; }
-    UtilSound.playSound(player,  SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+    UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to

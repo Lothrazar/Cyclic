@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import net.minecraft.block.Block;

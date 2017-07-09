@@ -16,6 +16,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   }
   /**
    * thanks to darkhax
+   * 
    * @return
    */
   public boolean isValid() {

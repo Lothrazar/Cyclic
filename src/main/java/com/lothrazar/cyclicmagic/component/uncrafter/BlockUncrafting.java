@@ -68,7 +68,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         "progressiveautomation:WitherIron",
         "progressiveautomation:WitherStone",
         "progressiveautomation:WitherWood",
-        "minecraft:elytra","techreborn:uumatter"
+        "minecraft:elytra", "techreborn:uumatter"
     };
     String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
@@ -76,8 +76,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "botania:manaTablet",
         "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem",
         "harvestcraft:bakewareItem", "harvestcraft:saucepanItem", "harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem",
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star"
-        ,"minecraft:elytra","techreborn:uumatter"
+        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star", "minecraft:elytra", "techreborn:uumatter"
     };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);

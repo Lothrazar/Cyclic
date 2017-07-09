@@ -2,13 +2,11 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean playerSkull;
@@ -37,11 +35,9 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         true, "Craft the minecart combinations using five iron as well as minecarts").getBoolean();
     notchApple = config.get(category, "Notch Apple",
         true, "Craft a notch apple with golden blocks as usual").getBoolean();
- 
     melonToSlice = config.get(category, "Melon Block Slices",
         true, "Craft a Melon block into nine slices").getBoolean();
     category = Const.ConfigCategory.recipes;
- 
     snowBlocksToBalls = config.get(category, "SnowBlockBalls",
         true, "Craft Snow blocks back into snowballs").getBoolean();
     quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
@@ -79,11 +75,10 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     }
     if (notchApple) {
       notchApple();
-    } 
+    }
     if (melonToSlice) {
       melonToSlice();
     }
- 
     if (netherwartBlockReverse) {
       netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
@@ -109,7 +104,6 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
         new ItemStack(Blocks.MELON_BLOCK));
   }
- 
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));

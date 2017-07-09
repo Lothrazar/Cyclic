@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public abstract class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
