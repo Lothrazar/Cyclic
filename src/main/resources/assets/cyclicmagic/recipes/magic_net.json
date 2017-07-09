@@ -17,7 +17,7 @@
       "item": "minecraft:snowball"
     },
     "i": {
-      "ore": "ingotIron",
+      "ore": "blockIron",
       "type": "forge:ore_dict"
     },
     "l": {

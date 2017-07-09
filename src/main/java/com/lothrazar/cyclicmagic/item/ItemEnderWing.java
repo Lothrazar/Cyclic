@@ -59,6 +59,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       break;
     }
     if (success) {
+    
       UtilItemStack.damageItem(player, held);
       UtilSound.playSound(player, SoundEvents.ENTITY_SHULKER_TELEPORT);
       player.getCooldownTracker().setCooldown(this, cooldown);

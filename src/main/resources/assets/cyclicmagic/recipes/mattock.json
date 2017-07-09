@@ -3,18 +3,14 @@
     "item": "cyclicmagic:mattock"
   },
   "pattern": [
-    "ede",
-    "oso",
-    " s "
+    "odo",
+    " e ",
+    " e "
   ],
   "type": "forge:ore_shaped",
   "key": {
-    "s": {
-      "ore": "bone",
-      "type": "forge:ore_dict"
-    },
     "d": {
-      "ore": "blockDiamond",
+      "ore": "gemDiamond",
       "type": "forge:ore_dict"
     },
     "e": {

@@ -10,16 +10,16 @@
   "type": "forge:ore_shaped",
   "key": {
     "p": {
-      "item": "minecraft:ice"
+      "item": "minecraft:packed_ice"
     },
     "r": {
-      "item": "minecraft:end_rod"
+      "item": "minecraft:blaze_rod"
     },
     "c": {
       "item": "minecraft:end_crystal"
     },
     "d": {
-      "ore": "blockEmerald",
+      "ore": "gemEmerald",
       "type": "forge:ore_dict"
     },
     "w": {
