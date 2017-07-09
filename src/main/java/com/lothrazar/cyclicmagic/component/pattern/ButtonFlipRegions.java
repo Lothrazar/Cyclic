@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonFlipRegions extends GuiButtonTooltip {
   private final BlockPos tilePos;
   public ButtonFlipRegions(int buttonId, int x, int y, BlockPos current) {
-    super(buttonId, x, y, 20, 10, "");
+    super(buttonId, x, y, 24, 12, "");
     tilePos = current;
     setTooltip("tile.builder_pattern.flip");
   }

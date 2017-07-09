@@ -9,6 +9,8 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,19 +35,21 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //first the main top left type button
+   
+//    GuiUtils.drawContinuousTexturedBox(x, y, u, v, xHeightTextbox, xHeightTextbox, textureWidth, textureHeight, borderSize, xHeightTextbox);
     int id = 2;
     int yOffset = 16;
     btnHeightDown = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox + yOffset, false, TileEntityControlledMiner.Fields.HEIGHT);
     this.buttonList.add(btnHeightDown);
     btnHeightUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox - yOffset, true, TileEntityControlledMiner.Fields.HEIGHT);
+        this.guiTop + yHeightTxtbox - yOffset-4, true, TileEntityControlledMiner.Fields.HEIGHT);
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
     int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
     btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++,
         x, y, true, TileEntityControlledMiner.Fields.LISTTYPE);
-    btnWhitelist.width = 46;
+    btnWhitelist.width = 50;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
     x = this.guiLeft + Const.PAD * 4;

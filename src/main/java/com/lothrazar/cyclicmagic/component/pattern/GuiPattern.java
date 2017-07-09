@@ -61,7 +61,7 @@ public class GuiPattern extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
     //flip button in bottom center
     ButtonFlipRegions bt = new ButtonFlipRegions(id++,
-        this.guiLeft + screenSize.width() / 2 - 10,
+        this.guiLeft + screenSize.width() / 2 - 12,
         this.guiTop + yRows[2], this.tile.getPos());
     bt.displayString = "<->";
     this.buttonList.add(bt);

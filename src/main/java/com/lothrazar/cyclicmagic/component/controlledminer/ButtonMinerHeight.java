@@ -11,7 +11,7 @@ public class ButtonMinerHeight extends GuiButtonTooltip {
   boolean goUp;
   private String stype;//TODO: should be field ordinal/int not string but meh
   public ButtonMinerHeight(BlockPos current, int buttonId, int x, int y, boolean up, TileEntityControlledMiner.Fields list) {
-    super(buttonId, x, y, 15, 10, "");
+    super(buttonId, x, y, 14, 14, "");
     tilePos = current;
     goUp = up;
     stype = list.name().toLowerCase();
