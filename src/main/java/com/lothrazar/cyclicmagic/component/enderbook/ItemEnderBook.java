@@ -104,20 +104,19 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     if (csv == null || csv.isEmpty()) { return false; }
     BookLocation loc = getLocation(book, slot);
     if (player.dimension != loc.dimension) { return false; }
-    //		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
-    if (player instanceof EntityPlayerMP) {
+    UtilSound.playSound(player,  SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+    BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
+    if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0
       EntityPlayerMP p = ((EntityPlayerMP) player);
       float f = 0.5F;// center the player on the block. 
       //also moving up so  not stuck in floor
       p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
-      BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
       // try and force chunk loading
-      //   player.getEntityWorld().getChunkFromBlockCoords(dest).setChunkModified()
       player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
-      UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     }
+    UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     return true;
   }
   public IRecipe addRecipe() {

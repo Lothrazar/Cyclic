@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -58,6 +60,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     if (success) {
       UtilItemStack.damageItem(player, held);
+      UtilSound.playSound(player, SoundEvents.ENTITY_SHULKER_TELEPORT);
       player.getCooldownTracker().setCooldown(this, cooldown);
     }
     return success;
@@ -67,7 +70,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     ItemStack stack = player.getHeldItem(hand);
     if (tryActivate(player, stack)) {
       super.onUse(stack, player, world, hand);
-      //      player.getCooldownTracker().setCooldown(this, cooldown);
+     
       return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
