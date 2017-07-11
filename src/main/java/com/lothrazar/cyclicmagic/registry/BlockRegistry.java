@@ -58,4 +58,8 @@ public class BlockRegistry {
       //      }
     }
   }
+  @SubscribeEvent
+  public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
+  }
 }

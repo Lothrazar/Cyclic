@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
@@ -14,6 +15,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -51,6 +53,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  *
  */
 public class RecipeRegistry {
+  public static List<IRecipe> recipes = new ArrayList<IRecipe>();
   public static class Util1pt12 {
     public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
@@ -78,11 +81,21 @@ public class RecipeRegistry {
       return list;
     }
   }
+  private static void add(IRecipe r, ResourceLocation location) {
+  r.setRegistryName(location);
+
+    
+    recipes.add(r);
+  }
+  ResourceLocation group = new ResourceLocation (Const.MODID,"recipes");
   public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(stack);
-    IRecipe r = new ShapelessOreRecipe(location, stack, recipeComponents);
-    // GameRegistry.addRecipe(r);
-    return r;
+    IRecipe recipe = new ShapelessOreRecipe(location, stack, recipeComponents);
+
+ 
+    
+    add(recipe,location);
+    return recipe;
   }
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
@@ -90,14 +103,14 @@ public class RecipeRegistry {
    * 
    * so
    * 
-   * @param stack
+   * @param output
    * @param recipeComponents
    * @return
    */
-  public static IRecipe addShapelessRecipe(ItemStack stack, Object... recipeComponents) {
+  public static IRecipe addShapelessRecipe(ItemStack output, Object... recipeComponents) {
     List<ItemStack> list = Lists.<ItemStack> newArrayList();
     for (Object object : recipeComponents) {
-      if (object instanceof String) { return addShapelessOreRecipe(stack, recipeComponents); }
+      if (object instanceof String) { return addShapelessOreRecipe(output, recipeComponents); }
       if (object instanceof ItemStack) {
         list.add(((ItemStack) object).copy());
       }
@@ -109,10 +122,10 @@ public class RecipeRegistry {
         list.add(new ItemStack((Block) object));
       }
     }
-    ResourceLocation location = Util1pt12.buildName(stack);
-    ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), stack, Util1pt12.convertToNonNullList(recipeComponents));
-    //recipe.setRegistryName(location);
-    //  GameRegistry.register(recipe);
+    ResourceLocation location = Util1pt12.buildName(output);
+    ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, Util1pt12.convertToNonNullList(recipeComponents));
+
+    add(recipe,location);
     return recipe;
   }
   /**
@@ -126,11 +139,15 @@ public class RecipeRegistry {
   //    return GameRegistry.addShapedRecipe(output, params);
   //  }
   private static IRecipe _addShapedRecipe(ItemStack output, Object... params) {
-    //  ResourceLocation location = Util1pt12.buildName(output);
+    //  ResourceLocation location = ;
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);
     ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
-    //  recipe.setRegistryName(location);
-    //   GameRegistry.register(recipe);
+
+
+
+    add(recipe,Util1pt12.buildName(output));
+    
+    
     return recipe;
   }
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
@@ -139,10 +156,13 @@ public class RecipeRegistry {
     }
     return _addShapedRecipe(output, recipeComponents);
   }
-  public static IRecipe addShapedOreRecipe(ItemStack stack, Object... recipeComponents) {
-    ResourceLocation location = Util1pt12.buildName(stack);
-    IRecipe r = new ShapedOreRecipe(location, stack, recipeComponents);
-    //    GameRegistry.addRecipe(r);
-    return r;
+  public static IRecipe addShapedOreRecipe(ItemStack output, Object... recipeComponents) {
+    ResourceLocation location = Util1pt12.buildName(output);
+    IRecipe recipe = new ShapedOreRecipe(location, output, recipeComponents);
+
+    add(recipe,Util1pt12.buildName(output));
+
+    
+    return recipe;
   }
 }
