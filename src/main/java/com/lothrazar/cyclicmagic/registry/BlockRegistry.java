@@ -33,15 +33,13 @@ public class BlockRegistry {
     }
     b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
-    IRecipe recipe = null;
+    //IRecipe recipe = null;
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
-    if (b instanceof IHasRecipe) {
-      recipe = ((IHasRecipe) b).addRecipe();
-    }
+   
     if (cat != null) {
-      GuideRegistry.register(cat, b, recipe, null);
+      GuideRegistry.register(cat, b, null, null);
     }
     if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
       JeiDescriptionRegistry.registerWithJeiDescription(b);
@@ -49,17 +47,16 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
+    System.out.println("Register  BLOCKS");
     //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     for (Block b : blocks) {
       event.getRegistry().register(b);
-      //      if (b instanceof BlockDimensionOre) {
-      //        BlockDimensionOre ore = (BlockDimensionOre) b;
-      //ore dict fails here
-      //      }
+      
     }
   }
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    System.out.println("Register  IRecipe");
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

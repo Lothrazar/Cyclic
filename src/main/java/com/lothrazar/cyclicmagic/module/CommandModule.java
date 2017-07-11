@@ -31,12 +31,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
   private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
   private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
   private static String category;
-  @Override
-  public void onPreInit() {
-    if (configToggle.get(CommandTodoList.name)) {
-      ModCyclic.instance.events.register(this);
-    }
-  }
+
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
     if (configToggle.get(CommandEnderChest.name)) {
@@ -103,12 +98,5 @@ public class CommandModule extends BaseModule implements IHasConfig {
     syncCommandConfig(config, CommandVillageInfo.name, false, "Get the stats on the nearest village (if any)");
     syncCommandConfig(config, CommandWorldHome.name, true, "Teleport to true worldspawn");
   }
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().player);
-    if (props != null && props.getTODO() != null && props.getTODO().length() > 0) {
-      event.getRight().add(props.getTODO());
-    }
-  }
+
 }

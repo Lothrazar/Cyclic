@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.enderbook;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -34,6 +35,7 @@ public class GuiEnderBook extends GuiScreen {
   final int DELETE_OFFSET = 1000;
   @Override
   public void initGui() {
+    Keyboard.enableRepeatEvents(true);
     // great tips here
     // http://www.minecraftforge.net/forum/index.php?topic=29945.0
     if (bookStack.hasTagCompound() == false) {
@@ -90,6 +92,11 @@ public class GuiEnderBook extends GuiScreen {
       del = new ButtonWaypointDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);
       buttonList.add(del);
     }
+  }
+  @Override
+  public void onGuiClosed () {
+
+      Keyboard.enableRepeatEvents(false);
   }
   @Override
   public void drawScreen(int x, int y, float par3) {

@@ -72,8 +72,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolsModule extends BaseEventModule implements IHasConfig {
-  private static SpellHud spellHud;
+public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableSleepingMat;
   private boolean enableToolPush;
   private boolean enableHarvestLeaves;
@@ -108,41 +107,8 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enablePlayerLauncher;
   private boolean evokerFang;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
-  public static RenderLoc renderLocation;
-  /**
-   * BIG thank you to this MIT licensed source code
-   * 
-   * https://github.com/romelo333/notenoughwands1.8.8/blob/2fee100fe9441828eb54dc7ec6a233c9b278e753/src/main/java/romelo333/notenoughwands/proxy/ClientProxy.java
-   * 
-   * @param evt
-   */
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void renderOverlay(RenderWorldLastEvent evt) {
-    Minecraft mc = Minecraft.getMinecraft();
-    EntityPlayerSP p = mc.player;
-    ItemStack heldItem = p.getHeldItemMainhand();
-    if (heldItem == null) { return; }
-    if (heldItem.getItem() instanceof ItemBuildSwapper) {
-      RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
-      if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
-        IBlockState state = p.world.getBlockState(mouseOver.getBlockPos());
-        Block block = state.getBlock();
-        if (block != null && block.getMaterial(state) != Material.AIR) {
-          ItemBuildSwapper wandInstance = (ItemBuildSwapper) heldItem.getItem();
-          IBlockState matched = null;
-          if (wandInstance.getWandType() == WandType.MATCH) {
-            matched = p.getEntityWorld().getBlockState(mouseOver.getBlockPos());
-          }
-          List<BlockPos> places = PacketSwapBlock.getSelectedBlocks(p.getEntityWorld(), mouseOver.getBlockPos(),
-              ActionType.values()[ActionType.get(heldItem)], wandInstance.getWandType(),
-              mouseOver.sideHit, matched);
-          Set<BlockPos> coordinates = new HashSet<BlockPos>(places);
-          UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, 75, 0, 130);
-        }
-      }
-    }
-  }
+
+  
   @Override
   public void onPreInit() {
     if (evokerFang) {
@@ -304,7 +270,6 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
       ItemRegistry.register(cyclic_wand_build, "cyclic_wand_build");
       SpellRegistry.register(cyclic_wand_build);
-      spellHud = new SpellHud();
       ModCyclic.instance.events.register(this);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
@@ -380,168 +345,5 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
   }
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onMouseInput(MouseEvent event) {
-    EntityPlayer player = Minecraft.getMinecraft().player;
-    if (!player.isSneaking() || event.getDwheel() == 0) { return; }
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand.isEmpty()) { return; }
-    //if theres only one spell, do nothing
-    if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
-    if (event.getDwheel() < 0) {
-      ModCyclic.network.sendToServer(new PacketSpellShiftRight());
-      event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
-    }
-    else if (event.getDwheel() > 0) {
-      ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
-      event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
-    }
-  }
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
-    // special new case: no hud for this type
-    if (!wand.isEmpty()) {
-      spellHud.drawSpellWheel(wand);
-    }
-  }
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public void onRender(RenderGameOverlayEvent.Post event) {
-    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
-    EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
-    ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand.isEmpty()) { return; }
-    int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
-    ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
-    if (!current.isEmpty()) {
-      //THE ITEM INSIDE THE BUILDY WHEEL
-      int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
-      int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
-      int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
-      ModCyclic.proxy.renderItemOnScreen(current, xmain, ymain);
-      //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
-    }
-  }
-  //TODO: refactor this
-  public static enum RenderLoc {
-    TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT;
-    private static final int yPadding = 6;
-    private static final int xPadding = 6;//was 30 if manabar is showing
-    private static final int spellSize = 16;
-    @SideOnly(Side.CLIENT)
-    public static int locToX(RenderLoc loc, int leftOffset, int rightOffset) {
-      ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-      switch (loc) {
-        case BOTTOMLEFT:
-        case TOPLEFT:
-          return RenderLoc.xPadding + leftOffset;
-        case BOTTOMRIGHT:
-        case TOPRIGHT:
-          return res.getScaledWidth() - RenderLoc.xPadding + rightOffset;
-      }
-      return 0;
-    }
-    @SideOnly(Side.CLIENT)
-    public static int locToY(RenderLoc loc, int topOffset, int bottomOffset) {
-      ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-      switch (ItemToolsModule.renderLocation) {
-        case BOTTOMLEFT:
-        case BOTTOMRIGHT:
-          return res.getScaledHeight() - RenderLoc.spellSize - RenderLoc.yPadding + bottomOffset;
-        case TOPLEFT:
-        case TOPRIGHT:
-          return RenderLoc.yPadding + topOffset;
-        default:
-        break;
-      }
-      return 0;
-    }
-  }
-  private class SpellHud {
-    private int ymain = RenderLoc.yPadding;
-    private int xmain;
-    @SideOnly(Side.CLIENT)
-    public void drawSpellWheel(ItemStack wand) {
-      int leftOff = 8, rightOff = -26, topOff = 0, bottOff = -38;
-      xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
-      ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
-      EntityPlayer player = Minecraft.getMinecraft().player;
-      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
-      ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
-      //if theres only one spell, do not do the rest eh
-      drawCurrentSpell(player, spellCurrent);
-      drawNextSpells(player, spellCurrent);
-      drawPrevSpells(player, spellCurrent);
-    }
-    private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent) {
-      UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplay(), xmain, ymain, RenderLoc.spellSize);
-    }
-    private void drawPrevSpells(EntityPlayer player, ISpell spellCurrent) {
-      ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-      ISpell prev = SpellRegistry.prev(wand, spellCurrent);
-      if (prev != null) {
-        int x = xmain + 9;
-        int y = ymain + RenderLoc.spellSize;
-        int dim = RenderLoc.spellSize / 2;
-        UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
-        prev = SpellRegistry.prev(wand, prev);
-        if (prev != null) {
-          x += 5;
-          y += 14;
-          dim -= 2;
-          UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
-          prev = SpellRegistry.prev(wand, prev);
-          if (prev != null) {
-            x += 3;
-            y += 10;
-            dim -= 2;
-            UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
-            prev = SpellRegistry.prev(wand, prev);
-            if (prev != null) {
-              x += 2;
-              y += 10;
-              dim -= 1;
-              UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
-            }
-          }
-        }
-      }
-    }
-    private void drawNextSpells(EntityPlayer player, ISpell spellCurrent) {
-      ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-      ISpell next = SpellRegistry.next(wand, spellCurrent);
-      if (next != null) {
-        int x = xmain - 5;
-        int y = ymain + RenderLoc.spellSize;
-        int dim = RenderLoc.spellSize / 2;
-        UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
-        ISpell next2 = SpellRegistry.next(wand, next);
-        if (next2 != null) {
-          x -= 2;
-          y += 14;
-          dim -= 2;
-          UtilTextureRender.drawTextureSquare(next2.getIconDisplay(), x, y, dim);
-          ISpell next3 = SpellRegistry.next(wand, next2);
-          if (next3 != null) {
-            x -= 2;
-            y += 10;
-            dim -= 2;
-            UtilTextureRender.drawTextureSquare(next3.getIconDisplay(), x, y, dim);
-            ISpell next4 = SpellRegistry.next(wand, next3);
-            if (next4 != null) {
-              x -= 2;
-              y += 10;
-              dim -= 1;
-              UtilTextureRender.drawTextureSquare(next4.getIconDisplay(), x, y, dim);
-            }
-          }
-        }
-      }
-    }
-  }
+ 
 }

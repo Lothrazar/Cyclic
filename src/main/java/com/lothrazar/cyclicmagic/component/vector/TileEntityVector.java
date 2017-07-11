@@ -108,6 +108,7 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
         break;
         case SOUND:
           this.playSound = value;
+        break;
         case REDSTONE:
           this.needsRedstone = value;
         break;

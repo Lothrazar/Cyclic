@@ -28,10 +28,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class GearEmeraldModule extends BaseModule implements IHasConfig {
-  // thanks for help:
-  // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-  private static final int maxDamageFactorDiamond = 33;
-  private static final String emeraldName = "emerald";
+
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
   // only because theyre private, with no getters
@@ -39,29 +36,9 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
   private boolean enableEmeraldGear;
   private boolean enableMattock;
-  private void registerEmeraldMaterial() {
-    MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
-        maxDamageFactorDiamond, //was -2 affects DURABILITY 
-        new int[] {
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-        },
-        ArmorMaterial.GOLD.getEnchantability(),
-        ArmorMaterial.DIAMOND.getSoundEvent(),
-        ArmorMaterial.DIAMOND.getToughness());//was  / 2
-    MaterialRegistry.emeraldArmorMaterial.repairMaterial = new ItemStack(Items.EMERALD);
-    //max uses is durability ex The number of uses this material allows.
-    //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
-    MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
-        ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses(), //was  - 261
-        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity(), //was  - 0.25F
-        ToolMaterial.GOLD.getEnchantability());
-    MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
-  }
+
   @Override
   public void onPreInit() {
-    this.registerEmeraldMaterial();
     if (enableEmeraldGear) {
       ItemEmeraldArmor emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
       ItemRegistry.register(emerald_head, "emerald_helmet", null);

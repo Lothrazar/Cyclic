@@ -76,7 +76,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       this.spawnParticlesAbove();
       BlockPos harvest = getTargetPos();
       if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
-        this.updateFuelIsBurning();
+         this.updateFuelIsBurning();
         UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
         if (conf.drops != null) {
           setOutputItems(conf.drops);

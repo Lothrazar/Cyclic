@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
@@ -68,8 +69,11 @@ public class ModCyclic {
     SoundRegistry.register();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
+    MaterialRegistry.register();
+
     this.events = new EventRegistry();
     this.events.registerCoreEvents();
+    
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
     ConfigRegistry.syncAllConfig();

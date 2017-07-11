@@ -16,7 +16,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,18 +50,25 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       UtilChat.addChatMessage(player, "command.worldhome.dim");
       return false;
     }
-    boolean success = false;
+    //boolean success = false;
+    BlockPos target = null;
     switch (warpType) {
       case BED:
-        success = UtilWorld.tryTpPlayerToBed(world, player);
+        target = player.getBedLocation(0);
+        // success = UtilWorld.tryTpPlayerToBed(world, player);
+        if (target == null) {
+          UtilChat.addChatMessage(player, "command.gethome.bed");
+          return false;
+        }
       break;
       case SPAWN:
-        UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-        success = true;
-      break;
-      default:
+        target = world.getSpawnPoint();
+      //UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+      //success = true;
       break;
     }
+    if (target == null) { return false; }
+    boolean success = UtilEntity.enderTeleportEvent(player, world, target);
     if (success) {
       UtilItemStack.damageItem(player, held);
       UtilSound.playSound(player, SoundEvents.ENTITY_SHULKER_TELEPORT);

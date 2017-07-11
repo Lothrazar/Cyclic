@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -40,6 +41,7 @@ public class GuiVector extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 2;
     //angle text box
     txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
@@ -67,12 +69,17 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw - btnYawSpacing, (NORTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "NW";
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
-    soundBtn = addButtonAt(id++, 134, 110, 0, Fields.SOUND.ordinal());
-    soundBtn.setWidth(34);
+    soundBtn = addButtonAt(id++, 130, 110, 0, Fields.SOUND.ordinal());
+    soundBtn.setWidth(38);
     //angle buttons
     addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString = "^";
     addButtonAt(id++, xAngle + 24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString = "/";
     addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
+  }
+  @Override
+  public void onGuiClosed () {
+
+      Keyboard.enableRepeatEvents(false);
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,

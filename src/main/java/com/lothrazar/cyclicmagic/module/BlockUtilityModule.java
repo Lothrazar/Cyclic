@@ -107,13 +107,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      IRecipe recipe = RecipeRegistry.addShapedRecipe(new ItemStack(BlockRegistry.block_storeempty),
-          "i i",
-          " o ",
-          "i i",
-          'o', "obsidian", 'i', "ingotIron");
+    
      
-      GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, recipe, null);
+      GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
     }
   }
   @Override

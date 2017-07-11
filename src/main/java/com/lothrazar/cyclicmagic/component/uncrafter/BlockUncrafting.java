@@ -46,12 +46,13 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " d ",
-        "fdf",
+        "d d",
+        "frf",
         "ooo",
+        'r', Blocks.DROPPER,
         'o', "obsidian",
         'f', Blocks.FURNACE,
-        'd', "blockDiamond");
+        'd', "gemDiamond");
   }
   @Override
   public void syncConfig(Configuration config) {

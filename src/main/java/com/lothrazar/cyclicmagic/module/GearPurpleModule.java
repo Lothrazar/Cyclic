@@ -17,11 +17,10 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class GearPurpleModule extends BaseEventModule implements IHasConfig {
-  private static final String MATERIALNAME = "power";
+
   private boolean enableWaterGear;
   @Override
   public void onPreInit() {
-    registerMaterial();
     if (enableWaterGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
       ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
@@ -32,21 +31,6 @@ public class GearPurpleModule extends BaseEventModule implements IHasConfig {
       Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
       ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
     }
-  }
-  private void registerMaterial() {
-    ArmorMaterial mimicArmor = ArmorMaterial.IRON;
-    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
-        15, // affects DURABILITY . 15 is the same as iron
-        new int[] {
-            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET),
-            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
-            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
-            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-        },
-        mimicArmor.getEnchantability(),
-        mimicArmor.getSoundEvent(),
-        mimicArmor.getToughness());
-    MaterialRegistry.powerArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
   }
   @Override
   public void syncConfig(Configuration config) {

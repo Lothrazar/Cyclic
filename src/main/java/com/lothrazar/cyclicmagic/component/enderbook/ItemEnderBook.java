@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -112,9 +113,11 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       EntityPlayerMP p = ((EntityPlayerMP) player);
       float f = 0.5F;// center the player on the block. 
       //also moving up so  not stuck in floor
-      p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
-      // try and force chunk loading
-      player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
+      boolean success = UtilEntity.enderTeleportEvent(player, p.world, new BlockPos(loc.X - f, loc.Y + 0.9, loc.Z - f));
+      //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
+
+      if (success){      // try and force chunk loading
+        player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);}
     }
     UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     return true;

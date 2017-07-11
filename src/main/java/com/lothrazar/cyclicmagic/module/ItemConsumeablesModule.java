@@ -24,7 +24,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemConsumeablesModule extends BaseEventModule implements IHasConfig {
+public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;
@@ -100,17 +100,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(glowing_chorus);
     }
   }
-  @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getEntity() instanceof EntityPlayer == false) { return; }
-    EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
-    ItemStack held = entityPlayer.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
-        && event.getTarget() instanceof AbstractHorse) {
-      ItemHorseUpgrade.onHorseInteract((AbstractHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
-      event.setCanceled(true);// stop the GUI inventory opening && horse mounting
-    }
-  }
+
   @Override
   public void syncConfig(Configuration config) {
     enableLapisApple = config.getBoolean("LapisApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
