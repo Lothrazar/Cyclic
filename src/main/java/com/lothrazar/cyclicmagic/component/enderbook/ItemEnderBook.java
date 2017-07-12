@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -22,6 +23,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -107,6 +109,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     if (player.dimension != loc.dimension) { return false; }
     UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
+    BlockPos start = player.getPosition();
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0
@@ -115,11 +118,14 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, p.world, new BlockPos(loc.X - f, loc.Y + 0.9, loc.Z - f));
       //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
-
-      if (success){      // try and force chunk loading
-        player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);}
+      
+      
+      if (success) { // try and force chunk loading
+        player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
+        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);
+        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, dest, player.dimension, 32);
+      }
     }
-    UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     return true;
   }
   public IRecipe addRecipe() {

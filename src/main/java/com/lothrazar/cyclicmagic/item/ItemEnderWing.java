@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -71,8 +73,12 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     boolean success = UtilEntity.enderTeleportEvent(player, world, target);
     if (success) {
       UtilItemStack.damageItem(player, held);
-      UtilSound.playSound(player, SoundEvents.ENTITY_SHULKER_TELEPORT);
+      UtilSound.playSound(player, SoundRegistry.warp);
       player.getCooldownTracker().setCooldown(this, cooldown);
+      if(world.isRemote == false){
+        //and for other players on arrival
+        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, target, player.dimension, 32);
+      }
     }
     return success;
   }
