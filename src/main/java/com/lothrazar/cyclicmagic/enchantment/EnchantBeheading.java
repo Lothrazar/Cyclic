@@ -95,7 +95,6 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       World world = attacker.world;
-      percentDrop=100;
       if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
       if (target == null) { return; } //probably wont happen just extra safe
