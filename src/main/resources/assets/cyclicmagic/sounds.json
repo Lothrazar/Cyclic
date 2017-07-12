@@ -10,5 +10,6 @@
 	"fill"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:fill"}]},
 	"pew"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pew"}]},
 	"pow"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pow"}]},
-	"thunk"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:thunk"}]}
+	"thunk"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:thunk"}]},
+	"warp"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:warp"}]}
 }

@@ -64,8 +64,15 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     }
     else {
       //was a normal item, so ok to set its ench list to empty
-      EnchantmentHelper.setEnchantments(enchants, input);//set as removed
-      dropStack(input);
+      if (input.getItem() == Items.ENCHANTED_BOOK) {//hotfix workaround for book: so it dont try to merge eh
+        ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(enchants, inputCopy);//set as remove
+        dropStack(inputCopy);
+      }
+      else {
+        EnchantmentHelper.setEnchantments(enchants, input);//set as removed
+        dropStack(input);
+      }
     }
     //currently it always drops after one enchant is removed
     this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);

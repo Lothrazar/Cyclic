@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.crafting.IRecipe;
@@ -51,20 +52,27 @@ public class ItemRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
+    System.out.println("Register  ITEMS");
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
-    for (Item b : ItemRegistry.itemMap.values()) {
-      event.getRegistry().register(b);
-      Block blockItem = Block.getBlockFromItem(b);
-      if (blockItem instanceof IHasOreDict) {
-        String oreName = ((IHasOreDict) blockItem).getOre();
-        OreDictionary.registerOre(oreName, blockItem);
-        ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
-      }
-      //hacky-ish way to register smelting.. we do not have ability do to this inside block class anymore
-      if (blockItem instanceof BlockDimensionOre) {
-        BlockDimensionOre ore = (BlockDimensionOre) blockItem;
-        GameRegistry.addSmelting(b, ore.getSmeltingOutput(), 1);
+    for (Item item : ItemRegistry.itemMap.values()) {
+      event.getRegistry().register(item);
+      Block blockItem = Block.getBlockFromItem(item);
+      if (blockItem != null && blockItem != Blocks.AIR) {
+        if (blockItem instanceof IHasOreDict) {
+          String oreName = ((IHasOreDict) blockItem).getOre();
+          OreDictionary.registerOre(oreName, blockItem);
+          ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
+        }
+        //hacky-ish way to register smelting.. we do not have ability do to this inside block class anymore
+        if (blockItem instanceof BlockDimensionOre) {
+          BlockDimensionOre ore = (BlockDimensionOre) blockItem;
+          GameRegistry.addSmelting(item, ore.getSmeltingOutput(), 1);
+        }
+        if (blockItem instanceof IHasRecipe) {
+          //ModCyclic.logger.info("item to block recipe?? " + blockItem);
+          ((IHasRecipe) blockItem).addRecipe();
+        }
       }
     }
   }

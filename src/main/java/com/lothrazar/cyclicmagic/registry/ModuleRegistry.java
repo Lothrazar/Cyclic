@@ -12,9 +12,7 @@ import com.lothrazar.cyclicmagic.module.EntityMinecartModule;
 import com.lothrazar.cyclicmagic.module.EnvironmentTweaksModule;
 import com.lothrazar.cyclicmagic.module.FragileTorchesModule;
 import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
-import com.lothrazar.cyclicmagic.module.GearEmeraldModule;
-import com.lothrazar.cyclicmagic.module.GearPurpleModule;
-import com.lothrazar.cyclicmagic.module.GearSandstoneModule;
+import com.lothrazar.cyclicmagic.module.GearModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.ItemCharmModule;
@@ -55,7 +53,7 @@ public class ModuleRegistry {
     register(new ItemCharmModule());
     register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
-    register(new GearEmeraldModule());
+    register(new GearModule());
     register(new EnchantModule());
     register(new PlayerAbilitiesModule());
     register(new TextInfoModule());
@@ -69,13 +67,11 @@ public class ModuleRegistry {
     register(new MountedTweaksModule());
     register(new ItemProjectileModule());
     register(new RecipeChangerModule());
-    register(new GearSandstoneModule());
     register(new EnvironmentTweaksModule());
     register(new StackSizeModule());
     register(new ItemToolsModule());
     register(new VillagerCreateModule());
     register(new WorldGenModule());
-    register(new GearPurpleModule());
     register(new EntityMinecartModule());
   }
 }

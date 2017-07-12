@@ -40,7 +40,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     }
   }
   @SideOnly(Side.CLIENT)
-  private void addButtonsToGui(InitGuiEvent.Post event) {
+  public void addButtonsToGui(InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen
     // all containers by default but with a blacklist in config

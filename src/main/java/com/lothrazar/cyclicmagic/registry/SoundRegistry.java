@@ -20,6 +20,7 @@ public class SoundRegistry {
   public static SoundEvent pew;
   public static SoundEvent pow;
   public static SoundEvent thunk;
+  public static SoundEvent warp;
   public static void register() {
     basey = registerSound("basey");//used by storage bag deposit
     bip = registerSound("bip");//cyclic wand GUI rotation
@@ -33,6 +34,7 @@ public class SoundRegistry {
     pew = registerSound("pew");//magic net on catch (previously was base spell thrown)
     pow = registerSound("pow");//UNUSED
     thunk = registerSound("thunk");//ChestSack 
+    warp = registerSound("warp");//Ender Wings & Book 
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3

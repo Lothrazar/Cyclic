@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
+import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.component.magnet.BlockMagnet;
 import com.lothrazar.cyclicmagic.component.magnet.TileEntityMagnet;
@@ -14,12 +15,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -44,65 +40,42 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     }
     if (launchPads) {
       //med
-      plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
+      plate_launch_med = new BlockLaunch(BlockLaunch.LaunchType.MEDIUM, SoundEvents.BLOCK_SLIME_FALL);
       BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med", null);
-      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_launch_med);
-      BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
+      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_launch_med);
+      BlockLaunch plate_launch_small = new BlockLaunch(BlockLaunch.LaunchType.SMALL, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small", null);
-      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_launch_small, 6),
-          "sss", "ggg", "iii",
-          's', "blockSlime",
-          'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
-          'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE));
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
-          new ItemStack(plate_launch_small),
-          "gemQuartz"));
       //large
-      BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
+      BlockLaunch plate_launch_large = new BlockLaunch(BlockLaunch.LaunchType.LARGE, SoundEvents.BLOCK_SLIME_BREAK);
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
-          new ItemStack(plate_launch_med),
-          "endstone"));
     }
     if (enableConveyor) {
-      BlockConveyor plate_push = new BlockConveyor(0.16F);
+      BlockConveyor plate_push = new BlockConveyor(SpeedType.MEDIUM);
       BlockRegistry.registerBlock(plate_push, "plate_push", null);
-      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
-      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_push, 8),
-          "sbs",
-          "bxb",
-          "sbs",
-          's', "ingotIron",
-          'x', "blockSlime",
-          'b', "dyePurple"));
-      plate_push_fast = new BlockConveyor(0.32F);
+      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
+      plate_push_fast = new BlockConveyor(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE));
-      BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
+      BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
-          "dyeBlue"));
-      BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
+      BlockConveyor plate_push_slowest = new BlockConveyor(SpeedType.TINY);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
-      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
-          "dyeLightBlue"));
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
       BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
-      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
+      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
-      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
-      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
-          "ttt",
-          "idi",
-          "bbb",
-          'i', Items.IRON_INGOT,
-          'd', Items.DIAMOND,
-          'b', base,
-          't', top));
+      //      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
+      //      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
+      //      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
+      //          "ttt",
+      //          "idi",
+      //          "bbb",
+      //          'i', Items.IRON_INGOT,
+      //          'd', Items.DIAMOND,
+      //          'b', base,
+      //          't', top));
     }
   }
   @Override

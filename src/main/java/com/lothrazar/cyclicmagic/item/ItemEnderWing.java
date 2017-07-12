@@ -3,19 +3,20 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,22 +47,33 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       UtilChat.addChatMessage(player, "command.worldhome.dim");
       return false;
     }
-    boolean success = false;
+    //boolean success = false;
+    BlockPos target = null;
     switch (warpType) {
       case BED:
-        success = UtilWorld.tryTpPlayerToBed(world, player);
+        target = player.getBedLocation(0);
+        // success = UtilWorld.tryTpPlayerToBed(world, player);
+        if (target == null) {
+          UtilChat.addChatMessage(player, "command.gethome.bed");
+          return false;
+        }
       break;
       case SPAWN:
-        UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-        success = true;
-      break;
-      default:
+        target = world.getSpawnPoint();
+      //UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+      //success = true;
       break;
     }
+    if (target == null) { return false; }
+    boolean success = UtilEntity.enderTeleportEvent(player, world, target);
     if (success) {
       UtilItemStack.damageItem(player, held);
-      UtilSound.playSound(player, SoundEvents.ENTITY_SHULKER_TELEPORT);
+      UtilSound.playSound(player, SoundRegistry.warp);
       player.getCooldownTracker().setCooldown(this, cooldown);
+      if (world.isRemote == false) {
+        //and for other players on arrival
+        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, target, player.dimension, 32);
+      }
     }
     return success;
   }

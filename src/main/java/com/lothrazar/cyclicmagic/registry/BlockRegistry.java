@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
@@ -33,15 +32,12 @@ public class BlockRegistry {
     }
     b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
-    IRecipe recipe = null;
+    //IRecipe recipe = null;
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
-    if (b instanceof IHasRecipe) {
-      recipe = ((IHasRecipe) b).addRecipe();
-    }
     if (cat != null) {
-      GuideRegistry.register(cat, b, recipe, null);
+      GuideRegistry.register(cat, b, null, null);
     }
     if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
       JeiDescriptionRegistry.registerWithJeiDescription(b);
@@ -52,10 +48,10 @@ public class BlockRegistry {
     //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     for (Block b : blocks) {
       event.getRegistry().register(b);
-      //      if (b instanceof BlockDimensionOre) {
-      //        BlockDimensionOre ore = (BlockDimensionOre) b;
-      //ore dict fails here
-      //      }
     }
+  }
+  @SubscribeEvent
+  public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

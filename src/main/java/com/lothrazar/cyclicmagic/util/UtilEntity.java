@@ -19,6 +19,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
@@ -26,6 +28,20 @@ public class UtilEntity {
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
   private final static float ITEMSPEEDFAR = 0.9F;
   private final static float ITEMSPEEDCLOSE = 0.2F;
+  /**
+   * 
+   * @return true if teleport was a success
+   */
+  public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target) {
+    EnderTeleportEvent event = new EnderTeleportEvent(player, target.getX(), target.getY(), target.getZ(), 0);
+    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
+    if (!wasCancelled) {
+      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
+      UtilEntity.teleportWallSafe(player, world,
+          new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()));
+    }
+    return !wasCancelled;
+  }
   public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
     player.setPositionAndUpdate(coords.getX(), coords.getY(), coords.getZ());
     moveEntityWallSafe(player, world);
