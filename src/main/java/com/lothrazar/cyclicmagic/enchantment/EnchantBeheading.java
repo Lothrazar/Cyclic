@@ -94,6 +94,11 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
+      if (target == null) { return; }//probably wont happen just extra safe
+      if (EntityList.getKey(target) == null) {
+        ModCyclic.logger.error("Beheading : mob not found in EntityList " + target.getName());
+        return;
+      }
       String resourcelocation = EntityList.getKey(target).toString();
       int level = getCurrentLevelTool(attacker);
       if (level < 0) { return; }
