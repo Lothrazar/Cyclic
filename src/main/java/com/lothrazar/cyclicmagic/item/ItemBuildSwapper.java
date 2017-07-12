@@ -2,9 +2,10 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic; 
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.event.EventRender;
+import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule; 
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -32,8 +33,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import com.lothrazar.cyclicmagic.event.EventRender;
-import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBuildSwapper extends BaseTool implements IHasRecipe {

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.event;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,11 +8,10 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -29,8 +27,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,11 +38,9 @@ public class EventRender {
   public static SpellHud spellHud;
   //TODO: loc should be a property of hud, not standalone
   public static RenderLoc renderLocation;
-  public EventRender(){
-
+  public EventRender() {
     spellHud = new SpellHud();
   }
-  
   /**
    * BIG thank you to this MIT licensed source code
    * 
@@ -86,17 +82,12 @@ public class EventRender {
     if (props != null && props.getTODO() != null && props.getTODO().length() > 0) {
       event.getRight().add(props.getTODO());
     }
-    
-    
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
     // special new case: no hud for this type
     if (!wand.isEmpty()) {
       spellHud.drawSpellWheel(wand);
     }
-    
   }
-  
-
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
@@ -115,8 +106,6 @@ public class EventRender {
       //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
     }
   }
-  
-
   //TODO: refactor this
   public static enum RenderLoc {
     TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT;

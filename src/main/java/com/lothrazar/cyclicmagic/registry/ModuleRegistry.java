@@ -12,7 +12,7 @@ import com.lothrazar.cyclicmagic.module.EntityMinecartModule;
 import com.lothrazar.cyclicmagic.module.EnvironmentTweaksModule;
 import com.lothrazar.cyclicmagic.module.FragileTorchesModule;
 import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
-import com.lothrazar.cyclicmagic.module.GearModule; 
+import com.lothrazar.cyclicmagic.module.GearModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.ItemCharmModule;
@@ -66,7 +66,7 @@ public class ModuleRegistry {
     register(new MobDropChangesModule());
     register(new MountedTweaksModule());
     register(new ItemProjectileModule());
-    register(new RecipeChangerModule()); 
+    register(new RecipeChangerModule());
     register(new EnvironmentTweaksModule());
     register(new StackSizeModule());
     register(new ItemToolsModule());

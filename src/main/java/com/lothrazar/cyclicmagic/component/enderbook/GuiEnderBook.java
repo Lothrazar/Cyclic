@@ -94,9 +94,8 @@ public class GuiEnderBook extends GuiScreen {
     }
   }
   @Override
-  public void onGuiClosed () {
-
-      Keyboard.enableRepeatEvents(false);
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   @Override
   public void drawScreen(int x, int y, float par3) {

@@ -8,10 +8,8 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
@@ -20,9 +18,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -75,7 +70,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       UtilItemStack.damageItem(player, held);
       UtilSound.playSound(player, SoundRegistry.warp);
       player.getCooldownTracker().setCooldown(this, cooldown);
-      if(world.isRemote == false){
+      if (world.isRemote == false) {
         //and for other players on arrival
         UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, target, player.dimension, 32);
       }

@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -28,7 +27,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent; 
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 public class UtilWorld {
   // 1 chunk is 16x16 blocks
@@ -395,5 +394,4 @@ public class UtilWorld {
         blockId.equals("tconstruct:stone_torch/0") ||
         blockId.equals("actuallyadditions:block_tiny_torch/0"));
   }
-
 }

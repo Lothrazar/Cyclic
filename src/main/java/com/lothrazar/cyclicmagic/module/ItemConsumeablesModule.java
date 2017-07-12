@@ -14,15 +14,11 @@ import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   private boolean enableEmeraldApple;
@@ -100,7 +96,6 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(glowing_chorus);
     }
   }
-
   @Override
   public void syncConfig(Configuration config) {
     enableLapisApple = config.getBoolean("LapisApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -51,9 +51,8 @@ public class GuiPassword extends GuiBaseContainer {
     updateVisibility();
   }
   @Override
-  public void onGuiClosed () {
-
-      Keyboard.enableRepeatEvents(false);
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   @SideOnly(Side.CLIENT)
   @Override

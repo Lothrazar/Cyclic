@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.command.CommandEnderChest;
 import com.lothrazar.cyclicmagic.command.CommandGetHome;
 import com.lothrazar.cyclicmagic.command.CommandHeal;
@@ -16,22 +15,14 @@ import com.lothrazar.cyclicmagic.command.CommandTodoList;
 import com.lothrazar.cyclicmagic.command.CommandVillageInfo;
 import com.lothrazar.cyclicmagic.command.CommandWorldHome;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CommandModule extends BaseModule implements IHasConfig {
   private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
   private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
   private static String category;
-
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
     if (configToggle.get(CommandEnderChest.name)) {
@@ -98,5 +89,4 @@ public class CommandModule extends BaseModule implements IHasConfig {
     syncCommandConfig(config, CommandVillageInfo.name, false, "Get the stats on the nearest village (if any)");
     syncCommandConfig(config, CommandWorldHome.name, true, "Teleport to true worldspawn");
   }
-
 }

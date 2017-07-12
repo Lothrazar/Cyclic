@@ -77,9 +77,8 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
   }
   @Override
-  public void onGuiClosed () {
-
-      Keyboard.enableRepeatEvents(false);
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,

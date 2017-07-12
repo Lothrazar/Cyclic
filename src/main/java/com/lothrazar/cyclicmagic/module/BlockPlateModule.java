@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
-import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
+import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.component.magnet.BlockMagnet;
 import com.lothrazar.cyclicmagic.component.magnet.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.component.magnetanti.BlockMagnetAnti;
@@ -15,12 +15,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -68,19 +63,19 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
       BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
-       GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
+      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
-//      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
-//      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-//      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
-//          "ttt",
-//          "idi",
-//          "bbb",
-//          'i', Items.IRON_INGOT,
-//          'd', Items.DIAMOND,
-//          'b', base,
-//          't', top));
+      //      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
+      //      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
+      //      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
+      //          "ttt",
+      //          "idi",
+      //          "bbb",
+      //          'i', Items.IRON_INGOT,
+      //          'd', Items.DIAMOND,
+      //          'b', base,
+      //          't', top));
     }
   }
   @Override

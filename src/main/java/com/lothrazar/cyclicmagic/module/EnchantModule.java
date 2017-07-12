@@ -29,7 +29,6 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantReach reach;
   private static EnchantBeheading beheading;
   private static EnchantQuickdraw quickdraw;
-
   private static boolean enablexpboost;
   private static boolean enableLaunch;
   private static boolean enableMagnet;
@@ -106,8 +105,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableQuickdraw = c.getBoolean("EnchantQuickdraw", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
-  for (EnchantBase b : loadedChants) {
+    for (EnchantBase b : loadedChants) {
       if (b instanceof IHasConfig) {
         ((IHasConfig) b).syncConfig(c);
       }

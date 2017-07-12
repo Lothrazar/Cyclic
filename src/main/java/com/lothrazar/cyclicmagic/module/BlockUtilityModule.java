@@ -26,11 +26,8 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -107,8 +104,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-    
-     
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
     }
   }

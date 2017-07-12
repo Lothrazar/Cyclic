@@ -3,9 +3,9 @@ import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class MaterialRegistry { // thanks for help:

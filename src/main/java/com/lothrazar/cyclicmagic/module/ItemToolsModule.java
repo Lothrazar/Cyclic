@@ -39,8 +39,8 @@ import com.lothrazar.cyclicmagic.item.bauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -83,8 +83,6 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enablePlayerLauncher;
   private boolean evokerFang;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
-
-  
   @Override
   public void onPreInit() {
     if (evokerFang) {
@@ -327,7 +325,5 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
     enableMattock = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
   }
- 
 }

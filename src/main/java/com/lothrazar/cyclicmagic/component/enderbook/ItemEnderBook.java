@@ -118,8 +118,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, p.world, new BlockPos(loc.X - f, loc.Y + 0.9, loc.Z - f));
       //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
-      
-      
       if (success) { // try and force chunk loading
         player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
         UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);

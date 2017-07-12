@@ -70,10 +70,8 @@ public class ModCyclic {
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     MaterialRegistry.register();
-
     this.events = new EventRegistry();
     this.events.registerCoreEvents();
-    
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
     ConfigRegistry.syncAllConfig();

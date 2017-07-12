@@ -28,12 +28,11 @@ public class UtilEntity {
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
   private final static float ITEMSPEEDFAR = 0.9F;
   private final static float ITEMSPEEDCLOSE = 0.2F;
-  
   /**
    * 
    * @return true if teleport was a success
    */
-  public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target){
+  public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target) {
     EnderTeleportEvent event = new EnderTeleportEvent(player, target.getX(), target.getY(), target.getZ(), 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
     if (!wasCancelled) {

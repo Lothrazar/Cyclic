@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
@@ -37,7 +36,6 @@ public class BlockRegistry {
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
-   
     if (cat != null) {
       GuideRegistry.register(cat, b, null, null);
     }
@@ -50,7 +48,6 @@ public class BlockRegistry {
     //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     for (Block b : blocks) {
       event.getRegistry().register(b);
-      
     }
   }
   @SubscribeEvent

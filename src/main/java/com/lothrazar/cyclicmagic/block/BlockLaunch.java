@@ -103,7 +103,7 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
             's', "blockSlime",
             'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-      break; 
+      break;
     }
     return null;
   }

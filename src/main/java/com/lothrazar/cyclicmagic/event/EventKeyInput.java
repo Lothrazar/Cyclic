@@ -15,9 +15,9 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
@@ -37,8 +37,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventKeyInput {
-  
-
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
@@ -59,8 +57,6 @@ public class EventKeyInput {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
     }
   }
-  
-  
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {

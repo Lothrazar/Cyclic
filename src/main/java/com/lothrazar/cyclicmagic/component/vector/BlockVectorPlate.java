@@ -177,8 +177,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    
-    return   RecipeRegistry.addShapedRecipe(new ItemStack(this, 6),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 6),
         "ttt",
         "idi",
         "bbb",
@@ -186,8 +185,5 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
         'd', Items.DIAMOND,
         'b', Blocks.WOODEN_PRESSURE_PLATE,
         't', Blocks.REDSTONE_LAMP);
-    
-    
-     
   }
 }

@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule; 
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;

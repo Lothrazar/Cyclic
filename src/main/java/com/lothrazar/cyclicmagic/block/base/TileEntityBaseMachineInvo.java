@@ -18,7 +18,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
- 
   private static final int SPEED_FUELED = 8;
   private static final int MAX_SPEED = 10;//unused mostly
   private static final int FUEL_FACTOR = 2;
@@ -356,5 +355,4 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         return (T) handlerSide;
     return super.getCapability(capability, facing);
   }
-
 }
