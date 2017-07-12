@@ -63,7 +63,6 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     mapClassToSkin.put("net.minecraft.entity.monster.EntitySpider", "MHF_Spider");
     mapClassToSkin.put("net.minecraft.entity.passive.EntitySquid", "MHF_Squid");
     mapClassToSkin.put("net.minecraft.entity.passive.EntityVillager", "MHF_Villager");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityWitherSkeleton", "MHF_WSkeleton");
     mapClassToSkin.put("net.minecraft.entity.boss.EntityWither", "MHF_Wither");
     mapClassToSkin.put("net.minecraft.entity.monster.EntityWitch", "MHF_Witch");
     mapClassToSkin.put("net.minecraft.entity.passive.EntityWolf", "MHF_Wolf");
