@@ -10,13 +10,20 @@ import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldHoe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
+import com.lothrazar.cyclicmagic.item.gear.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -26,17 +33,18 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class GearEmeraldModule extends BaseModule implements IHasConfig {
-
+public class GearModule extends BaseEventModule implements IHasConfig {
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
   // only because theyre private, with no getters
   //  private static final int    diamondDurability       = 33;
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
   private boolean enableEmeraldGear;
-  private boolean enableMattock;
-
+  private boolean enableSandstoneTools;
+  private boolean enablePurpleGear;
   @Override
   public void onPreInit() {
     if (enableEmeraldGear) {
@@ -63,16 +71,48 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(emerald_chest);
       GuideRegistry.register(GuideCategory.GEAR, new ItemStack(emerald_head), "item.emeraldgear.title", "item.emeraldgear.guide");
     }
-    if (enableMattock) {
-      final Set<Block> blocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
-      final Set<Material> materials = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
-      ItemMattock mattock = new ItemMattock(2, -1, MaterialRegistry.emeraldToolMaterial, blocks, materials);
-      ItemRegistry.register(mattock, "mattock");
+    if (enablePurpleGear) {
+      Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
+      ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
+      Item purple_leggings = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.LEGS);
+      ItemRegistry.register(purple_leggings, "purple_leggings", GuideCategory.GEAR);
+      Item purple_chestplate = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.CHEST);
+      ItemRegistry.register(purple_chestplate, "purple_chestplate", GuideCategory.GEAR);
+      Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
+      ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
+    }
+    if (enableSandstoneTools) {
+      Item sandstone_pickaxe = new ItemSandstonePickaxe();
+      ItemRegistry.register(sandstone_pickaxe, "sandstone_pickaxe", null);
+      Item sandstone_axe = new ItemSandstoneAxe();
+      ItemRegistry.register(sandstone_axe, "sandstone_axe", null);
+      Item sandstone_spade = new ItemSandstoneSpade();
+      ItemRegistry.register(sandstone_spade, "sandstone_spade", null);
+      Item sandstone_hoe = new ItemSandstoneHoe();
+      ItemRegistry.register(sandstone_hoe, "sandstone_hoe", null);
+      LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
+      LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
+      LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
+      GuideRegistry.register(GuideCategory.GEAR, new ItemStack(sandstone_axe), "item.sandstonegear.title", "item.sandstonegear.guide");
     }
   }
   @Override
   public void syncConfig(Configuration config) {
-    enableMattock = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePurpleGear = config.getBoolean("PurpleArmor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSandstoneTools = config.getBoolean("SandstoneTools", Const.ConfigCategory.content, true, "Sandstone tools are between wood and stone. " + Const.ConfigCategory.contentDefaultText);
     enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
+  }
+  /**
+   * TODO: maybe should be static inside powerarmor class?
+   * 
+   * @param event
+   */
+  @SubscribeEvent
+  public void onEntityUpdate(LivingUpdateEvent event) {
+    if (event.getEntityLiving() instanceof EntityPlayer) {//some of the items need an off switch
+      EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+      ItemPowerArmor.checkIfHelmOff(player);
+      ItemPowerArmor.checkIfLegsOff(player);
+    }
   }
 }

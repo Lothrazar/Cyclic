@@ -47,7 +47,6 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
-    System.out.println("Register  BLOCKS");
     //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     for (Block b : blocks) {
       event.getRegistry().register(b);
@@ -56,7 +55,6 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
-    System.out.println("Register  IRecipe");
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

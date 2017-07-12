@@ -1,19 +1,14 @@
 package com.lothrazar.cyclicmagic.module;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
-import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
@@ -23,6 +18,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
 import com.lothrazar.cyclicmagic.item.ItemFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
+import com.lothrazar.cyclicmagic.item.ItemMattock;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemPistonWand;
@@ -40,37 +36,16 @@ import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
 import com.lothrazar.cyclicmagic.item.bauble.ItemGloveClimb;
-import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import com.lothrazar.cyclicmagic.util.UtilTextureRender;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableSleepingMat;
@@ -87,6 +62,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableWarpSpawnTool;
   private boolean enableSwappers;
   private boolean enableRando;
+  private boolean enableMattock;
   private boolean enablePearlReuseMounted;
   private boolean enableCarbonPaper;
   private boolean storageBagEnabled;
@@ -306,6 +282,12 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(tool_randomize);
       ItemRegistry.registerWithJeiDescription(tool_randomize);
     }
+    if (enableMattock) {
+      final Set<Block> blocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
+      final Set<Material> materials = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
+      ItemMattock mattock = new ItemMattock(2, -1, MaterialRegistry.emeraldToolMaterial, blocks, materials);
+      ItemRegistry.register(mattock, "mattock");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -344,6 +326,8 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     enableStirrups = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
+    enableMattock = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
   }
  
 }
