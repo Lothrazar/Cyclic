@@ -45,7 +45,6 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.addItem(diamond_carrot, "horse_upgrade_health");
       ItemRegistry.addItem(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.addItem(ender_carrot, "horse_upgrade_jump");
-      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
       LootTableRegistry.registerLoot(diamond_carrot);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
       ItemRegistry.registerWithJeiDescription(emerald_carrot);
@@ -102,10 +101,11 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   public void onEntityInteractEvent(EntityInteract event) {
     if (event.getEntity() instanceof EntityPlayer == false) { return; }
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
+    
     ItemStack held = entityPlayer.getHeldItemMainhand();
     if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.stackSize > 0
         && event.getTarget() instanceof EntityHorse) {
-      ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
+      ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem(), event.getHand());
       event.setCanceled(true);// stop the GUI inventory opening && horse mounting
     }
   }

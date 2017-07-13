@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.password;
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
@@ -31,6 +32,7 @@ public class GuiPassword extends GuiBaseContainer {
   }
   @Override
   public void initGui() {
+    Keyboard.enableRepeatEvents(true);
     super.initGui();
     int width = 127, height = 20;
     int x = (xSize / 2 - width / 2), y = 26 + (height / 2);
@@ -49,6 +51,10 @@ public class GuiPassword extends GuiBaseContainer {
     buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
     this.addButton(buttonUserPerm);
     updateVisibility();
+  }
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   @SideOnly(Side.CLIENT)
   @Override

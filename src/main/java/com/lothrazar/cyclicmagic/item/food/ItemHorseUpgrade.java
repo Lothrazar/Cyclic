@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -45,7 +46,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
-  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
+  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem, EnumHand hand) {
+    if (player.getCooldownTracker().getCooldown(heldItem, 0) > 0) { return; }
     boolean success = false;
     switch (heldItem.upgradeType) {
       case HEALTH:
@@ -96,54 +98,60 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
         }
       break;
       case VARIANT:
-        int var = horse.getHorseVariant();
-        int varReduced = 0;
-        int varNew = 0;
-        while (var - 256 > 0) {
-          varReduced += 256;// this could be done with modulo % arithmetic too,
-          // but meh
-          // doesnt matter either way
-          var -= 256;
-        } // invalid numbers make horse invisible, but this is somehow safe. and
-        // easier than
-        // doing bitwise ops
-        switch (var) {
-          case HorseMeta.variant_black:
-            varNew = HorseMeta.variant_brown;
-          break;
-          case HorseMeta.variant_brown:
-            varNew = HorseMeta.variant_brown_dark;
-          break;
-          case HorseMeta.variant_brown_dark:
-            varNew = HorseMeta.variant_chestnut;
-          break;
-          case HorseMeta.variant_chestnut:
-            varNew = HorseMeta.variant_creamy;
-          break;
-          case HorseMeta.variant_creamy:
-            varNew = HorseMeta.variant_gray;
-          break;
-          case HorseMeta.variant_gray:
-            varNew = HorseMeta.variant_white;
-          break;
-          case HorseMeta.variant_white:
-            varNew = HorseMeta.variant_black;
-          break;
+        if (horse.getType() == HorseType.HORSE) {
+          int var = horse.getHorseVariant();
+          int varReduced = 0;
+          int varNew = 0;
+          while (var - 256 > 0) {
+            varReduced += 256;// this could be done with modulo % arithmetic too,
+            // but meh
+            // doesnt matter either way
+            var -= 256;
+          } // invalid numbers make horse invisible, but this is somehow safe. and
+          // easier than
+          // doing bitwise ops
+          switch (var) {
+            case HorseMeta.variant_black:
+              varNew = HorseMeta.variant_brown;
+            break;
+            case HorseMeta.variant_brown:
+              varNew = HorseMeta.variant_brown_dark;
+            break;
+            case HorseMeta.variant_brown_dark:
+              varNew = HorseMeta.variant_chestnut;
+            break;
+            case HorseMeta.variant_chestnut:
+              varNew = HorseMeta.variant_creamy;
+            break;
+            case HorseMeta.variant_creamy:
+              varNew = HorseMeta.variant_gray;
+            break;
+            case HorseMeta.variant_gray:
+              varNew = HorseMeta.variant_white;
+            break;
+            case HorseMeta.variant_white:
+              varNew = HorseMeta.variant_black;
+            break;
+          }
+          varNew += varReduced;
+          horse.setHorseVariant(varNew);
+          success = true;
         }
-        varNew += varReduced;
-        horse.setHorseVariant(varNew);
-        success = true;
       break;
       default:
       break;
     }
     if (success) {
-      if (player.capabilities.isCreativeMode == false) {
+      if ((player.capabilities.isCreativeMode == false) && (player.worldObj.isRemote == false)) {
         held.stackSize--;
+        if (held.stackSize == 0) {
+          player.setHeldItem(hand, null);
+        }
       }
       UtilParticle.spawnParticle(horse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, horse.getPosition());
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       horse.setEatingHaystack(true); // makes horse animate and bend down to eat
+      player.getCooldownTracker().setCooldown(heldItem, 5);
     }
   }
   public static enum HorseUpgradeType {

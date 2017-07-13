@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.vector;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
@@ -47,6 +48,7 @@ public class GuiVector extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 6,
         this.guiTop + 6, this.tile.getPos());
@@ -85,6 +87,10 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString = "^";
     addButtonAt(id++, xAngle + 24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString = "/";
     addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
+  }
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,
