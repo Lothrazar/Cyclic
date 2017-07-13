@@ -40,7 +40,7 @@ public class PacketTileFan implements IMessage, IMessageHandler<PacketTileFan, I
   }
   @Override
   public IMessage onMessage(PacketTileFan message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityFan tile = (TileEntityFan) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       int prev = tile.getField(message.type.ordinal());//value will be + or 1 something so increment by that

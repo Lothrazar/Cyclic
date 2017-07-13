@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_void"
+  },
+  "pattern": [
+    "r x",
+    "id ",
+    "iir"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "cropNetherWart",
+      "type": "forge:ore_dict"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "x": {
+      "item": "minecraft:ender_eye"
+    },
+    "i": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    }
+  }
+}

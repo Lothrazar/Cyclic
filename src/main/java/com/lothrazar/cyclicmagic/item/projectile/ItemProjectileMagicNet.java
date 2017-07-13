@@ -6,11 +6,9 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
@@ -38,17 +36,19 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return hasEntity(stack);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     if (hasEffect(stack)) {
       tooltip.add(stack.getTagCompound().getString(NBT_ENTITYID));
     }
     else {
-      tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+      super.addInformation(stack, playerIn, tooltip, advanced);
     }
   }
   @Override
@@ -57,7 +57,6 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
       this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
       held.getTagCompound().removeTag(NBT_ENTITYID);
       held.setTagCompound(null);
-      //      held = null;
     }
     else {
       this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));

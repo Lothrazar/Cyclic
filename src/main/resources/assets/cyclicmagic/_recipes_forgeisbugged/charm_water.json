@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_water"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:charm_water",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:fish",
+      "data": 1
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

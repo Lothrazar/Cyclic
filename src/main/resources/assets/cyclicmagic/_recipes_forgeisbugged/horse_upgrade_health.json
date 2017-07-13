@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "cyclicmagic:horse_upgrade_health"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

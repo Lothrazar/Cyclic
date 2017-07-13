@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
-  private static final int durability = 1024;
+  private static final int durability = 4096;
   public ItemCharmBoat() {
     super(durability);
   }

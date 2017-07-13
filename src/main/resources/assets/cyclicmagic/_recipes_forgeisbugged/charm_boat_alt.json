@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_boat"
+  },
+  "pattern": [
+    "r x",
+    "id ",
+    "iir"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "cropNetherWart",
+      "type": "forge:ore_dict"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "x": {
+      "item": "minecraft:armor_stand"
+    },
+    "i": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -42,7 +42,7 @@ public class ItemChestSack extends BaseItem {
     BlockPos offset = pos.offset(side);
     if (worldIn.isAirBlock(offset) == false) { return EnumActionResult.FAIL; }
     ItemStack stack = playerIn.getHeldItem(hand);
-    if (createAndFillChest(playerIn, stack, offset)) {
+    if (placeStoredTileEntity(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, ItemStack.EMPTY);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
       if (playerIn.capabilities.isCreativeMode == false && emptySack != null) {//its never really null tho
@@ -51,7 +51,7 @@ public class ItemChestSack extends BaseItem {
     }
     return EnumActionResult.SUCCESS;
   }
-  private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
+  private boolean placeStoredTileEntity(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
     NBTTagCompound itemData = UtilNBT.getItemStackNBT(heldChestSack);
     Block block = Block.getBlockById(itemData.getInteger(KEY_BLOCKID));
     if (block == null) {
@@ -85,14 +85,16 @@ public class ItemChestSack extends BaseItem {
     heldChestSack.setTagCompound(null);
     return true;
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
+  public void addInformation(ItemStack itemStack, World player, List<String> list, net.minecraft.client.util.ITooltipFlag advanced) {
     if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
         list.add(UtilChat.lang(blockname + ".name"));
       }
     }
+    //super.addInformation(itemStack, player, list, advanced);
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

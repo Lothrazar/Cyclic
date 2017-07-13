@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_soundproofing",
+    "count": 8
+  },
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "ore": "dyeOrange",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "item": "minecraft:bone_block"
+    }
+  }
+}

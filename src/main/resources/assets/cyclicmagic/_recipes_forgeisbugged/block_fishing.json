@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_fishing"
+  },
+  "pattern": [
+    "pwp",
+    "wfw",
+    "pwp"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "p": {
+      "ore": "chestTrapped",
+      "type": "forge:ore_dict"
+    },
+    "f": {
+      "item": "minecraft:fish",
+      "data": 3
+    },
+    "w": {
+      "item": "minecraft:web"
+    }
+  }
+}

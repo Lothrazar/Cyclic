@@ -48,8 +48,9 @@ public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
         'c', Items.PUMPKIN_SEEDS,
         'd', Items.NETHER_WART);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang("item.sprout_seed.tooltip"));
   }
 }

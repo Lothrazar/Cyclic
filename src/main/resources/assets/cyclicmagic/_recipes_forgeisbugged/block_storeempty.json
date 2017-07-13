@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_storeempty"
+  },
+  "pattern": [
+    "i i",
+    " o ",
+    "i i"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "i": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -62,7 +62,7 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
       public void run() {
-        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+        EntityPlayerMP player = ctx.getServerHandler().player;
         World world = player.getEntityWorld();
         TileEntityPassword tile = (TileEntityPassword) world.getTileEntity(message.pos);
         if (tile != null) {

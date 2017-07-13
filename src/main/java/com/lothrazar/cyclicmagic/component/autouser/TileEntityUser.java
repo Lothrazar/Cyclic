@@ -123,9 +123,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void interactEntities(BlockPos targetPos) {
-    BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
+    BlockPos entityCenter = getTargetCenter();
     int vRange = 1;
-    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size + 1, vRange);
+    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter.getX() + 0.5, entityCenter.getY(), entityCenter.getZ() + 0.5, size, vRange);
     List<? extends Entity> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
     List<? extends Entity> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
     List<Entity> all = new ArrayList<Entity>(living);

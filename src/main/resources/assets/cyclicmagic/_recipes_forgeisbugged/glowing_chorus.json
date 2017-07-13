@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:glowing_chorus",
+    "count": 3
+  },
+  "pattern": [
+    "lal",
+    "lal",
+    "lal"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "l": {
+      "ore": "dustGlowstone",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "result": {
+    "item": "cyclicmagic:builder_block"
+  },
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "blockRedstone",
+      "type": "forge:ore_dict"
+    },
+    "b": {
+      "ore": "blockDiamond",
+      "type": "forge:ore_dict"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:ghast_tear"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_randomize"
+  },
+  "pattern": [
+    " gi",
+    " ig",
+    "o  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "g": {
+      "ore": "dustRedstone",
+      "type": "forge:ore_dict"
+    },
+    "i": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

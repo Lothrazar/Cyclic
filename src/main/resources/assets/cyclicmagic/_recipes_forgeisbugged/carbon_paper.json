@@ -1,0 +1,11 @@
+{
+  "result": {
+    "item": "cyclicmagic:carbon_paper"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:carbon_paper"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -11,6 +11,7 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -94,7 +95,13 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.thePlayer.getEntityWorld()));
+    IRecipe r = CraftingManager.findMatchingRecipe(craftMatrix, this.thePlayer.getEntityWorld());
+    if (r == null) {
+      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+    }
+    else {
+      craftResult.setInventorySlotContents(0, r.getRecipeOutput().copy());
+    }
   }
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {

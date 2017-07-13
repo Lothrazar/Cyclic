@@ -91,8 +91,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (isRunning()) {
-        this.updateFuelIsBurning();
-        if (this.updateTimerIsZero()) {
+        if (this.updateFuelIsBurning() && this.updateTimerIsZero()) {
           if (updateMiningProgress()) {
             this.timer = TIMER_FULL;
           }

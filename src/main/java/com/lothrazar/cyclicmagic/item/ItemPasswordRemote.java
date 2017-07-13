@@ -28,8 +28,9 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   public ItemPasswordRemote() {
     this.setMaxStackSize(1);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
     if (pointer != null) {
       tooltip.add(TextFormatting.RED + UtilChat.blockPosToString(pointer));

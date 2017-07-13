@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_shears"
+  },
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:shears",
+      "data": 32767
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

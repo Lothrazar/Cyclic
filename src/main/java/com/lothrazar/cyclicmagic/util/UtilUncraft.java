@@ -1,15 +1,12 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 
 public class UtilUncraft {
   public static boolean dictionaryFreedom;
@@ -155,8 +152,8 @@ public class UtilUncraft {
       outsize = 0;
       // outsize is 3 means the recipe makes three items total. so MINUS three from the toUncraft for EACH LOOP
       UncraftResultType result = UncraftResultType.NORECIPE;//assumption
-      List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-      for (IRecipe next : recipeList) {
+      //      List<IRecipe> recipeList = CraftingManager.field_193380_a.getRecipeList();
+      for (IRecipe next : CraftingManager.REGISTRY) {
         if (next == null || next.getRecipeOutput() == null) {
           continue;//be careful
         }
@@ -172,7 +169,7 @@ public class UtilUncraft {
             continue;//keep looking but save the result type
           }
           outsize = next.getRecipeOutput().getCount();
-          List<? extends Object> input = getRecipeInput(next);
+          List<ItemStack> input = getRecipeInput(next);
           if (input == null) {
             result = UncraftResultType.UNKNOWN;
             continue;
@@ -198,28 +195,37 @@ public class UtilUncraft {
      * @param next
      * @return
      */
-    private List<? extends Object> getRecipeInput(IRecipe next) {
-      if (next instanceof ShapedOreRecipe) {
-        ShapedOreRecipe r = (ShapedOreRecipe) next;
-        return new ArrayList<Object>(Arrays.asList(r.getInput()));
+    private List<ItemStack> getRecipeInput(IRecipe next) {
+      NonNullList<Ingredient> ingreds = next.getIngredients();
+      List<ItemStack> inputs = new ArrayList<ItemStack>();
+      for (Ingredient i : ingreds) {
+        if (i != null && i.getMatchingStacks() != null && i.getMatchingStacks().length > 0)
+          inputs.add(i.getMatchingStacks()[0]);
       }
-      else if (next instanceof ShapelessOreRecipe) {
-        ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-        return r.getInput();
-      }
-      else if (next instanceof ShapedRecipes) {
-        ShapedRecipes r = (ShapedRecipes) next;
-        return new ArrayList<ItemStack>(Arrays.asList(r.recipeItems));
-      }
-      else if (next instanceof ShapelessRecipes) {
-        ShapelessRecipes r = (ShapelessRecipes) next;
-        return r.recipeItems;
-      }
-      else {
-        this.setErrorString(" " + next.getClass().getName());
-      }
-      //else it could be anything from a custom mod ex: solderer
-      return null;
+      return inputs;
+      //      if (next instanceof ShapedOreRecipe) {
+      //        ShapedOreRecipe r = (ShapedOreRecipe) next;
+      //        //        NonNullList<Ingredient> ingreds =  r.func_192400_c();
+      //        
+      //        return new ArrayList<Object>(Arrays.asList(ingreds));
+      //      }
+      //      else if (next instanceof ShapelessOreRecipe) {
+      //        ShapelessOreRecipe r = (ShapelessOreRecipe) next;
+      //        return ingreds;//r.getInput();
+      //      }
+      //      else if (next instanceof ShapedRecipes) {
+      //        ShapedRecipes r = (ShapedRecipes) next;
+      //        return r.recipeItems;
+      //      }
+      //      else if (next instanceof ShapelessRecipes) {
+      //        ShapelessRecipes r = (ShapelessRecipes) next;
+      //        return r.recipeItems;
+      //      }
+      //      else {
+      //        this.setErrorString(" " + next.getClass().getName());
+      //      }
+      //      //else it could be anything from a custom mod ex: solderer
+      //      return null;
     }
     public String getErrorString() {
       return errorString;

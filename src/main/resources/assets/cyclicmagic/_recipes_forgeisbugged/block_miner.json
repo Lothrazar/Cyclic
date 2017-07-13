@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_miner"
+  },
+  "pattern": [
+    "rsr",
+    " g ",
+    "ooo"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "bone",
+      "type": "forge:ore_dict"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "o": {
+      "item": "minecraft:mossy_cobblestone"
+    }
+  }
+}

@@ -89,7 +89,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     return null;
   }
   private void handle(PacketSwapBlock message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();
     //we already have center, now go around
     //      message.pos.offset(message.side.rotateAround(axis))

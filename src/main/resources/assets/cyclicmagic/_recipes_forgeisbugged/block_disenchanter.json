@@ -1,0 +1,34 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_disenchanter"
+  },
+  "pattern": [
+    "vhv",
+    "grg",
+    "sis"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:fire_charge"
+    },
+    "s": {
+      "ore": "ingotBrickNether",
+      "type": "forge:ore_dict"
+    },
+    "v": {
+      "item": "minecraft:experience_bottle"
+    },
+    "g": {
+      "ore": "blockGlassPurple",
+      "type": "forge:ore_dict"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "i": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 /**
@@ -53,8 +54,14 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     this.onCraftMatrixChanged(this.craftMatrix);
   }
   @Override
-  public void onCraftMatrixChanged(IInventory inventoryIn) {
-    this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+  public void onCraftMatrixChanged(IInventory inventory) {
+    IRecipe r = CraftingManager.findMatchingRecipe(craftMatrix, this.world);
+    if (r == null) {
+      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+    }
+    else {
+      craftResult.setInventorySlotContents(0, r.getRecipeOutput().copy());
+    }
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {

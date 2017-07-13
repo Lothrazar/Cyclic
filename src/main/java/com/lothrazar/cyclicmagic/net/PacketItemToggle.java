@@ -30,7 +30,7 @@ public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemTog
   @Override
   public IMessage onMessage(PacketItemToggle message, MessageContext ctx) {
     if (ctx.side.isServer()) {
-      EntityPlayer player = ctx.getServerHandler().playerEntity;
+      EntityPlayer player = ctx.getServerHandler().player;
       if (player.openContainer == null) { return null; }
       int scount = player.openContainer.inventorySlots.size();
       //this is an edge case but it DID happen: put charmin your hotbar and then open a creative inventory tab. avoid index OOB

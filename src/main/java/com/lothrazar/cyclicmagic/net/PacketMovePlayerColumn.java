@@ -31,7 +31,7 @@ public class PacketMovePlayerColumn implements IMessage, IMessageHandler<PacketM
   }
   @Override
   public IMessage onMessage(PacketMovePlayerColumn message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    EntityPlayer player = ctx.getServerHandler().player;
     if (message.isDown) {
       UtilPlayer.shiftSlotUp(player, message.slot);
     }

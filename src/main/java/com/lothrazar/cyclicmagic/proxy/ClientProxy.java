@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
@@ -24,24 +22,18 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -73,7 +65,6 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public void init() {
-    registerModels();
     registerKeys();
   }
   @Override
@@ -169,30 +160,6 @@ public class ClientProxy extends CommonProxy {
           && player.getEntityWorld().isAirBlock(blockPos) == false) { return blockPos.offset(mouseOver.sideHit); }
     }
     return null;
-  }
-  private void registerModels() {
-    // with help from
-    // http://www.minecraftforge.net/forum/index.php?topic=32492.0
-    // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
-    // More info on proxy rendering
-    // http://www.minecraftforge.net/forum/index.php?topic=27684.0
-    // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
-    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-    String name;
-    Item item;
-    for (Block b : BlockRegistry.blocks) {
-      item = Item.getItemFromBlock(b);
-      name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
-      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
-      if (b instanceof IBlockHasTESR) {
-        ((IBlockHasTESR) b).initModel();
-      }
-    }
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
-      mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
-    }
   }
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {

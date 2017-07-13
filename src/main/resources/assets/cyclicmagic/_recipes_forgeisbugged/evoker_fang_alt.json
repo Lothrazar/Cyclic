@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "cyclicmagic:evoker_fang"
+  },
+  "pattern": [
+    "wpc",
+    " dp",
+    "r w"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:packed_ice"
+    },
+    "r": {
+      "item": "minecraft:blaze_rod"
+    },
+    "c": {
+      "item": "minecraft:end_crystal"
+    },
+    "d": {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    },
+    "w": {
+      "item": "minecraft:web"
+    }
+  }
+}

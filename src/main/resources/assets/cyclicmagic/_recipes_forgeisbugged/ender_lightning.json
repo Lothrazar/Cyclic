@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_lightning",
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

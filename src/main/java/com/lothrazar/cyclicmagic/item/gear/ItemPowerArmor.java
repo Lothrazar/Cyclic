@@ -9,11 +9,9 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -23,6 +21,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
@@ -97,11 +97,13 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
     //flag it so we know the purple glow was from this item, not something else
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));
+    super.addInformation(held, player, list, par4);
   }
   @Override
   public IRecipe addRecipe() {

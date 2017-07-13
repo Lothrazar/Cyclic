@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.enderbook;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -34,6 +35,7 @@ public class GuiEnderBook extends GuiScreen {
   final int DELETE_OFFSET = 1000;
   @Override
   public void initGui() {
+    Keyboard.enableRepeatEvents(true);
     // great tips here
     // http://www.minecraftforge.net/forum/index.php?topic=29945.0
     if (bookStack.hasTagCompound() == false) {
@@ -52,7 +54,7 @@ public class GuiEnderBook extends GuiScreen {
     if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
       buttonNew.enabled = false;// also a tooltip?
     }
-    txtNew = new GuiTextField(buttonID++, this.fontRendererObj, buttonNew.xPosition + buttonNew.width + 20, buttonNew.yPosition, w, h);
+    txtNew = new GuiTextField(buttonID++, this.fontRenderer, buttonNew.x + buttonNew.width + 20, buttonNew.y, w, h);
     txtNew.setMaxStringLength(maxNameLen);
     // default to the current biome
     txtNew.setText(entityPlayer.getEntityWorld().getBiome(entityPlayer.getPosition()).getBiomeName());
@@ -92,9 +94,13 @@ public class GuiEnderBook extends GuiScreen {
     }
   }
   @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+  @Override
   public void drawScreen(int x, int y, float par3) {
     drawDefaultBackground();
-    drawCenteredString(fontRendererObj, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
+    drawCenteredString(fontRenderer, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     // no idea why this is sometimes randomly null and only on world start if i
     // open it too quick??
@@ -105,7 +111,7 @@ public class GuiEnderBook extends GuiScreen {
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         ITooltipButton btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), x, y, fontRendererObj);
+        drawHoveringText(btn.getTooltips(), x, y, fontRenderer);
       }
     }
   }

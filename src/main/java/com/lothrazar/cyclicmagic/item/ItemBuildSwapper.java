@@ -3,9 +3,9 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.event.EventRender;
+import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule.RenderLoc;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -16,8 +16,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   private static final int durability = 1000;
-  private static final int COOLDOWN = 30;
+  private static final int COOLDOWN = 5;
   public static String[] swapBlacklist;
   private WandType wandType;
   public ItemBuildSwapper(WandType t) {
@@ -120,8 +118,8 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       if (slot >= 0) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
         int leftOff = 0, rightOff = -18, topOff = 0, bottOff = 0;
-        int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
-        int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
+        int xmain = RenderLoc.locToX(EventRender.renderLocation, leftOff, rightOff);
+        int ymain = RenderLoc.locToY(EventRender.renderLocation, topOff, bottOff);
         if (!stack.isEmpty())
           ModCyclic.proxy.renderItemOnScreen(stack, xmain, ymain);
       }
@@ -150,8 +148,9 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(hand));
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }

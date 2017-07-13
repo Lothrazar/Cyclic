@@ -13,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -28,6 +27,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMattock extends ItemTool implements IHasRecipe {
   final static int RADIUS = 1;//radius 2 is 5x5 area square
@@ -129,23 +130,20 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
     }
     return super.onBlockStartBreak(stack, posHit, player);
   }
+  @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+  public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    super.addInformation(held, player, list, par4);
   }
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "ede", "oso", " s ",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "odo",
+        " e ",
+        " e ",
         'e', "blockQuartz",
         'o', "obsidian",
-        'd', "blockDiamond",
-        's', "bone");
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "ede", "oso", " s ",
-        'e', "gemEmerald",
-        'o', "obsidian",
-        'd', "gemDiamond",
-        's', "bone");
+        'd', "gemDiamond");
   }
 }

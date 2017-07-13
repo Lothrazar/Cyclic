@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:chest_sack_empty"
+  },
+  "pattern": [
+    " s ",
+    "lbl",
+    "lll"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:apple"
+    },
+    "s": {
+      "ore": "string",
+      "type": "forge:ore_dict"
+    },
+    "l": {
+      "ore": "leather",
+      "type": "forge:ore_dict"
+    }
+  }
+}

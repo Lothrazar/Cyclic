@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
@@ -15,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -26,21 +29,42 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockConveyor extends BlockBasePressurePlate {
+public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe {
+  private static final int RECIPE_OUTPUT = 8;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 1;
   private static final float powerCorrection = 0.02F;
+  public static enum SpeedType {
+    TINY, SMALL, MEDIUM, LARGE;
+  }
+  private SpeedType type;
   private float power;
   private SoundEvent sound;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
-  public BlockConveyor(float p) {
+  public BlockConveyor(SpeedType t) {
     super(Material.CLAY, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
-    power = p;
+    type = t;
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
     this.setHardness(2.0F).setResistance(2.0F);
+    switch (type) {
+      case LARGE:
+        this.power = 0.32F;
+      break;
+      case MEDIUM:
+        this.power = 0.16F;
+      break;
+      case SMALL:
+        this.power = 0.08F;
+      break;
+      case TINY:
+        this.power = 0.04F;
+      break;
+      default:
+      break;
+    }
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
   @Override
@@ -138,9 +162,54 @@ public class BlockConveyor extends BlockBasePressurePlate {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     int speed = (int) (this.power * 100);
     tooltip.add(UtilChat.lang("tile.plate_push.tooltip") + speed);
+  }
+  @Override
+  public IRecipe addRecipe() {
+    switch (type) {
+      case LARGE:
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUTPUT),
+            "sbs",
+            "bxb",
+            "sbs",
+            's', "ingotIron",
+            'x', "blockSlime",
+            'b', "dyeRed");
+      break;
+      case MEDIUM:
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUTPUT),
+            "sbs",
+            "bxb",
+            "sbs",
+            's', "ingotIron",
+            'x', "blockSlime",
+            'b', "dyePurple");
+      break;
+      case SMALL:
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUTPUT),
+            "sbs",
+            "bxb",
+            "sbs",
+            's', "ingotIron",
+            'x', "blockSlime",
+            'b', "dyeMagenta");
+      break;
+      case TINY:
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUTPUT),
+            "sbs",
+            "bxb",
+            "sbs",
+            's', "ingotIron",
+            'x', "blockSlime",
+            'b', "dyeLightBlue");
+      break;
+      default:
+      break;
+    }
+    return null;
   }
 }

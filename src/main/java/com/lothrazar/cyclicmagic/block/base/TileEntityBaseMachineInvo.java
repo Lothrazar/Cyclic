@@ -18,7 +18,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
-  private static final int SPEED_DEFAULT = 1;
   private static final int SPEED_FUELED = 8;
   private static final int MAX_SPEED = 10;//unused mostly
   private static final int FUEL_FACTOR = 2;
@@ -312,14 +311,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public int getSpeed() {
     if (this.usesFuel == false) {
-      return this.speed;
+      return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
       if (this.currentFuel == 0) {
-        return SPEED_DEFAULT;
+        return 0; // do not run without fuel
       }
       else {
-        return SPEED_FUELED;
+        return SPEED_FUELED;// i have fuel, use what it says eh
       }
     }
   }

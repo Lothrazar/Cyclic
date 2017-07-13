@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:apple_lapis"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "ore": "blockLapis",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

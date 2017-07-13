@@ -11,10 +11,10 @@ public class PatternBuilderTESR extends BaseMachineTesr<TileEntityPatternBuilder
     super();
   }
   @Override
-  public void render(TileEntityBaseMachineInvo te) {}
+  public void renderBasic(TileEntityBaseMachineInvo te) {}
   @Override
-  public void renderTileEntityAt(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage) {
-    super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
+  public void render(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p) {
+    super.render(te, x, y, z, partialTicks, destroyStage, p);
     if (te instanceof TileEntityPatternBuilder == false) { return; }
     TileEntityPatternBuilder tile = ((TileEntityPatternBuilder) te);
     if (tile.isPreviewVisible()) {

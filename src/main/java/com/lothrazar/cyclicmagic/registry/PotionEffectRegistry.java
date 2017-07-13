@@ -9,9 +9,12 @@ import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.PotionSnow;
 import com.lothrazar.cyclicmagic.potion.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionEffectRegistry {
+  public static ArrayList<Potion> potions = new ArrayList<Potion>();
   public static enum PotionType {
     NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
   }
@@ -33,9 +36,16 @@ public class PotionEffectRegistry {
     PotionEffectRegistry.registerPotionEffect(BOUNCE);
   }
   public static void registerPotionEffect(PotionBase effect) {
-    GameRegistry.register(effect, effect.getIcon());
+    effect.setIcon(effect.getIcon());
+    potions.add(effect);
     potionEffects.add(effect);
     ModCyclic.instance.events.register(effect);
+  }
+  @SubscribeEvent
+  public static void onRegistryEvent(RegistryEvent.Register<Potion> event) {
+    for (Potion b : potions) {
+      event.getRegistry().register(b);
+    }
   }
   public static String getStrForLevel(int lvl) {
     //TODO: probs a better roman numeral way\

@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_push",
+    "count": 8
+  },
+  "pattern": [
+    "sbs",
+    "bxb",
+    "sbs"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "ore": "dyePurple",
+      "type": "forge:ore_dict"
+    },
+    "s": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    },
+    "x": {
+      "ore": "blockSlime",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "cyclicmagic:uncrafting_block"
+  },
+  "pattern": [
+    "d d",
+    "frf",
+    "ooo"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:dropper"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

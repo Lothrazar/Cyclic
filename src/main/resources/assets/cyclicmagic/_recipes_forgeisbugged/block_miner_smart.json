@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_miner_smart"
+  },
+  "pattern": [
+    "rsr",
+    "gbx",
+    "ooo"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "blockLapis",
+      "type": "forge:ore_dict"
+    },
+    "b": {
+      "item": "minecraft:magma"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "x": {
+      "item": "minecraft:diamond_axe"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

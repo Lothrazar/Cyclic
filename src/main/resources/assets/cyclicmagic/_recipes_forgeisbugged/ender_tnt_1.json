@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_tnt_1",
+    "count": 12
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "ore": "paper",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

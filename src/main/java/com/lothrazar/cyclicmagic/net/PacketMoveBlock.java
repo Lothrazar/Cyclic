@@ -66,7 +66,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
   @SuppressWarnings("unused")
   private void handle(PacketMoveBlock message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer player = ctx.getServerHandler().playerEntity;
+      EntityPlayer player = ctx.getServerHandler().player;
       World worldObj = player.getEntityWorld();
       BlockPos resultPosition = null;
       switch (message.type) {

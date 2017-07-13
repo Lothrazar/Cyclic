@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_launch_med"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_launch_small"
+    },
+    {
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

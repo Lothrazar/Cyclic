@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_launch_large"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_launch_med"
+    },
+    {
+      "ore": "endstone",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

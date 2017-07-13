@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:horse_upgrade_variant"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:dye",
+      "data": 4
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

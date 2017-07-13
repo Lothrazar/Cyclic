@@ -123,6 +123,17 @@ enchantment.magnet=Magnet
 enchantment.venom=Venom
 enchantment.beheading=Beheading
 enchantment.quickdraw=Quickdraw
+
+enchantment.cyclicmagic.enchantment.reach.desc=Increases your building and mining reach
+enchantment.cyclicmagic.enchantment.expboost.desc=Increases experience drops from killing and mining
+enchantment.cyclicmagic.enchantment.autosmelt.desc=Smelts whatever you harvest with this tool.  
+enchantment.cyclicmagic.enchantment.launch.desc=Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that cooldown kicks in.
+enchantment.cyclicmagic.enchantment.magnet.desc=Makes you magnetic for item stacks and experience on the ground
+enchantment.cyclicmagic.enchantment.venom.desc=Inflicts the poison status effect on the target
+enchantment.cyclicmagic.enchantment.lifeleech.desc=Leeches life points from your target on attack, and even more on kill. 
+enchantment.cyclicmagic.enchantment.quickdraw.desc=This triples the speed that your bow draws up to full power.
+enchantment.cyclicmagic.enchantment.beheading.desc=This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.
+
 entity.Villager.druid=Druid
 entity.Villager.sage=Sage
 entity.cyclicmagic.goldminecart.name=Gold Minecart
@@ -734,12 +745,14 @@ guide.category.itembaubles=Passive Items
 guide.category.blockplate=Plate Blocks
 
 enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity is $1
-enchantment.expboost.guide=Increases experience drops per kill by $0 per level.  Rarity is $1
+enchantment.expboost.guide=Increases experience drops for killing and mining by factor of $0 per level.  Rarity is $1
 enchantment.autosmelt.guide=Smelts whatever you harvest with this tool.  Rarity is $0
 enchantment.launch.guide=Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that a cooldown of $0 ticks.  Rarity is $1
-enchantment.magnet.guide=Makes you magnetic for item stacks on the ground with radius of $0.  Rarity is $1
+enchantment.magnet.guide=Makes you magnetic for item stacks and experience on the ground with radius of $0.  Rarity is $1
 enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
 enchantment.lifeleech.guide=Leeches life points from your target on attack, and even more on kill.  Rarity is $0
+enchantment.quickdraw.guide=This triples the speed that your bow draws up to full power.
+enchantment.beheading.guide=This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.
 
 world.netherore.title=End Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
@@ -875,8 +888,5 @@ item.stone_minecart.guide=Think of this as a single-slot chest.  The Stone Minec
 
 item.tool_launcher.guide=Aim and then charge this up like a bow and then release it to get launched into the air.  It has two modes, forward and reverse, that you can toggle with attack (left-click).  Forward means you need to aim up into the air, and you fly the exact direction and angle that you look.  Reverse means you have to aim down at the ground and you get launched backwards.  Using this gives you the "bouncy" potion effect, which makes anything you land on bounce you up like a slime block.  
 
-
-enchantment.quickdraw.guide=This triples the speed that your bow draws up to full power.
-enchantment.beheading.guide=This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.
 item.evoker_fang.guide=Summons a beam of Evoker Fangs in whatever direction youre facing.  Must be used on an entity or a block.
 

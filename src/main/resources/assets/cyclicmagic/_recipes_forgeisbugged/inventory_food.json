@@ -1,0 +1,40 @@
+{
+  "result": {
+    "item": "cyclicmagic:inventory_food"
+  },
+  "ingredients": [
+    {
+      "ore": "chestEnder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:pumpkin_pie"
+    },
+    {
+      "item": "minecraft:cake"
+    },
+    {
+      "item": "minecraft:cookie"
+    },
+    {
+      "item": "minecraft:fish",
+      "data": 1
+    },
+    {
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

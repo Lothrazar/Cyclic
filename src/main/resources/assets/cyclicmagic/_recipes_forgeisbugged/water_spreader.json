@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "cyclicmagic:water_spreader"
+  },
+  "pattern": [
+    "wdw",
+    "iwi",
+    " o "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "w": {
+      "item": "minecraft:water_bucket"
+    },
+    "i": {
+      "item": "minecraft:ice"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

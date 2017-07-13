@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_trade"
+  },
+  "pattern": [
+    " e ",
+    " b ",
+    " q "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "q": {
+      "item": "minecraft:brown_mushroom"
+    },
+    "b": {
+      "item": "minecraft:book"
+    },
+    "e": {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    }
+  }
+}

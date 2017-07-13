@@ -11,21 +11,16 @@ import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
-import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemConsumeablesModule extends BaseEventModule implements IHasConfig {
+public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;
@@ -47,8 +42,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.register(diamond_carrot, "horse_upgrade_health");
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
-      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
-      AchievementRegistry.registerItemAchievement(diamond_carrot);
+      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks 
       ItemRegistry.registerWithJeiDescription(emerald_carrot);
       ItemRegistry.registerWithJeiDescription(lapis_carrot);
       ItemRegistry.registerWithJeiDescription(diamond_carrot);
@@ -74,21 +68,18 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
-      AchievementRegistry.registerItemAchievement(heart_food);
       ItemRegistry.registerWithJeiDescription(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food);
-      AchievementRegistry.registerItemAchievement(crafting_food);
       ItemRegistry.registerWithJeiDescription(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food);
-      AchievementRegistry.registerItemAchievement(inventory_food);
       ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
@@ -97,24 +88,12 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
-      AchievementRegistry.registerItemAchievement(corrupted_chorus);
       ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
     if (enableGlowingChorus) {
       ItemChorusGlowing glowing_chorus = new ItemChorusGlowing();
       ItemRegistry.register(glowing_chorus, "glowing_chorus");
       ModCyclic.instance.events.register(glowing_chorus);
-    }
-  }
-  @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getEntity() instanceof EntityPlayer == false) { return; }
-    EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
-    ItemStack held = entityPlayer.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
-        && event.getTarget() instanceof AbstractHorse) {
-      ItemHorseUpgrade.onHorseInteract((AbstractHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
-      event.setCanceled(true);// stop the GUI inventory opening && horse mounting
     }
   }
   @Override

@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "cyclicmagic:carbon_paper",
+    "count": 8
+  },
+  "pattern": [
+    "ppp",
+    "pcp",
+    "ppp"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "p": {
+      "ore": "paper",
+      "type": "forge:ore_dict"
+    },
+    "c": {
+      "item": "minecraft:coal",
+      "data": 1
+    }
+  }
+}

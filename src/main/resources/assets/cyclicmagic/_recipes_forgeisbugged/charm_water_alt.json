@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_water"
+  },
+  "pattern": [
+    "r x",
+    "id ",
+    "iir"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "cropNetherWart",
+      "type": "forge:ore_dict"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "x": {
+      "item": "minecraft:fish",
+      "data": 1
+    },
+    "i": {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_fishing",
+    "count": 32
+  },
+  "ingredients": [
+    {
+      "ore": "enderpearl",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "string",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

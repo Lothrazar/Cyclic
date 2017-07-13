@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.event;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
+import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.playerext.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.component.playerext.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
@@ -14,15 +16,20 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -30,6 +37,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventKeyInput {
+  @SideOnly(Side.CLIENT)
+  @SubscribeEvent
+  public void onMouseInput(MouseEvent event) {
+    EntityPlayer player = Minecraft.getMinecraft().player;
+    if (!player.isSneaking() || event.getDwheel() == 0) { return; }
+    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+    if (wand.isEmpty()) { return; }
+    //if theres only one spell, do nothing
+    if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
+    if (event.getDwheel() < 0) {
+      ModCyclic.network.sendToServer(new PacketSpellShiftRight());
+      event.setCanceled(true);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+    }
+    else if (event.getDwheel() > 0) {
+      ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
+      event.setCanceled(true);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+    }
+  }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {

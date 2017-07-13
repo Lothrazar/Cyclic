@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:purple_boots"
+  },
+  "pattern": [
+    "   ",
+    "p p",
+    "oio"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "p": {
+      "ore": "dyePurple",
+      "type": "forge:ore_dict"
+    },
+    "i": {
+      "item": "minecraft:chainmail_boots",
+      "data": 32767
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

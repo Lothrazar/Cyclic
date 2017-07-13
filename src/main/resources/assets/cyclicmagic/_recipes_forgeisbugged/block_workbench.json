@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_workbench"
+  },
+  "pattern": [
+    " t ",
+    "s s",
+    "   "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
+    },
+    "t": {
+      "ore": "workbench",
+      "type": "forge:ore_dict"
+    }
+  }
+}

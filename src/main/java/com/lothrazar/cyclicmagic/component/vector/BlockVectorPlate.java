@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.util.Random;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -17,8 +19,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundCategory;
@@ -34,7 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockVectorPlate extends BlockBaseHasTile {
+public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   private static final double BHEIGHT = 0.03125D;
   private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
@@ -169,5 +174,16 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   @Override
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
+  }
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 6),
+        "ttt",
+        "idi",
+        "bbb",
+        'i', Items.IRON_INGOT,
+        'd', Items.DIAMOND,
+        'b', Blocks.WOODEN_PRESSURE_PLATE,
+        't', Blocks.REDSTONE_LAMP);
   }
 }

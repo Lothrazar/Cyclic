@@ -46,13 +46,13 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " d ",
-        "fdf",
+        "d d",
+        "frf",
         "ooo",
-        'o', "obsidian", 
-        'f', Blocks.FURNACE, 
         'r', Blocks.DROPPER,
-        'd', "blockDiamond");
+        'o', "obsidian",
+        'f', Blocks.FURNACE,
+        'd', "gemDiamond");
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -68,7 +68,8 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         "progressiveautomation:WitherGold",
         "progressiveautomation:WitherIron",
         "progressiveautomation:WitherStone",
-        "progressiveautomation:WitherWood"
+        "progressiveautomation:WitherWood",
+        "minecraft:elytra", "techreborn:uumatter"
     };
     String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
@@ -76,12 +77,12 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "botania:manaTablet",
         "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem",
         "harvestcraft:bakewareItem", "harvestcraft:saucepanItem", "harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem",
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star"
+        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star", "minecraft:elytra", "techreborn:uumatter"
     };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
     //MODNAME
-    deflist = new String[] { "projecte" };
+    deflist = new String[] { "projecte", "resourcefulcrops" };
     blacklist = config.getStringList("BlacklistMod", category, deflist, "If a mod id is in this list, then nothing from that mod will be uncrafted ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.MODNAME);
     //CONTAINS

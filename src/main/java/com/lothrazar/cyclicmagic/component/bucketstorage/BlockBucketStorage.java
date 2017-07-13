@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -19,6 +21,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -33,7 +36,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBucketStorage extends BlockBase implements ITileEntityProvider {
+public class BlockBucketStorage extends BlockBase implements ITileEntityProvider, IHasRecipe {
   private Item bucketItem;
   public BlockBucketStorage(Item bucketIn) {
     super(Material.IRON);
@@ -213,5 +216,14 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   private void removeBucket(EntityPlayer entityPlayer, World world, TileEntityBucketStorage storage, Item bucketItem) {
     storage.removeBucket();
     entityPlayer.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(bucketItem));
+  }
+  @Override
+  public IRecipe addRecipe() {
+    if (this.bucketItem == null) { return RecipeRegistry.addShapedRecipe(new ItemStack(BlockRegistry.block_storeempty),
+        "i i",
+        " o ",
+        "i i",
+        'o', "obsidian", 'i', "ingotIron"); }
+    return null;
   }
 }

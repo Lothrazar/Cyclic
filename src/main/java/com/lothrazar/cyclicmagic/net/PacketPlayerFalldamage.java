@@ -20,7 +20,7 @@ public class PacketPlayerFalldamage implements IMessage, IMessageHandler<PacketP
   }
   @Override
   public IMessage onMessage(PacketPlayerFalldamage message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     p.fallDistance = 0;
     return null;
   }

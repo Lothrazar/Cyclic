@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "cyclicmagic:harvester_block"
+  },
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    },
+    "b": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "g": {
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

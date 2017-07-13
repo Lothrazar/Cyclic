@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -40,6 +41,7 @@ public class GuiVector extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 2;
     //angle text box
     txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
@@ -67,12 +69,16 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw - btnYawSpacing, (NORTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "NW";
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
-    soundBtn = addButtonAt(id++, 134, 110, 0, Fields.SOUND.ordinal());
-    soundBtn.setWidth(34);
+    soundBtn = addButtonAt(id++, 130, 110, 0, Fields.SOUND.ordinal());
+    soundBtn.setWidth(38);
     //angle buttons
     addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString = "^";
     addButtonAt(id++, xAngle + 24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString = "/";
     addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
+  }
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,
@@ -102,7 +108,7 @@ public class GuiVector extends GuiBaseContainer {
   }
   private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
-    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRendererObj, x, y, width, height);
+    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
     txt.setMaxStringLength(maxLen);
     txt.setText(text);
     txtBoxes.add(txt);
@@ -134,8 +140,8 @@ public class GuiVector extends GuiBaseContainer {
   }
   private void renderString(String s, int x, int y) {
     String str = UtilChat.lang(s);
-    int strWidth = this.fontRendererObj.getStringWidth(str);
-    this.fontRendererObj.drawString(str, x - strWidth / 2, y, 4210752);
+    int strWidth = this.fontRenderer.getStringWidth(str);
+    this.fontRenderer.drawString(str, x - strWidth / 2, y, 4210752);
   }
   @Override
   public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -175,8 +181,8 @@ public class GuiVector extends GuiBaseContainer {
     for (GuiTextField txt : txtBoxes) {
       txt.mouseClicked(mouseX, mouseY, btn);
       if (btn == 0) {//basically left click
-        boolean flag = mouseX >= this.guiLeft + txt.xPosition && mouseX < this.guiLeft + txt.xPosition + txt.width
-            && mouseY >= this.guiTop + txt.yPosition && mouseY < this.guiTop + txt.yPosition + txt.height;
+        boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
+            && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
         txt.setFocused(flag);
       }
     }

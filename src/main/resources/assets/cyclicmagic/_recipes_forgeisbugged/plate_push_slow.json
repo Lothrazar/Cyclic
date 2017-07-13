@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:plate_push_slow"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:plate_push"
+    },
+    {
+      "ore": "dyeBlue",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

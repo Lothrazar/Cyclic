@@ -1,0 +1,41 @@
+{
+  "result": {
+    "item": "cyclicmagic:dynamite_safe",
+    "count": 6
+  },
+  "ingredients": [
+    {
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "paper",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "ore": "feather",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "ore": "cobblestone",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

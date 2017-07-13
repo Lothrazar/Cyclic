@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "cyclicmagic:block_fragile_auto",
+    "count": 64
+  },
+  "ingredients": [
+    {
+      "ore": "dirt",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

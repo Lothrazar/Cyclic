@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_auto_torch"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:tool_auto_torch",
+      "data": 32767
+    },
+    {
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "blockCoal",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

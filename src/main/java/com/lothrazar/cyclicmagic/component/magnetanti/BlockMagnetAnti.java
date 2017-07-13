@@ -8,9 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -61,8 +59,9 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
         'b', new ItemStack(Blocks.NETHER_WART_BLOCK), //netherwart block
         'x', new ItemStack(Blocks.BEACON));
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     String s = UtilChat.lang("tile.magnet_anti_block.tooltip").replace("$t$", TileEntityMagnetAnti.TIMER_FULL + "");
     s = s.replace("$r$", TileEntityMagnetAnti.ITEM_HRADIUS + "");
     tooltip.add(s);

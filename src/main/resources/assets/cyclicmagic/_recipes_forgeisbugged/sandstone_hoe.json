@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:sandstone_hoe"
+  },
+  "pattern": [
+    "ee ",
+    " s ",
+    " s "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
+    },
+    "e": {
+      "ore": "sandstone",
+      "type": "forge:ore_dict"
+    }
+  }
+}

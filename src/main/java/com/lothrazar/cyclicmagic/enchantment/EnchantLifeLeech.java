@@ -22,8 +22,8 @@ public class EnchantLifeLeech extends EnchantBase {
   }
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
-    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
-      EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
+    if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
+      EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
       int level = getCurrentLevelTool(attacker);
       if (level > 0) {

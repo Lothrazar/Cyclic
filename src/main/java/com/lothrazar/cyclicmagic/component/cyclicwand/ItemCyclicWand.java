@@ -4,8 +4,8 @@ import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule.RenderLoc;
+import com.lothrazar.cyclicmagic.event.EventRender;
+import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
@@ -15,7 +15,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -58,8 +57,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
     super.onCreated(stack, worldIn, playerIn);
   }
+  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       tooltip.add(TextFormatting.GREEN + spell.getName() + " "
@@ -193,19 +193,19 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     String renderLocation = config.getString("Scepter HUD", Const.ConfigCategory.items, RenderLoc.BOTTOMLEFT.toString().toLowerCase(), "Location of scepter Hud [topleft, topright, bottomleft, bottomright].  Used by both Exchange Scepters and Cyclic Build Scepter.  ");
     //fff...yeah probs better way to do this, like a loop.
     if (RenderLoc.TOPLEFT.name().toLowerCase().equals(renderLocation)) {
-      ItemToolsModule.renderLocation = RenderLoc.TOPLEFT;
+      EventRender.renderLocation = RenderLoc.TOPLEFT;
     }
     else if (RenderLoc.TOPRIGHT.name().toLowerCase().equals(renderLocation)) {
-      ItemToolsModule.renderLocation = RenderLoc.TOPRIGHT;
+      EventRender.renderLocation = RenderLoc.TOPRIGHT;
     }
     else if (RenderLoc.BOTTOMLEFT.name().toLowerCase().equals(renderLocation)) {
-      ItemToolsModule.renderLocation = RenderLoc.BOTTOMLEFT;
+      EventRender.renderLocation = RenderLoc.BOTTOMLEFT;
     }
     else if (RenderLoc.BOTTOMRIGHT.name().toLowerCase().equals(renderLocation)) {
-      ItemToolsModule.renderLocation = RenderLoc.BOTTOMRIGHT;
+      EventRender.renderLocation = RenderLoc.BOTTOMRIGHT;
     }
     else {
-      ItemToolsModule.renderLocation = RenderLoc.BOTTOMLEFT;
+      EventRender.renderLocation = RenderLoc.BOTTOMLEFT;
     }
     SpellRegistry.doParticles = config.getBoolean("Build Scepter Particles", category, false, "Cyclic Scepter: Set to false to disable particles");
     category = Const.ConfigCategory.modpackMisc;

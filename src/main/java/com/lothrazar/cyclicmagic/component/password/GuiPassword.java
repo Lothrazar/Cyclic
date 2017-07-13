@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.password;
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword.PacketType;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -29,10 +30,11 @@ public class GuiPassword extends GuiBaseContainer {
   }
   @Override
   public void initGui() {
+    Keyboard.enableRepeatEvents(true);
     super.initGui();
     int width = 127, height = 20;
     int x = (xSize / 2 - width / 2), y = 26 + (height / 2);
-    txtPassword = new GuiTextField(0, this.fontRendererObj, x, y, width, height);
+    txtPassword = new GuiTextField(0, this.fontRenderer, x, y, width, height);
     txtPassword.setMaxStringLength(40);
     txtPassword.setText(ctr.tile.getMyPassword());
     txtPassword.setFocused(true);
@@ -47,6 +49,10 @@ public class GuiPassword extends GuiBaseContainer {
     buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
     this.addButton(buttonUserPerm);
     updateVisibility();
+  }
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -63,15 +69,15 @@ public class GuiPassword extends GuiBaseContainer {
       if (ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer())) {
         s = UtilChat.lang(namePref + "userclaim.ismine");
         y = 18;
-        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+        this.drawString(s, xCenter - this.fontRenderer.getStringWidth(s) / 2, y);
       }
       else {
         s = UtilChat.lang(namePref + "userclaim.isclaimed");
         y = 18;
-        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+        this.drawString(s, xCenter - this.fontRenderer.getStringWidth(s) / 2, y);
         y = 32;
         s = ctr.tile.userName;//ctr.tile.getClaimedHash();
-        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+        this.drawString(s, xCenter - this.fontRenderer.getStringWidth(s) / 2, y);
       }
       this.buttonUserClaim.displayString = UtilChat.lang(namePref + this.buttonUserClaim.type.name().toLowerCase() + ".unclaim");
     }

@@ -1,0 +1,42 @@
+{
+  "result": {
+    "item": "cyclicmagic:dynamite_mining",
+    "count": 6
+  },
+  "ingredients": [
+    {
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "ingotIron",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "gunpowder",
+      "type": "forge:ore_dict"
+    },
+    {
+      "ore": "paper",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "ore": "feather",
+      "type": "forge:ore_dict"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "ore": "ingotBrickNether",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

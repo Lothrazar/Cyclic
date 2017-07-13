@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantBeheading extends EnchantBase implements IHasConfig {
   private Map<String, String> mapClassToSkin;
+  private Map<String, String> mapResourceToSkin;
   private Map<String, NBTTagCompound> mapClassToTag;
   private int percentDrop;
   public EnchantBeheading() {
@@ -38,11 +40,13 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
   }
   private void buildDefaultHeadList() {
     mapClassToSkin = new HashMap<String, String>();
+    mapResourceToSkin = new HashMap<String, String>();
     mapClassToTag = new HashMap<String, NBTTagCompound>();
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
     //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
     //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
     //NBT image data from  http://www.minecraft-heads.com/custom/heads/animals/6746-llama
+    //TODO: Delete all classes, instead use "minecraft:mob"
     mapClassToSkin.put("net.minecraft.entity.monster.EntityBlaze", "MHF_Blaze");
     mapClassToSkin.put("net.minecraft.entity.monster.EntityCaveSpider", "MHF_CaveSpider");
     mapClassToSkin.put("net.minecraft.entity.passive.EntityChicken", "MHF_Chicken");
@@ -60,7 +64,6 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     mapClassToSkin.put("net.minecraft.entity.monster.EntitySpider", "MHF_Spider");
     mapClassToSkin.put("net.minecraft.entity.passive.EntitySquid", "MHF_Squid");
     mapClassToSkin.put("net.minecraft.entity.passive.EntityVillager", "MHF_Villager");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityWitherSkeleton", "MHF_WSkeleton");
     mapClassToSkin.put("net.minecraft.entity.boss.EntityWither", "MHF_Wither");
     mapClassToSkin.put("net.minecraft.entity.monster.EntityWitch", "MHF_Witch");
     mapClassToSkin.put("net.minecraft.entity.passive.EntityWolf", "MHF_Wolf");
@@ -89,61 +92,75 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
   }
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
-    if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
-      EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
-      EntityLivingBase target = (EntityLivingBase) event.getEntity();
-      int level = getCurrentLevelTool(attacker);
-      if (level < 0) { return; }
+    if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
+      EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       World world = attacker.world;
       if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
-      //else the random number was less than 10, so it passed the 10% chance req
+      EntityLivingBase target = (EntityLivingBase) event.getEntity();
+      if (target == null) { return; } //probably wont happen just extra safe
       BlockPos pos = target.getPosition();
+      if (target instanceof EntityPlayer) {
+        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
+        return;
+      }
+      int level = getCurrentLevelTool(attacker);
+      if (level < 0) { return; }
+      //else the random number was less than 10, so it passed the 10% chance req
       String key = target.getClass().getName();
       ////we allow all these, which include config, to override the vanilla skulls below
+      //first do my wacky class mapping// TODO delete and go to minecraft:blah
       if (mapClassToSkin.containsKey(key)) {
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
+        return;
       }
       else if (mapClassToTag.containsKey(key)) {
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
+        return;
       }
       else if (target instanceof EntityCreeper) {//4
         UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
+        return;
       }
       else if (target instanceof EntityZombie) {//2
         UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_zombie));
+        return;
       }
       else if (target instanceof EntitySkeleton) {//0
         UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_skeleton));
+        return;
       }
       else if (target instanceof EntityWitherSkeleton) {//1
         UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_wither));
+        return;
       }
       else if (target instanceof EntityDragon) {//5
         UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_dragon));
+        return;
       }
       else if (target instanceof EntityPlayer) {//player name
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
+        return;
       }
-      else {
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
-        ModCyclic.logger.info("beheading mob not found " + target.getClass().getName());
+      if (EntityList.getKey(target) != null) {
+        String resourcelocation = EntityList.getKey(target).toString();
+        if (mapResourceToSkin.containsKey(resourcelocation)) {
+          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapResourceToSkin.get(resourcelocation)));
+          return;
+        }
       }
+      ModCyclic.logger.error("Beheading : mob not found in EntityList " + target.getName());
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     this.percentDrop = config.getInt("BeheadingPercent", Const.ConfigCategory.modpackMisc, 10, 1, 100, "Percent chance that the beheading enchant will actually drop a head.");
-    String[] defaultConf = new String[] {
-        "net.minecraft.entity.monster.EntityVex-Vazkii", "elucent.roots.entity.EntitySprite-Darkosto" };
-    String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: classpath-player");
+    String[] defaultConf = new String[] { "roots:fairy-Elucent" };
+    String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: mod:monster-player, see the /summon command for mod data. ");
     for (String s : mappings) {
       if (s.contains("-")) {
         String[] spl = s.split("-");
         if (spl.length == 2) {
-          mapClassToSkin.put(spl[0], spl[1]);
+          mapResourceToSkin.put(spl[0], spl[1]);
         }
       }
     }

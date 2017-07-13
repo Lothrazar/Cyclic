@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "cyclicmagic:charm_wing"
+  },
+  "ingredients": [
+    {
+      "item": "cyclicmagic:charm_wing",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -11,6 +11,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable {
+  private static final int VRADIUS = 2;
   private static final int XP_PER_SPEWORB = 10;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 18;
@@ -22,7 +23,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_SPRAY = "spray";
   private static final String NBT_BOTTLE = "bottle";
   private static final String NBT_EXP = "particles";
-  public final static int RADIUS = 5;
+  public final static int RADIUS = 16;
   private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
   private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
@@ -79,9 +80,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void updateCollection() {
-    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(RADIUS));
-    if (orbs != null) {
-      //no timer just EAT
+    //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
+    AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1*RADIUS, -1*VRADIUS, -1*RADIUS);//expandXyz
+   
+    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, region);
+    if (orbs != null) { //no timer just EAT
+       
       for (EntityXPOrb orb : orbs) {
         if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
           getWorld().removeEntity(orb);//calls     orb.setDead(); for me

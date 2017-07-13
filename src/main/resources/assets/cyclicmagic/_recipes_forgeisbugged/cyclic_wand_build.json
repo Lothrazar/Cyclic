@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "cyclicmagic:cyclic_wand_build"
+  },
+  "pattern": [
+    "sds",
+    " o ",
+    "gog"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:bone_block"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "g": {
+      "ore": "gemQuartz",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

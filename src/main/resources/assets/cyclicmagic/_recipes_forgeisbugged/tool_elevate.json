@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_elevate"
+  },
+  "pattern": [
+    " de",
+    " gd",
+    "s  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "g": {
+      "item": "minecraft:ghast_tear"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_helmet"
+  },
+  "pattern": [
+    "   ",
+    "eee",
+    "e e"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "e": {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    }
+  }
+}

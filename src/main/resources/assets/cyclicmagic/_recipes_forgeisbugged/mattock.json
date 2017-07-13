@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "cyclicmagic:mattock"
+  },
+  "pattern": [
+    "odo",
+    " e ",
+    " e "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "d": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    },
+    "e": {
+      "ore": "blockQuartz",
+      "type": "forge:ore_dict"
+    },
+    "o": {
+      "ore": "obsidian",
+      "type": "forge:ore_dict"
+    }
+  }
+}

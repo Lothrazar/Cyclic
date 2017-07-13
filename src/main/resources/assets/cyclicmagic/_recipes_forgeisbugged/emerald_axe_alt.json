@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "cyclicmagic:emerald_axe"
+  },
+  "pattern": [
+    " ee",
+    " se",
+    " s "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
+    },
+    "e": {
+      "ore": "gemEmerald",
+      "type": "forge:ore_dict"
+    }
+  }
+}

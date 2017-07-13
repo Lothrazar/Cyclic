@@ -55,7 +55,6 @@ public class GuiUncrafting extends GuiBaseContainer {
     //first draw the zero slot
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_INPUT - 1, this.guiTop + ContainerUncrafting.SLOTY_INPUT - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     int xPrefix = 2 * Const.SQ + Const.PAD;
-    int yPrefix = 2 * Const.PAD;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         Gui.drawModalRectWithCustomSizedTexture(

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_warp_home"
+  },
+  "pattern": [
+    " ft",
+    "ggf",
+    "dg "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "t": {
+      "item": "minecraft:ghast_tear"
+    },
+    "d": {
+      "item": "minecraft:ender_eye"
+    },
+    "f": {
+      "ore": "feather",
+      "type": "forge:ore_dict"
+    },
+    "g": {
+      "ore": "ingotGold",
+      "type": "forge:ore_dict"
+    }
+  }
+}

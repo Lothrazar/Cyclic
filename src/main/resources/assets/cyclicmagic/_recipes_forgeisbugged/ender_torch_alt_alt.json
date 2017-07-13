@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "cyclicmagic:ender_torch"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:tallgrass",
+      "data": 32767
+    },
+    {
+      "ore": "torch",
+      "type": "forge:ore_dict"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

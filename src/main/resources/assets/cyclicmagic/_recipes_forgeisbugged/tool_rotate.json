@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "cyclicmagic:tool_rotate"
+  },
+  "pattern": [
+    " gp",
+    " bg",
+    "b  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:stone_brick_stairs"
+    },
+    "b": {
+      "ore": "stickWood",
+      "type": "forge:ore_dict"
+    },
+    "g": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    }
+  }
+}
