@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -64,8 +65,8 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   }
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
-    if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
-      EntityHorse horse = (EntityHorse) player.getRidingEntity();
+    if (player.getRidingEntity() != null && player.getRidingEntity() instanceof AbstractHorse) {
+      AbstractHorse horse = (AbstractHorse) player.getRidingEntity();
       double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
       // double jump = horse.getHorseJumpStrength() ;
       // convert from scale factor to blocks
