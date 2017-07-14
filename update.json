@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.29",
     "1.10.2-recommended": "1.10.29",
-    "1.11.2-latest": "1.5.8",
-    "1.11.2-recommended": "1.5.8",
+    "1.11.2-latest": "1.5.9",
+    "1.11.2-recommended": "1.5.9",
     "1.12-latest": "1.6.0",
     "1.12-recommended": "1.6.0"
   },
@@ -177,6 +177,7 @@
 	,"1.5.6":"New Enchantments: Quickdraw and Beheading.  New Item: Evoker Fang.  Fragile Torches feature now affects Stone Torch and Tiny Torch (from Tinkers and AA respectively), and also it respects the 'mobGriefing' gamerule (this feature is still turned off by default in the blocks config category).  "
 	,"1.5.7":"Fix client side crash that sometimes happen when right clicking items inside Chizel and Bits bag (misfire of right click to turn charms on and off).  "
 	,"1.5.8":"Nether Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  "
+	,"1.5.9":"Experience Boost enchantment now gives XP directly to player (when mining, not combat); this was done to avoid lag when using hammers or a vein miner.  Interfaces with textboxes now allow you to hold down the button, such as a letter or the delete key (Ender Book, Faith Plate, Password Detector).  The horse upgrade carrots will now get eaten only one at a time, instead of double.  Fixed horse info in F3 not showing for donkeys, zombie, and skeleton horses.  "
    }
   "1.12":{
   	"1.5.6":"Initial port from 1.11.2-1.5.6"
