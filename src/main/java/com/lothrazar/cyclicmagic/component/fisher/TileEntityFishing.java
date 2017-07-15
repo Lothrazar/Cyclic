@@ -95,6 +95,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (equip.isEmpty()) { return false; }
     if (equip.getItem() instanceof ItemFishingRod) { return true; }
     String itemsClass = equip.getItem().getClass().getName();
+    //TODO: why was i being dum. i should use resourcelocations: "modid:itemid"
     String aquaBase = "com.teammetallurgy.aquaculture.items.";
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
@@ -142,7 +143,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void tryAddToInventory(ItemStack itemstack) {
-    for (int i = RODSLOT; i <= FISHSLOTS; i++) {
+    for (int i = RODSLOT + 1; i <= FISHSLOTS; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
