@@ -89,16 +89,16 @@ public class UtilShape {
     });
     return circleList;
   }
-  public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> rectFrame(final BlockPos posCenter, int rx, int height, int rz) {
     BlockPos botCenter = posCenter;
     BlockPos topCenter = posCenter.add(0, height, 0);
-    List<BlockPos> cube = squareHorizontalHollow(topCenter, radius);
-    cube.addAll(squareHorizontalHollow(botCenter, radius));
+    List<BlockPos> cube = rectHollow(topCenter, rx, rz);
+    cube.addAll(rectHollow(botCenter, rx, rz));
     //four walls
-    BlockPos b1 = botCenter.add(radius, 0, radius);
-    BlockPos b2 = botCenter.add(radius, 0, -1 * radius);
-    BlockPos b3 = botCenter.add(-1 * radius, 0, -1 * radius);
-    BlockPos b4 = botCenter.add(-1 * radius, 0, radius);
+    BlockPos b1 = botCenter.add(rx, 0, rz);
+    BlockPos b2 = botCenter.add(rx, 0, -1 * rz);
+    BlockPos b3 = botCenter.add(-1 * rx, 0, -1 * rz);
+    BlockPos b4 = botCenter.add(-1 * rx, 0, rz);
     //pillars
     int sideLen = height - 1;
     cube.addAll(line(b1, EnumFacing.UP, sideLen));
@@ -106,6 +106,9 @@ public class UtilShape {
     cube.addAll(line(b3, EnumFacing.UP, sideLen));
     cube.addAll(line(b4, EnumFacing.UP, sideLen));
     return cube;
+  }
+  public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
+    return rectFrame(posCenter, radius, height, radius);
   }
   public static List<BlockPos> cubeFilled(final BlockPos posCenter, int radius, int height) {
     BlockPos botCenter = posCenter;
@@ -175,13 +178,13 @@ public class UtilShape {
     //corners are done so offset
     return shape;
   }
-  public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
+  public static List<BlockPos> rectHollow(final BlockPos pos, int radiusX, int radiusZ) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
-    int xMin = pos.getX() - radius;
-    int xMax = pos.getX() + radius;
-    int zMin = pos.getZ() - radius;
-    int zMax = pos.getZ() + radius;
+    int xMin = pos.getX() - radiusX;
+    int xMax = pos.getX() + radiusX;
+    int zMin = pos.getZ() - radiusZ;
+    int zMax = pos.getZ() + radiusZ;
     int y = pos.getY();
     for (int x = xMin; x <= xMax; x++) {
       shape.add(new BlockPos(x, y, zMin));
@@ -193,6 +196,9 @@ public class UtilShape {
       shape.add(new BlockPos(xMax, y, z));
     }
     return shape;
+  }
+  public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
+    return rectHollow(pos, radius, radius);
   }
   public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
