@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.BlockStone;
@@ -48,7 +49,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         true, "Craft Netherwart blocks back to item").getBoolean();
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (glowstoneBlockToDust) {
       glowstoneBlockToDust();
     }
