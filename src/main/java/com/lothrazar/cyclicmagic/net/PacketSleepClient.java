@@ -2,6 +2,9 @@ package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiSleepMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -41,6 +44,10 @@ public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepC
       //otherwise vanilla MC code gets NPE thrown
       player.bedLocation = message.pos;
       ItemSleepingMat.setRenderOffsetForSleep(player, player.getHorizontalFacing());
+ 
+//this should have shown the 'leave bed' dialog.. doesnt work dangit 
+   //   Minecraft.getMinecraft().displayGuiScreen(new GuiSleepMP());
+  
     }
     return null;
   }
