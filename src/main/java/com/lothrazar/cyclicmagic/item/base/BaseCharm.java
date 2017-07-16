@@ -21,6 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public abstract class BaseCharm extends BaseItem implements IHasClickToggle, baubles.api.IBauble {
   private final static String NBT_STATUS = "onoff";
+  private ItemStack repairedBy = ItemStack.EMPTY;
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
@@ -60,8 +61,9 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     }
   }
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+    //   RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
+    this.repairedBy = craftItem.copy();
+    RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
         "iir",
@@ -69,6 +71,12 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
         'd', "gemDiamond",
         'r', "cropNetherWart",
         'i', "ingotIron");
+    System.out.println("TWO RECIPES FOR " + this.getUnlocalizedName());
+    return null;
+  }
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return repair.isItemEqual(repair) && toRepair.getItemDamage() > 0;
   }
   /**
    * Fires while in inventory OR while in bauble slot
