@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -19,7 +20,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_REDST = "redstone";
- 
   private int needsRedstone = 1;
   public static enum Fields {
     REDSTONE
@@ -33,22 +33,22 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
-
     this.shiftAllUp();
-    
     ItemStack s = this.getStackInSlot(0);
-    
-    if(OreDictionary.itemMatches(s, new ItemStack(Blocks.DIRT), false)){
-      sendOutput( new ItemStack( Blocks.FARMLAND));
+    if (OreDictionary.itemMatches(s, new ItemStack(Blocks.DIRT), false)) {
+      sendOutput(new ItemStack(Blocks.FARMLAND));
       s.shrink(1);
     }
-    else if(OreDictionary.itemMatches(s, new ItemStack(Blocks.HARDENED_CLAY), false)){
-      sendOutput(new ItemStack( Blocks.CLAY) );
+    else if (OreDictionary.itemMatches(s, new ItemStack(Blocks.HARDENED_CLAY), false)) {
+      sendOutput(new ItemStack(Blocks.CLAY));
       s.shrink(1);
     }
-    
+    else if (s.isItemEqual(new ItemStack(Blocks.CONCRETE_POWDER, 1, EnumDyeColor.BLACK.getMetadata())   )) {
+      sendOutput(new ItemStack(Blocks.CONCRETE, 1, EnumDyeColor.BLACK.getMetadata()));
+      s.shrink(1);
+    }
   }
-  public void sendOutput(ItemStack out ) {
+  public void sendOutput(ItemStack out) {
     UtilItemStack.dropItemStackInWorld(this.world, this.getPos(), out);
   }
   @Override
