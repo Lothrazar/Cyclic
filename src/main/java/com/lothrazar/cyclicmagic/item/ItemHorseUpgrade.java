@@ -104,7 +104,6 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
             toSpawn.forceSpawn = true;//ignore natural rules/limits/etc
             world.spawnEntity(toSpawn);
           }
-          player.getCooldownTracker().setCooldown(held.getItem(), 30);
           ahorse.attackEntityFrom(DamageSource.MAGIC, 5000);
         }
       break;
@@ -155,6 +154,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       if (player.capabilities.isCreativeMode == false) {
         held.shrink(1);
       }
+      player.getCooldownTracker().setCooldown(heldItem, 5);
       UtilParticle.spawnParticle(ahorse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, ahorse.getPosition());
       UtilSound.playSound(player, ahorse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       ahorse.setEatingHaystack(true); // makes horse animate and bend down to eat
