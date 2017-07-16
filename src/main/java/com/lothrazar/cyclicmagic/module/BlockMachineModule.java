@@ -9,6 +9,8 @@ import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.component.password.BlockPassword;
@@ -39,6 +41,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enablePattern;
   private boolean expPylon;
   public void onPreInit() {// onInit() {
+    BlockHydrator block_hydrator = new BlockHydrator();
+    BlockRegistry.registerBlock(block_hydrator, "block_hydrator", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, "exp_pylon", GuideCategory.BLOCKMACHINE);

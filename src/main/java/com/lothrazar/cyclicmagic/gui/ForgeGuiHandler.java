@@ -30,6 +30,9 @@ import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.component.hydrator.ContainerHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
@@ -104,6 +107,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DISENCH = 20;
   public static final int GUI_INDEX_CRAFTER = 21;
   public static final int GUI_INDEX_WORKBENCH = 22;
+  public static final int GUI_INDEX_HYDRATOR = 23;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -195,6 +199,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_WORKBENCH:
         if (te instanceof TileEntityWorkbench) { return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te); }
       break;
+      case GUI_INDEX_HYDRATOR:
+        if (te instanceof TileEntityHydrator) { 
+          return new ContainerHydrator(player.inventory, (TileEntityHydrator) te); }
+          
+        break;
     }
     return null;
   }
@@ -271,6 +280,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_WORKBENCH:
           if (te instanceof TileEntityWorkbench) { return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te); }
         break;
+        case GUI_INDEX_HYDRATOR:
+          if (te instanceof TileEntityHydrator) { 
+            return new GuiHydrator(player.inventory, (TileEntityHydrator) te); }
+            
+          break;
       }
     }
     return null;
