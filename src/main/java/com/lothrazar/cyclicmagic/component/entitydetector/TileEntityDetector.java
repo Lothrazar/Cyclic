@@ -1,11 +1,7 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
-import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.BuildType;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

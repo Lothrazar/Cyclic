@@ -18,7 +18,7 @@ public class EntityDetectorTESR extends BaseMachineTesr<TileEntityDetector> {
     if (te instanceof TileEntityDetector == false) { return; }
     TileEntityDetector tile = ((TileEntityDetector) te);
     if (tile.isPreviewVisible()) {
-      UtilWorld.RenderShadow.renderBlockList(tile.getShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F); 
+      UtilWorld.RenderShadow.renderBlockList(tile.getShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
     }
   }
 }
