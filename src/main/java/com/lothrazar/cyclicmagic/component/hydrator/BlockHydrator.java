@@ -25,16 +25,21 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
   }
   private void addAllRecipes() {
     RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
+    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
+    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
       RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
     }
+
+    
+    
     
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityHydrator();
   }
- 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -44,8 +49,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
         'o', Blocks.MOSSY_COBBLESTONE,
         'g', Items.BUCKET, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
         's', Blocks.DISPENSER,
-        'r', "bone"
- 
-    );
+        'r', "bone");
   }
 }
