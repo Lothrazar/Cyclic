@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidTank;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
   public BlockHydrator() {

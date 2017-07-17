@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -11,8 +13,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+  public FluidTank tank = new FluidTank(4000);
   public final static int TIMER_FULL = 120;
   public static enum Fields {
     REDSTONE
@@ -30,6 +37,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     if (!isRunning()) { return; }
+    FluidStack fs = this.tank.getFluid();
+    //WAT https://github.com/BluSunrize/ImmersiveEngineering/search?utf8=%E2%9C%93&q=FluidUtil&type=
+    ModCyclic.logger.info("fluidstack " +fs);
     this.spawnParticlesAbove();
     this.shiftAllUp();
     if (this.updateTimerIsZero()) { // time to burn!
@@ -48,12 +58,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
     return super.writeToNBT(tagCompound);
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    tank.readFromNBT(tagCompound.getCompoundTag("tank"));
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -89,6 +101,18 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+      return true;
+    return super.hasCapability(capability, facing);
+  }
+  @Override
+  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+      return (T) tank;
+    return super.getCapability(capability, facing);
   }
   public static class ContainerDummy extends Container {
     @Override
