@@ -52,7 +52,6 @@ public class ItemRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
-    System.out.println("Register  ITEMS");
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
     for (Item item : ItemRegistry.itemMap.values()) {

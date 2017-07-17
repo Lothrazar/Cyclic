@@ -128,11 +128,7 @@ public class RecipeRegistry {
    * @param params
    * @return
    */
-  //  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
-  //    return GameRegistry.addShapedRecipe(output, params);
-  //  }
   private static IRecipe _addShapedRecipe(ItemStack output, Object... params) {
-    //  ResourceLocation location = ;
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);
     ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
     add(recipe, Util1pt12.buildName(output));

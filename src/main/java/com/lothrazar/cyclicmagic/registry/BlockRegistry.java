@@ -5,10 +5,13 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.component.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -52,6 +55,15 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    
+
+    event.getRegistry().register(new RecipeHydrate(new ItemStack(Blocks.DIRT),new ItemStack(Blocks.FARMLAND)));
+    
+    
+    
+    
+    
+    
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }
