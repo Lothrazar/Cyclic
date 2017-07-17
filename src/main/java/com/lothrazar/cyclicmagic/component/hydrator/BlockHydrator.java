@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import java.awt.List;
+import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
@@ -23,18 +25,18 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
     this.addAllRecipes();
   }
+  public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
   private void addAllRecipes() {
-    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
-    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
-    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
-    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
-      RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
+      recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
     }
-
-    
-    
-    
+    for (IRecipe r : recipeList) {
+      RecipeRegistry.register(r);
+    }
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
