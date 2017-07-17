@@ -19,6 +19,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
@@ -75,20 +76,26 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     public HydratorWrapper(RecipeHydrate source) {
       this.src = source;
     }
- 
-    public ItemStack getOut(){
+    public ItemStack getOut() {
       return src.getRecipeOutput();
     }
     @Override
     public void getIngredients(IIngredients ingredients) {
-      ingredients.setInput(ItemStack.class, src.getIngredients());
+      //   if(src.getIngredients().size()==0){
+      //     ModCyclic.logger.error("Error, recipe has no ingredients"+ this.src +"__"+this.src.getRegistryName());
+      //     return;
+      //   }
+      ingredients.setInput(ItemStack.class, src.getRecipeInput());
       ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
     }
   }
   public static class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> {
     private IDrawable gui;
+    private IDrawable icon;
     public HydratorRecipeCategory(IGuiHelper helper) {
       gui = helper.createDrawable(Const.Res.TABLEDEFAULT, 177, 31, 16, 47);
+      //TOD: block is wrong of course, just POC
+      icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_crafter.png"), 0, 0, 16, 16);
     }
     @Override
     public String getUid() {
@@ -103,18 +110,21 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
       return Const.MODID;
     }
     @Override
+    public IDrawable getIcon() {
+      return icon;//tab icon
+    }
+    @Override
     public IDrawable getBackground() {
       return gui;
     }
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
-
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      
-//      guiItemStacks.set(0, ingredients.get);
-      
-      guiItemStacks.set(1,recipeWrapper.getOut());
-      
+      guiItemStacks.init(0, true, 10, 30);
+      System.out.println(ingredients.getInputs(ItemStack.class));
+      guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
+      guiItemStacks.init(1, false, 30, 30);
+      guiItemStacks.set(1, recipeWrapper.getOut());
     }
   }
 }

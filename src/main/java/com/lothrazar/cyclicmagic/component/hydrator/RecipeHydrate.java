@@ -32,4 +32,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   public ItemStack getRecipeOutput() {
     return resultItem.copy();
   }
+  public ItemStack getRecipeInput() {
+    return inputItem.copy();
+  }
 }
