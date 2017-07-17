@@ -2,34 +2,25 @@ package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+  public static enum Fields {
+    REDSTONE
+  }
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
   public TileEntityHydrator() {
     super(9);
   }
-  //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
-  //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
-  // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  private static final String NBT_REDST = "redstone";
   private int needsRedstone = 1;
-  public static enum Fields {
-    REDSTONE
-  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -43,26 +34,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     ItemStack s = this.getStackInSlot(0);
     this.crafting.setInventorySlotContents(0, s);
     IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
- 
     if (rec != null) {
-      
-     // System.out.println("REC FOR!" + s + " IS " + rec.getRecipeOutput().getDisplayName());
-      
-      
+      this.sendOutput(rec.getRecipeOutput());
+      s.shrink(1);
     }
-    //   
-    //    if (OreDictionary.itemMatches(s, new ItemStack(Blocks.DIRT), false)) {
-    //      sendOutput(new ItemStack(Blocks.FARMLAND));
-    //      s.shrink(1);
-    //    }
-    //    else if (OreDictionary.itemMatches(s, new ItemStack(Blocks.HARDENED_CLAY), false)) {
-    //      sendOutput(new ItemStack(Blocks.CLAY));
-    //      s.shrink(1);
-    //    }
-    //    else if (s.isItemEqual(new ItemStack(Blocks.CONCRETE_POWDER, 1, EnumDyeColor.BLACK.getMetadata())   )) {
-    //      sendOutput(new ItemStack(Blocks.CONCRETE, 1, EnumDyeColor.BLACK.getMetadata()));
-    //      s.shrink(1);
-    //    }
   }
   public void sendOutput(ItemStack out) {
     UtilItemStack.dropItemStackInWorld(this.world, this.getPos(), out);

@@ -16,6 +16,7 @@ import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
@@ -82,6 +83,7 @@ public class ModCyclic {
     //for new registry
     MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
     MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
+    MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);
     MinecraftForge.EVENT_BUS.register(SoundRegistry.class);
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);

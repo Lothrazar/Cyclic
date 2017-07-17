@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -52,18 +53,5 @@ public class BlockRegistry {
     for (Block b : blocks) {
       event.getRegistry().register(b);
     }
-  }
-  @SubscribeEvent
-  public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
-    
-
-    event.getRegistry().register(new RecipeHydrate(new ItemStack(Blocks.DIRT),new ItemStack(Blocks.FARMLAND)));
-    
-    
-    
-    
-    
-    
-    event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

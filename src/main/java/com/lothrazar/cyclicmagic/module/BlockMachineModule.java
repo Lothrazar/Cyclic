@@ -44,7 +44,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     BlockHydrator block_hydrator = new BlockHydrator();
     BlockRegistry.registerBlock(block_hydrator, "block_hydrator", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
-    
+
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, "exp_pylon", GuideCategory.BLOCKMACHINE);

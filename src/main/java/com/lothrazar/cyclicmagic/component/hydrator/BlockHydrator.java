@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -20,6 +21,14 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
+    this.addAllRecipes();
+  }
+  private void addAllRecipes() {
+    RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    for (EnumDyeColor col : EnumDyeColor.values()) {
+      RecipeRegistry.register(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
+    }
+    
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
