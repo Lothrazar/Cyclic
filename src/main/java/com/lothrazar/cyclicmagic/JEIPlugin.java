@@ -35,18 +35,6 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
         15, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
         36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-    //////////// now register description pages
-    //no documentation found but i learned it from this OS https://github.com/Darkhax-Minecraft/Dark-Utilities/blob/a6422519b069ea71ccf83fc8545cd595c03b947c/src/main/java/net/darkhax/darkutils/addons/jei/DarkUtilsJEIPlugin.java
-    String lang;
-    //itemsJei
-    for (ItemStack s : JeiDescriptionRegistry.itemsJei) {
-      lang = s.getUnlocalizedName() + ".jei";
-      //      registry.addDescription(s, lang);
-    }
-    //    for (Block item : BlockRegistry.itemsJei) {
-    //      lang = item.getUnlocalizedName() + ".jei";
-    //      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
-    //    }
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
         10, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 10 INPUT
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
@@ -81,10 +69,6 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     }
     @Override
     public void getIngredients(IIngredients ingredients) {
-      //   if(src.getIngredients().size()==0){
-      //     ModCyclic.logger.error("Error, recipe has no ingredients"+ this.src +"__"+this.src.getRegistryName());
-      //     return;
-      //   }
       ingredients.setInput(ItemStack.class, src.getRecipeInput());
       ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
     }
