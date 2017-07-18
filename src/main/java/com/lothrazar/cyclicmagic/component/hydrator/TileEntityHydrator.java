@@ -35,7 +35,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public FluidTank tank = new FluidTank(4000);
   public final static int TIMER_FULL = 60;
   public static enum Fields {
-    REDSTONE
+    REDSTONE, TIMER
   }
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
   public TileEntityHydrator() {
@@ -66,6 +66,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.tank.drain(FLUID_PER_RECIPE, true);
       this.sendOutput(rec.getRecipeOutput());
+      this._debugTank();
       s.shrink(1);
     }
   }
@@ -120,6 +121,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TIMER:
+        return this.timer;
     }
     return -1;
   }
@@ -128,6 +131,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value;
+      break;
+      case TIMER:
+        this.timer = value;
       break;
     }
   }

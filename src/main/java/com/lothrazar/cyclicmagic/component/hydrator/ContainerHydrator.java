@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,7 +15,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   public ContainerHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator te) {
-    this.setTile(te);
+    this.setTile(te); 
     bindPlayerInventory(inventoryPlayer);
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
