@@ -54,7 +54,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     tryFillTankFromItems();
     if (this.getCurrentFluid() == 0) { return; }
     if (this.updateTimerIsZero()) { // time to burn!
-      this.timer = TIMER_FULL;
       this.spawnParticlesAbove();
       tryProcessRecipe();
     }
@@ -66,8 +65,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.tank.drain(FLUID_PER_RECIPE, true);
       this.sendOutput(rec.getRecipeOutput());
-      this._debugTank();
       s.shrink(1);
+      this.timer = TIMER_FULL;
+      this._debugTank();
     }
   }
   public void tryFillTankFromItems() {
