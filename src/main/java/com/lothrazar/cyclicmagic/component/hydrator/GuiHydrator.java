@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHydrator extends GuiBaseContainer {
   private TileEntityHydrator tile;
@@ -13,10 +17,21 @@ public class GuiHydrator extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
   }
-  //  @Override
-  //  public void initGui() {
-  //    super.initGui();
-  //  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+
+    if (this.tile.tank.getFluid() != null) {
+      FluidStack fluid = this.tile.tank.getFluid();
+      
+      this.drawString(" " + fluid.amount
+          + "/" + this.tile.tank.getInfo().capacity
+          + " " + fluid.getFluid().getName(),30,30);
+    } 
+  }
+  
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

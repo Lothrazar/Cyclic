@@ -49,80 +49,13 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     if (!isRunning()) { return; }
+    //ignore timer when filling up water
+    tryFillTankFromItems();
     if (this.updateTimerIsZero()) { // time to burn!
+      
+      
+      
       this.timer = TIMER_FULL;
-      ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
-      FluidStack f = FluidUtil.getFluidContained(maybeBucket);
-      IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
-      if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
-        //https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
-        if (this.tank.getFluid() != null) {
-          ModCyclic.logger.info("BEFORE tank =  " + this.tank.getFluid().amount
-              + "/" + this.tank.getInfo().capacity
-              + " " + this.tank.getFluid().getFluid().getName());
-        }
-        
-        
-        FluidActionResult r=   FluidUtil.tryEmptyContainer(maybeBucket, tank, Fluid.BUCKET_VOLUME, null, true);
-        
-        ModCyclic.logger.info("  FluidActionResult  "+r.success);
-        ModCyclic.logger.info("  FluidActionResult  "+r.result);
-        
-        if(r.success){
-             this.setInventorySlotContents(SLOT_INFLUID, r.result);
-        }
-        
-        
-        
-        
-        
-//        ModCyclic.logger.info(" try input water  ");//ffftryEmptyContainer
-//        //        FluidStack reallyDrained = FluidUtil.getFluidHandler(maybeBucket).drain(1000, true);
-//        //source, dest, amt, doIt 
-//        FluidStack afterTransferBucketToTank = FluidUtil.tryFluidTransfer(tank, FluidUtil.getFluidHandler(maybeBucket), new FluidStack(FluidRegistry.WATER,  Fluid.BUCKET_VOLUME), true);
-//        //        if (reallyDrained != null) {}
-//        ModCyclic.logger.info(" maybeBucket is now  " + maybeBucket.getDisplayName());
-//        if (afterTransferBucketToTank != null) {//now REALLLLLLY empty the bucket. k? k.
-//          ModCyclic.logger.info(" !afterTransferBucketToTank  " + afterTransferBucketToTank.amount);//this has 1000.
-//          
-//
-////          ModCyclic.logger.info(" bucketHandler has flud   " + bucketHandler.get);//this has 1000.
-//          
-//          bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
-//          ModCyclic.logger.info("maybeBucket   getItem " + maybeBucket.getItem());//this has 1000.
-//          ModCyclic.logger.info("IS EQUAL WATER?" + (maybeBucket.getItem() == Items.WATER_BUCKET));//this has 1000.
-//          
-//          
-//          FluidStack drainBucketresult = bucketHandler.drain(afterTransferBucketToTank.amount, true);
-//          //          f.amount -= afterTransferBucketToTank.amount;
-//
-//          
-//          
-//         
-//          
-//          ModCyclic.logger.info(" !f bucket SHOULD HAVE   " + f.amount);//this has 1000.
-//          
-//         
-//            ModCyclic.logger.info(" BUCKET DRAIN HAS FAILED ???   " +drainBucketresult);//this has 1000.
-//         this.setInventorySlotContents(SLOT_INFLUID, maybeBucket);
-//          
-//          //          NBTTagCompound tag = new NBTTagCompound();
-//          //          afterTransferBucketToTank.writeToNBT(tag);
-//          //          maybeBucket.setTagCompound(tag);
-//          //          ModCyclic.logger.info(" maybeBucket is now 2 " + maybeBucket.getDisplayName());
-//          //this.setStackInSlot(SLOT_INFLUID,maybeBucket);
-//        }
-        //        int fillResult = this.fill(FluidUtil.getFluidContained(maybeBucket), true);
-        //        if (fillResult > 0) {}
-        //        ModCyclic.logger.info(" fillResult  " + fillResult);
-        //WAT https://github.com/BluSunrize/ImmersiveEngineering/search?utf8=%E2%9C%93&q=FluidUtil&type=
-        //    ModCyclic.logger.info("fluidstack " + this.tank.getFluid());
-        if (this.tank.getFluid() != null) {
-          ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
-              + "/" + this.tank.getInfo().capacity
-              + " " + this.tank.getFluid().getFluid().getName());
-        }
-      }
       this.spawnParticlesAbove();
       //    this.shiftAllUp();
       ItemStack s = this.getStackInSlot(SLOT_PROCESSING);
@@ -132,6 +65,29 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
         this.sendOutput(rec.getRecipeOutput());
         s.shrink(1);
       }
+    }
+  }
+  public void tryFillTankFromItems() {
+    ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
+    FluidStack f = FluidUtil.getFluidContained(maybeBucket);
+    IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
+    if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
+      //https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
+      _debugTank();
+      FluidActionResult r = FluidUtil.tryEmptyContainer(maybeBucket, tank, Fluid.BUCKET_VOLUME, null, true);
+      //in the case of a full bucket, it becomes empty. 
+      //also supports any other fluid holding item, simply draining that fixed amount each round
+      if (r.success) {
+        this.setInventorySlotContents(SLOT_INFLUID, r.result);
+      }
+      _debugTank();
+    }
+  }
+  public void _debugTank() {
+    if (this.tank.getFluid() != null) {
+      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
+          + "/" + this.tank.getInfo().capacity
+          + " " + this.tank.getFluid().getFluid().getName());
     }
   }
   public void sendOutput(ItemStack out) {
