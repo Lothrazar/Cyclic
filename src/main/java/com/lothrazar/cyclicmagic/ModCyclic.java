@@ -28,6 +28,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -61,8 +62,17 @@ public class ModCyclic {
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
+
+  static
+  {
+    FluidRegistry.enableUniversalBucket();//https://github.com/BluSunrize/ImmersiveEngineering/blob/c76e51998756a54c22dd40ac1877313bf95e8520/src/main/java/blusunrize/immersiveengineering/ImmersiveEngineering.java
+  }
+
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
+    
+     
+    
     logger = new ModLogger(event.getModLog());
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
