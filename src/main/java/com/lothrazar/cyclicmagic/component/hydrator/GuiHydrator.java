@@ -1,8 +1,4 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
-import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
-import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -19,8 +15,8 @@ public class GuiHydrator extends GuiBaseContainer {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 32, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
-    //this.setScreenSize(ScreenSize.LARGE);
+    this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
+   
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -36,8 +32,21 @@ public class GuiHydrator extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHydrator.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHydrator.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    int x = this.guiLeft + ContainerHydrator.SLOTX_START - 1;
+    int y = this.guiTop + ContainerHydrator.SLOTY - 1;
+    for (int k = 0; k < 4; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          x + k % 2 * Const.SQ,
+          y + k / 2 * Const.SQ,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    x = this.guiLeft + 132;
+    y = this.guiTop + ContainerHydrator.SLOTY - 1;
+    for (int k = 0; k < 4; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          x + k % 2 * Const.SQ,
+          y + k / 2 * Const.SQ,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
 }

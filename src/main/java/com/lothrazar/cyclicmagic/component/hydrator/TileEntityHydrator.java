@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -31,7 +30,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
   private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_PROCESSING = 0;
-  private static final int SLOT_INFLUID = 1;
+  private static final int SLOT_INFLUID = 5;
   public FluidTank tank = new FluidTank(4000);
   public final static int TIMER_FULL = 60;
   public static enum Fields {
@@ -39,7 +38,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
   public TileEntityHydrator() {
-    super(9);
+    super(4 + 4 + 2);// in, out, 2 for fluid transfer
     timer = TIMER_FULL;
   }
   private int needsRedstone = 1;
@@ -55,12 +54,16 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (this.getCurrentFluid() == 0) { return; }
     if (this.updateTimerIsZero()) { // time to burn!
       this.spawnParticlesAbove();
-      tryProcessRecipe();
+      for (int i = 0; i < 4; i++) {
+        if (tryProcessRecipe(i)) {
+          break;//keep going until one works then stop
+        }
+      }
     }
   }
-  public void tryProcessRecipe() {
-    ItemStack s = this.getStackInSlot(SLOT_PROCESSING);
-    this.crafting.setInventorySlotContents(SLOT_PROCESSING, s);
+  public boolean tryProcessRecipe(int slot) {
+    ItemStack s = this.getStackInSlot(slot);
+    this.crafting.setInventorySlotContents(0, s);
     IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.tank.drain(FLUID_PER_RECIPE, true);
@@ -68,7 +71,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       s.shrink(1);
       this.timer = TIMER_FULL;
       this._debugTank();
+      return true;
     }
+    return false;
   }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
