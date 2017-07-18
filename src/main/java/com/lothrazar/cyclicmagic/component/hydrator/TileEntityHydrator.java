@@ -28,10 +28,12 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+  public static final int TANK_FULL = 10000;
+
   private static final int FLUID_PER_RECIPE = 100;
  
   private static final int SLOT_INFLUID = 8;
-  public FluidTank tank = new FluidTank(4000);
+  public FluidTank tank = new FluidTank(TANK_FULL);
   public final static int TIMER_FULL = 60;
   public static enum Fields {
     REDSTONE, TIMER
@@ -70,35 +72,35 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       this.sendOutput(rec.getRecipeOutput());
       s.shrink(1);
       this.timer = TIMER_FULL;
-      this._debugTank();
+ 
       return true;
     }
     return false;
   }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
-//    ModCyclic.logger.info(SLOT_INFLUID+maybeBucket.getDisplayName());
+ 
     FluidStack f = FluidUtil.getFluidContained(maybeBucket);
     IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
     if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
       //https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
-      _debugTank();
+   
       FluidActionResult r = FluidUtil.tryEmptyContainer(maybeBucket, tank, Fluid.BUCKET_VOLUME, null, true);
       //in the case of a full bucket, it becomes empty. 
       //also supports any other fluid holding item, simply draining that fixed amount each round
+      
       if (r.success) {
         this.setInventorySlotContents(SLOT_INFLUID, r.result);
-      }
-      _debugTank();
+      } 
     }
   }
-  public void _debugTank() {
-    if (this.tank.getFluid() != null) {
-      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
-          + "/" + this.tank.getInfo().capacity
-          + " " + this.tank.getFluid().getFluid().getName());
-    }
-  }
+//  public void _debugTank() {
+//    if (this.tank.getFluid() != null) {
+//      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
+//          + "/" + this.tank.getInfo().capacity
+//          + " " + this.tank.getFluid().getFluid().getName());
+//    }
+//  }
   public int getCurrentFluid() {
     if (this.tank.getFluid() == null) { return 0; }
     return this.tank.getFluid().amount;

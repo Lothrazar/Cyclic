@@ -16,16 +16,15 @@ public class GuiHydrator extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
-   
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (this.tile.tank.getFluid() != null) {
-      this.drawString(" " + this.tile.getCurrentFluid()
-          + "/" + this.tile.tank.getInfo().capacity, 30, 30);
-    }
+//    if (this.tile.tank.getFluid() != null) {
+//      this.drawString(" " + this.tile.getCurrentFluid()
+//          + "/" + this.tile.tank.getInfo().capacity, 30, 30);
+//    }
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -53,18 +52,18 @@ public class GuiHydrator extends GuiBaseContainer {
   private void drawFluidBar() {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
-    int pngWidth = 36, pngHeight=124;
+    int pngWidth = 36, pngHeight = 124, f = 2, h= pngHeight / f;//f is scale factor. original is too big
+    
+    int x = this.guiLeft + 80, y = this.guiTop + 10;
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 80,
-        this.guiTop+10, u, v,
-        pngWidth/2, pngHeight/2,
-        pngWidth/2, pngHeight/2);
-//    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
-//    float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
-//    Gui.drawModalRectWithCustomSizedTexture(
-//        this.guiLeft + screenSize.width() + Const.PAD,
-//        this.guiTop + Const.PAD, u, v,
-//        14, (int) (84 * percent),
-//        14, 84);
+        x, y, u, v,
+        pngWidth / f, h,
+        pngWidth / f, h);
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
+    float percent = ((float) tile.getCurrentFluid() / ((float) TileEntityHydrator.TANK_FULL));
+    Gui.drawModalRectWithCustomSizedTexture(
+        x + 1, y + 1, u, v,
+        16, (int) (h * percent),
+        16, h);
   }
 }
