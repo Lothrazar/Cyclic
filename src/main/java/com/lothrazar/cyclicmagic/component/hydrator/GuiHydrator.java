@@ -48,5 +48,23 @@ public class GuiHydrator extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    this.drawFluidBar();
+  }
+  private void drawFluidBar() {
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
+    int pngWidth = 36, pngHeight=124;
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + 80,
+        this.guiTop+10, u, v,
+        pngWidth/2, pngHeight/2,
+        pngWidth/2, pngHeight/2);
+//    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
+//    float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
+//    Gui.drawModalRectWithCustomSizedTexture(
+//        this.guiLeft + screenSize.width() + Const.PAD,
+//        this.guiTop + Const.PAD, u, v,
+//        14, (int) (84 * percent),
+//        14, 84);
   }
 }

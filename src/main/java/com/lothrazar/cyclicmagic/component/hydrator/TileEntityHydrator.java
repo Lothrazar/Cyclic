@@ -29,8 +29,8 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
   private static final int FLUID_PER_RECIPE = 100;
-  private static final int SLOT_PROCESSING = 0;
-  private static final int SLOT_INFLUID = 5;
+ 
+  private static final int SLOT_INFLUID = 8;
   public FluidTank tank = new FluidTank(4000);
   public final static int TIMER_FULL = 60;
   public static enum Fields {
@@ -77,6 +77,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
+//    ModCyclic.logger.info(SLOT_INFLUID+maybeBucket.getDisplayName());
     FluidStack f = FluidUtil.getFluidContained(maybeBucket);
     IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
     if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
