@@ -14,11 +14,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankProperties;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+  private static final int SLOT_PROCESSING = 0;
+  private static final int SLOT_INFLUID = 1;
   public FluidTank tank = new FluidTank(4000);
   public final static int TIMER_FULL = 120;
   public static enum Fields {
@@ -37,14 +45,42 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     if (!isRunning()) { return; }
-    FluidStack fs = this.tank.getFluid();
-    //WAT https://github.com/BluSunrize/ImmersiveEngineering/search?utf8=%E2%9C%93&q=FluidUtil&type=
-    ModCyclic.logger.info("fluidstack " +fs);
-    this.spawnParticlesAbove();
-    this.shiftAllUp();
     if (this.updateTimerIsZero()) { // time to burn!
-      ItemStack s = this.getStackInSlot(0);
-      this.crafting.setInventorySlotContents(0, s);
+      this.timer = TIMER_FULL;
+      ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
+      FluidStack f = FluidUtil.getFluidContained(maybeBucket);
+      if (f != null && f.getFluid().equals(FluidRegistry.WATER)) {
+//https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
+        
+        
+        ModCyclic.logger.info(" try input water  " );
+    
+
+//        FluidStack reallyDrained = FluidUtil.getFluidHandler(maybeBucket).drain(1000, true);
+        
+        //source, dest, amt, doIt 
+        FluidStack afterTransferBucketToTank=     FluidUtil.tryFluidTransfer(tank, FluidUtil.getFluidHandler(maybeBucket), 1000, true);
+        
+        
+//        if (reallyDrained != null) {}
+        ModCyclic.logger.info(" afterTransferBucketToTank  " + afterTransferBucketToTank);
+        ModCyclic.logger.info(" maybeBucket is now  " + maybeBucket.getDisplayName());
+//        int fillResult = this.fill(FluidUtil.getFluidContained(maybeBucket), true);
+//        if (fillResult > 0) {}
+//        ModCyclic.logger.info(" fillResult  " + fillResult);
+        //WAT https://github.com/BluSunrize/ImmersiveEngineering/search?utf8=%E2%9C%93&q=FluidUtil&type=
+        //    ModCyclic.logger.info("fluidstack " + this.tank.getFluid());
+        if (this.tank.getFluid() != null) {
+          ModCyclic.logger.info("tank =  " + this.tank.getFluid().amount
+              + "/" + this.tank.getInfo().capacity
+              + " " + this.tank.getFluid().getFluid().getName());
+        }
+        
+      }
+      this.spawnParticlesAbove();
+      //    this.shiftAllUp();
+      ItemStack s = this.getStackInSlot(SLOT_PROCESSING);
+      this.crafting.setInventorySlotContents(SLOT_PROCESSING, s);
       IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
       if (rec != null) {
         this.sendOutput(rec.getRecipeOutput());
@@ -102,6 +138,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+  /******************************
+   * fluid properties here
+   ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
@@ -119,5 +158,22 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     public boolean canInteractWith(EntityPlayer playerIn) {
       return false;
     }
+  }
+  @Override
+  public IFluidTankProperties[] getTankProperties() {
+    FluidTankInfo info = tank.getInfo();
+    return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
+  }
+  @Override
+  public int fill(FluidStack resource, boolean doFill) {
+    return tank.fill(resource, doFill);
+  }
+  @Override
+  public FluidStack drain(FluidStack resource, boolean doDrain) {
+    return tank.drain(resource, doDrain);
+  }
+  @Override
+  public FluidStack drain(int maxDrain, boolean doDrain) {
+    return tank.drain(maxDrain, doDrain);
   }
 }
