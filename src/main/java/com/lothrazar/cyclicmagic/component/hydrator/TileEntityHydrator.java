@@ -29,10 +29,11 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+  private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_PROCESSING = 0;
   private static final int SLOT_INFLUID = 1;
   public FluidTank tank = new FluidTank(4000);
-  public final static int TIMER_FULL = 120;
+  public final static int TIMER_FULL = 60;
   public static enum Fields {
     REDSTONE
   }
@@ -51,20 +52,21 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (!isRunning()) { return; }
     //ignore timer when filling up water
     tryFillTankFromItems();
+    if (this.getCurrentFluid() == 0) { return; }
     if (this.updateTimerIsZero()) { // time to burn!
-      
-      
-      
       this.timer = TIMER_FULL;
       this.spawnParticlesAbove();
-      //    this.shiftAllUp();
-      ItemStack s = this.getStackInSlot(SLOT_PROCESSING);
-      this.crafting.setInventorySlotContents(SLOT_PROCESSING, s);
-      IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
-      if (rec != null) {
-        this.sendOutput(rec.getRecipeOutput());
-        s.shrink(1);
-      }
+      tryProcessRecipe();
+    }
+  }
+  public void tryProcessRecipe() {
+    ItemStack s = this.getStackInSlot(SLOT_PROCESSING);
+    this.crafting.setInventorySlotContents(SLOT_PROCESSING, s);
+    IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
+    if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
+      this.tank.drain(FLUID_PER_RECIPE, true);
+      this.sendOutput(rec.getRecipeOutput());
+      s.shrink(1);
     }
   }
   public void tryFillTankFromItems() {
@@ -89,6 +91,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
           + "/" + this.tank.getInfo().capacity
           + " " + this.tank.getFluid().getFluid().getName());
     }
+  }
+  public int getCurrentFluid() {
+    if (this.tank.getFluid() == null) { return 0; }
+    return this.tank.getFluid().amount;
   }
   public void sendOutput(ItemStack out) {
     UtilItemStack.dropItemStackInWorld(this.world, this.getPos(), out);

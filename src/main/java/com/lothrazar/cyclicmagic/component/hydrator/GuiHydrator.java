@@ -24,11 +24,9 @@ public class GuiHydrator extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
     if (this.tile.tank.getFluid() != null) {
-      FluidStack fluid = this.tile.tank.getFluid();
-      
-      this.drawString(" " + fluid.amount
-          + "/" + this.tile.tank.getInfo().capacity
-          + " " + fluid.getFluid().getName(),30,30);
+ 
+      this.drawString(" " + this.tile.getCurrentFluid()
+          + "/" + this.tile.tank.getInfo().capacity ,30,30);
     } 
   }
   
