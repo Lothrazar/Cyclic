@@ -15,16 +15,16 @@ public class GuiHydrator extends GuiBaseContainer {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
+    // this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-//    if (this.tile.tank.getFluid() != null) {
-//      this.drawString(" " + this.tile.getCurrentFluid()
-//          + "/" + this.tile.tank.getInfo().capacity, 30, 30);
-//    }
+    //    if (this.tile.tank.getFluid() != null) {
+    //      this.drawString(" " + this.tile.getCurrentFluid()
+    //          + "/" + this.tile.tank.getInfo().capacity, 30, 30);
+    //    }
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -52,18 +52,21 @@ public class GuiHydrator extends GuiBaseContainer {
   private void drawFluidBar() {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
-    int pngWidth = 36, pngHeight = 124, f = 2, h= pngHeight / f;//f is scale factor. original is too big
-    
+    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int x = this.guiLeft + 80, y = this.guiTop + 10;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
         pngWidth / f, h);
+    h -= 2;// inner texture is 2 smaller, one for each border
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
     float percent = ((float) tile.getCurrentFluid() / ((float) TileEntityHydrator.TANK_FULL));
+    int hpct = (int) (h * percent);
+  //  System.out.println(tile.getCurrentFluid()+"_"+percent);
     Gui.drawModalRectWithCustomSizedTexture(
-        x + 1, y + 1, u, v,
-        16, (int) (h * percent),
+        x + 1, y + 1 + h - hpct,
+        u, v,
+        16, hpct,
         16, h);
   }
 }

@@ -34,7 +34,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
  
   private static final int SLOT_INFLUID = 8;
   public FluidTank tank = new FluidTank(TANK_FULL);
-  public final static int TIMER_FULL = 60;
+  public final static int TIMER_FULL = 40;
   public static enum Fields {
     REDSTONE, TIMER
   }
