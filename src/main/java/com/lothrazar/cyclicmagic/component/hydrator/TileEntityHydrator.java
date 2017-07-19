@@ -28,10 +28,9 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+  private static final String NBT_TANK = "tank";
   public static final int TANK_FULL = 10000;
-
   private static final int FLUID_PER_RECIPE = 100;
- 
   private static final int SLOT_INFLUID = 8;
   public FluidTank tank = new FluidTank(TANK_FULL);
   public final static int TIMER_FULL = 40;
@@ -40,7 +39,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
   public TileEntityHydrator() {
-    super(4 + 4 + 2);// in, out, 2 for fluid transfer
+    super(4 + 4 + 1);// in, out,  fluid transfer
     timer = TIMER_FULL;
   }
   private int needsRedstone = 1;
@@ -69,56 +68,59 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.tank.drain(FLUID_PER_RECIPE, true);
-      this.sendOutput(rec.getRecipeOutput());
+      this.sendOutputItem(rec.getRecipeOutput());
       s.shrink(1);
       this.timer = TIMER_FULL;
- 
       return true;
     }
     return false;
   }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
- 
     FluidStack f = FluidUtil.getFluidContained(maybeBucket);
     IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
     if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
       //https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
-   
       FluidActionResult r = FluidUtil.tryEmptyContainer(maybeBucket, tank, Fluid.BUCKET_VOLUME, null, true);
       //in the case of a full bucket, it becomes empty. 
       //also supports any other fluid holding item, simply draining that fixed amount each round
-      
       if (r.success) {
         this.setInventorySlotContents(SLOT_INFLUID, r.result);
-      } 
+      }
     }
   }
-//  public void _debugTank() {
-//    if (this.tank.getFluid() != null) {
-//      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
-//          + "/" + this.tank.getInfo().capacity
-//          + " " + this.tank.getFluid().getFluid().getName());
-//    }
-//  }
+  //  public void _debugTank() {
+  //    if (this.tank.getFluid() != null) {
+  //      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
+  //          + "/" + this.tank.getInfo().capacity
+  //          + " " + this.tank.getFluid().getFluid().getName());
+  //    }
+  //  }
   public int getCurrentFluid() {
     if (this.tank.getFluid() == null) { return 0; }
     return this.tank.getFluid().amount;
   }
-  public void sendOutput(ItemStack out) {
-    UtilItemStack.dropItemStackInWorld(this.world, this.getPos(), out);
+  public void sendOutputItem(ItemStack itemstack) {
+    for (int i = 3 + 1; i < 8; i++) {
+      if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
+        itemstack = tryMergeStackIntoSlot(itemstack, i);
+      }
+    }
+    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) { //FULL
+      UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.up(), itemstack);
+    }
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    tagCompound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
+    tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
     return super.writeToNBT(tagCompound);
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    tank.readFromNBT(tagCompound.getCompoundTag("tank"));
+    tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

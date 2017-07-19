@@ -5,6 +5,8 @@ public class Const {
   public static class Res {
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+    public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");
+    public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(Const.MODID, folder + "slot_bucket.png");
     public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");

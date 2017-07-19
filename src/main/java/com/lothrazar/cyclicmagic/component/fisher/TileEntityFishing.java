@@ -138,11 +138,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
           //else do nothing, leave it flat. mimics getting damaged and repaired right away
         }
         //loot phase
-        this.tryAddToInventory(itemstack);
+        this.sendOutputItem(itemstack);
       }
     }
   }
-  private void tryAddToInventory(ItemStack itemstack) {
+  private void sendOutputItem(ItemStack itemstack) {
     for (int i = RODSLOT + 1; i <= FISHSLOTS; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
@@ -174,7 +174,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       //IF enchanted and IF about to break, then spit it out
       int damageRem = equip.getMaxDamage() - equip.getItemDamage();
       if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
-        tryAddToInventory(equip);
+        sendOutputItem(equip);
         this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
       } //otherwise we also make sure if its fullly damanged
       if (equip.getItemDamage() >= equip.getMaxDamage()) {
