@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
@@ -46,6 +47,9 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
         10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     ////////////////// custom recipe hook
+    
+    registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
+    
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
   }
@@ -105,7 +109,6 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
       guiItemStacks.init(0, true, 10, 30);
-      System.out.println(ingredients.getInputs(ItemStack.class));
       guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
       guiItemStacks.init(1, false, 30, 30);
       guiItemStacks.set(1, recipeWrapper.getOut());

@@ -40,9 +40,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
         SLOTX_FLUID,
         SLOTY_FLUID));
     slotNum++;
-
-    System.out.println(slotNum+"  yaBB"+tile.getSizeInventory());
-  }
+ }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
