@@ -75,4 +75,8 @@ public class ContainerUser extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
+  
+  
+  
+  
 }

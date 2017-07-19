@@ -3,9 +3,12 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,7 +31,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
       slotNum++;
     }
     for (int i = 0; i < 4; i++) { 
-      addSlotToContainer(new SlotOutputOnly(tile, slotNum,
+      addSlotToContainer(new Slot(tile, slotNum,
           MID_SPACING +1+ i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
@@ -37,11 +40,33 @@ public class ContainerHydrator extends ContainerBaseMachine {
         SLOTX_FLUID,
         SLOTY_FLUID));
     slotNum++;
-//    addSlotToContainer(new SlotOutputOnly(tile, slotNum,
-//        SLOTX_EMPTY,
-//        SLOTY_SLOT));
-//    slotNum++;
- 
+
+    System.out.println(slotNum+"  yaBB"+tile.getSizeInventory());
+  }
+  @Override
+  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    ItemStack stack = ItemStack.EMPTY;
+    Slot slotObject = (Slot) inventorySlots.get(slot);
+    // null checks and checks if the item can be stacked (maxStackSize > 1)
+    if (slotObject != null && slotObject.getHasStack()) {
+      ItemStack stackInSlot = slotObject.getStack();
+      stack = stackInSlot.copy();
+      // merges the item into player inventory since its in the tileEntity
+       
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      }
+      else if (!this.mergeItemStack(stackInSlot, 0, 36, false)) { return ItemStack.EMPTY; }
+      if (stackInSlot.getCount() == 0) {
+        slotObject.putStack(ItemStack.EMPTY);
+      }
+      else {
+        slotObject.onSlotChanged();
+      }
+      if (stackInSlot.getCount() == stack.getCount()) { return ItemStack.EMPTY; }
+      slotObject.onTake(player, stackInSlot);
+    }
+    return stack;
   }
   @Override
   @SideOnly(Side.CLIENT)

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -32,11 +31,13 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public static final int TANK_FULL = 10000;
   private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_INFLUID = 8;
-  public FluidTank tank = new FluidTank(TANK_FULL);
   public final static int TIMER_FULL = 40;
   public static enum Fields {
     REDSTONE, TIMER
   }
+  public FluidTank tank = new FluidTank(TANK_FULL);
+  private int[] hopperInput = { 0, 1, 2, 3 }; 
+  private int[] hopperOutput = { 4, 5, 6, 7 }; 
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
   public TileEntityHydrator() {
     super(4 + 4 + 1);// in, out,  fluid transfer
@@ -75,6 +76,12 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     return false;
   }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    if (side == EnumFacing.UP)
+      return hopperInput;
+    return hopperOutput;
+  }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
     FluidStack f = FluidUtil.getFluidContained(maybeBucket);
@@ -89,13 +96,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
-  //  public void _debugTank() {
-  //    if (this.tank.getFluid() != null) {
-  //      ModCyclic.logger.info("AFTERtank =  " + this.tank.getFluid().amount
-  //          + "/" + this.tank.getInfo().capacity
-  //          + " " + this.tank.getFluid().getFluid().getName());
-  //    }
-  //  }
+ 
   public int getCurrentFluid() {
     if (this.tank.getFluid() == null) { return 0; }
     return this.tank.getFluid().amount;
@@ -121,10 +122,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] {};
   }
   @Override
   public int getField(int id) {
