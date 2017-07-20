@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.29",
     "1.11.2-latest": "1.5.9",
     "1.11.2-recommended": "1.5.9",
-    "1.12-latest": "1.6.0",
-    "1.12-recommended": "1.6.0"
+    "1.12-latest": "1.6.1",
+    "1.12-recommended": "1.6.1"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -187,5 +187,6 @@
   	,"1.5.10":"Nether and End Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  Fixed crafting bug in the workbench and inventory crafting that would temporarily disable recipes.  Fix fall damage desync bug with climbing gloves.  Fix many missing tooltips.  Fix item tooltip boxes not rendering in cyclic GUI's.  Fixed text pages adding to guide book twice (doubled).  "
 	,"1.5.11":"Stop cyclic machines trying to work while chunks are unloaded, causing TPS issues on servers.  Default config values changed (affects new and not existing config files): For both end and nether ores, spawnChanceDiamond = 1 and spawnChanceEmerald = 1.   For Uncrafter: added elytra and techreborn:uumatter to both BlacklistOutput and BlacklistInput.  Added resourcefulcrops to BlacklistMod.  Removed 'Elytra Repair' config entry and feature (overpowered and not working right).  Monster ball is now reuseable; does not break after a single use.   Fixed Ender Wings and Ender Book not playing sounds on teleport.  Made small changes to about five recipes.   Added support for Enchantment Descriptions (which are added by walia and other mods).  Fix BeheadingExtraMobs config system for the enchantment, it now uses modname:monster-player, matching the summon command.  Fix buttons on some GUI's having broken textures on the bottom.  Automated User in attack mode will no longer hit entities outside of its bounding box. "
 	,"1.6.0":"No longer uses JSON recipe files, this fixes the error in forge that removes ALL mod recipes when any one item is disabled in config.  All machines in cyclic that have fuel slots will no longer run for free, they now require fuel.  Fixed some tooltip issues.  The Ender Book and Ender Wing items now hook into forge event system, so they can get affected/blocked/redirected other items/blocks (compatibility with DarkUtilities and other mods).  Interfaces with textboxes now allow you to hold down the button (Ender Book, Faith Plate, Password Detector).  Automated User can now attack tiny entities such as silverfish.  Reduced cooldown on Exchange scepters.  Fixed wither skeleton skulls not dropping from Beheading enchantment.  Beheading enchant will no longer crash the game when used on a player.  All new custom made sounds for Ender Wings and Ender Book.  Fixed a potential exploit in Unchant Pylon.   Experience pylon range increased to 8 blocks away, up from 5.  Fixed Experience pylon collection area; it is now centered on the block instead of only working on one side.   "
+	,"1.6.1":"Fix item tooltips not showing in Sack of Storage.  Fix Entity Detector range being offcenter; also added a preview button to render selected area.  Auto Fisher should no longer let fish and other loot into fishing rod slot when the rod breaks.  Fixed some missing recipes.  Charms can now be repaired in an anvil instead of crafting table.  The horse upgrade carrots will now get eaten only one at a time, instead of double. "
   }
 }

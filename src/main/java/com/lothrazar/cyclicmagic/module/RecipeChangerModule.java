@@ -48,7 +48,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         true, "Craft Netherwart blocks back to item").getBoolean();
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (glowstoneBlockToDust) {
       glowstoneBlockToDust();
     }

@@ -54,36 +54,9 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
       if (result == EntityPlayer.SleepResult.OK) {
         final IPlayerExtendedProperties sleep = CapabilityRegistry.getPlayerProperties(player);
         if (sleep != null) {
-          sleep.setSleeping(true);
-          if (doPotions) {
-            player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-          }
-          this.onUse(stack, player, world, hand);
-          //hack because vanilla/forge has that java.lang.IllegalArgumentException: Cannot get property PropertyDirection error with assuming its a bed when its blocks.air
-          ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, true, "sleeping", "field_71083_bS");
-          ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, 0, "sleepTimer", "field_71076_b");
-          UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".trying");
-          //first set bed location
-          player.bedLocation = player.getPosition();
-          ModCyclic.network.sendTo(new PacketSleepClient(player.bedLocation), mp);
-          //then stop player in place
-          player.motionX = player.motionZ = player.motionY = 0;
-          world.updateAllPlayersSleepingFlag();
-          //then trigger vanilla sleep event(s)
-          //                world.setBlockState(player.getPosition(), Blocks.BED.getDefaultState());
-          SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
-          mp.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
-          mp.connection.sendPacket(sleepPacket);
-          //                mp.setRenderOffsetForSleep(player.getHorizontalFacing());//is private
-          ItemSleepingMat.setRenderOffsetForSleep(player, player.getHorizontalFacing());
-          if (doesSetSpawn) {
-            System.out.println("settingspawn");
-            player.setSpawnPoint(player.getPosition(), true);//true means it wont check for bed block
-          }
+          onSleepSuccess(world, hand, stack, mp, sleep);
         }
         else {
-          //					ModMain.logger.error("NULL IPlayerExtendedProperties found");
           //should never happen... but just in case
           UtilChat.addChatMessage(player, "tile.bed.noSleep");
         }
@@ -96,10 +69,31 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     }
     return ActionResult.newResult(EnumActionResult.PASS, stack);
   }
-  //stupid private functions in entity player
-  public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing p_175139_1_) {
-    mp.renderOffsetX = -1.8F * (float) p_175139_1_.getFrontOffsetX();
-    mp.renderOffsetZ = -1.8F * (float) p_175139_1_.getFrontOffsetZ();
+  public void onSleepSuccess(World world, EnumHand hand, ItemStack stack, EntityPlayerMP player, final IPlayerExtendedProperties sleep) {
+    sleep.setSleeping(true);
+    if (doPotions) {
+      player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+      player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+    }
+    this.onUse(stack, player, world, hand);
+    //hack because vanilla/forge has that java.lang.IllegalArgumentException: Cannot get property PropertyDirection error with assuming its a bed when its blocks.air
+    ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, true, "sleeping", "field_71083_bS");
+    ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, 0, "sleepTimer", "field_71076_b");
+    UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".trying");
+    //first set bed location
+    player.bedLocation = player.getPosition();
+    ModCyclic.network.sendTo(new PacketSleepClient(player.bedLocation), player);
+    //then stop player in place
+    player.motionX = player.motionZ = player.motionY = 0;
+    world.updateAllPlayersSleepingFlag();
+    //then trigger vanilla sleep event(s)
+    //                world.setBlockState(player.getPosition(), Blocks.BED.getDefaultState());
+    SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
+    player.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
+    player.connection.sendPacket(sleepPacket);
+    if (doesSetSpawn) {
+      player.setSpawnPoint(player.getPosition(), true);//true means it wont check for bed block
+    }
   }
   /**
    * hack in the vanilla sleep test, or at least something similar
@@ -117,17 +111,24 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     return EntityPlayer.SleepResult.OK;
   }
   @SubscribeEvent
-  public void onBedCheck(SleepingLocationCheckEvent evt) {
-    EntityPlayer p = evt.getEntityPlayer();
+  public void onBedCheck(SleepingLocationCheckEvent event) {
+    EntityPlayer p = event.getEntityPlayer();
     final IPlayerExtendedProperties sleep = p.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
-      p.bedLocation = p.getPosition();
-      evt.setResult(Result.ALLOW);
+      if (p.isSneaking()) {
+        //you want to cancel, ok
+        sleep.setSleeping(false);
+      }
+      else {
+        p.bedLocation = p.getPosition();
+        event.setResult(Result.ALLOW);
+      }
     }
   }
   @SubscribeEvent
   public void handleSleepInBed(PlayerSleepInBedEvent event) {
-    final IPlayerExtendedProperties sleep = event.getEntityPlayer().getCapability(ModCyclic.CAPABILITYSTORAGE, null);
+    EntityPlayer p = event.getEntityPlayer();
+    final IPlayerExtendedProperties sleep = p.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
       event.setResult(EntityPlayer.SleepResult.OK);
     }
@@ -151,5 +152,11 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         "leather");
+  } //stupid private functions in entity player
+  public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing p_175139_1_) {
+    mp.renderOffsetX = -1.8F * (float) p_175139_1_.getFrontOffsetX();
+    mp.renderOffsetZ = -1.8F * (float) p_175139_1_.getFrontOffsetZ();
+    //maybe one day.. meh
+    //UtilReflection.callPrivateMethod(Entity.class, mp, "setSize", "setSize", new Object[]{0.2F,0.2F});
   }
 }

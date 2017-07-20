@@ -20,6 +20,7 @@ public class GuiDetector extends GuiBaseContainer {
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldPreviewBtn = TileEntityDetector.Fields.RENDERPARTICLES.ordinal();
   }
   @Override
   public void initGui() {

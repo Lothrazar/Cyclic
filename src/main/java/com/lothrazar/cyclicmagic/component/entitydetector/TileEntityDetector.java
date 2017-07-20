@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,9 +12,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle {
   public TileEntityDetector() {
     super(0);
   }
@@ -23,9 +26,10 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   private boolean isPoweredNow = false;
   private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;
+  private int renderParticles;
   private static final int MAX_RANGE = 16;
   public static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE;
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES;
   }
   public static enum EntityType {
     LIVING, ITEM, EXP, PLAYER;
@@ -40,7 +44,14 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     World world = this.getWorld();
-    List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1)).expand(rangeX, rangeY, rangeZ));
+    BlockPos p = this.getPos();
+    double x = p.getX();
+    double y = p.getY();
+    double z = p.getZ();
+    AxisAlignedBB entityRange = new AxisAlignedBB(
+        x - this.rangeX, y - this.rangeY, z - this.rangeZ,
+        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
+    List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), entityRange);
     int entitiesFound = (entityList == null) ? 0 : entityList.size();
     boolean trigger = false;
     switch (this.compType) {
@@ -104,6 +115,8 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         return this.rangeY;
       case RANGEZ:
         return this.rangeZ;
+      case RENDERPARTICLES:
+        return this.renderParticles;
       default:
       break;
     }
@@ -132,8 +145,8 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         if (value > 999) {
           value = MAX_RANGE;
         }
-        if (value < 1) {
-          value = 1;
+        if (value < 0) {
+          value = 0;
         }
         this.limitUntilRedstone = value;
       break;
@@ -153,7 +166,8 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
           value = EntityType.values().length - 1;
         this.entityType = EntityType.values()[value];
       break;
-      default:
+      case RENDERPARTICLES:
+        this.renderParticles = value;
       break;
     }
   }
@@ -184,5 +198,18 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     tagCompound.setInteger("compare", compType.ordinal());
     tagCompound.setInteger("et", entityType.ordinal());
     return super.writeToNBT(tagCompound);
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return UtilShape.rectFrame(this.getPos(), this.rangeX, this.rangeY, this.rangeZ);
+  }
+  @Override
+  public void togglePreview() {
+    int val = (this.renderParticles + 1) % 2;
+    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
+  }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

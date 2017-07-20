@@ -81,11 +81,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   private void updateCollection() {
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
-    AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1*RADIUS, -1*VRADIUS, -1*RADIUS);//expandXyz
-   
+    AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1 * RADIUS, -1 * VRADIUS, -1 * RADIUS);//expandXyz
     List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, region);
     if (orbs != null) { //no timer just EAT
-       
       for (EntityXPOrb orb : orbs) {
         if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
           getWorld().removeEntity(orb);//calls     orb.setDead(); for me

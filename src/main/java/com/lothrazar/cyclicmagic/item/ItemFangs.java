@@ -91,7 +91,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
         'w', Blocks.WEB,
         'r', Blocks.END_ROD,
         'c', Items.END_CRYSTAL,
-        'p', Blocks.PACKED_ICE,
+        'p', Blocks.ICE, //ore dict ice doesnt exist
         'd', "blockEmerald");
   }
 }

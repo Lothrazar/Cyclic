@@ -41,6 +41,8 @@ public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepC
       //otherwise vanilla MC code gets NPE thrown
       player.bedLocation = message.pos;
       ItemSleepingMat.setRenderOffsetForSleep(player, player.getHorizontalFacing());
+      //this should have shown the 'leave bed' dialog.. doesnt work dangit 
+      //   Minecraft.getMinecraft().displayGuiScreen(new GuiSleepMP());
     }
     return null;
   }

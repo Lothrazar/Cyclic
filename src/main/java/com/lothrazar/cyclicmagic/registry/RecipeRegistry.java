@@ -82,7 +82,6 @@ public class RecipeRegistry {
   }
   private static void add(IRecipe r, ResourceLocation location) {
     r.setRegistryName(location);
-    //  ModCyclic.logger.info(" recipe =>"+location.toString());
     recipes.add(r);
   }
   ResourceLocation group = new ResourceLocation(Const.MODID, "recipes");
