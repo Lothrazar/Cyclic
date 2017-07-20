@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
@@ -81,9 +82,9 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     private IDrawable gui;
     private IDrawable icon;
     public HydratorRecipeCategory(IGuiHelper helper) {
-      gui = helper.createDrawable(Const.Res.TABLEDEFAULT, 177, 31, 16, 47);
+      gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
       //TOD: block is wrong of course, just POC
-      icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_crafter.png"), 0, 0, 16, 16);
+      icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/block_workbench_top.png"), 0, 0, 16, 16, 16, 16);
     }
     @Override
     public String getUid() {
@@ -91,7 +92,7 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     }
     @Override
     public String getTitle() {
-      return RECIPE_CATEGORY_HYDRATOR + ".title";
+      return "tile.block_hydrator.name";
     }
     @Override
     public String getModName() {
@@ -108,9 +109,9 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      guiItemStacks.init(0, true, 10, 30);
+      guiItemStacks.init(0, true, 3, 18);
       guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
-      guiItemStacks.init(1, false, 30, 30);
+      guiItemStacks.init(1, false, 129, 18);
       guiItemStacks.set(1, recipeWrapper.getOut());
     }
   }

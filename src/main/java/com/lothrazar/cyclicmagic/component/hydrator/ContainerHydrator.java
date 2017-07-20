@@ -18,7 +18,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
   static final int SLOTY_FLUID = 39;
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   static final int SLOTX_START = 8;
-  static final int SLOTY = 30;
+  public static final int SLOTY = 30;
   static final int SQ = 18;
   public ContainerHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator te) {
     this.setTile(te);
