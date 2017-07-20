@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodStep;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
+import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -36,6 +37,9 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
     ItemFoodStep food_step = new ItemFoodStep();
     ItemRegistry.register(food_step, "food_step");
     ModCyclic.instance.events.register(food_step);
+    ItemStirrupsReverse stirrup_inverse = new ItemStirrupsReverse();
+    ItemRegistry.register(stirrup_inverse, "stirrup_inverse");
+    
     if (enableHorseFoodUpgrades) {
       Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD));
       Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));

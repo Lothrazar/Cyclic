@@ -10,15 +10,22 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemStirrups extends BaseTool implements IHasRecipe {
-  public ItemStirrups() {
+public class ItemStirrupsReverse extends BaseTool implements IHasRecipe {
+  public ItemStirrupsReverse() {
     super(100);
   }
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     World world = entity.getEntityWorld();
    // if (world.isRemote) { return false; }
-    player.startRiding(entity, true);
+     
+    if(entity.isRidingOrBeingRiddenBy(player) == false){
+      entity.startRiding(player, true);
+    player.getPassengers().add(entity);
+    }
+    else{
+player.removePassengers();
+    }
     super.onUse(stack, player, world, hand);
     return true;
   }
