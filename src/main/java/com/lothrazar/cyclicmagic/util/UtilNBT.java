@@ -4,7 +4,9 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityEvokerFangs;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -187,5 +189,11 @@ public class UtilNBT {
     skullOwner.setTag("Properties", props);
     base.setTag(Const.SkullOwner, skullOwner);
     return base;
+  }
+  public static void setEntityBoolean(EntityEvokerFangs entityevokerfangs, String string) {
+    entityevokerfangs.getEntityData().setBoolean(string, true);
+  }
+  public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
+    return entityevokerfangs.getEntityData().getBoolean(string);
   }
 }

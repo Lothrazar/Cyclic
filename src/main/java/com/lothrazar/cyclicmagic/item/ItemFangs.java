@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +19,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemFangs extends BaseTool implements IHasRecipe {
+  private static final String NBT_FANG_FROMPLAYER = "cyclicfang";
   private static final int COOLDOWN = 10;//ticks not seconds
   private static final int DURABILITY = 666;
   private static final int MAX_RANGE = 16;
@@ -77,6 +81,9 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
   private void summonFangSingle(EntityPlayer caster, double x, double y, double z, float yaw, int delay) {
     EntityEvokerFangs entityevokerfangs = new EntityEvokerFangs(caster.world, x, y, z, yaw, delay, caster);
     caster.world.spawnEntity(entityevokerfangs);
+    // so. WE are using this hack because the entity has a MAGIC NUMBER of 6.0F hardcoded in a few places deep inside methods and if statements
+    //this number is the damage that it deals.  ( It should be a property )
+    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
   }
   private void onCastSuccess(EntityPlayer caster) {
     UtilSound.playSound(caster, SoundEvents.EVOCATION_ILLAGER_PREPARE_ATTACK);
@@ -93,5 +100,14 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
         'c', Items.END_CRYSTAL,
         'p', Blocks.ICE, //ore dict ice doesnt exist
         'd', "blockEmerald");
+  }
+  @SubscribeEvent
+  public void onAttack(LivingHurtEvent event) {
+    //true source is player that was holding the fang item
+    //immediate source is the entity. and we check the boolean flag to make sure it was one of these, not from illager or some other spawn reason
+    if (event.getSource().getImmediateSource() instanceof EntityEvokerFangs
+        && UtilNBT.getEntityBoolean(event.getSource().getImmediateSource(), NBT_FANG_FROMPLAYER)) {
+      event.setAmount(event.getAmount() * 2);
+    }
   }
 }
