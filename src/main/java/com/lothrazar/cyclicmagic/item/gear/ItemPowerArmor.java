@@ -111,25 +111,25 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
       case CHEST:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "p p", "oio", "ooo",
-            'i', new ItemStack(Items.CHAINMAIL_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
+            'i', "gemDiamond",
             'o', "obsidian",
             'p', "dyePurple");
       case FEET:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "   ", "p p", "oio",
-            'i', new ItemStack(Items.CHAINMAIL_BOOTS, 1, OreDictionary.WILDCARD_VALUE),
+            'i', "gemDiamond",
             'o', "obsidian",
             'p', "dyePurple");
       case HEAD:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "   ",
-            'i', new ItemStack(Items.CHAINMAIL_HELMET, 1, OreDictionary.WILDCARD_VALUE),
+            'i', "gemDiamond",
             'o', "obsidian",
             'p', "dyePurple");
       case LEGS:
         return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "o o",
-            'i', new ItemStack(Items.CHAINMAIL_LEGGINGS, 1, OreDictionary.WILDCARD_VALUE),
+            'i', "gemDiamond",
             'o', "obsidian",
             'p', "dyePurple");
     }
@@ -142,8 +142,8 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
   }
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
-    if (tags.hasKey(NBT_STATUS) == false) { return true;//default for newlycrafted//legacy items
-    }
+    if (tags.hasKey(NBT_STATUS) == false) { return true;}//default for newlycrafted//legacy items
+    
     return tags.getInteger(NBT_STATUS) == 1;
   }
 }

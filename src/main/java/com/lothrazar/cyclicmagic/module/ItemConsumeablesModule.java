@@ -8,11 +8,13 @@ import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.ItemChorusCorrupted;
 import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
+import com.lothrazar.cyclicmagic.item.ItemFoodStep;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -31,6 +33,9 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   private boolean enableLapisApple;
   @Override
   public void onPreInit() {
+    ItemFoodStep food_step = new ItemFoodStep();
+    ItemRegistry.register(food_step, "food_step");
+    ModCyclic.instance.events.register(food_step);
     if (enableHorseFoodUpgrades) {
       Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD));
       Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));

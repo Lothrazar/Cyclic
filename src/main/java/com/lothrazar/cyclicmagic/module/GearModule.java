@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemFoodStep;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldHoe;
