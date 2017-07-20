@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExt
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.gui.IDrawable;
@@ -92,7 +93,7 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     }
     @Override
     public String getTitle() {
-      return "tile.block_hydrator.name";
+      return UtilChat.lang("tile.block_hydrator.name");
     }
     @Override
     public String getModName() {
@@ -100,7 +101,7 @@ public class JEIPlugin extends mezz.jei.api.BlankModPlugin {
     }
     @Override
     public IDrawable getIcon() {
-      return icon;//tab icon
+      return icon;
     }
     @Override
     public IDrawable getBackground() {

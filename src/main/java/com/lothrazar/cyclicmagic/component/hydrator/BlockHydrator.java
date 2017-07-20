@@ -13,18 +13,26 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
+  public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setSoundType(SoundType.METAL);
+    this.setTickRandomly(true);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
+    this.setTranslucent();
     this.addAllRecipes();
   }
-  public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
+  @Override
+  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    return side == EnumFacing.DOWN;
+  }
   private void addAllRecipes() {
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
@@ -45,11 +53,11 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
-        " g ",
-        "ooo",
+        "ogo",
+        " o ",
         'o', Blocks.MOSSY_COBBLESTONE,
-        'g', Items.BUCKET, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-        's', Blocks.DISPENSER,
-        'r', "bone");
+        'g', Blocks.IRON_BLOCK,
+        's', Blocks.DROPPER,
+        'r', Items.WATER_BUCKET);
   }
 }

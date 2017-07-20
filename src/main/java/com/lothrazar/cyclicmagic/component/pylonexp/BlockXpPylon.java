@@ -27,8 +27,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockXpPylon() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_XP);
-    this.setHardness(3F);
-    this.setResistance(5F);
+    this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.GLASS);
     this.setTranslucent();
   }
