@@ -17,14 +17,12 @@ public class ItemStirrupsReverse extends BaseTool implements IHasRecipe {
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     World world = entity.getEntityWorld();
-   // if (world.isRemote) { return false; }
-     
-    if(entity.isRidingOrBeingRiddenBy(player) == false){
+    if (player.isRidingOrBeingRiddenBy(entity) == false) {
       entity.startRiding(player, true);
-    player.getPassengers().add(entity);
+      player.getPassengers().add(entity);
     }
-    else{
-player.removePassengers();
+    else {
+      player.removePassengers();
     }
     super.onUse(stack, player, world, hand);
     return true;
@@ -32,9 +30,9 @@ player.removePassengers();
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "sl ",
         " ls",
-        " sl",
-        "ii ",
+        " ii",
         'l', Items.LEAD,
         'i', "ingotIron",
         's', "leather");
