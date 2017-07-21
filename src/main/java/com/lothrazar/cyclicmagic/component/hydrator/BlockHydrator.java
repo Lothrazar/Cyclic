@@ -96,7 +96,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) {
-       ModCyclic.network.sendTo(new PacketTileSetFieldClient(pos, TileEntityHydrator.Fields.FLUID.ordinal(), te.getField(TileEntityHydrator.Fields.FLUID.ordinal())), (EntityPlayerMP) player);
+     //  ModCyclic.network.sendTo(new PacketTileSetFieldClient(pos, TileEntityHydrator.Fields.FLUID.ordinal(), te.getField(TileEntityHydrator.Fields.FLUID.ordinal())), (EntityPlayerMP) player);
       }
       //    if (te == null || !te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) { return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ); }
       //    IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);

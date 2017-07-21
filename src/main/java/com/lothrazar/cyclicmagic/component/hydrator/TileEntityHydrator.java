@@ -113,17 +113,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    tagCompound.setInteger(NBT_TANK, this.getCurrentFluid());
+    tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
     return super.writeToNBT(tagCompound);
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    int current = tagCompound.getInteger(NBT_TANK);
-    tank.setFluid(new FluidStack(FluidRegistry.WATER, current));
-    this.setCurrentFluid(current);
-    //.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+    tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
   @Override
   public int getField(int id) {
