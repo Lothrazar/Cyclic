@@ -61,10 +61,7 @@ public class ContainerUser extends ContainerBaseMachine {
     }
     return stack;
   }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-  }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
