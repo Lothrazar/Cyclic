@@ -39,7 +39,7 @@ public class ItemFoodStep extends ItemFood implements IHasRecipe {
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
     UtilSound.playSound(player, SoundRegistry.bwewe);
     if (player.getEntityWorld().isRemote) {
-      UtilChat.addChatMessage(player, "unlocks.stepheight" + !previousOn);
+      UtilChat.addChatMessage(player, "unlocks.stepheight." + !previousOn);
     }
   }
   @Override

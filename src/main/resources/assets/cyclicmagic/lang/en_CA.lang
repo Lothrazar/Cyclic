@@ -735,6 +735,8 @@ tool_spelunker.water=Water found at distance
 tooltip.burntime=Burn Time: 
 unlocks.crafting=Unlocked Inventory Crafting
 unlocks.extended=Unlocked Extended Inventory
+unlocks.stepheight.true=Step Height Enabled
+unlocks.stepheight.false=Step Height Disabled
 wand.inventory.empty=Scepter Inventory is Empty
 
 item.guide.name=Cyclic Guide Book
