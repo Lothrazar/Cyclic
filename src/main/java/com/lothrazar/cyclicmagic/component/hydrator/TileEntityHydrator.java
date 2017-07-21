@@ -50,9 +50,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public void update() {
+    tryFillTankFromItems();
     if (!isRunning()) { return; }
     //ignore timer when filling up water
-    tryFillTankFromItems();
     if (this.getCurrentFluid() == 0) { return; }
     if (this.updateTimerIsZero()) { // time to burn!
       this.spawnParticlesAbove();
