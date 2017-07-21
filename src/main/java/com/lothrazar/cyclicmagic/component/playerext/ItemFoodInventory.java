@@ -47,10 +47,14 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), "chestEnder", Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, "gemDiamond", "gemEmerald", "gemQuartz");
   }
- 
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;
     EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
 }
