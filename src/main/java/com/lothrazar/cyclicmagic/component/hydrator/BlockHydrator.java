@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler; 
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.material.Material;
@@ -84,24 +84,10 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe {
     TileEntityHydrator te = (TileEntityHydrator) world.getTileEntity(pos);
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
-      if (world.isRemote == false) {
-     //  ModCyclic.network.sendTo(new PacketTileSetFieldClient(pos, TileEntityHydrator.Fields.FLUID.ordinal(), te.getField(TileEntityHydrator.Fields.FLUID.ordinal())), (EntityPlayerMP) player);
+      if (!world.isRemote) {
+        int currentFluid = te.getField(Fields.FLUID.ordinal());
+        UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
-      //    if (te == null || !te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) { return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ); }
-      //    IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-      int currentFluid = te.getField(Fields.FLUID.ordinal());
-      // display the level of the barrel
-      //    if (!world.isRemote && player.isSneaking()) {//so this is serverside.. AHA!!1... i see
-      //      FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-      //      if (fluid == null) {
-      //        UtilChat.sendStatusMessage(player, "cyclic.fluid.empty");
-      //      }
-      //      else {
-      UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid + ":isClient=" + world.isRemote);
-      UtilChat.addChatMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid + ":isClient=" + world.isRemote);
-      //      }
-      //    }
-     // te.markDirty();
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);

@@ -166,7 +166,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       fluid = new FluidStack(FluidRegistry.WATER, amt);
     }
     fluid.amount = amt;
-    ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
+   // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
   @Override
