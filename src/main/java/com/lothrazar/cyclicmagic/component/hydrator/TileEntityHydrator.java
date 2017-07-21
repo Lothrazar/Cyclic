@@ -162,13 +162,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return; }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    if (fluid != null) {
-      fluid.amount = amt;
-      ModCyclic.logger.info("setCurrentFluid to "+fluid.amount + " from isClient = "+this.world.isRemote);
+    if (fluid == null) {
+      fluid = new FluidStack(FluidRegistry.WATER, amt);
     }
-    else {
-      //WTF//  fluidHandler.getTankProperties()[0].
-    }
+    fluid.amount = amt;
+    ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
   @Override
