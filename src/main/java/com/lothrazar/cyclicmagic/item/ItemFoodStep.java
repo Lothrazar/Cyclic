@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -8,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
@@ -17,6 +19,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFoodStep extends ItemFood implements IHasRecipe {
   public ItemFoodStep() {
@@ -40,7 +44,9 @@ public class ItemFoodStep extends ItemFood implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), "chestEnder", Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, "gemDiamond", "gemEmerald", "gemQuartz");
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
+        "dyeCyan", "dyeOrange", Blocks.TALLGRASS,
+        Items.APPLE);
   }
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
@@ -56,5 +62,11 @@ public class ItemFoodStep extends ItemFood implements IHasRecipe {
       }
       //else leave it alone (allows other mods to turn it on without me disrupting)
     }
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    super.addInformation(stack, player, tooltip, advanced);
   }
 }
