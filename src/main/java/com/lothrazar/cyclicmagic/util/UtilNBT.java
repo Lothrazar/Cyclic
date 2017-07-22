@@ -35,6 +35,10 @@ public class UtilNBT {
     if (item.isEmpty()) { return; }
     getItemStackNBT(item).setInteger(prop, value);
   }
+  public static void setItemStackNBTVal(ItemStack item, String prop, String value) {
+    if (item.isEmpty()) { return; }
+    getItemStackNBT(item).setString(prop, value);
+  }
   public static int getItemStackNBTVal(ItemStack held, String prop) {
     if (held.isEmpty()) { return 0; }
     NBTTagCompound tags = getItemStackNBT(held);

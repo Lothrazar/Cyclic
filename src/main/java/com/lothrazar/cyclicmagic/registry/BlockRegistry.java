@@ -20,9 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
-  public static BlockBucketStorage block_storelava;//TODO: FIX THIS ENTIRE THING.. maybe even fliud registry eh
-  public static BlockBucketStorage block_storewater;
-  public static BlockBucketStorage block_storemilk;
+
   public static BlockBucketStorage block_storeempty;
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);
