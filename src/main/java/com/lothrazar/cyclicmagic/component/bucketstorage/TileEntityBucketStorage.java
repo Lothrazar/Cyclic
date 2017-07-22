@@ -3,6 +3,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
@@ -46,7 +47,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
     return fluidHandler.getTankProperties()[0].getContents();
- 
   }
   @Override
   public IFluidTankProperties[] getTankProperties() {
@@ -80,5 +80,14 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     tank.setFluid(result);
     return result;
   }
-  //TODO: persist tank in NBT
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    return super.writeToNBT(tagCompound);
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+  }
 }

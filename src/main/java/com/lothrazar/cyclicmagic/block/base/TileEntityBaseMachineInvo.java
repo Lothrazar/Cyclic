@@ -31,6 +31,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
   public static final String NBT_FUELMAX = "maxFuel";
+  public static final String NBT_TANK = "tankwater";
   protected NonNullList<ItemStack> inv;
   private int currentMaxFuel;
   private int fuelSlot = -1;

@@ -4,24 +4,15 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -30,10 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -44,6 +32,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBucketStorage extends BlockBase implements ITileEntityProvider, IHasRecipe {
+  public static final String NBT_FLUIDSIZE = "fluidtotal";
+  public static final String NBT_FLUIDTYPE = "fluidtype";
   public BlockBucketStorage() {
     super(Material.IRON);
     this.setHardness(7F);
@@ -51,7 +41,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     this.setSoundType(SoundType.GLASS);
     this.setHarvestLevel("pickaxe", 1);
   }
-  public static final String NBTBUCKETS = "buckets";
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
     //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
@@ -63,9 +52,9 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       TileEntityBucketStorage te = (TileEntityBucketStorage) ent;
       FluidStack fs = te.getCurrentFluid();
       if (fs != null) {
-        UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, fs.amount);
-        String resourceStr = fs.getFluid().getStill().toString();
-        UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS + "fluid", resourceStr);
+        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
+        String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
+        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
         ModCyclic.logger.info("block pickup save has  " + resourceStr + fs.amount);
       }
     }
@@ -76,12 +65,13 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     if (stack.getTagCompound() != null) {
       NBTTagCompound tags = stack.getTagCompound();
-      int b = tags.getInteger(NBTBUCKETS);
-      String resourceStr = tags.getString(NBTBUCKETS + "fluid");
+      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
+      String resourceStr = tags.getString(NBT_FLUIDTYPE);
       TileEntityBucketStorage container = (TileEntityBucketStorage) worldIn.getTileEntity(pos);
-      //          container.setBuckets(b);
-      Fluid f = FluidRegistry.getFluid(resourceStr);//TODO: why null
-      ModCyclic.logger.info("TODO: placed block has " + resourceStr + b + "??" + f);
+      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0
+      ModCyclic.logger.info(" placed block has " + resourceStr + fluidAmt + "??" + fluidObj);
+      if (fluidObj != null)
+        container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
   @SideOnly(Side.CLIENT)
