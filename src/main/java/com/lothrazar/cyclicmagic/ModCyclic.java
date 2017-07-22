@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
@@ -85,6 +86,7 @@ public class ModCyclic {
     }
     proxy.preInit();
     //for new registry
+    FluidsRegistry.onRegistryEvent();//TODO: might be event one day like others
     MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
     MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
     MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);

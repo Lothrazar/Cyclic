@@ -737,6 +737,9 @@ wand.inventory.empty=Scepter Inventory is Empty
 
 cyclic.fluid.empty=Empty
 cyclic.fluid.amount=Fluid: 
+tile.milk.name=Milk
+fluid.milk=Milk
+
 
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
