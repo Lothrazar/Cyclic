@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidExp extends BlockFluidBase implements IBlockHasTESR {
+public class BlockFluidExp extends BlockFluidBase {
   public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
   public BlockFluidExp() {
     super(FluidsRegistry.fluid_exp, Material.WATER);

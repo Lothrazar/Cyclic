@@ -1,11 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.block.BlockFluidExp;
 import com.lothrazar.cyclicmagic.block.BlockFluidMilk;
 import com.lothrazar.cyclicmagic.fluid.FluidExp;
 import com.lothrazar.cyclicmagic.fluid.FluidMilk;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 public class FluidsRegistry {
@@ -13,10 +10,6 @@ public class FluidsRegistry {
   public static BlockFluidMilk block_milk;
   public static FluidExp fluid_exp;
   public static BlockFluidExp block_exp;
-  private static List<Fluid> fluids = new ArrayList<Fluid>();
-  public static void register(Fluid f) {
-    fluids.add(f);
-  }
   public static void onRegistryEvent() {
     registerMilk();
     registerExp();

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.fluid;
-import java.awt.Color;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -15,9 +14,5 @@ public class FluidExp extends Fluid {
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
     setUnlocalizedName("xpjuice");
-  }
-  @Override
-  public int getColor() {
-    return Color.GREEN.getRGB();
   }
 }

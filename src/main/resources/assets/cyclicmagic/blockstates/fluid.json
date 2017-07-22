@@ -10,6 +10,13 @@
                     "fluid": "milk"
                 }
             }
+        ],
+        "xpjuice": [
+            {
+                "custom": {
+                    "fluid": "xpjuice"
+                }
+            }
         ]
     }
 }
