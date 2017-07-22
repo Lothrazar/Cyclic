@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
-
+import java.util.Arrays;
+import org.apache.commons.lang3.tuple.Triple;
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,6 +16,9 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,104 +31,59 @@ import net.minecraftforge.fluids.FluidStack;
 public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-  Minecraft mc = Minecraft.getMinecraft();
-
-
-FluidStack fluid = te.getCurrentFluid();
-if(fluid == null) {
-  return;
-}
-  
-ModCyclic.logger.info(ModelFluid.WATER.toString());//minecraft:blocks/water_flow
- 
- 
-
-ModCyclic.logger.info(fluid.getFluid().getStill(fluid).toString());
-  //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-  
-  World world = te.getWorld();
-  // Translate back to local view coordinates so that we can do the acual rendering here
-  GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
-  Tessellator tessellator = Tessellator.getInstance();
-  tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-  IModel model;
-  try {
-    model =ModelFluid.WATER;// ModelLoaderRegistry.getModel( fluid.getFluid().getStill(fluid) );
+    Minecraft mc = Minecraft.getMinecraft();
+    FluidStack fluid = te.getCurrentFluid();
+    if (fluid == null) { return; }
+    ModCyclic.logger.info(fluid.getFluid().getStill(fluid).toString());
+    //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+    GlStateManager.pushMatrix();
+    if (fluid != null) {
+      Tessellator tess = Tessellator.getInstance();
+      BufferBuilder buffer = tess.getBuffer();
+      bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+      TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill().toString());
+      TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getFlowing().toString());
+      double posY = 0.9;// .1 + (.8 * ((float) fluid.amount / (float) TileEntityBucketStorage.TANK_FULL));
+      int icolor = fluid.getFluid().getColor(fluid);
+      float red = (icolor >> 16 & 0xFF) / 255.0F;
+      float green = (icolor >> 8 & 0xFF) / 255.0F;
+      float blue = (icolor & 0xFF) / 255.0F;
+      float[] color = new float[] { red, green, blue, 1.0F };//cheat the alpha
+      // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
+      //TOP SIDE
+      buffer.setTranslation(x, y, z);
+      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+      buffer.pos(2F / 16F, posY, 2F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(12F / 16F, posY, 2F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(12F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(2F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      tess.draw();
+      //BOTTOM SIDE
+      buffer.setTranslation(x, y-posY, z);
+      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+      buffer.pos(4F / 16F, posY, 4F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(12F / 16F, posY, 4F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(12F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(4F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      tess.draw();
+      //the +Z side
+      buffer.setTranslation(x, y, z);
+      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+      buffer.pos(14F / 16F, 1F / 16F, 14F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(14F / 16F, posY, 14F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(2F / 16F, posY, 14F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(2F / 16F, 1F / 16F, 14F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
+      tess.draw();
+//now the opposite: -Z side
+//      buffer.setTranslation(x, y, z+1);
+//      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+//      buffer.pos(12F / 16F, 1F / 16F,- 12F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
+//      buffer.pos(12F / 16F, posY, -12F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
+//      buffer.pos(4F / 16F, posY, -12F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
+//      buffer.pos(4F / 16F, 1F / 16F, -12F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
+//      tess.draw();
+      buffer.setTranslation(0, 0, 0);
+    }
+    GlStateManager.popMatrix();
   }
-  catch (Exception e) {
-    throw new RuntimeException(e);
-     
-  }
-  IBakedModel bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
-      new Function<ResourceLocation, TextureAtlasSprite>() {
-        @Override
-        public TextureAtlasSprite apply(ResourceLocation location) {
-          return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-        }
-      });
-  
-  Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-      world,
-      bakedModel,
-      world.getBlockState(te.getPos()),
-      te.getPos(),
-      Tessellator.getInstance().getBuffer(), false);
-  tessellator.draw();
-  RenderHelper.enableStandardItemLighting();
-  GlStateManager.popMatrix();
-
-//    FluidStack fluid = barrel.getCurrentFluid();
-//    if(fluid == null) {
-//      return;
-//    }
-// 
-//    BlockPos pos = barrel.getPos();
-// 
-//
-//    float height = 0.9f;
-// 
- 
-//
-//    Tessellator tessellator = Tessellator.getInstance();
-//    BufferBuilder renderer = tessellator.getBuffer();
-//    renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-//    mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-//
-//    GlStateManager.pushMatrix();
-//
-//    RenderHelper.disableStandardItemLighting();
-//    GlStateManager.enableBlend();
-//    GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//
- 
-//      GL11.glShadeModel(GL11.GL_SMOOTH);
- 
-//    GlStateManager.translate(x, y, z);
-//    GlStateManager.disableCull();
-//
-//   // TextureAtlasSprite sprite = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-//    int color = fluid.getFluid().getColor(fluid);
-//    int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
-//
-//
-//    float size = 1.0F ;
-//    
-//    TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
-//
-//   // renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
- 
- 
-////    renderer.setOverrideBlockTexture(fluid.getFluid().getBlock() );
-////   // renderer.renderAllFaces = true;
-////  ////  renderer.renderStandardBlock(flowing ? Block.waterMoving : Block.waterStill, x, y, z);
- 
-//    tessellator.draw();
-//    GlStateManager.enableCull();
-//
-//    GlStateManager.disableBlend();
-//    GlStateManager.popMatrix();
-//    RenderHelper.enableStandardItemLighting();
-  }
-  
-  
 }
