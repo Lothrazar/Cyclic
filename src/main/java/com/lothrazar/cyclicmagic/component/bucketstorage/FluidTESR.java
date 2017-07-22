@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    Minecraft mc = Minecraft.getMinecraft();
+    
     FluidStack fluid = te.getCurrentFluid();
     if (fluid == null) { return; }
     ModCyclic.logger.info(fluid.getFluid().getStill(fluid).toString());
@@ -40,13 +40,13 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       //TOP SIDE
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
-      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
       tess.draw();
       //BOTTOM SIDE
-      buffer.setTranslation(x, y - posY + B, z);
+      buffer.setTranslation(x, y - posY + B, z);//
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
       buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
       buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
