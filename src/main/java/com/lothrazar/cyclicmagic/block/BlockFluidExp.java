@@ -22,33 +22,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidMilk extends BlockFluidBase implements IBlockHasTESR {
-  public static FluidStack stack;
-  public BlockFluidMilk() {
-    super(FluidsRegistry.fluid_milk, Material.WATER);
-    FluidsRegistry.fluid_milk.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_milk, 1000);
-  }
-  @Override
-  public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-    return false;
-  }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) {
-    return false;
-  }
-  @Override
-  public boolean isFullCube(IBlockState state) {
-    return false;
-  }
-  @Override
-  public EnumBlockRenderType getRenderType(IBlockState state) {
-    return EnumBlockRenderType.MODEL;
+public class BlockFluidExp extends BlockFluidBase implements IBlockHasTESR {
+  public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
+  public BlockFluidExp() {
+    super(FluidsRegistry.fluid_exp, Material.WATER);
+    FluidsRegistry.fluid_exp.setBlock(this);
+    stack = new FluidStack(FluidsRegistry.fluid_exp, 1000);
   }
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
-    Block block = FluidsRegistry.block_milk;
+    Block block = FluidsRegistry.block_exp;
     Item item = Item.getItemFromBlock(block);
     ModelBakery.registerItemVariants(item);
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
@@ -59,9 +43,5 @@ public class BlockFluidMilk extends BlockFluidBase implements IBlockHasTESR {
         return modelResourceLocation;
       }
     });
-  }
-  @Override
-  public IBlockState getStateFromMeta(int meta) {
-    return getBlockState().getBaseState().withProperty(LEVEL, meta);
   }
 }
