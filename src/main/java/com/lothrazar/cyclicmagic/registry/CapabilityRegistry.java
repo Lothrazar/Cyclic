@@ -199,12 +199,11 @@ public class CapabilityRegistry {
     }
     @Override
     public boolean doForceStepOff() {
-       
       return this.foreStepHeightOff;
     }
     @Override
     public void setForceStepOff(boolean b) {
-      this.foreStepHeightOff=b;
+      this.foreStepHeightOff = b;
     }
   }
   public static class Storage implements IStorage<IPlayerExtendedProperties> {

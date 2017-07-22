@@ -94,4 +94,7 @@ public class UtilChat {
       yStr = Math.abs(yDist) + " down ";
     return xStr + yStr + zStr;
   }
+  public static void sendStatusMessage(EntityPlayer player, String string) {
+    player.sendStatusMessage(new TextComponentTranslation(string), true);
+  }
 }

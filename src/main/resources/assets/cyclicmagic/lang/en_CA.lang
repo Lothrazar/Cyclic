@@ -563,13 +563,9 @@ tile.block_soundproofing.tooltip=Each block reduces sound within a radius of
 tile.block_shears.name=Shearing Block
 tile.block_shears.jei=Shears any entity that comes into content with it.  Try putting it in a field surrounded by sheep.  
 tile.block_shears.tooltip=Shear entities on collision
-tile.block_storeempty.name=Bucket Storage
-tile.block_storeempty.jei=This is not a tank; instead it stores the entire bucket along with the liquid.  Left click with a full bucket to deposit, and right click with an empty hand to withdraw.  Storage is virtually unlimited.  
-tile.block_storeempty.tooltip=Stores vanilla liquids along with the bucket
-tile.block_storeany.tooltip=Buckets: 
-tile.block_storelava.name=Lava Storage
-tile.block_storemilk.name=Milk Storage
-tile.block_storewater.name=Water Storage
+tile.block_storeempty.name=Fluid Storage Tank
+tile.block_storeempty.jei=Stores 64 buckets of any liquid  
+tile.block_storeempty.tooltip=Stores up to 64 buckets of any liquid
 tile.block_storelava.jei=Currently holding lava.  This is not a tank; instead it stores the entire bucket along with the liquid.  Left click with a full bucket to deposit, and right click with an empty hand to withdraw.  Storage is virtually unlimited.  
 tile.block_storemilk.jei=Currently holding milk.  This is not a tank; instead it stores the entire bucket along with the liquid.  Left click with a full bucket to deposit, and right click with an empty hand to withdraw.  Storage is virtually unlimited.  
 tile.block_storewater.jei=Currently holding water.  This is not a tank; instead it stores the entire bucket along with the liquid.  Left click with a full bucket to deposit, and right click with an empty hand to withdraw.  Storage is virtually unlimited.  
@@ -738,6 +734,9 @@ unlocks.extended=Unlocked Extended Inventory
 unlocks.stepheight.true=Step Height Enabled
 unlocks.stepheight.false=Step Height Disabled
 wand.inventory.empty=Scepter Inventory is Empty
+
+cyclic.fluid.empty=Empty
+cyclic.fluid.amount=Fluid: 
 
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide

@@ -200,10 +200,8 @@ public class ForgeGuiHandler implements IGuiHandler {
         if (te instanceof TileEntityWorkbench) { return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te); }
       break;
       case GUI_INDEX_HYDRATOR:
-        if (te instanceof TileEntityHydrator) { 
-          return new ContainerHydrator(player.inventory, (TileEntityHydrator) te); }
-          
-        break;
+        if (te instanceof TileEntityHydrator) { return new ContainerHydrator(player.inventory, (TileEntityHydrator) te); }
+      break;
     }
     return null;
   }
@@ -281,10 +279,8 @@ public class ForgeGuiHandler implements IGuiHandler {
           if (te instanceof TileEntityWorkbench) { return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te); }
         break;
         case GUI_INDEX_HYDRATOR:
-          if (te instanceof TileEntityHydrator) { 
-            return new GuiHydrator(player.inventory, (TileEntityHydrator) te); }
-            
-          break;
+          if (te instanceof TileEntityHydrator) { return new GuiHydrator(player.inventory, (TileEntityHydrator) te); }
+        break;
       }
     }
     return null;

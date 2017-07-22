@@ -287,11 +287,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if(EnumFacing.UP == side)
-    {
-        return new int[] {TOOLSLOT_INDEX};
-    }
-	  
+    if (EnumFacing.UP == side) { return new int[] { TOOLSLOT_INDEX }; }
     return new int[] { FUEL_SLOT };
   }
   @Override
