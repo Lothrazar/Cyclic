@@ -739,6 +739,8 @@ cyclic.fluid.empty=Empty
 cyclic.fluid.amount=Fluid: 
 tile.milk.name=Milk
 fluid.milk=Milk
+tile.xpjuice.name=Experience
+fluid.xpjuice=Experience
 
 
 item.guide.name=Cyclic Guide Book

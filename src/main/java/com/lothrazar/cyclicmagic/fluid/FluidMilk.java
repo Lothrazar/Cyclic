@@ -15,8 +15,4 @@ public class FluidMilk extends Fluid {
     setDensity(1200);//water is 1000, lava is 3000
     setUnlocalizedName("milk");
   }
-  @Override
-  public int getColor() {
-    return Color.WHITE.getRGB();
-  }
 }
