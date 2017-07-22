@@ -61,7 +61,6 @@ public class ContainerUser extends ContainerBaseMachine {
     }
     return stack;
   }
-
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
@@ -72,8 +71,4 @@ public class ContainerUser extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
-  
-  
-  
-  
 }

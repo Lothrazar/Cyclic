@@ -1,14 +1,11 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,9 +27,9 @@ public class ContainerHydrator extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    for (int i = 0; i < 4; i++) { 
+    for (int i = 0; i < 4; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
-          MID_SPACING +1+ i / 2 * Const.SQ,
+          MID_SPACING + 1 + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
@@ -40,7 +37,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
         SLOTX_FLUID,
         SLOTY_FLUID));
     slotNum++;
- }
+  }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -50,7 +47,6 @@ public class ContainerHydrator extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-       
       if (slot < tile.getSizeInventory()) {
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }

@@ -2,11 +2,8 @@ package com.lothrazar.cyclicmagic.component.bucketstorage;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
-import com.lothrazar.cyclicmagic.block.base.MachineTESR;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -60,7 +57,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       if (fs != null) {
         UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
         String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
-        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr); 
+        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
       }
     }
     ret.add(stack);
@@ -88,15 +85,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     return false;
   }
   @Override
-  public boolean hasComparatorInputOverride(IBlockState state) {
-    return true;
-  }
-  //  @Override
-  //  public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
-  //    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-  //    return container.getBuckets();
-  //  }
-  @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityBucketStorage();
   }
@@ -114,10 +102,10 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "i i",
-        " o ",
-        "i i",
-        'o', "obsidian", 'i', "ingotIron");
+        "igi",
+        "gog",
+        "igi",
+        'o', "obsidian", 'i', "ingotIron", 'g', "blockGlass");
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -142,8 +130,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBucketStorage.class, new FluidTESR( ));
-
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBucketStorage.class, new FluidTESR());
   }
 }

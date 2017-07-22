@@ -18,7 +18,7 @@ public class Const {
     public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
     public static final ResourceLocation FLUID = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
     public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
-    }
+  }
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;
     public int width() {

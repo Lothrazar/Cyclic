@@ -66,7 +66,6 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   @Override
   public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
     // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-  
     // sent to the client. Called on server only.
     NBTTagCompound syncData = getUpdateTag();
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
@@ -74,7 +73,6 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   @Override
   public NBTTagCompound getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
-   
     NBTTagCompound syncData = new NBTTagCompound();
     this.writeToNBT(syncData);//this calls writeInternal
     return syncData;

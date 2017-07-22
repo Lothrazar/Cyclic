@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,9 +13,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    
     FluidStack fluid = te.getCurrentFluid();
-    if (fluid == null) { return; } 
+    if (fluid == null) { return; }
     //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
     GlStateManager.pushMatrix();
     if (fluid != null) {
@@ -25,7 +23,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getFlowing().toString());
-      double posY =   .1 + (.8 * ((float) fluid.amount / (float) TileEntityBucketStorage.TANK_FULL));//so we get range of [0.1,0.9]
+      double posY = .1 + (.8 * ((float) fluid.amount / (float) TileEntityBucketStorage.TANK_FULL));//so we get range of [0.1,0.9]
       int icolor = fluid.getFluid().getColor(fluid);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;

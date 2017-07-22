@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -23,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
 public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickToggle {
@@ -142,8 +140,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickTo
   }
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
-    if (tags.hasKey(NBT_STATUS) == false) { return true;}//default for newlycrafted//legacy items
-    
+    if (tags.hasKey(NBT_STATUS) == false) { return true; } //default for newlycrafted//legacy items
     return tags.getInteger(NBT_STATUS) == 1;
   }
 }
