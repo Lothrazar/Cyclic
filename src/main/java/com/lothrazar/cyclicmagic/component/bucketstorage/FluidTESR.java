@@ -64,10 +64,10 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       //now the opposite: -Z side 
       buffer.setTranslation(x, y, z + 1);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(T, posY, -1 * T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, B, -1 * T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(B, B, -1 * T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(B, posY, -1 * T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, -1 * T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, B, -1 * T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, B, -1 * T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, posY, -1 * T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
       tess.draw();
       // the +X side  
       buffer.setTranslation(x, y, z);
@@ -80,10 +80,10 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       // the -X side  
       buffer.setTranslation(x - 1 + 2 * B, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(T, posY, B).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, B, B).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, B, T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, B).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, B, B).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, B, T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
       tess.draw();
       buffer.setTranslation(0, 0, 0);
     }
