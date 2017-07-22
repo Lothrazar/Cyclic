@@ -48,40 +48,45 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       float red = (icolor >> 16 & 0xFF) / 255.0F;
       float green = (icolor >> 8 & 0xFF) / 255.0F;
       float blue = (icolor & 0xFF) / 255.0F;
-      float[] color = new float[] { red, green, blue, 1.0F };//cheat the alpha
+      float alph=1.0F;
+ 
       // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
+      // T/B for top and bottom
+      float T = 15F / 16F;
+      float B = 1F/16F;
+      int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(2F / 16F, posY, 2F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(12F / 16F, posY, 2F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(12F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(2F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
       tess.draw();
       //BOTTOM SIDE
-      buffer.setTranslation(x, y-posY, z);
+      buffer.setTranslation(x, y-posY+B, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(4F / 16F, posY, 4F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(12F / 16F, posY, 4F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(4)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(12F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(12), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(4F / 16F, posY, 12F / 16F).tex(still.getInterpolatedU(4), still.getInterpolatedV(12)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
       tess.draw();
       //the +Z side
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(14F / 16F, 1F / 16F, 14F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(14F / 16F, posY, 14F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(2F / 16F, posY, 14F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
-      buffer.pos(2F / 16F, 1F / 16F, 14F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
+      buffer.pos(T, B,      T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY,   T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, posY,   T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, B,      T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
       tess.draw();
 //now the opposite: -Z side
-//      buffer.setTranslation(x, y, z+1);
-//      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-//      buffer.pos(12F / 16F, 1F / 16F,- 12F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
-//      buffer.pos(12F / 16F, posY, -12F / 16F).tex(flow.getInterpolatedU(12), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
-//      buffer.pos(4F / 16F, posY, -12F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(1)).color(color[0], color[1], color[2], color[3]).endVertex();
-//      buffer.pos(4F / 16F, 1F / 16F, -12F / 16F).tex(flow.getInterpolatedU(4), flow.getInterpolatedV(15)).color(color[0], color[1], color[2], color[3]).endVertex();
-//      tess.draw();
+      buffer.setTranslation(x, y, z+1);
+      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+      buffer.pos(T, B,-1*T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
+      buffer.pos(T, posY,    -1*T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, posY,    -1*T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(S)).color(red,green,blue,alph).endVertex();
+      buffer.pos(B, B,-1*T).tex(flow.getInterpolatedU(S), flow.getInterpolatedV(E)).color(red,green,blue,alph).endVertex();
+      tess.draw();
       buffer.setTranslation(0, 0, 0);
     }
     GlStateManager.popMatrix();
