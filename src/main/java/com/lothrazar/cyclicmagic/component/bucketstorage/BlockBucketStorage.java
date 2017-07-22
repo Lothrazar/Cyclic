@@ -60,8 +60,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       if (fs != null) {
         UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
         String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
-        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
-        ModCyclic.logger.info("block pickup save has  " + resourceStr + fs.amount);
+        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr); 
       }
     }
     ret.add(stack);
@@ -74,8 +73,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
       String resourceStr = tags.getString(NBT_FLUIDTYPE);
       TileEntityBucketStorage container = (TileEntityBucketStorage) worldIn.getTileEntity(pos);
-      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0
-      ModCyclic.logger.info(" placed block has " + resourceStr + fluidAmt + "??" + fluidObj);
+      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
       if (fluidObj != null)
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }

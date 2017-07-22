@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implements IFluidHandler {
   public static final String NBT_ID = "buckets";
-  public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 10000;//yep 10k buckets
+  public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 64;//yep 64  
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityBucketStorage() {
     super(0);
@@ -60,6 +60,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     if (doesFluidMatchTank(resource) == false) { return 0; }
+    if (resource.amount + tank.getFluidAmount() > TANK_FULL) {//enForce limit
+      resource.amount = TANK_FULL - tank.getFluidAmount();
+    }
     int result = tank.fill(resource, doFill);
     // this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
