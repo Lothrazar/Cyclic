@@ -34,8 +34,8 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       float alph = 1.0F;
       // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
       // T/B for top and bottom
-      float T = 15F / 16F;
-      float B = 1F / 16F;
+      float T = 14F / 16F;
+      float B = 2F / 16F;
       int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);
