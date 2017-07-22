@@ -739,6 +739,9 @@ unlocks.stepheight.true=Step Height Enabled
 unlocks.stepheight.false=Step Height Disabled
 wand.inventory.empty=Scepter Inventory is Empty
 
+cyclic.fluid.empty=Empty
+cyclic.fluid.amount=Fluid: 
+
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
 guide.welcome=Cyclic
