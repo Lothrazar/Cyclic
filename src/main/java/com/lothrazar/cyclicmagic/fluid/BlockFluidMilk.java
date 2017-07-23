@@ -24,6 +24,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,7 +35,7 @@ public class BlockFluidMilk extends BlockFluidBase {
   public BlockFluidMilk() {
     super(FluidsRegistry.fluid_milk, Material.WATER);
     FluidsRegistry.fluid_milk.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_milk, 1000);
+    stack = new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME);
   }
   @SideOnly(Side.CLIENT)
   @Override

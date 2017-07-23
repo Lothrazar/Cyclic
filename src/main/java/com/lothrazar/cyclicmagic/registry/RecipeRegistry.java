@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -16,6 +17,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -153,6 +158,7 @@ public class RecipeRegistry {
   }
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    FluidsRegistry.addRecipes();//yeah kinda hacky since fluids have no register event yet
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

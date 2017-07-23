@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.fluid;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.base.BlockFluidBase;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,31 +9,31 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidExp extends BlockFluidBase {
-  public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
-  public BlockFluidExp() {
-    super(FluidsRegistry.fluid_exp, Material.WATER);
-    FluidsRegistry.fluid_exp.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME);
+public class BlockFluidPoison extends BlockFluidBase {
+  public static FluidStack stack;
+  public BlockFluidPoison() {
+    super(FluidsRegistry.fluid_poison, Material.WATER);
+    FluidsRegistry.fluid_poison.setBlock(this);
+    stack = new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME);
   }
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
-    Block block = FluidsRegistry.block_exp;
+    Block block = FluidsRegistry.block_poison;
     Item item = Item.getItemFromBlock(block);
     ModelBakery.registerItemVariants(item);
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
@@ -44,5 +44,16 @@ public class BlockFluidExp extends BlockFluidBase {
         return modelResourceLocation;
       }
     });
+  }
+  @Override
+  @Nonnull
+  public Vec3d modifyAcceleration(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull Entity entity, @Nonnull Vec3d vec) {
+    if (entity instanceof EntityLivingBase) {
+      EntityLivingBase living = (EntityLivingBase) entity;
+      if (living.isPotionActive(MobEffects.POISON) == false) {
+        living.addPotionEffect(new PotionEffect(MobEffects.POISON, 400, 0));
+      }
+    }
+    return super.modifyAcceleration(world, pos, entity, vec);
   }
 }

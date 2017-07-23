@@ -4,17 +4,21 @@
         "model": "forge:fluid"
     },
     "variants": {
-        "milk": [
-            {
+        "milk": [{
                 "custom": {
                     "fluid": "milk"
                 }
             }
         ],
-        "xpjuice": [
-            {
+        "xpjuice": [{
                 "custom": {
                     "fluid": "xpjuice"
+                }
+            }
+        ],
+        "poison": [{
+                "custom": {
+                    "fluid": "poison"
                 }
             }
         ]

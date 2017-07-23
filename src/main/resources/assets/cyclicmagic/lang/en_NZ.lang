@@ -741,7 +741,8 @@ tile.milk.name=Milk
 fluid.milk=Milk
 tile.xpjuice.name=Experience
 fluid.xpjuice=Experience
-
+tile.poison.name=Poison
+fluid.poison=Poison
 
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
