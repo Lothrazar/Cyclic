@@ -70,7 +70,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
         'd', "gemDiamond",
         'r', "cropNetherWart",
         'i', "ingotIron");
-    System.out.println("TWO RECIPES FOR " + this.getUnlocalizedName());
     return null;
   }
   @Override

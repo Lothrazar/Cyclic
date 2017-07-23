@@ -133,13 +133,13 @@ public class GuiPylon extends GuiBaseContainer {
     this.drawString("" + currentFluid, 0, 0);
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + 98, y = this.guiTop + 16;
+    int x = this.guiLeft + 112, y = this.guiTop + 20;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
         pngWidth / f, h);
     h -= 2;// inner texture is 2 smaller, one for each border
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_EXP);
     float percent = ((float) currentFluid / ((float) TileEntityXpPylon.TANK_FULL));
     int hpct = (int) (h * percent);
     //  System.out.println(tile.getCurrentFluid()+"_"+percent);
@@ -155,6 +155,6 @@ public class GuiPylon extends GuiBaseContainer {
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.exp_pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.exp_pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 3, 82);
+    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2+8, 92);
   }
 }

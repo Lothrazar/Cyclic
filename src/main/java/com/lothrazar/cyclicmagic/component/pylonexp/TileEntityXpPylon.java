@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
@@ -66,20 +67,16 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   private void updateSpew() {
     this.timer--;
-    if (this.timer <= 0) {
+    if (this.timer <= 0 && this.getCurrentFluid() > XP_PER_SPEWORB) {
       this.timer = TIMER_FULL;
-      int currentExp = this.tank.getFluidAmount();
-      int amtToSpew = Math.min(XP_PER_SPEWORB, currentExp); //to catch 1 or 2 remainder left
-      FluidStack drained = this.drain(amtToSpew, true);
-      amtToSpew = drained.amount;
-      if (amtToSpew > 0) { //  && tryDecrExp(amtToSpew)
-        if (this.getWorld().isRemote == false) {
-          EntityXPOrb orb = new EntityXPOrb(this.getWorld());
-          orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-          orb.xpValue = amtToSpew;
-          this.getWorld().spawnEntity(orb);
-          spewOrb(orb);
-        }
+      FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
+      if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
+      if (this.getWorld().isRemote == false) {
+        EntityXPOrb orb = new EntityXPOrb(this.getWorld());
+        orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+        orb.xpValue = XP_PER_BOTTLE;
+        this.getWorld().spawnEntity(orb);
+        spewOrb(orb);
       }
     }
   }
@@ -87,9 +84,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      if (outputSlotHasRoom() && inputSlotHasSome()) {
+      if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() > XP_PER_BOTTLE) {
         //pay the cost first
-        FluidStack actuallyDrained = this.drain(XP_PER_BOTTLE, true);
+        FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
         if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
         outputSlotIncrement();
         inputSlotDecrement();
@@ -105,7 +102,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         if (orb.isDead) {
           continue;
         }
-        int filled = this.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue()), true);
+        int filled = this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue()), true);
         if (filled > 0) {//this.tryIncrExp(orb.getXpValue())
           getWorld().removeEntity(orb);//calls     orb.setDead(); for me
         }
@@ -237,7 +234,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     fluid.amount = amt;
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
-  }  /******************************
+  }
+  /******************************
    * fluid properties here
    ******************************/
   @Override
@@ -259,7 +257,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public int fill(FluidStack resource, boolean doFill) {
     if (resource.getFluid() != FluidsRegistry.fluid_exp) { return 0; }
     int result = tank.fill(resource, doFill);
-    this.world.markChunkDirty(pos, this);
+    //   this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result);
     return result;
   }
@@ -267,14 +265,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (resource.getFluid() != FluidsRegistry.fluid_exp) { return resource; }
     FluidStack result = tank.drain(resource, doDrain);
-    this.world.markChunkDirty(pos, this);
+    //   this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    this.world.markChunkDirty(pos, this);
+    // this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }
