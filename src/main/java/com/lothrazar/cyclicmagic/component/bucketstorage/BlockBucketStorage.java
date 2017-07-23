@@ -127,6 +127,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+  @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
