@@ -26,7 +26,6 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -95,13 +94,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (enableBucketBlocks) {
       //TODO: refactor and support more recipes
-      BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", null);
-      BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", null);
-      BlockRegistry.block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", null);
-      BlockRegistry.block_storeempty = new BlockBucketStorage(null);
+      BlockRegistry.block_storeempty = new BlockBucketStorage();
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);

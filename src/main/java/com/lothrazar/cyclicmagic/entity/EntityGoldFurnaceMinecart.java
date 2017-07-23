@@ -216,7 +216,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
         entityIn instanceof EntityMinecart &&
         (this.motionX != motionXprev || this.motionZ != motionZprev)) {
       //well i am the engine, i should not get stopped in my tracks just because theres two shits in front
-      ModCyclic.logger.info("undo bwahaha" + motionXprev + "_" + motionZprev);
+  
       this.motionX = motionXprev * 8;
       this.motionZ = motionZprev * 8;
     }

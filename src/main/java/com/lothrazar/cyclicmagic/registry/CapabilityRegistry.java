@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,6 +47,10 @@ public class CapabilityRegistry {
     void setChorusDim(int d);
     int getChorusTimer();
     void setChorusTimer(int d);
+    boolean isStepHeightOn();
+    void setStepHeightOn(boolean b);
+    boolean doForceStepOff();
+    void setForceStepOff(boolean b);
   }
   public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
     private static final String MHEALTH = "mhealth";
@@ -57,6 +62,10 @@ public class CapabilityRegistry {
     private static final String KEY_TIMER = "ghost_timer";
     private static final String KEY_EATLOC = "ghost_location";
     private static final String KEY_EATDIM = "ghost_dim";
+    private static final String KEY_STEP = Const.MODID + "_step";
+    private static final String KEY_STEPFORCE = Const.MODID + "_step";
+    private boolean foreStepHeightOff = false;
+    private boolean isStepOn = false;
     private boolean isSleeping = false;
     private boolean hasInventoryCrafting = false;
     private boolean hasInventoryExtended = false;
@@ -102,6 +111,8 @@ public class CapabilityRegistry {
       tags.setString(KEY_EATLOC, UtilNBT.posToStringCSV(this.chorusStart));
       tags.setInteger(KEY_EATDIM, this.chorusDim);
       tags.setInteger(KEY_TIMER, this.chorusSeconds);
+      tags.setBoolean(KEY_STEP, this.isStepOn);
+      tags.setBoolean(KEY_STEPFORCE, this.foreStepHeightOff);
       return tags;
     }
     @Override
@@ -121,6 +132,8 @@ public class CapabilityRegistry {
       this.setChorusDim(tags.getInteger(KEY_EATDIM));
       this.setChorusTimer(tags.getInteger(KEY_TIMER));
       this.setChorusOn(tags.getBoolean(KEY_BOOLEAN));
+      this.setStepHeightOn(tags.getBoolean(KEY_STEP));
+      this.setForceStepOff(tags.getBoolean(KEY_STEPFORCE));
       String posCSV = tags.getString(KEY_EATLOC);
       if (posCSV != null && posCSV.length() > 0) {
         String[] p = posCSV.split(",");
@@ -175,6 +188,22 @@ public class CapabilityRegistry {
     @Override
     public void setChorusTimer(int d) {
       this.chorusSeconds = d;
+    }
+    @Override
+    public boolean isStepHeightOn() {
+      return this.isStepOn;
+    }
+    @Override
+    public void setStepHeightOn(boolean b) {
+      this.isStepOn = b;
+    }
+    @Override
+    public boolean doForceStepOff() {
+      return this.foreStepHeightOff;
+    }
+    @Override
+    public void setForceStepOff(boolean b) {
+      this.foreStepHeightOff = b;
     }
   }
   public static class Storage implements IStorage<IPlayerExtendedProperties> {

@@ -8,9 +8,11 @@ import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.ItemChorusCorrupted;
 import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
+import com.lothrazar.cyclicmagic.item.ItemFoodStep;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
+import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -29,8 +31,19 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   private boolean enableHorseFoodUpgrades;
   private boolean enableGlowingChorus;
   private boolean enableLapisApple;
+  private boolean foodStep;
+  private boolean mountInverse;
   @Override
   public void onPreInit() {
+    if (foodStep) {
+      ItemFoodStep food_step = new ItemFoodStep();
+      ItemRegistry.register(food_step, "food_step");
+      ModCyclic.instance.events.register(food_step);
+    }
+    if (mountInverse) {
+      ItemStirrupsReverse stirrup_inverse = new ItemStirrupsReverse();
+      ItemRegistry.register(stirrup_inverse, "tool_mount_inverse");
+    }
     if (enableHorseFoodUpgrades) {
       Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD));
       Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
@@ -98,6 +111,8 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    foodStep = config.getBoolean("AppleStature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    mountInverse = config.getBoolean("StirrupInverse", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLapisApple = config.getBoolean("LapisApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableGlowingChorus = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEmeraldApple = config.getBoolean("EmeraldApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

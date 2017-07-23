@@ -5,6 +5,8 @@ public class Const {
   public static class Res {
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+    public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");
+    public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(Const.MODID, folder + "slot_bucket.png");
     public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
@@ -14,6 +16,9 @@ public class Const {
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
     public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
     public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
+    public static final ResourceLocation FLUID = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
+    public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
+    public static final ResourceLocation FLUID_EXP = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_exp.png");
   }
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;

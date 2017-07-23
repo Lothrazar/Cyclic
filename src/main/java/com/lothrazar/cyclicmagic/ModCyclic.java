@@ -10,12 +10,14 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
@@ -27,6 +29,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -60,6 +63,9 @@ public class ModCyclic {
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
+  static {
+    FluidRegistry.enableUniversalBucket();//https://github.com/BluSunrize/ImmersiveEngineering/blob/c76e51998756a54c22dd40ac1877313bf95e8520/src/main/java/blusunrize/immersiveengineering/ImmersiveEngineering.java
+  }
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
@@ -80,8 +86,10 @@ public class ModCyclic {
     }
     proxy.preInit();
     //for new registry
+    FluidsRegistry.onRegistryEvent();//TODO: might be event one day like others
     MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
     MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
+    MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);
     MinecraftForge.EVENT_BUS.register(SoundRegistry.class);
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);

@@ -9,16 +9,12 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
-  public static BlockBucketStorage block_storelava;//TODO: FIX THIS ENTIRE THING.. maybe even fliud registry eh
-  public static BlockBucketStorage block_storewater;
-  public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);
@@ -49,9 +45,5 @@ public class BlockRegistry {
     for (Block b : blocks) {
       event.getRegistry().register(b);
     }
-  }
-  @SubscribeEvent
-  public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
-    event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

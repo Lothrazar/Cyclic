@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -15,6 +16,12 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -53,6 +60,9 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class RecipeRegistry {
   public static List<IRecipe> recipes = new ArrayList<IRecipe>();
+  public static void register(IRecipe recipeHydrate) {
+    recipes.add(recipeHydrate);
+  }
   public static class Util1pt12 {
     public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
@@ -128,11 +138,7 @@ public class RecipeRegistry {
    * @param params
    * @return
    */
-  //  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
-  //    return GameRegistry.addShapedRecipe(output, params);
-  //  }
   private static IRecipe _addShapedRecipe(ItemStack output, Object... params) {
-    //  ResourceLocation location = ;
     CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(params);
     ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
     add(recipe, Util1pt12.buildName(output));
@@ -149,5 +155,10 @@ public class RecipeRegistry {
     IRecipe recipe = new ShapedOreRecipe(location, output, recipeComponents);
     add(recipe, Util1pt12.buildName(output));
     return recipe;
+  }
+  @SubscribeEvent
+  public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
+    FluidsRegistry.addRecipes();//yeah kinda hacky since fluids have no register event yet
+    event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }
