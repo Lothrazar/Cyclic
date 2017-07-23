@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.fluid;
-import java.awt.Color;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -8,11 +7,12 @@ import net.minecraftforge.fluids.Fluid;
  * @author Sam
  *
  */
-public class FluidMilk extends Fluid {
-  public FluidMilk() {
-    super("milk", new ResourceLocation(Const.MODID , "blocks/fluid_milk_base"), new ResourceLocation(Const.MODID, "blocks/fluid_milk_flowing"));
+public class FluidExp extends Fluid {
+  // TODO: link this to the Experience Pylon, convert that to Fluid GUI
+  public FluidExp() {
+    super("xpjuice", new ResourceLocation(Const.MODID , "blocks/fluid_xpjuice_base"), new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
-    setUnlocalizedName("milk");
+    setUnlocalizedName("xpjuice");
   }
 }

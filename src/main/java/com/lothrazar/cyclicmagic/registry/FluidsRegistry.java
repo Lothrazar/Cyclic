@@ -1,19 +1,25 @@
 package com.lothrazar.cyclicmagic.registry;
-import java.util.ArrayList;
-import java.util.List;
+import com.lothrazar.cyclicmagic.block.BlockFluidExp;
 import com.lothrazar.cyclicmagic.block.BlockFluidMilk;
+import com.lothrazar.cyclicmagic.fluid.FluidExp;
 import com.lothrazar.cyclicmagic.fluid.FluidMilk;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 public class FluidsRegistry {
   public static FluidMilk fluid_milk;
   public static BlockFluidMilk block_milk;
-  private static List<Fluid> fluids = new ArrayList<Fluid>();
-  public static void register(Fluid f) {
-    fluids.add(f);
-  }
+  public static FluidExp fluid_exp;
+  public static BlockFluidExp block_exp;
   public static void onRegistryEvent() {
+    registerMilk();
+    registerExp();
+  }
+  //eventually it may convert to event
+  //  @SubscribeEvent
+  //  public static void onRegistryEvent(RegistryEvent.Register<Fluid> event) {
+  //    
+  //  }
+  private static void registerMilk() {
     fluid_milk = new FluidMilk();
     FluidRegistry.registerFluid(fluid_milk);
     block_milk = new BlockFluidMilk();
@@ -21,9 +27,12 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_milk,"milk",null);
     FluidRegistry.addBucketForFluid(fluid_milk);
   }
-  //eventually it may convert to event
-  //  @SubscribeEvent
-  //  public static void onRegistryEvent(RegistryEvent.Register<Fluid> event) {
-  //    
-  //  }
+  private static void registerExp() {
+    fluid_exp = new FluidExp();
+    FluidRegistry.registerFluid(fluid_exp);
+    block_exp = new BlockFluidExp();
+    fluid_exp.setBlock(block_exp);
+    BlockRegistry.registerBlock(block_exp,"xpjuice",null);
+    FluidRegistry.addBucketForFluid(fluid_exp);
+  }
 }

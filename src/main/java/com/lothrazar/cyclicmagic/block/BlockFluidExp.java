@@ -22,17 +22,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidMilk extends BlockFluidBase {
-  public static FluidStack stack;
-  public BlockFluidMilk() {
-    super(FluidsRegistry.fluid_milk, Material.WATER);
-    FluidsRegistry.fluid_milk.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_milk, 1000);
+public class BlockFluidExp extends BlockFluidBase {
+  public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
+  public BlockFluidExp() {
+    super(FluidsRegistry.fluid_exp, Material.WATER);
+    FluidsRegistry.fluid_exp.setBlock(this);
+    stack = new FluidStack(FluidsRegistry.fluid_exp, 1000);
   }
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
-    Block block = FluidsRegistry.block_milk;
+    Block block = FluidsRegistry.block_exp;
     Item item = Item.getItemFromBlock(block);
     ModelBakery.registerItemVariants(item);
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());

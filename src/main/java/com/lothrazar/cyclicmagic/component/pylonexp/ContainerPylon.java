@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +19,7 @@ public class ContainerPylon extends ContainerBaseMachine {
   public static final int SLOTY = 18;
   protected TileEntityXpPylon tileEntity;
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
+    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
