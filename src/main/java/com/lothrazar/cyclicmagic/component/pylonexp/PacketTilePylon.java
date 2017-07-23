@@ -46,7 +46,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     TileEntityXpPylon tile = (TileEntityXpPylon) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       int pylonHas = tile.getField(message.type.ordinal());
-      int pylonSpace = TileEntityXpPylon.MAX_EXP_HELD - pylonHas;
+      int pylonSpace = TileEntityXpPylon.TANK_FULL - pylonHas;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
         int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
         int toDeposit;
@@ -57,7 +57,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
         else {//try deposit specified amt
           toDeposit = Math.min(message.value, pylonSpace);
         }
-        if (pylonHas + toDeposit <= TileEntityXpPylon.MAX_EXP_HELD) {//is it full
+        if (pylonHas + toDeposit <= TileEntityXpPylon.TANK_FULL) {//is it full
           if (UtilExperience.drainExp(player, toDeposit)) {//does player have enough
             //then deposit that much into it if drain worked
             tile.setField(message.type.ordinal(), pylonHas + toDeposit);

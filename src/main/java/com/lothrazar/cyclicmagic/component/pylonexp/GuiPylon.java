@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -28,8 +29,9 @@ public class GuiPylon extends GuiBaseContainer {
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.progressBar = new ProgressBar(this, 10, 17 + 3 * Const.SQ, TileEntityXpPylon.Fields.EXP.ordinal(), TileEntityXpPylon.MAX_EXP_HELD);
-    this.progressBar.asset = PROGEXP;
+    //this.progressBar = new ProgressBar(this, 10, 17 + 3 * Const.SQ, TileEntityXpPylon.Fields.EXP.ordinal(), TileEntityXpPylon.TANK_FULL);
+   // this.progressBar.asset = PROGEXP;
+    this.setScreenSize(ScreenSize.LARGE);
   }
   @Override
   public void initGui() {
@@ -45,8 +47,9 @@ public class GuiPylon extends GuiBaseContainer {
     btnSpray = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnSpray);
-    x += w + Const.PAD;
-    y = this.guiTop + Const.PAD * 2;
+   // x += w + Const.PAD;
+//    y = this.guiTop + Const.PAD * 2;
+    y += h + Const.PAD / 2;
     btnBottle = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnBottle);
@@ -118,6 +121,33 @@ public class GuiPylon extends GuiBaseContainer {
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    this.drawFluidBar();
+  }
+  private void drawFluidBar() {
+    //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
+    int u = 0, v = 0;
+    //    IFluidHandler fluidHandler = tile.getWorld().getTileEntity(tile.getPos()).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+    //    
+    int currentFluid = tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+    this.drawString("" + currentFluid, 0, 0);
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
+    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
+    int x = this.guiLeft + 98, y = this.guiTop + 16;
+    Gui.drawModalRectWithCustomSizedTexture(
+        x, y, u, v,
+        pngWidth / f, h,
+        pngWidth / f, h);
+    h -= 2;// inner texture is 2 smaller, one for each border
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
+    float percent = ((float) currentFluid / ((float) TileEntityXpPylon.TANK_FULL));
+    int hpct = (int) (h * percent);
+    //  System.out.println(tile.getCurrentFluid()+"_"+percent);
+    Gui.drawModalRectWithCustomSizedTexture(
+        x + 1, y + 1 + h - hpct,
+        u, v,
+        16, hpct,
+        16, h);
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -125,6 +155,6 @@ public class GuiPylon extends GuiBaseContainer {
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.exp_pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.exp_pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
+    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 3, 82);
   }
 }

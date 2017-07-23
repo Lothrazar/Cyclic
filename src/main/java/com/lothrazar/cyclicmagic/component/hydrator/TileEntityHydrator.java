@@ -107,16 +107,16 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger(NBT_REDST, this.needsRedstone);
+    tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    return super.writeToNBT(tags);
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    this.needsRedstone = tags.getInteger(NBT_REDST);
+    tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
   }
   @Override
   public int getField(int id) {
@@ -183,6 +183,17 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public float getFillRatio() {
     return tank.getFluidAmount() / tank.getCapacity();
   }
+  /**
+   * For the crafting inventory, since its never in GUI and is 
+   * just used for auto processing
+   * @author Sam
+   */
+  public static class ContainerDummy extends Container {
+    @Override
+    public boolean canInteractWith(EntityPlayer playerIn) {
+      return false;
+    }
+  }
   /******************************
    * fluid properties here
    ******************************/
@@ -195,12 +206,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) { return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank); }
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
-  }
-  public static class ContainerDummy extends Container {
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-      return false;
-    }
   }
   @Override
   public IFluidTankProperties[] getTankProperties() {
@@ -230,21 +235,5 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result.amount);
     return result;
   }
-  //  
-  //  @Override
-  //  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-  //    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-  //    // from the server. Called on client only.
-  //    this.readFromNBT(pkt.getNbtCompound());
-  //    super.onDataPacket(net, pkt);
-  //  }
-  //  @Override
-  //  public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
-  //    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-  //  
-  //    // sent to the client. Called on server only.
-  //    NBTTagCompound syncData = new NBTTagCompound();
-  //    this.writeToNBT(syncData);
-  //    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  //  }
+
 }
