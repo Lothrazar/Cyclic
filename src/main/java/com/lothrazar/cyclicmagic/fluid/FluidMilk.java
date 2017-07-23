@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.fluid;
-import java.awt.Color;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;

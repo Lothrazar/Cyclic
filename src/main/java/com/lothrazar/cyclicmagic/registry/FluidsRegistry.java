@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.block.BlockFluidExp;
-import com.lothrazar.cyclicmagic.block.BlockFluidMilk;
+import com.lothrazar.cyclicmagic.fluid.BlockFluidExp;
+import com.lothrazar.cyclicmagic.fluid.BlockFluidMilk;
 import com.lothrazar.cyclicmagic.fluid.FluidExp;
 import com.lothrazar.cyclicmagic.fluid.FluidMilk;
 import net.minecraftforge.fluids.FluidRegistry;
