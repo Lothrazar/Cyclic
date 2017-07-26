@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.fluid.BlockFluidExp;
 import com.lothrazar.cyclicmagic.fluid.BlockFluidMilk;
 import com.lothrazar.cyclicmagic.fluid.BlockFluidPoison;
@@ -48,8 +49,17 @@ public class FluidsRegistry {
     FluidRegistry.addBucketForFluid(fluid_exp);
   }
   public static void addRecipes() {
-    RecipeRegistry.addShapelessRecipe(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME)),
-        FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME)),
-        Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);
+    try {
+      //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null
+      Fluid poison = FluidRegistry.getFluid(FluidsRegistry.fluid_poison.getName());
+      RecipeRegistry.addShapelessRecipe(FluidUtil.getFilledBucket(new FluidStack(poison, Fluid.BUCKET_VOLUME)),
+          FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME)),
+          Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);
+    }
+    catch (Exception e) {
+      //if another mod adds poison fluid, then our fluid gets rejected
+      ModCyclic.logger.error("Error: Cyclic failed to add recipe for Poison Bucket");
+      e.printStackTrace();
+    }
   }
 }

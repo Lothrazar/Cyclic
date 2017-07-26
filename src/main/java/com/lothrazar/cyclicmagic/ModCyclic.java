@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
@@ -55,6 +57,22 @@ public class ModCyclic {
     if (tabItem == null)
       tabItem = i;
   }
+  public int digitSquareSum(int numberInput) {
+    List<Integer> digits = new ArrayList<Integer>();
+    //first find all digits
+    while (numberInput > 0) {
+      digits.add(numberInput % 10);
+      numberInput = numberInput / 10;
+    }
+    
+    //loop and square them
+    //return sum of squares
+int sum = 0;
+    for(int d : digits){
+  sum+=d;
+}
+    return sum;
+  }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public ItemStack getTabIconItem() {
@@ -68,6 +86,7 @@ public class ModCyclic {
   }
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
+    System.out.println("!"+this.digitSquareSum(-100));
     logger = new ModLogger(event.getModLog());
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
