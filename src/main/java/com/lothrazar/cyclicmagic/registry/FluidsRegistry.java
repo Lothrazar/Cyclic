@@ -57,7 +57,7 @@ public class FluidsRegistry {
           Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);
     }
     catch (Exception e) {
-      //if another mod adds poison fluid, then our fluid gets rejected
+      //if another mod adds poison fluid (such as biomes o plenty), then our fluid gets rejected
       ModCyclic.logger.error("Error: Cyclic failed to add recipe for Poison Bucket");
       e.printStackTrace();
     }
