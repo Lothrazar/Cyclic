@@ -1,5 +1,9 @@
 {
     "variants": {
-        "normal": { "model": "cyclicmagic:block_hydrator" }
+        "normal": { "model": "cyclicmagic:block_hydrator" },
+        "facing=north": { "model": "cyclicmagic:block_hydrator"},
+        "facing=east": { "model":  "cyclicmagic:block_hydrator"},
+        "facing=south": { "model": "cyclicmagic:block_hydrator"},
+        "facing=west": { "model":  "cyclicmagic:block_hydrator" }
     }
 }
