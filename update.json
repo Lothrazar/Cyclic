@@ -7,10 +7,10 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.29",
     "1.10.2-recommended": "1.10.29",
-    "1.11.2-latest": "1.5.9",
-    "1.11.2-recommended": "1.5.9",
+    "1.11.2-latest": "1.5.10",
+    "1.11.2-recommended": "1.5.10",
     "1.12-latest": "1.7.1",
-    "1.12-recommended": "1.7.1"
+    "1.12-recommended": "1.7.2"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -178,6 +178,7 @@
 	,"1.5.7":"Fix client side crash that sometimes happen when right clicking items inside Chizel and Bits bag (misfire of right click to turn charms on and off).  "
 	,"1.5.8":"Nether Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  "
 	,"1.5.9":"Experience Boost enchantment now gives XP directly to player (when mining, not combat); this was done to avoid lag when using hammers or a vein miner.  Interfaces with textboxes now allow you to hold down the button, such as a letter or the delete key (Ender Book, Faith Plate, Password Detector).  The horse upgrade carrots will now get eaten only one at a time, instead of double.  Fixed horse info in F3 not showing for donkeys, zombie, and skeleton horses.  "
+	,"1.5.10":"Remove JSON recipe files that leaked over from the 1.12 build, and remove a bunch of logspam on startup "
    }
   "1.12":{
   	"1.5.6":"Initial port from 1.11.2-1.5.6"
@@ -190,5 +191,6 @@
 	,"1.6.1":"You can now sneak to cancel sleeping in the Sleeping Mat.  Fix item tooltips not showing in Sack of Storage.  Fix Entity Detector range being offcenter; also added a preview button to render selected area.  Auto Fisher should no longer let fish and other loot into fishing rod slot when the rod breaks.  Fixed some missing recipes.  Charms can now be repaired in an anvil instead of crafting table.  The horse upgrade carrots will now get eaten only one at a time, instead of double. "
 	,"1.7.0":"Controlled miner now accepts items into the tool slot from above (hoppers & other automation - thanks to CatAndHorse).  New block: Hydrator for making concrete, and other blocks.  Doubled the damage output of the Evoker Fang.  Purple ability armor no longer takes chain armor to craft, and has similar defense to diamond.  New Item: Apple of Lofty Stature.  New Item: Inverted Stirrups.  Bucket Storage block has been overhauled and replaced by a new block: Fluid Storage Tank that takes any fluid.   Registered Milk, Experience, and Poison in forge Fluid Registry, which means they can be put into fluid tanks or a bucket.  Bathing in milk will cure potion effects just like drinking it.  Experience Pylon overhauled to now use experience fluid (WARNING: existing placed pylons during upgrade may lose xp).  "
 	,"1.7.1":"Fix crash on startup from version 1.7.0 that happens if Biomes o Plenty is installed (both mods have poison fluid, and cyclic in 1.7.0 was adding recipe in an unsafe way.)  Fix broken Item texture model for Hydrator.  Structure builder can now place blocks underwater.  "
+	,"1.7.2":"Launch enchantment tweaks: You can now sneak to jump normally and avoid launch-jumping (before this change it was very hard to jump-stack up with blocks); increased cooldown a bit; you can now double-jump straight up if your horizontal movement is zero, before this change you would always jump at a forced angle while standing still.  "
   }
 }
