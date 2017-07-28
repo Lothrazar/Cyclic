@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.XpPylonTESR;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -30,6 +31,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
   public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
@@ -46,16 +49,18 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     return side == EnumFacing.DOWN;
   }
   private void addAllRecipes() {
+    RecipeSorter.register(Const.MODID+":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS,"");
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.SNOW), new ItemStack(Blocks.ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
       recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
     }
-    for (IRecipe r : recipeList) {
-      RecipeRegistry.register(r);
-    }
+//    for (IRecipe r : recipeList) {
+//      RecipeRegistry.register(r);
+//    }
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

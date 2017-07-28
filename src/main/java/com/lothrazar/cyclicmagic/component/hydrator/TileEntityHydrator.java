@@ -7,11 +7,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
@@ -63,10 +63,16 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+  private static IRecipe findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn) {
+    for (IRecipe irecipe : BlockHydrator.recipeList) {
+      if (irecipe.matches(craftMatrix, worldIn)) { return irecipe; }
+    }
+    return null;
+  }
   public boolean tryProcessRecipe(int slot) {
     ItemStack s = this.getStackInSlot(slot);
     this.crafting.setInventorySlotContents(0, s);
-    IRecipe rec = CraftingManager.findMatchingRecipe(crafting, this.world);
+    IRecipe rec = findMatchingRecipe(crafting, this.world);
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.tank.drain(FLUID_PER_RECIPE, true);
       this.sendOutputItem(rec.getRecipeOutput());
@@ -184,8 +190,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     return tank.getFluidAmount() / tank.getCapacity();
   }
   /**
-   * For the crafting inventory, since its never in GUI and is 
-   * just used for auto processing
+   * For the crafting inventory, since its never in GUI and is just used for
+   * auto processing
+   * 
    * @author Sam
    */
   public static class ContainerDummy extends Container {
@@ -235,5 +242,4 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result.amount);
     return result;
   }
-
 }
