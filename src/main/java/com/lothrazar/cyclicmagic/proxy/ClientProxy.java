@@ -24,6 +24,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -161,13 +162,17 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
-    EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;
-    if (p != null) {
+    EntityPlayer player = this.getPlayerEntity(ctx); 
+    if (player != null) {
       IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(getClientPlayer());
       if (props != null) {
         props.setDataFromNBT(tags);
+        if (props.getMaxHealth() != 0 && props.getMaxHealth() > player.getMaxHealth()) {//it doesnt always need to do this somehow. i get 24>20 sometimes then 24>24 other tiems
+          UtilEntity.setMaxHealth(player, props.getMaxHealth());
+        }
       }
     }
   }
