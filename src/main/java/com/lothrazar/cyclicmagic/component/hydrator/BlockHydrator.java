@@ -54,7 +54,9 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
-    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.SNOW), new ItemStack(Blocks.ICE)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] {new ItemStack(Blocks.SNOW),new ItemStack(Blocks.SNOW),new ItemStack(Blocks.SNOW),new ItemStack(Blocks.SNOW)}
+        , new ItemStack(Blocks.ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
       recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
     }

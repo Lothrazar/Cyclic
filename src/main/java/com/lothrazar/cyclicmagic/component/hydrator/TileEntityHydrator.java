@@ -27,6 +27,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+  private static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_INFLUID = 8;
@@ -37,9 +38,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public FluidTank tank = new FluidTank(TANK_FULL);
   private int[] hopperInput = { 0, 1, 2, 3 };
   private int[] hopperOutput = { 4, 5, 6, 7 };
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), 1, 1);
+  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
   public TileEntityHydrator() {
-    super(4 + 4 + 1);// in, out,  fluid transfer
+    super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
     timer = TIMER_FULL;
     this.tank.setTileEntity(this);
   }
@@ -56,31 +57,34 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     if (this.getCurrentFluid() == 0) { return; }
     if (this.updateTimerIsZero()) { // time to burn!
       this.spawnParticlesAbove();
-      for (int i = 0; i < 4; i++) {
-        if (tryProcessRecipe(i)) {
-          break;//keep going until one works then stop
-        }
+      if (tryProcessRecipe()) {
+        this.timer = TIMER_FULL;
       }
     }
   }
-  private static IRecipe findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn) {
+  private IRecipe findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn) {
+    for (int i = 0; i < RECIPE_SIZE; i++) {
+      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i));
+    }
     for (IRecipe irecipe : BlockHydrator.recipeList) {
       if (irecipe.matches(craftMatrix, worldIn)) { return irecipe; }
     }
     return null;
   }
-  public boolean tryProcessRecipe(int slot) {
-    ItemStack s = this.getStackInSlot(slot);
-    this.crafting.setInventorySlotContents(0, s);
+  public boolean tryProcessRecipe() {
     IRecipe rec = findMatchingRecipe(crafting, this.world);
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
-      this.tank.drain(FLUID_PER_RECIPE, true);
       this.sendOutputItem(rec.getRecipeOutput());
-      s.shrink(1);
-      this.timer = TIMER_FULL;
+      payRecipeCost(rec);
       return true;
     }
     return false;
+  }
+  public void payRecipeCost(IRecipe rec) {
+    this.tank.drain(FLUID_PER_RECIPE, true);
+    for (int i = 0; i < RECIPE_SIZE; i++) {
+      this.decrStackSize(i);
+    }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
