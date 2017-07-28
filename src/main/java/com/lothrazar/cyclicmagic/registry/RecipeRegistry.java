@@ -13,7 +13,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeRegistry {
-  public static final boolean WRITE_JSON = true;
+ 
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this
    * returns it after registering it
@@ -22,8 +22,7 @@ public class RecipeRegistry {
    * @param recipeComponents
    * @return
    */
-  public static IRecipe addShapelessRecipe(ItemStack output, Object... recipeComponents) {
-  if(WRITE_JSON) { RecipeFileWriter.addShapelessRecipe(output, recipeComponents);}
+  public static IRecipe addShapelessRecipe(ItemStack output, Object... recipeComponents) { 
     List<ItemStack> list = Lists.<ItemStack> newArrayList();
     for (Object object : recipeComponents) {
       if (object instanceof String) { return addShapelessOreRecipe(output, recipeComponents); }
@@ -50,7 +49,7 @@ public class RecipeRegistry {
    * @return
    */
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
-    if(WRITE_JSON){ RecipeFileWriter.addShapedRecipe(output, recipeComponents);}
+    
     for (Object object : recipeComponents) {
       if (object instanceof String) { return addShapedOreRecipe(output, recipeComponents); }
     }
