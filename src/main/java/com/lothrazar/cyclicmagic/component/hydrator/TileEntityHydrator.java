@@ -27,7 +27,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
-  private static final int RECIPE_SIZE = 4;
+  public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_INFLUID = 8;

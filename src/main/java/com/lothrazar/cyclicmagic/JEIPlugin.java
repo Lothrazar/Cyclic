@@ -1,8 +1,12 @@
 package com.lothrazar.cyclicmagic;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.RecipeHydrate;
+import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -54,16 +58,13 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
-    
     //this should work. idk
-    for(Item s : ItemRegistry.itemMap.values()){
-
-//      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei"); 
+    for (Item s : ItemRegistry.itemMap.values()) {
+      //      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei"); 
       registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
     }
-    for(Block s : BlockRegistry.blocks){
-
-//      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei");
+    for (Block s : BlockRegistry.blocks) {
+      //      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei");
       registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");
     }
   }
@@ -87,7 +88,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     }
     @Override
     public void getIngredients(IIngredients ingredients) {
-      ingredients.setInput(ItemStack.class, src.getRecipeInput());
+      ingredients.setInputs(ItemStack.class, Arrays.asList(src.getRecipeInput()));
       ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
     }
   }
@@ -122,10 +123,17 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      guiItemStacks.init(0, true, 3, 18);
-      guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
-      guiItemStacks.init(1, false, 129, 18);
-      guiItemStacks.set(1, recipeWrapper.getOut());
+      guiItemStacks.init(0, true, 3, Const.SQ);
+      guiItemStacks.init(1, true, 3, 2 * Const.SQ);
+      guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
+      guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
+      for (int i = 0; i < TileEntityHydrator.RECIPE_SIZE; i++) {
+        List<ItemStack> input = ingredients.getInputs(ItemStack.class).get(i);
+        if (input != null && input.size() > 0 && input.get(0) != null)
+          guiItemStacks.set(i, input.get(0));
+      }
+      guiItemStacks.init(4, false, 129, 18);
+      guiItemStacks.set(4, recipeWrapper.getOut());
     }
   }
 }
