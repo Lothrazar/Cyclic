@@ -24,15 +24,11 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   public void initGui() {
     this.buttonList.clear();
     super.initGui();
-  }
+  } 
   @Override
-  protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-    // this.fontRendererObj.drawString(I18n.format("container.crafting", new
-    // Object[0]), 97, 8, 4210752);
-  }
-  @Override
-  public void drawScreen(int par1, int par2, float par3) {
-    super.drawScreen(par1, par2, par3);
+  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    this.renderHoveredToolTip(mouseX, mouseY);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {

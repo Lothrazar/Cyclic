@@ -58,7 +58,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     //this should work. idk
     for(Item s : ItemRegistry.itemMap.values()){
 
-//      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei");
+//      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei"); 
       registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
     }
     for(Block s : BlockRegistry.blocks){
