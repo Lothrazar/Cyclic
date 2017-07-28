@@ -105,14 +105,13 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     //TODO:  STILL this sometimes stops randomly at a 90 DEG ANGLE WHEN pushing
     if (this.fuel > 0 && this.motionX * this.motionX < 0.001 && this.motionZ * this.motionZ < 0.001
     //          && this.motionX> 1.0E-4D  && this.motionX>1.0E-4D
-    ) {
-      ModCyclic.logger.info(" fueled with motion zero?");
+    ) { 
       this.motionX = this.motionX * 2;
       this.motionZ = this.motionZ * 2;
       //if that didnt owrk
       if (this.motionX == 0 && this.posX - this.prevPosX != 0) {
         this.motionX = (this.posX - this.prevPosX) * 8;
-        ModCyclic.logger.info("motionX hax" + this.motionX);
+      
         this.pushX = (this.posX - this.prevPosX) * (this.posX - this.prevPosX);
         if (pushZ == 0) {
           pushZ = 0.5;
