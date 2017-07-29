@@ -49,8 +49,11 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     return side == EnumFacing.DOWN;
   }
   private void addAllRecipes() {
-   // RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
+    // RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), ItemStack.EMPTY, ItemStack.EMPTY },
+        new ItemStack(Blocks.GRASS)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
     recipeList.add(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
@@ -58,14 +61,20 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
-   
     //GRAVEL JUST FOR FUN EH
+    //IDEAS: bones, rotten flesh, mushrooms, leather??
     recipeList.add(new RecipeHydrate(
-        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) }, 
+        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
-   
     recipeList.add(new RecipeHydrate(
-        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) }, new ItemStack(Blocks.ICE)));
+        new ItemStack[] { new ItemStack(Blocks.DIRT,1,1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), ItemStack.EMPTY },
+        new ItemStack(Blocks.MYCELIUM)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
+        new ItemStack(Blocks.ICE)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
+        new ItemStack(Blocks.PACKED_ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
       recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
     }
