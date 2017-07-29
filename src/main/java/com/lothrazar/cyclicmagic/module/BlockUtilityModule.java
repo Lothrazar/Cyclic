@@ -26,7 +26,6 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -74,15 +73,15 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
-      ItemBlock ib =  new ItemBlockScaffolding(block_fragile);
-      BlockRegistry.registerBlock(block_fragile,ib, "block_fragile", GuideCategory.BLOCK);
+      ItemBlock ib = new ItemBlockScaffolding(block_fragile);
+      BlockRegistry.registerBlock(block_fragile, ib, "block_fragile", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(ib);
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
-      ib= new ItemBlockScaffolding(block_fragile_auto);
-      BlockRegistry.registerBlock(block_fragile_auto,ib, "block_fragile_auto", GuideCategory.BLOCK);
+      ib = new ItemBlockScaffolding(block_fragile_auto);
+      BlockRegistry.registerBlock(block_fragile_auto, ib, "block_fragile_auto", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(ib);
       BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
-      ib=new ItemBlockScaffolding(block_fragile_weak);
+      ib = new ItemBlockScaffolding(block_fragile_weak);
       BlockRegistry.registerBlock(block_fragile_weak, ib, "block_fragile_weak", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(ib);
     }

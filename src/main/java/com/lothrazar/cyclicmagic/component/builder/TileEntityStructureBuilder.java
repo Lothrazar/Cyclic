@@ -245,7 +245,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
           //true means bounding box is null in the check. entit falling sand uses true
           //used to be exact air world.isAirBlock(nextPos)
-          if (stuff.canPlaceBlockAt(world, nextPos) &&//sutf checks isReplaceable for us, all AIR checks removed
+          if (stuff.canPlaceBlockAt(world, nextPos) && //sutf checks isReplaceable for us, all AIR checks removed
               world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
             IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
             if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {

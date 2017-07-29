@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -22,7 +21,7 @@ public class ItemBlockScaffolding extends ItemBlock {
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-    ItemStack stack = player.getHeldItem(hand); 
+    ItemStack stack = player.getHeldItem(hand);
     if (player.isSneaking()) { return new ActionResult<ItemStack>(EnumActionResult.PASS, stack); } //skip if sneaking
     BlockPos pos = player.getPosition().up();// at eye level
     int direction = MathHelper.floor((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
@@ -77,7 +76,7 @@ public class ItemBlockScaffolding extends ItemBlock {
           facing = EnumFacing.NORTH;
         break;
       }
-    } 
+    }
     if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) { return new ActionResult<ItemStack>(this.onItemUse(player, worldIn, pos, hand, facing, 0, 0, 0), stack); }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
@@ -97,7 +96,6 @@ public class ItemBlockScaffolding extends ItemBlock {
     if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getEntityPlayer().isSneaking()) {
       EnumFacing opp = event.getFace().getOpposite();
       BlockPos dest = UtilWorld.nextAirInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
- 
       this.onItemUse(event.getEntityPlayer(), event.getWorld(), dest, event.getHand(), opp, 0, 0, 0);
       event.setCanceled(true);
     }

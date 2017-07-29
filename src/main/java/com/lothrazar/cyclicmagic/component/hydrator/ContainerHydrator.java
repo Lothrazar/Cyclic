@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("unused")
 public class ContainerHydrator extends ContainerBaseMachine {
   static final int MID_SPACING = 133;
   static final int SLOTX_FLUID = 70;
@@ -48,11 +46,10 @@ public class ContainerHydrator extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity 
-      if (slot < tile.getSizeInventory()) { 
+      if (slot < tile.getSizeInventory()) {
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, 36, false)) {  
-        return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, 36, false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }

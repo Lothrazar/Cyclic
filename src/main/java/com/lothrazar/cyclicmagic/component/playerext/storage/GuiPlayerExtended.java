@@ -24,7 +24,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   public void initGui() {
     this.buttonList.clear();
     super.initGui();
-  } 
+  }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);

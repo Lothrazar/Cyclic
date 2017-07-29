@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockFluidBase extends BlockFluidClassic implements IBlockHasTESR  {
+public abstract class BlockFluidBase extends BlockFluidClassic implements IBlockHasTESR {
   public BlockFluidBase(Fluid fluid, Material material) {
     super(fluid, material);
     this.setQuantaPerBlock(6);

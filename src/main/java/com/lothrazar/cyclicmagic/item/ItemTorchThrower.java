@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -44,7 +43,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
         " cg",
         "l  ",
         'g', "ingotGold",
-        'c',"blockCoal",
+        'c', "blockCoal",
         'l', "logWood");
     return null;
   }

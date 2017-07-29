@@ -165,7 +165,7 @@ public class ClientProxy extends CommonProxy {
   @Override
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
-    EntityPlayer player = this.getPlayerEntity(ctx); 
+    EntityPlayer player = this.getPlayerEntity(ctx);
     if (player != null) {
       IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(getClientPlayer());
       if (props != null) {

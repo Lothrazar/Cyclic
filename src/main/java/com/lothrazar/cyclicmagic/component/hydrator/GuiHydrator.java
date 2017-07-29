@@ -52,9 +52,7 @@ public class GuiHydrator extends GuiBaseContainer {
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
-   
     int currentFluid = tile.getField(Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
-    
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int x = this.guiLeft + 98, y = this.guiTop + 16;
@@ -66,7 +64,6 @@ public class GuiHydrator extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
     float percent = ((float) currentFluid / ((float) TileEntityHydrator.TANK_FULL));
     int hpct = (int) (h * percent);
-   
     Gui.drawModalRectWithCustomSizedTexture(
         x + 1, y + 1 + h - hpct,
         u, v,

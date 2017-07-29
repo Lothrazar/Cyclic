@@ -4,9 +4,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.XpPylonTESR;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -31,8 +28,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
   public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
@@ -67,7 +62,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
     recipeList.add(new RecipeHydrate(
-        new ItemStack[] { new ItemStack(Blocks.DIRT,1,1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), ItemStack.EMPTY },
+        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), ItemStack.EMPTY },
         new ItemStack(Blocks.MYCELIUM)));
     recipeList.add(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },

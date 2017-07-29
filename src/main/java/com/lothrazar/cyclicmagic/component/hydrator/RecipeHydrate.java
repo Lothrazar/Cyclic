@@ -39,7 +39,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   }
   @Override
   public boolean canFit(int width, int height) {
-    return (width <=2 && height <=2);
+    return (width <= 2 && height <= 2);
   }
   @Override
   public ItemStack getRecipeOutput() {

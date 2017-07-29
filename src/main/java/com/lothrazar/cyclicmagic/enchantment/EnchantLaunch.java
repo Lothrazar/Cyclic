@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EnchantLaunch extends EnchantBase {
   private static final float power = 1.05F;
   private static final int rotationPitch = 70;
-  private static final int cooldown = 5*20;
+  private static final int cooldown = 5 * 20;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
@@ -71,10 +71,9 @@ public class EnchantLaunch extends EnchantBase {
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer p = Minecraft.getMinecraft().player;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet == null || feet.isEmpty() || p.isSneaking()) { return; }//sneak to not double jump
+    if (feet == null || feet.isEmpty() || p.isSneaking()) { return; } //sneak to not double jump
     if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
     if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
- 
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
         && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
       //JUMP IS pressed and you are moving down
