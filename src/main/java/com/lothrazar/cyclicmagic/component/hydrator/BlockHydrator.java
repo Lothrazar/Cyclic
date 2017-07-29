@@ -49,7 +49,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     return side == EnumFacing.DOWN;
   }
   private void addAllRecipes() {
-    RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
+   // RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
     recipeList.add(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
@@ -58,6 +58,12 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+   
+    //GRAVEL JUST FOR FUN EH
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) }, 
+        new ItemStack(Blocks.GRAVEL)));
+   
     recipeList.add(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) }, new ItemStack(Blocks.ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
