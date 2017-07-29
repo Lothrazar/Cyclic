@@ -33,7 +33,7 @@ public class UtilPlayerInventoryFilestorage {
       File fileNew = event.getPlayerFile(ext);
       if (fileNew.exists()) {
         try {
-          Files.copy(fileNew, playerFile); 
+          Files.copy(fileNew, playerFile);
           fileNew.delete();
           File fb = event.getPlayerFile(extback);
           if (fb.exists())

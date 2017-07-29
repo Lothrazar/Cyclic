@@ -29,8 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EnchantLaunch extends EnchantBase {
   private static final float power = 1.05F;
-  private static final int rotationPitch = 75;
-  private static final int cooldown = 40;
+  private static final int rotationPitch = 70;
+  private static final int cooldown = 5 * 20;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
@@ -71,7 +71,7 @@ public class EnchantLaunch extends EnchantBase {
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer p = Minecraft.getMinecraft().player;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet == null || feet.isEmpty()) { return; }
+    if (feet == null || feet.isEmpty() || p.isSneaking()) { return; } //sneak to not double jump
     if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
     if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
@@ -80,7 +80,8 @@ public class EnchantLaunch extends EnchantBase {
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       p.fallDistance = 0;
-      UtilEntity.launch(p, rotationPitch, power);
+      float angle = (p.motionX == 0 && p.motionZ == 0) ? 90 : rotationPitch;
+      UtilEntity.launch(p, angle, power);
       UtilParticle.spawnParticle(p.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, p.getPosition());
       UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
       UtilItemStack.damageItem(p, feet);

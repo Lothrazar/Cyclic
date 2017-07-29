@@ -26,14 +26,9 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     super.initGui();
   }
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    // this.fontRendererObj.drawString(I18n.format("container.crafting", new
-    // Object[0]), 97, 8, 4210752);
-  }
-  @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
+    this.renderHoveredToolTip(mouseX, mouseY);
     this.oldMouseX = (float) mouseX;
     this.oldMouseY = (float) mouseY;
   }

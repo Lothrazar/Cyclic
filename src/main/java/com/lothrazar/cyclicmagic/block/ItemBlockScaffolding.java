@@ -92,7 +92,7 @@ public class ItemBlockScaffolding extends ItemBlock {
    */
   @SubscribeEvent
   public void onRightClickBlock(RightClickBlock event) {
-    //instanceof ItemBlockScaffolding
+    //instanceof ItemBlockScaffolding 
     if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getEntityPlayer().isSneaking()) {
       EnumFacing opp = event.getFace().getOpposite();
       BlockPos dest = UtilWorld.nextAirInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());

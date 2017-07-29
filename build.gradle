@@ -57,7 +57,7 @@ dependencies {
 
   //compile files("lib/Baubles-${mc_version}-${baubles_version}.jar")
   
-  deobfCompile name: "Baubles", version: "1.12-1.4.5"
+  deobfCompile name: "Baubles", version: "${mc_version}-${baubles_version}"
   
   
   

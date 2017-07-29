@@ -4,8 +4,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.XpPylonTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -46,16 +44,55 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     return side == EnumFacing.DOWN;
   }
   private void addAllRecipes() {
+    // RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), ItemStack.EMPTY, ItemStack.EMPTY },
+        new ItemStack(Blocks.GRASS)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE, 1, 0), new ItemStack(Blocks.MOSSY_COBBLESTONE, 1, 0)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+    //GRAVEL JUST FOR FUN EH
+    //IDEAS: bones, rotten flesh, mushrooms, leather??
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
+        new ItemStack(Blocks.GRAVEL)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), ItemStack.EMPTY },
+        new ItemStack(Blocks.MYCELIUM)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
+        new ItemStack(Blocks.ICE)));
+    recipeList.add(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
+        new ItemStack(Blocks.PACKED_ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
-      recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getDyeDamage()), new ItemStack(Blocks.CONCRETE, 1, col.getDyeDamage())));
+      recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
     }
-    for (IRecipe r : recipeList) {
-      RecipeRegistry.register(r);
+    for (EnumDyeColor col : EnumDyeColor.values()) {
+      if (col.getMetadata() != EnumDyeColor.WHITE.getMetadata())
+        recipeList.add(new RecipeHydrate(new ItemStack(Blocks.WOOL, 1, col.getMetadata()), new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata())));
     }
+    //they didnt use metadata for glazed because of facing direction i guess
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.BLACK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLACK.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLUE.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.BROWN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BROWN.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.CYAN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.CYAN.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GREEN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.GREEN.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIGHT_BLUE.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.LIME_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIME.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.MAGENTA_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.MAGENTA.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.ORANGE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.ORANGE.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.PINK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PINK.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.PURPLE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PURPLE.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.RED_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.RED.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

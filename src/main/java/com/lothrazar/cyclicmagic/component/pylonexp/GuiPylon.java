@@ -3,7 +3,6 @@ import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -30,7 +29,7 @@ public class GuiPylon extends GuiBaseContainer {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     //this.progressBar = new ProgressBar(this, 10, 17 + 3 * Const.SQ, TileEntityXpPylon.Fields.EXP.ordinal(), TileEntityXpPylon.TANK_FULL);
-   // this.progressBar.asset = PROGEXP;
+    // this.progressBar.asset = PROGEXP;
     this.setScreenSize(ScreenSize.LARGE);
   }
   @Override
@@ -47,8 +46,8 @@ public class GuiPylon extends GuiBaseContainer {
     btnSpray = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnSpray);
-   // x += w + Const.PAD;
-//    y = this.guiTop + Const.PAD * 2;
+    // x += w + Const.PAD;
+    //    y = this.guiTop + Const.PAD * 2;
     y += h + Const.PAD / 2;
     btnBottle = new GuiButton(btnId++,
         x, y, w, h, "");
@@ -155,6 +154,6 @@ public class GuiPylon extends GuiBaseContainer {
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.exp_pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.exp_pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2+8, 92);
+    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 + 8, 92);
   }
 }

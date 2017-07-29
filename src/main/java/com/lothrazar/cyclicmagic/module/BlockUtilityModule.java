@@ -26,7 +26,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -73,14 +73,17 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
-      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile", GuideCategory.BLOCK);
-      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
+      ItemBlock ib = new ItemBlockScaffolding(block_fragile);
+      BlockRegistry.registerBlock(block_fragile, ib, "block_fragile", GuideCategory.BLOCK);
+      ModCyclic.instance.events.register(ib);
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
-      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto", GuideCategory.BLOCK);
-      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_auto));
+      ib = new ItemBlockScaffolding(block_fragile_auto);
+      BlockRegistry.registerBlock(block_fragile_auto, ib, "block_fragile_auto", GuideCategory.BLOCK);
+      ModCyclic.instance.events.register(ib);
       BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
-      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak", GuideCategory.BLOCK);
-      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_weak));
+      ib = new ItemBlockScaffolding(block_fragile_weak);
+      BlockRegistry.registerBlock(block_fragile_weak, ib, "block_fragile_weak", GuideCategory.BLOCK);
+      ModCyclic.instance.events.register(ib);
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();

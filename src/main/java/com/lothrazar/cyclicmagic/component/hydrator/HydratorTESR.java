@@ -13,14 +13,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class HydratorTESR extends BaseMachineTesr<TileEntityHydrator> {
-  private int lowerSlot;
+  private static final float height = 0.5F;
   public HydratorTESR(int slot, int ls) {
     super(slot);
-    lowerSlot = ls;
   }
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
-    renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0, 0.5F, 1);
-    renderItem(te, te.getStackInSlot(this.lowerSlot), 1, 0.5F, 0);
+    renderItem(te, te.getStackInSlot(0), 0, height, 1);
+    renderItem(te, te.getStackInSlot(1), 1, height, 1);
+    renderItem(te, te.getStackInSlot(2), 1, height, 0);
+    renderItem(te, te.getStackInSlot(3), 0, height, 0);
   }
 }

@@ -244,11 +244,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
           //true means bounding box is null in the check. entit falling sand uses true
-          if (world.isAirBlock(nextPos) &&
-              stuff.canPlaceBlockAt(world, nextPos) &&
+          //used to be exact air world.isAirBlock(nextPos)
+          if (stuff.canPlaceBlockAt(world, nextPos) && //sutf checks isReplaceable for us, all AIR checks removed
               world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
             IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
-            if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+            if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
               this.decrStackSize(0, 1);
               SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, nextPos);
               if (type != null && type.getPlaceSound() != null) {
