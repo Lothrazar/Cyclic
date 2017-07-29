@@ -65,11 +65,9 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
     //this should work. idk
     for (Item s : ItemRegistry.itemMap.values()) {
-      //      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei"); 
       registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
     }
     for (Block s : BlockRegistry.blocks) {
-      //      registry.addDescription(new ItemStack(s), s.getUnlocalizedName() + ".jei");
       registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");
     }
   }
