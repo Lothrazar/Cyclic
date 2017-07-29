@@ -119,8 +119,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       }
       if (this.motionZ == 0 && this.posZ - this.prevPosZ != 0) {
         this.motionZ = (this.posZ - this.prevPosZ) * 8;
-        this.pushZ = (this.posZ - this.prevPosZ) * (this.posZ - this.prevPosZ);
-        ModCyclic.logger.info("motionZ hax" + this.motionZ);
+        this.pushZ = (this.posZ - this.prevPosZ) * (this.posZ - this.prevPosZ); 
         if (pushX == 0) {
           pushX = 0.5;
         }
