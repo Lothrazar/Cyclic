@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
@@ -52,6 +53,11 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
         10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerHydrator.class, RECIPE_CATEGORY_HYDRATOR,
+        0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        3, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+        9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     ////////////////// custom recipe hook
     registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
