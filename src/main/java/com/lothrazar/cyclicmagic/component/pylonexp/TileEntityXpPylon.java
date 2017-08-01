@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -14,7 +12,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;

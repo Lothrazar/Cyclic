@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.entity;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockFurnace;
@@ -106,13 +105,11 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     if (this.fuel > 0 && this.motionX * this.motionX < 0.001 && this.motionZ * this.motionZ < 0.001
     //          && this.motionX> 1.0E-4D  && this.motionX>1.0E-4D
     ) {
-      ModCyclic.logger.info(" fueled with motion zero?");
       this.motionX = this.motionX * 2;
       this.motionZ = this.motionZ * 2;
       //if that didnt owrk
       if (this.motionX == 0 && this.posX - this.prevPosX != 0) {
         this.motionX = (this.posX - this.prevPosX) * 8;
-        ModCyclic.logger.info("motionX hax" + this.motionX);
         this.pushX = (this.posX - this.prevPosX) * (this.posX - this.prevPosX);
         if (pushZ == 0) {
           pushZ = 0.5;
@@ -121,7 +118,6 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       if (this.motionZ == 0 && this.posZ - this.prevPosZ != 0) {
         this.motionZ = (this.posZ - this.prevPosZ) * 8;
         this.pushZ = (this.posZ - this.prevPosZ) * (this.posZ - this.prevPosZ);
-        ModCyclic.logger.info("motionZ hax" + this.motionZ);
         if (pushX == 0) {
           pushX = 0.5;
         }
@@ -216,7 +212,6 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
         entityIn instanceof EntityMinecart &&
         (this.motionX != motionXprev || this.motionZ != motionZprev)) {
       //well i am the engine, i should not get stopped in my tracks just because theres two shits in front
-  
       this.motionX = motionXprev * 8;
       this.motionZ = motionZprev * 8;
     }

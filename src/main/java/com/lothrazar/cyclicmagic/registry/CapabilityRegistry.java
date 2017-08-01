@@ -63,7 +63,7 @@ public class CapabilityRegistry {
     private static final String KEY_EATLOC = "ghost_location";
     private static final String KEY_EATDIM = "ghost_dim";
     private static final String KEY_STEP = Const.MODID + "_step";
-    private static final String KEY_STEPFORCE = Const.MODID + "_step";
+    private static final String KEY_STEPFORCE = Const.MODID + "_stepforced";
     private boolean foreStepHeightOff = false;
     private boolean isStepOn = false;
     private boolean isSleeping = false;

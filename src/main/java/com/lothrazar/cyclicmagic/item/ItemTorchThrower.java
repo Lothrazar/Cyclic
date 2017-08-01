@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -22,7 +21,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
   private static final float PITCHOFFSET = 0.0F;//copied from BaseItemProjectile
   private static final int COOLDOWN = 8;//ticks
   public ItemTorchThrower() {
-    super(256);
+    super(256);//at 64 it reparied 21->37
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
@@ -40,12 +39,18 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " gi",
-        " ig",
-        "o  ",
-        'i', Items.IRON_INGOT,
-        'g', Items.GOLD_INGOT,
-        'o', Blocks.OBSIDIAN);
+        " gc",
+        " cg",
+        "l  ",
+        'g', "ingotGold",
+        'c', "blockCoal",
+        'l', "logWood");
     return null;
+  }
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {//176 to 240 as an example repair
+    ItemStack mat = new ItemStack(Blocks.COAL_BLOCK);
+    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) { return true; }
+    return super.getIsRepairable(toRepair, repair);
   }
 }
