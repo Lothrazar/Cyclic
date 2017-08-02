@@ -37,10 +37,12 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 3),
-        "lal", "lal", "lal",
-        'l', "dustGlowstone",
-        'a', Items.CHORUS_FRUIT);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
+        "lll", 
+        "lgl", 
+        "lll",
+        'g', "dustGlowstone",
+        'l', Items.CHORUS_FRUIT);
   }
   private void setFlying(EntityPlayer player) {
     player.fallDistance = 0.0F;

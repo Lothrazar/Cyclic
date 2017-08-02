@@ -92,16 +92,11 @@ public class EventRender {
       spellHud.drawSpellWheel(wand);
     }
     int flyingTicks = props.getFlyingTimer();
-//    if (player.getEntityData().getBoolean(ItemChorusGlowing.KEY_BOOLEAN)) { //unlike corrupted chorus, we are fine with losing this data on death, it just stops flight
-//      int playerGhost = player.getEntityData().getInteger(ItemChorusGlowing.KEY_TIMER);
-      if (flyingTicks > 0) {
-      //  if (flyingTicks % Const.TICKS_PER_SEC == 0) {
-          int secs = flyingTicks / Const.TICKS_PER_SEC;
-          String time = UtilChat.formatSecondsToMinutes(secs);
-          event.getRight().add(UtilChat.lang("screentext.flying.seconds") + time);
-       // }
-      }
-//    }
+    if (flyingTicks > 0) {
+      int secs = flyingTicks / Const.TICKS_PER_SEC;
+      String time = UtilChat.formatSecondsToMinutes(secs);
+      event.getRight().add(UtilChat.lang("screentext.flying.seconds") + time);
+    }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)

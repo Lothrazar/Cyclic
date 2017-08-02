@@ -101,6 +101,7 @@ public class UtilChat {
     if (secontsTotal < 0) { return ""; }
     int minutes = secontsTotal / 60;
     int secs = secontsTotal % 60;
-    return minutes + ":" + secs;
+     
+    return minutes + ":" + String.format("%02d", secs);
   }
 }
