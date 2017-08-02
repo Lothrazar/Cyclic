@@ -10,7 +10,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockBase extends Block {
+public abstract class BlockBase extends Block { 
+  public static final String NBT_FLUIDSIZE = "fluidtotal";
+public static final String NBT_FLUIDTYPE = "fluidtype";
   public BlockBase(Material materialIn) {
     super(materialIn);
     this.setHardness(2.0F).setResistance(2.0F);//of course can/will be overwritten in most cases, but at least have a nonzero default

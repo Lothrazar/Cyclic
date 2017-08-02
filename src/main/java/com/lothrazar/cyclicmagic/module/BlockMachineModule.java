@@ -20,6 +20,7 @@ import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
+import com.lothrazar.cyclicmagic.component.pylonexp.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
@@ -46,7 +47,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
-      BlockRegistry.registerBlock(exp_pylon, "exp_pylon", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     }
     if (enablePattern) {

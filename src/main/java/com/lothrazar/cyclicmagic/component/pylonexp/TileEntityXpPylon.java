@@ -201,6 +201,11 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
+  public FluidStack getCurrentFluidStack() {
+    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
+    return fluidHandler.getTankProperties()[0].getContents();
+  }
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {

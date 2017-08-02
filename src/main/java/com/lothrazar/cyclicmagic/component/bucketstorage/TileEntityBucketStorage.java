@@ -42,7 +42,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
       return false;
     }
   }
-  public FluidStack getCurrentFluid() {
+  public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
     return fluidHandler.getTankProperties()[0].getContents();
