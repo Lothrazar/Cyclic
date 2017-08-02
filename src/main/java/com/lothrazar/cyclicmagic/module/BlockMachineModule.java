@@ -48,7 +48,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     
     
     BlockVacuum vacuum_block = new BlockVacuum();
-    BlockRegistry.registerBlock(vacuum_block, "vacuum_block", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
 
     

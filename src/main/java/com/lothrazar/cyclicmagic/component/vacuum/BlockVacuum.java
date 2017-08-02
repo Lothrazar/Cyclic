@@ -21,8 +21,7 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe 
   public BlockVacuum() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_VACUUM);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setSoundType(SoundType.GLASS);
-    this.setTranslucent();
+    this.setSoundType(SoundType.STONE);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

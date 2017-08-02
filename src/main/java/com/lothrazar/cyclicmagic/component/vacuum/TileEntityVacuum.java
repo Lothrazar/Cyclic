@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -26,9 +27,8 @@ import net.minecraft.inventory.InventoryHelper;
 
 public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable {
   private static final int VRADIUS = 2;
-  public static final int TIMER_FULL = 18;
-  private static final String NBT_TIMER = "Timer";
-  public final static int RADIUS = 16;
+  public static final int TIMER_FULL = 18; 
+  public final static int RADIUS = 8;
   private static final int[] SLOTS_EXTRACT = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 };
   public static enum Fields {
     TIMER;
@@ -43,33 +43,38 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   }
   @Override
   public void update() {
+    if (!this.isRunning()) { return; }
     updateCollection();
   }
+  @SuppressWarnings("serial")
   private void updateCollection() {
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
-    AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1 * RADIUS, -1 * VRADIUS, -1 * RADIUS);//expandXyz
+    BlockPos center = this.getTargetCenter();
+    AxisAlignedBB region = new AxisAlignedBB(center).expand(RADIUS, VRADIUS, RADIUS).expand(-1 * RADIUS, -1 * VRADIUS, -1 * RADIUS);//expandXyz
     List<EntityItem> orbs = getWorld().getEntitiesWithinAABB(EntityItem.class, region);
-    if (orbs != null) { //no timer just EAT
-      for (EntityItem orb : orbs) {
-        if (orb.isDead) {
-          continue;
+    if (orbs == null) { return; }
+    for (EntityItem orb : orbs) {
+      if (orb.isDead) {
+        continue;
+      }
+      ItemStack contained = orb.getItem();
+      ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(new ArrayList<ItemStack>() {
+        {
+          add(contained);
         }
-        ItemStack contained = orb.getItem();
- 
-        ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(new ArrayList<ItemStack>() {
-          {
-            add(contained);
-          }
-        }, this,0);
-        if (toDrop.size() > 0) {//JUST in case it did not fit or only half of it fit
-          orb.setItem(toDrop.get(0));
-        }
-        else{
-          orb.setDropItemsWhenDead(false);
-          orb.setDead();
-        }
+      }, this, 0);
+      if (toDrop.size() > 0) {//JUST in case it did not fit or only half of it fit
+        orb.setItem(toDrop.get(0));
+      }
+      else {
+        orb.setDropItemsWhenDead(false);
+        orb.setDead();
       }
     }
+  }
+  public BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), RADIUS);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
