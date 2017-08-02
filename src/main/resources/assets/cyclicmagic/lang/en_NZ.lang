@@ -195,7 +195,7 @@ item.dynamite_safe.tooltip=Does not break blocks or hurt players
 item.dynamite_mining.name=Mining Dynamite
 item.dynamite_mining.tooltip=Drops 100% of blocks broken as items.  Does not hurt players.
 item.glowing_chorus.name=Glowing Chorus Fruit
-item.glowing_chorus.tooltip=Gives you a few (stackable) seconds of creative flight each time its eaten.  
+item.glowing_chorus.tooltip=Gives you a few (stackable) minutes of creative flight each time its eaten.  
 item.cantoggle.tooltip.info=Right-Click to toggle: 
 item.cantoggle.tooltip.on=On
 item.cantoggle.tooltip.off=Off
@@ -734,6 +734,8 @@ unlocks.extended=Unlocked Extended Inventory
 unlocks.stepheight.true=Step Height Enabled
 unlocks.stepheight.false=Step Height Disabled
 wand.inventory.empty=Scepter Inventory is Empty
+
+screentext.flying.seconds=Flying: 
 
 cyclic.fluid.empty=Empty
 cyclic.fluid.amount=Fluid: 

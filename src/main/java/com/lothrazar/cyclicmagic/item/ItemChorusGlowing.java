@@ -4,7 +4,9 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,11 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
-  private static final String KEY_BOOLEAN = "cyclicflying_on";
-  private static final String KEY_TIMER = "cyclicflying_timer";
-  private static final String KEY_POTION = "cyclicflying_potion";//more if you eat more
-  public static final int FLY_SECONDS = 10;
-  public static final int POTION_SECONDS = 10;
+  public static final int FLY_SECONDS = 5 * 60;//five minutes each
   public ItemChorusGlowing() {
     super(4, false);
     this.setAlwaysEdible();
@@ -34,11 +32,8 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     setFlying(player);
-    if (world.isRemote == false) {
-      UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, FLY_SECONDS * Const.TICKS_PER_SEC);
-      player.getEntityData().setBoolean(KEY_BOOLEAN, true);
-      UtilNBT.incrementPlayerIntegerNBT(player, KEY_POTION, POTION_SECONDS);
-    }
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+    props.setFlyingTimer(props.getFlyingTimer() + FLY_SECONDS * Const.TICKS_PER_SEC);
   }
   @Override
   public IRecipe addRecipe() {
@@ -63,23 +58,15 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-    if (player.getEntityData().getBoolean(KEY_BOOLEAN)) { //unlike corrupted chorus, we are fine with losing this data on death, it just stops flight
-      int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
-      if (playerGhost > 0) {
-        if (playerGhost % Const.TICKS_PER_SEC == 0) {
-          int secs = playerGhost / Const.TICKS_PER_SEC;
-          UtilChat.addChatMessage(player, "" + secs);
-        }
-        UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, -1);
-        setFlying(player);
-      }
-      else { //times up!
-        player.getEntityData().setBoolean(KEY_BOOLEAN, false);
-        int playerPot = player.getEntityData().getInteger(KEY_POTION);
-        player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, Const.TICKS_PER_SEC * playerPot));
-        player.getEntityData().setInteger(KEY_POTION, 0);
-        setNonFlying(player);
-      }
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+    int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS
+    if (flyingTicks > 0) {
+      props.setFlyingTimer(props.getFlyingTimer() - 1);
+      setFlying(player);
+    }
+    else { //times up!
+      props.setFlyingTimer(0);//in case negative
+      setNonFlying(player);
     }
   }
   @Override
