@@ -36,7 +36,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   public void update() {
     if (!this.isRunning()) { return; }
     this.spawnParticlesAbove();
-    if (!this.updateTimerIsZero()) {return;}
+    if (!this.updateTimerIsZero()) { return; }
     updateCollection();
   }
   @SuppressWarnings("serial")
@@ -67,7 +67,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), RADIUS);
+    return this.getPos().offset(this.getCurrentFacing(), RADIUS + 1);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
