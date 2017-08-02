@@ -28,13 +28,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EnchantLaunch extends EnchantBase {
-  private static final float power = 1.05F;
-  private static final int rotationPitch = 70;
-  private static final int cooldown = 5 * 20;
+  private static final float LAUNCH_POWER = 1.05F;
+  private static final int ROTATIONPITCH = 70;
+  private static final int COOLDOWN = 5 * 20;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
-    GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(cooldown + "")));
+    GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(COOLDOWN + "")));
   }
   @Override
   public int getMaxLevel() {
@@ -69,32 +69,32 @@ public class EnchantLaunch extends EnchantBase {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
-    EntityPlayer p = Minecraft.getMinecraft().player;
-    ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet == null || feet.isEmpty() || p.isSneaking()) { return; } //sneak to not double jump
+    EntityPlayer player = Minecraft.getMinecraft().player;
+    ItemStack feet = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+    if (feet == null || feet.isEmpty() || player.isSneaking()) { return; } //sneak to not double jump
     if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
-    if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
+    if (player.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
-        && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
+        && player.posY < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
       //JUMP IS pressed and you are moving down
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
-      p.fallDistance = 0;
-      float angle = (p.motionX == 0 && p.motionZ == 0) ? 90 : rotationPitch;
-      UtilEntity.launch(p, angle, power);
-      UtilParticle.spawnParticle(p.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, p.getPosition());
-      UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
-      UtilItemStack.damageItem(p, feet);
+      player.fallDistance = 0;
+      float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
+      UtilEntity.launch(player, angle, LAUNCH_POWER);
+      UtilParticle.spawnParticle(player.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, player.getPosition());
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
+      UtilItemStack.damageItem(player, feet);
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
-          p.getCooldownTracker().setCooldown(feet.getItem(), cooldown);
+          player.getCooldownTracker().setCooldown(feet.getItem(), COOLDOWN);
         }
         uses = 0;
       }
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
-      p.fallDistance = 0;
+      player.fallDistance = 0;
       ModCyclic.network.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
     }
   }

@@ -97,4 +97,11 @@ public class UtilChat {
   public static void sendStatusMessage(EntityPlayer player, String string) {
     player.sendStatusMessage(new TextComponentTranslation(string), true);
   }
+  public static String formatSecondsToMinutes(int secontsTotal) {
+    if (secontsTotal < 0) { return ""; }
+    int minutes = secontsTotal / 60;
+    int secs = secontsTotal % 60;
+     
+    return minutes + ":" + String.format("%02d", secs);
+  }
 }
