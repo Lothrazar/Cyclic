@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
   private static final int VRADIUS = 2;
-  public static final int TIMER_FULL = 18;
+  public static final int TIMER_FULL = 20;
   public final static int RADIUS = 8;
   private static final int[] SLOTS_EXTRACT = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 };
   public static enum Fields {
@@ -26,7 +26,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private int needsRedstone = 1;
   private int renderParticles = 0;
   public TileEntityVacuum() {
-    super(3 * 9);
+    super(4 * 9);
   }
   @Override
   public int[] getFieldOrdinals() {

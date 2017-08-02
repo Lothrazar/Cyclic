@@ -736,6 +736,9 @@ unlocks.stepheight.false=Step Height Disabled
 wand.inventory.empty=Scepter Inventory is Empty
 
 screentext.flying.seconds=Flying: 
+tile.block_vacuum.name=Item Vacuum
+tile.block_vacuum.tooltip=Collects items in front of it
+tile.block_vacuum.guide=Collects items in front of it.  Only fires once per second.  Can be redstone controlled.  Option to render the active selected area.  
 
 cyclic.fluid.empty=Empty
 cyclic.fluid.amount=Fluid: 

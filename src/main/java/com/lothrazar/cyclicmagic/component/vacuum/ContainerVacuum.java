@@ -20,14 +20,15 @@ public class ContainerVacuum extends ContainerBaseMachine {
   public ContainerVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum te) {
   
     this.setTile(te);
+    this.screenSize=ScreenSize.LARGE;
     
-    int rows=3,cols=9;
+    int rows=4,cols=9;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
 
         addSlotToContainer(new Slot(tile, j + i * 9,
-            Const.PAD + j * Const.SQ+1, /// X
-            Const.PAD + i * Const.SQ+ 10 // Y
+            Const.PAD + j * Const.SQ, /// X
+            72 + (i-1) * Const.SQ // Y
       ));
       }
     }

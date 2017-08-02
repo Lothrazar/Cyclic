@@ -36,22 +36,16 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVacuum();
   }
- 
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "vhv",
-        "grg",
-        "sis",
-        'v', "vine",
-        'h', Blocks.DROPPER,
-        'i', "ingotGold",
-        'g', "dyeLime",
-        'r', Items.FIRE_CHARGE,
-        's', "ingotBrickNether");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
+        'o', "obsidian",
+        'g', Blocks.OBSERVER,
+        's', Blocks.DISPENSER,
+        'r', "ingotIron",
+        'b', "dustRedstone");
   }
-
   @SideOnly(Side.CLIENT)
   public void initModel() {
      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
