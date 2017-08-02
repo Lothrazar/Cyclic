@@ -1,39 +1,30 @@
 package com.lothrazar.cyclicmagic.component.vacuum;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraft.inventory.InventoryHelper;
 
-public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
   private static final int VRADIUS = 2;
-  public static final int TIMER_FULL = 18; 
+  public static final int TIMER_FULL = 18;
   public final static int RADIUS = 8;
   private static final int[] SLOTS_EXTRACT = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 };
   public static enum Fields {
-    TIMER;
+    TIMER, RENDERPARTICLES, REDSTONE;
   }
   private int timer = 0;
+  private int needsRedstone = 1;
+  private int renderParticles = 0;
   public TileEntityVacuum() {
     super(3 * 9);
   }
@@ -44,6 +35,8 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   @Override
   public void update() {
     if (!this.isRunning()) { return; }
+    this.spawnParticlesAbove();
+    if (!this.updateTimerIsZero()) {return;}
     updateCollection();
   }
   @SuppressWarnings("serial")
@@ -83,12 +76,16 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
+    tags.setInteger(NBT_REDST, this.needsRedstone);
+    tags.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tags);
   }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
+    this.needsRedstone = tags.getInteger(NBT_REDST);
+    this.renderParticles = tags.getInteger(NBT_RENDER);
   }
   @Override
   public int getFieldCount() {
@@ -99,7 +96,44 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     switch (Fields.values()[id]) {
       case TIMER:
         return timer;
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      case REDSTONE:
+        return this.needsRedstone;
     }
     return -1;
+  }
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
+    }
+  }
+  public void togglePreview() {
+    this.renderParticles = (renderParticles + 1) % 2;
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return UtilShape.squareHorizontalHollow(getTargetCenter(), RADIUS);
+  }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    this.needsRedstone = (this.needsRedstone + 1) % 2;
+  }
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }
