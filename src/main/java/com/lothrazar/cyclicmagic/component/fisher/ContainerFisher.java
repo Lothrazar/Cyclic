@@ -17,10 +17,8 @@ public class ContainerFisher extends ContainerBaseMachine {
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {
     tileEntity = te;
     this.setTile(te);
-    for (int i = 0; i < TileEntityFishing.RODSLOT; i++) {
-      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
-    }
-    int s = TileEntityFishing.RODSLOT;
+    addSlotToContainer(new Slot(tileEntity, TileEntityFishing.toolSlot, SLOTX_START, SLOTY));
+    int s = 1;
     int row = 0, col = 0;
     for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) { //so going from 0-9
       row = i / 3;// /3 will go 000, 111, 222
