@@ -38,8 +38,8 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
-        "lll", 
-        "lgl", 
+        "lll",
+        "lgl",
         "lll",
         'g', "dustGlowstone",
         'l', Items.CHORUS_FRUIT);
@@ -62,14 +62,15 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS
-    if (flyingTicks > 0) {
+    if (flyingTicks > 1) {//it decays at 1 not zero so that we only set flying False once, not constantly. avoids having boolean flag
       props.setFlyingTimer(props.getFlyingTimer() - 1);
       setFlying(player);
     }
-    else { //times up!
-      props.setFlyingTimer(0);//in case negative
+    else if (flyingTicks == 1) { //times up! only 1/20 of a second left
+      props.setFlyingTimer(0);//skip ahead to zero
       setNonFlying(player);
     }
+    //else it is zero. so this is the same as null/undefined/ so player has never eaten or it wore off.
   }
   @Override
   @SideOnly(Side.CLIENT)
