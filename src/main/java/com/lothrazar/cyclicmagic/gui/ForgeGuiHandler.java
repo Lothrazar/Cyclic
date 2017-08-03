@@ -208,8 +208,7 @@ public class ForgeGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_VACUUM:
         if (te instanceof TileEntityVacuum) { return new ContainerVacuum(player.inventory, (TileEntityVacuum) te); }
-        
-        break;
+      break;
     }
     return null;
   }

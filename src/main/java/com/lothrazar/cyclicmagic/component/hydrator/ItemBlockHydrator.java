@@ -23,6 +23,5 @@ public class ItemBlockHydrator extends ItemBlock {
       String rsc = item.getTagCompound().getString(BlockBase.NBT_FLUIDTYPE);
       tooltip.add(amt + " " + rsc);
     }
- 
   }
 }

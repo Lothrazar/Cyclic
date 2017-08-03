@@ -44,21 +44,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUser;
   private boolean enablePattern;
   private boolean expPylon;
-  public void onPreInit() { 
-    
-    
+  public void onPreInit() {
     BlockVacuum vacuum_block = new BlockVacuum();
     BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
-
-    
-    
-    
-    
-    
-    
-    
-    
     BlockHydrator block_hydrator = new BlockHydrator();
     BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");

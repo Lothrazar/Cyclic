@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
-public  class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
+public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
   public GuiButtonTooltip(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
     super(buttonId, x, y, widthIn, heightIn, buttonText);
   }

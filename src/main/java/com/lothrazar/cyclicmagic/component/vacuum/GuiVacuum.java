@@ -21,35 +21,29 @@ public class GuiVacuum extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
     int xCenter = this.xSize / 2;
-   String s = UtilChat.lang("tile.block_vacuum.filter");
-    this.drawString(s, xCenter-38 - this.fontRenderer.getStringWidth(s) / 2, 22);
-    
+    String s = UtilChat.lang("tile.block_vacuum.filter");
+    this.drawString(s, xCenter - 38 - this.fontRenderer.getStringWidth(s) / 2, 22);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-  
     for (int i = 0; i < TileEntityVacuum.ROWS; i++) {
       for (int j = 0; j < TileEntityVacuum.COLS; j++) {
         Gui.drawModalRectWithCustomSizedTexture(
-            this.guiLeft + Const.PAD + j * Const.SQ-1,
+            this.guiLeft + Const.PAD + j * Const.SQ - 1,
             this.guiTop + 72 + (i - 1) * Const.SQ - 1,
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    int start = TileEntityVacuum.ROWS*TileEntityVacuum.COLS;
-    for(int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++){
-      
-
+    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
+    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + Const.PAD + (k+4) * Const.SQ-1,
+          this.guiLeft + Const.PAD + (k + 4) * Const.SQ - 1,
           this.guiTop + 18,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-      
     }
   }
 }

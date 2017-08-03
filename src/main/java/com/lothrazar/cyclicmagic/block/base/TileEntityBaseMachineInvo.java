@@ -68,9 +68,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public void consumeFuel(int amt) {
     for (int i = 0; i < amt; i++) {
-      
       this.consumeFuel();
-      
     }
   }
   public void consumeFuel() {

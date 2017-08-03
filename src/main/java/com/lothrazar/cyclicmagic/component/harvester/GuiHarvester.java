@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
-import com.lothrazar.cyclicmagic.component.pylonexp.PacketTilePylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -40,7 +38,7 @@ public class GuiHarvester extends GuiBaseContainer {
     int y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(btnId++,
         x, y, this.tile.getPos());
-    this.buttonList.add(btnSize); 
+    this.buttonList.add(btnSize);
     int w = 58, h = 20;
     x += 40 + Const.PAD;
     btnSpray = new GuiButtonTooltip(btnId++,

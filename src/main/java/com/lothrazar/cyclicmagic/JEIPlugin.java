@@ -67,8 +67,8 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     //this should work. idk
     for (Item s : ItemRegistry.itemMap.values()) {
       //this makes no sense at all but lets just hack the error out of the log
-      if(s instanceof ItemCharmAir == false)//its in a recipe, its valid. IDK 
-      registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
+      if (s instanceof ItemCharmAir == false)//its in a recipe, its valid. IDK 
+        registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
     }
     for (Block s : BlockRegistry.blocks) {
       registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");

@@ -2,14 +2,11 @@ package com.lothrazar.cyclicmagic.component.vacuum;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,31 +14,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerVacuum extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX = 150;
-  public static final int SLOTY = 18; 
+  public static final int SLOTY = 18;
   public ContainerVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum te) {
-  
     this.setTile(te);
-    this.screenSize=ScreenSize.LARGE;
-     
+    this.screenSize = ScreenSize.LARGE;
     for (int i = 0; i < TileEntityVacuum.ROWS; i++) {
       for (int j = 0; j < TileEntityVacuum.COLS; j++) {
-
         addSlotToContainer(new Slot(tile, j + i * 9,
             Const.PAD + j * Const.SQ, /// X
-            72 + (i-1) * Const.SQ // Y
-      ));
+            72 + (i - 1) * Const.SQ // Y
+        ));
       }
     }
-    
-    int start = TileEntityVacuum.ROWS*TileEntityVacuum.COLS;
-    for(int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++){
-      addSlotToContainer(new SlotSingleStack(tile, start+k,
-          Const.PAD +( k+4) * Const.SQ, /// X
-          19  // Y
-    ));
+    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
+    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++) {
+      addSlotToContainer(new SlotSingleStack(tile, start + k,
+          Const.PAD + (k + 4) * Const.SQ, /// X
+          19 // Y
+      ));
     }
-    
-
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
