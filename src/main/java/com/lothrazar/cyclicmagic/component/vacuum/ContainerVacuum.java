@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
+import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -21,16 +22,23 @@ public class ContainerVacuum extends ContainerBaseMachine {
   
     this.setTile(te);
     this.screenSize=ScreenSize.LARGE;
-    
-    int rows=4,cols=9;
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
+     
+    for (int i = 0; i < TileEntityVacuum.ROWS; i++) {
+      for (int j = 0; j < TileEntityVacuum.COLS; j++) {
 
         addSlotToContainer(new Slot(tile, j + i * 9,
             Const.PAD + j * Const.SQ, /// X
             72 + (i-1) * Const.SQ // Y
       ));
       }
+    }
+    
+    int start = TileEntityVacuum.ROWS*TileEntityVacuum.COLS;
+    for(int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++){
+      addSlotToContainer(new SlotSingleStack(tile, start+k,
+          Const.PAD +( k+4) * Const.SQ, /// X
+          19  // Y
+    ));
     }
     
 
