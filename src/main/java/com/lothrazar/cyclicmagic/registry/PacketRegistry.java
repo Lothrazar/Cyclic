@@ -1,5 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.component.autouser.PacketTileIncrementField;
+package com.lothrazar.cyclicmagic.registry; 
 import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildSize;
 import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildType;
 import com.lothrazar.cyclicmagic.component.controlledminer.PacketTileMineHeight;
@@ -43,6 +42,7 @@ import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
+import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -97,5 +97,9 @@ public class PacketRegistry {
     network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
+    
+ 
+    
+    
   }
 }

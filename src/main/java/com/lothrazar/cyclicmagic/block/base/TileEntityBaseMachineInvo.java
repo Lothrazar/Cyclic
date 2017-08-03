@@ -66,6 +66,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
+  public void consumeFuel(int amt) {
+    for (int i = 0; i < amt; i++) {
+      
+      this.consumeFuel();
+      
+    }
+  }
   public void consumeFuel() {
     if (usesFuel && !this.world.isRemote) {
       if (this.currentFuel > 0) {

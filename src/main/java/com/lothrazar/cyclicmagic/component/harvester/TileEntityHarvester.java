@@ -23,15 +23,16 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public final static int TIMER_FULL = 200;
-  private HarvestSetting conf;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private static final int[] hopperInputFuel = { 27 };// all slots
   private static final int[] hopperOUTPUT = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
       18, 19, 20, 21, 22, 23, 24, 25, 26 };// all slots
   public static enum Fields {
-    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
   }
+  private HarvestSetting conf;
+  private int needsRedstone = 1;
+  private int renderParticles = 0;
+  private int normalModeIfZero = 0;//if this == 1, then do full field at once
   public TileEntityHarvester() {
     super(1 + 3 * 9);
     this.setFuelSlot(27);
@@ -56,17 +57,19 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.size = tags.getInteger(NBT_SIZE);
     this.needsRedstone = tags.getInteger(NBT_REDST);
     this.renderParticles = tags.getInteger(NBT_RENDER);
+    this.normalModeIfZero = tags.getInteger("HM");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_RENDER, renderParticles);
     tags.setInteger(NBT_SIZE, size);
+    tags.setInteger("HM", normalModeIfZero);
     return super.writeToNBT(tags);
   }
-  public boolean isFuelBurning() {
-    return this.timer > 0 && this.timer < TIMER_FULL;
-  }
+  //  public boolean isFuelBurning() {
+  //    return this.timer > 0 && this.timer < TIMER_FULL;
+  //  }
   @Override
   public void update() {
     if (!isRunning()) { return; }
@@ -74,21 +77,36 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;//harvest worked!
       this.spawnParticlesAbove();
-      BlockPos harvest = getTargetPos();
-      if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
-        this.updateFuelIsBurning();
-        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
-        if (conf.drops != null) {
-          setOutputItems(conf.drops);
-        }
+      if (this.normalModeIfZero == 0) {
+        tryHarvestSingle();
       }
       else {
-        timer = 1;//harvest didnt work, try again really quick
+        tryHarvestArea();
       }
-      this.markDirty();
     }
     else {
       this.updateFuelIsBurning();
+    }
+  }
+  private void tryHarvestArea() {
+    int success = UtilHarvestCrops.harvestArea(world, getTargetCenter(), this.size, conf);
+    this.consumeFuel(success * 10);//10 fuel per item instead of one
+    //POTENTIAL to exploit here. if fuel is at say 2, and harvesting wants to pay cost of 18
+    //well its too late so, 
+    // then youre getting something for free
+    //not terribly worried about it. after that it wont work again until you refuel which will be max
+  }
+  private void tryHarvestSingle() {
+    BlockPos harvest = getTargetPos();
+    if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
+      this.updateFuelIsBurning();
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
+      if (conf.drops != null) {
+        setOutputItems(conf.drops);
+      }
+    }
+    else {
+      timer = 1;//harvest didnt work, try again really quick
     }
   }
   private void setOutputItems(List<ItemStack> output) {
@@ -121,36 +139,35 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
-      default:
-      break;
+      case HARVESTMODE:
+        return this.normalModeIfZero;
     }
     return -1;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount()) {
-      switch (Fields.values()[id]) {
-        case TIMER:
-          this.timer = value;
-        break;
-        case REDSTONE:
-          this.needsRedstone = value;
-        break;
-        case SIZE:
-          this.size = value;
-        break;
-        case RENDERPARTICLES:
-          this.renderParticles = value % 2;
-        break;
-        case FUEL:
-          this.setFuelCurrent(value);
-        break;
-        case FUELMAX:
-          this.setFuelMax(value);
-        break;
-        default:
-        break;
-      }
+    switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case SIZE:
+        this.size = value;
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      case HARVESTMODE:
+        this.normalModeIfZero = value % 2;
+      break;
     }
   }
   @Override

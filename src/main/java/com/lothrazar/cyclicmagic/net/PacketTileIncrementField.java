@@ -1,7 +1,7 @@
-package com.lothrazar.cyclicmagic.component.autouser;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+package com.lothrazar.cyclicmagic.net;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -10,13 +10,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/**
+ * generic packet handler for tile entities. assumes they handle cyclic fields
+ * that start over
+ * 
+ * TODO: see if we can reuse this mroe and remove uneccessary classes
+ * 
+ * @author Sam
+ *
+ */
 public class PacketTileIncrementField implements IMessage, IMessageHandler<PacketTileIncrementField, IMessage> {
   private BlockPos pos;
   private int field;
   public PacketTileIncrementField() {}
   public PacketTileIncrementField(BlockPos p, int f) {
     pos = p;
-    field = f;
+    this.field = f;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -39,10 +48,15 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
   @Override
   public IMessage onMessage(PacketTileIncrementField message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;
-    TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
-    if (tile != null && tile instanceof TileEntityBaseMachineInvo) {
-      TileEntityBaseMachineInvo te = ((TileEntityBaseMachineInvo) tile);
-      te.setField(message.field, te.getField(message.field) + 1);
+    try {
+      TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
+      if (tile != null && tile instanceof IInventory) {
+        IInventory tileInvo = ((IInventory) tile);
+        tileInvo.setField(message.field, tileInvo.getField(message.field) + 1);
+      }
+    }
+    catch (Exception e) {//since we dont know which class exactly this might get run on
+      e.printStackTrace();
     }
     return null;
   }
