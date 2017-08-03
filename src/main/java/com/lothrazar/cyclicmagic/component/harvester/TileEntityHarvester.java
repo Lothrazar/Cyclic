@@ -51,18 +51,18 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return conf;
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    this.size = tagCompound.getInteger(NBT_SIZE);
-    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    this.size = tags.getInteger(NBT_SIZE);
+    this.needsRedstone = tags.getInteger(NBT_REDST);
+    this.renderParticles = tags.getInteger(NBT_RENDER);
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    tagCompound.setInteger(NBT_SIZE, size);
-    tagCompound.setInteger(NBT_RENDER, renderParticles);
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger(NBT_REDST, this.needsRedstone);
+    tags.setInteger(NBT_RENDER, renderParticles);
+    tags.setInteger(NBT_SIZE, size);
+    return super.writeToNBT(tags);
   }
   public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
@@ -181,6 +181,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
