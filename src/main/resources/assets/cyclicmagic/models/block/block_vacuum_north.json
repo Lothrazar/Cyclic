@@ -4,7 +4,7 @@
         "0": "blocks/furnace_top",
         "1": "blocks/cauldron_inner",
         "2": "blocks/dispenser_front_vertical",
-        "3": "blocks/obsidian",
+        "3": "blocks/lapis_block",
         "4": "blocks/iron_block",
         "particle": "blocks/iron_block"
     }

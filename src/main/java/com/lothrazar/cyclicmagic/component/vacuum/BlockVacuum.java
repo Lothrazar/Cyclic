@@ -39,12 +39,14 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', "obsidian",
-        'g', Blocks.OBSERVER,
-        's', Blocks.DISPENSER,
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), 
+        "r r", 
+        "glg", 
+        "hhh",
+        'l', "blockLapis",
+        'g', Blocks.DROPPER, 
         'r', "ingotIron",
-        'b', "dustRedstone");
+        'h', Blocks.HOPPER);
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {
