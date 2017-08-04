@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.ItemChorusCorrupted;
 import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
-import com.lothrazar.cyclicmagic.item.ItemFoodStep;
+import com.lothrazar.cyclicmagic.item.ItemAppleStep;
 import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
@@ -36,7 +36,7 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     if (foodStep) {
-      ItemFoodStep food_step = new ItemFoodStep();
+      ItemAppleStep food_step = new ItemAppleStep();
       ItemRegistry.register(food_step, "food_step");
       ModCyclic.instance.events.register(food_step);
     }

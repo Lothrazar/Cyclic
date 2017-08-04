@@ -98,8 +98,7 @@ public class Const {
     public static final String content = MODCONF + "content";
     public static final String contentDefaultText = "Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
-    public static final String uncrafter = modpackMisc + ".uncrafter";
-    public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
+    public static final String uncrafter = modpackMisc + ".uncrafter"; 
     public static final String InventoryButtonsModpack = modpackMisc + ".TerrariaButtons";
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
