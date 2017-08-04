@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemAppleStep;
+import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,12 +70,12 @@ public class CapabilityRegistry {
     private static final String KEY_STEPFORCE = Const.MODID + "_stepforced";
     private static final String KEY_FLYING = Const.MODID + "_flying";
     private boolean foreStepHeightOff = false;
-    private boolean isStepOn = false;
+    private boolean isStepOn = ItemAppleStep.defaultPlayerStepUp;
     private boolean isSleeping = false;
     private boolean hasInventoryCrafting = false;
     private boolean hasInventoryExtended = false;
     private String todo = "";
-    private int health = 20;
+    private int health = ItemHeartContainer.defaultHearts * 2;//two health per heart. magic number alert!
     private boolean isChorusSpectator = false;
     private BlockPos chorusStart = null;
     private int chorusDim = 0;

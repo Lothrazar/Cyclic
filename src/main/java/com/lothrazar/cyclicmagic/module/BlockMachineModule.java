@@ -44,13 +44,19 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUser;
   private boolean enablePattern;
   private boolean expPylon;
+  private boolean enableVacuum;
+  private boolean enableHydrator;
   public void onPreInit() {
-    BlockVacuum vacuum_block = new BlockVacuum();
-    BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
-    BlockHydrator block_hydrator = new BlockHydrator();
-    BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    if (enableVacuum) {
+      BlockVacuum vacuum_block = new BlockVacuum();
+      BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
+    }
+    if (enableHydrator) {
+      BlockHydrator block_hydrator = new BlockHydrator();
+      BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    }
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
@@ -105,6 +111,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableHydrator = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableVacuum = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

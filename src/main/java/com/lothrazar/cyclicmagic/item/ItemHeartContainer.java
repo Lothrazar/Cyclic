@@ -34,6 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConfig {
   private static final int numFood = 2;
   private static final int numHearts = 1;
+  public static int defaultHearts = 10;
   private static int maxHearts = 20;
   public ItemHeartContainer() {
     super(numFood, false);
@@ -83,6 +84,8 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
   public void syncConfig(Configuration config) {
     maxHearts = config.getInt("HeartContainerMax", Const.ConfigCategory.modpackMisc,
         20, 10, 100, "Maximum number of heart containers you can get by eating heart containers.  Does not limit the /" + CommandHearts.name + " command");
+    defaultHearts = config.getInt("HeartContainerDefault", Const.ConfigCategory.player,
+        10, 1, 100, "Default number of heart containers a new player will start with when first joining the world.  Will not affect existing players once they have joined.  (For Maximum heart limit given by the heart container see 'modpacks' category in the config file)");
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
