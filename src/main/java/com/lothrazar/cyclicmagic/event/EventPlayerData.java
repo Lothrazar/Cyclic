@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
@@ -27,6 +29,7 @@ public class EventPlayerData {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
+        setDefaultHealth(p);
       }
     }
   }
@@ -36,7 +39,17 @@ public class EventPlayerData {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
+        
+        setDefaultHealth(p);
+      
       }
+    }
+  }
+  private void setDefaultHealth( EntityPlayerMP p ){
+    IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(p);
+//    UtilChat.sendStatusMessage(p,"Setting your maximum health to "+src.getMaxHealth());
+    if (src.getMaxHealth() > 0) {
+      UtilEntity.setMaxHealth(p, src.getMaxHealth());
     }
   }
   /**
