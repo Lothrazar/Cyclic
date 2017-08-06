@@ -19,7 +19,6 @@ public class ContainerFisher extends ContainerBaseMachine {
     this.setTile(te);
     //the first slot is the rod
     addSlotToContainer(new Slot(tileEntity, TileEntityFishing.toolSlot, SLOTX_START, SLOTY));
-    
     int s = 1;
     int row = 0, col = 0;
     for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) { //so going from 0-9

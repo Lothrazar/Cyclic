@@ -13,8 +13,8 @@ public class GuiFan extends GuiBaseContainer {
   private ButtonFan btnHeightUp;
   private int xHeightTextbox = 176 - 25;
   private int yHeightTxtbox = 38;
-//  private ButtonFan btnTogglePrt;
-  private ButtonFan btnTogglePush; 
+  //  private ButtonFan btnTogglePrt;
+  private ButtonFan btnTogglePush;
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -42,35 +42,25 @@ public class GuiFan extends GuiBaseContainer {
     ButtonFan btnHeightUp5 = new ButtonFan(tile.getPos(), id++, x, y - h - 1, w, h, +5, TileEntityFan.Fields.RANGE);
     btnHeightUp5.displayString = "+5";
     this.buttonList.add(btnHeightUp5);
-    
     // SPEED BUTTONS
-
-    ButtonFan  btnSpeedDown5 = new ButtonFan(tile.getPos(), id++, btnHeightDown5.x-20, btnHeightDown5.y, w, h, -5, TileEntityFan.Fields.SPEED);
+    ButtonFan btnSpeedDown5 = new ButtonFan(tile.getPos(), id++, btnHeightDown5.x - 20, btnHeightDown5.y, w, h, -5, TileEntityFan.Fields.SPEED);
     btnSpeedDown5.displayString = "-5";
     this.buttonList.add(btnSpeedDown5);
-    
-    ButtonFan  btnSpeedDown = new ButtonFan(tile.getPos(), id++, btnHeightDown.x-20, btnHeightDown.y, w, h, -1, TileEntityFan.Fields.SPEED);
+    ButtonFan btnSpeedDown = new ButtonFan(tile.getPos(), id++, btnHeightDown.x - 20, btnHeightDown.y, w, h, -1, TileEntityFan.Fields.SPEED);
     btnSpeedDown.displayString = "-1";
     this.buttonList.add(btnSpeedDown);
-    
-
-    ButtonFan  btnSpeedUp = new ButtonFan(tile.getPos(), id++, btnHeightUp.x-20, btnHeightUp.y, w, h, +1, TileEntityFan.Fields.SPEED);
+    ButtonFan btnSpeedUp = new ButtonFan(tile.getPos(), id++, btnHeightUp.x - 20, btnHeightUp.y, w, h, +1, TileEntityFan.Fields.SPEED);
     btnSpeedUp.displayString = "+1";
     this.buttonList.add(btnSpeedUp);
-    
-
-    ButtonFan  btnSpeedUp5 = new ButtonFan(tile.getPos(), id++, btnHeightUp5.x-20, btnHeightUp5.y, w, h, +5, TileEntityFan.Fields.SPEED);
+    ButtonFan btnSpeedUp5 = new ButtonFan(tile.getPos(), id++, btnHeightUp5.x - 20, btnHeightUp5.y, w, h, +5, TileEntityFan.Fields.SPEED);
     btnSpeedUp5.displayString = "+5";
     this.buttonList.add(btnSpeedUp5);
-    
     w = 70;
     h = 20;
     x = this.guiLeft + 50;
     y = this.guiTop + 38;
- 
     btnTogglePush = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.PUSHPULL);
     this.buttonList.add(btnTogglePush);
-    
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -84,20 +74,14 @@ public class GuiFan extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-//    btnTogglePrt.updateDisplayStringWith(tile);
+    //    btnTogglePrt.updateDisplayStringWith(tile);
     btnTogglePush.updateDisplayStringWith(tile);
     String display = "" + this.tile.getRange();
     int x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.drawString(display, x, yHeightTxtbox);
-    
-    
-
     display = "" + this.tile.getSpeed();
-    
     x -= 20;
     this.drawString(display, x, yHeightTxtbox);
-    
-    
     //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

@@ -39,15 +39,13 @@ public class EventPlayerData {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
-        
         setDefaultHealth(p);
-      
       }
     }
   }
-  private void setDefaultHealth( EntityPlayerMP p ){
+  private void setDefaultHealth(EntityPlayerMP p) {
     IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(p);
-//    UtilChat.sendStatusMessage(p,"Setting your maximum health to "+src.getMaxHealth());
+    //    UtilChat.sendStatusMessage(p,"Setting your maximum health to "+src.getMaxHealth());
     if (src.getMaxHealth() > 0) {
       UtilEntity.setMaxHealth(p, src.getMaxHealth());
     }
