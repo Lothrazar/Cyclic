@@ -23,16 +23,16 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private static final String NBT_RANGE = "range";
   private static final int MAX_RANGE = 32;
   public static enum Fields {
-    TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE;
+    TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE, SPEED;
   }
   private int timer;
   private int needsRedstone = 1;
   private int pushIfZero = 0;//else pull. 0 as default
   private int particlesIfZero = 0;// 0 as default
-  private int speedBase = 13;//divide by 100 for real speed. bigger=faster
   private int range = 16;
   public TileEntityFan() {
     super(0);
+    this.speed = 13;
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -44,8 +44,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer = 0;
       return;
     }
-    EnumFacing facing = getCurrentFacing();
-    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
+//    EnumFacing facing = getCurrentFacing();
+//    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle
@@ -86,7 +86,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
-    switch(getCurrentFacing()){ 
+   EnumFacing face = getCurrentFacing();
+    switch(face){ 
       case NORTH:
         start=start.south();
         break;
@@ -104,21 +105,22 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       
     }
 
-   // System.out.println("!!!shape size is " + shape.size() + " ... rangeFixed = " + getCurrentFacing()+"END"+end);
-  //  System.out.println("start"+start+"   END"+end);
+  
     AxisAlignedBB region = new AxisAlignedBB(start, end);
-    List<Entity> nonPlayer = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
+    List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
     // center of the block
     double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.7;
+    double y = this.getPos().getY()+2;//was 0.7; dont move them up, move down. let them fall!
     double z = this.getPos().getZ() + 0.5;
+    
     float SPEED = this.getSpeedCalc();
     boolean pushIfFalse = (pushIfZero != 0);
-    UtilEntity.pullEntityList(x, y, z, pushIfFalse, nonPlayer, SPEED, SPEED);
-    return nonPlayer.size();
-  }
+    UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
+ 
+    return entitiesFound.size();
+  } 
   private float getSpeedCalc() {
-    return ((float) speedBase) / 100F;
+    return ((float) this.speed) / 15F;
   }
   private void doParticles() {
     List<BlockPos> shape = getShape();
@@ -199,6 +201,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
           return this.pushIfZero;
         case RANGE:
           return this.range;
+        case SPEED:
+        return this.speed;
       }
     }
     return -1;
@@ -222,7 +226,19 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         case RANGE:
           this.setRange(value);
         break;
+        case SPEED:
+          this.setSpeed(value);
+          break;
+          
       }
     }
+  }
+  @Override
+
+  public void setSpeed(int value) {
+    if (value < 1) {
+      value = 1;
+    }
+    speed = Math.min(value, MAX_SPEED);
   }
 }
