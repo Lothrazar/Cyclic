@@ -24,7 +24,7 @@ public class GuiFan extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 2;
-    int w = 15, h = 10;
+    int w = 18, h = 10;
     int yOffset = 14;
     int x = this.guiLeft + xHeightTextbox;
     int y = this.guiTop + yHeightTxtbox + yOffset;
