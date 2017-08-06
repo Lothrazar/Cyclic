@@ -66,10 +66,8 @@ public class GuiFan extends GuiBaseContainer {
     w = 70;
     h = 20;
     x = this.guiLeft + 50;
-    y = this.guiTop + 20;
-//    btnTogglePrt = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.PARTICLES);
-//    this.buttonList.add(btnTogglePrt);
-    y = this.guiTop + 48;
+    y = this.guiTop + 38;
+ 
     btnTogglePush = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.PUSHPULL);
     this.buttonList.add(btnTogglePush);
     
