@@ -21,7 +21,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   public static final int TIMER_FULL = 20;
   public final static int ROWS = 4;
   public final static int COLS = 9;
-  public final static int FILTERSLOTS = 5;
+  public final static int FILTERSLOTS = 5; 
   private final static int[] SLOTS_EXTRACT = IntStream.range(0, ROWS * COLS).toArray();
   public static enum Fields {
     TIMER, RENDERPARTICLES, REDSTONE;
@@ -62,7 +62,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
       {
         add(contained);
       }
-    }, this, 0);
+    }, this, 0,  ROWS * COLS);//end slot is here, after that is item filter so dont put them there
     if (toDrop.size() > 0) {//JUST in case it did not fit or only half of it fit
       itemOnGround.setItem(toDrop.get(0));
     }
