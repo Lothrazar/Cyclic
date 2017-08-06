@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -49,21 +50,28 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle
       if (particlesIfZero == 0) {
-        doParticles(rangeFixed);
+        doParticles();
       }
     }
     else {
       this.timer--;
     }
-    pushEntities(facing, rangeFixed);//int pushed = 
+    pushEntities();//int pushed = 
   }
-  private int pushEntities(EnumFacing facing, int rangeFixed) {
-    BlockPos start = this.getPos();
-    BlockPos end = this.getCurrentFacingPos().offset(facing, rangeFixed).up();//.up()
-    //without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
-    switch (facing.getAxis()) {
+  public List<BlockPos> getShape() {
+    //UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
+    return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
+  }
+  private int pushEntities() {
+    //    BlockPos start = this.getCurrentFacingPos();//this is the first block, so we only need to add (range-1)
+    //    BlockPos end = start.offset(facing, range-1).up();//.up()
+    List<BlockPos> shape = getShape();
+    BlockPos start = shape.get(0);
+    BlockPos end = shape.get(shape.size() - 1);//without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
+    switch (getCurrentFacing().getAxis()) {
       case X:
-        end = end.add(0, 0, 1);
+        end = end.add(0, 0, 1);//X means EASTorwest. adding +1z means GO 1 south
+        
       break;
       case Y:
       break;
@@ -73,6 +81,31 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       default:
       break;
     }
+    end = end.add(0, 1, 0);///and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
+    //ok now we have basically teh 3d box we wanted
+    //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
+    //EAST and SOUTH are skiping LAST blocks, but shouldnt
+    //just fix it. root cause seems fine esp with UtilShape used
+    switch(getCurrentFacing()){ 
+      case NORTH:
+        start=start.south();
+        break;
+      case SOUTH:
+           end = end.south();
+        break; 
+      case EAST:
+        end=end.east();
+        break;
+      case WEST:
+        start=start.east();
+        break;
+      default:
+        break;
+      
+    }
+
+   // System.out.println("!!!shape size is " + shape.size() + " ... rangeFixed = " + getCurrentFacing()+"END"+end);
+  //  System.out.println("start"+start+"   END"+end);
     AxisAlignedBB region = new AxisAlignedBB(start, end);
     List<Entity> nonPlayer = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
     // center of the block
@@ -87,10 +120,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private float getSpeedCalc() {
     return ((float) speedBase) / 100F;
   }
-  private void doParticles(int rangeFixed) {
-    EnumFacing facing = getCurrentFacing();
-    for (int i = 1; i <= rangeFixed; i++) {
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, this.getPos().offset(facing, i), 1);
+  private void doParticles() {
+    List<BlockPos> shape = getShape();
+    for (BlockPos pos : shape) {
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos, 1);
     }
   }
   private int getCurrentRange() {
