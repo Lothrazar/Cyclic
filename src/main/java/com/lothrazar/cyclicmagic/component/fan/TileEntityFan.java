@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -13,7 +14,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
   private static final int MIN_RANGE = 1;
   private static final int TIMER_FULL = 30;
   private static final String NBT_TIMER = "Timer";
@@ -28,11 +29,11 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int timer;
   private int needsRedstone = 1;
   private int pushIfZero = 0;//else pull. 0 as default
-  private int particlesIfZero = 0;// 0 as default
+  private int showParticles = 0;// 0 as default
   private int range = 16;
   public TileEntityFan() {
     super(0);
-    this.speed = 13;
+    this.speed = 5;
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -44,12 +45,12 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer = 0;
       return;
     }
-//    EnumFacing facing = getCurrentFacing();
-//    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
+    //    EnumFacing facing = getCurrentFacing();
+    //    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle
-      if (particlesIfZero == 0) {
+      if (isPreviewVisible()) {
         doParticles();
       }
     }
@@ -71,7 +72,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     switch (getCurrentFacing().getAxis()) {
       case X:
         end = end.add(0, 0, 1);//X means EASTorwest. adding +1z means GO 1 south
-        
       break;
       case Y:
       break;
@@ -86,39 +86,34 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
-   EnumFacing face = getCurrentFacing();
-    switch(face){ 
+    EnumFacing face = getCurrentFacing();
+    switch (face) {
       case NORTH:
-        start=start.south();
-        break;
+        start = start.south();
+      break;
       case SOUTH:
-           end = end.south();
-        break; 
+        end = end.south();
+      break;
       case EAST:
-        end=end.east();
-        break;
+        end = end.east();
+      break;
       case WEST:
-        start=start.east();
-        break;
+        start = start.east();
+      break;
       default:
-        break;
-      
+      break;
     }
-
-  
     AxisAlignedBB region = new AxisAlignedBB(start, end);
     List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
     // center of the block
     double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY()+2;//was 0.7; dont move them up, move down. let them fall!
+    double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
     double z = this.getPos().getZ() + 0.5;
-    
     float SPEED = this.getSpeedCalc();
     boolean pushIfFalse = (pushIfZero != 0);
     UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
- 
     return entitiesFound.size();
-  } 
+  }
   private float getSpeedCalc() {
     return ((float) this.speed) / 15F;
   }
@@ -155,7 +150,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_REDST, this.needsRedstone);
-    tags.setInteger(NBT_PART, this.particlesIfZero);
+    tags.setInteger(NBT_PART, this.showParticles);
     tags.setInteger(NBT_PUSH, this.pushIfZero);
     tags.setInteger(NBT_RANGE, this.range);
     return super.writeToNBT(tags);
@@ -165,7 +160,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
     needsRedstone = tags.getInteger(NBT_REDST);
-    this.particlesIfZero = tags.getInteger(NBT_PART);
+    this.showParticles = tags.getInteger(NBT_PART);
     this.pushIfZero = tags.getInteger(NBT_PUSH);
     this.range = tags.getInteger(NBT_RANGE);
   }
@@ -175,7 +170,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     this.setField(Fields.REDSTONE.ordinal(), val % 2);
   }
   private void setShowParticles(int value) {
-    this.particlesIfZero = value % 2;
+    this.showParticles = value % 2;
   }
   private void setPushPull(int value) {
     this.pushIfZero = value % 2;
@@ -196,13 +191,13 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         case REDSTONE:
           return this.needsRedstone;
         case PARTICLES:
-          return this.particlesIfZero;
+          return this.showParticles;
         case PUSHPULL:
           return this.pushIfZero;
         case RANGE:
           return this.range;
         case SPEED:
-        return this.speed;
+          return this.speed;
       }
     }
     return -1;
@@ -228,17 +223,23 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         break;
         case SPEED:
           this.setSpeed(value);
-          break;
-          
+        break;
       }
     }
   }
   @Override
-
   public void setSpeed(int value) {
     if (value < 1) {
       value = 1;
     }
     speed = Math.min(value, MAX_SPEED);
+  }
+  @Override
+  public void togglePreview() {
+    this.showParticles = (this.showParticles + 1) % 2;
+  }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.showParticles == 1;
   }
 }
