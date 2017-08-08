@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.module.DispenserBehaviorModule;
 import com.lothrazar.cyclicmagic.module.EnchantModule;
 import com.lothrazar.cyclicmagic.module.EntityMinecartModule;
 import com.lothrazar.cyclicmagic.module.EnvironmentTweaksModule;
+import com.lothrazar.cyclicmagic.module.FluidsModule;
 import com.lothrazar.cyclicmagic.module.FragileTorchesModule;
 import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
 import com.lothrazar.cyclicmagic.module.GearModule;
@@ -73,5 +74,6 @@ public class ModuleRegistry {
     register(new VillagerCreateModule());
     register(new WorldGenModule());
     register(new EntityMinecartModule());
+    register(new FluidsModule());
   }
 }

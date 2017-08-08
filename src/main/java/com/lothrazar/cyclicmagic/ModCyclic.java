@@ -85,8 +85,8 @@ public class ModCyclic {
       module.onPreInit();
     }
     proxy.preInit();
-    //for new registry
-    FluidsRegistry.onRegistryEvent();//TODO: might be event one day like others
+    //fluids still does the old way ( FluidRegistry.addBucketForFluid)
+    //    MinecraftForge.EVENT_BUS.register(FluidsRegistry.class);
     MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
     MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
     MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);

@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
 import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -58,6 +59,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
     }
     if (expPylon) {
+
+      FluidsRegistry.registerExp();//it needs EXP fluid to work
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");

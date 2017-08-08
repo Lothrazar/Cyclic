@@ -153,7 +153,7 @@ public class RecipeRegistry {
   }
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
-    FluidsRegistry.addRecipes();//yeah kinda hacky since fluids have no register event yet
+    FluidsRegistry.addPoisonRecipe();//yeah kinda hacky since fluids have no register event yet
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
 }

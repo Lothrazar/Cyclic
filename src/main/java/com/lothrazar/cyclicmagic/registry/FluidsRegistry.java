@@ -19,20 +19,17 @@ public class FluidsRegistry {
   public static BlockFluidExp block_exp;
   public static FluidPoison fluid_poison;
   public static BlockFluidPoison block_poison;
-  public static void onRegistryEvent() {
-    registerMilk();
-    registerExp();
-    registerPoison();
-  }
-  private static void registerPoison() {
+ 
+  public static void registerPoison() {
     fluid_poison = new FluidPoison();
     FluidRegistry.registerFluid(fluid_poison);
     block_poison = new BlockFluidPoison();
     fluid_poison.setBlock(block_poison);
     BlockRegistry.registerBlock(block_poison, "poison", null);
     FluidRegistry.addBucketForFluid(fluid_poison);
+ 
   }
-  private static void registerMilk() {
+  public static void registerMilk() {
     fluid_milk = new FluidMilk();
     FluidRegistry.registerFluid(fluid_milk);
     block_milk = new BlockFluidMilk();
@@ -40,7 +37,7 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_milk, "milk", null);
     FluidRegistry.addBucketForFluid(fluid_milk);
   }
-  private static void registerExp() {
+  public static void registerExp() {
     fluid_exp = new FluidExp();
     FluidRegistry.registerFluid(fluid_exp);
     block_exp = new BlockFluidExp();
@@ -48,10 +45,13 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_exp, "xpjuice", null);
     FluidRegistry.addBucketForFluid(fluid_exp);
   }
-  public static void addRecipes() {
+  public static void addPoisonRecipe() {
     try {
       //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null
       Fluid poison = FluidRegistry.getFluid(FluidsRegistry.fluid_poison.getName());
+      if(poison == null){
+        return;
+      }
       RecipeRegistry.addShapelessRecipe(FluidUtil.getFilledBucket(new FluidStack(poison, Fluid.BUCKET_VOLUME)),
           FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME)),
           Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);
