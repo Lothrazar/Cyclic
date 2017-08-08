@@ -5,6 +5,10 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.block.BlockDynamicLiquid;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -47,7 +51,13 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
   private boolean spreadWaterFromCenter(World world, EntityPlayer player, BlockPos posCenter) {
     int count = 0;
     for (BlockPos pos : UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS)) {
-      world.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
+      //      world.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState()); // , state.withProperty(LEVEL, 0)
+      //instead of just setBlockState, get the correct state for max level and for this fluid material, then schedule a tick update.
+      //this way, it sends correct block update and avoids 'stuck' water that doesnt flow
+      BlockDynamicLiquid blockdynamicliquid = BlockLiquid.getFlowingBlock(Material.WATER);
+      IBlockState state = blockdynamicliquid.getDefaultState();
+      world.setBlockState(pos, blockdynamicliquid.getDefaultState().withProperty(BlockLiquid.LEVEL, state.getValue(BlockLiquid.LEVEL)), 2);
+      world.scheduleUpdate(pos, blockdynamicliquid, blockdynamicliquid.tickRate(world));
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
       count++;
