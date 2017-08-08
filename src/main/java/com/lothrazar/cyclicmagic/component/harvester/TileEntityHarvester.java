@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -90,6 +91,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   private void tryHarvestArea() {
     int success = UtilHarvestCrops.harvestArea(world, getTargetCenter(), this.size, conf);
+  
     if (conf.drops != null) {
       setOutputItems(conf.drops);
     }
@@ -100,6 +102,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.consumeFuel(success * 10);//10 fuel per item instead of one
   }
   private void tryHarvestSingle() {
+    conf.resetDrops();
     BlockPos harvest = getTargetPos();
     if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
       this.updateFuelIsBurning();
