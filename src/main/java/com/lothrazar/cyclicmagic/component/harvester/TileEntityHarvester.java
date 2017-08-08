@@ -90,11 +90,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   private void tryHarvestArea() {
     int success = UtilHarvestCrops.harvestArea(world, getTargetCenter(), this.size, conf);
-    this.consumeFuel(success * 10);//10 fuel per item instead of one
+    if (conf.drops != null) {
+      setOutputItems(conf.drops);
+    }
     //POTENTIAL to exploit here. if fuel is at say 2, and harvesting wants to pay cost of 18
     //well its too late so, 
     // then youre getting something for free
     //not terribly worried about it. after that it wont work again until you refuel which will be max
+    this.consumeFuel(success * 10);//10 fuel per item instead of one
   }
   private void tryHarvestSingle() {
     BlockPos harvest = getTargetPos();
