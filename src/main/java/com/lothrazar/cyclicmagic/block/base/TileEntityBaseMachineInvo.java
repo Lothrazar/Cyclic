@@ -19,7 +19,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   private static final int SPEED_FUELED = 8;
-  private static final int MAX_SPEED = 10;//unused mostly
+  protected static final int MAX_SPEED = 10;//unused mostly
   private static final int FUEL_FACTOR = 2;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -65,6 +65,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
+  }
+  public void consumeFuel(int amt) {
+    for (int i = 0; i < amt; i++) {
+      this.consumeFuel();
+    }
   }
   public void consumeFuel() {
     if (usesFuel && !this.world.isRemote) {

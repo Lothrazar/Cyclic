@@ -44,8 +44,9 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
   public BlockConveyor(SpeedType t) {
-    super(Material.CLAY, MapColor.GRASS);
+    super(Material.IRON, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
+    this.setHardness(2.0F).setResistance(2.0F);
     type = t;
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
     this.setHardness(2.0F).setResistance(2.0F);

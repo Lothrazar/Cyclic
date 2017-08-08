@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    FluidStack fluid = te.getCurrentFluid();
+    FluidStack fluid = te.getCurrentFluidStack();
     if (fluid == null) { return; }
     //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
     GlStateManager.pushMatrix();

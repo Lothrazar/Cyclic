@@ -170,7 +170,7 @@ public class UtilEntity {
     entity.addVelocity(velX, velY, velZ);
   }
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
-    float mountPower = (float) (power - 0.5);
+    float mountPower = (float) (power + 0.5);
     double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);

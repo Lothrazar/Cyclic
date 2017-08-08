@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:block_vacuum_north"},
+        "facing=east": { "model":  "cyclicmagic:block_vacuum_east"},
+        "facing=south": { "model": "cyclicmagic:block_vacuum_south"},
+        "facing=west": { "model":  "cyclicmagic:block_vacuum_west" }
+    }
+}

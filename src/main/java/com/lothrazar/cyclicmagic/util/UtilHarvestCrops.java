@@ -54,12 +54,19 @@ public class UtilHarvestCrops {
       s += "doesHarvestTallgrass = " + doesTallgrass + System.lineSeparator();
       return s;
     }
+    public void resetDrops() {
+      drops = new ArrayList<ItemStack>();
+    }
+    public void addDrops(List<ItemStack> d) {
+      this.drops.addAll(d);
+    }
     public void setDrops(List<ItemStack> d) {
       this.drops = d;
     }
   }
   private static String[] blacklist;
   public static int harvestArea(World world, BlockPos pos, int hRadius, HarvestSetting conf) {
+    conf.resetDrops();
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
@@ -266,8 +273,8 @@ public class UtilHarvestCrops {
             UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
           }
         }
-        else {
-          conf.setDrops(drops);
+        else {  
+          conf.addDrops(drops);
         }
       }
       return true;

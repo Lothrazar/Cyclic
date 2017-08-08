@@ -31,14 +31,13 @@ import net.minecraft.world.storage.loot.LootTableManager;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
   public static final float SPEEDFACTOR = 0.00089F;//0.00089F;//// bigger == faster
-  private int toolSlot = 0;
+  static final int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   public TileEntityFishing() {
-    super(RODSLOT + FISHSLOTS);
+    super(1 + FISHSLOTS);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
@@ -143,7 +142,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void sendOutputItem(ItemStack itemstack) {
-    for (int i = RODSLOT + 1; i <= FISHSLOTS; i++) {
+    for (int i = toolSlot + 1; i <= FISHSLOTS; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }

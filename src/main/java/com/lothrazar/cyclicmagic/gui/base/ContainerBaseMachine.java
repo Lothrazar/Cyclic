@@ -53,7 +53,9 @@ public class ContainerBaseMachine extends ContainerBase {
   }
   @Override
   public void detectAndSendChanges() {
-    this.syncFields();
+    if (tile != null) {
+      this.syncFields();
+    }
     super.detectAndSendChanges();
   }
   @Override

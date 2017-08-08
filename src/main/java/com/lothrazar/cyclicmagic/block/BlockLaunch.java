@@ -31,9 +31,9 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
   private float power;
   private SoundEvent sound;
   public BlockLaunch(LaunchType t, SoundEvent s) {
-    super(Material.CLAY, MapColor.GRASS);//same as BlockSlime
+    super(Material.IRON, MapColor.GRASS);//same as BlockSlime
     this.setSoundType(SoundType.SLIME);
-    //    power = p;
+    this.setHardness(2.0F).setResistance(2.0F);
     sound = s;
     type = t;
     switch (type) {
@@ -49,7 +49,6 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
       default:
       break;
     }
-    this.setHardness(2.0F).setResistance(2.0F);
   }
   @Override
   protected void playClickOnSound(World worldIn, BlockPos pos) {

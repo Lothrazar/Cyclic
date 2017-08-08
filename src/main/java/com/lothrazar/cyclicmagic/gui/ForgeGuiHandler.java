@@ -64,6 +64,9 @@ import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.component.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.GuiUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
+import com.lothrazar.cyclicmagic.component.vacuum.ContainerVacuum;
+import com.lothrazar.cyclicmagic.component.vacuum.GuiVacuum;
+import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.component.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.component.vector.GuiVector;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
@@ -108,6 +111,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_CRAFTER = 21;
   public static final int GUI_INDEX_WORKBENCH = 22;
   public static final int GUI_INDEX_HYDRATOR = 23;
+  public static final int GUI_INDEX_VACUUM = 24;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -202,6 +206,9 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_HYDRATOR:
         if (te instanceof TileEntityHydrator) { return new ContainerHydrator(player.inventory, (TileEntityHydrator) te); }
       break;
+      case GUI_INDEX_VACUUM:
+        if (te instanceof TileEntityVacuum) { return new ContainerVacuum(player.inventory, (TileEntityVacuum) te); }
+      break;
     }
     return null;
   }
@@ -280,6 +287,9 @@ public class ForgeGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_HYDRATOR:
           if (te instanceof TileEntityHydrator) { return new GuiHydrator(player.inventory, (TileEntityHydrator) te); }
+        break;
+        case GUI_INDEX_VACUUM:
+          if (te instanceof TileEntityVacuum) { return new GuiVacuum(player.inventory, (TileEntityVacuum) te); }
         break;
       }
     }

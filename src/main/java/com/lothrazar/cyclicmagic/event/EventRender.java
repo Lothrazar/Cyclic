@@ -5,6 +5,7 @@ import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
@@ -13,6 +14,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -78,21 +80,28 @@ public class EventRender {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().player);
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     if (props != null && props.getTODO() != null && props.getTODO().length() > 0) {
       event.getRight().add(props.getTODO());
     }
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
+    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
     // special new case: no hud for this type
     if (!wand.isEmpty()) {
       spellHud.drawSpellWheel(wand);
+    }
+    int flyingTicks = props.getFlyingTimer();
+    if (flyingTicks > 0) {
+      int secs = flyingTicks / Const.TICKS_PER_SEC;
+      String time = UtilChat.formatSecondsToMinutes(secs);
+      event.getRight().add(UtilChat.lang("screentext.flying.seconds") + time);
     }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
-    EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
+    EntityPlayer effectivePlayer = ModCyclic.proxy.getClientPlayer();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
     if (heldWand.isEmpty()) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
@@ -149,7 +158,7 @@ public class EventRender {
       int leftOff = 8, rightOff = -26, topOff = 0, bottOff = -38;
       xmain = RenderLoc.locToX(renderLocation, leftOff, rightOff);
       ymain = RenderLoc.locToY(renderLocation, topOff, bottOff);
-      EntityPlayer player = Minecraft.getMinecraft().player;
+      EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh

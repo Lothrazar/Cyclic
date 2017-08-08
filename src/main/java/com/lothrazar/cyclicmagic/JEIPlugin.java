@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.bauble.ItemCharmAir;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -65,7 +66,9 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
     //this should work. idk
     for (Item s : ItemRegistry.itemMap.values()) {
-      registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
+      //this makes no sense at all but lets just hack the error out of the log
+      if (s instanceof ItemCharmAir == false)//its in a recipe, its valid. IDK 
+        registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
     }
     for (Block s : BlockRegistry.blocks) {
       registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");

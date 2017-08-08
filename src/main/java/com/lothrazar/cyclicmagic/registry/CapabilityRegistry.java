@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemAppleStep;
+import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,6 +53,8 @@ public class CapabilityRegistry {
     void setStepHeightOn(boolean b);
     boolean doForceStepOff();
     void setForceStepOff(boolean b);
+    int getFlyingTimer();
+    void setFlyingTimer(int d);
   }
   public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
     private static final String MHEALTH = "mhealth";
@@ -64,17 +68,19 @@ public class CapabilityRegistry {
     private static final String KEY_EATDIM = "ghost_dim";
     private static final String KEY_STEP = Const.MODID + "_step";
     private static final String KEY_STEPFORCE = Const.MODID + "_stepforced";
+    private static final String KEY_FLYING = Const.MODID + "_flying";
     private boolean foreStepHeightOff = false;
-    private boolean isStepOn = false;
+    private boolean isStepOn = ItemAppleStep.defaultPlayerStepUp;
     private boolean isSleeping = false;
     private boolean hasInventoryCrafting = false;
     private boolean hasInventoryExtended = false;
     private String todo = "";
-    private int health = 20;
+    private int health = ItemHeartContainer.defaultHearts * 2;//two health per heart. magic number alert!
     private boolean isChorusSpectator = false;
     private BlockPos chorusStart = null;
     private int chorusDim = 0;
     private int chorusSeconds = 0;
+    private int flyingSeconds = 0;
     @Override
     public boolean isSleeping() {
       return isSleeping;
@@ -113,6 +119,7 @@ public class CapabilityRegistry {
       tags.setInteger(KEY_TIMER, this.chorusSeconds);
       tags.setBoolean(KEY_STEP, this.isStepOn);
       tags.setBoolean(KEY_STEPFORCE, this.foreStepHeightOff);
+      tags.setInteger(KEY_FLYING, this.flyingSeconds);
       return tags;
     }
     @Override
@@ -124,6 +131,7 @@ public class CapabilityRegistry {
       else {
         tags = (NBTTagCompound) nbt;
       }
+      this.setFlyingTimer(tags.getInteger(KEY_FLYING));
       this.setSleeping(tags.getByte(IS_SLEEPING) == 1);
       this.setInventoryCrafting(tags.getByte(HAS_INVENTORY_CRAFTING) == 1);
       this.setInventoryExtended(tags.getByte(HAS_INVENTORY_EXTENDED) == 1);
@@ -204,6 +212,14 @@ public class CapabilityRegistry {
     @Override
     public void setForceStepOff(boolean b) {
       this.foreStepHeightOff = b;
+    }
+    @Override
+    public int getFlyingTimer() {
+      return this.flyingSeconds;
+    }
+    @Override
+    public void setFlyingTimer(int d) {
+      this.flyingSeconds = d;
     }
   }
   public static class Storage implements IStorage<IPlayerExtendedProperties> {

@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledM
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.component.hydrator.ItemBlockHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
@@ -20,11 +21,15 @@ import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
+import com.lothrazar.cyclicmagic.component.pylonexp.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
+import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
+import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -40,13 +45,24 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUser;
   private boolean enablePattern;
   private boolean expPylon;
-  public void onPreInit() {// onInit() {
-    BlockHydrator block_hydrator = new BlockHydrator();
-    BlockRegistry.registerBlock(block_hydrator, "block_hydrator", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+  private boolean enableVacuum;
+  private boolean enableHydrator;
+  public void onPreInit() {
+    if (enableVacuum) {
+      BlockVacuum vacuum_block = new BlockVacuum();
+      BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
+    }
+    if (enableHydrator) {
+      BlockHydrator block_hydrator = new BlockHydrator();
+      BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    }
     if (expPylon) {
+
+      FluidsRegistry.registerExp();//it needs EXP fluid to work
       BlockXpPylon exp_pylon = new BlockXpPylon();
-      BlockRegistry.registerBlock(exp_pylon, "exp_pylon", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     }
     if (enablePattern) {
@@ -98,6 +114,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableHydrator = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableVacuum = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -16,13 +18,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodStep extends ItemFood implements IHasRecipe {
-  public ItemFoodStep() {
+public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
+  public static boolean defaultPlayerStepUp = false;
+  public ItemAppleStep() {
     super(4, false);
     this.setAlwaysEdible();
   }
@@ -67,5 +71,9 @@ public class ItemFoodStep extends ItemFood implements IHasRecipe {
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     super.addInformation(stack, player, tooltip, advanced);
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    defaultPlayerStepUp = config.getBoolean("StepHeightDefault", Const.ConfigCategory.player, false, "Set the players default step height value.  False is just like normal minecraft, true means step height is one full block.   Only applies to new players the first time they join the world.  Regardless of setting this can still be toggled with Apple of Lofty Stature.  ");
   }
 }

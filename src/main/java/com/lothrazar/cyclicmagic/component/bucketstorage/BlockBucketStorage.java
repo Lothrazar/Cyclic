@@ -35,8 +35,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBucketStorage extends BlockBase implements ITileEntityProvider, IHasRecipe, IBlockHasTESR {
-  public static final String NBT_FLUIDSIZE = "fluidtotal";
-  public static final String NBT_FLUIDTYPE = "fluidtype";
   public BlockBucketStorage() {
     super(Material.IRON);
     this.setHardness(7F);
@@ -44,6 +42,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     this.setSoundType(SoundType.GLASS);
     this.setHarvestLevel("pickaxe", 1);
   }
+  @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
     //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
@@ -53,7 +52,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     ItemStack stack = new ItemStack(item);
     if (ent != null && ent instanceof TileEntityBucketStorage) {
       TileEntityBucketStorage te = (TileEntityBucketStorage) ent;
-      FluidStack fs = te.getCurrentFluid();
+      FluidStack fs = te.getCurrentFluidStack();
       if (fs != null) {
         UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
         String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
@@ -91,7 +90,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-    if (willHarvest) return true; //If it will harvest, delay deletion of the block until after getDrops
+    if (willHarvest) { return true; } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
   @Override
@@ -99,6 +98,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     super.harvestBlock(world, player, pos, state, te, tool);
     world.setBlockToAir(pos);
   }
+  //end of fixing getdrops
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -114,7 +114,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        FluidStack fs = te.getCurrentFluid();
+        FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + TileEntityBucketStorage.TANK_FULL + " ";
           UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
