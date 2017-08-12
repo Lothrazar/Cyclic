@@ -21,7 +21,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   public static final int TIMER_FULL = 20;
   public final static int ROWS = 4;
   public final static int COLS = 9;
-  public final static int FILTERSLOTS = 5;
+  public final static int FILTERSLOTS = 5 * 2;
   private final static int[] SLOTS_EXTRACT = IntStream.range(0, ROWS * COLS).toArray();
   public static enum Fields {
     TIMER, RENDERPARTICLES, REDSTONE;

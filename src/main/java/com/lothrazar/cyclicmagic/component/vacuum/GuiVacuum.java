@@ -39,10 +39,16 @@ public class GuiVacuum extends GuiBaseContainer {
       }
     }
     int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
-    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++) {
+    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS/2; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           this.guiLeft + Const.PAD + (k + 4) * Const.SQ - 1,
-          this.guiTop + 18,
+          this.guiTop + Const.SQ -2,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    for (int k = TileEntityVacuum.FILTERSLOTS/2; k < TileEntityVacuum.FILTERSLOTS; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + Const.PAD + (k - 1) * Const.SQ - 1,
+          this.guiTop + 2*Const.SQ -2,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
