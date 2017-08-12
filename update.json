@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.29",
     "1.10.2-recommended": "1.10.29",
-    "1.11.2-latest": "1.5.10",
-    "1.11.2-recommended": "1.5.10",
+    "1.11.2-latest": "1.5.11",
+    "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.7.6",
     "1.12-recommended": "1.7.6"
   },
@@ -36,7 +36,7 @@
  	,"1.4.1":"Fixed two crash bugs: with Cyclic Scepter and with Scaffolding blocks. "
   	,"1.4.2":"Fix for the spawners hardness. " 	
   	,"1.4.3":"Fix chest sack glitching out and deleting items. "
-  	,"1.4.4":"Add config category 'content' to remove items and blocks added.  Fix Mounted Pearl feature not keeping the horse attached to you"
+	 ,"1.4.4":"Add config category 'content' to remove items and blocks added.  Fix Mounted Pearl feature not keeping the horse attached to you"
 	,"1.4.5":"Hot fix not loading on servers (#61).  Hotfix Exp Achievements misfiring on false positives (#60). "
  	,"1.5.0":"New block: Harvester.  New block: Item Magnet.  Added a config option to disable potion effects from Sleeing Mat.  Fix Garden Scythe leaving a floating block (#64).  Magnet enchant now only goes to I not V (levels barely had a difference anyway)"
  	,"1.5.1":"Fix Garden Scythe rotating cocoa beans on harvesting (#67)"
@@ -165,8 +165,8 @@
 	,"1.4.2":"Added Turrent Minecart and Dropper Minecart.  Automated User can now interact with minecarts (previously was only living entities).  Updated projectile rendering which stop them sometimes hitting the throwing player clienside and becoming invisible, and this fixes the dynamite playing explosion sounds on throw instead of on impact.  Fixed Guidebook pages going off screen, and a few typos.  Fixed the breaking particles of several blocks (so they arent the broken black/purple).  Fixed block hardness of the Auto Crafter, Workbench, Soundproofing, and the plates (so they are no longer instant-break).  New Guidebook category: Transport.  "
 	,"1.4.3":"Cyclic minecarts now work out of dispensers.  Fix Gold Minecart not picking up entities on collision.  Re-wrote Gold Furnace Minecart collision and movement logic, now gets stuck less and slow down less pushing other carts.  Gold furnace minecart does not auto move when you give it fuel, and it tells you current fuel total.  Removed 'world generation / Biome Crops' config & feature, as it was possibly causing world generation lag, in addition to being fairly bare bones, not fully configurable, and kind of boring... other mods do it better."
   	,"1.4.4":"Fix missing texture in Workbench and fix JEI crafting support."
-	,"1.4.5":"Reduced speed of Player->Faster Ladder option by a factor of six to prevent launching you if the ladder is really tall.  Fixed an item loss bug in Uncrafting Grinder if it was working on a valid recipe with less items than required at the end of a stack.  Add HarvesterBlacklist in config file, by default it contains 'terraqueous:pergola' so harvester and garden scythe can be blocked from harvesting blocks that are coded to be food/bushes, but are not intended to be.  	"
- 	,"1.4.6":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
+	  ,"1.4.5":"Reduced speed of Player Faster Ladder option by a factor of six to prevent launching you if the ladder is really tall.  Fixed an item loss bug in Uncrafting Grinder if it was working on a valid recipe with less items than required at the end of a stack.  Add HarvesterBlacklist in config file, by default it contains 'terraqueous:pergola' so harvester and garden scythe can be blocked from harvesting blocks that are coded to be food/bushes, but are not intended to be.   "
+	  ,"1.4.6":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
   	,"1.4.7":"Fix crashed caused by using scythe on certain leaves (caused by the config blacklist added in v1.4.5)"
 	,"1.5.0":"Now requires Forge version 13.20.0.2300 or higher.  Block Miner and Block Placer can now face up and down, in addition to horizontal directions (so full 6 directional placement just like a Dispenser).  Harvester now captures drops in its inventory.  Automatic User now works with all forge buckets and fluid tanks.  Updated a few machine GUIs.  Many machines that act on an area now render their preview area using ghost blocks and a toggle button.  Many machines now optionally can consume furnace-fuel, which increases their speed.  Fixed Structure Builder and Pattern Replicator not playing block placing sounds.  For all three Scythes (Brush, Tree, Garden) you can hold shift to reduce the range by half.  "
 	,"1.5.1":"Fix the new fuel slots machines destroying the empty bucket when consuming lava as fuel.  Add new config option to Sleeping Mat that makes it set players spawn point just like a bed (defaults false).  "
@@ -179,7 +179,8 @@
 	,"1.5.8":"Nether Ores now registered in ore dictionary as ore blocks (so for example anything that processes redstone ore will work on nether and end redstone ore).  Existing recipes now work with ore dictionary items (example: ingots, dyes, sticks, etc).  Fixed a few typos in tooltips and guidebook.  "
 	,"1.5.9":"Experience Boost enchantment now gives XP directly to player (when mining, not combat); this was done to avoid lag when using hammers or a vein miner.  Interfaces with textboxes now allow you to hold down the button, such as a letter or the delete key (Ender Book, Faith Plate, Password Detector).  The horse upgrade carrots will now get eaten only one at a time, instead of double.  Fixed horse info in F3 not showing for donkeys, zombie, and skeleton horses.  "
 	,"1.5.10":"Remove JSON recipe files that leaked over from the 1.12 build, and remove a bunch of logspam on startup "
-   }
+  	,"1.5.11":"Update zh_CN language file" 
+  },
   "1.12":{
   	"1.5.6":"Initial port from 1.11.2-1.5.6"
   	,"1.5.7":"Fixed the server subscribing to tooltip render events which prevented server startup.  Recipes have been converted to new JSON system.  Needs forge 14.21.0.2338 higher.  "
