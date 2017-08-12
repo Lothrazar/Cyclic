@@ -194,8 +194,11 @@ public class UtilNBT {
     base.setTag(Const.SkullOwner, skullOwner);
     return base;
   }
-  public static void setEntityBoolean(EntityEvokerFangs entityevokerfangs, String string) {
-    entityevokerfangs.getEntityData().setBoolean(string, true);
+  public static void setEntityBoolean(Entity entity, String string) {
+    setEntityBoolean(entity, string, true);
+  }
+  public static void setEntityBoolean(Entity entityevokerfangs, String string, boolean bIn) {
+    entityevokerfangs.getEntityData().setBoolean(string, bIn);
   }
   public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
     return entityevokerfangs.getEntityData().getBoolean(string);
