@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilFurnace;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
@@ -203,7 +205,9 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
           sign.setEditable(true);
         }
         sign.setPlayer(entityPlayer);
-        entityPlayer.openEditSign(sign);
+        //entityPlayer.openEditSign(sign);//NOPE: this does not cause server sync, must go through network with mod instance
+        event.getEntityPlayer().openGui(ModCyclic.instance, ForgeGuiHandler.VANILLA_SIGN, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
+        
       }
     }
   }
