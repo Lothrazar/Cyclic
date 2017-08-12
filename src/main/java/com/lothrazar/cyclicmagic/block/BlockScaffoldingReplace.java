@@ -16,6 +16,7 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
   public BlockScaffoldingReplace() {
     super();
     this.dropBlock = true;
+    this.doesAutobreak = false;
   }
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (heldItem == null) { return false; }

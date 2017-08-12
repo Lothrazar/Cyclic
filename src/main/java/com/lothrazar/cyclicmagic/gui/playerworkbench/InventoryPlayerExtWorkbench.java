@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
 import java.lang.ref.WeakReference;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
@@ -27,6 +28,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public ItemStack getStackInSlot(int s) {
     return s >= this.getSizeInventory() ? null : this.stackList[s];
   }
+
   /**
    * When some containers are closed they call this on each slot, then drop
    * whatever it returns as an EntityItem - like when you close a workbench GUI.

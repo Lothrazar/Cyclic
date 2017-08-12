@@ -11,6 +11,7 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,8 +26,10 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public static final int HOTBAR_SIZE = 9;
   public IInventory craftResult = new InventoryCraftResult();
   final int pad = 8;
-  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, EntityPlayer player) {
+  private World world;
+  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, World world,EntityPlayer player) {
     this.thePlayer = player;
+    this.world = world;
     craftMatrix = new InventoryPlayerExtWorkbench(this, player);
     int slotId = 0;
     int xResult = 155, yResult = 22;
@@ -94,7 +97,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.thePlayer.getEntityWorld()));
+    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.world));
   }
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {
