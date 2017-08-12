@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.merchant;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,10 +30,16 @@ public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVill
   public IMessage onMessage(PacketVillagerTrade message, MessageContext ctx) {
     if (ctx.side == Side.SERVER) {
       EntityPlayer player = ctx.getServerHandler().player;
+      try{
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
         ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
         c.setCurrentRecipeIndex(message.selectedMerchantRecipe); //TODO: well this duplicates packetsyncvilltoserv..so..
         c.doTrade(player, message.selectedMerchantRecipe);
+      }
+      }
+      catch(Exception e){
+        ModCyclic.logger.error("Error trying to perform villager trade from Almanac: "+e.getMessage());
+        e.printStackTrace();
       }
     }
     return null;
