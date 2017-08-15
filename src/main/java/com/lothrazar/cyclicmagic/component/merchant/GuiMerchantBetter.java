@@ -29,8 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
-  //  static final int texture_width = 250;
-  //  static final int texture_height = 212;
+
   public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID, Const.Res.folder + "tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;

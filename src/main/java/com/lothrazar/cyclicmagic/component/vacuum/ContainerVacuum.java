@@ -26,12 +26,18 @@ public class ContainerVacuum extends ContainerBaseMachine {
         ));
       }
     }
-    //now add the filter slots at the end
+    //now add the filter slots at the end. TWO slots actually!
     int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
-    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++) {
+    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
       addSlotToContainer(new SlotSingleStack(tile, start + k,
           Const.PAD + (k + 4) * Const.SQ, /// X
-          19 // Y
+          Const.SQ - 1// Y
+      ));
+    }
+    for (int k = TileEntityVacuum.FILTERSLOTS / 2; k < TileEntityVacuum.FILTERSLOTS; k++) {
+      addSlotToContainer(new SlotSingleStack(tile, start + k,
+          Const.PAD + (k - 1) * Const.SQ, /// X
+          2 * Const.SQ - 1 // Y
       ));
     }
     bindPlayerInventory(inventoryPlayer);

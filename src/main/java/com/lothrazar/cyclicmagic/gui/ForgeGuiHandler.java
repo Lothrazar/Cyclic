@@ -76,12 +76,14 @@ import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -112,11 +114,15 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_WORKBENCH = 22;
   public static final int GUI_INDEX_HYDRATOR = 23;
   public static final int GUI_INDEX_VACUUM = 24;
+  //skip ahead: vanilla starts here
+  public static final int VANILLA_SIGN = 100;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
     TileEntity te = world.getTileEntity(p);
     switch (ID) {
+      case VANILLA_SIGN:
+        return null;
       case GUI_INDEX_EXTENDED:
         return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player);
       case GUI_INDEX_PWORKBENCH:
@@ -218,6 +224,8 @@ public class ForgeGuiHandler implements IGuiHandler {
     if (world instanceof WorldClient) {
       TileEntity te = world.getTileEntity(p);
       switch (ID) {
+        case VANILLA_SIGN:
+          return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));
         case GUI_INDEX_EXTENDED:
           return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player));
         case GUI_INDEX_PWORKBENCH:

@@ -172,6 +172,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
   private void setPushPull(int value) {
     this.pushIfZero = value % 2;
+    this.markDirty();
+    this.world.markBlockRangeForRenderUpdate(pos, pos);
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

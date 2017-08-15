@@ -119,7 +119,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     int firstSlot = -1, secondSlot = -1;
     ItemStack iStack = ItemStack.EMPTY;
     boolean canTrade = false;
-    for (int i = 0; i <= 3 * 9; i++) {
+    for (int i = 0; i <= player.inventory.getSizeInventory(); i++) {
       iStack = player.inventory.getStackInSlot(i);
       if (iStack.isEmpty()) {
         continue;
@@ -156,8 +156,8 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       }
     }
     if (tradeSuccess) {
-      ItemStack purchased = trade.getItemToSell().copy();
-      player.entityDropItem(purchased, 0);
+      ItemStack purchased = trade.getItemToSell().copy(); 
+      player.entityDropItem(purchased, 1);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
       if (firstItem.getCount() == 0) {
