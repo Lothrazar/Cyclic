@@ -29,7 +29,9 @@ public class EntityDynamite extends EntityThrowableDispensable {
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
-    this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+    if (this.inWater == false) {
+      this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+    }
     this.setDead();
   }
 }
