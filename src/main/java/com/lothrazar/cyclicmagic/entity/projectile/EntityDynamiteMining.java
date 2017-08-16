@@ -26,9 +26,11 @@ public class EntityDynamiteMining extends EntityThrowableDispensable {
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
-    ExplosionMining explosion = new ExplosionMining(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
-    explosion.doExplosionA();
-    explosion.doExplosionB(false);
+    if (this.inWater == false) {
+      ExplosionMining explosion = new ExplosionMining(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
+      explosion.doExplosionA();
+      explosion.doExplosionB(false);
+    }
     this.setDead();
   }
 }

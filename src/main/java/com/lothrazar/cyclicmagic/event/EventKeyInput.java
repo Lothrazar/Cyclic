@@ -172,7 +172,7 @@ public class EventKeyInput {
     // https://github.com/Inventory-Tweaks/inventory-tweaks/blob/develop/src/main/java/invtweaks/InvTweaks.java
     try { //but just to be careful, add the trycatch also
       boolean bindingPressed = keybinding.isPressed();
-      boolean isKeyDown = Keyboard.isKeyDown(keybinding.getKeyCode());
+      boolean isKeyDown = Keyboard.isCreated() && Keyboard.isKeyDown(keybinding.getKeyCode());
       boolean validKeyModifier = (keybinding.getKeyModifier() == null ||
           keybinding.getKeyModifier().isActive());
       return bindingPressed || //either keybinding object knows its presed, ir the keyboard knows its pressed with the mod
