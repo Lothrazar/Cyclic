@@ -61,7 +61,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
-    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+    if (Keyboard.isCreated() && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
       tooltip.add(TextFormatting.GREEN + spell.getName() + " "
           + "[" + UtilChat.lang(BuildType.getName(stack)) + "] ");
       tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.tooltiprange") + BaseSpellRange.maxRange);
