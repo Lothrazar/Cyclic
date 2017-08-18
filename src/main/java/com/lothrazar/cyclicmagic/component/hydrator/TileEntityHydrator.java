@@ -62,17 +62,17 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
-  private IRecipe findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn) {
+  private IRecipe findMatchingRecipe() {
     for (int i = 0; i < RECIPE_SIZE; i++) {
-      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i));
+      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
     for (IRecipe irecipe : BlockHydrator.recipeList) {
-      if (irecipe.matches(craftMatrix, worldIn)) { return irecipe; }
+      if (irecipe.matches( this.crafting, world)) { return irecipe; }
     }
     return null;
   }
   public boolean tryProcessRecipe() {
-    IRecipe rec = findMatchingRecipe(crafting, this.world);
+    IRecipe rec = findMatchingRecipe();
     if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
       this.sendOutputItem(rec.getRecipeOutput());
       payRecipeCost(rec);
