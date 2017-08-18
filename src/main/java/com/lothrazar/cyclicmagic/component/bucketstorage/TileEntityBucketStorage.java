@@ -56,7 +56,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
-    sendClientUpdate();
+   
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
   private boolean doesFluidMatchTank(FluidStack incoming) {
@@ -65,7 +65,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    ModCyclic.logger.info(" fill() !!!!!!!!!");
+  
     if (doesFluidMatchTank(resource) == false) { return 0; }
     if (resource.amount + tank.getFluidAmount() > TANK_FULL) {//enForce limit
       resource.amount = TANK_FULL - tank.getFluidAmount();
@@ -73,9 +73,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     int result = tank.fill(resource, doFill);
     // this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
-    if (doFill) {
-      sendClientUpdate();
-    }
+ 
     return result;
   }
   @Override
@@ -84,9 +82,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(resource, doDrain);
     //   this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
-    if (doDrain) {
-      sendClientUpdate();
-    }
+
     return result;
   }
   @Override
@@ -94,9 +90,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(maxDrain, doDrain);
     //  this.world.markChunkDirty(pos, this);
     tank.setFluid(result);
-    if (doDrain) {
-      sendClientUpdate();
-    }
+  
     return result;
   }
   @Override
@@ -109,24 +103,8 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     super.readFromNBT(tagCompound);
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
-  public void sendClientUpdate() {
-//    ModCyclic.logger.info(" sendClientUpdate() ");
-//    if (this.world.isRemote == false) {
-//      PacketFluidSync packet = new PacketFluidSync(pos, this.tank.getFluid());
-//      // Chunk chunk = world.getChunkFromBlockCoords(pos);
-//      for (EntityPlayer player : world.playerEntities) {
-//        // only send to relevant players
-//        if (player instanceof EntityPlayerMP) {
-//          EntityPlayerMP playerMP = (EntityPlayerMP) player;
-//          ModCyclic.logger.info(" sendToPlayer() ");
-//          // if(world.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.x, chunk.z)) {
-//          ModCyclic.network.sendTo(packet, playerMP);
-//          // }
-//        }
-//      }
-//    }
-    // ModCyclic.network.sendTo(message, player);
-  }
+
+
   /**
    * fix fluid rendering breaks because pipes and pumps update my fluid level
    * only client side
@@ -135,7 +113,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
    */
   @SideOnly(Side.CLIENT)
   public void updateFluidTo(FluidStack fluid) {
-    ModCyclic.logger.info("FLUID UPDATE " + fluid);
     this.tank.setFluid(fluid);
   }
 }

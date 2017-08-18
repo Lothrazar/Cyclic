@@ -24,7 +24,7 @@ public class FluidTankFixDesync extends FluidTank {
   public int fill(FluidStack resource, boolean doFill) {
     int amount = super.fill(resource, doFill);
     if(amount > 0 && doFill) {
-      sendClientUpdate();
+  //    sendClientUpdate();
     }
     return amount;
   }
@@ -33,7 +33,7 @@ public class FluidTankFixDesync extends FluidTank {
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     FluidStack fluid = super.drain(resource, doDrain);
     if(fluid != null && doDrain) {
-      sendClientUpdate();
+   //   sendClientUpdate();
     }
     return fluid;
   }
@@ -42,13 +42,13 @@ public class FluidTankFixDesync extends FluidTank {
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack fluid = super.drain(maxDrain, doDrain);
     if(fluid != null && doDrain) {
-      sendClientUpdate();
+     // sendClientUpdate();
     }
     return fluid;
   }
 
-  public void sendClientUpdate() {
-    ModCyclic.logger.info(" sendClientUpdate() ");
+  private void sendClientUpdate() {
+ //   ModCyclic.logger.info(" sendClientUpdate() ");
     if (parent.getWorld().isRemote == false) {
       PacketFluidSync packet = new PacketFluidSync(parent.getPos(), this.getFluid());
       // Chunk chunk = world.getChunkFromBlockCoords(pos);
@@ -70,7 +70,8 @@ public class FluidTankFixDesync extends FluidTank {
   protected void onContentsChanged() {
     
 
-    ModCyclic.logger.info(" onContentsChanged() ");
+   // ModCyclic.logger.info(" onContentsChanged() ");
+    sendClientUpdate();
 //    // updates the tile entity for the sake of things that detect when contents change (such as comparators)
 //    if(parent instanceof IFluidTankUpdater) {
 //      ((IFluidTankUpdater) parent).onTankContentsChanged();

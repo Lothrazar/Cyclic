@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.29",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12-latest": "1.7.8",
-    "1.12-recommended": "1.7.8"
+    "1.12-latest": "1.7.9",
+    "1.12-recommended": "1.7.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -199,5 +199,6 @@
   	,"1.7.6":"Fixed the Merchant Almanac failing to open.  Added configs to disable registering of Milk and Poison fluids.  Experience fluid is disabled whenever the Experience Pylon is disabled.  Fixed Harvester sometimes not gathering all the drops.  Water Spreader now sends correct block updates on use, so you wont get 'stuck' source water blocks that do not flow.  "
 	,"1.7.7":"Updated zh_CN lang file.  Added five more filter slots to the Item Collector.  Attempt to fix client-desync in the Fan block when the redstone toggle button is used.  Fixed the left-click Editable Signs feature.  Fix Merchant Almanac not using tradeable items from bottom slots of inventory.  "
 	,"1.7.8":"Fix a game crash that can happen while holding a key and exiting.  Thrown dynamite will no longer explode in water.  Corrected the tooltip on Air Charm.  "
+	,"1.7.9":"Fixed the Fluid Tank not rendering fluid content updates when filled or drained by other pipes and pumps.  "
   }
 }
