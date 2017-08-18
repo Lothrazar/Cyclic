@@ -32,7 +32,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    addSlotToContainer(new SlotOutputOnly(tile, slotNum,
+    addSlotToContainer(new Slot(tile, slotNum,
         SLOTX_FLUID,
         SLOTY_FLUID));
     bindPlayerInventory(inventoryPlayer);
