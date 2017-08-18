@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.component.bucketstorage;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,11 +17,13 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implements IFluidHandler {
   public static final String NBT_ID = "buckets";
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 64;//yep 64  
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  private FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityBucketStorage() {
     super(0);
   }
@@ -50,6 +55,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
+    sendClientUpdate();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
   private boolean doesFluidMatchTank(FluidStack incoming) {
@@ -58,6 +64,7 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
+    ModCyclic.logger.info(" fill() !!!!!!!!!");
     if (doesFluidMatchTank(resource) == false) { return 0; }
     if (resource.amount + tank.getFluidAmount() > TANK_FULL) {//enForce limit
       resource.amount = TANK_FULL - tank.getFluidAmount();
@@ -65,6 +72,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     int result = tank.fill(resource, doFill);
     // this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
+    if (doFill) {
+      sendClientUpdate();
+    }
     return result;
   }
   @Override
@@ -73,6 +83,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(resource, doDrain);
     //   this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
+    if (doDrain) {
+      sendClientUpdate();
+    }
     return result;
   }
   @Override
@@ -80,6 +93,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(maxDrain, doDrain);
     //  this.world.markChunkDirty(pos, this);
     tank.setFluid(result);
+    if (doDrain) {
+      sendClientUpdate();
+    }
     return result;
   }
   @Override
@@ -91,5 +107,34 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+  }
+  public void sendClientUpdate() {
+    ModCyclic.logger.info(" sendClientUpdate() ");
+    if (this.world.isRemote == false) {
+      PacketFluidSync packet = new PacketFluidSync(pos, this.tank.getFluid());
+      // Chunk chunk = world.getChunkFromBlockCoords(pos);
+      for (EntityPlayer player : world.playerEntities) {
+        // only send to relevant players
+        if (player instanceof EntityPlayerMP) {
+          EntityPlayerMP playerMP = (EntityPlayerMP) player;
+          ModCyclic.logger.info(" sendToPlayer() ");
+          // if(world.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.x, chunk.z)) {
+          ModCyclic.network.sendTo(packet, playerMP);
+          // }
+        }
+      }
+    }
+    // ModCyclic.network.sendTo(message, player);
+  }
+  /**
+   * fix fluid rendering breaks because pipes and pumps update my fluid level
+   * only client side
+   * 
+   * @param fluid
+   */
+  @SideOnly(Side.CLIENT)
+  public void updateFluidTo(FluidStack fluid) {
+    ModCyclic.logger.info("FLUID UPDATE " + fluid);
+    this.tank.setFluid(fluid);
   }
 }
