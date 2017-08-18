@@ -23,9 +23,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implements IFluidHandler {
   public static final String NBT_ID = "buckets";
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 64;//yep 64  
-  private FluidTank tank = new FluidTank(TANK_FULL);
+  private FluidTank tank;
   public TileEntityBucketStorage() {
     super(0);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
   }
   //  @Override
   //  public int getBlockMetadata() {
@@ -109,21 +110,21 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
   public void sendClientUpdate() {
-    ModCyclic.logger.info(" sendClientUpdate() ");
-    if (this.world.isRemote == false) {
-      PacketFluidSync packet = new PacketFluidSync(pos, this.tank.getFluid());
-      // Chunk chunk = world.getChunkFromBlockCoords(pos);
-      for (EntityPlayer player : world.playerEntities) {
-        // only send to relevant players
-        if (player instanceof EntityPlayerMP) {
-          EntityPlayerMP playerMP = (EntityPlayerMP) player;
-          ModCyclic.logger.info(" sendToPlayer() ");
-          // if(world.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.x, chunk.z)) {
-          ModCyclic.network.sendTo(packet, playerMP);
-          // }
-        }
-      }
-    }
+//    ModCyclic.logger.info(" sendClientUpdate() ");
+//    if (this.world.isRemote == false) {
+//      PacketFluidSync packet = new PacketFluidSync(pos, this.tank.getFluid());
+//      // Chunk chunk = world.getChunkFromBlockCoords(pos);
+//      for (EntityPlayer player : world.playerEntities) {
+//        // only send to relevant players
+//        if (player instanceof EntityPlayerMP) {
+//          EntityPlayerMP playerMP = (EntityPlayerMP) player;
+//          ModCyclic.logger.info(" sendToPlayer() ");
+//          // if(world.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.x, chunk.z)) {
+//          ModCyclic.network.sendTo(packet, playerMP);
+//          // }
+//        }
+//      }
+//    }
     // ModCyclic.network.sendTo(message, player);
   }
   /**
