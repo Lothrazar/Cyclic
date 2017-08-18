@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -59,22 +61,22 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       updateBottle();
     }
     if (this.spray == 1) {
-      updateSpew();
+      updateSpray();
     }
   }
-  private void updateSpew() {
-  //  this.timer--;
+  private void updateSpray() {
     int toSpew = Math.min(XP_PER_SPEWORB, this.getCurrentFluid());
-    if (this.getCurrentFluid() >= toSpew) {
-     // this.timer = TIMER_FULL;
+    if (toSpew > 0 && this.getCurrentFluid() >= toSpew) {
       FluidStack actuallyDrained = this.tank.drain(toSpew, true);
+      //was the correct amount drained
       if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
-      if (this.getWorld().isRemote == false) {
-        EntityXPOrb orb = new EntityXPOrb(this.getWorld());
+      if (world.isRemote == false) {
+        EntityXPOrb orb = new EntityXPOrb(world);
         orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-        orb.xpValue = XP_PER_BOTTLE;
-        this.getWorld().spawnEntity(orb);
-        spewOrb(orb);
+        orb.xpValue = toSpew;
+        orb.delayBeforeCanPickup = 0;
+        world.spawnEntity(orb);
+        setOrbVelocity(orb);
       }
     }
   }
@@ -97,16 +99,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, region);
     if (orbs != null) { //no timer just EAT
       for (EntityXPOrb orb : orbs) {
-        if (orb.isDead) {
+        if (orb.isDead || orb.delayBeforeCanPickup > 0) {
           continue;
         }
-        int filled = this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue()), true);
-        if (filled > 0) {//this.tryIncrExp(orb.getXpValue())
-          getWorld().removeEntity(orb);//calls     orb.setDead(); for me
-        }
-        else {//is full
-          spewOrb(orb);
-        }
+        this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue()), true);
+        //we have no "set exp value" function so this is workaround to set value to zero
+        orb.delayBeforeCanPickup = 9999;//set delay because it will be isDead=true for a little while until actually removed. prevent other mods getting dead orbs
+        orb.xpValue = 0;
+        getWorld().removeEntity(orb);//calls     orb.setDead(); for me
       }
     }
   }
@@ -155,7 +155,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   //    this.currentExp += xpValue;
   //    return true;
   //  }
-  private void spewOrb(EntityXPOrb orb) {
+  private void setOrbVelocity(EntityXPOrb orb) {
     orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
   }
   @Override
