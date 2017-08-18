@@ -64,15 +64,6 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
-    //this should work. idk
-    for (Item s : ItemRegistry.itemMap.values()) {
-      //this makes no sense at all but lets just hack the error out of the log
-      if (s instanceof ItemCharmAir == false)//its in a recipe, its valid. IDK 
-        registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
-    }
-    for (Block s : BlockRegistry.blocks) {
-      registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");
-    }
   }
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
