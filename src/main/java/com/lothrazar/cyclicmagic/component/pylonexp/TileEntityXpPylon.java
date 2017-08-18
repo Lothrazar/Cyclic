@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler {
   public static final int TANK_FULL = 20000;
   private static final int VRADIUS = 2;
-  private static final int XP_PER_SPEWORB = 10;
+  private static final int XP_PER_SPEWORB = 50;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 18;
   public static final int SLOT_INPUT = 0;
@@ -63,10 +63,11 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void updateSpew() {
-    this.timer--;
-    if (this.timer <= 0 && this.getCurrentFluid() > XP_PER_SPEWORB) {
-      this.timer = TIMER_FULL;
-      FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
+  //  this.timer--;
+    int toSpew = Math.min(XP_PER_SPEWORB, this.getCurrentFluid());
+    if (this.getCurrentFluid() >= toSpew) {
+     // this.timer = TIMER_FULL;
+      FluidStack actuallyDrained = this.tank.drain(toSpew, true);
       if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
       if (this.getWorld().isRemote == false) {
         EntityXPOrb orb = new EntityXPOrb(this.getWorld());
