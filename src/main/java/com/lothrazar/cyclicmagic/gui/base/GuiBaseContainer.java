@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.base;
+import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -79,8 +81,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
-    drawFuelText();
     updateToggleButtonStates();
+    if (GlobalSettings.fuelEnabled) {
+      drawFuelText();
+    }
   }
   public void drawNameText() {
     if (tile != null) {
@@ -126,7 +130,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.progressBar != null) {
       drawProgressBar();
     }
-    if (this.fieldFuel > -1 && this.tile.getFuelCurrent() > 0) {
+    if (this.fieldFuel > -1 && GlobalSettings.fuelEnabled) {
       drawFuelBar();
     }
   }
@@ -138,37 +142,86 @@ public abstract class GuiBaseContainer extends GuiContainer {
         GL11.glPushMatrix();
         float fontScale = 0.5F;
         GL11.glScalef(fontScale, fontScale, fontScale);
-        this.drawString(pct + "", this.xSize * 2 + 20, 24);
+        if (GlobalSettings.fuelBarHorizontal) {
+          this.drawString(pct + "%", 176, -38);
+        }
+        else {
+          this.drawString(pct + "%", this.xSize * 2 + 18, 24);
+        }
         GL11.glPopMatrix();
       }
     }
   }
   public void drawFuelBar() {
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + 1,
-        this.guiTop, u, v,
-        28, 100,
-        28, 100);
-    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + Const.PAD,
-        this.guiTop + Const.PAD, u, v,
-        14, (int) (84 * percent),
-        14, 84);
+    int outerLength = 100, outerWidth = 28;
+    int innerLength = 84, innerWidth = 14;
+    if (GlobalSettings.fuelBarHorizontal) {// vertical
+      fuelX = this.guiLeft + screenSize.width() - innerLength - 8;
+      fuelXE = fuelX + innerLength;
+      fuelY = this.guiTop - outerWidth + 5;
+      fuelYE = fuelY + innerWidth;
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTRVERT);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() - outerLength,
+          this.guiTop - outerWidth - 2, u, v,
+          outerLength, outerWidth,
+          outerLength, outerWidth);
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNERVERT);
+      Gui.drawModalRectWithCustomSizedTexture(
+          fuelX,
+          fuelY, u, v,
+          (int) (innerLength * percent), innerWidth,
+          innerLength, innerWidth);
+    }
+    else {
+      fuelX = this.guiLeft + screenSize.width() + Const.PAD;
+      fuelXE = fuelX + innerWidth;
+      fuelY = this.guiTop + Const.PAD;
+      fuelYE = fuelY + innerLength;
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() + 1,
+          this.guiTop, u, v,
+          outerWidth, outerLength,
+          outerWidth, outerLength);
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
+      Gui.drawModalRectWithCustomSizedTexture(
+          fuelX,
+          fuelY, u, v,
+          innerWidth, (int) (innerLength * percent),
+          innerWidth, innerLength);
+    }
   }
+  private String getFuelAmtDisplay() {
+    if (tile.getField(this.fieldMaxFuel) == 0) { return "0"; }
+    return tile.getField(this.fieldFuel) + "/" + tile.getField(this.fieldMaxFuel);
+  }
+  @SuppressWarnings("serial")
+  private void tryDrawFuelTooltip(int mouseX, int mouseY) {
+    if (fuelX < mouseX && mouseX < fuelXE
+        && fuelY < mouseY && mouseY < fuelYE) {
+      String display = getFuelAmtDisplay();
+      drawHoveringText(new ArrayList<String>() {
+        {
+          add(display);
+        }
+      }, mouseX, mouseY, fontRenderer);
+    }
+  }
+  private int fuelX, fuelY, fuelXE, fuelYE;
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    this.tryDrawFuelTooltip(mouseX, mouseY);
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         btn = (ITooltipButton) buttonList.get(i);
         if (btn.getTooltips() != null) {
-          drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRenderer);
+          drawHoveringText(btn.getTooltips(), mouseX, mouseY);
         }
         break;// cant hover on 2 at once
       }
@@ -192,5 +245,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
           (int) (ProgressBar.WIDTH * percent),
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
+  }
+  public void tryDrawFuelSlot(int x, int y) {
+    if (this.fieldFuel < 0 || GlobalSettings.fuelEnabled == false) { return; }
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 }

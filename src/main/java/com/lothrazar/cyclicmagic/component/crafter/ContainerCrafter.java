@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,7 +60,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

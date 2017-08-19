@@ -10,9 +10,6 @@ import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.bauble.ItemCharmAir;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModPlugin;
@@ -26,8 +23,6 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -64,15 +59,6 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
-    //this should work. idk
-    for (Item s : ItemRegistry.itemMap.values()) {
-      //this makes no sense at all but lets just hack the error out of the log
-      if (s instanceof ItemCharmAir == false)//its in a recipe, its valid. IDK 
-        registry.addIngredientInfo(s, Item.class, s.getUnlocalizedName() + ".jei");
-    }
-    for (Block s : BlockRegistry.blocks) {
-      registry.addIngredientInfo(s, Block.class, s.getUnlocalizedName() + ".jei");
-    }
   }
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {

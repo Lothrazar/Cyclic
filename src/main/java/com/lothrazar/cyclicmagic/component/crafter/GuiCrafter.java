@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.crafter;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -59,8 +58,8 @@ public class GuiCrafter extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+     
+    super.tryDrawFuelSlot( ContainerCrafter.SLOTX_FUEL - 1,  ContainerCrafter.SLOTY_FUEL - 1   ); 
   }
   @SideOnly(Side.CLIENT)
   @Override

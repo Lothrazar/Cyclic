@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -32,7 +31,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    addSlotToContainer(new SlotOutputOnly(tile, slotNum,
+    addSlotToContainer(new Slot(tile, slotNum,
         SLOTX_FLUID,
         SLOTY_FLUID));
     bindPlayerInventory(inventoryPlayer);

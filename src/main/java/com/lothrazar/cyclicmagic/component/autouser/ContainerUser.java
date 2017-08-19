@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,7 +28,7 @@ public class ContainerUser extends ContainerBaseMachine {
     for (int i = 6; i < 9; i++) {//678
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY - Const.SQ));
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));//fuel slot==9
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

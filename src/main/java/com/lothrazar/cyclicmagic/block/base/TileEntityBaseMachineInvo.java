@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -45,8 +46,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.fuelSlot = -1;
   }
   protected void setFuelSlot(int slot) {
-    usesFuel = true;
-    this.fuelSlot = slot;
+    if (GlobalSettings.fuelEnabled) {
+      usesFuel = true;
+      this.fuelSlot = slot;
+    }
   }
   public int getFuelMax() {
     return this.currentMaxFuel;
@@ -61,7 +64,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.currentFuel = f;
   }
   public double getPercentFormatted() {
-    if (this.currentMaxFuel == 0) { return 0.0; }
+    if (this.currentMaxFuel == 0) { return 0; }
     double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
@@ -72,7 +75,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
   }
   public void consumeFuel() {
-    if (usesFuel && !this.world.isRemote) {
+    if (usesFuel) {// && !this.world.isRemote
       if (this.currentFuel > 0) {
         this.currentFuel--;
       }
@@ -100,9 +103,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public boolean updateFuelIsBurning() {
     if (usesFuel) {
       this.consumeFuel();
-      return this.currentFuel > 0;
+      return hasFuel();
     }
     return true;
+  }
+  @Override
+  protected void spawnParticlesAbove() {
+    //turn off when its off
+    if (this.isRunning() && this.hasFuel()) {
+      super.spawnParticlesAbove();
+    }
+  }
+  @Override
+  public boolean hasFuel() {
+    if (!usesFuel) { return true; }
+    return this.currentFuel > 0;
   }
   protected boolean updateTimerIsZero() {
     timer -= this.getSpeed();

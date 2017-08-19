@@ -81,7 +81,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    if (te.isRunning()) {
+    if (te.isRunning() && te.hasFuel()) {
       this.renderBasic(te);
     }
     GlStateManager.popMatrix();

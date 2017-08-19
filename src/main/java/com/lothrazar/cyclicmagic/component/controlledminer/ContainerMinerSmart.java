@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,7 +25,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
-    addSlotToContainer(new SlotFurnaceFuel(tile, 5, SLOTX_FUEL, SLOTY_FUEL));
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

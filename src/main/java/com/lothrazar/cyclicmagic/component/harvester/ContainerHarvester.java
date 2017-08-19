@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,7 +30,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
     for (int i = 18; i < 27; i++) {//SlotOutputOnly
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, 27, SLOTX_FUEL, SLOTY_FUEL));
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
