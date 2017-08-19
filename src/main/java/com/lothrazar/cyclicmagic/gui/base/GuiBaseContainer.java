@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.base;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -79,8 +80,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
-    drawFuelText();
     updateToggleButtonStates();
+    if (GlobalSettings.fuelEnabled) {
+      drawFuelText();
+    }
   }
   public void drawNameText() {
     if (tile != null) {
@@ -126,7 +129,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.progressBar != null) {
       drawProgressBar();
     }
-    if (this.fieldFuel > -1 && this.tile.getFuelCurrent() > 0) {
+    if (this.fieldFuel > -1 && GlobalSettings.fuelEnabled) {
       drawFuelBar();
     }
   }

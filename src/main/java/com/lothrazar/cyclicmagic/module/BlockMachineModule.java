@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
 import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
@@ -59,7 +60,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
     }
     if (expPylon) {
-
       FluidsRegistry.registerExp();//it needs EXP fluid to work
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
@@ -130,5 +130,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityControlledMiner.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
+    GlobalSettings.fuelEnabled = config.getBoolean("MachinesNeedFuel", Const.ConfigCategory.global, true, "False will mean all machines will run for free (as they did in old versions), true means burnable fuel is required such as coal");
   }
 }

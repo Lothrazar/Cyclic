@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
@@ -78,7 +79,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   public TileEntityUser() {
     super(10);
-    timer = TIMER_FULL;
+    timer = TIMER_FULL; 
     this.setFuelSlot(9);
   }
   @Override

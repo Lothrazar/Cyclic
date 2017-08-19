@@ -85,6 +85,7 @@ public class Const {
   public static final String MODCONF = Const.MODID + ".";
   public class ConfigCategory {
     //to store categories. basically an enum/lookup table
+    public static final String global = MODCONF + "global";
     public static final String player = MODCONF + "player";
     public static final String worldGen = MODCONF + "world generation";
     public static final String mobs = MODCONF + "mobs";

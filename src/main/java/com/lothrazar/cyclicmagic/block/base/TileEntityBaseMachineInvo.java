@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -45,8 +46,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.fuelSlot = -1;
   }
   protected void setFuelSlot(int slot) {
-    usesFuel = true;
-    this.fuelSlot = slot;
+    if (GlobalSettings.fuelEnabled) {
+      usesFuel = true;
+      this.fuelSlot = slot;
+    }
   }
   public int getFuelMax() {
     return this.currentMaxFuel;
