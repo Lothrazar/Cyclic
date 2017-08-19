@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import net.minecraftforge.common.config.Configuration;
 

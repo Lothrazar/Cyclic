@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.base;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
