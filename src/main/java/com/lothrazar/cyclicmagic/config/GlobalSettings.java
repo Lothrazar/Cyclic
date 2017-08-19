@@ -10,8 +10,10 @@ public class GlobalSettings implements IHasConfig {
    * slots
    */
   public static boolean fuelEnabled;
+  public static boolean fuelBarHorizontal;
   @Override
   public void syncConfig(Configuration config) {
     GlobalSettings.fuelEnabled = config.getBoolean("MachinesNeedFuel", Const.ConfigCategory.global, true, "False will mean all machines will run for free (as they did in old versions), true means burnable fuel is required such as coal");
+    GlobalSettings.fuelBarHorizontal = config.getBoolean("FuelBarHorizontal", Const.ConfigCategory.global, false, "True means fuel bar is horizontal above the machine, false means it is vertical to the right side");
   }
 }

@@ -141,26 +141,49 @@ public abstract class GuiBaseContainer extends GuiContainer {
         GL11.glPushMatrix();
         float fontScale = 0.5F;
         GL11.glScalef(fontScale, fontScale, fontScale);
-        this.drawString(pct + "%", this.xSize * 2 + 19, 24);
+        if (GlobalSettings.fuelBarHorizontal) {
+          this.drawString(pct + "%", 176, -38);
+        }
+        else {
+          this.drawString(pct + "%", this.xSize * 2 + 19, 24);
+        }
         GL11.glPopMatrix();
       }
     }
   }
   public void drawFuelBar() {
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + 1,
-        this.guiTop, u, v,
-        28, 100,
-        28, 100);
-    this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + screenSize.width() + Const.PAD,
-        this.guiTop + Const.PAD, u, v,
-        14, (int) (84 * percent),
-        14, 84);
+    int outerLength = 100, outerWidth = 28;
+    int innerHeight = 84, innerWidth = 14;
+    if (GlobalSettings.fuelBarHorizontal) {// vertical
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTRVERT);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() - outerLength,
+          this.guiTop - outerWidth - 2, u, v,
+          outerLength, outerWidth,
+          outerLength, outerWidth);
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNERVERT);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() - innerHeight - 8,
+          this.guiTop - outerWidth + 5, u, v, ///
+          (int) (innerHeight * percent), innerWidth,
+          innerHeight,  innerWidth);
+    }
+    else {
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() + 1,
+          this.guiTop, u, v,
+          outerWidth, outerLength,
+          outerWidth, outerLength);
+      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + screenSize.width() + Const.PAD,
+          this.guiTop + Const.PAD, u, v,
+          innerWidth, (int) (innerHeight * percent),
+          innerWidth, innerHeight);
+    }
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
