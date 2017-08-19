@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.base;
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -81,7 +82,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    if (te.isRunning()) {
+    if (te.isRunning() && te.hasFuel()) {
       this.renderBasic(te);
     }
     GlStateManager.popMatrix();

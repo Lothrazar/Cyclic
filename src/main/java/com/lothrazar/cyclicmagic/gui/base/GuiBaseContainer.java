@@ -138,7 +138,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         GL11.glPushMatrix();
         float fontScale = 0.5F;
         GL11.glScalef(fontScale, fontScale, fontScale);
-        this.drawString(pct + "", this.xSize * 2 + 20, 24);
+        this.drawString(pct + "%", this.xSize * 2 + 19, 24);
         GL11.glPopMatrix();
       }
     }
