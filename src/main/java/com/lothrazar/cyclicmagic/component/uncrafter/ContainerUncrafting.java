@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -35,7 +36,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
         slot++;
       }
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

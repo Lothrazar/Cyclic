@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.gui.base;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 
 public class ContainerBaseMachine extends ContainerBase {
@@ -61,5 +64,16 @@ public class ContainerBaseMachine extends ContainerBase {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     return ItemStack.EMPTY;
+  }
+  //cant have no slots. breaks shiftclick
+  public void addFurnaceFuelSlot(int slotxFuel, int slotyFuel) {
+    Slot fuel;
+    if (GlobalSettings.fuelEnabled) {
+      fuel = new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel);
+    }
+    else {
+      fuel = new SlotOutputOnly(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel + 9999);//LITERALLY OFF SCREEN
+    }
+    addSlotToContainer(fuel);
   }
 }

@@ -75,9 +75,8 @@ public class GuiHarvester extends GuiBaseContainer {
           this.guiLeft + ContainerHarvester.SLOTX_START - 1 + (k - 18) * Const.SQ,
           this.guiTop + 2 * Const.SQ + ContainerHarvester.SLOTY - 1,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_FUEL - 1, this.guiTop + ContainerUser.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    } 
+super.tryDrawFuelSlot(ContainerUser.SLOTX_FUEL - 1,  ContainerUser.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override

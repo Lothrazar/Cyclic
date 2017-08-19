@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.harvester;
+import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -31,7 +32,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
     for (int i = 18; i < 27; i++) {//SlotOutputOnly
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
     }
-    addSlotToContainer(new SlotFurnaceFuel(tile, 27, SLOTX_FUEL, SLOTY_FUEL));
+    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

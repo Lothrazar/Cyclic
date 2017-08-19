@@ -196,4 +196,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
   }
+  public void tryDrawFuelSlot(int x, int y) {
+    if (this.fieldFuel < 0 || GlobalSettings.fuelEnabled == false) { return; }
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+  }
 }
