@@ -18,11 +18,39 @@ public class MaterialRegistry { // thanks for help:
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
   public static ArmorMaterial powerArmorMaterial;
+//  public static ToolMaterial obsidianToolMaterial;
+//  public static ArmorMaterial obsidianArmorMaterial;
   public static void register() {
     registerPurpleMaterial();
     registerEmeraldMaterial();
     registerSandstoneMaterials();
+//    registerObsidianMaterial();
   }
+//  private static void registerObsidianMaterial() {
+//    ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
+//    String name = "obsidian";
+//    MaterialRegistry.obsidianArmorMaterial = EnumHelper.addArmorMaterial(name, Const.MODRES + name,
+//        60, // affects DURABILITY . 15 is the same as iron
+//        new int[] {
+//            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET),
+//            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
+//            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
+//            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+//        },
+//        mimicArmor.getEnchantability() * 2,
+//        mimicArmor.getSoundEvent(),
+//        mimicArmor.getToughness() * 4);
+//    MaterialRegistry.obsidianArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
+//    //max uses is durability ex The number of uses this material allows.
+//    //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
+//    MaterialRegistry.obsidianToolMaterial = EnumHelper.addToolMaterial(name,
+//        ToolMaterial.DIAMOND.getHarvestLevel() * 4,
+//        ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
+//        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial() * 4,
+//        ToolMaterial.DIAMOND.getDamageVsEntity() * 4, //was  - 0.25F
+//        ToolMaterial.GOLD.getEnchantability());
+//    MaterialRegistry.obsidianToolMaterial.setRepairItem(MaterialRegistry.obsidianArmorMaterial.repairMaterial);
+//  }
   private static void registerPurpleMaterial() {
     ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
     MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,

@@ -4,10 +4,13 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -23,9 +26,8 @@ public class BlockShears extends BlockBase implements IHasRecipe {
   final static int FORTUNE = 10;// f yeah why not
   // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
   public BlockShears() {
-    super(Material.PISTON);
-    this.setHardness(4.0F);
-    this.setResistance(5.0F);
+    super(Material.CLOTH);
+    this.setSoundType(SoundType.CLOTH);
     this.setTranslucent();
   }
   @Override
@@ -35,7 +37,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
         "sos",
         " s ",
         's', new ItemStack(Items.SHEARS, 1, OreDictionary.WILDCARD_VALUE),
-        'o', "obsidian");
+        'o', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata()));
   }
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
