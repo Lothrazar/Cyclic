@@ -9,6 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantAutoSmelt extends EnchantBase {
@@ -24,7 +25,7 @@ public class EnchantAutoSmelt extends EnchantBase {
   public boolean canApplyTogether(Enchantment ench) {
     return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
   }
-  @SubscribeEvent()
+  @SubscribeEvent(priority = EventPriority.HIGHEST) // // i almost tried this for the compat bugs
   public void onHarvestDrops(HarvestDropsEvent event) {
     if (event.getHarvester() == null) { return; }
     int level = getCurrentLevelTool(event.getHarvester());
@@ -39,7 +40,7 @@ public class EnchantAutoSmelt extends EnchantBase {
     //erase list of drops and rebuild it
     drops.clear();//works since byref
     for (ItemStack drop : dropsCopy) {
-      ItemStack fromSmelted = FurnaceRecipes.instance().getSmeltingResult(drop);
+      ItemStack fromSmelted = FurnaceRecipes.instance().getSmeltingResult(drop).copy();// copy again so we dont break/edit existing recipes! bugs from tinkers AND silents gems
       if (!fromSmelted.isEmpty()) {
         if (fromSmelted.getCount() == 0) { //wtf!?!?! why how does this happen? idk whatever fixed
           fromSmelted.setCount(1);

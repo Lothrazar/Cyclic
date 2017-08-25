@@ -110,4 +110,8 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
     return true;
   }
+  @Override
+  public String toString(){
+    return this.getLocalizedName();
+  }
 }
