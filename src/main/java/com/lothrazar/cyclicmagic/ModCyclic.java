@@ -1,8 +1,13 @@
 package com.lothrazar.cyclicmagic;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
@@ -24,8 +29,12 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,7 +70,7 @@ public class ModCyclic {
       tabItem = i;
   }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
-    private Comparator<ItemStack> c = Ordering.usingToString().onResultOf(new com.google.common.base.Function<ItemStack, Item>() {
+    private Comparator<ItemStack> comp = Ordering.usingToString().onResultOf(new com.google.common.base.Function<ItemStack, Item>() {
       @Override
       public Item apply(ItemStack input) {
         return input.getItem();
@@ -75,7 +84,19 @@ public class ModCyclic {
     @SideOnly(Side.CLIENT)
     public void displayAllRelevantItems(NonNullList<ItemStack> list) {
       super.displayAllRelevantItems(list);
-      Collections.sort(list, c);
+      Iterator<ItemStack> i = list.iterator();
+      while (i.hasNext()) {
+        ItemStack s = i.next(); // must be called before you can call i.remove()
+        if (s.getItem() == Items.ENCHANTED_BOOK)
+          i.remove();
+      }
+      Collections.sort(list, comp);
+      for (Enchantment e : EnchantRegistry.enchants) {
+        ItemStack ebook = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
+        System.out.println(e.getName() + e.getMaxLevel());
+        list.add(ebook);
+      }
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
