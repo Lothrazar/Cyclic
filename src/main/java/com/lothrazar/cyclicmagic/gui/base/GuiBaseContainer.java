@@ -28,6 +28,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
+  private int fuelX, fuelY, fuelXE, fuelYE;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -210,7 +211,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }, mouseX, mouseY, fontRenderer);
     }
   }
-  private int fuelX, fuelY, fuelXE, fuelYE;
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);

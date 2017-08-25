@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -38,7 +39,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
         e.extinguish();
       }
       else {
-        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, 20 * 10));
+        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
       }
       float damage = 0;
       if (mop.entityHit instanceof EntityBlaze) {
