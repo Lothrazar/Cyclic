@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic;
+import java.util.Collections;
+import java.util.Comparator;
+import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
@@ -24,6 +27,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -39,6 +43,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.11.2,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
@@ -55,9 +61,21 @@ public class ModCyclic {
       tabItem = i;
   }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
+    private Comparator<ItemStack> c = Ordering.usingToString().onResultOf(new com.google.common.base.Function<ItemStack, Item>() {
+      @Override
+      public Item apply(ItemStack input) {
+        return input.getItem();
+      }
+    });
     @Override
     public ItemStack getTabIconItem() {
       return ModCyclic.instance.tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(ModCyclic.instance.tabItem);
+    }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void displayAllRelevantItems(NonNullList<ItemStack> list) {
+      super.displayAllRelevantItems(list);
+      Collections.sort(list, c);
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
