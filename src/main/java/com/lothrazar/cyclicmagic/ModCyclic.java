@@ -1,13 +1,8 @@
 package com.lothrazar.cyclicmagic;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
@@ -31,7 +26,6 @@ import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemEnchantedBook;
@@ -70,12 +64,12 @@ public class ModCyclic {
       tabItem = i;
   }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
-    private Comparator<ItemStack> comp = Ordering.usingToString().onResultOf(new com.google.common.base.Function<ItemStack, Item>() {
+    Comparator<ItemStack> comparator = new Comparator<ItemStack>() {
       @Override
-      public Item apply(ItemStack input) {
-        return input.getItem();
+      public int compare(final ItemStack first, final ItemStack second) {
+        return first.getDisplayName().compareTo(second.getDisplayName());
       }
-    });
+    };
     @Override
     public ItemStack getTabIconItem() {
       return ModCyclic.instance.tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(ModCyclic.instance.tabItem);
@@ -90,11 +84,10 @@ public class ModCyclic {
         if (s.getItem() == Items.ENCHANTED_BOOK)
           i.remove();
       }
-      Collections.sort(list, comp);
+      Collections.sort(list, comparator);
       for (Enchantment e : EnchantRegistry.enchants) {
         ItemStack ebook = new ItemStack(Items.ENCHANTED_BOOK);
         ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
-        System.out.println(e.getName() + e.getMaxLevel());
         list.add(ebook);
       }
     }
