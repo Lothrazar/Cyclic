@@ -24,7 +24,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockSpikesRetractable extends BlockBase {
-
   private static final DamageSource SOURCE = DamageSource.GENERIC;
   private static final int DAMAGE = 4;
   public static final PropertyBool ACTIVATED = PropertyBool.create("activated");
@@ -54,7 +53,7 @@ public class BlockSpikesRetractable extends BlockBase {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED) ) {
+    if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
       entity.attackEntityFrom(SOURCE, DAMAGE);
     }
   }
@@ -66,20 +65,18 @@ public class BlockSpikesRetractable extends BlockBase {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     if (state.getValue(ACTIVATED)) { return FULL_BLOCK_AABB; }
     EnumFacing enumfacing = state.getValue(FACING);
-//    switch (enumfacing) {
-// TODO: should we tweak this based on where facing?
-//    }
- 
+    //    switch (enumfacing) {
+    // TODO: should we tweak this based on where facing?
+    //    }
     return NULL_AABB;
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos) {
     return NULL_AABB;
   }
-
   @Override
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    if (!canPlaceBlockAt(worldIn, pos)) { // if we are attached to somethihg dissapearedy
+    if (canPlaceBlockAt(worldIn, pos) == false) { // if we are attached to somethihg dissapearedy
       dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
       worldIn.setBlockToAir(pos);
     }
@@ -92,8 +89,6 @@ public class BlockSpikesRetractable extends BlockBase {
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }
-
-
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
     this.neighborChanged(state, worldIn, pos, this, pos);
@@ -108,7 +103,7 @@ public class BlockSpikesRetractable extends BlockBase {
   }
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-    for (EnumFacing fac : EnumFacing.values()) { 
+    for (EnumFacing fac : EnumFacing.values()) {
       if (worldIn.isSideSolid(pos.offset(fac), fac.getOpposite(), true)) { return true; }
     }
     return false;
