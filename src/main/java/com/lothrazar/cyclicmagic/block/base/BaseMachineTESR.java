@@ -1,26 +1,17 @@
 package com.lothrazar.cyclicmagic.block.base;
 import org.lwjgl.opengl.GL11;
-import com.google.common.base.Function;
-import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
