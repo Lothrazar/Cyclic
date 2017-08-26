@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.component.sprinkler;
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
+import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -19,32 +21,12 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
-public class SprinklerTESR<T extends TileSprinkler> extends TileEntitySpecialRenderer<T> {
-  private IModel model;
-  private IBakedModel bakedModel;
-  private String resource = null;
-  public SprinklerTESR(String block) {
-    resource = "tesr/" + block.replace("tile.", "").replace(".name", "");
+public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
+ 
+  public SprinklerTESR(Block block) {
+    super(block);
   }
-  protected IBakedModel getBakedModel() {
-    // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-    if (bakedModel == null && resource != null) {
-      try {
-        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
-      }
-      catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-      bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
-          new Function<ResourceLocation, TextureAtlasSprite>() {
-            @Override
-            public TextureAtlasSprite apply(ResourceLocation location) {
-              return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-            }
-          });
-    }
-    return bakedModel;
-  }
+ 
   @Override
   public void render(TileSprinkler te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     GlStateManager.pushAttrib();

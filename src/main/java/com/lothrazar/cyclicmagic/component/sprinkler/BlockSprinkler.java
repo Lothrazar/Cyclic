@@ -32,6 +32,6 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR {
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileSprinkler.class, new SprinklerTESR(this.getUnlocalizedName()));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileSprinkler.class, new SprinklerTESR(this));
   }
 }

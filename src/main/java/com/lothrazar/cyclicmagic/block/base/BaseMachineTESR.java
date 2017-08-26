@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.base;
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -31,19 +32,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
-  private IModel model;
-  private IBakedModel bakedModel;
-  private String resource = null;
+public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> extends BaseTESR<T> {
+ 
   protected int itemSlotAbove = -1;
-  public BaseMachineTesr(String res, int slot) {
-    this.resource = res;
+  public BaseMachineTESR(Block res, int slot) {
+    super(res);
     this.itemSlotAbove = slot;
   }
-  public BaseMachineTesr(int slot) {
+  public BaseMachineTESR(int slot) {
     this(null, slot);
   }
-  public BaseMachineTesr() {
+  public BaseMachineTESR() {
     this(null, -1);
   }
   /**
@@ -52,25 +51,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
    * @param te
    */
   public abstract void renderBasic(TileEntityBaseMachineInvo te);
-  protected IBakedModel getBakedModel() {
-    // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-    if (bakedModel == null && resource != null) {
-      try {
-        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
-      }
-      catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-      bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
-          new Function<ResourceLocation, TextureAtlasSprite>() {
-            @Override
-            public TextureAtlasSprite apply(ResourceLocation location) {
-              return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-            }
-          });
-    }
-    return bakedModel;
-  }
+ 
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z,
       float partialTicks, int destroyStage, float alpha

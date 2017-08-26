@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class XpPylonTESR extends BaseMachineTesr<TileEntityXpPylon> {
+public class XpPylonTESR extends BaseMachineTESR<TileEntityXpPylon> {
   private int lowerSlot;
   public XpPylonTESR(int slot, int ls) {
     super(slot);

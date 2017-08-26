@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,11 +14,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
-  public MachineTESR(String block, int slot) {
-    super("tesr/" + block.replace("tile.", "").replace(".name", ""), slot);
+public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
+  public MachineTESR(Block block, int slot) {
+    super(block, slot);
   }
-  public MachineTESR(String block) {
+  public MachineTESR(Block block) {
     this(block, -1);
   }
   @Override
