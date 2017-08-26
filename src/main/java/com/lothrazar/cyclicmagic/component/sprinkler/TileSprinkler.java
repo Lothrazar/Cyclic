@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -19,8 +20,12 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
     this.timer = TIMER_FULL;
   }
   @Override
+  public boolean isRunning() {
+    return (world.getBlockState(this.pos.down()).getBlock() == Blocks.WATER);
+  }
+  @Override
   public void update() {
-    if (this.isInvalid()) { return; }
+    if (this.isInvalid() || !this.isRunning()) { return; }
     //TODO: only run if water underneath and/or nearby. right click message to tell status just like tank
     timer -= 1;
     if (timer > 0) { return; }

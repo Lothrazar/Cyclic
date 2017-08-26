@@ -22,11 +22,9 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
 public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
- 
   public SprinklerTESR(Block block) {
     super(block);
   }
- 
   @Override
   public void render(TileSprinkler te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     GlStateManager.pushAttrib();
@@ -34,21 +32,22 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    //TODO: only rotate if running
-    //    if (te.isRunning() && te.hasFuel()) {
-    this.renderAnimation(te);
-    //  }
+  
+      this.renderAnimation(te);
+   
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
   protected void renderAnimation(TileEntityBaseMachineInvo te) {
     GlStateManager.pushMatrix();
+    if (te.isRunning()) {
     //start of rotate
     GlStateManager.translate(0.5, 0, 0.5);
     long angle = (System.currentTimeMillis() / 10) % 360;
     GlStateManager.rotate(angle, 0, 1, 0);
     GlStateManager.translate(-.5, 0, -.5);
     //end of rotate
+    }
     RenderHelper.disableStandardItemLighting();
     this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     if (Minecraft.isAmbientOcclusionEnabled()) {
