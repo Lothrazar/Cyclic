@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.block;
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -12,8 +16,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.DamageSource;
@@ -23,10 +25,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 
-public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
-  private static final DamageSource SOURCE = DamageSource.GENERIC;
+public class BlockSpikesRetractable extends BlockBase implements IHasRecipe { 
   private static final int DAMAGE = 1;
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
@@ -38,6 +40,8 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   private static final AxisAlignedBB WEST_BOX = new AxisAlignedBB(LARGE, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   private static final AxisAlignedBB UP_BOX = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, SMALL, 1.0F);
   private static final AxisAlignedBB DOWN_BOX = new AxisAlignedBB(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
+  private static WeakReference<FakePlayer> fakePlayer;
+  private static UUID uuid;
   private boolean redstoneControlled;
   public BlockSpikesRetractable(boolean redContr) {
     super(Material.IRON);
@@ -52,11 +56,10 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    if(this.redstoneControlled)
+    if (this.redstoneControlled)
       return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
-      
     else
-    return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, true);
+      return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, true);
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -70,7 +73,20 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
-      entity.attackEntityFrom(SOURCE, DAMAGE);
+//      entity.attackEntityFrom(SOURCE, DAMAGE);
+      if (worldIn instanceof WorldServer) {
+        if (uuid == null) {
+          uuid = UUID.randomUUID();
+        }
+        if (fakePlayer == null) {
+          fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldIn, uuid);
+          if (fakePlayer == null) {
+            ModCyclic.logger.error("Fake player failed to init ");
+            return;
+          }
+        }
+        entity.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), DAMAGE);
+      }
     }
   }
   @Override
@@ -111,10 +127,10 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
       dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
       worldIn.setBlockToAir(pos);
     }
-    if(redstoneControlled == false){
+    if (redstoneControlled == false) {
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
       return;
-    }// else redstone can toggle me on and off
+    } // else redstone can toggle me on and off
     if (!state.getValue(ACTIVATED) && worldIn.isBlockPowered(pos)) {
       //sound
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
@@ -145,23 +161,21 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    if(this.redstoneControlled){
+    if (this.redstoneControlled) {
       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
           " s ",
           "s s",
           "ttt",
           's', Blocks.IRON_BARS,
-          't',Blocks.STONE_PRESSURE_PLATE
-          );
+          't', Blocks.STONE_PRESSURE_PLATE);
     }
-    else{
+    else {
       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
           " s ",
           "s s",
           "ttt",
           's', Blocks.IRON_BARS,
-          't',Blocks.WOODEN_PRESSURE_PLATE
-          ); 
-    } 
+          't', Blocks.WOODEN_PRESSURE_PLATE);
+    }
   }
 }
