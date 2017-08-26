@@ -92,13 +92,15 @@ public class BlockSpikesRetractable extends BlockBase {
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }
+
+
+  @Override
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
+    this.neighborChanged(state, worldIn, pos, this, pos);
+  }
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase player, EnumHand hand) {
     return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, false) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, false);
-  }
-  @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    this.neighborChanged(state, worldIn, pos, this, pos);
   }
   @Override
   public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
