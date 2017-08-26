@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.sprinkler;
-
 import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -20,12 +19,11 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
-public class SprinklerTESR<T extends TileSprinkler>  extends TileEntitySpecialRenderer<T> {
-  
+public class SprinklerTESR<T extends TileSprinkler> extends TileEntitySpecialRenderer<T> {
   private IModel model;
   private IBakedModel bakedModel;
   private String resource = null;
-  public SprinklerTESR(String block){
+  public SprinklerTESR(String block) {
     resource = "tesr/" + block.replace("tile.", "").replace(".name", "");
   }
   protected IBakedModel getBakedModel() {
@@ -47,44 +45,28 @@ public class SprinklerTESR<T extends TileSprinkler>  extends TileEntitySpecialRe
     }
     return bakedModel;
   }
-
   @Override
-  public void render(TileSprinkler te, double x, double y, double z,
-      float partialTicks, int destroyStage, float alpha
-  //, net.minecraft.client.renderer.BufferBuilder buffer
-  ) {
+  public void render(TileSprinkler te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-//    if (te.isRunning() && te.hasFuel()) {
-      this.renderAnimation(te,x,y,z,partialTicks);
-//    GlStateManager.rotate(90, 0, 1, 0);
-//    GlStateManager.translate(-1, 0, 0);//fix position and such
-
-//  }
+    //TODO: only rotate if running
+    //    if (te.isRunning() && te.hasFuel()) {
+    this.renderAnimation(te);
+    //  }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
-  protected void renderAnimation(TileEntityBaseMachineInvo te,double x, double y, double z,
-      float partialTicks) {
+  protected void renderAnimation(TileEntityBaseMachineInvo te) {
     GlStateManager.pushMatrix();
-//    EnumFacing facing = te.getCurrentFacing();
-//    if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
-//      GlStateManager.rotate(90, 0, 1, 0);
-//      GlStateManager.translate(-1, 0, 0);//fix position and such
-//    }
     //start of rotate
     GlStateManager.translate(0.5, 0, 0.5);
-    long angle =   (System.currentTimeMillis() / 10) % 360;
+    long angle = (System.currentTimeMillis() / 10) % 360;
     GlStateManager.rotate(angle, 0, 1, 0);
     GlStateManager.translate(-.5, 0, -.5);
     //end of rotate
-    ////do the sliding across animation
-    double currTenthOfSec = System.currentTimeMillis() / 100;//move speed
-//    double ratio = (currTenthOfSec % 8) / 10.00;//this is dong modulo 0.8 since there are 8 locations to move over
-//    GlStateManager.translate(0, 0, -1 * ratio);
     RenderHelper.disableStandardItemLighting();
     this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     if (Minecraft.isAmbientOcclusionEnabled()) {
