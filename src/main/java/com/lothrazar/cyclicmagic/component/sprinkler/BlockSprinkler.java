@@ -55,10 +55,11 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "bbb",
-        "gog",
-        "igi",
+        "ioi",
+        "ggg",
         'b', Blocks.IRON_BARS,
         'o', Items.WATER_BUCKET,
-        'i', Blocks.CAULDRON, 'g', Blocks.BONE_BLOCK);
+        'i', Blocks.CAULDRON,
+        'g', Blocks.BONE_BLOCK);
   }
 }
