@@ -23,14 +23,14 @@
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spike_simple"
+					"cross": "cyclicmagic:blocks/spikes_simple"
 				}
 			},
 			"true": 
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spike_simple_active"
+					"cross": "cyclicmagic:blocks/spikes_simple_active"
 				}
 			}
 		},
@@ -41,7 +41,7 @@
 				"transform": "forge:default-item",
 				"textures": 
 				{
-					"layer0": "cyclicmagic:blocks/spike_simple_active"
+					"layer0": "cyclicmagic:blocks/spikes_simple_active"
 				}
 			}
 		]
