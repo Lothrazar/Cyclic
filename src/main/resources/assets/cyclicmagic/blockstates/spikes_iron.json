@@ -23,14 +23,14 @@
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spikes"
+					"cross": "cyclicmagic:blocks/spikes_iron"
 				}
 			},
 			"true": 
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spikes_active"
+					"cross": "cyclicmagic:blocks/spikes_iron_active"
 				}
 			}
 		}

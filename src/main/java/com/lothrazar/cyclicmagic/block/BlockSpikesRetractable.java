@@ -16,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.DamageSource;
@@ -28,7 +29,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class BlockSpikesRetractable extends BlockBase implements IHasRecipe { 
+public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
+  /**
+   * TODO: config file damage
+   */
   private static final int DAMAGE = 1;
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
@@ -42,13 +46,13 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   private static final AxisAlignedBB DOWN_BOX = new AxisAlignedBB(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
   private static WeakReference<FakePlayer> fakePlayer;
   private static UUID uuid;
-  private boolean redstoneControlled;
-  public BlockSpikesRetractable(boolean redContr) {
+  private boolean doesPlayerDamage;
+  public BlockSpikesRetractable( boolean doesPlayer) {
     super(Material.IRON);
     setHardness(1.5F);
     setResistance(10F);
     this.setTranslucent();
-    this.redstoneControlled = redContr;
+    this.doesPlayerDamage = doesPlayer;
   }
   //copy vanilla methods: 8 facing directions bitwise-combined with enabled or not
   public static EnumFacing getFacing(int meta) {
@@ -56,10 +60,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    if (this.redstoneControlled)
+ 
       return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
-    else
-      return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, true);
+ 
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -73,19 +76,23 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
-//      entity.attackEntityFrom(SOURCE, DAMAGE);
-      if (worldIn instanceof WorldServer) {
-        if (uuid == null) {
-          uuid = UUID.randomUUID();
-        }
-        if (fakePlayer == null) {
-          fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldIn, uuid);
-          if (fakePlayer == null) {
-            ModCyclic.logger.error("Fake player failed to init ");
-            return;
+      if (this.doesPlayerDamage) {
+        if (worldIn instanceof WorldServer) {
+          if (uuid == null) {
+            uuid = UUID.randomUUID();
           }
+          if (fakePlayer == null) {
+            fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldIn, uuid);
+            if (fakePlayer == null) {
+              ModCyclic.logger.error("Fake player failed to init ");
+              return;
+            }
+          }
+          entity.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), DAMAGE);
         }
-        entity.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), DAMAGE);
+      }
+      else {
+        entity.attackEntityFrom(DamageSource.CACTUS, DAMAGE);
       }
     }
   }
@@ -111,7 +118,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
       case DOWN:
         return DOWN_BOX;
     }
-    return FULL_BLOCK_AABB;//CANT BE NULL, causes crashes. TODO make a small one 
+    return FULL_BLOCK_AABB;//CANT BE NULL, causes crashes.   
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos) {
@@ -127,10 +134,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
       dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
       worldIn.setBlockToAir(pos);
     }
-    if (redstoneControlled == false) {
-      worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
-      return;
-    } // else redstone can toggle me on and off
+ 
     if (!state.getValue(ACTIVATED) && worldIn.isBlockPowered(pos)) {
       //sound
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
@@ -146,7 +150,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase player, EnumHand hand) {
-    return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, !redstoneControlled) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, !redstoneControlled);
+    return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, false) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, false);
   }
   @Override
   public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
@@ -161,13 +165,13 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    if (this.redstoneControlled) {
+    if (this.doesPlayerDamage) {
       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
           " s ",
           "s s",
           "ttt",
-          's', Blocks.IRON_BARS,
-          't', Blocks.STONE_PRESSURE_PLATE);
+          's', Items.DIAMOND,
+          't', "blockIron");
     }
     else {
       return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -175,7 +179,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
           "s s",
           "ttt",
           's', Blocks.IRON_BARS,
-          't', Blocks.WOODEN_PRESSURE_PLATE);
+          't', Blocks.STONE_PRESSURE_PLATE);
     }
   }
 }

@@ -23,28 +23,17 @@
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spikes_simple"
+					"cross": "cyclicmagic:blocks/spikes_diamond"
 				}
 			},
 			"true": 
 			{
 				"textures": 
 				{
-					"cross": "cyclicmagic:blocks/spikes_simple_active"
+					"cross": "cyclicmagic:blocks/spikes_diamond_active"
 				}
 			}
-		},
-		"inventory": 
-		[
-			{ 
-				"model": "builtin/generated",
-				"transform": "forge:default-item",
-				"textures": 
-				{
-					"layer0": "cyclicmagic:blocks/spikes_simple_active"
-				}
-			}
-		]
+		}
 	}
 }
 
