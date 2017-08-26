@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.block;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.Block;
@@ -27,13 +29,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
+public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHasConfig {
   /**
    * TODO: config file damage
    */
-  private static final int DAMAGE = 1;
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
   private static final float LARGE = 0.9375F;
@@ -47,7 +49,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   private static WeakReference<FakePlayer> fakePlayer;
   private static UUID uuid;
   private boolean doesPlayerDamage;
-  public BlockSpikesRetractable( boolean doesPlayer) {
+  private int damageIron = 1;
+  private int damageDiamond = 2;
+  public BlockSpikesRetractable(boolean doesPlayer) {
     super(Material.IRON);
     setHardness(1.5F);
     setResistance(10F);
@@ -60,9 +64,10 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
- 
-      return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
- 
+    return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
+  }
+  private int getDamage() {
+    return (this.doesPlayerDamage) ? this.damageDiamond : this.damageIron;
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -88,11 +93,11 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
               return;
             }
           }
-          entity.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), DAMAGE);
+          entity.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), getDamage());
         }
       }
       else {
-        entity.attackEntityFrom(DamageSource.CACTUS, DAMAGE);
+        entity.attackEntityFrom(DamageSource.CACTUS, getDamage());
       }
     }
   }
@@ -134,7 +139,6 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
       dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
       worldIn.setBlockToAir(pos);
     }
- 
     if (!state.getValue(ACTIVATED) && worldIn.isBlockPowered(pos)) {
       //sound
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
@@ -181,5 +185,10 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
           's', Blocks.IRON_BARS,
           't', Blocks.STONE_PRESSURE_PLATE);
     }
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    this.damageIron = config.getInt("SpikeIronDamage", Const.ConfigCategory.modpackMisc, 1, 1, 99, "Damage per second of iron spikes");
+    this.damageDiamond = config.getInt("SpikeDiamondDamage", Const.ConfigCategory.modpackMisc, 2, 1, 99, "Damage per second of iron spikes");
   }
 }
