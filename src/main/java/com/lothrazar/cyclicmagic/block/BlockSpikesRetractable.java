@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 public class BlockSpikesRetractable extends BlockBase {
   private static final DamageSource SOURCE = DamageSource.GENERIC;
-  private static final int DAMAGE = 4;
+  private static final int DAMAGE = 1;
   public static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
   public BlockSpikesRetractable() {
@@ -68,12 +68,17 @@ public class BlockSpikesRetractable extends BlockBase {
     //    switch (enumfacing) {
     // TODO: should we tweak this based on where facing?
     //    }
-    return NULL_AABB;
+    return FULL_BLOCK_AABB;//CANT BE NULL, causes crashes. TODO make a small one 
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos) {
     return NULL_AABB;
   }
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
   @Override
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
     if (canPlaceBlockAt(worldIn, pos) == false) { // if we are attached to somethihg dissapearedy
