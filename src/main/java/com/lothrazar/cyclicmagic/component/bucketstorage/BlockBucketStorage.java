@@ -114,7 +114,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) { //server side
-        
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + TileEntityBucketStorage.TANK_FULL + " ";
@@ -124,7 +123,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
           UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.empty"));
         }
       }
-      
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);

@@ -61,6 +61,5 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
         'b', Blocks.IRON_BARS,
         'o', Items.WATER_BUCKET,
         'i', Blocks.CAULDRON, 'g', Blocks.BONE_BLOCK);
-   
   }
 }

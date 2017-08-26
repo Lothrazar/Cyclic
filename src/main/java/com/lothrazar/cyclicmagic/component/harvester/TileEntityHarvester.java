@@ -90,7 +90,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   private void tryHarvestArea() {
     int success = UtilHarvestCrops.harvestArea(world, getTargetCenter(), this.size, conf);
-  
     if (conf.drops != null) {
       setOutputItems(conf.drops);
     }

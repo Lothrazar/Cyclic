@@ -53,7 +53,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     BlockSprinkler sprinkler = new BlockSprinkler();
     BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
-    
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();
       BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);

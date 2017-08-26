@@ -33,7 +33,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> extends BaseTESR<T> {
- 
   protected int itemSlotAbove = -1;
   public BaseMachineTESR(Block res, int slot) {
     super(res);
@@ -51,7 +50,6 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
    * @param te
    */
   public abstract void renderBasic(TileEntityBaseMachineInvo te);
- 
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z,
       float partialTicks, int destroyStage, float alpha

@@ -18,7 +18,7 @@ public class ItemProjectileSnow extends BaseItemProjectile implements IHasRecipe
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32),
-          "cobblestone",
+        "cobblestone",
         new ItemStack(Blocks.ICE),
         new ItemStack(Items.SNOWBALL));
   }

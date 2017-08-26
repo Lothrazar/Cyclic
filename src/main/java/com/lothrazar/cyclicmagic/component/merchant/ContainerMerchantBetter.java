@@ -156,7 +156,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       }
     }
     if (tradeSuccess) {
-      ItemStack purchased = trade.getItemToSell().copy(); 
+      ItemStack purchased = trade.getItemToSell().copy();
       player.entityDropItem(purchased, 1);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);

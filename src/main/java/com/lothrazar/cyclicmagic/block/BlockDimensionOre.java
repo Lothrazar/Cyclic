@@ -111,7 +111,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return true;
   }
   @Override
-  public String toString(){
+  public String toString() {
     return this.getLocalizedName();
   }
 }

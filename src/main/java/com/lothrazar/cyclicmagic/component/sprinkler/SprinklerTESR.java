@@ -32,21 +32,19 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-  
-      this.renderAnimation(te);
-   
+    this.renderAnimation(te);
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
   protected void renderAnimation(TileEntityBaseMachineInvo te) {
     GlStateManager.pushMatrix();
     if (te.isRunning()) {
-    //start of rotate
-    GlStateManager.translate(0.5, 0, 0.5);
-    long angle = (System.currentTimeMillis() / 10) % 360;
-    GlStateManager.rotate(angle, 0, 1, 0);
-    GlStateManager.translate(-.5, 0, -.5);
-    //end of rotate
+      //start of rotate
+      GlStateManager.translate(0.5, 0, 0.5);
+      long angle = (System.currentTimeMillis() / 10) % 360;
+      GlStateManager.rotate(angle, 0, 1, 0);
+      GlStateManager.translate(-.5, 0, -.5);
+      //end of rotate
     }
     RenderHelper.disableStandardItemLighting();
     this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
