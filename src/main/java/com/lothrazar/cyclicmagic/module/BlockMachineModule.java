@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockSprinkler;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
@@ -24,6 +23,8 @@ import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.component.sprinkler.BlockSprinkler;
+import com.lothrazar.cyclicmagic.component.sprinkler.TileSprinkler;
 import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
@@ -51,7 +52,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     BlockSprinkler sprinkler = new BlockSprinkler();
     BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
- 
+    GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
+    
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();
       BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
