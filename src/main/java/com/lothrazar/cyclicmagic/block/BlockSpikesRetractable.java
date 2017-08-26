@@ -31,11 +31,13 @@ public class BlockSpikesRetractable extends BlockBase {
   private static final AxisAlignedBB WEST_BOX = new AxisAlignedBB(LARGE, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   private static final AxisAlignedBB UP_BOX = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, SMALL, 1.0F);
   private static final AxisAlignedBB DOWN_BOX = new AxisAlignedBB(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
-  public BlockSpikesRetractable() {
+  private boolean redstoneControlled;
+  public BlockSpikesRetractable(boolean redContr) {
     super(Material.IRON);
     setHardness(1.5F);
     setResistance(10F);
     this.setTranslucent();
+    this.redstoneControlled = redContr;
   }
   //copy vanilla methods: 8 facing directions bitwise-combined with enabled or not
   public static EnumFacing getFacing(int meta) {
@@ -43,7 +45,11 @@ public class BlockSpikesRetractable extends BlockBase {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
+    if(this.redstoneControlled)
+      return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
+      
+    else
+    return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, true);
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -98,6 +104,10 @@ public class BlockSpikesRetractable extends BlockBase {
       dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
       worldIn.setBlockToAir(pos);
     }
+    if(redstoneControlled == false){
+      worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
+      return;
+    }// else redstone can toggle me on and off
     if (!state.getValue(ACTIVATED) && worldIn.isBlockPowered(pos)) {
       //sound
       worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
@@ -113,7 +123,7 @@ public class BlockSpikesRetractable extends BlockBase {
   }
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase player, EnumHand hand) {
-    return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, false) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, false);
+    return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, !redstoneControlled) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, !redstoneControlled);
   }
   @Override
   public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {

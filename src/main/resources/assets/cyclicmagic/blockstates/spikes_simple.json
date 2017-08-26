@@ -1,0 +1,50 @@
+{
+	"forge_marker": 1,
+    "defaults": 
+	{
+		"transform": "forge:default-block",
+        "model": "cross"
+    },
+	"variants": 
+	{
+		"facing": 
+		{
+			"up":    {    },
+			"down":  { "x": 180 },
+			"north": { "x": 90 },
+			"south": { "x": 90, "y": 180 },
+			"east":  { "x": 90, "y": 90 },
+			"west":  { "x": 90, "y": 270 }
+		},
+		"activated": 
+		{
+		
+			"false": 
+			{
+				"textures": 
+				{
+					"cross": "cyclicmagic:blocks/spike"
+				}
+			},
+			"true": 
+			{
+				"textures": 
+				{
+					"cross": "cyclicmagic:blocks/spike_active"
+				}
+			}
+		},
+		"inventory": 
+		[
+			{ 
+				"model": "builtin/generated",
+				"transform": "forge:default-item",
+				"textures": 
+				{
+					"layer0": "cyclicmagic:blocks/spike_active"
+				}
+			}
+		]
+	}
+}
+
