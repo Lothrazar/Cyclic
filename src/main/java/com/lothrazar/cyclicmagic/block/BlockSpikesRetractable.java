@@ -33,9 +33,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHasConfig {
-  /**
-   * TODO: config file damage
-   */
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
   private static final float LARGE = 0.9375F;
