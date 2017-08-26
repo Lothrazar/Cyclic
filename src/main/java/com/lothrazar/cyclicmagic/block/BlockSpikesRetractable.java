@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -11,13 +9,10 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -26,8 +21,16 @@ import net.minecraft.world.World;
 public class BlockSpikesRetractable extends BlockBase {
   private static final DamageSource SOURCE = DamageSource.GENERIC;
   private static final int DAMAGE = 1;
-  public static final PropertyBool ACTIVATED = PropertyBool.create("activated");
-  public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
+  private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
+  private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
+  private static final float LARGE = 0.9375F;
+  private static final float SMALL = 0.0625F;
+  private static final AxisAlignedBB NORTH_BOX = new AxisAlignedBB(0.0F, 0.0F, LARGE, 1.0F, 1.0F, 1.0F);
+  private static final AxisAlignedBB EAST_BOX = new AxisAlignedBB(0.0F, 0.0F, 0.0F, SMALL, 1.0F, 1.0F);
+  private static final AxisAlignedBB SOUTH_BOX = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, SMALL);
+  private static final AxisAlignedBB WEST_BOX = new AxisAlignedBB(LARGE, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+  private static final AxisAlignedBB UP_BOX = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, SMALL, 1.0F);
+  private static final AxisAlignedBB DOWN_BOX = new AxisAlignedBB(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
   public BlockSpikesRetractable() {
     super(Material.IRON);
     setHardness(1.5F);
@@ -65,9 +68,20 @@ public class BlockSpikesRetractable extends BlockBase {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     if (state.getValue(ACTIVATED)) { return FULL_BLOCK_AABB; }
     EnumFacing enumfacing = state.getValue(FACING);
-    //    switch (enumfacing) {
-    // TODO: should we tweak this based on where facing?
-    //    }
+    switch (enumfacing) {
+      case NORTH:
+        return NORTH_BOX;
+      case EAST:
+        return EAST_BOX;
+      case SOUTH:
+        return SOUTH_BOX;
+      case WEST:
+        return WEST_BOX;
+      case UP:
+        return UP_BOX;
+      case DOWN:
+        return DOWN_BOX;
+    }
     return FULL_BLOCK_AABB;//CANT BE NULL, causes crashes. TODO make a small one 
   }
   @Override
@@ -78,7 +92,6 @@ public class BlockSpikesRetractable extends BlockBase {
   public boolean isFullCube(IBlockState state) {
     return false;
   }
-
   @Override
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
     if (canPlaceBlockAt(worldIn, pos) == false) { // if we are attached to somethihg dissapearedy
