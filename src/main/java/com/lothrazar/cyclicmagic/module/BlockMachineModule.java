@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
@@ -53,6 +54,13 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     BlockSprinkler sprinkler = new BlockSprinkler();
     BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
+    
+    
+    
+    BlockSpikesRetractable spikes_redstone = new BlockSpikesRetractable();
+    BlockRegistry.registerBlock(spikes_redstone, "spikes_redstone", GuideCategory.BLOCKMACHINE);
+    
+    
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();
       BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
