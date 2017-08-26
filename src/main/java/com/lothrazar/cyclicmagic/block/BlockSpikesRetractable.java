@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -9,7 +11,11 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -17,8 +23,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class BlockSpikesRetractable extends BlockBase {
+public class BlockSpikesRetractable extends BlockBase implements IHasRecipe {
   private static final DamageSource SOURCE = DamageSource.GENERIC;
   private static final int DAMAGE = 1;
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
@@ -135,5 +142,26 @@ public class BlockSpikesRetractable extends BlockBase {
       if (worldIn.isSideSolid(pos.offset(fac), fac.getOpposite(), true)) { return true; }
     }
     return false;
+  }
+  @Override
+  public IRecipe addRecipe() {
+    if(this.redstoneControlled){
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+          " s ",
+          "s s",
+          "ttt",
+          's', Blocks.IRON_BARS,
+          't',Blocks.STONE_PRESSURE_PLATE
+          );
+    }
+    else{
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+          " s ",
+          "s s",
+          "ttt",
+          's', Blocks.IRON_BARS,
+          't',Blocks.WOODEN_PRESSURE_PLATE
+          ); 
+    } 
   }
 }
