@@ -21,6 +21,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
   @Override
   public void update() {
     if (this.isInvalid()) { return; }
+    //TODO: only run if water underneath and/or nearby. right click message to tell status just like tank
     timer -= 1;
     if (timer > 0) { return; }
     timer = TIMER_FULL;
