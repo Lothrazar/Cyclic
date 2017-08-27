@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.29",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12-latest": "1.7.11",
-    "1.12-recommended": "1.7.11"
+    "1.12-latest": "1.7.12",
+    "1.12-recommended": "1.7.12"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -202,5 +202,6 @@
 	,"1.7.9":"Fixed the Fluid Tank not rendering fluid content updates when filled or drained by other pipes and pumps.  Fixed Hydrator water bucket input slot not working.  Fixed a Hydrator item dupe bug.  Experience Pylon: increase speed of Spray mode, it now puts 50 exp per orb instead of 10, and allowed it to go right down to zero (wont get stuck with 2 left).  Machines will stop animating and smoking now when they run out of fuel.  Fuel bar in machines will now render even when empty.  Fuel bar in machines now have a tooltip to show exact quantity.  New global config added with option to disable fuel requirements of ALL machines.  New global config to move fuel bar above the GUI instead of to the side (default is unchanged).   "
 	,"1.7.10":"Shear block now craftable with wool instead of obsidian; texture changed to match.  Fix dupe bug with Auto Smelt enchantment when combined with Tinkers or Silents Gems tools in certain conditions.  Fix a crash that can happen with sack of storage on large inventories such as Actually Additions large crate (especially in laggy servers or LAN worlds).  Cyclic creative tab is now sorted alphabetically by display name.  Enchantments from Cyclic will now show up in the creative tab. "
 	,"1.7.11":"New blocks: Iron Spikes, Diamond Spikes, Sprinkler, Redstone Clock.  "
+	,"1.7.12":""
   }
 }
