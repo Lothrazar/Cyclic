@@ -9,6 +9,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   }
   public TileEntityClock() {
     super(0);
+   
     timer = 0;
   }
   private int timeOff = 60;

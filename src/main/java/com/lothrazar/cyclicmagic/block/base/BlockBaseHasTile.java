@@ -18,7 +18,7 @@ import net.minecraft.world.World;
  *
  */
 public abstract class BlockBaseHasTile extends BlockBase {
-  protected int guiID = -1;
+  private int guiID = -1;
   public BlockBaseHasTile(Material materialIn) {
     super(materialIn);
   }

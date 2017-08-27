@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.clock;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -21,6 +22,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile {
   public static final PropertyBool POWERED = net.minecraft.block.BlockLever.POWERED;//PropertyBool.create("powered");
   public BlockRedstoneClock() {
     super(Material.IRON);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_CLOCK);
   }
   @Override
   protected BlockStateContainer createBlockState() {
