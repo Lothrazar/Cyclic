@@ -52,20 +52,26 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean expPylon;
   private boolean enableVacuum;
   private boolean enableHydrator;
+  private boolean enableClock;
+  private boolean enableSprinkler;
+  private boolean enableSpikes;
   public void onPreInit() {
-    
-    BlockRedstoneClock clock = new BlockRedstoneClock();
-    BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
-    BlockSprinkler sprinkler = new BlockSprinkler();
-    BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
-    //    BlockSpikesRetractable spikes_simple = new BlockSpikesRetractable(false,false);
-    //    BlockRegistry.registerBlock(spikes_simple, "spikes_simple", GuideCategory.BLOCKMACHINE);
-    BlockSpikesRetractable spikes_iron = new BlockSpikesRetractable(false);
-    BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCKMACHINE);
-    BlockSpikesRetractable spikes_redstone_diamond = new BlockSpikesRetractable(true);
-    BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCKMACHINE);
+    if (enableClock) {
+      BlockRedstoneClock clock = new BlockRedstoneClock();
+      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
+    }
+    if (enableSprinkler) {
+      BlockSprinkler sprinkler = new BlockSprinkler();
+      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
+    }
+    if (enableSpikes) {
+      BlockSpikesRetractable spikes_iron = new BlockSpikesRetractable(false);
+      BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCKMACHINE);
+      BlockSpikesRetractable spikes_redstone_diamond = new BlockSpikesRetractable(true);
+      BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCKMACHINE);
+    }
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();
       BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
@@ -131,6 +137,9 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableClock = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSprinkler = config.getBoolean("Sprinkler", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSpikes = config.getBoolean("Spikes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHydrator = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVacuum = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -139,7 +148,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    //   enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
