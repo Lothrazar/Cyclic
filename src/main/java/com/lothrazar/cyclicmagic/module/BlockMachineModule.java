@@ -53,6 +53,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableVacuum;
   private boolean enableHydrator;
   public void onPreInit() {
+    
     BlockRedstoneClock clock = new BlockRedstoneClock();
     BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
