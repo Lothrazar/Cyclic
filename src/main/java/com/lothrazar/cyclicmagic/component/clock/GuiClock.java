@@ -9,15 +9,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClock extends GuiBaseContainer {
   boolean debugLabels = false;
-  int w = 20, h = 20;
-  int xCol1 = 10;
-  int xCol2 = xCol1 + w;
-  int xColText = xCol2 + 40;
-  int xCol3 = xColText + 50;
-  int xCol4 = xCol3 + w;
-  int yRow1 = 16;
-  int yRow2 = yRow1 + h + Const.PAD;
-  int yRow3 = yRow2 + h + Const.PAD;
+  int w = 18, h = 15;
+  int xCol1 = (this.width + this.xSize) / 2 - 54;
+  int xCol2 = xCol1 + w+Const.PAD/4;
+  int xColText = xCol2 + 24;
+  int xCol3 = xColText + 18;
+  int xCol4 = xCol3 + w+Const.PAD/4;
+  int yRow1 = Const.PAD*2+ Const.PAD/2;
+  int yRow2 = yRow1 + h + Const.PAD/4;
+  int yRow3 = yRow2 + h + Const.PAD/4;
   public GuiClock(InventoryPlayer inventoryPlayer, TileEntityClock tileEntity) {
     super(new ContainerClock(inventoryPlayer, tileEntity), tileEntity);
   }
@@ -40,23 +40,21 @@ public class GuiClock extends GuiBaseContainer {
     ButtonIncrementField btn = new ButtonIncrementField(btnId++,
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
-        20, 20);
-    btn.setTooltip(tooltip);
+        w, h);
+    btn.displayString = ""+value;
+    btn.setTooltip("tile.clock."+tooltip);
     this.buttonList.add(btn);
   }
-  //  @Override
-  //  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-  //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-  // 
-  //  }
+ 
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    int rowOffset = 6;
+    int rowOffset = 4;
     this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1+rowOffset);
     this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2+rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3+rowOffset);
-    this.drawString("" + this.tile.getField(Fields.TIMER.ordinal()), xColText+44, yRow3+rowOffset);
+    //FOR debug only
+//    this.drawString("" + this.tile.getField(Fields.TIMER.ordinal()), xColText+44, yRow3+rowOffset);
   }
 }
