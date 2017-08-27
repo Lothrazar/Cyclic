@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.autouser;
+package com.lothrazar.cyclicmagic.gui.button;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
@@ -16,17 +16,26 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonIncrementField extends GuiButtonTooltip {
   private BlockPos pos;
   private int field;
+  private int value;
   public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld) {
-    super(buttonId, x, y, 40, 20, "");
+    this(buttonId, x, y, p, fld, 1);
+  }
+  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
+    this(buttonId, x, y, p, fld, diff, 40, 20);
+  }
+  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld, int diff,
+      int w, int h) {
+    super(buttonId, x, y, w, h, "");
     this.pos = p;
     field = fld;
+    this.value = diff;
   }
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, field));
+      ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, field, value));
     }
     return pressed;
   }

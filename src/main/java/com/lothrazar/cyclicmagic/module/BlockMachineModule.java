@@ -6,6 +6,8 @@ import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
+import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
 import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
@@ -51,6 +53,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableVacuum;
   private boolean enableHydrator;
   public void onPreInit() {
+    
+    BlockRedstoneClock clock = new BlockRedstoneClock();
+    BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
     BlockSprinkler sprinkler = new BlockSprinkler();
     BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
