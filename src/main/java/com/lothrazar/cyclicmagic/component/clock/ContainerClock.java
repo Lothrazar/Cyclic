@@ -11,5 +11,14 @@ public class ContainerClock extends ContainerBaseMachine {
     this.setTile(te);
     bindPlayerInventory(inventoryPlayer);
   }
-
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    this.tile.setField(id, data);
+  }
+  @Override
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, this.tile);
+  }
 }
