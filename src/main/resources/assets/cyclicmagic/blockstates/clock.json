@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=true":  { "model": "cyclicmagic:clock_on" },
+        "powered=false": { "model": "cyclicmagic:clock_off" }
+    }
+}

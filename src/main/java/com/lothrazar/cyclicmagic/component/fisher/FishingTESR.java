@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.fisher;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class FishingTESR extends BaseMachineTesr<TileEntityFishing> {
+public class FishingTESR extends BaseMachineTESR<TileEntityFishing> {
   public FishingTESR(int slot) {
     super(slot);
   }

@@ -11,7 +11,6 @@ import net.minecraftforge.fluids.Fluid;
  *
  */
 public class FluidExp extends Fluid {
-  // TODO: link this to the Experience Pylon, convert that to Fluid GUI
   public FluidExp() {
     super("xpjuice", new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_base"), new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000

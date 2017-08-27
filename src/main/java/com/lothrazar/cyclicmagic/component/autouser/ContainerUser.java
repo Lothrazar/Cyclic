@@ -28,7 +28,7 @@ public class ContainerUser extends ContainerBaseMachine {
     for (int i = 6; i < 9; i++) {//678
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY - Const.SQ));
     }
-    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

@@ -207,7 +207,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         sign.setPlayer(entityPlayer);
         //entityPlayer.openEditSign(sign);//NOPE: this does not cause server sync, must go through network with mod instance
         event.getEntityPlayer().openGui(ModCyclic.instance, ForgeGuiHandler.VANILLA_SIGN, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
-        
       }
     }
   }

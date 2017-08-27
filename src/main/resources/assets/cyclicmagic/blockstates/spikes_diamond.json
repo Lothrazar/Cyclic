@@ -1,0 +1,39 @@
+{
+	"forge_marker": 1,
+    "defaults": 
+	{
+		"transform": "forge:default-block",
+        "model": "cross"
+    },
+	"variants": 
+	{
+		"facing": 
+		{
+			"up":    {    },
+			"down":  { "x": 180 },
+			"north": { "x": 90 },
+			"south": { "x": 90, "y": 180 },
+			"east":  { "x": 90, "y": 90 },
+			"west":  { "x": 90, "y": 270 }
+		},
+		"activated": 
+		{
+		
+			"false": 
+			{
+				"textures": 
+				{
+					"cross": "cyclicmagic:blocks/spikes_diamond"
+				}
+			},
+			"true": 
+			{
+				"textures": 
+				{
+					"cross": "cyclicmagic:blocks/spikes_diamond_active"
+				}
+			}
+		}
+	}
+}
+

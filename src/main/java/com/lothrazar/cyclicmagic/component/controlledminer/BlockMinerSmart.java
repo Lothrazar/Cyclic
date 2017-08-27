@@ -38,7 +38,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlledMiner.class, new MachineTESR(this.getUnlocalizedName(), 4));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlledMiner.class, new MachineTESR(this, 4));
   }
   @Override
   public IRecipe addRecipe() {

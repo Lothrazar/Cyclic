@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class HydratorTESR extends BaseMachineTesr<TileEntityHydrator> {
+public class HydratorTESR extends BaseMachineTESR<TileEntityHydrator> {
   private static final float height = 0.5F;
   public HydratorTESR(int slot, int ls) {
     super(slot);

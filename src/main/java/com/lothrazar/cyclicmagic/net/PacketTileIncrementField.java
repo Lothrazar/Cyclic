@@ -22,10 +22,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketTileIncrementField implements IMessage, IMessageHandler<PacketTileIncrementField, IMessage> {
   private BlockPos pos;
   private int field;
+  private int value;
   public PacketTileIncrementField() {}
   public PacketTileIncrementField(BlockPos p, int f) {
+    this(p, f, 1);
+  }
+  public PacketTileIncrementField(BlockPos p, int f, int val) {
     pos = p;
     this.field = f;
+    value = val;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -34,6 +39,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
     field = tags.getInteger("f");
+    value = tags.getInteger("v");
     pos = new BlockPos(x, y, z);
   }
   @Override
@@ -43,6 +49,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
     tags.setInteger("f", field);
+    tags.setInteger("v", value);
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
@@ -52,7 +59,9 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
       TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
       if (tile != null && tile instanceof IInventory) {
         IInventory tileInvo = ((IInventory) tile);
-        tileInvo.setField(message.field, tileInvo.getField(message.field) + 1);
+        int newVal = tileInvo.getField(message.field) + message.value;
+        System.out.println("inc field   " + message.field + "__" + newVal);
+        tileInvo.setField(message.field, newVal);
       }
     }
     catch (Exception e) {//since we dont know which class exactly this might get run on

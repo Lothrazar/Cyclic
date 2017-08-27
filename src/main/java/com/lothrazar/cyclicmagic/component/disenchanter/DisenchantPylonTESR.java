@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic.component.disenchanter;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class DisenchantPylonTESR extends BaseMachineTesr<TileEntityDisenchanter> {
+public class DisenchantPylonTESR extends BaseMachineTESR<TileEntityDisenchanter> {
   public DisenchantPylonTESR() {
     super();
   }
