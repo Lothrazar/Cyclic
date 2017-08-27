@@ -68,9 +68,8 @@ public class GuiMinerSmart extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMinerSmart.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 1, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-//    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-super.tryDrawFuelSlot( ContainerBaseMachine.SLOTX_FUEL - 1 , ContainerBaseMachine.SLOTY_FUEL - 1
-    );//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override

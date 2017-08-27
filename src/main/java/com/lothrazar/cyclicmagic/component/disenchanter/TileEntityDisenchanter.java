@@ -26,7 +26,6 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   public static final int SLOT_GLOWSTONE = 3;
   public static final int SLOT_BOOK = 4;
   private int needsRedstone = 1;
-  private int timer = TIMER_FULL;
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
   }

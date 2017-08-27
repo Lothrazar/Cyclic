@@ -19,7 +19,6 @@ public class FluidsRegistry {
   public static BlockFluidExp block_exp;
   public static FluidPoison fluid_poison;
   public static BlockFluidPoison block_poison;
- 
   public static void registerPoison() {
     fluid_poison = new FluidPoison();
     FluidRegistry.registerFluid(fluid_poison);
@@ -27,7 +26,6 @@ public class FluidsRegistry {
     fluid_poison.setBlock(block_poison);
     BlockRegistry.registerBlock(block_poison, "poison", null);
     FluidRegistry.addBucketForFluid(fluid_poison);
- 
   }
   public static void registerMilk() {
     fluid_milk = new FluidMilk();
@@ -49,9 +47,7 @@ public class FluidsRegistry {
     try {
       //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null
       Fluid poison = FluidRegistry.getFluid(FluidsRegistry.fluid_poison.getName());
-      if(poison == null){
-        return;
-      }
+      if (poison == null) { return; }
       RecipeRegistry.addShapelessRecipe(FluidUtil.getFilledBucket(new FluidStack(poison, Fluid.BUCKET_VOLUME)),
           FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME)),
           Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);

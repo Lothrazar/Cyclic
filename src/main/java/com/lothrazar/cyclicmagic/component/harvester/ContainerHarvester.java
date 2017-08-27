@@ -30,7 +30,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
     for (int i = 18; i < 27; i++) {//SlotOutputOnly
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
     }
-    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

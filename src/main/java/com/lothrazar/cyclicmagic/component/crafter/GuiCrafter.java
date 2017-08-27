@@ -58,8 +58,7 @@ public class GuiCrafter extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-     
-    super.tryDrawFuelSlot( ContainerCrafter.SLOTX_FUEL - 1,  ContainerCrafter.SLOTY_FUEL - 1   ); 
+    super.tryDrawFuelSlot(ContainerCrafter.SLOTX_FUEL - 1, ContainerCrafter.SLOTY_FUEL - 1);
   }
   @SideOnly(Side.CLIENT)
   @Override

@@ -273,7 +273,7 @@ public class UtilHarvestCrops {
             UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
           }
         }
-        else {  
+        else {
           conf.addDrops(drops);
         }
       }

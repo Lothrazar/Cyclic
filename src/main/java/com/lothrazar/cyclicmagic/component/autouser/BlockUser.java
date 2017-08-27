@@ -37,7 +37,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this.getUnlocalizedName()));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this));
   }
   @Override
   public IRecipe addRecipe() {

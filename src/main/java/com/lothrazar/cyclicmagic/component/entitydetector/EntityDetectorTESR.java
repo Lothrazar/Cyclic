@@ -1,12 +1,12 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTesr;
+import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class EntityDetectorTESR extends BaseMachineTesr<TileEntityDetector> {
+public class EntityDetectorTESR extends BaseMachineTESR<TileEntityDetector> {
   public EntityDetectorTESR() {
     super();
   }

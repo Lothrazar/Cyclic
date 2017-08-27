@@ -265,7 +265,6 @@ public class InventoryWand extends InventoryBase implements IInventory {
   public void clear() {}
   @Override
   public boolean isEmpty() {
-    // TODO Auto-generated method stub
     return false;
   }
   @Override

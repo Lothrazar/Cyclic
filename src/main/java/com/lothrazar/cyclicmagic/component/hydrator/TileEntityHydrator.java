@@ -66,7 +66,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
     for (IRecipe irecipe : BlockHydrator.recipeList) {
-      if (irecipe.matches( this.crafting, world)) { return irecipe; }
+      if (irecipe.matches(this.crafting, world)) { return irecipe; }
     }
     return null;
   }

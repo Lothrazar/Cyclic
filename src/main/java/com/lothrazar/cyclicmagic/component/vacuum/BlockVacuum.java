@@ -46,6 +46,6 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     //    // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityVacuum.class, new MachineTESR(this.getUnlocalizedName()));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityVacuum.class, new MachineTESR(this));
   }
 }

@@ -5,6 +5,9 @@ import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.component.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.component.clock.ContainerClock;
+import com.lothrazar.cyclicmagic.component.clock.GuiClock;
+import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
 import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.GuiMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
@@ -114,6 +117,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_WORKBENCH = 22;
   public static final int GUI_INDEX_HYDRATOR = 23;
   public static final int GUI_INDEX_VACUUM = 24;
+  public static final int GUI_INDEX_CLOCK = 25;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -215,6 +219,9 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_VACUUM:
         if (te instanceof TileEntityVacuum) { return new ContainerVacuum(player.inventory, (TileEntityVacuum) te); }
       break;
+      case GUI_INDEX_CLOCK:
+        if (te instanceof TileEntityClock) { return new ContainerClock(player.inventory, (TileEntityClock) te); }
+      break;
     }
     return null;
   }
@@ -298,6 +305,9 @@ public class ForgeGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_VACUUM:
           if (te instanceof TileEntityVacuum) { return new GuiVacuum(player.inventory, (TileEntityVacuum) te); }
+        break;
+        case GUI_INDEX_CLOCK:
+          if (te instanceof TileEntityClock) { return new GuiClock(player.inventory, (TileEntityClock) te); }
         break;
       }
     }

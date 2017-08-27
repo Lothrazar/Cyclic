@@ -53,7 +53,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
-   
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
   private boolean doesFluidMatchTank(FluidStack incoming) {
@@ -62,7 +61,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-  
     if (doesFluidMatchTank(resource) == false) { return 0; }
     if (resource.amount + tank.getFluidAmount() > TANK_FULL) {//enForce limit
       resource.amount = TANK_FULL - tank.getFluidAmount();
@@ -70,7 +68,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     int result = tank.fill(resource, doFill);
     // this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
- 
     return result;
   }
   @Override
@@ -79,7 +76,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(resource, doDrain);
     //   this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);
-
     return result;
   }
   @Override
@@ -87,7 +83,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     FluidStack result = tank.drain(maxDrain, doDrain);
     //  this.world.markChunkDirty(pos, this);
     tank.setFluid(result);
-  
     return result;
   }
   @Override
@@ -100,8 +95,6 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     super.readFromNBT(tagCompound);
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
-
-
   /**
    * fix fluid rendering breaks because pipes and pumps update my fluid level
    * only client side

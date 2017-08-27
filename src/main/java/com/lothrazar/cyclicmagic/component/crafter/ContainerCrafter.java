@@ -60,7 +60,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
-    super.addFurnaceFuelSlot( SLOTX_FUEL, SLOTY_FUEL);
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

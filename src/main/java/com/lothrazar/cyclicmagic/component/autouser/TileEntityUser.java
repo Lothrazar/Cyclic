@@ -78,7 +78,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   public TileEntityUser() {
     super(10);
-    timer = TIMER_FULL; 
+    timer = TIMER_FULL;
     this.setFuelSlot(9);
   }
   @Override
