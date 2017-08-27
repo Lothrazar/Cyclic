@@ -7,9 +7,9 @@ import net.minecraft.util.ITickable;
 public class TileEntityClock extends TileEntityBaseMachine implements ITickable{
   
   
-  private int timeOff = 10;
-  private int timeOn = 10;
-  private int power = 3;
+  private int timeOff = 60;
+  private int timeOn = 60;
+  private int power = 12;
   private int timer = 0;
   public int getPower(){
     return this.power;
@@ -32,7 +32,7 @@ public class TileEntityClock extends TileEntityBaseMachine implements ITickable{
         powered = false;
       }
       
-
+System.out.println(timer+"__"+powered);
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
       
     }

@@ -17,14 +17,33 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRedstoneClock extends BlockBaseHasTile {
-  public static final PropertyBool POWERED = PropertyBool.create("powered");
+  public static final PropertyBool POWERED = net.minecraft.block.BlockLever.POWERED;//PropertyBool.create("powered");
   public BlockRedstoneClock() {
     super(Material.IRON);
+   
   }
   @Override
   protected BlockStateContainer createBlockState() {
-    return new BlockStateContainer(this, POWERED, POWERED);
+    return new BlockStateContainer(this, POWERED);
   }
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+//      if (meta <= 5)
+          return this.getDefaultState().withProperty(POWERED,false);
+//      else
+//          return this.getDefaultState().withProperty(BlockButton.FACING, EnumFacing.VALUES[meta - 6]).withProperty(POWERED, Boolean.TRUE);
+  }
+  @Override
+  public boolean canProvidePower(IBlockState state)
+  {
+      return true;
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state) {
+      return  (state.getValue(POWERED) ? 1 : 0);
+  }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityClock();
