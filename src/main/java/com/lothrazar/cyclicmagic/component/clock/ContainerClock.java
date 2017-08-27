@@ -6,7 +6,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerClock extends ContainerBaseMachine {
-
   public ContainerClock(InventoryPlayer inventoryPlayer, TileEntityClock te) {
     this.setTile(te);
     bindPlayerInventory(inventoryPlayer);

@@ -60,7 +60,7 @@ public class PacketTileIncrementField implements IMessage, IMessageHandler<Packe
       if (tile != null && tile instanceof IInventory) {
         IInventory tileInvo = ((IInventory) tile);
         int newVal = tileInvo.getField(message.field) + message.value;
-        System.out.println("inc field   "+message.field+"__" + newVal);
+        System.out.println("inc field   " + message.field + "__" + newVal);
         tileInvo.setField(message.field, newVal);
       }
     }
