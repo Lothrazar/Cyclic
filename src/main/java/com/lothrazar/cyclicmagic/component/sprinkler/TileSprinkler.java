@@ -40,7 +40,8 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
         IBlockState bState = world.getBlockState(current);
         Block block = bState.getBlock();
         if (block instanceof IPlantable || block instanceof IGrowable) {
-          if (((IGrowable) block).canGrow(world, current, bState, world.isRemote) == false) {
+          if (block instanceof IGrowable &&
+              ((IGrowable) block).canGrow(world, current, bState, world.isRemote) == false) {
             continue;//its at full growth, stahp
           }
           //plantable has no such
