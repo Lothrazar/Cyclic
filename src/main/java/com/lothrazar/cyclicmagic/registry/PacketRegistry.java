@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketWandGui;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketNewButton;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketWarpButton;
-import com.lothrazar.cyclicmagic.component.entitydetector.PacketTileDetector;
 import com.lothrazar.cyclicmagic.component.fan.PacketTileFan;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToServer;
@@ -83,7 +82,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternBuilder.class, PacketTilePatternBuilder.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileDetector.class, PacketTileDetector.class, packetID++, Side.SERVER);
+ packetID++;
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
     network.registerMessage(PacketPlayerFalldamage.class, PacketPlayerFalldamage.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerFlying.class, PacketSyncPlayerFlying.class, packetID++, Side.CLIENT);

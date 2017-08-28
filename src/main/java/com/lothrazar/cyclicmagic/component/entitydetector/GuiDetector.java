@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Com
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,8 +16,8 @@ public class GuiDetector extends GuiBaseContainer {
   private int sizeY;
   private int limitColX;
   private int[] yRows = new int[3];
-  private ButtonDetector greaterLessBtn;
-  private ButtonDetector entityBtn;
+  private ButtonIncrementField greaterLessBtn;
+  private ButtonIncrementField entityBtn;
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -49,15 +50,22 @@ public class GuiDetector extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
     //TODO: PREVIEW BUTTON
   }
-  private ButtonDetector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
+  private ButtonIncrementField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
     return this.addPatternButtonAt(id, x, y, isUp, f, 15, 10);
   }
-  private ButtonDetector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
-    ButtonDetector btn = new ButtonDetector(tile.getPos(), id,
+  private ButtonIncrementField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
+    int val = (isUp) ? 1 : -1;
+    ButtonIncrementField btn = new ButtonIncrementField(id,
         this.guiLeft + x,
         this.guiTop + y,
-        isUp, f, w, h);
+        tile.getPos(),
+        f.ordinal(), val, w, h);
     btn.displayString = (isUp) ? "+" : "-";
+    String ud = "";
+    if (f != Fields.ENTITYTYPE && f != Fields.GREATERTHAN) {
+      ud = (isUp) ? "up" : "down";
+    }
+    btn.setTooltip("tile.entity_detector." + f.name().toLowerCase() + ud);
     this.buttonList.add(btn);
     return btn;
   }
