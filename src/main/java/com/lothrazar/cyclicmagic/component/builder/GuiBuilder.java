@@ -45,17 +45,17 @@ public class GuiBuilder extends GuiBaseContainer {
     width = 15;
     //size buttons
     xSizeTextbox = 176 - 52;
-    btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
+    btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, TileEntityStructureBuilder.Fields.SIZE);
     this.buttonList.add(btnSizeUp);
-    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
+    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false,  TileEntityStructureBuilder.Fields.SIZE);
     this.buttonList.add(btnSizeDown);
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
     //HEIGHT BUTTONS
     xHeightTextbox = xSizeTextbox - 28;
-    btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
+    btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true,  TileEntityStructureBuilder.Fields.HEIGHT);
     this.buttonList.add(btnHeightUp);
-    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
+    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false,  TileEntityStructureBuilder.Fields.HEIGHT);
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
