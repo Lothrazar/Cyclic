@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +19,7 @@ public class ButtonBuilderType extends GuiButtonTooltip {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileBuildType(tilePos));
+      ModCyclic.network.sendToServer(new PacketTileIncrementField(tilePos,TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal()));
     }
     return pressed;
   }

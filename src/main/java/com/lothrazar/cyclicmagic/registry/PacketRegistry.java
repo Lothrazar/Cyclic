@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.component.bucketstorage.PacketFluidSync;
-import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildSize;
-import com.lothrazar.cyclicmagic.component.builder.PacketTileBuildType;
 import com.lothrazar.cyclicmagic.component.controlledminer.PacketTileMineHeight;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
@@ -72,8 +70,8 @@ public class PacketRegistry {
     network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
-    network.registerMessage(PacketTileBuildType.class, PacketTileBuildType.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileBuildSize.class, PacketTileBuildSize.class, packetID++, Side.SERVER);
+    packetID++;//removed packets from a refactor . KEEP THESE lines so packet ids dont mismatch
+    packetID++;
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);

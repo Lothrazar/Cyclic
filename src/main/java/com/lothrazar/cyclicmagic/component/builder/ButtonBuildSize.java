@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +15,7 @@ public class ButtonBuildSize extends GuiButtonTooltip {
     super(buttonId, x, y, 15, 10, "");
     tilePos = current;
     goUp = up;
-    type = strType;
+    type = TileEntityStructureBuilder.Fields.SIZE.name().toLowerCase();
     this.setTooltip("button." + type + "." + (goUp ? "up" : "down"));
   }
   @SideOnly(Side.CLIENT)
@@ -23,7 +24,7 @@ public class ButtonBuildSize extends GuiButtonTooltip {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       int size = (goUp) ? 1 : -1;
-      ModCyclic.network.sendToServer(new PacketTileBuildSize(tilePos, size, type));
+      ModCyclic.network.sendToServer(new PacketTileIncrementField(tilePos, TileEntityStructureBuilder.Fields.SIZE.ordinal(), size));
     }
     return pressed;
   }
