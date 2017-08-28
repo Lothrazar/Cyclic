@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.component.bucketstorage.PacketFluidSync;
-import com.lothrazar.cyclicmagic.component.controlledminer.PacketTileMineHeight;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
@@ -75,7 +74,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileMineHeight.class, PacketTileMineHeight.class, packetID++, Side.SERVER);
+  packetID++;
     network.registerMessage(PacketSwapBlock.class, PacketSwapBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);
