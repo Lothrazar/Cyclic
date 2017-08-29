@@ -42,7 +42,12 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   }
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-    return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
+    EnumFacing fac = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+    if (fac != EnumFacing.UP && fac != EnumFacing.DOWN) {
+      fac = fac.getOpposite();//make consistent with non-omni blocks: faces user
+    }
+    return this.getDefaultState().withProperty(PROPERTYFACING,
+        fac);
   }
   public static EnumFacing getCurrentFacing(World world, BlockPos pos) {
     try {

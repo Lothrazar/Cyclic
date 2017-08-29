@@ -343,7 +343,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
       case TIMER:
         this.timer = value;
-      default:
       break;
     }
   }
