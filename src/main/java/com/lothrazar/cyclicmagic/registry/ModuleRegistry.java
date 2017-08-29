@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.module.BlockMachineModule;
 import com.lothrazar.cyclicmagic.module.BlockPlateModule;
 import com.lothrazar.cyclicmagic.module.BlockUtilityModule;

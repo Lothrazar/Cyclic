@@ -322,6 +322,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
           value = maxHeight;
         }
         setHeight(value);
+      break;
       case REDSTONE:
         needsRedstone = value;
       break;

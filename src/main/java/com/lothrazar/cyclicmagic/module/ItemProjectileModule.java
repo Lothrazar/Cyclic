@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;

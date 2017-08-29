@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.config;
 import net.minecraftforge.common.config.Configuration;
 
 public interface IHasConfig {

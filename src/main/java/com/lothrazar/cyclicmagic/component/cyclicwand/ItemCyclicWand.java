@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.cyclicwand;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;

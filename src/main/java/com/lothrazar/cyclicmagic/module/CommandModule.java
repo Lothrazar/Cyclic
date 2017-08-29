@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.command.CommandEnderChest;
 import com.lothrazar.cyclicmagic.command.CommandGetHome;
 import com.lothrazar.cyclicmagic.command.CommandHeal;
@@ -14,6 +13,7 @@ import com.lothrazar.cyclicmagic.command.CommandSearchTrades;
 import com.lothrazar.cyclicmagic.command.CommandTodoList;
 import com.lothrazar.cyclicmagic.command.CommandVillageInfo;
 import com.lothrazar.cyclicmagic.command.CommandWorldHome;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;

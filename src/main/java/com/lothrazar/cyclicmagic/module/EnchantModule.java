@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBase;

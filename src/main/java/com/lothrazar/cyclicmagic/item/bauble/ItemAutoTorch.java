@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.bauble;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

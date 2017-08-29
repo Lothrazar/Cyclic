@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
@@ -11,6 +10,7 @@ import com.lothrazar.cyclicmagic.component.magnetanti.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.component.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;

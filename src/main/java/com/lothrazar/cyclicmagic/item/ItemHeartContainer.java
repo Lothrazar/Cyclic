@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;

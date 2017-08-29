@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
@@ -22,6 +21,7 @@ import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
