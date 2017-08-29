@@ -128,7 +128,6 @@ public class GuideRegistry {
     public GuideItem(@Nonnull GuideCategory cat, @Nonnull Item icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
       this.cat = cat;
       this.icon = icon;
-      ModCyclic.logger.log("GUIDE ICON " + icon);
       this.title = UtilChat.lang(title);
       if (text != null) {
         this.pages.add(new GuidePage(UtilChat.lang(text)));

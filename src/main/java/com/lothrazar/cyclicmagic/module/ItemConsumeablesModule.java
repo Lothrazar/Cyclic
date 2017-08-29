@@ -56,11 +56,7 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks 
-      ItemRegistry.registerWithJeiDescription(emerald_carrot);
-      ItemRegistry.registerWithJeiDescription(lapis_carrot);
-      ItemRegistry.registerWithJeiDescription(diamond_carrot);
-      ItemRegistry.registerWithJeiDescription(redstone_carrot);
-      ItemRegistry.registerWithJeiDescription(ender_carrot);
+      
     }
     if (enableLapisApple) {
       ItemAppleLapis apple_lapis = new ItemAppleLapis();
@@ -70,8 +66,7 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
     if (enableEmeraldApple) {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.register(apple_emerald, "apple_emerald");
-      LootTableRegistry.registerLoot(apple_emerald);
-      ItemRegistry.registerWithJeiDescription(apple_emerald);
+      LootTableRegistry.registerLoot(apple_emerald); 
       ModCyclic.instance.events.register(apple_emerald);
     }
     if (enableHeartContainer) {
@@ -80,28 +75,24 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
-      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
-      ItemRegistry.registerWithJeiDescription(heart_food);
+      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO); 
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
-      LootTableRegistry.registerLoot(crafting_food);
-      ItemRegistry.registerWithJeiDescription(crafting_food);
+      LootTableRegistry.registerLoot(crafting_food); 
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
-      LootTableRegistry.registerLoot(inventory_food);
-      ItemRegistry.registerWithJeiDescription(inventory_food);
+      LootTableRegistry.registerLoot(inventory_food); 
     }
     if (enableCorruptedChorus) {
       ItemChorusCorrupted corrupted_chorus = new ItemChorusCorrupted();
       ItemRegistry.register(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
-      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
-      ItemRegistry.registerWithJeiDescription(corrupted_chorus);
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY); 
     }
     if (enableGlowingChorus) {
       ItemChorusGlowing glowing_chorus = new ItemChorusGlowing();
