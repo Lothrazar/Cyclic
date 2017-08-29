@@ -59,7 +59,7 @@ public class GearModule extends BaseEventModule implements IHasConfig {
       LootTableRegistry.registerLoot(emerald_pickaxe);
       LootTableRegistry.registerLoot(emerald_sword);
       LootTableRegistry.registerLoot(emerald_chest);
-      GuideRegistry.register(GuideCategory.GEAR, new ItemStack(emerald_head), "item.emeraldgear.title", "item.emeraldgear.guide");
+      GuideRegistry.register(GuideCategory.GEAR, emerald_head, "item.emeraldgear.title", "item.emeraldgear.guide");
     }
     if (enablePurpleGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
@@ -83,7 +83,7 @@ public class GearModule extends BaseEventModule implements IHasConfig {
       LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
-      GuideRegistry.register(GuideCategory.GEAR, new ItemStack(sandstone_axe), "item.sandstonegear.title", "item.sandstonegear.guide");
+      GuideRegistry.register(GuideCategory.GEAR, sandstone_axe, "item.sandstonegear.title", "item.sandstonegear.guide");
     }
   }
   @Override

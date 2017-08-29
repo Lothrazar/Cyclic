@@ -15,6 +15,7 @@ import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -230,9 +231,9 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore", null);
     end_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
     end_iron_ore.registerOre("oreIron");
-    GuideItem page = GuideRegistry.register(GuideCategory.WORLD, new ItemStack(nether_gold_ore), "world.netherore.title");
+    GuideItem page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(nether_gold_ore), "world.netherore.title");
     page.addTextPage("world.netherore.guide");
-    page = GuideRegistry.register(GuideCategory.WORLD, new ItemStack(end_redstone_ore), "world.endore.title");
+    page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(end_redstone_ore), "world.endore.title");
     page.addTextPage("world.endore.guide");
   }
 }

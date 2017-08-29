@@ -41,6 +41,7 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
+    ModCyclic.logger.log("RegistryEvent.Register<Block> !!!");
     //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     for (Block b : blocks) {
       event.getRegistry().register(b);

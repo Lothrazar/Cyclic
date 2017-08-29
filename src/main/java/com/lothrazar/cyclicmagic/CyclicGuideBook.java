@@ -101,7 +101,7 @@ public class CyclicGuideBook implements IGuideBook {
           pages.add(new PageBrewingRecipe(p.brewRecipe));
         }
       }
-      addEntry(item.cat, pages, item.title, item.icon);
+      addEntry(item.cat, pages, item.title, new ItemStack(item.icon));
     }
   }
   @Override
@@ -115,8 +115,7 @@ public class CyclicGuideBook implements IGuideBook {
     addCategory(entriesBlocks, GuideCategory.BLOCK);
     addCategory(entriesBlockMachine, GuideCategory.BLOCKMACHINE);
     addCategory(entriesItems, GuideCategory.ITEM);
-    addCategory(entriesGear,
-        GuideCategory.GEAR);
+    addCategory(entriesGear, GuideCategory.GEAR);
     addCategory(entriesPotion, GuideCategory.POTION);
     addCategory(entriesEnchants, GuideCategory.ENCHANT);
     addCategory(entriesWorld, GuideCategory.WORLD);
