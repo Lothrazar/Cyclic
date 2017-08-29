@@ -807,7 +807,7 @@ item.ender_lightning.guide=A handheld single use throwable lightning bolt.  Summ
 item.fire_killer.guide=Extinguish all nearby fire.
 item.soulstone.guide=A single use item that saves you from death, similar to totem of undying without the effects.  Does not have to be held or in your hotbar, just your inventory.  When it triggers, you come back with 3 hearts, a few positive potion effects, and 10 minutes of Bad Luck and Weakness II.  
 item.water_spreader.guide=Turns nearby flowing water into source water.  Fills lakes and rivers out very quickly. 
-item.glove_climb.guide=Lets you climb any surface like it was a ladder.  Can be turned off with right click.  Compatible with baubles.  
+item.glove_climb.guide=Lets you climb any surface like it was a ladder.  Can be turned off with right click.  To climb down, sneak and walk into the wall.  Compatible with baubles.  
 item.tool_torch_launcher.guide=Shoots out a flying torch that gets placed when it lands.  
 item.water_freezer.guide=Turns nearby water blocks into ice.  Costs durability to use.  
 item.horse_upgrade_jump.guide=A permanent stackable jump increase for your horse.  
@@ -925,4 +925,7 @@ item.stone_minecart.guide=Think of this as a single-slot chest.  The Stone Minec
 item.tool_launcher.guide=Aim and then charge this up like a bow and then release it to get launched into the air.  It has two modes, forward and reverse, that you can toggle with attack (left-click).  Forward means you need to aim up into the air, and you fly the exact direction and angle that you look.  Reverse means you have to aim down at the ground and you get launched backwards.  Using this gives you the "bouncy" potion effect, which makes anything you land on bounce you up like a slime block.  
 
 item.evoker_fang.guide=Summons a beam of Evoker Fangs in whatever direction youre facing.  Must be used on an entity or a block.
-
+tile.clock.guide=This redstone clock lets you control the number of ticks that is on and off.  Ticks that its turned on are called the Duration; ticks off are called the Delay.  Power is the redstone signal strength, so 15 for full power and 1 for lowest.  
+tile.spikes_diamond.guide=These spikes damage any entity touching it, as long as they are turned on with redstone.  Diamond spikes kill as if damaged by a player, so this includes so called player-only drops such as spider eyes, as well as EXP landing on the ground.  Damage per tick is in the config file.  
+tile.spikes_iron.guide=These spikes damage any entity touching it, as long as they are turned on with redstone.  Damage per tick is in the config file.  
+tile.sprinkler.guide=This only runs while water is directly below.  It will water nearby crops, increasing their growing speed.  Multiple sprinklers in the same area do stack.  
