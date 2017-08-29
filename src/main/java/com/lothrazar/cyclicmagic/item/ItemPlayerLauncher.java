@@ -85,6 +85,11 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
     super(2000);
   }
   @Override
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return stack.isItemEnchanted() || ActionType.isForward(stack);
+  }
+  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     playerIn.setActiveHand(hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
