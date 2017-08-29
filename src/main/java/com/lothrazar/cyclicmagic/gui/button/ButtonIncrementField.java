@@ -24,8 +24,8 @@ public class ButtonIncrementField extends GuiButtonTooltip {
   public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
     this(buttonId, x, y, p, fld, diff, 40, 20);
   }
-  public ButtonIncrementField(int buttonId, int x, int y, 
-      BlockPos p, int fld, int diff,
+  public ButtonIncrementField(int buttonId, int x, int y,  BlockPos p,
+      int fld, int diff,
       int w, int h) {
     super(buttonId, x, y, w, h, "");
     this.pos = p;
