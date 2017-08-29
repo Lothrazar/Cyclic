@@ -12,7 +12,6 @@ import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.component.merchant.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
-import com.lothrazar.cyclicmagic.component.pattern.PacketTilePatternBuilder;
 import com.lothrazar.cyclicmagic.component.pattern.PacketTilePatternSwap;
 import com.lothrazar.cyclicmagic.component.playerext.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.component.playerext.PacketOpenFakeWorkbench;
@@ -79,7 +78,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTilePatternBuilder.class, PacketTilePatternBuilder.class, packetID++, Side.SERVER);
+ packetID++;
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
  packetID++;
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
