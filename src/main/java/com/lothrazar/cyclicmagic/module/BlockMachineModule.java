@@ -58,19 +58,19 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (enableClock) {
       BlockRedstoneClock clock = new BlockRedstoneClock();
-      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
     }
     if (enableSprinkler) {
       BlockSprinkler sprinkler = new BlockSprinkler();
-      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
     }
     if (enableSpikes) {
       BlockSpikesRetractable spikes_iron = new BlockSpikesRetractable(false);
-      BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCK);
       BlockSpikesRetractable spikes_redstone_diamond = new BlockSpikesRetractable(true);
-      BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCK);
     }
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();
