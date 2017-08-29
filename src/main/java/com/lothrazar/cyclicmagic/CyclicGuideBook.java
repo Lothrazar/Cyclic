@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +48,10 @@ public class CyclicGuideBook implements IGuideBook {
   private void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:
-        entriesBlocks.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle,
-            icon));
+        entriesBlocks.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       case ITEM:
-        entriesItems.put(new ResourceLocation(Const.MODID,
-            pageTitle), new EntryItemStack(page, pageTitle, icon));
+        entriesItems.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       case GEAR:
         entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
@@ -86,6 +86,13 @@ public class CyclicGuideBook implements IGuideBook {
   }
   private void buildPages() {
     List<GuideItem> items = GuideRegistry.getItems();
+    Comparator<GuideItem> comparator = new Comparator<GuideItem>() {
+      @Override
+      public int compare(final GuideItem first, final GuideItem second) {
+        return first.title.compareTo(second.title);
+      }
+    };
+    Collections.sort(items, comparator);
     for (GuideItem item : items) {
       List<IPage> pages = new ArrayList<IPage>();
       for (GuidePage p : item.pages) {
