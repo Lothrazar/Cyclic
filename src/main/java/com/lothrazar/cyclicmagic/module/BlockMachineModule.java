@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
@@ -56,6 +57,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableSprinkler;
   private boolean enableSpikes;
   public void onPreInit() {
+    
+    
+    BlockFireSafe fire = new BlockFireSafe();
+    BlockRegistry.registerBlock(fire, "fire", null);
     if (enableClock) {
       BlockRedstoneClock clock = new BlockRedstoneClock();
       BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCK);
