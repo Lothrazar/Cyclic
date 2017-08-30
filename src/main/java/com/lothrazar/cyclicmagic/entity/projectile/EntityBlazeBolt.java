@@ -14,9 +14,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityBlazeBolt extends EntityThrowableDispensable {
-  public static Item renderSnowball;
   public static final int fireSeconds = 3;
   public static final boolean damageEntityOnHit = true;
+  public static Item renderSnowball;
   public EntityBlazeBolt(World worldIn) {
     super(worldIn);
   }

@@ -82,7 +82,7 @@ public class RenderProjectile<T extends Entity> extends RenderSnowball<T> {
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
     @Override
     public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
-      return new RenderProjectile<EntityBlazeBolt>(rm, EntityBlazeBolt.renderSnowball, Minecraft.getMinecraft().getRenderItem());
+      return new RenderSpell<EntityBlazeBolt>(rm);
     }
   }
   public static final FactoryDynMining FACTORY_DYNMINING = new FactoryDynMining();
