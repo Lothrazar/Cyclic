@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,11 +14,19 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityBlazeBolt extends EntityThrowableDispensable {
   public static final int fireSeconds = 3;
   public static final boolean damageEntityOnHit = true;
-  public static Item renderSnowball;
+
+  public static final FactoryFire FACTORY_FIRE = new FactoryFire();
+  public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
+    @Override
+    public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityBlazeBolt>(rm, "fire");
+    }
+  }
   public EntityBlazeBolt(World worldIn) {
     super(worldIn);
   }

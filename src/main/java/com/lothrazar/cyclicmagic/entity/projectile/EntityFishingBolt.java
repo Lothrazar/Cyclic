@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
@@ -13,9 +15,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityFishingBolt extends EntityThrowableDispensable {
-  public static Item renderSnowball;
+
+  public static final FactoryFish FACTORY = new FactoryFish();
+  public static class FactoryFish implements IRenderFactory<EntityFishingBolt> {
+    @Override
+    public Render<? super EntityFishingBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityFishingBolt>(rm, "fishing");
+    }
+  }
   public EntityFishingBolt(World worldIn) {
     super(worldIn);
   }
@@ -44,12 +54,12 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
       UtilSound.playSound(world, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
       this.setDead();
     }
-    else {
-      if (world.isRemote == false) {
-        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
-        this.setDead();
-      }
-    }
+//    else {
+//      if (world.isRemote == false) {
+//        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
+//        this.setDead();
+//      }
+//    }
   }
   private ItemStack getRandomFish() {
     ItemStack fishSpawned = null;

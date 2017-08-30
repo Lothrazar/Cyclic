@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +13,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetEmpty extends EntityThrowableDispensable {
   public static Item renderSnowball;
+
+  public static final FactoryBallEmpty FACTORY_BALLEMPTY = new FactoryBallEmpty();
+  public static class FactoryBallEmpty implements IRenderFactory<EntityMagicNetEmpty> {
+    @Override
+    public Render<? super EntityMagicNetEmpty> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityMagicNetEmpty>(rm, "net");
+    }
+  }
   public EntityMagicNetEmpty(World worldIn) {
     super(worldIn);
   }

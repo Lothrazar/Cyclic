@@ -61,14 +61,14 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-      EntityBlazeBolt.renderSnowball = ender_blaze;
+  
       projectiles.add(ender_blaze);
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
       ItemRegistry.register(ender_dungeon, "ender_dungeon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
-      EntityDungeonEye.renderSnowball = ender_dungeon;
+ 
       LootTableRegistry.registerLoot(ender_dungeon);
      //ItemRegistry.registerWithJeiDescription(ender_dungeon);
       projectiles.add(ender_dungeon);
@@ -77,7 +77,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
       ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
-      EntityFishingBolt.renderSnowball = ender_fishing;
+ 
      // ItemRegistry.registerWithJeiDescription(ender_fishing);
       projectiles.add(ender_fishing);
     }
@@ -85,16 +85,14 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileWool ender_wool = new ItemProjectileWool();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
-      EntityShearingBolt.renderSnowball = ender_wool;
-      //ItemRegistry.registerWithJeiDescription(ender_wool);
+ 
       projectiles.add(ender_wool);
     }
     if (enderTorch) {
       ItemProjectileTorch ender_torch = new ItemProjectileTorch();
       ItemRegistry.register(ender_torch, "ender_torch", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
-      EntityTorchBolt.renderSnowball = ender_torch;
-     // ItemRegistry.registerWithJeiDescription(ender_torch);
+ 
       projectiles.add(ender_torch);
     }
     if (enderWater) {
@@ -102,24 +100,23 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = ender_water;
-      //ItemRegistry.registerWithJeiDescription(ender_water);
+ 
       projectiles.add(ender_water);
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();
       ItemRegistry.register(ender_snow, "ender_snow", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
-      EntitySnowballBolt.renderSnowball = ender_snow;
-      //ItemRegistry.registerWithJeiDescription(ender_snow);
+ 
       projectiles.add(ender_snow);
     }
     if (enderLightning) {
       ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
       ItemRegistry.register(ender_lightning, "ender_lightning", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
-      EntityLightningballBolt.renderSnowball = ender_lightning;
+ 
       LootTableRegistry.registerLoot(ender_lightning);
-   //   ItemRegistry.registerWithJeiDescription(ender_lightning);
+ 
       projectiles.add(ender_lightning);
     }
     if (dynamiteSafe) {
@@ -144,7 +141,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
       ItemRegistry.register(magic_net, "magic_net", GuideCategory.ITEMTHROW);
       EntityMagicNetEmpty.renderSnowball = magic_net;
-      EntityMagicNetFull.renderSnowball = magic_net;
+      
       EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
       EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
       projectiles.add(magic_net);
@@ -182,7 +179,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(ender_tnt_6, "ender_tnt_6", null);
       GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
       EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
-      EntityDynamite.renderSnowball = ender_tnt_1;
+ 
       projectiles.add(ender_tnt_1);
       projectiles.add(ender_tnt_2);
       projectiles.add(ender_tnt_3);

@@ -2,6 +2,9 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
@@ -13,9 +16,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityShearingBolt extends EntityThrowableDispensable {
-  public static Item renderSnowball;
+
+  public static final FactoryShear FACTORY = new FactoryShear();
+  public static class FactoryShear implements IRenderFactory<EntityShearingBolt> {
+    @Override
+    public Render<? super EntityShearingBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityShearingBolt>(rm, "shears");
+    }
+  }
   public static boolean doesShearChild;
   public EntityShearingBolt(World worldIn) {
     super(worldIn);
@@ -48,11 +59,11 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
           }
           UtilSound.playSound(world, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
         }
-        else {
-          BlockPos posToDrop = getPosToDrop(mop);
-          if (posToDrop != null)
-            UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
-        }
+//        else {
+//          BlockPos posToDrop = getPosToDrop(mop);
+//          if (posToDrop != null)
+//            UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
+//        }
       }
       catch (Exception e) {
         // https://github.com/PrinceOfAmber/Cyclic/issues/120

@@ -5,6 +5,8 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,9 +20,16 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntitySnowballBolt extends EntityThrowableDispensable {
-  public static Item renderSnowball;
+  public static final FactorySnow FACTORY = new FactorySnow();
+  public static class FactorySnow implements IRenderFactory<EntitySnowballBolt> {
+    @Override
+    public Render<? super EntitySnowballBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntitySnowballBolt>(rm, "snow");
+    }
+  }
   public EntitySnowballBolt(World worldIn) {
     super(worldIn);
   }

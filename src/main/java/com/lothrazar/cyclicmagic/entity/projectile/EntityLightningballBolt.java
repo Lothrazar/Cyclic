@@ -1,12 +1,15 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.item.Item;
+ 
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityLightningballBolt extends EntityThrowableDispensable {
-  public static Item renderSnowball;
+ 
   public EntityLightningballBolt(World worldIn) {
     super(worldIn);
   }
@@ -23,4 +26,13 @@ public class EntityLightningballBolt extends EntityThrowableDispensable {
     world.spawnEntity(ball);
     this.setDead();
   }
+  public static final FactoryLightning FACTORY = new FactoryLightning();
+  public static class FactoryLightning implements IRenderFactory<EntityLightningballBolt> {
+    @Override
+    public Render<? super EntityLightningballBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityLightningballBolt>(rm, "lightning");
+    }
+  }
+
+
 }
