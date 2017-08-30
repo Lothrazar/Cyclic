@@ -33,7 +33,7 @@ public class BlockRegistry {
     }
     b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
-    //IRecipe recipe = null;
+  
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
@@ -43,15 +43,9 @@ public class BlockRegistry {
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
- 
-    //    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
-    for (Block b : blocks) {
-      event.getRegistry().register(b);
-    }
-    //    GuideRegistry.register(cat, b, null, null);
-    //    for (Map.Entry<Block, GuideCategory> entry : map.entrySet()) {
-    //      ModCyclic.logger.log("RegistryEvent.Register<Block> !!!"+entry.getValue()+" "+entry.getKey());
-    //      GuideRegistry.register(entry.getValue(), entry.getKey());
+    event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+    //    for (Block b : blocks) {
+    //      event.getRegistry().register(b);
     //    }
   }
 }

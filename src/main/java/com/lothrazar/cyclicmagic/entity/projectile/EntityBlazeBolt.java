@@ -70,7 +70,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
       if (world.isAirBlock(pos)) {
         toSetFire.add(pos);
         // turn flowing water into solid
-        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
+//        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
       }
       if (world.isAirBlock(pos.offset(EnumFacing.EAST))) {
         toSetFire.add(pos.offset(EnumFacing.EAST));
@@ -106,7 +106,8 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
         }
       }
       for (BlockPos p : toSetFire) {
-        world.setBlockState(p, Blocks.FIRE.getDefaultState());
+     
+        world.setBlockState(p,    Block.getBlockFromName("cyclicmagic:fire").getDefaultState());
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }

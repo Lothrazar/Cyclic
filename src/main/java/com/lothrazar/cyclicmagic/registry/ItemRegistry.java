@@ -4,6 +4,7 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.IHasOreDict;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -89,6 +90,7 @@ public class ItemRegistry {
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
+    
       if (b instanceof IBlockHasTESR) {
         ((IBlockHasTESR) b).initModel();
       }
