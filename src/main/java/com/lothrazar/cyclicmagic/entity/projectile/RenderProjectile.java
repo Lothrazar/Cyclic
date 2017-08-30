@@ -40,7 +40,7 @@ public class RenderProjectile<T extends Entity> extends RenderSnowball<T> {
   public static class FactorySnow implements IRenderFactory<EntitySnowballBolt> {
     @Override
     public Render<? super EntitySnowballBolt> createRenderFor(RenderManager rm) {
-      return new RenderProjectile<EntitySnowballBolt>(rm, EntitySnowballBolt.renderSnowball, Minecraft.getMinecraft().getRenderItem());
+      return new RenderBall<EntitySnowballBolt>(rm);
     }
   }
   public static final FactoryTorch FACTORY_TORCH = new FactoryTorch();
