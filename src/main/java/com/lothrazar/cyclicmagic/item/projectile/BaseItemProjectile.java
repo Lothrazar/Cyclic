@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class BaseItemProjectile extends BaseItem {
+  
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack h = playerIn.getHeldItem(hand);
@@ -37,7 +39,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     player.swingArm(hand);
     BlockPos pos = player.getPosition();
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
-    UtilPlayer.decrStackSize(player, hand);
+    
   }
   protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
     this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);

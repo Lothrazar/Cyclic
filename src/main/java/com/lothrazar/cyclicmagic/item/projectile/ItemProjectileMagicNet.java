@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -19,6 +20,9 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRecipe {
   public static final String NBT_ENTITYID = "id";
+  public ItemProjectileMagicNet(){
+    super();
+  }
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
     return new EntityTorchBolt(world, x, y, z);
   }
@@ -60,6 +64,8 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     }
     else {
       this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));
+    
     }
+    UtilPlayer.decrStackSize(player, hand);
   }
 }

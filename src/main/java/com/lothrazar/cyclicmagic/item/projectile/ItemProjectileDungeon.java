@@ -6,6 +6,8 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
   private static int DUNGEONRADIUS = 64;
+  public ItemProjectileDungeon() {
+    super();
+    this.setMaxDamage(1000);
+    this.setMaxStackSize(1);
+  }
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
     return new EntityDungeonEye(world, x, y, z);
@@ -52,6 +59,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
         UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
       }
     }
+    UtilItemStack.damageItem(player, held);
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

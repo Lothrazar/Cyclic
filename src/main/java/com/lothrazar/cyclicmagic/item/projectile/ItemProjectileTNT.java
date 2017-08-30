@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -47,5 +48,6 @@ public class ItemProjectileTNT extends BaseItemProjectile {
       break;
     }
     this.doThrow(world, player, hand, d);
+    UtilPlayer.decrStackSize(player, hand);
   }
 }

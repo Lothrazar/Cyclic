@@ -59,11 +59,11 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
         ModCyclic.logger.error(e.getMessage());
       }
     }
-    else {
-      BlockPos posToDrop = getPosToDrop(mop);
-      if (posToDrop != null)
-        UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
-    }
+//    else {
+//      BlockPos posToDrop = getPosToDrop(mop);
+//      if (posToDrop != null)
+//        UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
+//    }
     this.setDead();
   }
   private BlockPos getPosToDrop(RayTraceResult mop) {
