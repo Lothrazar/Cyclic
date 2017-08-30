@@ -24,6 +24,7 @@ public class BlockFireSafe extends BlockFire {
     //   this.registerBlockWithStateMapper(Blocks.FIRE, (new StateMap.Builder()).ignore(BlockFire.AGE).build());
     //above from client.redner.blockmodelshapes
   }
+ 
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     if (worldIn.getGameRules().getBoolean("doFireTick")) {
