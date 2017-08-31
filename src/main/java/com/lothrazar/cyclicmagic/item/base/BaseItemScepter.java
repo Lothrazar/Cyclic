@@ -34,6 +34,7 @@ public abstract class BaseItemScepter extends BaseTool {
   private static final float PITCHOFFSET = 0.0F;
   private static final float MAX_CHARGE = 9.7F;
   private static final int TICKS_USING = 93000;
+  private static final int COOLDOWN = 15;
   public BaseItemScepter(int durability) {
     super(durability);
   }
@@ -42,9 +43,13 @@ public abstract class BaseItemScepter extends BaseTool {
     return TICKS_USING;//bow has 72000
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    playerIn.setActiveHand(hand);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
+    if (hand != EnumHand.MAIN_HAND || player.getCooldownTracker().hasCooldown(player.getHeldItem(hand).getItem())) {
+      //dont let them use it yet
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
+    }
+    player.setActiveHand(hand);
+    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
   }
   @Override
   public EnumAction getItemUseAction(ItemStack stack) {
@@ -54,6 +59,7 @@ public abstract class BaseItemScepter extends BaseTool {
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
     if (entity instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) entity;
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
@@ -80,6 +86,7 @@ public abstract class BaseItemScepter extends BaseTool {
       shots = 1;
     }
     UtilItemStack.damageItem(player, stack, shots);
+    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
