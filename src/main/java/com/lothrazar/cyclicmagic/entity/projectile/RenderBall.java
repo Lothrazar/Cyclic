@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderBall<T extends Entity> extends Render<T> {
   private ResourceLocation resource;
-  protected RenderBall(RenderManager renderManager, String texture) {
+  public RenderBall(RenderManager renderManager, String texture) {
     super(renderManager);
     resource = new ResourceLocation(Const.MODID, "textures/entity/projectile/" + texture + ".png");
   }

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.base;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -32,9 +32,8 @@ public abstract class BaseItemScepter extends BaseTool {
   private static final float VELOCITY_MAX = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
-  private static final float MAX_CHARGE = 6.7F;
-  private static final float CHARGE_MULTISHOT = MAX_CHARGE - 2;
-  private static final int TICKS_USING = 53000;
+  private static final float MAX_CHARGE = 9.7F;
+  private static final int TICKS_USING = 93000;
   public BaseItemScepter(int durability) {
     super(durability);
   }
@@ -60,28 +59,45 @@ public abstract class BaseItemScepter extends BaseTool {
     // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];
     float amountCharged = percentageCharged * MAX_CHARGE;
-    float velocityFactor = percentageCharged * 4;//flat upscale
+    float velocityFactor = percentageCharged * 1.5F;//flat upscale
     //between 0.3 and 5.1 roughly
     UtilChat.sendStatusMessage(player, amountCharged + "");
-    Vec3d vecCrossRight = player.getLookVec().normalize().crossProduct(new Vec3d(0, 2, 0));
-    Vec3d vecCrossLeft = player.getLookVec().normalize().crossProduct(new Vec3d(0, -2, 0));
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
+    int shots = 0;
+    if (amountCharged > MAX_CHARGE - 0.5F) {//shoot 3
+      //strongest so both
+      shootTwins(world, player, velocityFactor, damage);
+      shootMain(world, player, velocityFactor, damage);
+      shots = 3;
+    }
+    else if (amountCharged > MAX_CHARGE / 4) {//shoot 2
+      //only two
+      shootTwins(world, player, velocityFactor, damage);
+      shots = 2;
+    }
+    else {//shoot 1
+      shootMain(world, player, velocityFactor, damage);
+      shots = 1;
+    }
+    UtilItemStack.damageItem(player, stack, shots);
+    super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
+    super.onUse(stack, player, world, EnumHand.MAIN_HAND);
+  }
+  private void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
     EntityThrowable proj = createBullet(world, player, damage);
     this.launchProjectile(world, player, proj, velocityFactor * VELOCITY_MAX);
-    ModCyclic.logger.log(" damage " + damage);
-    if (amountCharged > CHARGE_MULTISHOT) {
-      EntityThrowable projRight = createBullet(world, player, damage);
-      projRight.posX += vecCrossRight.x;
-      projRight.posZ += vecCrossRight.z;
-      this.launchProjectile(world, player, projRight, velocityFactor * VELOCITY_MAX);
-      EntityThrowable projLeft = createBullet(world, player, damage);
-      projLeft.posX += vecCrossLeft.x;
-      projLeft.posZ += vecCrossLeft.z;
-      this.launchProjectile(world, player, projLeft, velocityFactor * VELOCITY_MAX);
-    }
-    UtilItemStack.damageItem(player, stack);
-    super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
-    //   super.onUse(stack, player, world, EnumHand.MAIN_HAND);
+  }
+  private void shootTwins(World world, EntityPlayer player, float velocityFactor, float damage) {
+    Vec3d vecCrossRight = player.getLookVec().normalize().crossProduct(new Vec3d(0, 2, 0));
+    Vec3d vecCrossLeft = player.getLookVec().normalize().crossProduct(new Vec3d(0, -2, 0));
+    EntityThrowable projRight = createBullet(world, player, damage);
+    projRight.posX += vecCrossRight.x;
+    projRight.posZ += vecCrossRight.z;
+    this.launchProjectile(world, player, projRight, velocityFactor * VELOCITY_MAX);
+    EntityThrowable projLeft = createBullet(world, player, damage);
+    projLeft.posX += vecCrossLeft.x;
+    projLeft.posZ += vecCrossLeft.z;
+    this.launchProjectile(world, player, projLeft, velocityFactor * VELOCITY_MAX);
   }
   public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {

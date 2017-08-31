@@ -24,7 +24,8 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32), "enderpearl", "gunpowder", "string");
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this)
+        , "enderpearl", "gunpowder", "string");
   }
   @Override
   public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
