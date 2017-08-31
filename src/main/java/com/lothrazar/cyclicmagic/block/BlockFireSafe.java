@@ -24,7 +24,9 @@ public class BlockFireSafe extends BlockFire {
     //   this.registerBlockWithStateMapper(Blocks.FIRE, (new StateMap.Builder()).ignore(BlockFire.AGE).build());
     //above from client.redner.blockmodelshapes
   }
- 
+  protected boolean isVanillaSource() {
+    return false;
+  }
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     if (worldIn.getGameRules().getBoolean("doFireTick")) {
@@ -32,7 +34,7 @@ public class BlockFireSafe extends BlockFire {
         worldIn.setBlockToAir(pos);
       }
       Block block = worldIn.getBlockState(pos.down()).getBlock();
-      boolean flag = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
+      boolean flag =block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
       int intAge = ((Integer) state.getValue(AGE)).intValue();
       if (!flag && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + (float) intAge * 0.03F) {
         worldIn.setBlockToAir(pos);

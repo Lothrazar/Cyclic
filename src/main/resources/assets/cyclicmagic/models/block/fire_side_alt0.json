@@ -1,5 +1,5 @@
 {
-    "parent": "block/fire_side_alt",
+    "parent": "cyclicmagic:block/fire_side_alt",
     "textures": {
         "particle": "cyclicmagic:blocks/fire_layer_0",
         "fire": "cyclicmagic:blocks/fire_layer_0"
