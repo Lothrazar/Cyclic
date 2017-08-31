@@ -61,8 +61,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-  
-      projectiles.add(ender_blaze);
+   
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
@@ -70,45 +69,38 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
  
       LootTableRegistry.registerLoot(ender_dungeon);
-     //ItemRegistry.registerWithJeiDescription(ender_dungeon);
-      projectiles.add(ender_dungeon);
+ 
     }
     if (enderFishing) {
       ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
       ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
- 
-     // ItemRegistry.registerWithJeiDescription(ender_fishing);
-      projectiles.add(ender_fishing);
+  
     }
     if (enderWool) {
       ItemProjectileWool ender_wool = new ItemProjectileWool();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
- 
-      projectiles.add(ender_wool);
+  
     }
     if (enderTorch) {
       ItemProjectileTorch ender_torch = new ItemProjectileTorch();
       ItemRegistry.register(ender_torch, "ender_torch", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
- 
-      projectiles.add(ender_torch);
+  
     }
     if (enderWater) {
       ItemProjectileWater ender_water = new ItemProjectileWater();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = ender_water;
- 
-      projectiles.add(ender_water);
+  
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();
       ItemRegistry.register(ender_snow, "ender_snow", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
- 
-      projectiles.add(ender_snow);
+  
     }
     if (enderLightning) {
       ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
@@ -116,8 +108,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
  
       LootTableRegistry.registerLoot(ender_lightning);
- 
-      projectiles.add(ender_lightning);
+  
     }
     if (dynamiteSafe) {
       ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);

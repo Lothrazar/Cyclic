@@ -31,7 +31,14 @@ public class ItemProjectileSnow extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    this.doThrow(world, player, hand, new EntitySnowballBolt(world, player));
-    UtilItemStack.damageItem(player,held);
+    EntitySnowballBolt proj = new EntitySnowballBolt(world, player);
+    this.doThrow(world, player, hand, proj);
+    EntitySnowballBolt projUp = new EntitySnowballBolt(world, player);
+    projUp.posY += 2;
+    this.doThrow(world, player, hand, projUp);
+    EntitySnowballBolt projDown = new EntitySnowballBolt(world, player);
+    projDown.posY -= 2;
+    this.doThrow(world, player, hand, projDown);
+    UtilItemStack.damageItem(player, held);
   }
 }

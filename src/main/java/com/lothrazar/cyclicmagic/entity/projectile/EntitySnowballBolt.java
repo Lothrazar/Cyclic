@@ -31,7 +31,8 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       return new RenderBall<EntitySnowballBolt>(rm, "snow");
     }
   }
-  float damage = 3;
+  
+  public static final  float damage = 3;
   public EntitySnowballBolt(World worldIn) {
     super(worldIn);
   }
