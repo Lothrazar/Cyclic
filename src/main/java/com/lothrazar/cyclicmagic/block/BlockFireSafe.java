@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -146,7 +147,8 @@ public class BlockFireSafe extends BlockFire {
       //TODO: any entities immune to this?
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(PotionEffectRegistry.SNOW)) {
-        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, 20 * 9, 1));
+        e.setFire(10);
+        e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
       }
     }
     super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);

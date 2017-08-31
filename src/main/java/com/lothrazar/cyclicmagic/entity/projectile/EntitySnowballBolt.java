@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
@@ -30,6 +31,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       return new RenderBall<EntitySnowballBolt>(rm, "snow");
     }
   }
+  float damage = 3;
   public EntitySnowballBolt(World worldIn) {
     super(worldIn);
   }
@@ -49,11 +51,9 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       }
       else {
         e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
+        e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 30, 2));
       }
-      float damage = 0;
-      if (mop.entityHit instanceof EntityBlaze) {
-        damage = 1;
-      }
+  
       // do the snowball damage, which should be none. put out the fire
       mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
     }
