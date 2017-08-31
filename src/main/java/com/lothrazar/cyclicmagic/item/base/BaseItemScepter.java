@@ -1,11 +1,16 @@
 package com.lothrazar.cyclicmagic.item.base;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher.ActionType;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -13,6 +18,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -20,7 +26,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * TODO: ItemPlayerLauncher should also extend this
@@ -34,9 +45,74 @@ public abstract class BaseItemScepter extends BaseTool {
   private static final float PITCHOFFSET = 0.0F;
   private static final float MAX_CHARGE = 9.7F;
   private static final int TICKS_USING = 93000;
-  private static final int COOLDOWN = 15;
+  private static final int COOLDOWN = 5;
+  public enum ActionType {
+    SINGLE, MULTI, TRIPLE;
+    private final static String NBT = "ActionType";
+    private final static String NBTTIMEOUT = "timeout";
+    public static void toggle(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      int type = tags.getInteger(NBT) + 1;
+      if (type >= ActionType.values().length) {
+        type = 0;
+      }
+      tags.setInteger(NBT, type);
+      wand.setTagCompound(tags);
+    }
+    public static ActionType getAction(ItemStack wand) {
+      try {
+        NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+        return ActionType.values()[tags.getInteger(NBT)];
+      }
+      catch (Exception e) {
+        return SINGLE;
+      }
+    }
+    public static String getName(ItemStack wand) {
+      return "wand.action." + ActionType.getAction(wand).toString().toLowerCase();
+    }
+    public static void setTimeout(ItemStack wand) {
+      UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
+    }
+    public static int getTimeout(ItemStack wand) {
+      return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
+    }
+    public static void tickTimeout(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      int t = tags.getInteger(NBTTIMEOUT);
+      if (t > 0) {
+        UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, t - 1);
+      }
+    }
+  }
   public BaseItemScepter(int durability) {
     super(durability);
+  }
+  @SubscribeEvent
+  public void onHit(PlayerInteractEvent.LeftClickBlock event) {
+    EntityPlayer player = event.getEntityPlayer();
+    ItemStack held = player.getHeldItem(event.getHand());
+    if (held != null && held.getItem() == this) {
+      //did we turn it off? is the visible timer still going?
+      if (ActionType.getTimeout(held) > 0) { return; }
+      ActionType.setTimeout(held);
+      event.setCanceled(true);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
+      if (!player.getEntityWorld().isRemote) { // server side
+        ActionType.toggle(held);
+        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+      }
+    }
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
+    super.addInformation(stack, playerIn, tooltip, advanced);
+  }
+  @Override
+  public void onUpdate(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+    ActionType.tickTimeout(stack);
   }
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
@@ -70,20 +146,22 @@ public abstract class BaseItemScepter extends BaseTool {
     UtilChat.sendStatusMessage(player, amountCharged + "");
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
     int shots = 0;
-    if (amountCharged > MAX_CHARGE - 0.5F) {//shoot 3
-      //strongest so both
-      shootTwins(world, player, velocityFactor, damage);
-      shootMain(world, player, velocityFactor, damage);
-      shots = 3;
-    }
-    else if (amountCharged > MAX_CHARGE / 4) {//shoot 2
-      //only two
-      shootTwins(world, player, velocityFactor, damage);
-      shots = 2;
-    }
-    else {//shoot 1
-      shootMain(world, player, velocityFactor, damage);
-      shots = 1;
+    switch (ActionType.getAction(stack)) {
+      case TRIPLE:
+        shootTwins(world, player, velocityFactor, damage);
+        shootMain(world, player, velocityFactor, damage);
+        shots = 3;
+      break;
+      case MULTI:
+        shootTwins(world, player, velocityFactor, damage);
+        shots = 2;
+      break;
+      case SINGLE:
+        shootMain(world, player, velocityFactor, damage);
+        shots = 1;
+      break;
+      default:
+      break;
     }
     UtilItemStack.damageItem(player, stack, shots);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);

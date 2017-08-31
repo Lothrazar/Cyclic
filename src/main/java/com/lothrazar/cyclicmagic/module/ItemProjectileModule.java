@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
@@ -61,54 +62,47 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-   
+      ModCyclic.instance.events.register(ender_blaze);
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
       ItemRegistry.register(ender_dungeon, "ender_dungeon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
- 
       LootTableRegistry.registerLoot(ender_dungeon);
- 
     }
     if (enderFishing) {
       ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
       ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
-  
     }
     if (enderWool) {
       ItemProjectileWool ender_wool = new ItemProjectileWool();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
-  
     }
     if (enderTorch) {
       ItemProjectileTorch ender_torch = new ItemProjectileTorch();
       ItemRegistry.register(ender_torch, "ender_torch", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
-  
     }
     if (enderWater) {
       ItemProjectileWater ender_water = new ItemProjectileWater();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = ender_water;
-  
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();
       ItemRegistry.register(ender_snow, "ender_snow", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
-  
+      ModCyclic.instance.events.register(ender_snow);
     }
     if (enderLightning) {
       ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
       ItemRegistry.register(ender_lightning, "ender_lightning", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
- 
       LootTableRegistry.registerLoot(ender_lightning);
-  
+      ModCyclic.instance.events.register(ender_lightning);
     }
     if (dynamiteSafe) {
       ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);
@@ -132,7 +126,6 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
       ItemRegistry.register(magic_net, "magic_net", GuideCategory.ITEMTHROW);
       EntityMagicNetEmpty.renderSnowball = magic_net;
-      
       EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
       EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
       projectiles.add(magic_net);
@@ -170,7 +163,6 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(ender_tnt_6, "ender_tnt_6", null);
       GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
       EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
- 
       projectiles.add(ender_tnt_1);
       projectiles.add(ender_tnt_2);
       projectiles.add(ender_tnt_3);
