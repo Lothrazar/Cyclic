@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item.base;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -59,17 +61,17 @@ public abstract class BaseItemScepter extends BaseTool {
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     float power = Math.min(MAX_POWER, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
-    Vec3d vec = player.getLookVec().normalize();
-    
-    
+
+//between 0.3 and 5.1 roughly
+//    UtilChat.sendStatusMessage(player, power+"");
     //TODO: Refactor the abstract throw and factor in this power for velocit
     //    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
-    this.onItemThrow(stack, world, player, EnumHand.MAIN_HAND);
+    this.onItemThrow(stack, world, player, EnumHand.MAIN_HAND, power);
     super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
     //   super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
-  public abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
-  protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
+  public abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand, float power);
+  protected void launchProjectile(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       // func_184538_a
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
@@ -80,7 +82,5 @@ public abstract class BaseItemScepter extends BaseTool {
     BlockPos pos = player.getPosition();
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
   }
-  protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
-    this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);
-  }
+ 
 }
