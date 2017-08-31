@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +31,7 @@ public class ItemProjectileWater extends BaseItemProjectile implements IHasRecip
         "string");
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityWaterBolt(world, player));
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
   }

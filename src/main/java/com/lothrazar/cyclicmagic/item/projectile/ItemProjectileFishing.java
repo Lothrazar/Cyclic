@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
@@ -26,7 +27,7 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32), "enderpearl", "gunpowder", "string");
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityFishingBolt(world, player));
     UtilItemStack.damageItem(player, held);
   }

@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +37,7 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
         new ItemStack(Items.SHEARS));
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityShearingBolt(world, player));
 
     UtilItemStack.damageItem(player,held);

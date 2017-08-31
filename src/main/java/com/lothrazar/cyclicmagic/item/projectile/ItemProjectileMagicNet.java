@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,7 +57,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     }
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     if (hasEntity(held)) {
       this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
       held.getTagCompound().removeTag(NBT_ENTITYID);

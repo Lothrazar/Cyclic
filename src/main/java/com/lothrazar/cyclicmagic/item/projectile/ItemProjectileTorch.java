@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
         "torch");
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityTorchBolt(world, player));
     UtilPlayer.decrStackSize(player, hand);
   }

@@ -16,7 +16,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.item.projectile.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileDungeon;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;

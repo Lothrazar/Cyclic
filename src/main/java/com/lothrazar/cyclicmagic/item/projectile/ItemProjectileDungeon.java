@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -45,7 +46,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
         "cropNetherWart");// Blocks.iron_bars
   }
   @Override
-  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
