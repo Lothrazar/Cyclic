@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
+  private static final int COOLDOWN = 10;
   private static int DUNGEONRADIUS = 64;
   public ItemProjectileDungeon() {
     super();
@@ -36,7 +37,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
   @Override
   public void syncConfig(Configuration config) {
-    DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 128, 8, 128, "Search radius of dungeonfinder");
+    DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of dungeonfinder");
   }
   @Override
   public IRecipe addRecipe() {
@@ -60,6 +61,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
         UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
       }
     }
+    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
   }
   @SideOnly(Side.CLIENT)

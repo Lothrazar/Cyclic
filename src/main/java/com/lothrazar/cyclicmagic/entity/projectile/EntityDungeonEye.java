@@ -47,7 +47,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       this.lastTickPosX = this.posX;
       this.lastTickPosY = this.posY;
       this.lastTickPosZ = this.posZ;
-      //      super.onUpdate();
+   
       this.posX += this.motionX;
       this.posY += this.motionY;
       this.posZ += this.motionZ;
@@ -89,23 +89,23 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       double speedHReduction = 1;
       double speedVReduction = 1;
       if (this.ticksExisted < 20) {
-        speedHReduction = 3;
-        speedVReduction = 16;
+        speedHReduction = 2.2;
+        speedVReduction = 12.2;
       }
       if (this.ticksExisted < 40) {
-        speedHReduction = 2;
-        speedVReduction = 12;
+        speedHReduction = 1.8;
+        speedVReduction = 10;
       }
       else if (this.ticksExisted < 100) {
-        speedHReduction = 1.5;
+        speedHReduction = 1.2;
         speedVReduction = 6;
       }
       else if (this.ticksExisted < 150) {
-        speedHReduction = 1.3;
-        speedVReduction = 3;
+        speedHReduction = 1.1;
+        speedVReduction = 2;
       }
       else if (this.ticksExisted < 500) {
-        speedHReduction = 1.3;
+        speedHReduction = 1;
         speedVReduction = 1.1;
       }
       //else no reduction
