@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.wandblaze;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseItemScepter;
+import com.lothrazar.cyclicmagic.item.base.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-public class ItemProjectileBlaze extends BaseItemScepter implements IHasRecipe {
+public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRecipe {
   public ItemProjectileBlaze() {
     super(1000);
   }

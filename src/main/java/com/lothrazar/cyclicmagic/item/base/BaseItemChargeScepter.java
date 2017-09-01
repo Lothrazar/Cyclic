@@ -1,14 +1,9 @@
 package com.lothrazar.cyclicmagic.item.base;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher.ActionType;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,12 +29,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * TODO: ItemPlayerLauncher should also extend this
+ * TODO: extend BaseItemProjectile? then make a third intermediate for the single use ones? maybe
+ * 
  * 
  * @author Sam
  *
  */
-public abstract class BaseItemScepter extends BaseTool {
+public abstract class BaseItemChargeScepter extends BaseTool {
   private static final float VELOCITY_MAX = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
@@ -47,7 +43,7 @@ public abstract class BaseItemScepter extends BaseTool {
   private static final int TICKS_USING = 93000;
   private static final int COOLDOWN = 5;
   public enum ActionType {
-    SINGLE, MULTI, TRIPLE;
+    SINGLE, DOUBLE, TRIPLE;
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
     public static void toggle(ItemStack wand) {
@@ -85,7 +81,7 @@ public abstract class BaseItemScepter extends BaseTool {
       }
     }
   }
-  public BaseItemScepter(int durability) {
+  public BaseItemChargeScepter(int durability) {
     super(durability);
   }
   @SubscribeEvent
@@ -152,7 +148,7 @@ public abstract class BaseItemScepter extends BaseTool {
         shootMain(world, player, velocityFactor, damage);
         shots = 3;
       break;
-      case MULTI:
+      case DOUBLE:
         shootTwins(world, player, velocityFactor, damage);
         shots = 2;
       break;
