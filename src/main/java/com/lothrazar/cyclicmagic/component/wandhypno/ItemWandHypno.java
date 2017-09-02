@@ -26,8 +26,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ItemWandHypno extends BaseTool implements IHasRecipe {
-  private static final double TRIGGERODDS = 0.5;
-  private static final double RANGE = 32.0;
+  //private static final double TRIGGERODDS = 0.5;
+  private static final double RANGE = 16.0;
   private static final int durability = 2000;
   private static final int cooldown = 10;
   public ItemWandHypno() {
@@ -52,11 +52,11 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
       EntityLivingBase curTarget;
       int targeted = 0;
       for (int i = 0; i < trimmedTargets.size(); i++) {
-        cur = targets.get(i);
+        cur = trimmedTargets.get(i);
         cur.setRevengeTarget(null);
-        int j = world.rand.nextInt(targets.size());
+        int j = world.rand.nextInt(trimmedTargets.size());
         if (j != i) {//&& world.rand.nextDouble() < TRIGGERODDS
-          curTarget = targets.get(j);
+          curTarget = trimmedTargets.get(j);
           //          cur.attackEntityFrom( DamageSource.causeMobDamage(curTarget), 0);
           cur.setRevengeTarget(curTarget);
           cur.setLastAttackedEntity(curTarget);
