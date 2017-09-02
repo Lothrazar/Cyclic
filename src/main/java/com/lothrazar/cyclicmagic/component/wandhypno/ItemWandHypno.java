@@ -99,6 +99,6 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
-    return true;
+    return false;
   }
 }
