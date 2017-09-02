@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -33,22 +34,23 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
     super(durability);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
-    ItemStack held = playerIn.getHeldItem(hand);
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
     if (!world.isRemote) {
-      int x = playerIn.getPosition().getX();
-      int y = playerIn.getPosition().getY();
-      int z = playerIn.getPosition().getZ();
+      int x = player.getPosition().getX();
+      int y = player.getPosition().getY();
+      int z = player.getPosition().getZ();
       List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
       ArrayList<EntityLivingBase> trimmedTargets = new ArrayList<EntityLivingBase>();
       for (int i = 0; i < targets.size(); i++) {
-        if (targets.get(i).getUniqueID().compareTo(playerIn.getUniqueID()) != 0
+        if (targets.get(i).getUniqueID().compareTo(player.getUniqueID()) != 0
             && targets.get(i).isCreatureType(EnumCreatureType.MONSTER, false)) {
           trimmedTargets.add(targets.get(i));
         }
       }
       EntityLivingBase cur;
       EntityLivingBase curTarget;
+      int targeted = 0;
       for (int i = 0; i < trimmedTargets.size(); i++) {
         cur = targets.get(i);
         cur.setRevengeTarget(null);
@@ -60,11 +62,15 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
           cur.setLastAttackedEntity(curTarget);
           net.minecraftforge.common.ForgeHooks.onLivingSetAttackTarget(cur, curTarget);
           UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, cur.getPosition());
+          targeted++;
         }
       }
+      if (targeted == 0) {
+        UtilChat.sendStatusMessage(player, "wand.result.notargets");
+      }
     }
-    playerIn.getCooldownTracker().setCooldown(held.getItem(), cooldown);
-    super.onUse(held, playerIn, world, hand);
+    player.getCooldownTracker().setCooldown(held.getItem(), cooldown);
+    super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
   @Override

@@ -59,21 +59,19 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean dynamiteSafe;
   private boolean dynamiteMining;
   private boolean magicNet;
+  private boolean enableChaos;
+  private boolean enableMissile;
   @Override
   public void onPreInit() {
-
-    ItemWandHypno wand_hypno = new ItemWandHypno();
-    ItemRegistry.register(wand_hypno, "wand_hypno", GuideCategory.ITEMTHROW);
-    
-    
-    ItemMagicMissile magic_missile = new ItemMagicMissile();
-    ItemRegistry.register(magic_missile, "magic_missile", GuideCategory.ITEMTHROW);
-    
-    EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class,"magic_missile",1020);
-    
-    
-    
-    
+    if (enableChaos) {
+      ItemWandHypno wand_hypno = new ItemWandHypno();
+      ItemRegistry.register(wand_hypno, "wand_hypno", GuideCategory.ITEMTHROW);
+    }
+    if (enableMissile) {
+      ItemMagicMissile magic_missile = new ItemMagicMissile();
+      ItemRegistry.register(magic_missile, "wand_missile", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
+    }
     if (enableEnderBlaze) {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
@@ -210,6 +208,8 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableChaos = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMissile = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     magicNet = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

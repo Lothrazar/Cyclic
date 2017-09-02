@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -31,22 +32,25 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
     super(durability);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
-    ItemStack held = playerIn.getHeldItem(hand);
-    int x = playerIn.getPosition().getX();
-    int y = playerIn.getPosition().getY();
-    int z = playerIn.getPosition().getZ();
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
+    int x = player.getPosition().getX();
+    int y = player.getPosition().getY();
+    int z = player.getPosition().getZ();
     if (!world.isRemote) {
       for (int k = 0; k < SHOTSPERUSE; k ++){
       List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
       ArrayList<EntityLivingBase> trimmedTargets = new ArrayList<EntityLivingBase>();
       for (int i = 0; i < targets.size(); i++) {
-        if (targets.get(i).getUniqueID().compareTo(playerIn.getUniqueID()) != 0
+        if (targets.get(i).getUniqueID().compareTo(player.getUniqueID()) != 0
             && targets.get(i).isCreatureType(EnumCreatureType.MONSTER, false)) {
           trimmedTargets.add(targets.get(i));
         }
       }
-      if (trimmedTargets.size() > 0) {
+      if (trimmedTargets.size() == 0) {
+        UtilChat.sendStatusMessage(player, "wand.result.notargets");
+      }
+      else{
         EntityHomingProjectile projectile = new EntityHomingProjectile(world);
         projectile.setPosition(x, y, z);
         projectile.motionX = 0;
@@ -60,8 +64,8 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
       }
      }
     }
-    playerIn.getCooldownTracker().setCooldown(held.getItem(), cooldown);
-    super.onUse(held, playerIn, world, hand);
+    player.getCooldownTracker().setCooldown(held.getItem(), cooldown);
+    super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
   @Override

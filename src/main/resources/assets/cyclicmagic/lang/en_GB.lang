@@ -448,6 +448,12 @@ item.water_spreader.tooltip=Replace nearby flowing water with source water
 item.water_freezer.name=Water Froster
 item.water_freezer.jei=Turns source water blocks into ice.  
 item.water_freezer.tooltip=Freeze nearby water into ice
+item.wand_missile.name=Wand of Magic Missiles
+item.wand_missile.tooltip=Spawns homing missiles at nearby hostile targets
+item.wand_missile.guide=Spawns homing missiles at nearby hostile targets
+item.wand_hypno.name=Chaos Siren
+item.wand_hypno.tooltip=Confuse nearby hostiles so they attack each other
+item.wand_hypno.guide=Confuse nearby hostiles so they attack each other
 item.fire_killer.name=Fire Slayer
 item.fire_killer.tooltip=Extinguish nearby fire
 itemGroup.cyclicmagic=Cyclic
@@ -930,6 +936,6 @@ tile.spikes_diamond.guide=These spikes damage any entity touching it, as long as
 tile.spikes_iron.guide=These spikes damage any entity touching it, as long as they are turned on with redstone.  Damage per tick is in the config file.  
 tile.sprinkler.guide=This only runs while water is directly below.  It will water nearby crops, increasing their growing speed.  Multiple sprinklers in the same area do stack.  
 
-
+wand.result.notargets=No Targets Found
 tile.fire_dark.name=Dark Fire
 tile.fire_dark.tooltip=Does not harm players or destroy blocks

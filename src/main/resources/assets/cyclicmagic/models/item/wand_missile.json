@@ -1,0 +1,7 @@
+{
+ 	"parent": "cyclicmagic:parent/wand_simple",
+    "textures": {
+        "0": "blocks/obsidian",
+		"2": "blocks/emerald_block"
+    }
+}

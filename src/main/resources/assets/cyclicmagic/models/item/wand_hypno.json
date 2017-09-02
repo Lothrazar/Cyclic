@@ -1,0 +1,7 @@
+{
+ 	"parent": "cyclicmagic:parent/wand_simple",
+    "textures": {
+        "0": "blocks/purpur_block",
+		"2": "blocks/end_stone"
+    }
+}
