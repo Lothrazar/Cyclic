@@ -7,6 +7,8 @@ import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.component.wandice.ItemProjectileSnow;
 import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
 import com.lothrazar.cyclicmagic.component.wandlightning.ItemProjectileLightning;
+import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
+import com.lothrazar.cyclicmagic.component.wandmissile.ItemMagicMissile;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
@@ -58,6 +60,15 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean magicNet;
   @Override
   public void onPreInit() {
+    
+    ItemMagicMissile magic_missile = new ItemMagicMissile();
+    ItemRegistry.register(magic_missile, "magic_missile", GuideCategory.ITEMTHROW);
+    
+    EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class,"magic_missile",1020);
+    
+    
+    
+    
     if (enableEnderBlaze) {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);

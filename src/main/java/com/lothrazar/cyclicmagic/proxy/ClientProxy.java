@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
@@ -100,6 +101,8 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     RenderingRegistry.registerEntityRenderingHandler(EntityMinecartTurret.class, RenderCyclicMinecart.FACTORY_TURRET);
     //the projectiles too
+    
+    
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, EntityLightningballBolt.FACTORY);
     RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, EntitySnowballBolt.FACTORY);
     RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, EntityTorchBolt.FACTORY);
@@ -112,6 +115,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, RenderProjectile.FACTORY_DYNSAVE);
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, EntityMagicNetFull.FACTORY_BALL);
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, EntityMagicNetEmpty.FACTORY_BALLEMPTY);
+    RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, EntityHomingProjectile.FACTORY);
   }
   @SideOnly(Side.CLIENT)
   @Override
