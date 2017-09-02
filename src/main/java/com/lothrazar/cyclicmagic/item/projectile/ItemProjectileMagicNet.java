@@ -11,9 +11,11 @@ import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -68,5 +70,10 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     
     }
     UtilPlayer.decrStackSize(player, hand);
+  }
+  @Override
+  public SoundEvent getSound() {
+    // TODO Auto-generated method stub
+    return SoundEvents.ENTITY_EGG_THROW;
   }
 }

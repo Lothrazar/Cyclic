@@ -7,9 +7,11 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe {
@@ -31,5 +33,10 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
   public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityFishingBolt(world, player));
     UtilItemStack.damageItem(player, held);
+  }
+  @Override
+  public SoundEvent getSound() {
+    // TODO Auto-generated method stub
+    return SoundEvents.ENTITY_EGG_THROW;
   }
 }

@@ -11,6 +11,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,7 +28,7 @@ public abstract class BaseItemProjectile extends BaseItem {
   }
   public abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
   public abstract EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z);//, double accelX, double accelY, double accelZ
-
+  public abstract SoundEvent getSound();
   public void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       // func_184538_a
@@ -37,7 +38,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     }
     player.swingArm(hand);
     BlockPos pos = player.getPosition();
-    UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
+    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS);
     
   }
   public void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {

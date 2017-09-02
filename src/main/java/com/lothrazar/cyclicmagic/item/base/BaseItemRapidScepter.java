@@ -10,6 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -30,7 +31,9 @@ public abstract class BaseItemRapidScepter extends BaseTool {
   public BaseItemRapidScepter(int durability) {
     super(durability);
   }
- 
+
+  public abstract SoundEvent getSound();
+  public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
@@ -76,7 +79,6 @@ public abstract class BaseItemRapidScepter extends BaseTool {
     projLeft.posZ += vecCrossLeft.z;
     this.launchProjectile(world, player, projLeft, velocityFactor );
   }
-  public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn

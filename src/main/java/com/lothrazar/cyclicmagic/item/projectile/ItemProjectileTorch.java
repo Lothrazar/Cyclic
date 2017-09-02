@@ -7,9 +7,11 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -33,5 +35,10 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityTorchBolt(world, player));
     UtilPlayer.decrStackSize(player, hand);
+  }
+  @Override
+  public SoundEvent getSound() {
+    // TODO Auto-generated method stub
+    return SoundEvents.ENTITY_EGG_THROW;
   }
 }

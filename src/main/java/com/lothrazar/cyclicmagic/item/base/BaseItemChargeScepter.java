@@ -18,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -29,7 +30,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * TODO: extend BaseItemProjectile? then make a third intermediate for the single use ones? maybe
+ * TODO: extend BaseItemProjectile? then make a third intermediate for the
+ * single use ones? maybe
  * 
  * 
  * @author Sam
@@ -84,6 +86,8 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   public BaseItemChargeScepter(int durability) {
     super(durability);
   }
+  public abstract SoundEvent getSound();
+  public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -180,7 +184,6 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     projLeft.posZ += vecCrossLeft.z;
     this.launchProjectile(world, player, projLeft, velocityFactor * VELOCITY_MAX);
   }
-  public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
@@ -188,6 +191,6 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       world.spawnEntity(thing);
     }
     BlockPos pos = player.getPosition();
-    UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
+    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS);
   }
 }

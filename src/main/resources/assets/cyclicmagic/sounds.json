@@ -12,6 +12,12 @@
 	"pow"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pow"}]},
 	"thunk"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:thunk"}]},
 	"warp"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:warp"}]},
+	"dungeonfinder": {"category" : "player", "sounds" : [{"name":"cyclicmagic:dungeonfinder"}]},
+	"firelaunch"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:firelaunch"}]},
+	"goodlaunch"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:goodlaunch"}]},
+	"laserbeanpew" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:laserbeanpew"}]},
+	"powerupscales": {"category" : "player", "sounds" : [{"name":"cyclicmagic:powerupscales"}]},
+	"spikemaybe"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikemaybe"}]},
 	"spikes_out": {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_out"}]},
-	"spikes_in" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_in"}]}
+	"spikes_in"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_in"}]}
 }

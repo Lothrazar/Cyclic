@@ -6,8 +6,10 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class ItemProjectileTNT extends BaseItemProjectile {
@@ -50,5 +52,10 @@ public class ItemProjectileTNT extends BaseItemProjectile {
     }
     this.doThrow(world, player, hand, d);
     UtilPlayer.decrStackSize(player, hand);
+  }
+  @Override
+  public SoundEvent getSound() {
+    // TODO Auto-generated method stub
+    return SoundEvents.ENTITY_EGG_THROW;
   }
 }
