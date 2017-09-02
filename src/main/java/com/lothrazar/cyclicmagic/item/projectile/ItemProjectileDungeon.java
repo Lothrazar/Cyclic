@@ -72,6 +72,6 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.goodlaunch;
+    return SoundRegistry.dungeonfinder;
   }
 }
