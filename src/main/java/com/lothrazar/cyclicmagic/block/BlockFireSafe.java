@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTNT;
@@ -9,12 +11,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFireSafe extends BlockFire {
   public BlockFireSafe() {
@@ -22,11 +28,11 @@ public class BlockFireSafe extends BlockFire {
     this.setHardness(0.0F).setLightLevel(1.0F);
     this.enableStats = false;
     this.blockSoundType = SoundType.CLOTH;
-    //   this.registerBlockWithStateMapper(Blocks.FIRE, (new StateMap.Builder()).ignore(BlockFire.AGE).build());
-    //above from client.redner.blockmodelshapes
   }
-  protected boolean isVanillaSource() {
-    return false;
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -35,7 +41,7 @@ public class BlockFireSafe extends BlockFire {
         worldIn.setBlockToAir(pos);
       }
       Block block = worldIn.getBlockState(pos.down()).getBlock();
-      boolean flag =block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
+      boolean flag = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
       int intAge = ((Integer) state.getValue(AGE)).intValue();
       if (!flag && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + (float) intAge * 0.03F) {
         worldIn.setBlockToAir(pos);
@@ -143,8 +149,9 @@ public class BlockFireSafe extends BlockFire {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase) {
-      //TODO: any entities immune to this?
+    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
+        && !(entityIn instanceof EntityPlayer)) {
+   
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(PotionEffectRegistry.SNOW)) {
         e.setFire(10);

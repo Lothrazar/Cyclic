@@ -932,3 +932,4 @@ tile.sprinkler.guide=This only runs while water is directly below.  It will wate
 
 
 tile.fire_dark.name=Dark Fire
+tile.fire_dark.tooltip=Does not harm players or destroy blocks
