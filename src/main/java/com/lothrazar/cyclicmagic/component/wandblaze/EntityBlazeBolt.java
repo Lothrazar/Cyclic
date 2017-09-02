@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,9 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityBlazeBolt extends EntityThrowableDispensable {
+  float damage = 1;
   public static final int fireSeconds = 3;
-  public static final boolean damageEntityOnHit = true;
-
   public static final FactoryFire FACTORY_FIRE = new FactoryFire();
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
     @Override
@@ -42,15 +42,8 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
       // do the snowball damage, which should be none. put out the fire
-      if (damageEntityOnHit) {
-        float damage = 1;
-        if (mop.entityHit instanceof EntityBlaze) {
-          damage = 0;
-        }
+      if (mop.entityHit.isCreatureType(EnumCreatureType.MONSTER, false)) {
         mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
-      }
-      if (mop.entityHit.isBurning() == false && fireSeconds > 0) {
-        mop.entityHit.setFire(fireSeconds);
       }
     }
     BlockPos pos = mop.getBlockPos();
@@ -72,7 +65,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
       if (world.isAirBlock(pos)) {
         toSetFire.add(pos);
         // turn flowing water into solid
-//        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
+        //        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
       }
       if (world.isAirBlock(pos.offset(EnumFacing.EAST))) {
         toSetFire.add(pos.offset(EnumFacing.EAST));
@@ -108,8 +101,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
         }
       }
       for (BlockPos p : toSetFire) {
-     
-        world.setBlockState(p,    Block.getBlockFromName("cyclicmagic:fire_dark").getDefaultState());
+        world.setBlockState(p, Block.getBlockFromName("cyclicmagic:fire_dark").getDefaultState());
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }

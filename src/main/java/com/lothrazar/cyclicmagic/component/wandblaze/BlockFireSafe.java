@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.component.wandblaze;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFireSafe extends BlockFire {
+  private static final int FIRESECONDS = 10;
   public BlockFireSafe() {
     super();
     this.setHardness(0.0F).setLightLevel(1.0F);
@@ -138,10 +140,7 @@ public class BlockFireSafe extends BlockFire {
         }
         worldIn.setBlockState(pos, this.getDefaultState().withProperty(AGE, Integer.valueOf(j)), 3);
       }
-      //          else
-      //          {
-      //              worldIn.setBlockToAir(pos);
-      //          }
+    
       if (iblockstate.getBlock() == Blocks.TNT) {
         Blocks.TNT.onBlockDestroyedByPlayer(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
       }
@@ -153,9 +152,10 @@ public class BlockFireSafe extends BlockFire {
         && !(entityIn instanceof EntityPlayer)) {
    
       EntityLivingBase e = ((EntityLivingBase) entityIn);
-      if (!e.isPotionActive(PotionEffectRegistry.SNOW)) {
-        e.setFire(10);
-        e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
+      if (!e.isPotionActive(PotionEffectRegistry.SNOW)
+          && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
+        e.setFire(FIRESECONDS);
+        //e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
       }
     }
     super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);

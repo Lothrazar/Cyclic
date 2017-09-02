@@ -17,7 +17,6 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
   @Override
   public EntityBlazeBolt createBullet(World world, EntityPlayer player, float dmg) {
     EntityBlazeBolt s = new EntityBlazeBolt(world, player);
-//    s.setDamage(dmg);
     return s;
   }
   @Override

@@ -26,6 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntitySnowballBolt extends EntityThrowableDispensable {
+  private static final int SLOWNESSLEVEL = 2;
+  private static final int POTIONSECONDS = 30;
   public static final FactorySnow FACTORY = new FactorySnow();
   public static class FactorySnow implements IRenderFactory<EntitySnowballBolt> {
     @Override
@@ -71,7 +73,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
   public void onHitPlayer(RayTraceResult mop, EntityPlayer entityHit) {
     //not slowness only snow
     entityHit.extinguish();
-    entityHit.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
+    entityHit.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * POTIONSECONDS));
   }
   public void onHitEntity(RayTraceResult mop) {
     EntityLivingBase e = (EntityLivingBase) mop.entityHit;
@@ -79,7 +81,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       e.extinguish();
     }
     e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
-    e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 30, 2));
+    e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 30, SLOWNESSLEVEL));
     // do the snowball damage, which should be none. put out the fire
     mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
   }
