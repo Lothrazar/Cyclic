@@ -109,7 +109,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
       }
       for (BlockPos p : toSetFire) {
      
-        world.setBlockState(p,    Block.getBlockFromName("cyclicmagic:fire").getDefaultState());
+        world.setBlockState(p,    Block.getBlockFromName("cyclicmagic:fire_dark").getDefaultState());
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }

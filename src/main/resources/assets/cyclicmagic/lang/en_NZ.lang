@@ -929,3 +929,6 @@ tile.clock.guide=This redstone clock lets you control the number of ticks that i
 tile.spikes_diamond.guide=These spikes damage any entity touching it, as long as they are turned on with redstone.  Diamond spikes kill as if damaged by a player, so this includes so called player-only drops such as spider eyes, as well as EXP landing on the ground.  Damage per tick is in the config file.  
 tile.spikes_iron.guide=These spikes damage any entity touching it, as long as they are turned on with redstone.  Damage per tick is in the config file.  
 tile.sprinkler.guide=This only runs while water is directly below.  It will water nearby crops, increasing their growing speed.  Multiple sprinklers in the same area do stack.  
+
+
+tile.fire_dark.name=Dark Fire

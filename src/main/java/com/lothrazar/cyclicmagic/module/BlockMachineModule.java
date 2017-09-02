@@ -60,7 +60,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     
     
     BlockFireSafe fire = new BlockFireSafe();
-    BlockRegistry.registerBlock(fire, "fire", null);
+    BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableClock) {
       BlockRedstoneClock clock = new BlockRedstoneClock();
       BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCK);
