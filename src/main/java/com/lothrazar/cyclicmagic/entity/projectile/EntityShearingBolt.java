@@ -18,9 +18,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityShearingBolt extends EntityThrowableDispensable {
+  private static final int FORTUNE = 3;
   public static final FactoryShear FACTORY = new FactoryShear();
   public static class FactoryShear implements IRenderFactory<EntityShearingBolt> {
     @Override
@@ -41,42 +43,32 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
   @Override
   protected void processImpact(RayTraceResult mop) {
     World world = getEntityWorld();
-    if (mop.entityHit != null && mop.entityHit instanceof EntitySheep) {
+    //process entity hit if any
+    if (mop.entityHit != null && mop.entityHit instanceof IShearable) {
       try {
-        EntitySheep sheep = (EntitySheep) mop.entityHit;
-        // imported from MY unreleased/abandoned BlockShearWool.java in./FarmingBlocks/// fleece colour might be null? maybe causing bug #120
-        //if this sheep is not sheared, AND ->  either an adult, or child that passes config
-        if (sheep.getSheared() == false && sheep.getFleeceColor() != null &&
-            (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true))) {
-          if (world.isRemote == false) {
-            sheep.setSheared(true);
-            int i = 2 + world.rand.nextInt(6);
-            for (int j = 0; j < i; ++j) {
-              EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);
-              entityitem.motionY += (double) (world.rand.nextFloat() * 0.05F);
-              entityitem.motionX += (double) ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F);
-              entityitem.motionZ += (double) ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F);
-            }
-          }
+        IShearable target = (IShearable) mop.entityHit;
+        BlockPos ePos = mop.entityHit.getPosition();
+        if (target.isShearable(null, world, ePos)) {
+          java.util.List<ItemStack> drops = target.onSheared(null, world, ePos, FORTUNE);
+          UtilItemStack.dropItemStacksInWorld(world, ePos, drops);
+          UtilSound.playSound(world, ePos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
           this.setDead();
-          UtilSound.playSound(world, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
         }
       }
-      catch (Exception e) {
+      catch (Exception e) { //keep because a modded entity could be shearable and have issues
         // https://github.com/PrinceOfAmber/Cyclic/issues/120
         ModCyclic.logger.error(e.getMessage());
       }
     }
     if (this.isDead || mop.getBlockPos() == null) { return; }
+    //process block hit if its shearable
     BlockPos pos = mop.getBlockPos();
-    //    if (sideHit != null) {
-    //      pos = mop.getBlockPos().offset(sideHit);
-    //    }
+    //process block hit if its shearable
     Block block = world.getBlockState(pos).getBlock();
     if (block instanceof net.minecraftforge.common.IShearable) {
       net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable) block;
       if (target.isShearable(null, world, pos)) {
-        java.util.List<ItemStack> drops = target.onSheared(null, world, pos, 1);
+        java.util.List<ItemStack> drops = target.onSheared(null, world, pos, FORTUNE);
         for (ItemStack stack : drops) {
           float f = 0.7F;
           double d = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;

@@ -29,6 +29,8 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
   }
   public EntityTorchBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
+  
+ 
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
