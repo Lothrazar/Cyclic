@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.component.wandhypno.ItemWandHypno;
 import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.component.wandice.ItemProjectileSnow;
 import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
@@ -60,6 +61,10 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean magicNet;
   @Override
   public void onPreInit() {
+
+    ItemWandHypno wand_hypno = new ItemWandHypno();
+    ItemRegistry.register(wand_hypno, "wand_hypno", GuideCategory.ITEMTHROW);
+    
     
     ItemMagicMissile magic_missile = new ItemMagicMissile();
     ItemRegistry.register(magic_missile, "magic_missile", GuideCategory.ITEMTHROW);
