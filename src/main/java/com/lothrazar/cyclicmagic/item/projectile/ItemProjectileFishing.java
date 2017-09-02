@@ -19,6 +19,7 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
+    
   }
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
