@@ -48,42 +48,45 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
-    BlockPos pos = mop.getBlockPos();
-    if (pos == null) { return; }
     World world = getEntityWorld();
-    UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, pos);
     if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
-      onHitEntity(mop);
+      UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, mop.entityHit.getPosition());
       if (mop.entityHit instanceof EntityPlayer) {
         onHitPlayer(mop, (EntityPlayer) mop.entityHit);
+      }
+      else {
+        onHitEntity(mop);
       }
       this.setDead();
     }
     else if (this.isInWater()) {
       onHitWater(mop);
+      this.setDead();
     }
     else {
       onHitGround(mop);
+      this.setDead();
     }
-    this.setDead();
   }
   public void onHitPlayer(RayTraceResult mop, EntityPlayer entityHit) {
-    //
+    //not slowness only snow
+    entityHit.extinguish();
+    entityHit.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
   }
   public void onHitEntity(RayTraceResult mop) {
     EntityLivingBase e = (EntityLivingBase) mop.entityHit;
     if (e.isBurning()) {
       e.extinguish();
     }
-    else {
-      e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
-      e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 30, 2));
-    }
+    e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 30));
+    e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 30, 2));
     // do the snowball damage, which should be none. put out the fire
     mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
   }
   public void onHitGround(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
+    if (pos == null) { return; }
+    UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, pos);
     World world = getEntityWorld();
     if (mop.sideHit != null) {
       world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
