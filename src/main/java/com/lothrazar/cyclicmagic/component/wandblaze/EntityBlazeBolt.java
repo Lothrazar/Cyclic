@@ -26,7 +26,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
     @Override
     public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
-      return new RenderBall<EntityBlazeBolt>(rm, "fire");
+      return new RenderBall<EntityBlazeBolt>(rm, "fire_dark");
     }
   }
   public EntityBlazeBolt(World worldIn) {

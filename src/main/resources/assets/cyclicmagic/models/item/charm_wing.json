@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/charm_wing"
+        "layer0": "cyclicmagic:items/charm/charm_wing"
     }
 }

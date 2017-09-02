@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/turret_minecart"
+        "layer0": "cyclicmagic:items/minecart/turret_minecart"
     }
 }
