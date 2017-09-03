@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-@SuppressWarnings("unused")
+ 
 public class ItemProjectileLightning extends BaseItemChargeScepter implements IHasRecipe {
   public ItemProjectileLightning() {
     super(20);

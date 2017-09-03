@@ -101,7 +101,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
     if (enderWater) {
       ItemProjectileWater ender_water = new ItemProjectileWater();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
-
+      ModCyclic.instance.events.register(ender_water);
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();

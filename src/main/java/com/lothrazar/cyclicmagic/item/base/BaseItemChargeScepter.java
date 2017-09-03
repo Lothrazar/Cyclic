@@ -88,11 +88,12 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   }
   public abstract SoundEvent getSound();
   public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
+  //start of toggle fns
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
-    if (held != null && held.getItem() == this) {
+    if (held.getItem() == this) {
       //did we turn it off? is the visible timer still going?
       if (ActionType.getTimeout(held) > 0) { return; }
       ActionType.setTimeout(held);
@@ -114,6 +115,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   public void onUpdate(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
   }
+  //end of toggle fns
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return TICKS_USING;//bow has 72000
