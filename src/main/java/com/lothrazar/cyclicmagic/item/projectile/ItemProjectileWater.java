@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileWater extends BaseTool implements IHasRecipe {
   private static final int HEIGHT = 3;
-  private static final int RADIUS = 3;
+  private static final int RADIUS = 4;
   public static enum ActionType {
     WATER, LAVA, GENERIC;
     private final static String NBT = "ActionType";
@@ -85,7 +85,7 @@ public class ItemProjectileWater extends BaseTool implements IHasRecipe {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack stack = playerIn.getHeldItem(hand);
-    List<BlockPos> shape = UtilShape.cubeFilled(playerIn.getPosition(), RADIUS, HEIGHT);
+    List<BlockPos> shape = UtilShape.cubeFilled(playerIn.getPosition().down(), RADIUS, HEIGHT);
     List<BlockPos> queuedToUpdate = new ArrayList<BlockPos>();
     int success = 0;
     for (BlockPos pos : shape) {

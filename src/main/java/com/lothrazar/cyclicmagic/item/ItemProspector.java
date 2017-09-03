@@ -102,11 +102,11 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " sg",
-        " bs",
+        "  g",
+        " i ",
         "b  ",
+        'i',"ingotIron",
         'b', new ItemStack(Items.BLAZE_ROD),
-        's', "gemDiamond",
         'g', "blockGlassLightBlue");
   }
   @Override

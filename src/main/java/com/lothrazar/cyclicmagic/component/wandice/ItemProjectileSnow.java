@@ -18,10 +18,14 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
-        "cobblestone",
-        new ItemStack(Blocks.ICE),
-        new ItemStack(Items.SNOWBALL));
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        " sc",
+        " rs",
+        "i  ",
+        'c', Blocks.ICE,
+        's', Blocks.SNOW,
+        'r', "dustRedstone",
+        'i', "ingotIron");
   }
   @Override
   public EntitySnowballBolt createBullet(World world, EntityPlayer player, float dmg) {

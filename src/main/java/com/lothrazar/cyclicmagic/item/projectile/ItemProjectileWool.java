@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe, IHasConfig {
+public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe {
   public ItemProjectileWool() {
     super();
     this.setMaxDamage(1000);
@@ -33,15 +34,14 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
     return new EntityShearingBolt(world, x, y, z);
   }
   @Override
-  public void syncConfig(Configuration config) {
-    EntityShearingBolt.doesShearChild = config.getBoolean("Ender Shears Child", Const.ConfigCategory.items, true, "Ender shears work on child sheep");
-  }
-  @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32),
-        new ItemStack(Blocks.MOSSY_COBBLESTONE),
-        new ItemStack(Blocks.WOOL),
-        new ItemStack(Items.SHEARS));
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        " cs",
+        " sc",
+        "t  ",
+        'c',new ItemStack(Blocks.MOSSY_COBBLESTONE),
+        't',new ItemStack(Blocks.CACTUS),
+        's',new ItemStack(Items.SHEARS));
   }
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
@@ -50,8 +50,7 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   public SoundEvent getSound() {
- 
-    return SoundEvents.ENTITY_EGG_THROW;
+    return SoundRegistry.metal_pitch;
   }
   /**
    * Returns true if the item can be used on the given entity, e.g. shears on
@@ -111,17 +110,13 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
     return false;
   }
   @Override
-  public float getStrVsBlock(ItemStack stack, IBlockState state)
-  {
-      Block block = state.getBlock();
-
-      if (block != Blocks.WEB && state.getMaterial() != Material.LEAVES)
-      {
-          return block == Blocks.WOOL ? 5.0F : super.getStrVsBlock(stack, state);
-      }
-      else
-      {
-          return 15.0F;
-      }
+  public float getStrVsBlock(ItemStack stack, IBlockState state) {
+    Block block = state.getBlock();
+    if (block != Blocks.WEB && state.getMaterial() != Material.LEAVES) {
+      return block == Blocks.WOOL ? 5.0F : super.getStrVsBlock(stack, state);
+    }
+    else {
+      return 15.0F;
+    }
   }
 }

@@ -21,7 +21,13 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.FIRE_CHARGE), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.FLINT));
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        " cc",
+        "fbc",
+        "ff ",
+        'c', new ItemStack(Items.FIRE_CHARGE),
+        'b', new ItemStack(Items.BLAZE_POWDER),
+        'f', new ItemStack(Items.FLINT));
   }
   @Override
   public SoundEvent getSound() {

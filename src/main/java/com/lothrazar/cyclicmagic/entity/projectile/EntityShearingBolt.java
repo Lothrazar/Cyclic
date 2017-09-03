@@ -29,8 +29,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
     public Render<? super EntityShearingBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityShearingBolt>(rm, "shears");
     }
-  }
-  public static boolean doesShearChild;
+  } 
   public EntityShearingBolt(World worldIn) {
     super(worldIn);
   }

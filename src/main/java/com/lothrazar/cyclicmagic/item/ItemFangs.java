@@ -96,10 +96,10 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
         " dp",
         "r w",
         'w', Blocks.WEB,
-        'r', Blocks.END_ROD,
+        'r', Items.BLAZE_ROD,
         'c', Items.END_CRYSTAL,
         'p', Blocks.ICE, //ore dict ice doesnt exist
-        'd', "blockEmerald");
+        'd', "gemEmerald");
   }
   @SubscribeEvent
   public void onAttack(LivingHurtEvent event) {

@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -19,7 +20,6 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
-    
   }
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
@@ -27,11 +27,15 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this)
-        , "enderpearl", "gunpowder", "string");
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "ggg",
+        " fg",
+        "f  ",
+        'f', Items.FISHING_ROD,
+        'g', "gunpowder");
   }
   @Override
-  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityFishingBolt(world, player));
     UtilItemStack.damageItem(player, held);
   }
