@@ -10,26 +10,25 @@ import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt
 import com.lothrazar.cyclicmagic.component.wandlightning.ItemProjectileLightning;
 import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
 import com.lothrazar.cyclicmagic.component.wandmissile.ItemMagicMissile;
+import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.component.wandspawner.ItemProjectileDungeon;
+import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.component.wandtorch.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt; 
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileDungeon;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
@@ -102,8 +101,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
     if (enderWater) {
       ItemProjectileWater ender_water = new ItemProjectileWater();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
-      EntityWaterBolt.renderSnowball = ender_water;
+
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();

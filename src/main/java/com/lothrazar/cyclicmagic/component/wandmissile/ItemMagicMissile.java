@@ -77,27 +77,17 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    //    switch (orbType) {
-    //      case MOUNTED:
-    //        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-    //            "ere",
-    //            "rsr",
-    //            "ere",
-    //            'e', new ItemStack(Items.ENDER_EYE),
-    //            'r', "dyeBlue",
-    //            's', "blockIron");
-    //      case NORMAL:
-    //        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-    //            "ere",
-    //            "rsr",
-    //            "ere",
-    //            'e', new ItemStack(Items.ENDER_EYE),
-    //            'r', "dustRedstone",
-    //            's', "blockIron");
-    //      default:
-    //      break;
-    //    }
-    return null;
+ 
+             return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+                "dcd",
+                " b ",
+                "rbr",
+                'd', "gemDiamond",
+                'c', new ItemStack(Items.GHAST_TEAR),
+                'r', "ingotGold",
+                'b', "ingotIron");
+ 
+ 
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

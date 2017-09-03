@@ -1,4 +1,6 @@
-package com.lothrazar.cyclicmagic.entity.projectile;
+package com.lothrazar.cyclicmagic.component.wandspawner;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;

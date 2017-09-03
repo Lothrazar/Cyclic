@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -10,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
@@ -80,27 +82,15 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    //    switch (orbType) {
-    //      case MOUNTED:
-    //        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-    //            "ere",
-    //            "rsr",
-    //            "ere",
-    //            'e', new ItemStack(Items.ENDER_EYE),
-    //            'r', "dyeBlue",
-    //            's', "blockIron");
-    //      case NORMAL:
-    //        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-    //            "ere",
-    //            "rsr",
-    //            "ere",
-    //            'e', new ItemStack(Items.ENDER_EYE),
-    //            'r', "dustRedstone",
-    //            's', "blockIron");
-    //      default:
-    //      break;
-    //    }
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "dcd",
+        " b ",
+        "rbr",
+        'd', "blockGold",
+        'c', new ItemStack(Items.GHAST_TEAR),
+        'r', "dyeBlue",
+        'b', "ingotIron");
+    
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

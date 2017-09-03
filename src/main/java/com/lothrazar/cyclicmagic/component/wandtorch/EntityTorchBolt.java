@@ -1,4 +1,6 @@
-package com.lothrazar.cyclicmagic.entity.projectile;
+package com.lothrazar.cyclicmagic.component.wandtorch;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.renderer.entity.Render;

@@ -1,6 +1,5 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.component.wandtorch;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
