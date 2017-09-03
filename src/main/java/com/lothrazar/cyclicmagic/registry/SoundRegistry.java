@@ -29,6 +29,16 @@ public class SoundRegistry {
   public static SoundEvent laserbeanpew;
   public static SoundEvent powerupscales;
   public static SoundEvent spikemaybe;
+  public static SoundEvent bass_echo;
+  public static SoundEvent coin;
+  public static SoundEvent crack;
+  public static SoundEvent explosm;
+  public static SoundEvent guitar;
+  public static SoundEvent hovering;
+  public static SoundEvent magic_missile;
+  public static SoundEvent metal_pitch;
+  public static SoundEvent pew_long;
+  public static SoundEvent pschew_fire;
   public static void register() {
     basey = registerSound("basey");//used by storage bag deposit
     bip = registerSound("bip");//cyclic wand GUI rotation
@@ -50,6 +60,16 @@ public class SoundRegistry {
     goodlaunch = registerSound("goodlaunch");
     laserbeanpew = registerSound("laserbeanpew");
     powerupscales = registerSound("powerupscales");
+    bass_echo = registerSound("bass_echo");
+    coin = registerSound("coin");
+    crack = registerSound("crack");
+    explosm = registerSound("explosm");
+    guitar = registerSound("guitar");
+    hovering = registerSound("hovering");
+    magic_missile = registerSound("magic_missile");
+    metal_pitch = registerSound("metal_pitch");
+    pew_long = registerSound("pew_long");
+    pschew_fire = registerSound("pschew_fire");
     spikemaybe = registerSound("spikemaybe");
   }
   private static SoundEvent registerSound(String name) {

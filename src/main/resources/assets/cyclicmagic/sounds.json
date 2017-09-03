@@ -18,6 +18,16 @@
 	"laserbeanpew" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:laserbeanpew"}]},
 	"powerupscales": {"category" : "player", "sounds" : [{"name":"cyclicmagic:powerupscales"}]},
 	"spikemaybe"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikemaybe"}]},
-	"spikes_out": {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_out"}]},
-	"spikes_in"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_in"}]}
+	"spikes_out"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_out"}]},
+	"spikes_in"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_in"}]},
+	"bass_echo"	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bass_echo"}]},
+	"coin"   	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:coin"}]},
+	"crack"   	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:crack"}]},
+	"explosm" 	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:explosm"}]},
+	"guitar"	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:guitar"}]},
+	"hovering"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:hovering"}]},
+	"magic_missile": {"category" : "player", "sounds" : [{"name":"cyclicmagic:magic_missile"}]},
+	"metal_pitch"  : {"category" : "player", "sounds" : [{"name":"cyclicmagic:metal_pitch"}]},
+	"pew_long"	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pew_long"}]},
+	"pschew_fire"  : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pschew_fire"}]}
 }

@@ -3,8 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +17,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,14 +31,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemWandHypno extends BaseTool implements IHasRecipe {
   //private static final double TRIGGERODDS = 0.5;
   private static final double RANGE = 16.0;
-  private static final int durability = 2000;
-  private static final int cooldown = 10;
+  private static final int durability = 100;
+  private static final int COOLDOWN = 60;
   public ItemWandHypno() {
     super(durability);
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
+    UtilSound.playSound(player, SoundRegistry.powerupscales);
     if (!world.isRemote) {
       int x = player.getPosition().getX();
       int y = player.getPosition().getY();
@@ -68,8 +72,9 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
       if (targeted == 0) {
         UtilChat.sendStatusMessage(player, "wand.result.notargets");
       }
+       
     }
-    player.getCooldownTracker().setCooldown(held.getItem(), cooldown);
+    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }

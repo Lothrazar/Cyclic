@@ -43,7 +43,7 @@ public abstract class BaseItemRapidScepter extends BaseTool {
     float amountCharged =  MAX_CHARGE;
  
     //between 0.3 and 5.1 roughly
-    UtilChat.sendStatusMessage(player, amountCharged + "");
+  //  UtilChat.sendStatusMessage(player, amountCharged + "");
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
     int shots = 0;
     double rand = world.rand.nextDouble();
