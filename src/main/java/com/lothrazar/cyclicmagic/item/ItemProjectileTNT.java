@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.projectile;
+package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;

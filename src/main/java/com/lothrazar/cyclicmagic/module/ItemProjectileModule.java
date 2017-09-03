@@ -23,14 +23,14 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt; 
+import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.item.ItemProjectileFishing;
+import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
+import com.lothrazar.cyclicmagic.item.ItemProjectileTNT;
+import com.lothrazar.cyclicmagic.item.ItemShearsRanged;
+import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
+import com.lothrazar.cyclicmagic.item.ItemProjectileTNT.ExplosionType;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -89,7 +89,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
     }
     if (enderWool) {
-      ItemProjectileWool ender_wool = new ItemProjectileWool();
+      ItemShearsRanged ender_wool = new ItemShearsRanged();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
     }
@@ -99,7 +99,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
     }
     if (enderWater) {
-      ItemProjectileWater ender_water = new ItemProjectileWater();
+      ItemWaterRemoval ender_water = new ItemWaterRemoval();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
       ModCyclic.instance.events.register(ender_water);
     }

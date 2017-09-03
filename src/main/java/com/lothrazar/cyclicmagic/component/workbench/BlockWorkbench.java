@@ -24,9 +24,8 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " t ",
-        "s s",
-        "   ",
+        "ts",
+        "s ",
         't', "workbench",
         's', "cobblestone");
   }

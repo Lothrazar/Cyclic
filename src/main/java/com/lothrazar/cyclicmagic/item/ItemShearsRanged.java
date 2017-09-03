@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.projectile;
+package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -24,8 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe {
-  public ItemProjectileWool() {
+public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
+  public ItemShearsRanged() {
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);

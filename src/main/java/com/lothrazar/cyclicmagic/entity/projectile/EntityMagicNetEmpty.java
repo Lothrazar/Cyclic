@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
+import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;

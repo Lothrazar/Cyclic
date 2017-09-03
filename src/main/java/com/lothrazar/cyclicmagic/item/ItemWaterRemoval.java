@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.projectile;
+package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.common.collect.Lists;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemProjectileWater extends BaseTool implements IHasRecipe {
+public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
   private static final int HEIGHT = 3;
   private static final int RADIUS = 4;
   public static enum ActionType {
@@ -79,7 +79,7 @@ public class ItemProjectileWater extends BaseTool implements IHasRecipe {
       }
     }
   }
-  public ItemProjectileWater() {
+  public ItemWaterRemoval() {
     super(2000);
   }
   @Override

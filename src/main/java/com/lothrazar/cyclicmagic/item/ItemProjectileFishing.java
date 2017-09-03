@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.projectile;
+package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe {
   public ItemProjectileFishing() {
     super();
-    this.setMaxDamage(1000);
+    this.setMaxDamage(300);
     this.setMaxStackSize(1);
   }
   @Override
@@ -29,8 +29,9 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "ggg",
-        " fg",
-        "f  ",
+        "qfg",
+        "fqg",
+        'q', "gemQuartz",
         'f', Items.FISHING_ROD,
         'g', "gunpowder");
   }

@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -74,7 +75,6 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
       if (targeted == 0) {
         UtilChat.sendStatusMessage(player, "wand.result.notargets");
       }
-       
     }
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
@@ -84,13 +84,13 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "dcd",
-        " b ",
+        " x ",
         "rbr",
-        'd', "blockGold",
+        'd', "ingotGold",
         'c', new ItemStack(Items.GHAST_TEAR),
         'r', "dyeBlue",
-        'b', "ingotIron");
-    
+        'b', Blocks.RED_MUSHROOM_BLOCK,
+        'x', Blocks.BROWN_MUSHROOM_BLOCK);
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

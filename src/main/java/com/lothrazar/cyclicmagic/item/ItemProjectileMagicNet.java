@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.projectile;
+package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
