@@ -74,10 +74,12 @@ public class GearModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
     }
     if (enablePurpleSwords) {
+      ItemPowerSword sword_weakness = new ItemPowerSword(ItemPowerSword.SwordType.WEAK);
+      ItemRegistry.register(sword_weakness, "sword_weakness", GuideCategory.GEAR);
+      ItemPowerSword sword_slowness = new ItemPowerSword(ItemPowerSword.SwordType.SLOW);
+      ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
       ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
       ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
-      ItemPowerSword sword_frost = new ItemPowerSword(ItemPowerSword.SwordType.FROST);
-      ItemRegistry.register(sword_frost, "sword_frost", GuideCategory.GEAR);
     }
     if (enableSandstoneTools) {
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
