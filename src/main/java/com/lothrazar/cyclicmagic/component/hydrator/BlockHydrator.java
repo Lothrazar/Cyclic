@@ -100,6 +100,19 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
+    recipeList.add(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
+    }, new ItemStack(Blocks.SPONGE)));
+    recipeList.add(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
+    }, new ItemStack(Blocks.WEB, 4)));
+    recipeList.add(new RecipeHydrate(new ItemStack[] {
+        
+        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), ItemStack.EMPTY
+    }, new ItemStack(Items.PRISMARINE_SHARD)));
+    recipeList.add(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), ItemStack.EMPTY, ItemStack.EMPTY
+    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -42,6 +42,6 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.GLASS_BOTTLE);
+    return super.addRecipeAndRepair(new ItemStack(Blocks.BONE_BLOCK));
   }
 }

@@ -27,6 +27,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -129,6 +130,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     }
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
+     
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
       guiItemStacks.init(0, true, 3, Const.SQ);
       guiItemStacks.init(1, true, 3, 2 * Const.SQ);
@@ -136,7 +138,8 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
       for (int i = 0; i < TileEntityHydrator.RECIPE_SIZE; i++) {
         List<ItemStack> input = ingredients.getInputs(ItemStack.class).get(i);
-        if (input != null && input.size() > 0 && input.get(0) != null)
+ 
+        if (input != null && input.size() > 0 && input.get(0) != null && input.get(0).isEmpty() == false)
           guiItemStacks.set(i, input.get(0));
       }
       guiItemStacks.init(4, false, 129, 18);

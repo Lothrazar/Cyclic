@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class ItemProjectileLightning extends BaseItemChargeScepter implements IHasRecipe {
   public ItemProjectileLightning() {
-    super(20);
+    super(200);
   }
   @Override
   public IRecipe addRecipe() {
@@ -29,7 +29,7 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
   @Override
   public EntityLightningballBolt createBullet(World world, EntityPlayer player, float dmg) {
     EntityLightningballBolt s = new EntityLightningballBolt(world, player);
-    //  s.setDamage(dmg);
+ 
     return s;
   }
   @Override
