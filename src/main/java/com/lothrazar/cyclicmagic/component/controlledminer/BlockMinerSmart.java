@@ -32,13 +32,13 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityControlledMiner();//"tile.block_miner_smart.name"
+    return new TileEntityControlledMiner();
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlledMiner.class, new MachineTESR(this, 4));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlledMiner.class, new MachineTESR(this, TileEntityControlledMiner.TOOLSLOT_INDEX));
   }
   @Override
   public IRecipe addRecipe() {
@@ -47,10 +47,10 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
         "gbx",
         "ooo",
         'o', "obsidian",
-        'g', Items.DIAMOND_PICKAXE,
-        'x', Items.DIAMOND_AXE,
-        's', Blocks.DISPENSER,
+        'g', "gemDiamond",
+        'x', "gemDiamond",
+        's', Blocks.OBSERVER,
         'r', "blockLapis",
-        'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+        'b', Blocks.MAGMA);
   }
 }

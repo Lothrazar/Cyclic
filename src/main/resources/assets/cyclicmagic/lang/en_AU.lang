@@ -969,3 +969,5 @@ tile.nether_diamond_ore.guide=Diamond ore that spawns in the Nether.
 tile.end_diamond_ore.guide=Diamond ore that spawns in the End.
 tile.nether_redstone_ore.guide=Redstone ore that spawns in the Nether.
 tile.end_redstone_ore.guide=Redstone ore that spawns in the End.
+
+item.chest_sack.guide=This was created when a chest sack is used on a tile entity, containing all of its data for transport. 

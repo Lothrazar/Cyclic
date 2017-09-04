@@ -44,9 +44,9 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
         'o', "obsidian",
-        'g', Items.GHAST_TEAR,
+        'g', Blocks.OBSERVER,
         's', Blocks.DISPENSER,
         'r', "blockRedstone",
-        'b', "blockDiamond");
+        'b', Blocks.MAGMA);
   }
 }
