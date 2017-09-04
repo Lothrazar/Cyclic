@@ -23,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRecipe {
   public static final String NBT_ENTITYID = "id";
-  public ItemProjectileMagicNet(){
+  public ItemProjectileMagicNet() {
     super();
   }
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
@@ -59,7 +59,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     }
   }
   @Override
-  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     if (hasEntity(held)) {
       this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
       held.getTagCompound().removeTag(NBT_ENTITYID);
@@ -67,7 +67,6 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     }
     else {
       this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));
-    
     }
     UtilPlayer.decrStackSize(player, hand);
   }

@@ -19,11 +19,8 @@ public class PotionSnow extends PotionBase {
     if (world.isAirBlock(here) && world.isSideSolid(below, EnumFacing.UP)) {
       world.setBlockState(here, Blocks.SNOW_LAYER.getDefaultState());
     }
-    
-    
-    if(world.rand.nextDouble() < 0.1){
+    if (world.rand.nextDouble() < 0.1) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.SNOWBALL, here);
-      
     }
   }
 }

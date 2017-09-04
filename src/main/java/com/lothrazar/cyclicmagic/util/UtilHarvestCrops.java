@@ -233,7 +233,7 @@ public class UtilHarvestCrops {
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
       if (addDropsToList) {
-        blockCheck.getDrops(drops,world, posCurrent, blockState, 0);
+        blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
       }
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {

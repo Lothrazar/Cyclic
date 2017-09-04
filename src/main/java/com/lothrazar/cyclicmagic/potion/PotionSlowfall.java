@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.potion;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -18,7 +17,6 @@ public class PotionSlowfall extends PotionBase {
     // entity
     // a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
     // flattens out at -0.078
-
     if (entityLiving.motionY < 0) {
       entityLiving.motionY *= slowfallSpeed;
       entityLiving.fallDistance = 0f; // for no fall damage

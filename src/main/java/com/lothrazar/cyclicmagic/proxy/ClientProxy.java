@@ -99,8 +99,6 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     RenderingRegistry.registerEntityRenderingHandler(EntityMinecartTurret.class, RenderCyclicMinecart.FACTORY_TURRET);
     //the projectiles too
-    
-    
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, EntityLightningballBolt.FACTORY);
     RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, EntitySnowballBolt.FACTORY);
     RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, EntityTorchBolt.FACTORY);

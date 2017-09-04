@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.component.playerext.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.component.playerext.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleStep;
@@ -12,7 +13,6 @@ import com.lothrazar.cyclicmagic.item.food.ItemChorusGlowing;
 import com.lothrazar.cyclicmagic.item.food.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade.HorseUpgradeType;
-import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -56,7 +56,6 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks 
-      
     }
     if (enableLapisApple) {
       ItemAppleLapis apple_lapis = new ItemAppleLapis();
@@ -66,7 +65,7 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
     if (enableEmeraldApple) {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.register(apple_emerald, "apple_emerald");
-      LootTableRegistry.registerLoot(apple_emerald); 
+      LootTableRegistry.registerLoot(apple_emerald);
       ModCyclic.instance.events.register(apple_emerald);
     }
     if (enableHeartContainer) {
@@ -75,24 +74,24 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
-      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO); 
+      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
-      LootTableRegistry.registerLoot(crafting_food); 
+      LootTableRegistry.registerLoot(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
-      LootTableRegistry.registerLoot(inventory_food); 
+      LootTableRegistry.registerLoot(inventory_food);
     }
     if (enableCorruptedChorus) {
       ItemChorusCorrupted corrupted_chorus = new ItemChorusCorrupted();
       ItemRegistry.register(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
-      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY); 
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
     }
     if (enableGlowingChorus) {
       ItemChorusGlowing glowing_chorus = new ItemChorusGlowing();

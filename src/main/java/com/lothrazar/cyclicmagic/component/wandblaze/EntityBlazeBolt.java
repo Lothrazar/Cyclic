@@ -9,10 +9,8 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -23,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityBlazeBolt extends EntityThrowableDispensable {
-  static final  float damage = 10;
+  static final float damage = 10;
   public static final int fireSeconds = 4;
   public static final FactoryFire FACTORY_FIRE = new FactoryFire();
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
@@ -61,7 +59,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
     waterBoth.add(Blocks.WATER);
     World world = this.getEntityWorld();
     if (mop.sideHit != null && this.getThrower() instanceof EntityPlayer) {
-  //    world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+      //    world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
       offset = mop.getBlockPos().offset(mop.sideHit);
     }
     // Block hitBlock = this.worldObj.getBlockState(pos).getBlock();
@@ -112,7 +110,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }
-    UtilSound.playSound(world, pos,SoundRegistry.explosm,SoundCategory.BLOCKS);
+    UtilSound.playSound(world, pos, SoundRegistry.explosm, SoundCategory.BLOCKS);
     this.setDead();
   }
 }

@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.plant.ItemMagicBean;
 //import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry; 
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
@@ -22,7 +22,6 @@ public class PlantsModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);
       //      AchievementRegistry.registerItemAchievement(sprout_seed);
-      
     }
   }
   @Override

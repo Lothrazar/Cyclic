@@ -57,8 +57,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableSprinkler;
   private boolean enableSpikes;
   public void onPreInit() {
-    
-    
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableClock) {

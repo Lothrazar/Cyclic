@@ -20,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -54,7 +53,6 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVector();
   }
- 
   @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {

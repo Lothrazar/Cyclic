@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -20,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityFishingBolt extends EntityThrowableDispensable {
-
   public static final FactoryFish FACTORY = new FactoryFish();
   public static class FactoryFish implements IRenderFactory<EntityFishingBolt> {
     @Override
@@ -56,12 +54,12 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
       UtilSound.playSound(world, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
       this.setDead();
     }
-//    else {
-//      if (world.isRemote == false) {
-//        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
-//        this.setDead();
-//      }
-//    }
+    //    else {
+    //      if (world.isRemote == false) {
+    //        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
+    //        this.setDead();
+    //      }
+    //    }
   }
   private ItemStack getRandomFish() {
     ItemStack fishSpawned = null;

@@ -1,55 +1,24 @@
 package com.lothrazar.cyclicmagic.component.wandmissile;
-import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt.FactoryLightning;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import net.minecraft.block.BlockRedstoneLight;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityFlying;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIFleeSun;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIRestrictSun;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITarget;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.EntityAIZombieAttack;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 /**
  * From what used to be roots 1 by @elucent
- *  
+ * 
  *
  */
 public class EntityHomingProjectile extends EntityFlying {// implements IRangedAttackMob {
@@ -111,7 +80,7 @@ public class EntityHomingProjectile extends EntityFlying {// implements IRangedA
         double x = this.getEntityBoundingBox().minX * 0.5 + this.getEntityBoundingBox().maxX * 0.5;
         double y = this.getEntityBoundingBox().minY * 0.5 + this.getEntityBoundingBox().maxY * 0.5;
         double z = this.getEntityBoundingBox().minZ * 0.5 + this.getEntityBoundingBox().maxZ * 0.5;
-        UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, x,y,z);
+        UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, x, y, z);
         //Roots.proxy.spawnParticleMagicAuraFX(getEntityWorld(), x, y, z, -0.125*moveVec.xCoord, -0.125*moveVec.yCoord, -0.125*moveVec.zCoord, color.xCoord, color.yCoord, color.zCoord);
       }
     }
@@ -160,8 +129,6 @@ public class EntityHomingProjectile extends EntityFlying {// implements IRangedA
     super.readEntityFromNBT(compound);
     this.getEntityWorld().removeEntity(this);
   }
-  
-  
   //TODO RenderHomingProjectile
   public static final FactoryMissile FACTORY = new FactoryMissile();
   public static class FactoryMissile implements IRenderFactory<EntityHomingProjectile> {

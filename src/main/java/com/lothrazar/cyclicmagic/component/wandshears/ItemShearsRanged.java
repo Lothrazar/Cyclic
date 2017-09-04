@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.component.wandshears;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -14,14 +12,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 
 public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
   public ItemShearsRanged() {
@@ -38,9 +34,9 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
         " cs",
         " sc",
         "t  ",
-        'c',new ItemStack(Blocks.MOSSY_COBBLESTONE),
-        't',new ItemStack(Blocks.CACTUS),
-        's',new ItemStack(Items.SHEARS));
+        'c', new ItemStack(Blocks.MOSSY_COBBLESTONE),
+        't', new ItemStack(Blocks.CACTUS),
+        's', new ItemStack(Items.SHEARS));
   }
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

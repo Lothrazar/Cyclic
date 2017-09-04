@@ -5,17 +5,11 @@ import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -31,7 +25,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
     public Render<? super EntityShearingBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityShearingBolt>(rm, "shears");
     }
-  } 
+  }
   public EntityShearingBolt(World worldIn) {
     super(worldIn);
   }

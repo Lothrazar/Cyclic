@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
-import com.lothrazar.cyclicmagic.component.wandblaze.BlockFireSafe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -90,7 +89,6 @@ public class ItemRegistry {
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
-    
       if (b instanceof IBlockHasTESR) {
         ((IBlockHasTESR) b).initModel();
       }

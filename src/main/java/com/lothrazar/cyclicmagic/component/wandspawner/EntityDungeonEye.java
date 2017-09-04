@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -13,18 +12,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityDungeonEye extends EntityThrowableDispensable {
-
   public static final FactoryDungeon FACTORY = new FactoryDungeon();
   public static class FactoryDungeon implements IRenderFactory<EntityDungeonEye> {
     @Override
     public Render<? super EntityDungeonEye> createRenderFor(RenderManager rm) {
-      return new RenderBall<EntityDungeonEye>(rm,"dungeon");
+      return new RenderBall<EntityDungeonEye>(rm, "dungeon");
     }
   }
   private static final double DISTLIMIT = 0.8;
   private static final double VERT = 0.014999999664723873D;
   private static final double HORIZ = 0.0025D;
- 
   private double targetX;
   private double targetY;
   private double targetZ;
@@ -49,7 +46,6 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       this.lastTickPosX = this.posX;
       this.lastTickPosY = this.posY;
       this.lastTickPosZ = this.posZ;
-   
       this.posX += this.motionX;
       this.posY += this.motionY;
       this.posZ += this.motionZ;

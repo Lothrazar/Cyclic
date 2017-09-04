@@ -71,16 +71,16 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);
-  packetID++;
+    packetID++;
     network.registerMessage(PacketSwapBlock.class, PacketSwapBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
- packetID++;
+    packetID++;
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
- packetID++;
+    packetID++;
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
     network.registerMessage(PacketPlayerFalldamage.class, PacketPlayerFalldamage.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerFlying.class, PacketSyncPlayerFlying.class, packetID++, Side.CLIENT);
@@ -88,7 +88,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncVillagerToServer.class, PacketSyncVillagerToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketVillagerTrade.class, PacketVillagerTrade.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSleepClient.class, PacketSleepClient.class, packetID++, Side.CLIENT);
-   packetID++;
+    packetID++;
     network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);

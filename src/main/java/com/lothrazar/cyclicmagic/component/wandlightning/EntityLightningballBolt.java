@@ -5,13 +5,11 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
- 
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityLightningballBolt extends EntityThrowableDispensable {
- 
   public EntityLightningballBolt(World worldIn) {
     super(worldIn);
   }
@@ -35,6 +33,4 @@ public class EntityLightningballBolt extends EntityThrowableDispensable {
       return new RenderBall<EntityLightningballBolt>(rm, "lightning");
     }
   }
-
-
 }

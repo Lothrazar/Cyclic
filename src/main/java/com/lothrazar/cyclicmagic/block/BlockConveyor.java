@@ -171,7 +171,6 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   }
   @Override
   public IRecipe addRecipe() {
- 
     switch (type) {
       case LARGE:
         RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUTPUT),

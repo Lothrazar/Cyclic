@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
- 
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
@@ -67,7 +66,6 @@ public class GuiPattern extends GuiBaseContainer {
     bt.setTooltip("tile.builder_pattern.flip");
     //24, 12,
     this.buttonList.add(bt);
- 
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonIncrementField btn = new ButtonIncrementField(id,
@@ -76,7 +74,7 @@ public class GuiPattern extends GuiBaseContainer {
         15, 10);
     btn.displayString = (isUp) ? "+" : "-";
     //15, 10
-    btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase()+  (isUp ? "up" : "down"));
+    btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase() + (isUp ? "up" : "down"));
     this.buttonList.add(btn);
   }
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
@@ -100,9 +98,7 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
- 
     int u = 0, v = 0;
- 
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

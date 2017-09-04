@@ -133,7 +133,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.timer = value;
         break;
         case BUILDTYPE:
-          if(value >= BuildType.values().length){
+          if (value >= BuildType.values().length) {
             value = 0;
           }
           this.buildType = value;

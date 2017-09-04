@@ -8,8 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Re-used by many tile entities
- * used to increment fields using packets
+ * Re-used by many tile entities used to increment fields using packets
  * 
  * @author Sam
  *
@@ -24,7 +23,7 @@ public class ButtonIncrementField extends GuiButtonTooltip {
   public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
     this(buttonId, x, y, p, fld, diff, 40, 20);
   }
-  public ButtonIncrementField(int buttonId, int x, int y,  BlockPos p,
+  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p,
       int fld, int diff,
       int w, int h) {
     super(buttonId, x, y, w, h, "");

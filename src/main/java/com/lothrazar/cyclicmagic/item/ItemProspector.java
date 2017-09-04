@@ -105,7 +105,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
         "  g",
         " i ",
         "b  ",
-        'i',"ingotIron",
+        'i', "ingotIron",
         'b', new ItemStack(Items.BLAZE_ROD),
         'g', "blockGlassLightBlue");
   }

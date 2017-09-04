@@ -31,7 +31,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
         "torch");
   }
   @Override
-  public  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityTorchBolt(world, player));
     UtilPlayer.decrStackSize(player, hand);
   }

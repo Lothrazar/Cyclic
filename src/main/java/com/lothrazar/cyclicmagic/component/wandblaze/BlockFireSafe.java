@@ -8,15 +8,12 @@ import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -140,7 +137,6 @@ public class BlockFireSafe extends BlockFire {
         }
         worldIn.setBlockState(pos, this.getDefaultState().withProperty(AGE, Integer.valueOf(j)), 3);
       }
-    
       if (iblockstate.getBlock() == Blocks.TNT) {
         Blocks.TNT.onBlockDestroyedByPlayer(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
       }
@@ -150,7 +146,6 @@ public class BlockFireSafe extends BlockFire {
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
         && !(entityIn instanceof EntityPlayer)) {
-   
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(PotionEffectRegistry.SNOW)
           && e.isCreatureType(EnumCreatureType.MONSTER, false)) {

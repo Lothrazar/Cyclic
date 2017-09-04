@@ -68,7 +68,7 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity() * 8,//best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.DIAMOND.getDamageVsEntity() * 8, //best draconic evolution sword is 35 base, so this is not that crazy
         ToolMaterial.GOLD.getEnchantability() * 2);
     MaterialRegistry.powerToolMaterial.setRepairItem(MaterialRegistry.powerArmorMaterial.repairMaterial);
   }

@@ -68,7 +68,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonIncrementField(id++,
         this.guiLeft + xSizeTextbox,
-        this.guiTop + 22 + yOffset+8,
+        this.guiTop + 22 + yOffset + 8,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
@@ -78,7 +78,7 @@ public class GuiBuilder extends GuiBaseContainer {
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 22;
     //HEIGHT BUTTONS
-  fld = TileEntityStructureBuilder.Fields.HEIGHT;
+    fld = TileEntityStructureBuilder.Fields.HEIGHT;
     xHeightTextbox = xSizeTextbox - 28;
     btnHeightUp = new ButtonIncrementField(id++,
         this.guiLeft + xHeightTextbox, this.guiTop + yOffset,
@@ -89,7 +89,7 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonIncrementField(id++,
-        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset+8,
+        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset + 8,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);

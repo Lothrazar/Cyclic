@@ -5,13 +5,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -33,7 +31,6 @@ public class BlockRegistry {
     }
     b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
-  
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
@@ -44,6 +41,5 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
- 
   }
 }

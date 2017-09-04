@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;

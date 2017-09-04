@@ -140,12 +140,12 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
       world.setBlockToAir(pos);
     }
     if (!state.getValue(ACTIVATED) && world.isBlockPowered(pos)) {
-     UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(),16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, true));
     }
     else if (state.getValue(ACTIVATED) && !world.isBlockPowered(pos)) {
       //sound
-      UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(),16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -66,7 +65,7 @@ public class GuideRegistry {
     return register(cat, Item.getItemFromBlock(block), pageTitle, text, recipe, args);
   }
   public static GuideItem register(GuideCategory cat, Item item) {
-    return register(cat, item, (IRecipe)null, null);
+    return register(cat, item, (IRecipe) null, null);
   }
   public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = item.getUnlocalizedName() + ".name";

@@ -35,7 +35,7 @@ public class ItemProjectileTNT extends BaseItemProjectile {
     return null;
   }
   @Override
-  public   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+  public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     EntityThrowableDispensable d = null;
     switch (type) {
       case NORMAL:

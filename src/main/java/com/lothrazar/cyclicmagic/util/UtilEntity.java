@@ -344,19 +344,17 @@ public class UtilEntity {
   public static String getCareerName(EntityVillager merchant) {
     return merchant.getDisplayName().getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
   }
-  public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2){
-    float f = (float) ((180.0f*Math.atan2(posX2-posX,posZ2-posZ))/(float)Math.PI);
+  public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
+    float f = (float) ((180.0f * Math.atan2(posX2 - posX, posZ2 - posZ)) / (float) Math.PI);
     return f;
   }
-
-  public static float pitchDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2){
-    return (float)Math.toDegrees(Math.atan2(posY2-posY,Math.sqrt((posX2-posX)*(posX2-posX)+(posZ2-posZ)*(posZ2-posZ))));
+  public static float pitchDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
+    return (float) Math.toDegrees(Math.atan2(posY2 - posY, Math.sqrt((posX2 - posX) * (posX2 - posX) + (posZ2 - posZ) * (posZ2 - posZ))));
   }
-  public static Vec3d lookVector(float rotYaw, float rotPitch){
+  public static Vec3d lookVector(float rotYaw, float rotPitch) {
     return new Vec3d(
-      Math.sin(rotYaw)*Math.cos(rotPitch),
-      Math.sin(rotPitch),
-      Math.cos(rotYaw)*Math.cos(rotPitch) 
-    );
+        Math.sin(rotYaw) * Math.cos(rotPitch),
+        Math.sin(rotPitch),
+        Math.cos(rotYaw) * Math.cos(rotPitch));
   }
 }

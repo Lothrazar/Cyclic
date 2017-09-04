@@ -1,13 +1,11 @@
 package com.lothrazar.cyclicmagic.component.wandtorch;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -31,8 +29,6 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
   }
   public EntityTorchBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
-  
- 
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
@@ -57,9 +53,9 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     if (isValidLocation && isValidBlockstate && isSideSolid && world.isRemote == false) {
       world.setBlockState(offset, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
-//    else {
-//      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
-//    }
+    //    else {
+    //      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
+    //    }
     this.setDead();
   }
 }

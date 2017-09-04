@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.wandlightning;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -29,7 +28,6 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
   @Override
   public EntityLightningballBolt createBullet(World world, EntityPlayer player, float dmg) {
     EntityLightningballBolt s = new EntityLightningballBolt(world, player);
- 
     return s;
   }
   @Override

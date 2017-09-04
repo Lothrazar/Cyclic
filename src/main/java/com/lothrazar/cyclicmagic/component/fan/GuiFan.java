@@ -53,14 +53,14 @@ public class GuiFan extends GuiBaseContainer {
     btn.displayString = "+5";
     this.buttonList.add(btn);
     // SPEED BUTTONS
-    int xSpeed = this.guiLeft +xRange - 20;
+    int xSpeed = this.guiLeft + xRange - 20;
     y = this.guiTop + yHeightTxtbox + yOffset;
     btn = new ButtonIncrementField(id++, xSpeed, y, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), -5, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-5";
     this.buttonList.add(btn);
-    btn = new ButtonIncrementField(id++, xSpeed,  y + h + 1, tile.getPos(),
+    btn = new ButtonIncrementField(id++, xSpeed, y + h + 1, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), -1, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-1";

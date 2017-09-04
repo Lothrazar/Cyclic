@@ -8,7 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderSpell<T extends Entity> extends Render<T> {
- 
   private final ModelLlamaSpit model = new ModelLlamaSpit();
   protected RenderSpell(RenderManager renderManager) {
     super(renderManager);

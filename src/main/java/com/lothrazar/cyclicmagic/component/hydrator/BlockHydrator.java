@@ -107,7 +107,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
     }, new ItemStack(Blocks.WEB, 4)));
     recipeList.add(new RecipeHydrate(new ItemStack[] {
-        
         new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), ItemStack.EMPTY
     }, new ItemStack(Items.PRISMARINE_SHARD)));
     recipeList.add(new RecipeHydrate(new ItemStack[] {
