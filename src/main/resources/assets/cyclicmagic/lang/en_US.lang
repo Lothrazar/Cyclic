@@ -953,6 +953,10 @@ wand.result.notargets=No Targets Found
 tile.fire_dark.name=Dark Fire
 tile.fire_dark.tooltip=Does not harm players or destroy blocks
 
+item.sword_frost.name=Sword of Atrophy
+item.sword_ender.name=Sword of Decay
+item.sword_frost.guide=Powerful sword with a special right-click ability
+item.sword_ender.guide=Powerful sword with a special right-click ability
 
 tile.sprout.guide=When this is harvested it randomly drops a block from a custom loot table (listed in config file)
 tile.end_coal_ore.guide=Coal ore that spawns in the End. 

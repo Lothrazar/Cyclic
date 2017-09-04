@@ -10,9 +10,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.IRecipe;
@@ -38,23 +40,23 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
+    ItemStack item = ItemStack.EMPTY;
     switch (type) {
       case ENDER:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-            " e ",
-            " e ",
-            " s ",
-            'e', Items.NETHER_STAR,
-            's', "blockDiamond");
+        item = new ItemStack(Blocks.MYCELIUM);
+      break;
       case FROST:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-            " e ",
-            " e ",
-            " s ",
-            'e', Items.NETHER_STAR,
-            's', "stickWood");
+        item = new ItemStack(Blocks.PACKED_ICE);
+      break;
     }
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ded",
+        "ded",
+        "wsw",
+        'w', item,
+        'e', Items.NETHER_STAR,
+        'd', Items.DRAGON_BREATH,
+        's', "blockDiamond");
   }
   //overrides to disable item damage
   @Override
@@ -80,9 +82,9 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe {
   }
   private void spawnLingeringPotion(EntityPlayer player, PotionType ptype) {
     World world = player.getEntityWorld();
-    ItemStack potion = PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), ptype);
+    ItemStack potion = PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), ptype);
     EntityPotion entitypotion = new EntityPotion(world, player, potion);
-    //   entitypotion.setThrowableHeading(0, 1, 0, 0.75F, 1.0F);
+   
     entitypotion.setHeadingFromThrower(player, player.rotationPitch - 20, player.rotationYaw, 0, 1.6F, 0.5F);
     if (world.isRemote == false) {
       world.spawnEntity(entitypotion);
