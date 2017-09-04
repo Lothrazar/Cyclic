@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.gear.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.item.gear.ItemPowerSword;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
@@ -35,6 +36,7 @@ public class GearModule extends BaseEventModule implements IHasConfig {
   private boolean enableEmeraldGear;
   private boolean enableSandstoneTools;
   private boolean enablePurpleGear;
+  private boolean enablePurpleSwords;
   @Override
   public void onPreInit() {
     if (enableEmeraldGear) {
@@ -71,6 +73,12 @@ public class GearModule extends BaseEventModule implements IHasConfig {
       Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
       ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
     }
+    if (enablePurpleSwords) {
+      ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
+      ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
+      ItemPowerSword sword_frost = new ItemPowerSword(ItemPowerSword.SwordType.FROST);
+      ItemRegistry.register(sword_frost, "sword_frost", GuideCategory.GEAR);
+    }
     if (enableSandstoneTools) {
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
       ItemRegistry.register(sandstone_pickaxe, "sandstone_pickaxe", null);
@@ -91,6 +99,7 @@ public class GearModule extends BaseEventModule implements IHasConfig {
     enablePurpleGear = config.getBoolean("PurpleArmor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSandstoneTools = config.getBoolean("SandstoneTools", Const.ConfigCategory.content, true, "Sandstone tools are between wood and stone. " + Const.ConfigCategory.contentDefaultText);
     enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
+    enablePurpleSwords = config.getBoolean("SwordsFrostEnder", Const.ConfigCategory.content, true, "Enable the epic swords. " + Const.ConfigCategory.contentDefaultText);
   }
   /**
    * TODO: maybe should be static inside powerarmor class?

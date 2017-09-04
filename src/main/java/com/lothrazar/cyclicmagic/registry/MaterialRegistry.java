@@ -18,13 +18,11 @@ public class MaterialRegistry { // thanks for help:
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
   public static ArmorMaterial powerArmorMaterial;
-  //  public static ToolMaterial obsidianToolMaterial;
-  //  public static ArmorMaterial obsidianArmorMaterial;
+  public static ToolMaterial powerToolMaterial;
   public static void register() {
     registerPurpleMaterial();
     registerEmeraldMaterial();
     registerSandstoneMaterials();
-    //    registerObsidianMaterial();
   }
   //  private static void registerObsidianMaterial() {
   //    ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
@@ -65,6 +63,14 @@ public class MaterialRegistry { // thanks for help:
         mimicArmor.getSoundEvent(),
         mimicArmor.getToughness());
     MaterialRegistry.powerArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
+    //now the tool material
+    MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,
+        ToolMaterial.DIAMOND.getHarvestLevel(),
+        ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
+        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
+        ToolMaterial.DIAMOND.getDamageVsEntity() * 4,
+        ToolMaterial.GOLD.getEnchantability() * 2);
+    MaterialRegistry.powerToolMaterial.setRepairItem(MaterialRegistry.powerArmorMaterial.repairMaterial);
   }
   private static void registerEmeraldMaterial() {
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
