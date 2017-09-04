@@ -167,14 +167,14 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
         ingredient = "gemEmerald";
       break;
       case NORMAL:
-        ingredient = "blockLapis";
+        ingredient = "dyeBlue";
       break;
     }
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gi",
-        "oig",
-        "oo ",
-        'i', "blockIron",
+        " ig",
+        "o  ",
+        'i', "ingotIron",
         'g', ingredient,
         'o', "obsidian");
   }

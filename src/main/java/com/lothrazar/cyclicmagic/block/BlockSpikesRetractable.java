@@ -171,7 +171,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   @Override
   public IRecipe addRecipe() {
     if (this.doesPlayerDamage) {
-      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
           " s ",
           "s s",
           "ttt",
@@ -179,7 +179,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
           't', "blockIron");
     }
     else {
-      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
           " s ",
           "s s",
           "ttt",

@@ -62,8 +62,10 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
     ItemStack stack = playerIn.getHeldItem(hand);
     boolean success = false;
     success = trigger(stack, worldIn, playerIn);
-    if (success)
+    if (success) {
+      playerIn.swingArm(hand);
       return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    }
     else
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
@@ -112,9 +114,12 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
-        new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
-        Blocks.STONE_BUTTON,
-        Blocks.LEVER);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        " s ",
+        " t ",
+        " l ",
+        'l', new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
+        's', Blocks.STONE_BUTTON,
+        't', Blocks.LEVER);
   }
 }
