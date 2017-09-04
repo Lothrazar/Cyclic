@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block.base;
-import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumBlockRenderType;

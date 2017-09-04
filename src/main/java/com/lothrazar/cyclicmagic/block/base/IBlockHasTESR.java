@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.block.base;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.food;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

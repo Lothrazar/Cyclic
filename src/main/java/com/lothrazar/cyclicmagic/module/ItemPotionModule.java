@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.Potions;
-import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
+import com.lothrazar.cyclicmagic.item.food.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
@@ -59,14 +59,12 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     //   http://www.minecraftforge.net/forum/index.php?topic=12358.0
     if (enableViscous) {
       potion_viscous = new ItemPotionCustom(false);
-      //      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
       ItemRegistry.register(potion_viscous, "potion_viscous", null);
       GuideItem guide = GuideRegistry.register(GuideCategory.POTION, potion_viscous);
       guide.addRecipePage(addBrewingRecipe(
           PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), //   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
           new ItemStack(potion_viscous)));
-    //  JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);
     }
     if (enableEnder) {
       ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.ENDER, NORMAL, Potions.I, "item.potion_ender.tooltip");
@@ -82,7 +80,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_ender,
           UPG_LENGTH,
           potion_ender_long));
- //     JeiDescriptionRegistry.registerWithJeiDescription(potion_ender);
     }
     if (enableMagnet) {
       ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.MAGNET, NORMAL, Potions.I);
@@ -98,7 +95,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_magnet,
           UPG_LENGTH,
           potion_magnet_long));
- //     JeiDescriptionRegistry.registerWithJeiDescription(potion_magnet);
     }
     if (enableWaterwalk) {
       ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.WATERWALK, NORMAL, Potions.I);
@@ -118,7 +114,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_waterwalk,
           UPG_LENGTH,
           potion_waterwalk_long));
-    //  JeiDescriptionRegistry.registerWithJeiDescription(potion_waterwalk);
     }
     if (enableSwimspeed) {
       ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.SWIMSPEED, NORMAL, Potions.I);
@@ -134,7 +129,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_swimspeed,
           UPG_LENGTH,
           potion_swimspeed_long));
-   //   JeiDescriptionRegistry.registerWithJeiDescription(potion_swimspeed);
     }
     if (enableSlowfall) {
       ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.SLOWFALL, NORMAL, Potions.I);
@@ -154,7 +148,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_slowfall),
           new ItemStack(UPG_LENGTH),
           new ItemStack(potion_slowfall_long)));
-   //   JeiDescriptionRegistry.registerWithJeiDescription(potion_slowfall);
     }
     if (enableSnow) {
       ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.SNOW, NORMAL, Potions.I, "item.potion_snow.tooltip");
@@ -172,7 +165,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_snow_long)));
       LootTableRegistry.registerLoot(potion_snow, ChestType.IGLOO);
       LootTableRegistry.registerLoot(potion_snow_long, ChestType.IGLOO);
-   //   JeiDescriptionRegistry.registerWithJeiDescription(potion_snow);
     }
     if (enableHBoost) {
       ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
@@ -189,7 +181,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           UPG_LENGTH,
           potion_boost_long));
       LootTableRegistry.registerLoot(potion_boost_long);
-   //   JeiDescriptionRegistry.registerWithJeiDescription(potion_boost);
     }
     if (enableResist) {
       ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);

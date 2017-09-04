@@ -1,4 +1,6 @@
-package com.lothrazar.cyclicmagic.entity.projectile;
+package com.lothrazar.cyclicmagic.component.wandfishing;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.renderer.entity.Render;

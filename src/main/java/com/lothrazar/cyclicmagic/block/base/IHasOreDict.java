@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.block.base;
 import javax.annotation.Nonnull;
 
 public interface IHasOreDict {

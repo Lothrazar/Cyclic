@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -109,7 +110,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
             " ft",
             "ggf",
             "dg ",
-            't', new ItemStack(Items.GHAST_TEAR),
+            't', "blockQuartz",
             'f', "feather",
             'g', "ingotGold",
             'd', new ItemStack(Items.ENDER_EYE));

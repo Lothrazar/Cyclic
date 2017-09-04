@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
-import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
+import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

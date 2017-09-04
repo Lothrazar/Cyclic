@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldGenModule;
 import net.minecraft.block.BlockOre;

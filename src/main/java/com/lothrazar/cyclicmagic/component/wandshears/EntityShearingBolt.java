@@ -1,5 +1,7 @@
-package com.lothrazar.cyclicmagic.entity.projectile;
+package com.lothrazar.cyclicmagic.component.wandshears;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;

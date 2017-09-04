@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.component.scaffold;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;

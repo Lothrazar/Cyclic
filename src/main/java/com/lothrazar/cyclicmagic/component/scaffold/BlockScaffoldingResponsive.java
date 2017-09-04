@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.component.scaffold;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.food;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
