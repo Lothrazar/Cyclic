@@ -101,6 +101,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           return;
         }
       }
+      //fake player facing the same direction as tile. for throwables
+      fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
       tryEquipItem();
       if (triggered) {
         timer = TIMER_FULL;

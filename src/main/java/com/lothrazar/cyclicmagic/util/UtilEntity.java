@@ -357,4 +357,19 @@ public class UtilEntity {
         Math.sin(rotPitch),
         Math.cos(rotYaw) * Math.cos(rotPitch));
   }
+  public static float getYawFromFacing(EnumFacing currentFacing) {
+    switch (currentFacing) {
+      case DOWN:
+      case UP:
+      case SOUTH:
+      default:
+        return 0;
+      case EAST:
+        return 270F;
+      case NORTH:
+        return 180F;
+      case WEST:
+        return 90F;
+    }
+  }
 }
