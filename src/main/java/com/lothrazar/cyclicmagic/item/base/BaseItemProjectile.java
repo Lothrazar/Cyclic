@@ -35,7 +35,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     }
     player.swingArm(hand);
     BlockPos pos = player.getPosition();
-    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS);
+    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS, 0.5F);
   }
   public void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
     this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);

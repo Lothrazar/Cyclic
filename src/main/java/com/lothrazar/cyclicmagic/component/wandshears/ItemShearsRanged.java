@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
@@ -45,7 +46,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
   }
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.metal_pitch;
+    return SoundEvents.ENTITY_EGG_THROW;
   }
   /**
    * Returns true if the item can be used on the given entity, e.g. shears on

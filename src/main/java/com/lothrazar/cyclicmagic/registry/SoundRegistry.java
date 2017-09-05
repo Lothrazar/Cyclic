@@ -62,7 +62,7 @@ public class SoundRegistry {
     laserbeanpew = registerSound("laserbeanpew");// wandlightning
     powerupscales = registerSound("powerupscales");//wandhypno
     magic_missile = registerSound("magic_missile");//wand missile
-    metal_pitch = registerSound("metal_pitch");//wandshears
+    metal_pitch = registerSound("metal_pitch");
     pschew_fire = registerSound("pschew_fire");//waterremoval
     bass_echo = registerSound("bass_echo");
     coin = registerSound("coin");
