@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -102,11 +102,11 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " sg",
-        " bs",
+        "  g",
+        " i ",
         "b  ",
+        'i', "ingotIron",
         'b', new ItemStack(Items.BLAZE_ROD),
-        's', "gemDiamond",
         'g', "blockGlassLightBlue");
   }
   @Override

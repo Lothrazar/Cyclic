@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.workbench;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.IHasOreDict;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
@@ -24,9 +24,8 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " t ",
-        "s s",
-        "   ",
+        "ts",
+        "s ",
         't', "workbench",
         's', "cobblestone");
   }

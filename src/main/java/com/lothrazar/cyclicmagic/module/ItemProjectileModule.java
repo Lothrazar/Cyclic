@@ -1,33 +1,34 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.component.wandblaze.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.component.wandhypno.ItemWandHypno;
+import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.component.wandice.ItemProjectileSnow;
+import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.component.wandlightning.ItemProjectileLightning;
+import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
+import com.lothrazar.cyclicmagic.component.wandmissile.ItemMagicMissile;
+import com.lothrazar.cyclicmagic.component.wandshears.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.component.wandshears.ItemShearsRanged;
+import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.component.wandspawner.ItemProjectileDungeon;
+import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.component.wandtorch.ItemProjectileTorch;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.item.projectile.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileBlaze;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileDungeon;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileLightning;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileSnow;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
+import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
+import com.lothrazar.cyclicmagic.item.ItemProjectileTNT;
+import com.lothrazar.cyclicmagic.item.ItemProjectileTNT.ExplosionType;
+import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -44,7 +45,7 @@ import net.minecraftforge.common.config.Configuration;
 public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean enableEnderBlaze;
   private boolean enableEnderDungeonFinder;
-  private boolean enderFishing;
+//  private boolean enderFishing;
   private boolean enderSnow;
   private boolean enderWool;
   private boolean enderTorch;
@@ -55,72 +56,63 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean dynamiteSafe;
   private boolean dynamiteMining;
   private boolean magicNet;
+  private boolean enableChaos;
+  private boolean enableMissile;
   @Override
   public void onPreInit() {
+    if (enableChaos) {
+      ItemWandHypno wand_hypno = new ItemWandHypno();
+      ItemRegistry.register(wand_hypno, "wand_hypno", GuideCategory.ITEMTHROW);
+    }
+    if (enableMissile) {
+      ItemMagicMissile magic_missile = new ItemMagicMissile();
+      ItemRegistry.register(magic_missile, "wand_missile", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
+    }
     if (enableEnderBlaze) {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-      EntityBlazeBolt.renderSnowball = ender_blaze;
-      projectiles.add(ender_blaze);
+      ModCyclic.instance.events.register(ender_blaze);
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
       ItemRegistry.register(ender_dungeon, "ender_dungeon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
-      EntityDungeonEye.renderSnowball = ender_dungeon;
       LootTableRegistry.registerLoot(ender_dungeon);
-      ItemRegistry.registerWithJeiDescription(ender_dungeon);
-      projectiles.add(ender_dungeon);
     }
-    if (enderFishing) {
-      ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
-      ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
-      EntityFishingBolt.renderSnowball = ender_fishing;
-      ItemRegistry.registerWithJeiDescription(ender_fishing);
-      projectiles.add(ender_fishing);
-    }
+//    if (enderFishing) {
+//      ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
+//      ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
+//      EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
+//    }
     if (enderWool) {
-      ItemProjectileWool ender_wool = new ItemProjectileWool();
+      ItemShearsRanged ender_wool = new ItemShearsRanged();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
-      EntityShearingBolt.renderSnowball = ender_wool;
-      ItemRegistry.registerWithJeiDescription(ender_wool);
-      projectiles.add(ender_wool);
     }
     if (enderTorch) {
       ItemProjectileTorch ender_torch = new ItemProjectileTorch();
       ItemRegistry.register(ender_torch, "ender_torch", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
-      EntityTorchBolt.renderSnowball = ender_torch;
-      ItemRegistry.registerWithJeiDescription(ender_torch);
-      projectiles.add(ender_torch);
     }
     if (enderWater) {
-      ItemProjectileWater ender_water = new ItemProjectileWater();
+      ItemWaterRemoval ender_water = new ItemWaterRemoval();
       ItemRegistry.register(ender_water, "ender_water", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
-      EntityWaterBolt.renderSnowball = ender_water;
-      ItemRegistry.registerWithJeiDescription(ender_water);
-      projectiles.add(ender_water);
+      ModCyclic.instance.events.register(ender_water);
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();
       ItemRegistry.register(ender_snow, "ender_snow", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
-      EntitySnowballBolt.renderSnowball = ender_snow;
-      ItemRegistry.registerWithJeiDescription(ender_snow);
-      projectiles.add(ender_snow);
+      ModCyclic.instance.events.register(ender_snow);
     }
     if (enderLightning) {
       ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
       ItemRegistry.register(ender_lightning, "ender_lightning", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
-      EntityLightningballBolt.renderSnowball = ender_lightning;
       LootTableRegistry.registerLoot(ender_lightning);
-      ItemRegistry.registerWithJeiDescription(ender_lightning);
-      projectiles.add(ender_lightning);
+      ModCyclic.instance.events.register(ender_lightning);
     }
     if (dynamiteSafe) {
       ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);
@@ -144,7 +136,6 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
       ItemRegistry.register(magic_net, "magic_net", GuideCategory.ITEMTHROW);
       EntityMagicNetEmpty.renderSnowball = magic_net;
-      EntityMagicNetFull.renderSnowball = magic_net;
       EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
       EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
       projectiles.add(magic_net);
@@ -182,7 +173,6 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(ender_tnt_6, "ender_tnt_6", null);
       GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
       EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
-      EntityDynamite.renderSnowball = ender_tnt_1;
       projectiles.add(ender_tnt_1);
       projectiles.add(ender_tnt_2);
       projectiles.add(ender_tnt_3);
@@ -214,12 +204,14 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableChaos = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMissile = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     magicNet = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+   // enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderSnow = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderWool = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderTorch = config.getBoolean("EnderTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

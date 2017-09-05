@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclicmagic:items/purple_leggings"
+        "layer0": "cyclicmagic:items/gear/purple_leggings"
     }
 }

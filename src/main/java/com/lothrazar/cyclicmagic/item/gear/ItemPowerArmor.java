@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item.gear;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;

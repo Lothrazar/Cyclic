@@ -21,6 +21,24 @@ public class SoundRegistry {
   public static SoundEvent pow;
   public static SoundEvent thunk;
   public static SoundEvent warp;
+  public static SoundEvent spikes_in;
+  public static SoundEvent spikes_out;
+  public static SoundEvent dungeonfinder;
+  public static SoundEvent firelaunch;
+  public static SoundEvent goodlaunch;
+  public static SoundEvent laserbeanpew;
+  public static SoundEvent powerupscales;
+  public static SoundEvent spikemaybe;
+  public static SoundEvent bass_echo;
+  public static SoundEvent coin;
+  public static SoundEvent crack;
+  public static SoundEvent explosm;
+  public static SoundEvent guitar;
+  public static SoundEvent hovering;
+  public static SoundEvent magic_missile;
+  public static SoundEvent metal_pitch;
+  public static SoundEvent pew_long;
+  public static SoundEvent pschew_fire;
   public static void register() {
     basey = registerSound("basey");//used by storage bag deposit
     bip = registerSound("bip");//cyclic wand GUI rotation
@@ -35,6 +53,24 @@ public class SoundRegistry {
     pow = registerSound("pow");//UNUSED
     thunk = registerSound("thunk");//ChestSack 
     warp = registerSound("warp");//Ender Wings & Book 
+    spikes_out = registerSound("spikes_out");//spikes
+    spikes_in = registerSound("spikes_in");//spikes
+    dungeonfinder = registerSound("dungeonfinder");// wandspawner
+    firelaunch = registerSound("firelaunch");//used by wandblaze
+    explosm = registerSound("explosm");//entity blaze fire
+    goodlaunch = registerSound("goodlaunch");//used by wandice
+    laserbeanpew = registerSound("laserbeanpew");// wandlightning
+    powerupscales = registerSound("powerupscales");//wandhypno
+    magic_missile = registerSound("magic_missile");//wand missile
+    metal_pitch = registerSound("metal_pitch");
+    pschew_fire = registerSound("pschew_fire");//waterremoval
+    bass_echo = registerSound("bass_echo");
+    coin = registerSound("coin");
+    crack = registerSound("crack");
+    guitar = registerSound("guitar");
+    hovering = registerSound("hovering");
+    pew_long = registerSound("pew_long");
+    spikemaybe = registerSound("spikemaybe");
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3

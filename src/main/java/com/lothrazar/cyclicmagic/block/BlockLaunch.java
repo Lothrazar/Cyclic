@@ -85,21 +85,21 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
       case LARGE:
         RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUT),
             "sss", "ggg", "iii",
-            's', "blockSlime",
+            's', "slimeball",
             'g', Blocks.STONE_PRESSURE_PLATE,
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
       break;
       case MEDIUM:
         RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUT),
             "sss", "ggg", "iii",
-            's', "blockSlime",
+            's', "slimeball",
             'g', Blocks.WOODEN_PRESSURE_PLATE,
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
       break;
       case SMALL:
         RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUT),
             "sss", "ggg", "iii",
-            's', "blockSlime",
+            's', "slimeball",
             'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
       break;

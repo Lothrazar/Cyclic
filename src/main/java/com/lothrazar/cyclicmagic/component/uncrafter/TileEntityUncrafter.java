@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -74,8 +75,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
+            UtilSound.playSoundFromServer(SoundRegistry.crack, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
           }
-          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
+//          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
         }
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
@@ -84,7 +86,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
           if (this.getWorld().isRemote == false) {
             this.decrStackSize(0, stack.getCount());
           }
-          UtilSound.playSound(this.getWorld(), this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
         }
         this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
         this.markDirty();

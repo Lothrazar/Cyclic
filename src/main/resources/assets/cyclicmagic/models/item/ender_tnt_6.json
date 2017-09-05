@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/ender_tnt_6"
+        "layer0": "cyclicmagic:items/tnt/ender_tnt_6"
     }
 }

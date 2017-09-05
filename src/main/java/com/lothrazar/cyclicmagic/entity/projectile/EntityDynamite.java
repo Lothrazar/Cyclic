@@ -1,15 +1,22 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityDynamite extends EntityThrowableDispensable {
   public static final float EX_CREEPER = 1;
   public static final float EX_CHARGEDCREEPER = 2;
   public static final float EX_TNT = 4;
   public static final float EX_ENDCRYSTAL = 6;
-  public static Item renderSnowball;
+  public static class FactoryDyn implements IRenderFactory<EntityDynamite> {
+    @Override
+    public Render<? super EntityDynamite> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityDynamite>(rm, "tnt");
+    }
+  }
   private float explosionLevel;
   public EntityDynamite(World worldIn) {
     super(worldIn);

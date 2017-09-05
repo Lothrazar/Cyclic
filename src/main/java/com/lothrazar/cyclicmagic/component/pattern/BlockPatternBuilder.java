@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -51,10 +51,10 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
         "did",
         "rmr",
         'b', Blocks.STONE_BUTTON,
-        'd', "blockDiamond",
+        'd', "gemDiamond",
         'i', Blocks.ICE,
         'm', Blocks.MAGMA,
-        'r', "blockRedstone");
+        'r', "dustRedstone");
   }
   @SideOnly(Side.CLIENT)
   @Override

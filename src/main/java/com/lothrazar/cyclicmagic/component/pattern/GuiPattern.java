@@ -2,14 +2,13 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
-  //  static final int WIDTH = 176;
-  //  static final int HEIGHT = 212;
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
@@ -64,19 +63,18 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + screenSize.width() / 2 - 12,
         this.guiTop + yRows[2], this.tile.getPos());
     bt.displayString = "<->";
+    bt.setTooltip("tile.builder_pattern.flip");
+    //24, 12,
     this.buttonList.add(bt);
-    // ButtonToggleRender
-    //    ButtonToggleRender btn = new ButtonToggleRender(id++,
-    //        this.guiLeft + screenSize.width() - 20 - Const.PAD,
-    //        this.guiTop + Const.PAD, this.tile.getPos());
-    //    this.buttonList.add(btn);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
-    ButtonPattern btn = new ButtonPattern(tile.getPos(), id,
-        this.guiLeft + x,
-        this.guiTop + y,
-        isUp, f);
+    ButtonIncrementField btn = new ButtonIncrementField(id,
+        this.guiLeft + x, this.guiTop + y, tile.getPos(),
+        f.ordinal(), (isUp) ? 1 : -1,
+        15, 10);
     btn.displayString = (isUp) ? "+" : "-";
+    //15, 10
+    btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase() + (isUp ? "up" : "down"));
     this.buttonList.add(btn);
   }
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
@@ -100,12 +98,7 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    //GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    //    this.mc.getTextureManager().bindTexture(getBackground());
-    //    int thisX = this.getMiddleX();
-    //    int thisY = this.getMiddleY();
     int u = 0, v = 0;
-    //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

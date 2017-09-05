@@ -20,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -54,10 +53,6 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVector();
   }
-  //  @Override
-  //  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-  //    return AABB;
-  //  }
   @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
@@ -178,12 +173,12 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 6),
-        "ttt",
+        " t ",
         "idi",
         "bbb",
-        'i', Items.IRON_INGOT,
-        'd', Items.DIAMOND,
+        'i', "ingotIron",
+        'd', "dustRedstone",
         'b', Blocks.WOODEN_PRESSURE_PLATE,
-        't', Blocks.REDSTONE_LAMP);
+        't', "dustGlowstone");
   }
 }

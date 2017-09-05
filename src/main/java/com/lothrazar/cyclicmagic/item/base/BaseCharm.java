@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item.base;
 import java.util.List;
-import com.lothrazar.cyclicmagic.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;

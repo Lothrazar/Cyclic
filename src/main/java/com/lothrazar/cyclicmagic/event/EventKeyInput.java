@@ -9,7 +9,7 @@ import com.lothrazar.cyclicmagic.component.playerext.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;

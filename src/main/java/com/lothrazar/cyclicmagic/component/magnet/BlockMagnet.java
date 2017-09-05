@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.magnet;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;

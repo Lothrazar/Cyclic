@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
@@ -35,7 +36,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -90,6 +94,12 @@ public class ModCyclic {
         ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
         list.add(ebook);
       }
+      if (FluidsRegistry.fluid_poison != null)
+        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME)));
+      if (FluidsRegistry.fluid_exp != null)
+        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME)));
+      if (FluidsRegistry.fluid_milk != null)
+        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME)));
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)

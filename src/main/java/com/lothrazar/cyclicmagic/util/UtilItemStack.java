@@ -54,8 +54,11 @@ public class UtilItemStack {
     }
   }
   public static void damageItem(EntityPlayer p, ItemStack s) {
-    if (p.capabilities.isCreativeMode == false) {
-      s.damageItem(1, p);
+    damageItem(p, s, 1);
+  }
+  public static void damageItem(EntityPlayer p, ItemStack s, int num) {
+    if (p.capabilities.isCreativeMode == false && p.world.isRemote == false) {
+      s.damageItem(num, p);
     }
   }
   public static String getRawName(Item item) {

@@ -1,13 +1,15 @@
 package com.lothrazar.cyclicmagic.block;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -24,6 +26,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -131,18 +134,19 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     return false;
   }
   @Override
-  public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    if (canPlaceBlockAt(worldIn, pos) == false) { // if we are attached to somethihg dissapearedy
-      dropBlockAsItem(worldIn, pos, getDefaultState(), 0);
-      worldIn.setBlockToAir(pos);
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    if (canPlaceBlockAt(world, pos) == false) { // if we are attached to somethihg dissapearedy
+      dropBlockAsItem(world, pos, getDefaultState(), 0);
+      world.setBlockToAir(pos);
     }
-    if (!state.getValue(ACTIVATED) && worldIn.isBlockPowered(pos)) {
-      //sound
-      worldIn.setBlockState(pos, state.withProperty(ACTIVATED, true));
+    if (!state.getValue(ACTIVATED) && world.isBlockPowered(pos)) {
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      world.setBlockState(pos, state.withProperty(ACTIVATED, true));
     }
-    else if (state.getValue(ACTIVATED) && !worldIn.isBlockPowered(pos)) {
+    else if (state.getValue(ACTIVATED) && !world.isBlockPowered(pos)) {
       //sound
-      worldIn.setBlockState(pos, state.withProperty(ACTIVATED, false));
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      world.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }
   @Override
@@ -167,7 +171,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   @Override
   public IRecipe addRecipe() {
     if (this.doesPlayerDamage) {
-      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
           " s ",
           "s s",
           "ttt",
@@ -175,7 +179,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
           't', "blockIron");
     }
     else {
-      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
           " s ",
           "s s",
           "ttt",

@@ -132,7 +132,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         }
         StorageActionType.setTimeout(held);
         event.setCanceled(true);
-        UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
+        UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
         if (!player.getEntityWorld().isRemote) { // server side
           StorageActionType.toggle(held);
           UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));

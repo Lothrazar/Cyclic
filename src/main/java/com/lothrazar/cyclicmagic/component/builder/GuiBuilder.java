@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,11 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
-  private ButtonBuilderType btn;
-  private ButtonBuildSize btnSizeUp;
-  private ButtonBuildSize btnSizeDown;
-  private ButtonBuildSize btnHeightUp;
-  private ButtonBuildSize btnHeightDown;
+  private ButtonIncrementField btn;
+  private ButtonIncrementField btnSizeUp;
+  private ButtonIncrementField btnSizeDown;
+  private ButtonIncrementField btnHeightUp;
+  private ButtonIncrementField btnHeightDown;
   private int xSizeTextbox;
   private int ySizeTxtbox;
   private int xHeightTextbox;
@@ -36,26 +37,64 @@ public class GuiBuilder extends GuiBaseContainer {
     super.initGui();
     //first the main top left type button
     int width = 50;
+    int h = 15;
     int id = 2;
     int y = this.guiTop + yOffset + Const.PAD;
-    btn = new ButtonBuilderType(tile.getPos(), id++,
-        this.guiLeft + Const.PAD + 20,
-        y, width);
+    btn = new ButtonIncrementField(id++,
+        this.guiLeft + Const.PAD + h,
+        y,
+        tile.getPos(),
+        TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
+        width, 20);
+    //TileEntityStructureBuilder.Fields.BUILDTYPE
+    btn.setTooltip("button.builder.tooltip");
     this.buttonList.add(btn);
     width = 15;
+    TileEntityStructureBuilder.Fields fld = TileEntityStructureBuilder.Fields.SIZE;
     //size buttons
     xSizeTextbox = 176 - 52;
-    btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
+    // this.setTooltip("button." + fld.name().toLowerCase() + "." + (goUp ? "up" : "down"));
+    btnSizeUp = new ButtonIncrementField(id++,
+        this.guiLeft + xSizeTextbox,
+        this.guiTop + yOffset,
+        tile.getPos(),
+        fld.ordinal(),
+        1, width, h
+    //        true,
+    //         TileEntityStructureBuilder.Fields.SIZE
+    );
+    btnSizeUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
+    btnSizeUp.displayString = "+";
     this.buttonList.add(btnSizeUp);
-    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
+    btnSizeDown = new ButtonIncrementField(id++,
+        this.guiLeft + xSizeTextbox,
+        this.guiTop + 22 + yOffset + 8,
+        tile.getPos(),
+        fld.ordinal(),
+        -1, width, h);
+    btnSizeDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
+    btnSizeDown.displayString = "-";
     this.buttonList.add(btnSizeDown);
     xSizeTextbox += width / 2 - 2;
-    ySizeTxtbox = 16;
+    ySizeTxtbox = 22;
     //HEIGHT BUTTONS
+    fld = TileEntityStructureBuilder.Fields.HEIGHT;
     xHeightTextbox = xSizeTextbox - 28;
-    btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
+    btnHeightUp = new ButtonIncrementField(id++,
+        this.guiLeft + xHeightTextbox, this.guiTop + yOffset,
+        tile.getPos(),
+        fld.ordinal(),
+        1, width, h);
+    btnHeightUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
+    btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
-    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
+    btnHeightDown = new ButtonIncrementField(id++,
+        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset + 8,
+        tile.getPos(),
+        fld.ordinal(),
+        -1, width, h);
+    btnHeightDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
+    btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;

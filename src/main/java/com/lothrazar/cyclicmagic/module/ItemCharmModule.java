@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.bauble.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.bauble.ItemCharmAir;
@@ -38,47 +38,39 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.register(charm_fire, "charm_fire", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_fire);
-      ItemRegistry.registerWithJeiDescription(charm_fire);
     }
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
       ItemRegistry.register(charm_boat, "charm_boat", GuideCategory.ITEMBAUBLES);
-      ItemRegistry.registerWithJeiDescription(charm_boat);
     }
     if (enableVoid) {
       ItemCharmVoid charm_void = new ItemCharmVoid();
       ItemRegistry.register(charm_void, "charm_void", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_void);
-      ItemRegistry.registerWithJeiDescription(charm_void);
     }
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.register(charm_water, "charm_water", GuideCategory.ITEMBAUBLES);
-      ItemRegistry.registerWithJeiDescription(charm_water);
     }
     if (antidoteCharm) {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
       ItemRegistry.register(charm_antidote, "charm_antidote", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_antidote);
-      ItemRegistry.registerWithJeiDescription(charm_antidote);
     }
     if (slowfallCharm) {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
       ItemRegistry.register(charm_wing, "charm_wing", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_wing);
-      ItemRegistry.registerWithJeiDescription(charm_wing);
     }
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
       ItemRegistry.register(tool_auto_torch, "tool_auto_torch", GuideCategory.ITEMBAUBLES);
       ModCyclic.instance.events.register(tool_auto_torch);
       LootTableRegistry.registerLoot(tool_auto_torch);
-      ItemRegistry.registerWithJeiDescription(tool_auto_torch);
     }
     if (enableSpeed) {
       ItemCharmSpeed charm_speed = new ItemCharmSpeed();
       ItemRegistry.register(charm_speed, "charm_speed", GuideCategory.ITEMBAUBLES);
-      ItemRegistry.registerWithJeiDescription(charm_speed);
     }
   }
   @Override

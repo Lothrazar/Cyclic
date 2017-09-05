@@ -55,8 +55,8 @@ public class ItemWarpSurface extends BaseTool implements IHasRecipe {
         " gd",
         "s  ",
         'e', Items.ENDER_EYE,
-        'd', "gemDiamond",
-        'g', Items.GHAST_TEAR,
+        'd', "blockQuartz",
+        'g', Blocks.REDSTONE_LAMP,
         's', Blocks.REDSTONE_LAMP);
   }
 }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

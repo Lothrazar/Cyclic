@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -16,10 +17,10 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private TileEntityControlledMiner tile;
   private int xHeightTextbox = 100;
   private int yHeightTxtbox = 38;
-  private ButtonMinerHeight btnHeightDown;
-  private ButtonMinerHeight btnHeightUp;
+  private ButtonIncrementField btnHeightDown;
+  private ButtonIncrementField btnHeightUp;
   private GuiButtonToggleSize btnSize;
-  private ButtonMinerHeight btnWhitelist;
+  private ButtonIncrementField btnWhitelist;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -36,16 +37,27 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //    GuiUtils.drawContinuousTexturedBox(x, y, u, v, xHeightTextbox, xHeightTextbox, textureWidth, textureHeight, borderSize, xHeightTextbox);
     int id = 2;
     int yOffset = 16;
-    btnHeightDown = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox + yOffset, false, TileEntityControlledMiner.Fields.HEIGHT);
+    //tooltips be like     setTooltip("button." + stype + "." + (goUp ? "up" : "down"));
+    btnHeightDown = new ButtonIncrementField(
+        id++,
+        this.guiLeft + xHeightTextbox,
+        this.guiTop + yHeightTxtbox + yOffset,
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, 14, 14);
+    btnHeightDown.setTooltip("button.height.down");
+    btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
-    btnHeightUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox - yOffset - 4, true, TileEntityControlledMiner.Fields.HEIGHT);
+    btnHeightUp = new ButtonIncrementField(
+        id++, this.guiLeft + xHeightTextbox,
+        this.guiTop + yHeightTxtbox - yOffset - 4,
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, 14, 14);
+    btnHeightUp.setTooltip("button.height.up");
+    btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
     int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
-    btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++,
-        x, y, true, TileEntityControlledMiner.Fields.LISTTYPE);
+    btnWhitelist = new ButtonIncrementField(id++,
+        x, y,
+        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, 14, 14);
     btnWhitelist.width = 50;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);

@@ -178,7 +178,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "blockSlime",
+            'x', "slimeball",
             'b', "dyeRed");
       break;
       case MEDIUM:
@@ -187,7 +187,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "blockSlime",
+            'x', "slimeball",
             'b', "dyePurple");
       break;
       case SMALL:
@@ -196,7 +196,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "blockSlime",
+            'x', "slimeball",
             'b', "dyeMagenta");
       break;
       case TINY:
@@ -205,7 +205,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "blockSlime",
+            'x', "slimeball",
             'b', "dyeLightBlue");
       break;
       default:

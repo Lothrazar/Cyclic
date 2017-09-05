@@ -52,7 +52,7 @@ public class GuideRegistry {
   }
   public static GuideItem register(Enchantment ench, @Nonnull List<String> args) {
     args.add(ench.getRarity().name().toLowerCase().replace("_", " "));
-    return register(GuideCategory.ENCHANT, new ItemStack(Items.ENCHANTED_BOOK), ench.getName(), ench.getName() + SUFFIX, null, args);
+    return register(GuideCategory.ENCHANT, Items.ENCHANTED_BOOK, ench.getName(), ench.getName() + SUFFIX, null, args);
   }
   public static GuideItem register(GuideCategory cat, Block block) {
     //    String pageTitle = block.getUnlocalizedName() + ".name";
@@ -62,20 +62,20 @@ public class GuideRegistry {
   public static GuideItem register(GuideCategory cat, Block block, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = block.getUnlocalizedName() + ".name";
     String text = block.getUnlocalizedName() + SUFFIX;
-    return register(cat, new ItemStack(block), pageTitle, text, recipe, args);
+    return register(cat, Item.getItemFromBlock(block), pageTitle, text, recipe, args);
   }
   public static GuideItem register(GuideCategory cat, Item item) {
-    return register(cat, item, null, null);
+    return register(cat, item, (IRecipe) null, null);
   }
   public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + SUFFIX;
-    return register(cat, new ItemStack(item), pageTitle, above, recipe, args);
+    return register(cat, item, pageTitle, above, recipe, args);
   }
-  public static GuideItem register(GuideCategory cat, ItemStack icon, String title, String text) {
+  public static GuideItem register(GuideCategory cat, Item icon, String title, String text) {
     return register(cat, icon, title, text, null, null);
   }
-  public static GuideItem register(GuideCategory cat, @Nonnull ItemStack icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, @Nonnull Item icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
     //layer of seperation between guidebook api. 1 for optional include and 2 in case i ever need to split it out and 3 for easy registering
     if (args != null && args.size() > 0) {
       text = UtilChat.lang(text);
@@ -97,7 +97,7 @@ public class GuideRegistry {
    * @param title
    * @return
    */
-  public static GuideItem register(GuideCategory cat, ItemStack icon, String title) {
+  public static GuideItem register(GuideCategory cat, Item icon, String title) {
     GuideItem itempage = new GuideItem(cat, icon, title, null, null);
     items.add(itempage);
     return itempage;
@@ -121,10 +121,10 @@ public class GuideRegistry {
   }
   public static class GuideItem {
     public GuideCategory cat;
-    public ItemStack icon;
+    public Item icon;
     public String title;
     public List<GuidePage> pages = new ArrayList<GuidePage>();
-    public GuideItem(@Nonnull GuideCategory cat, @Nonnull ItemStack icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
+    public GuideItem(@Nonnull GuideCategory cat, @Nonnull Item icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
       this.cat = cat;
       this.icon = icon;
       this.title = UtilChat.lang(title);

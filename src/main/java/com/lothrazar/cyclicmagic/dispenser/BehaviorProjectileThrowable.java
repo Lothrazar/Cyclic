@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.dispenser;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.item.projectile.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;

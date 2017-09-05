@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
@@ -32,6 +31,8 @@ import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
 import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
+import com.lothrazar.cyclicmagic.component.wandblaze.BlockFireSafe;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
@@ -56,21 +57,23 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableSprinkler;
   private boolean enableSpikes;
   public void onPreInit() {
+    BlockFireSafe fire = new BlockFireSafe();
+    BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableClock) {
       BlockRedstoneClock clock = new BlockRedstoneClock();
-      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
     }
     if (enableSprinkler) {
       BlockSprinkler sprinkler = new BlockSprinkler();
-      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
     }
     if (enableSpikes) {
       BlockSpikesRetractable spikes_iron = new BlockSpikesRetractable(false);
-      BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCK);
       BlockSpikesRetractable spikes_redstone_diamond = new BlockSpikesRetractable(true);
-      BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCK);
     }
     if (enableVacuum) {
       BlockVacuum vacuum_block = new BlockVacuum();

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/charm_antidote"
+        "layer0": "cyclicmagic:items/charm/charm_antidote"
     }
 }

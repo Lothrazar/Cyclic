@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraftforge.common.config.Configuration;
 

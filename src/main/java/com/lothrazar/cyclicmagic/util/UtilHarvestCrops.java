@@ -19,6 +19,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
@@ -107,7 +108,7 @@ public class UtilHarvestCrops {
     //ModCyclic.logger.info(blockClassString+ posCurrent);
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    final List<ItemStack> drops = new ArrayList<ItemStack>();
+    final NonNullList<ItemStack> drops = NonNullList.create();
     if (blockCheck instanceof BlockNetherWart) {
       if (conf.doesCrops) {
         int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
@@ -232,7 +233,7 @@ public class UtilHarvestCrops {
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
       if (addDropsToList) {
-        drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, 0));
+        blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
       }
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -10,7 +10,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -44,9 +43,9 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
         'o', "obsidian",
-        'g', Items.GHAST_TEAR,
+        'g', Blocks.OBSERVER,
         's', Blocks.DISPENSER,
         'r', "blockRedstone",
-        'b', "blockDiamond");
+        'b', Blocks.MAGMA);
   }
 }

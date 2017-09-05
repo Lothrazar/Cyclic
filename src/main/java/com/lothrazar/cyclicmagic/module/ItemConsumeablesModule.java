@@ -1,18 +1,18 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.playerext.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.component.playerext.ItemFoodInventory;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
-import com.lothrazar.cyclicmagic.item.ItemAppleLapis;
-import com.lothrazar.cyclicmagic.item.ItemAppleStep;
-import com.lothrazar.cyclicmagic.item.ItemChorusCorrupted;
-import com.lothrazar.cyclicmagic.item.ItemChorusGlowing;
-import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
-import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
-import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
+import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
+import com.lothrazar.cyclicmagic.item.food.ItemAppleLapis;
+import com.lothrazar.cyclicmagic.item.food.ItemAppleStep;
+import com.lothrazar.cyclicmagic.item.food.ItemChorusCorrupted;
+import com.lothrazar.cyclicmagic.item.food.ItemChorusGlowing;
+import com.lothrazar.cyclicmagic.item.food.ItemHeartContainer;
+import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
+import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -56,11 +56,6 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks 
-      ItemRegistry.registerWithJeiDescription(emerald_carrot);
-      ItemRegistry.registerWithJeiDescription(lapis_carrot);
-      ItemRegistry.registerWithJeiDescription(diamond_carrot);
-      ItemRegistry.registerWithJeiDescription(redstone_carrot);
-      ItemRegistry.registerWithJeiDescription(ender_carrot);
     }
     if (enableLapisApple) {
       ItemAppleLapis apple_lapis = new ItemAppleLapis();
@@ -71,7 +66,6 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.register(apple_emerald, "apple_emerald");
       LootTableRegistry.registerLoot(apple_emerald);
-      ItemRegistry.registerWithJeiDescription(apple_emerald);
       ModCyclic.instance.events.register(apple_emerald);
     }
     if (enableHeartContainer) {
@@ -81,19 +75,16 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
-      ItemRegistry.registerWithJeiDescription(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.register(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food);
-      ItemRegistry.registerWithJeiDescription(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.register(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food);
-      ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
       ItemChorusCorrupted corrupted_chorus = new ItemChorusCorrupted();
@@ -101,7 +92,6 @@ public class ItemConsumeablesModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
-      ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
     if (enableGlowingChorus) {
       ItemChorusGlowing glowing_chorus = new ItemChorusGlowing();
