@@ -17,7 +17,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetEmpty extends EntityThrowableDispensable {
   public static Item renderSnowball;
-  public static final FactoryBallEmpty FACTORY_BALLEMPTY = new FactoryBallEmpty();
+ 
   public static class FactoryBallEmpty implements IRenderFactory<EntityMagicNetEmpty> {
     @Override
     public Render<? super EntityMagicNetEmpty> createRenderFor(RenderManager rm) {

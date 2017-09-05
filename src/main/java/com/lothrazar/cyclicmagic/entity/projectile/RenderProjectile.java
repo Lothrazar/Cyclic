@@ -15,14 +15,12 @@ public class RenderProjectile<T extends Entity> extends RenderSnowball<T> {
   public RenderProjectile(RenderManager renderManagerIn, Item itemIn, RenderItem itemRendererIn) {
     super(renderManagerIn, itemIn, itemRendererIn);
   }
-  public static final FactoryDynMining FACTORY_DYNMINING = new FactoryDynMining();
   public static class FactoryDynMining implements IRenderFactory<EntityDynamiteMining> {
     @Override
     public Render<? super EntityDynamiteMining> createRenderFor(RenderManager rm) {
       return new RenderProjectile<EntityDynamiteMining>(rm, EntityDynamiteMining.renderSnowball, Minecraft.getMinecraft().getRenderItem());
     }
-  }
-  public static final FactoryDynSafe FACTORY_DYNSAVE = new FactoryDynSafe();
+  } 
   public static class FactoryDynSafe implements IRenderFactory<EntityDynamiteBlockSafe> {
     @Override
     public Render<? super EntityDynamiteBlockSafe> createRenderFor(RenderManager rm) {

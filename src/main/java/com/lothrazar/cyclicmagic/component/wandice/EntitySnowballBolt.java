@@ -26,7 +26,6 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 public class EntitySnowballBolt extends EntityThrowableDispensable {
   private static final int SLOWNESSLEVEL = 2;
   private static final int POTIONSECONDS = 30;
-  public static final FactorySnow FACTORY = new FactorySnow();
   public static class FactorySnow implements IRenderFactory<EntitySnowballBolt> {
     @Override
     public Render<? super EntitySnowballBolt> createRenderFor(RenderManager rm) {

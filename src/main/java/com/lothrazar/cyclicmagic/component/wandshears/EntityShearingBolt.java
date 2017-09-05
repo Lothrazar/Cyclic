@@ -19,7 +19,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityShearingBolt extends EntityThrowableDispensable {
   private static final int FORTUNE = 3;
-  public static final FactoryShear FACTORY = new FactoryShear();
+  
   public static class FactoryShear implements IRenderFactory<EntityShearingBolt> {
     @Override
     public Render<? super EntityShearingBolt> createRenderFor(RenderManager rm) {

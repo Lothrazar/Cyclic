@@ -26,7 +26,7 @@ public class EntityLightningballBolt extends EntityThrowableDispensable {
     world.spawnEntity(ball);
     this.setDead();
   }
-  public static final FactoryLightning FACTORY = new FactoryLightning();
+ 
   public static class FactoryLightning implements IRenderFactory<EntityLightningballBolt> {
     @Override
     public Render<? super EntityLightningballBolt> createRenderFor(RenderManager rm) {

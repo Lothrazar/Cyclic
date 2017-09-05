@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetFull extends EntityThrowableDispensable {
-  public static final FactoryBall FACTORY_BALL = new FactoryBall();
+ 
   public static class FactoryBall implements IRenderFactory<EntityMagicNetFull> {
     @Override
     public Render<? super EntityMagicNetFull> createRenderFor(RenderManager rm) {

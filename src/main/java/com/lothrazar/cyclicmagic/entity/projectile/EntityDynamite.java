@@ -11,7 +11,6 @@ public class EntityDynamite extends EntityThrowableDispensable {
   public static final float EX_CHARGEDCREEPER = 2;
   public static final float EX_TNT = 4;
   public static final float EX_ENDCRYSTAL = 6;
-  public static final FactoryDyn FACTORY_DYN = new FactoryDyn();
   public static class FactoryDyn implements IRenderFactory<EntityDynamite> {
     @Override
     public Render<? super EntityDynamite> createRenderFor(RenderManager rm) {

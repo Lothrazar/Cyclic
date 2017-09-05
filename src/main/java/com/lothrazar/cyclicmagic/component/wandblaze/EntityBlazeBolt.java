@@ -23,7 +23,6 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 public class EntityBlazeBolt extends EntityThrowableDispensable {
   static final float damage = 10;
   public static final int fireSeconds = 4;
-  public static final FactoryFire FACTORY_FIRE = new FactoryFire();
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
     @Override
     public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
