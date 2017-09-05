@@ -53,23 +53,23 @@ public class SoundRegistry {
     pow = registerSound("pow");//UNUSED
     thunk = registerSound("thunk");//ChestSack 
     warp = registerSound("warp");//Ender Wings & Book 
-    spikes_out = registerSound("spikes_out");
-    spikes_in = registerSound("spikes_in");
-    dungeonfinder = registerSound("dungeonfinder");
-    firelaunch = registerSound("firelaunch");
-    goodlaunch = registerSound("goodlaunch");
-    laserbeanpew = registerSound("laserbeanpew");
-    powerupscales = registerSound("powerupscales");
+    spikes_out = registerSound("spikes_out");//spikes
+    spikes_in = registerSound("spikes_in");//spikes
+    dungeonfinder = registerSound("dungeonfinder");// wandspawner
+    firelaunch = registerSound("firelaunch");//used by wandblaze
+    explosm = registerSound("explosm");//entity blaze fire
+    goodlaunch = registerSound("goodlaunch");//used by wandice
+    laserbeanpew = registerSound("laserbeanpew");// wandlightning
+    powerupscales = registerSound("powerupscales");//wandhypno
+    magic_missile = registerSound("magic_missile");//wand missile
+    metal_pitch = registerSound("metal_pitch");//wandshears
+    pschew_fire = registerSound("pschew_fire");//waterremoval
     bass_echo = registerSound("bass_echo");
     coin = registerSound("coin");
     crack = registerSound("crack");
-    explosm = registerSound("explosm");
     guitar = registerSound("guitar");
     hovering = registerSound("hovering");
-    magic_missile = registerSound("magic_missile");
-    metal_pitch = registerSound("metal_pitch");
     pew_long = registerSound("pew_long");
-    pschew_fire = registerSound("pschew_fire");
     spikemaybe = registerSound("spikemaybe");
   }
   private static SoundEvent registerSound(String name) {
