@@ -86,7 +86,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
           if (this.getWorld().isRemote == false) {
             this.decrStackSize(0, stack.getCount());
           }
-          UtilSound.playSound(this.getWorld(), this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
         }
         this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
         this.markDirty();
