@@ -75,6 +75,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
             world.spawnEntity(entityitem);
             world.setBlockToAir(pos);
           }
+          UtilSound.playSound(world, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS);
         }
         this.setDead();
       }
