@@ -50,7 +50,7 @@ public class FluidTankFixDesync extends FluidTank {
         // only send to relevant players
         if (player instanceof EntityPlayerMP) {
           EntityPlayerMP playerMP = (EntityPlayerMP) player;
-          ModCyclic.logger.info(" sendToPlayer() ");
+          //ModCyclic.logger.info(" sendToPlayer() ");
           // if(world.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.x, chunk.z)) {
           ModCyclic.network.sendTo(packet, playerMP);
           // }
