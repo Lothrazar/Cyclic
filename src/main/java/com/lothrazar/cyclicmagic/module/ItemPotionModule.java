@@ -294,7 +294,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (ModCyclic.logger.sendInfo) {//OMG UNIT TESTING WAAT
       ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
       if (output0.getItem() == output.getItem())
-        ModCyclic.logger.info("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+        ModCyclic.logger.log("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
       else {
         ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
       }
