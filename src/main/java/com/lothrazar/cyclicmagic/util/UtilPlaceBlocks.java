@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
-  public static boolean placeStateDetsroy(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
+  public static boolean placeStateDetsroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
     if (world.destroyBlock(placePos, dropBlock)) { return placeStateSafe(world, player, placePos, placeState); }
     return false;
   }
@@ -29,7 +29,7 @@ public class UtilPlaceBlocks {
    * TODO: SHOULD every call to this be in a scheduled task?
    * https://github.com/PrinceOfAmber/Cyclic/issues/143
    */
-  public static boolean placeStateOverwrite(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateOverwrite(World world,@Nullable  EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (world.setBlockToAir(placePos)) { return placeStateSafe(world, player, placePos, placeState); }
     return false;
   }
@@ -192,7 +192,7 @@ public class UtilPlaceBlocks {
   }
   //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static boolean rotateBlockValidState(World worldObj, EntityPlayer p, BlockPos pos, EnumFacing side) {
+  public static boolean rotateBlockValidState(World worldObj, @Nullable EntityPlayer p, BlockPos pos, EnumFacing side) {
     if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return false; }
     IBlockState clicked = worldObj.getBlockState(pos);
     if (clicked.getBlock() == null) { return false; }
@@ -204,7 +204,8 @@ public class UtilPlaceBlocks {
     boolean isDone = clickedBlock.rotateBlock(worldObj, pos, side);
     if (isDone) {
       //rotateBlock does not have any sounds attached, so add our own
-      UtilSound.playSoundPlaceBlock(p, pos, clickedBlock);
+      if (p != null)
+        UtilSound.playSoundPlaceBlock(p, pos, clickedBlock);
       return true;
     }
     //first handle any special cases 

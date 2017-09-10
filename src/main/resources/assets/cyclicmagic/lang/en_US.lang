@@ -1,6 +1,7 @@
 
 builder.toggle.name=Toggle
 buildertype.circle.name=Circle
+buildertype.diagonal.name=Diagonal
 buildertype.facing.name=Facing
 buildertype.solid.name=Solid
 buildertype.sphere.name=Sphere
@@ -58,6 +59,8 @@ button.miner.whitelist.0=Blacklist
 button.miner.whitelist.1=Whitelist
 button.reset.name=Reset
 button.reset.tooltip=Reset position to first slot
+button.rotations.up=Number of times to rotate the block (for stairs and such)
+button.rotations.down=Number of times to rotate the block (for stairs and such)
 button.size.down=Decrease size
 button.size.tooltip=Change Size
 button.size.up=Increase size

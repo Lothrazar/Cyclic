@@ -219,6 +219,21 @@ public class UtilShape {
     }
     return shape;
   }
+  public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+
+    for (int i = 1; i < want + 1; i++) {
+      if (isLookingUp)
+        posCurrent = posCurrent.up();
+      else
+        posCurrent = posCurrent.down();
+      //go up and over each time
+      posCurrent = posCurrent.offset(pfacing);
+      shape.add(posCurrent);
+
+    }
+    return shape;
+  }
   public static List<BlockPos> line(BlockPos pos, EnumFacing efacing, int want) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;
