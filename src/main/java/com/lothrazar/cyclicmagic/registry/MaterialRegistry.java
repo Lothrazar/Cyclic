@@ -9,59 +9,53 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class MaterialRegistry { // thanks for help:
+  private static final int diamondDurability = 33;
+  private static final int ironDurability = 15;
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-  private static final int maxDamageFactorDiamond = 33;
   private static final String emeraldName = "emerald";
   private static final String MATERIALNAME = "power";
+  private static final String GLOWING = "glowing";
   // thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial sandstoneToolMaterial;
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
   public static ArmorMaterial powerArmorMaterial;
   public static ToolMaterial powerToolMaterial;
+  public static ArmorMaterial glowingArmorMaterial;
   public static void register() {
     registerPurpleMaterial();
     registerEmeraldMaterial();
     registerSandstoneMaterials();
+    registerGlowingMaterials();
   }
-  //  private static void registerObsidianMaterial() {
-  //    ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
-  //    String name = "obsidian";
-  //    MaterialRegistry.obsidianArmorMaterial = EnumHelper.addArmorMaterial(name, Const.MODRES + name,
-  //        60, // affects DURABILITY . 15 is the same as iron
-  //        new int[] {
-  //            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET),
-  //            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
-  //            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
-  //            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-  //        },
-  //        mimicArmor.getEnchantability() * 2,
-  //        mimicArmor.getSoundEvent(),
-  //        mimicArmor.getToughness() * 4);
-  //    MaterialRegistry.obsidianArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
-  //    //max uses is durability ex The number of uses this material allows.
-  //    //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
-  //    MaterialRegistry.obsidianToolMaterial = EnumHelper.addToolMaterial(name,
-  //        ToolMaterial.DIAMOND.getHarvestLevel() * 4,
-  //        ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
-  //        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial() * 4,
-  //        ToolMaterial.DIAMOND.getDamageVsEntity() * 4, //was  - 0.25F
-  //        ToolMaterial.GOLD.getEnchantability());
-  //    MaterialRegistry.obsidianToolMaterial.setRepairItem(MaterialRegistry.obsidianArmorMaterial.repairMaterial);
-  //  }
-  private static void registerPurpleMaterial() {
-    ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
-    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
-        15, // affects DURABILITY . 15 is the same as iron
+  private static void registerGlowingMaterials() {
+    ArmorMaterial mimicArmor = ArmorMaterial.IRON;
+    MaterialRegistry.glowingArmorMaterial = EnumHelper.addArmorMaterial(GLOWING, Const.MODRES + GLOWING,
+        ironDurability, // affects DURABILITY  
         new int[] {
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET),
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
         },
-        mimicArmor.getEnchantability(),
+        mimicArmor.getEnchantability() + 1,
         mimicArmor.getSoundEvent(),
-        mimicArmor.getToughness());
+        mimicArmor.getToughness() + 1);
+    MaterialRegistry.glowingArmorMaterial.repairMaterial = new ItemStack(Blocks.GLOWSTONE);
+  }
+  private static void registerPurpleMaterial() {
+    ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
+    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
+        diamondDurability * 2, // affects DURABILITY . 15 is the same as iron
+        new int[] {
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET) + 1,
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS) + 1,
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST) + 1,
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD) + 2
+        },
+        mimicArmor.getEnchantability() / 4,
+        mimicArmor.getSoundEvent(),
+        mimicArmor.getToughness() + 2);
     MaterialRegistry.powerArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
     //now the tool material
     MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,
@@ -74,13 +68,16 @@ public class MaterialRegistry { // thanks for help:
   }
   private static void registerEmeraldMaterial() {
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
-        maxDamageFactorDiamond, //was -2 affects DURABILITY 
+        diamondDurability + 30, //was -2 affects DURABILITY 
         new int[] {
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET),
+            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
+            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
+            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
         },
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
-        ArmorMaterial.DIAMOND.getToughness());//was  / 2
+        ArmorMaterial.DIAMOND.getToughness() + 1);//was  / 2
     MaterialRegistry.emeraldArmorMaterial.repairMaterial = new ItemStack(Items.EMERALD);
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)

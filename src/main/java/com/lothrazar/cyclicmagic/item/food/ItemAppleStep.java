@@ -57,7 +57,7 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
       EntityPlayer player = (EntityPlayer) event.getEntityLiving();
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
       if (data.isStepHeightOn()) {
-        player.stepHeight = 1.0F;//if MY feature turns this on, then do it
+        player.stepHeight = 1.0F + (1F / 16F);//PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
       }
       else if (data.doForceStepOff()) {
         //otherwise, dont automatically force it off. only force it off the once if player is toggling FROM on TO off with my feature

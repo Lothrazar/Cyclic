@@ -13,7 +13,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class EntityTorchBolt extends EntityThrowableDispensable { 
+public class EntityTorchBolt extends EntityThrowableDispensable {
   public static class FactoryTorch implements IRenderFactory<EntityTorchBolt> {
     @Override
     public Render<? super EntityTorchBolt> createRenderFor(RenderManager rm) {

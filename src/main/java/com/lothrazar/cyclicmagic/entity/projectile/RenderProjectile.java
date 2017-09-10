@@ -20,7 +20,7 @@ public class RenderProjectile<T extends Entity> extends RenderSnowball<T> {
     public Render<? super EntityDynamiteMining> createRenderFor(RenderManager rm) {
       return new RenderProjectile<EntityDynamiteMining>(rm, EntityDynamiteMining.renderSnowball, Minecraft.getMinecraft().getRenderItem());
     }
-  } 
+  }
   public static class FactoryDynSafe implements IRenderFactory<EntityDynamiteBlockSafe> {
     @Override
     public Render<? super EntityDynamiteBlockSafe> createRenderFor(RenderManager rm) {

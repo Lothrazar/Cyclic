@@ -23,12 +23,12 @@ import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.entity.RenderCyclicMinecart;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite.FactoryDyn;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull; 
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite.FactoryDyn;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty.FactoryBallEmpty;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull.FactoryBall;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile.FactoryDynMining;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile.FactoryDynSafe;
@@ -111,19 +111,19 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     RenderingRegistry.registerEntityRenderingHandler(EntityMinecartTurret.class, RenderCyclicMinecart.FACTORY_TURRET);
     //the projectiles too
-    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class,  new FactoryLightning());
+    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new FactoryLightning());
     RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new FactorySnow());
     RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new FactoryTorch());
     RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new FactoryFish());
     RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new FactoryShear());
     RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new FactoryDungeon());
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class,  new FactoryDyn());
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new FactoryDyn());
     RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new FactoryFire());
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class,  new FactoryDynMining());
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new FactoryDynMining());
     RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new FactoryDynSafe());
-    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class,   new FactoryBall());
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new FactoryBall());
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
-    RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class,  new FactoryMissile());
+    RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
   }
   @SideOnly(Side.CLIENT)
   @Override

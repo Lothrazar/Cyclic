@@ -32,13 +32,14 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int needsRedstone = 1;
   private int shapeIndex = 0;// current index of shape array
   private int renderParticles = 1;
+  private int rotations = 0;
   public static int maxSize;
   public static int maxHeight = 10;
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS;
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE;
+    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE, DIAGONAL;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
@@ -48,7 +49,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return BuildType.values()[type];
     }
     public boolean hasHeight() {
-      if (this == STAIRWAY || this == SPHERE)
+      if (this == STAIRWAY || this == SPHERE || this == DIAGONAL)
         return false;
       return true;
     }
@@ -84,6 +85,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPos(), this.getSize());
+      break;
+      case DIAGONAL:
+        shape = UtilShape.diagonal(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
+      break;
+      default:
       break;
     }
     if (buildType.hasHeight() && this.buildHeight > 1) { //first layer is already done, add remaining
@@ -121,6 +127,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.getFuelCurrent();
         case FUELMAX:
           return this.getFuelMax();
+        case ROTATIONS:
+          return this.rotations;
+        default:
+        break;
       }
     }
     return -1;
@@ -161,6 +171,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         break;
         case FUELMAX:
           this.setFuelMax(value);
+        break;
+        case ROTATIONS:
+          this.rotations = Math.max(0, value);
+        break;
+        default:
         break;
       }
     }
@@ -216,6 +231,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
+    this.rotations = tagCompound.getInteger("rotations");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -225,6 +241,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     tagCompound.setInteger(NBT_RENDER, renderParticles);
+    tagCompound.setInteger("rotations", rotations);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -252,6 +269,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
               world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
             IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
             if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+              //rotations if any
+              for (int j = 0; j < this.rotations; j++) {
+                UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
+              }
+              //decrement and sound
               this.decrStackSize(0, 1);
               SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, nextPos);
               if (type != null && type.getPlaceSound() != null) {

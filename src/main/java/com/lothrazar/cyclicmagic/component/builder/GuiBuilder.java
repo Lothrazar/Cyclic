@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.builder;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -23,6 +24,7 @@ public class GuiBuilder extends GuiBaseContainer {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + Const.PAD;
+  private int xRotTextbox;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -46,7 +48,6 @@ public class GuiBuilder extends GuiBaseContainer {
         tile.getPos(),
         TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
         width, 20);
-    //TileEntityStructureBuilder.Fields.BUILDTYPE
     btn.setTooltip("button.builder.tooltip");
     this.buttonList.add(btn);
     width = 15;
@@ -59,16 +60,13 @@ public class GuiBuilder extends GuiBaseContainer {
         this.guiTop + yOffset,
         tile.getPos(),
         fld.ordinal(),
-        1, width, h
-    //        true,
-    //         TileEntityStructureBuilder.Fields.SIZE
-    );
+        1, width, h);
     btnSizeUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnSizeUp.displayString = "+";
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonIncrementField(id++,
         this.guiLeft + xSizeTextbox,
-        this.guiTop + 22 + yOffset + 8,
+        this.guiTop + 22 + yOffset + Const.PAD,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
@@ -89,7 +87,7 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonIncrementField(id++,
-        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset + 8,
+        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset + Const.PAD,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
@@ -97,6 +95,27 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
+    yHeightTxtbox = ySizeTxtbox;
+    //ROTATION BUTTONS
+    fld = TileEntityStructureBuilder.Fields.ROTATIONS;
+    xRotTextbox = xHeightTextbox - 28;
+    ButtonIncrementField btnRotUp = new ButtonIncrementField(id++,
+        this.guiLeft + xRotTextbox, this.guiTop + yOffset,
+        tile.getPos(),
+        fld.ordinal(),
+        1, width, h);
+    btnRotUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
+    btnRotUp.displayString = "+";
+    this.buttonList.add(btnRotUp);
+    ButtonIncrementField btnRotDown = new ButtonIncrementField(id++,
+        this.guiLeft + xRotTextbox, this.guiTop + ySizeTxtbox + yOffset + Const.PAD,
+        tile.getPos(),
+        fld.ordinal(),
+        -1, width, h);
+    btnRotDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
+    btnRotDown.displayString = "-";
+    this.buttonList.add(btnRotDown);
+    xRotTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
   }
   @SideOnly(Side.CLIENT)
@@ -108,14 +127,18 @@ public class GuiBuilder extends GuiBaseContainer {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
-      this.fontRenderer.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
+      this.drawString(display, x, ySizeTxtbox + yOffset - 4);
     }
     if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
-      this.fontRenderer.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
+      this.drawString(display, x, yHeightTxtbox + yOffset - 4);
     }
+    String display = "" + this.tile.getField(Fields.ROTATIONS.ordinal());
+    //move it over if more than 1 digit
+    int x = (display.length() > 1) ? xRotTextbox - 3 : xRotTextbox;
+    this.drawString(display, x, yHeightTxtbox + yOffset - 4);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }

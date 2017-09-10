@@ -18,7 +18,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class EntityFishingBolt extends EntityThrowableDispensable { 
+public class EntityFishingBolt extends EntityThrowableDispensable {
   public static class FactoryFish implements IRenderFactory<EntityFishingBolt> {
     @Override
     public Render<? super EntityFishingBolt> createRenderFor(RenderManager rm) {

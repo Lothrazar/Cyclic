@@ -1,40 +1,7 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 builder.toggle.name=Toggle
 buildertype.circle.name=Circle
+buildertype.diagonal.name=Diagonal
 buildertype.facing.name=Facing
 buildertype.solid.name=Solid
 buildertype.sphere.name=Sphere
@@ -92,6 +59,8 @@ button.miner.whitelist.0=Blacklist
 button.miner.whitelist.1=Whitelist
 button.reset.name=Reset
 button.reset.tooltip=Reset position to first slot
+button.rotations.up=Number of times to rotate the block (for stairs and such)
+button.rotations.down=Number of times to rotate the block (for stairs and such)
 button.size.down=Decrease size
 button.size.tooltip=Change Size
 button.size.up=Increase size
@@ -151,6 +120,8 @@ enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity 
 enchantment.reach=Block Reach
 enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
 enchantment.venom=Venom
+enchantment.waterwalking=Waterwalking
+enchantment.waterwalking.guide=Walk on liquid as if it is solid
 entity.Villager.druid=Druid
 entity.Villager.sage=Sage
 entity.cyclicmagic.golddropperminecart.name=Dropper Minecart
@@ -325,6 +296,9 @@ item.glowing_chorus.guide=A balanced way to get the power of flight.
 item.glowing_chorus.name=Glowing Chorus Fruit
 item.glowing_chorus.tooltip=Gives you a few (stackable) minutes of creative flight each time its eaten.
 item.gold_furnace_minecart.guide=The plain Furnace Minecarts in the game are unusable; they lose speed quite fast, especially on corners, so the fuel cannot even overpowere the drag/friction.  This Gold furnace minecart has much less drag while it has fuel, so it wont stop after two corners.
+item.glowing_helmet.name=Vision Helmet
+item.glowing_helmet.tooltip=Glowing night vision
+item.glowing_helmet.guide=Enables glowing night vision while worn, you can also turn it on and off by right-clicking (works in most inventory screens)
 item.gold_furnace_minecart.name=Gold Furnace Minecart
 item.gold_furnace_minecart.tooltip=Does not lose momentum while fueled
 item.gold_minecart.guide=This is just a faster version of the regular minecart.
@@ -406,19 +380,14 @@ item.potion_viscous.name=Viscous Potion
 item.potion_waterwalk.guide=Drink this to walk on water
 item.potion_waterwalk.name=Potion of Waterwalk
 item.potion_waterwalk_long.name=Potion of Waterwalk
-item.purple_boots.guide=These boots let you walk on any liquid as if it was solid.  Turn off with right click.
-item.purple_boots.name=Boots of Elitch
-item.purple_boots.tooltip=Walk on liquid
-item.purple_chestplate.guide=This magical armor increases your speed while sneaking, so you can sneak at walking speed.  Turn off with right click.
-item.purple_chestplate.name=Nokozan Chestplate
-item.purple_chestplate.tooltip=Sneak at full speed
-item.purple_helmet.guide=This helmet gives you two effects, you have night vision and you also have a glowing aura around you.  Turn off with right click.
-item.purple_helmet.name=Darksight Helm
-item.purple_helmet.tooltip=Glowing Night Vision
-item.purple_leggings.guide=This armor increases your step height, so you can walk like a horse up full blocks.  Turn off with right click.
-item.purple_leggings.name=Leggings of Zakarum
-item.purple_leggings.tooltip=Walk up full blocks
-item.respawn_egg.name=Respawn Egg
+item.purple_boots.guide=
+item.purple_boots.name=Obsidian Boots
+item.purple_chestplate.guide=
+item.purple_chestplate.name=Obsidian Chestplate
+item.purple_helmet.guide=
+item.purple_helmet.name=Obsidian Helmet
+item.purple_leggings.guide=
+item.purple_leggings.name=Obsidian Leggings
 item.sack_ender.guide=This portable item opens with the same inventory from your Ender Chest.
 item.sack_ender.name=Ender Sack
 item.sack_ender.tooltip=Portable Ender Chest
