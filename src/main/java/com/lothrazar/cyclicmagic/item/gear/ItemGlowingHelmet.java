@@ -64,10 +64,10 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "oio",
+        "ioi",
         "o o",
         "   ",
-        'i', "dustRedstone",
+        'i', "dyeOrange",
         'o', "glowstone");
   }
   public void toggle(EntityPlayer player, ItemStack held) {
