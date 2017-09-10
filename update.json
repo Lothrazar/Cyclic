@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.29",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12-latest": "1.8.2",
-    "1.12-recommended": "1.8.2"
+    "1.12-latest": "1.8.3",
+    "1.12-recommended": "1.8.3"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -205,5 +205,6 @@
 	,"1.8.0":"New Hydrator recipes.  Sounds added to Spikes.  Block miner and placer now face towards you when put down, consistent with other cyclic machines.   Added more details to certain guidebook entries (download the Guide API).  Fixed the blocks in the guidebook not rendering their item as the Guidebook Category.  Fixed JEI description tab not showing for cyclic content.  Launch enchant renamed to Multi-Jump.  Player Launcher now has enchanted glow to indicate forward mode.  Several recipes changed slightly.  Several of the simple throwing items have been removed or completely overhauled.  The following magic items have been added, each with a unique effect:  Duskflame, Spirit Seeker, Frost Bringer, Spawner Seeker, Chaos Reaper, Engraved Thunder, Antimatter Evaporator.  Added Sword of Decay, Sword of Atrophy, and Sword of Evasion.  Uncrafting Grinder now has custom sound effect, and will correctly become silent when empty.   Fixed Automated User using certain items or projectiles in the wrong direction.  Fixed intermittent crashes with Merchant Almanac being used quickly.  "  
   	,"1.8.1":"Remove server console / log file spam out of a few places including fluid tank and brewing recipes."
   	,"1.8.2":"Fixed step-height not walking up from path blocks so it now goes up 1+1/16th of a block (this is the feature given by Apple of lofty stature or the StepHeightDefault config).  Purple armor has been renamed to and no longer provides custom effects.  Vision Helmet is now the helmet that gives night vision.  New enchantment: Waterwalking.  Structure builder now has a new shape: Diagonal.  Structure builder now has a new rotation value: used to place stairs and other blocks at different rotations.   "
+	,"1.8.3":"Fix waterwalking enchant firing when removed.  Fix waterwalking levitating you a full block above the water, it now tries to keep you at 0.1 of a block above. "
   }
 }
