@@ -69,17 +69,14 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
       EnchantRegistry.register(lifeleech);
-  
     }
     if (enablebeheading) {
       beheading = new EnchantBeheading();
       EnchantRegistry.register(beheading);
- 
     }
     if (enableQuickdraw) {
       quickdraw = new EnchantQuickdraw();
       EnchantRegistry.register(quickdraw);
- 
     }
   }
   @Override

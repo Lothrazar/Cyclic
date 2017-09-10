@@ -129,7 +129,6 @@ public class EntityHomingProjectile extends EntityFlying {// implements IRangedA
     super.readEntityFromNBT(compound);
     this.getEntityWorld().removeEntity(this);
   }
- 
   public static class FactoryMissile implements IRenderFactory<EntityHomingProjectile> {
     @Override
     public Render<? super EntityHomingProjectile> createRenderFor(RenderManager rm) {

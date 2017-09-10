@@ -45,7 +45,7 @@ import net.minecraftforge.common.config.Configuration;
 public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean enableEnderBlaze;
   private boolean enableEnderDungeonFinder;
-//  private boolean enderFishing;
+  //  private boolean enderFishing;
   private boolean enderSnow;
   private boolean enderWool;
   private boolean enderTorch;
@@ -81,11 +81,11 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
       LootTableRegistry.registerLoot(ender_dungeon);
     }
-//    if (enderFishing) {
-//      ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
-//      ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
-//      EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
-//    }
+    //    if (enderFishing) {
+    //      ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
+    //      ItemRegistry.register(ender_fishing, "ender_fishing", GuideCategory.ITEMTHROW);
+    //      EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
+    //    }
     if (enderWool) {
       ItemShearsRanged ender_wool = new ItemShearsRanged();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);
@@ -211,7 +211,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-   // enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    // enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderSnow = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderWool = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderTorch = config.getBoolean("EnderTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

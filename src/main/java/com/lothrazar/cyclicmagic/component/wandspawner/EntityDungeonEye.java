@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityDungeonEye extends EntityThrowableDispensable {
-   
   public static class FactoryDungeon implements IRenderFactory<EntityDungeonEye> {
     @Override
     public Render<? super EntityDungeonEye> createRenderFor(RenderManager rm) {

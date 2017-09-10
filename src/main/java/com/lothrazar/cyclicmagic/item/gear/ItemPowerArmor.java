@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("incomplete-switch")
 public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
-  public ItemPowerArmor( EntityEquipmentSlot armorType) {
+  public ItemPowerArmor(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.powerArmorMaterial, 0, armorType);
   }
   @Override
