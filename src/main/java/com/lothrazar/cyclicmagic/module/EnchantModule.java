@@ -1,7 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
@@ -13,13 +10,12 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
 import com.lothrazar.cyclicmagic.enchantment.EnchantQuickdraw;
 import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
+import com.lothrazar.cyclicmagic.enchantment.EnchantWaterwalking;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
-  public static List<EnchantBase> loadedChants = new ArrayList<EnchantBase>();
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
@@ -27,75 +23,68 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantAutoSmelt autosmelt;
   public static EnchantXpBoost xpboost;
   public static EnchantReach reach;
-  private static EnchantBeheading beheading;
-  private static EnchantQuickdraw quickdraw;
-  private static boolean enablexpboost;
-  private static boolean enableLaunch;
-  private static boolean enableMagnet;
-  private static boolean enableVenom;
-  private static boolean enableLifeleech;
-  private static boolean enableautosmelt;
-  private static boolean enablereach;
-  private static boolean enablebeheading;
+  public static EnchantBeheading beheading;
+  public static EnchantQuickdraw quickdraw;
+  public static EnchantWaterwalking waterwalk;
+  private boolean enablexpboost;
+  private boolean enableLaunch;
+  private boolean enableMagnet;
+  private boolean enableVenom;
+  private boolean enableLifeleech;
+  private boolean enableautosmelt;
+  private boolean enablereach;
+  private boolean enablebeheading;
   private boolean enableQuickdraw;
+  private boolean enablewaterwalk;
   @Override
   public void onPreInit() {
+    if (enablewaterwalk) {
+      waterwalk = new EnchantWaterwalking();
+      EnchantRegistry.register(waterwalk);
+    }
     if (enablereach) {
       reach = new EnchantReach();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, reach.getName()), reach);
-      ModCyclic.instance.events.register(EnchantModule.reach);
+      EnchantRegistry.register(reach);
     }
     if (enablexpboost) {
       xpboost = new EnchantXpBoost();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, xpboost.getName()), xpboost);
-      ModCyclic.instance.events.register(xpboost);
-      loadedChants.add(xpboost);
+      EnchantRegistry.register(xpboost);
     }
     if (enableautosmelt) {
       autosmelt = new EnchantAutoSmelt();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, autosmelt.getName()), autosmelt);
-      ModCyclic.instance.events.register(autosmelt);
-      loadedChants.add(autosmelt);
+      EnchantRegistry.register(autosmelt);
     }
     if (enableLaunch) {
       launch = new EnchantLaunch();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, launch.getName()), launch);
-      ModCyclic.instance.events.register(launch);
-      loadedChants.add(launch);
+      EnchantRegistry.register(launch);
     }
     if (enableMagnet) {
       magnet = new EnchantMagnet();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, magnet.getName()), magnet);
-      ModCyclic.instance.events.register(magnet);
-      loadedChants.add(magnet);
+      EnchantRegistry.register(magnet);
     }
     if (enableVenom) {
       venom = new EnchantVenom();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, venom.getName()), venom);
-      ModCyclic.instance.events.register(venom);
-      loadedChants.add(venom);
+      EnchantRegistry.register(venom);
     }
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, lifeleech.getName()), lifeleech);
-      ModCyclic.instance.events.register(lifeleech);
-      loadedChants.add(lifeleech);
+      EnchantRegistry.register(lifeleech);
+  
     }
     if (enablebeheading) {
       beheading = new EnchantBeheading();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, beheading.getName()), beheading);
-      ModCyclic.instance.events.register(beheading);
-      loadedChants.add(beheading);
+      EnchantRegistry.register(beheading);
+ 
     }
     if (enableQuickdraw) {
       quickdraw = new EnchantQuickdraw();
-      EnchantRegistry.register(new ResourceLocation(Const.MODID, quickdraw.getName()), quickdraw);
-      ModCyclic.instance.events.register(quickdraw);
-      loadedChants.add(quickdraw);
+      EnchantRegistry.register(quickdraw);
+ 
     }
   }
   @Override
   public void syncConfig(Configuration c) {
+    enablewaterwalk = c.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablereach = c.getBoolean("EnchantReach", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablexpboost = c.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableautosmelt = c.getBoolean("EnchantAutoSmelt", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -105,7 +94,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableQuickdraw = c.getBoolean("EnchantQuickdraw", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    for (EnchantBase b : loadedChants) {
+    for (EnchantBase b : EnchantRegistry.enchants) {
       if (b instanceof IHasConfig) {
         ((IHasConfig) b).syncConfig(c);
       }
