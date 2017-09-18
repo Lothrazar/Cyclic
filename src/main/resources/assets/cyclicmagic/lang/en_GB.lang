@@ -53,6 +53,7 @@ button.harvester.size6=13x13
 button.harvester.size7=15x15
 button.height.down=Decrease height
 button.height.up=Increase height
+button.inventory.hotbarswap=Swap row with hotbar
 button.listtype.up=Whitelist or Blacklist
 button.listtype=Toggle the ignore list type
 button.miner.whitelist.0=Blacklist
