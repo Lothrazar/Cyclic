@@ -206,6 +206,6 @@
   	,"1.8.1":"Remove server console / log file spam out of a few places including fluid tank and brewing recipes."
   	,"1.8.2":"Fixed step-height not walking up from path blocks so it now goes up 1+1/16th of a block (this is the feature given by Apple of lofty stature or the StepHeightDefault config).  Purple armor has been renamed to and no longer provides custom effects.  Vision Helmet is now the helmet that gives night vision.  New enchantment: Waterwalking.  Structure builder now has a new shape: Diagonal.  Structure builder now has a new rotation value: used to place stairs and other blocks at different rotations.   "
 	,"1.8.3":"Fix waterwalking enchant firing when removed.  Fix waterwalking levitating you a full block above the water, it now tries to keep you at 0.1 of a block above. "
-	,"1.8.4":"Extended inventory is now 4 slots bigger instead of showing player armor.  Extended inventory has new buttons to swap the row of items with players hotbar.  "
+	,"1.8.4":"Extended inventory is now 4 slots bigger instead of showing player armor.  Extended inventory has new buttons to swap the row of items with players hotbar.  Patch the Structure Builder crashing when placing a block that has a missing or invalid placement sound.  "
   }
 }
