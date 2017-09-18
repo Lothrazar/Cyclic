@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.playerext;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ButtonTabToggleInventory extends GuiButton {
+public class ButtonTabToggleInventory extends GuiButtonTooltip {
   private GuiScreen gui;
   public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
     super(51, x, y, 15, 10, "");

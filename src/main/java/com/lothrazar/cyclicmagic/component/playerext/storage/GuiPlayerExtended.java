@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+import com.lothrazar.cyclicmagic.component.playerext.ButtonToggleHotbar;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiStats;
@@ -14,16 +15,35 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   }
   @Override
   public void updateScreen() {
-    try {
-      ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
-    }
-    catch (Exception e) {}
+//    try {
+//      ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
+//    }
+//    catch (Exception e) {}
     this.updateActivePotionEffects();
   }
   @Override
   public void initGui() {
-    this.buttonList.clear();
     super.initGui();
+    int id = 0, x=this.guiLeft + this.width,y=this.guiTop;
+    
+    
+    
+    ButtonToggleHotbar btn = new ButtonToggleHotbar(id,x,y);
+    this.buttonList.add(btn);
+    
+    id++;
+    y += Const.SQ;
+
+     btn = new ButtonToggleHotbar(id,x,y);
+    this.buttonList.add(btn);
+    
+
+    id++;
+    y += Const.SQ;
+
+     btn = new ButtonToggleHotbar(id,x,y);
+    this.buttonList.add(btn);
+    
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -40,9 +60,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   }
   @Override
   protected void actionPerformed(GuiButton button) {
-    //    if (button.id == 0) {
-    //      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
-    //    }
+
     if (button.id == 1) {
       this.mc.displayGuiScreen(new GuiStats(this, this.mc.player.getStatFileWriter()));
     }

@@ -1,75 +1,44 @@
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
-  private final EntityPlayer thePlayer;
-  private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
-  public static final int SLOT_SHIELD = 40;
-  public static final int SQ = 18;
-  public static final int VROW = 3;
-  public static final int VCOL = 9;
-  public static final int HOTBAR_SIZE = 9;
-  final int pad = 8;
+  public static final int SQ = Const.SQ;
+  public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
+  final int pad = Const.PAD;
   public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
-    this.thePlayer = player;
-    inventory = eInvo;//new InventoryPlayerExtended(player);
+    inventory = eInvo;
     inventory.setEventHandler(this);
     if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
-      //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
-    }
-    for (int k = 0; k < ARMOR.length; k++) {
-      final EntityEquipmentSlot slot = ARMOR[k];
-      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), pad, pad + k * SQ) {
-        @Override
-        public int getSlotStackLimit() {
-          return 1;
-        }
-        @Override
-        public boolean isItemValid(ItemStack stack) {
-          if (stack == null) {
-            return false;
-          }
-          else {
-            return stack.getItem().isValidArmor(stack, slot, thePlayer);
-          }
-        }
-        @Override
-        @SideOnly(Side.CLIENT)
-        public String getSlotTexture() {
-          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
-        }
-      });
     }
     int xPos, yPos, sl;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
-        xPos = pad + (j + 1) * SQ;
+        xPos = pad + j * SQ;
         yPos = pad + i * SQ;
         sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
     }
-    for (int i = 0; i < VROW; ++i) {
-      for (int j = 0; j < VCOL; ++j) {
+    
+    for (int i = 0; i < Const.ROWS_VANILLA; ++i) {
+      for (int j = 0; j < Const.COLS_VANILLA; ++j) {
         xPos = pad + j * SQ;
         yPos = 84 + i * SQ;
-        sl = j + (i + 1) * HOTBAR_SIZE;
+        sl = j + (i + 1) *  Const.COLS_VANILLA;
         this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
       }
     }
     yPos = 142;
-    for (int i = 0; i < HOTBAR_SIZE; ++i) {
+    for (int i = 0; i < Const.HOTBAR_SIZE; ++i) {
       xPos = pad + i * SQ;
       sl = i;
       this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
@@ -93,24 +62,24 @@ public class ContainerPlayerExtended extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36, hotbarStart = 63, hotbarEnd = 72, armorStart = 0, armorEnd = 4;
+    int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36+9, hotbarStart = 63, hotbarEnd = 72;
     //36 to 62 is lower
     //4 to 40 is bottom
     if (slot != null && slot.getHasStack()) {
       ItemStack copy = slot.getStack();
       itemstack = copy.copy();
-      if (itemstack.getItem() instanceof ItemArmor) {
-        //ItemArmor armor = (ItemArmor) copy.getItem();
-        //int armorSlot = 8 - armor.armorType.getIndex();
-        //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
-        if (armorStart <= iSlot && iSlot < armorEnd) {
-          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
-        }
-        else {
-          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
-        }
-      }
-      else if (playerStart <= iSlot && iSlot < playerEnd) {
+//      if (itemstack.getItem() instanceof ItemArmor) {
+//        //ItemArmor armor = (ItemArmor) copy.getItem();
+//        //int armorSlot = 8 - armor.armorType.getIndex();
+//        //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
+//        if (armorStart <= iSlot && iSlot < armorEnd) {
+//          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
+//        }
+//        else {
+//          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
+//        }
+//      }
+       if (playerStart <= iSlot && iSlot < playerEnd) {
         if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
       }
       else if (topStart <= iSlot && iSlot < topEnd) {
@@ -130,11 +99,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     }
     return itemstack;
   }
-  //  @Override
-  //  public void putStacksInSlots(ItemStack[] s) {
-  //    inventory.blockEvents = true;
-  //    super.putStacksInSlots(s);
-  //  }
+
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;
     int k = par2;

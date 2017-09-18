@@ -157,7 +157,7 @@ public class UtilPlayerInventoryFilestorage {
     return new File(playerDirectory, "_" + playernameFiltered + "." + suffix);
   }
   public static void syncItems(EntityPlayer player) {
-    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW;
+    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW+20;//+20 somehow magically fixes bottom row
     for (int a = 0; a < size; a++) {
       getPlayerInventory(player).syncSlotToClients(a);
     }
