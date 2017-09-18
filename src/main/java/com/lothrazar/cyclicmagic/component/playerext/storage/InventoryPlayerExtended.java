@@ -51,9 +51,9 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack r = super.decrStackSize(index, count);
-//    if (eventHandler != null) {
-//      this.eventHandler.onCraftMatrixChanged(this);
-//    }
+    //    if (eventHandler != null) {
+    //      this.eventHandler.onCraftMatrixChanged(this);
+    //    }
     syncSlotToClients(index);
     return r;
   }

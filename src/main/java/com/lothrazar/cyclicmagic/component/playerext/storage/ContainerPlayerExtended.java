@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
 public class ContainerPlayerExtended extends ContainerBase {
@@ -28,12 +27,11 @@ public class ContainerPlayerExtended extends ContainerBase {
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
     }
-    
     for (int i = 0; i < Const.ROWS_VANILLA; ++i) {
       for (int j = 0; j < Const.COLS_VANILLA; ++j) {
         xPos = pad + j * SQ;
         yPos = 84 + i * SQ;
-        sl = j + (i + 1) *  Const.COLS_VANILLA;
+        sl = j + (i + 1) * Const.COLS_VANILLA;
         this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
       }
     }
@@ -62,24 +60,24 @@ public class ContainerPlayerExtended extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36+9, hotbarStart = 63, hotbarEnd = 72;
+    int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36 + 9, hotbarStart = 63, hotbarEnd = 72;
     //36 to 62 is lower
     //4 to 40 is bottom
     if (slot != null && slot.getHasStack()) {
       ItemStack copy = slot.getStack();
       itemstack = copy.copy();
-//      if (itemstack.getItem() instanceof ItemArmor) {
-//        //ItemArmor armor = (ItemArmor) copy.getItem();
-//        //int armorSlot = 8 - armor.armorType.getIndex();
-//        //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
-//        if (armorStart <= iSlot && iSlot < armorEnd) {
-//          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
-//        }
-//        else {
-//          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
-//        }
-//      }
-       if (playerStart <= iSlot && iSlot < playerEnd) {
+      //      if (itemstack.getItem() instanceof ItemArmor) {
+      //        //ItemArmor armor = (ItemArmor) copy.getItem();
+      //        //int armorSlot = 8 - armor.armorType.getIndex();
+      //        //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
+      //        if (armorStart <= iSlot && iSlot < armorEnd) {
+      //          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
+      //        }
+      //        else {
+      //          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
+      //        }
+      //      }
+      if (playerStart <= iSlot && iSlot < playerEnd) {
         if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
       }
       else if (topStart <= iSlot && iSlot < topEnd) {
@@ -99,7 +97,6 @@ public class ContainerPlayerExtended extends ContainerBase {
     }
     return itemstack;
   }
-
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;
     int k = par2;

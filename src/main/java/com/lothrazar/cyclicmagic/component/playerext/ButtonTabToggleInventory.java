@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbe
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.relauncher.Side;

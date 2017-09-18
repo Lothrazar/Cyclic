@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic.component.playerext.storage;
 import com.lothrazar.cyclicmagic.component.playerext.ButtonToggleHotbar;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +41,6 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
@@ -54,7 +51,6 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
         break;// cant hover on 2 at once
       }
     }
-    
     this.renderHoveredToolTip(mouseX, mouseY);
   }
   @Override
