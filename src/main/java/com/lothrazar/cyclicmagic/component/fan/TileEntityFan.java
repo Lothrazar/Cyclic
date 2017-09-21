@@ -62,9 +62,11 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
   }
   private int pushEntities() {
-    //    BlockPos start = this.getCurrentFacingPos();//this is the first block, so we only need to add (range-1)
-    //    BlockPos end = start.offset(facing, range-1).up();//.up()
     List<BlockPos> shape = getShape();
+    if(shape.size() == 0){
+      // sometimes is empty on changing dimension or tile load/unload
+      return 0;
+    }
     BlockPos start = shape.get(0);
     BlockPos end = shape.get(shape.size() - 1);//without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
     switch (getCurrentFacing().getAxis()) {
