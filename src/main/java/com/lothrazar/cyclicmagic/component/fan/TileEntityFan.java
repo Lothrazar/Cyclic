@@ -43,8 +43,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer = 0;
       return;
     }
-    //    EnumFacing facing = getCurrentFacing();
-    //    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle
@@ -55,16 +53,18 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     else {
       this.timer--;
     }
-    pushEntities();//int pushed = 
+    pushEntities();
   }
   public List<BlockPos> getShape() {
     //UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
   }
   private int pushEntities() {
-    //    BlockPos start = this.getCurrentFacingPos();//this is the first block, so we only need to add (range-1)
-    //    BlockPos end = start.offset(facing, range-1).up();//.up()
     List<BlockPos> shape = getShape();
+    if (shape.size() == 0) {
+      // sometimes is empty on changing dimension or tile load/unload
+      return 0;
+    }
     BlockPos start = shape.get(0);
     BlockPos end = shape.get(shape.size() - 1);//without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
     switch (getCurrentFacing().getAxis()) {

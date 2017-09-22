@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 public class InventoryPlayerExtended extends InventoryBase implements IInventory {
   private Container eventHandler;
   public WeakReference<EntityPlayer> player;
-  public boolean blockEvents = false;
+  //public boolean blockEvents = false;
   public static final int IROW = 4;
-  public static final int ICOL = 8;
+  public static final int ICOL = 9;
   public InventoryPlayerExtended(EntityPlayer player) {
-    super(IROW * ICOL + 20);//...why is it 20??
+    super(IROW * ICOL + 20);//+20 somehow magically fixes bottom row
     this.player = new WeakReference<EntityPlayer>(player);
   }
   public Container getEventHandler() {
@@ -51,9 +51,9 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack r = super.decrStackSize(index, count);
-    if (eventHandler != null) {
-      this.eventHandler.onCraftMatrixChanged(this);
-    }
+    //    if (eventHandler != null) {
+    //      this.eventHandler.onCraftMatrixChanged(this);
+    //    }
     syncSlotToClients(index);
     return r;
   }

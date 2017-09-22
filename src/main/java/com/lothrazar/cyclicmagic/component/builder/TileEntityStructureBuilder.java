@@ -303,7 +303,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
       shapeIndex = c;
     }
-    //    this.markDirty();
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

@@ -63,7 +63,9 @@ public class UtilSound {
     return placeState.getBlock().getSoundType(placeState, world, pos, null);
   }
   public static void playSoundFromServer(SoundEvent soundEvent, SoundCategory cat, BlockPos nextPos, int dim, int range) {
-    ModCyclic.network.sendToAllAround(new PacketSound(nextPos, soundEvent, cat),
-        new NetworkRegistry.TargetPoint(dim, nextPos.getX(), nextPos.getY(), nextPos.getZ(), range));
+    //https://github.com/PrinceOfAmber/Cyclic/issues/506
+    if (soundEvent != null && soundEvent.getRegistryName() != null) // dont crash trying to play invalid sound
+      ModCyclic.network.sendToAllAround(new PacketSound(nextPos, soundEvent, cat),
+          new NetworkRegistry.TargetPoint(dim, nextPos.getX(), nextPos.getY(), nextPos.getZ(), range));
   }
 }

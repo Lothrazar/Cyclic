@@ -45,7 +45,8 @@ public class InventoryBase {
     return stack;
   }
   public void setInventorySlotContents(int index, ItemStack stack) {
-    inv.set(index, stack);
+    if (index < inv.size())
+      inv.set(index, stack);
   }
   public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
     return true;

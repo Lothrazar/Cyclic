@@ -221,7 +221,6 @@ public class UtilShape {
   }
   public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-
     for (int i = 1; i < want + 1; i++) {
       if (isLookingUp)
         posCurrent = posCurrent.up();
@@ -230,7 +229,6 @@ public class UtilShape {
       //go up and over each time
       posCurrent = posCurrent.offset(pfacing);
       shape.add(posCurrent);
-
     }
     return shape;
   }

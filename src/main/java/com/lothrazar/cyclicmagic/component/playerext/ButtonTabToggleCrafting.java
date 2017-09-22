@@ -1,16 +1,16 @@
 package com.lothrazar.cyclicmagic.component.playerext;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ButtonTabToggleCrafting extends GuiButton {
+public class ButtonTabToggleCrafting extends GuiButtonTooltip {
   private GuiScreen gui;
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
     super(256, x, y, 15, 10, "");
