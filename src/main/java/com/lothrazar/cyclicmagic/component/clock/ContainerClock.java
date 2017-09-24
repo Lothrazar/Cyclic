@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.clock;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
