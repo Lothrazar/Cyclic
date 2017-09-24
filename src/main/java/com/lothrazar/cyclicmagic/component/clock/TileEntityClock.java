@@ -25,10 +25,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = 60;
     timeOn = 60;
     power = 15;
-    for (EnumFacing f : EnumFacing.values()) {
-      poweredSides.put(f, false);
-    }
-//    this.facingResetAllOn();
+    this.facingResetAllOn();
   }
   public int getPower() {
     return this.power;
@@ -136,7 +133,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, compound.getBoolean(f.getName()));
     }
-    if(this.detectAllOff()){
+    if (this.detectAllOff()) {
       this.facingResetAllOn();//fix legacy data for one
     }
   }

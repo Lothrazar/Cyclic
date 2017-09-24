@@ -33,10 +33,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    //      if (meta <= 5)
     return this.getDefaultState().withProperty(POWERED, false);
-    //      else
-    //          return this.getDefaultState().withProperty(BlockButton.FACING, EnumFacing.VALUES[meta - 6]).withProperty(POWERED, Boolean.TRUE);
   }
   @Override
   public boolean canProvidePower(IBlockState state) {
@@ -64,11 +61,11 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
   @Override
   public IRecipe addRecipe() {

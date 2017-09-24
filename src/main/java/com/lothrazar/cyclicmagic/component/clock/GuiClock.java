@@ -25,8 +25,10 @@ public class GuiClock extends GuiBaseContainer {
   int yRow2 = yRow1 + h + Const.PAD / 4;
   int yRow3 = yRow2 + h + Const.PAD / 4;
   int xColFacing = xCol4 + w + Const.PAD;
+  TileEntityClock tileClock;
   public GuiClock(InventoryPlayer inventoryPlayer, TileEntityClock tileEntity) {
     super(new ContainerClock(inventoryPlayer, tileEntity), tileEntity);
+    tileClock = (TileEntityClock) this.tile;
   }
   @Override
   public void initGui() {
@@ -50,6 +52,7 @@ public class GuiClock extends GuiBaseContainer {
     ButtonToggleFacing btn = new ButtonToggleFacing(btnId++,
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), side, w, h);
+    btn.setIsChecked(tileClock.getSideHasPower(side));
     btn.setTooltip("tile.clock.facing." + side.name().toLowerCase());
     this.buttonList.add(btn);
     poweredButtons.put(side, btn);
@@ -59,11 +62,7 @@ public class GuiClock extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);
-    if (value > 0)
-      btn.displayString = "+" + value;
-    else
-      btn.displayString = "" + value;
-    btn.setTooltip("tile.clock." + tooltip);
+    btn.displayString = (value > 0) ? "+" + value : "" + value;
     this.buttonList.add(btn);
   }
   @SideOnly(Side.CLIENT)
@@ -74,21 +73,15 @@ public class GuiClock extends GuiBaseContainer {
     this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
-    //FOR debug only
-    //    this.drawString("" + this.tile.getField(Fields.TIMER.ordinal()), xColText+44, yRow3+rowOffset);
   }
   @Override
   public void updateScreen() {
     super.updateScreen();
-    if (!(this.tile instanceof TileEntityClock)) {
+    if (tileClock == null) {
       return;
     }
-    TileEntityClock t = (TileEntityClock) this.tile;
-    if (t == null) {
-      return;
-    }
-    for (EnumFacing side : EnumFacing.values()) {
-      poweredButtons.get(side).displayString = (t.getSideHasPower(side)) ? "!" : "x";
-    }
+    //    for (EnumFacing side : EnumFacing.values()) {
+    //      poweredButtons.get(side).displayString = (tileClock.getSideHasPower(side)) ? "!" : "x";
+    //    }
   }
 }
