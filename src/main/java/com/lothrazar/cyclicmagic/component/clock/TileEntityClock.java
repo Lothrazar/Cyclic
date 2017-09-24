@@ -1,27 +1,50 @@
 package com.lothrazar.cyclicmagic.component.clock;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.ITileFacingToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle {
   public static enum Fields {
     TIMER, TOFF, TON, POWER;
   }
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
   private int power;
+  private Map<EnumFacing, Boolean> poweredSides = new HashMap<EnumFacing, Boolean>();
   public TileEntityClock() {
     super(0);
     timer = 0;
-    timeOff = 60;//dont let these times be zero !!!
+    timeOff = 60;
     timeOn = 60;
     power = 15;
+    for (EnumFacing f : EnumFacing.values()) {
+      poweredSides.put(f, false);
+    }
+//    this.facingResetAllOn();
   }
   public int getPower() {
     return this.power;
+  }
+  public int getPowerForSide(EnumFacing side) {
+    if (this.getSideHasPower(side))
+      return this.power;
+    else
+      return 0;
+  }
+  public boolean getSideHasPower(EnumFacing side) {
+    return this.poweredSides.get(side);
+  }
+  @Override
+  public void toggleSide(EnumFacing side) {
+    this.poweredSides.put(side, !this.poweredSides.get(side));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -99,6 +122,9 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     compound.setInteger("off", timeOff);
     compound.setInteger("on", timeOn);
     compound.setInteger("power", power);
+    for (EnumFacing f : EnumFacing.values()) {
+      compound.setBoolean(f.getName(), poweredSides.get(f));
+    }
     return super.writeToNBT(compound);
   }
   @Override
@@ -107,5 +133,23 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = compound.getInteger("off");
     timeOn = compound.getInteger("on");
     power = compound.getInteger("power");
+    for (EnumFacing f : EnumFacing.values()) {
+      poweredSides.put(f, compound.getBoolean(f.getName()));
+    }
+    if(this.detectAllOff()){
+      this.facingResetAllOn();//fix legacy data for one
+    }
+  }
+  private boolean detectAllOff() {
+    boolean areAnyOn = false;
+    for (EnumFacing f : EnumFacing.values()) {
+      areAnyOn = areAnyOn || poweredSides.get(f);
+    }
+    return !areAnyOn;
+  }
+  private void facingResetAllOn() {
+    for (EnumFacing f : EnumFacing.values()) {
+      poweredSides.put(f, true);
+    }
   }
 }
