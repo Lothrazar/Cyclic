@@ -78,8 +78,12 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     held.getTagCompound().setByte(KEY_NOTE, noteblock.note);
   }
   public static void pasteNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
-    if (held.getTagCompound() == null) { return; } // nothing ot paste
-    if (held.getTagCompound().getByte(KEY_NOTE) == NOTE_EMPTY) { return; }
+    if (held.getTagCompound() == null) {
+      return;
+    } // nothing ot paste
+    if (held.getTagCompound().getByte(KEY_NOTE) == NOTE_EMPTY) {
+      return;
+    }
     noteblock.note = held.getTagCompound().getByte(KEY_NOTE);
   }
   @SideOnly(Side.CLIENT)

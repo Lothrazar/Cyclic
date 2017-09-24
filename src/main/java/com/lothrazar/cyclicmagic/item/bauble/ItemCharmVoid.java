@@ -26,7 +26,9 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     World worldIn = living.getEntityWorld();
     if (living.getPosition().getY() < yLowest) {
       UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));

@@ -47,7 +47,9 @@ public class FluidsRegistry {
     try {
       //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null
       Fluid poison = FluidRegistry.getFluid(FluidsRegistry.fluid_poison.getName());
-      if (poison == null) { return; }
+      if (poison == null) {
+        return;
+      }
       RecipeRegistry.addShapelessRecipe(FluidUtil.getFilledBucket(new FluidStack(poison, Fluid.BUCKET_VOLUME)),
           FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME)),
           Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.SUGAR);

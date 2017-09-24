@@ -42,7 +42,9 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
   @Override
   protected void processImpact(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
-    if (pos == null) { return; }
+    if (pos == null) {
+      return;
+    }
     World world = getEntityWorld();
     if (this.isInWater()) {
       UtilParticle.spawnParticle(this.getEntityWorld(), EnumParticleTypes.WATER_BUBBLE, pos);

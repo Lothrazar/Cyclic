@@ -82,7 +82,9 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       //        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
       //      }
       //      else {//so it is 0,1
-      if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return ItemStack.EMPTY; }
+      if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) {
+        return ItemStack.EMPTY;
+      }
       //      }
       //cleanup steps
       if (itemstack1.getCount() == 0) {
@@ -91,7 +93,9 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
+      if (itemstack1.getCount() == itemstack.getCount()) {
+        return ItemStack.EMPTY;
+      }
       slot.onTake(playerIn, itemstack1);
     }
     return itemstack;
@@ -111,7 +115,9 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   }
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
-    if (trade.isRecipeDisabled()) { return; }
+    if (trade.isRecipeDisabled()) {
+      return;
+    }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
     ItemStack itemSecondBuy = (trade.getSecondItemToBuy().isEmpty()) ? ItemStack.EMPTY : trade.getSecondItemToBuy().copy();
     ItemStack firstItem = ItemStack.EMPTY;

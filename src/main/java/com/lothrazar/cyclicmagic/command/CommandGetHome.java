@@ -13,7 +13,9 @@ public class CommandGetHome extends BaseCommand implements ICommand {
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
-    if (ic instanceof EntityPlayer == false) { return; }
+    if (ic instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) ic;
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.gethome.overworld");

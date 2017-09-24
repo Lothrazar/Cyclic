@@ -48,8 +48,12 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       EntityPlayer entityPlayer = event.getEntityPlayer();
       BlockPos pos = event.getPos();
       World worldObj = event.getWorld();
-      if (pos == null) { return; }
-      if (entityPlayer.isSneaking()) { return; }
+      if (pos == null) {
+        return;
+      }
+      if (entityPlayer.isSneaking()) {
+        return;
+      }
       //      ItemStack held = event.getItemStack();// entityPlayer.getHeldItem(event.getHand());
       IBlockState state = event.getWorld().getBlockState(pos);
       //removed  && entityPlayer.isSneaking() == false
@@ -112,7 +116,9 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       EntityPlayer entityPlayer = event.getEntityPlayer();
       BlockPos pos = event.getPos();
       World worldObj = event.getWorld();
-      if (pos == null) { return; }
+      if (pos == null) {
+        return;
+      }
       // event has no hand??
       // and no item stack. and right click rarely works. known bug
       // http://www.minecraftforge.net/forum/index.php?topic=37416.0
@@ -162,8 +168,12 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     ItemStack held = event.getItemStack();
     if (stardewFurnace) {
       // ignore in creative// left clicking just breaks it anyway
-      if (entityPlayer.capabilities.isCreativeMode) { return; }
-      if (pos == null) { return; }
+      if (entityPlayer.capabilities.isCreativeMode) {
+        return;
+      }
+      if (pos == null) {
+        return;
+      }
       int playerSlot = 0;// entityPlayer.inventory.currentItem;
       boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
       if (wasMain) {
@@ -197,7 +207,9 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
     if (editableSigns) {
-      if (pos == null) { return; }
+      if (pos == null) {
+        return;
+      }
       TileEntity tile = worldObj.getTileEntity(pos);
       if (held.isEmpty() && tile instanceof TileEntitySign) {
         TileEntitySign sign = (TileEntitySign) tile;
@@ -216,11 +228,17 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
     if (armorStandSwap) {
       //added for https://www.twitch.tv/darkphan
-      if (event.getWorld().isRemote) { return; } //server side only
-      if (event.getTarget() == null || event.getTarget() instanceof EntityArmorStand == false) { return; }
+      if (event.getWorld().isRemote) {
+        return;
+      } //server side only
+      if (event.getTarget() == null || event.getTarget() instanceof EntityArmorStand == false) {
+        return;
+      }
       EntityArmorStand entityStand = (EntityArmorStand) event.getTarget();
       EntityPlayer player = event.getEntityPlayer();
-      if (player.isSneaking() == false) { return; } //bc when not sneaking, we do the normal single item version
+      if (player.isSneaking() == false) {
+        return;
+      } //bc when not sneaking, we do the normal single item version
       event.setCanceled(true);//which means we need to now cancel that normal version and do our own
       for (EntityEquipmentSlot slot : armorStandEquipment) {
         ItemStack itemPlayer = player.getItemStackFromSlot(slot);

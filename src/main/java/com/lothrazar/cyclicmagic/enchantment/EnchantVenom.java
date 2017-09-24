@@ -27,7 +27,9 @@ public class EnchantVenom extends EnchantBase {
   }
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    if (event.getTarget() instanceof EntityLivingBase == false) { return; }
+    if (event.getTarget() instanceof EntityLivingBase == false) {
+      return;
+    }
     EntityLivingBase target = (EntityLivingBase) event.getTarget();
     EntityPlayer attacker = event.getEntityPlayer();
     ItemStack main = attacker.getHeldItemMainhand();

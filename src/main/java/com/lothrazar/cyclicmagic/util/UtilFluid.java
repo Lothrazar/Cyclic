@@ -48,7 +48,9 @@ public class UtilFluid {
     ItemStack dispensedStack = stackIn.copy();
     dispensedStack.setCount(1);
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(dispensedStack);
-    if (fluidHandler == null) { return null; }
+    if (fluidHandler == null) {
+      return null;
+    }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
     if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
       //      FluidActionResult placeResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack);
@@ -64,7 +66,9 @@ public class UtilFluid {
   }
   public static ItemStack drainOneBucket(ItemStack d) {
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(d);
-    if (fluidHandler == null) { return d; } //its empty, ok no problem
+    if (fluidHandler == null) {
+      return d;
+    } //its empty, ok no problem
     fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
     return fluidHandler.getContainer();
   }

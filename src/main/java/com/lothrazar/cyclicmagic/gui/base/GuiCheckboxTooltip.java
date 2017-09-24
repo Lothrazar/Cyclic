@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiCheckboxTooltip extends GuiCheckBox implements ITooltipButton {

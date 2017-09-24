@@ -89,7 +89,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-    if (!isRunning()) { return; }
+    if (!isRunning()) {
+      return;
+    }
     this.shiftAllUp(7);
     this.spawnParticlesAbove();
     this.updateFuelIsBurning();

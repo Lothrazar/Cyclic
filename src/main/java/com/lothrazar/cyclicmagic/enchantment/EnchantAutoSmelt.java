@@ -27,10 +27,16 @@ public class EnchantAutoSmelt extends EnchantBase {
   }
   @SubscribeEvent(priority = EventPriority.HIGHEST) // // i almost tried this for the compat bugs
   public void onHarvestDrops(HarvestDropsEvent event) {
-    if (event.getHarvester() == null) { return; }
+    if (event.getHarvester() == null) {
+      return;
+    }
     int level = getCurrentLevelTool(event.getHarvester());
-    if (level <= 0) { return; }
-    if (event.isSilkTouching()) { return; } //it should be incompabile but check anyway ya
+    if (level <= 0) {
+      return;
+    }
+    if (event.isSilkTouching()) {
+      return;
+    } //it should be incompabile but check anyway ya
     List<ItemStack> drops = event.getDrops();
     List<ItemStack> dropsCopy = new ArrayList<ItemStack>();
     //  Collections.copy(dropsCopy, drops);//fails

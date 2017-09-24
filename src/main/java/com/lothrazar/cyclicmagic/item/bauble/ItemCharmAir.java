@@ -20,7 +20,9 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     World world = player.getEntityWorld();
     BlockPos belowMe = player.getPosition().down();
     boolean isAirBorne = (world.isAirBlock(belowMe) //sneak on air, or a nonsolid block like a flower

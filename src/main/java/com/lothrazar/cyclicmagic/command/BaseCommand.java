@@ -51,7 +51,9 @@ public class BaseCommand implements ICommand {
   }
   @Override
   public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
-    if (usernameIndex < 0) { return Collections.<String> emptyList(); }
+    if (usernameIndex < 0) {
+      return Collections.<String> emptyList();
+    }
     return args.length == usernameIndex + 1 ? CommandBase.getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : Collections.<String> emptyList();
   }
   @Override

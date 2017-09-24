@@ -31,7 +31,9 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     TileEntityDetector te = (TileEntityDetector) blockAccess.getTileEntity(pos);
-    if (te == null) { return 0; }
+    if (te == null) {
+      return 0;
+    }
     return te.isPowered() ? 15 : 0;
   }
   @Override

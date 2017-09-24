@@ -12,9 +12,13 @@ import net.minecraft.world.World;
 public class UtilSpellCaster {
   public static ItemStack getPlayerWandIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (!wand.isEmpty() && wand.getItem() instanceof ItemCyclicWand) { return wand; }
+    if (!wand.isEmpty() && wand.getItem() instanceof ItemCyclicWand) {
+      return wand;
+    }
     wand = player.getHeldItemOffhand();
-    if (!wand.isEmpty() && wand.getItem() instanceof ItemCyclicWand) { return wand; }
+    if (!wand.isEmpty() && wand.getItem() instanceof ItemCyclicWand) {
+      return wand;
+    }
     return ItemStack.EMPTY;
   }
   public static boolean spellsEnabled(EntityPlayer player) {
@@ -26,7 +30,9 @@ public class UtilSpellCaster {
   }
   public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, ItemStack wand, EnumHand hand) {
     //ItemStack wand = getPlayerWandIfHeld(player);
-    if (wand.isEmpty()) { return false; }
+    if (wand.isEmpty()) {
+      return false;
+    }
     //		if (ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)) { return false; }
     if (spell.canPlayerCast(world, player, pos)) {
       if (spell.cast(world, player, wand, pos, side)) {

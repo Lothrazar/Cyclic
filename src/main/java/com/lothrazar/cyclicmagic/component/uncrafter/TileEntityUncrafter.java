@@ -59,10 +59,14 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
-    if (!this.isRunning()) { return; }
+    if (!this.isRunning()) {
+      return;
+    }
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
-    if (stack.isEmpty()) { return; }
+    if (stack.isEmpty()) {
+      return;
+    }
     this.spawnParticlesAbove();// its processing
     this.updateFuelIsBurning();
     if (this.updateTimerIsZero()) {

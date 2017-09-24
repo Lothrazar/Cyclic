@@ -107,7 +107,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    if (state.getValue(ACTIVATED)) { return FULL_BLOCK_AABB; }
+    if (state.getValue(ACTIVATED)) {
+      return FULL_BLOCK_AABB;
+    }
     EnumFacing enumfacing = state.getValue(FACING);
     switch (enumfacing) {
       case NORTH:
@@ -164,7 +166,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
     for (EnumFacing fac : EnumFacing.values()) {
-      if (worldIn.isSideSolid(pos.offset(fac), fac.getOpposite(), true)) { return true; }
+      if (worldIn.isSideSolid(pos.offset(fac), fac.getOpposite(), true)) {
+        return true;
+      }
     }
     return false;
   }

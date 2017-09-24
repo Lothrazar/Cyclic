@@ -67,7 +67,9 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return ore;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (WorldGenModule.oreSpawns == false) { return; } //config has disabled spawning no matter what
+    if (WorldGenModule.oreSpawns == false) {
+      return;
+    } //config has disabled spawning no matter what
     if (this.spawn != null) {
       int rand = world.rand.nextInt(100);
       if (rand < this.spawnChance) {
@@ -99,7 +101,9 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return dropped;
   }
   public int quantityDropped(Random random) {
-    if (randomMax == 1) { return 1; }
+    if (randomMax == 1) {
+      return 1;
+    }
     return 1 + random.nextInt(randomMax);
   }
   @Override

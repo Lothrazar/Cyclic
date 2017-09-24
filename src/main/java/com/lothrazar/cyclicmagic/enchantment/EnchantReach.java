@@ -49,7 +49,9 @@ public class EnchantReach extends EnchantBase {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     //check if NOT holding this harm
-    if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
+    if (event.getEntityLiving() instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     //Ticking
     ItemStack armor = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);

@@ -57,7 +57,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   private int findSlotForMatch(IBlockState stateToMatch) {
     int slot = -1;
-    if (stateToMatch == null || stateToMatch.getBlock() == null) { return slot; }
+    if (stateToMatch == null || stateToMatch.getBlock() == null) {
+      return slot;
+    }
     ItemStack is;
     Item itemFromState;
     for (int i = 0; i < this.getSizeInventory(); i++) {
@@ -86,7 +88,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       timer = TIMER_FULL;
       BlockPos centerSrc = this.getCenterSrc();
       List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
-      if (shapeSrc.size() <= 0) { return; }
+      if (shapeSrc.size() <= 0) {
+        return;
+      }
       World world = this.getWorld();
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
@@ -105,7 +109,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (!world.isAirBlock(posSrc)) {
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
-        if (slot < 0) { return; } //EMPTY
+        if (slot < 0) {
+          return;
+        } //EMPTY
         if (world.isAirBlock(posTarget)) { //now we want target to be air
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);

@@ -19,14 +19,26 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
     if (fragileTorches) {
       Entity ent = event.getEntity();
       World world = ent.getEntityWorld();
-      if (world.isRemote) { return; } //we only need to break block on server, it gets propogated for us
-      if (world.rand.nextDouble() > oddsWillBreak) { return; } //no chance of breaking anyway, just stop
+      if (world.isRemote) {
+        return;
+      } //we only need to break block on server, it gets propogated for us
+      if (world.rand.nextDouble() > oddsWillBreak) {
+        return;
+      } //no chance of breaking anyway, just stop
       //ok the dice roll passed
-      if (ent instanceof EntityLiving == false) { return; }
+      if (ent instanceof EntityLiving == false) {
+        return;
+      }
       EntityLivingBase living = (EntityLivingBase) event.getEntity();
-      if (living == null) { return; }
-      if (living instanceof EntityPlayer && ((EntityPlayer) living).isSneaking()) { return; } //if you are a player, then cancel if sneaking
-      if (world.getGameRules().getBoolean("mobGriefing") == false) { return; }
+      if (living == null) {
+        return;
+      }
+      if (living instanceof EntityPlayer && ((EntityPlayer) living).isSneaking()) {
+        return;
+      } //if you are a player, then cancel if sneaking
+      if (world.getGameRules().getBoolean("mobGriefing") == false) {
+        return;
+      }
       if (UtilWorld.isBlockTorch(world, living.getPosition())) {
         world.destroyBlock(living.getPosition(), true);
       }

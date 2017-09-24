@@ -10,7 +10,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class UtilTextureRender {
   @SideOnly(Side.CLIENT)
   public static void drawTextureSimple(ResourceLocation res, int x, int y, int w, int h) {
-    if (res == null) { return; }
+    if (res == null) {
+      return;
+    }
     try {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       Minecraft.getMinecraft().getTextureManager().bindTexture(res);
@@ -30,7 +32,9 @@ public class UtilTextureRender {
   }
   @SideOnly(Side.CLIENT)
   public static void drawTextureSquare(ResourceLocation img, int x, int y, int dim) {
-    if (img == null) { return; }
+    if (img == null) {
+      return;
+    }
     drawTextureSimple(img, x, y, dim, dim);
   }
 }

@@ -38,9 +38,13 @@ public abstract class BaseSpell implements ISpell {
   }
   @Override
   public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
-    if (player.capabilities.isCreativeMode) { return true; }
+    if (player.capabilities.isCreativeMode) {
+      return true;
+    }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == null) { return false; }
+    if (wand == null) {
+      return false;
+    }
     return true;
   }
   @Override

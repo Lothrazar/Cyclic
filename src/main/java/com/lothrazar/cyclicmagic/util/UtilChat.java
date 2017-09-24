@@ -98,7 +98,9 @@ public class UtilChat {
     player.sendStatusMessage(new TextComponentTranslation(string), true);
   }
   public static String formatSecondsToMinutes(int secontsTotal) {
-    if (secontsTotal < 0) { return ""; }
+    if (secontsTotal < 0) {
+      return "";
+    }
     int minutes = secontsTotal / 60;
     int secs = secontsTotal % 60;
     return minutes + ":" + String.format("%02d", secs);

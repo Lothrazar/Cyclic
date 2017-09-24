@@ -31,7 +31,8 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
   }
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
-    if (tags.hasKey(NBT_STATUS) == false) { return true;//default for newlycrafted//legacy items
+    if (tags.hasKey(NBT_STATUS) == false) {
+      return true;//default for newlycrafted//legacy items
     }
     return tags.getInteger(NBT_STATUS) == 1;
   }
@@ -110,7 +111,9 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
   public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {}
   @Optional.Method(modid = "baubles")
   public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     if (arg1 instanceof EntityPlayer && stack != null && stack.getCount() > 0) {
       this.onTick(stack, (EntityPlayer) arg1);
     }

@@ -24,7 +24,9 @@ public class PotionBounce extends PotionBase {
   public void onFall(LivingFallEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     if (entity == null || entity instanceof EntityPlayer == false || entity.isSneaking()
-        || entity.isPotionActive(this) == false) { return; }
+        || entity.isPotionActive(this) == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) entity;
     if (event.getDistance() >= MIN_HEIGHT_START_BOUNCE) {
       event.setDamageMultiplier(0);
@@ -53,7 +55,9 @@ public class PotionBounce extends PotionBase {
     //catch a rebounce that was postponed from last tick
     if (event.player.isPotionActive(this)) {
       EntityPlayer player = event.player;
-      if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) { return; }
+      if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) {
+        return;
+      }
       float motionY = ((float) player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
       if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
         player.getEntityData().setInteger(NBT_TICK, -1);

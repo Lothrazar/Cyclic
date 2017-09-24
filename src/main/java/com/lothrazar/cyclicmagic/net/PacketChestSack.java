@@ -58,7 +58,9 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
           EntityPlayer player = ctx.getServerHandler().player;
           World world = player.getEntityWorld();
           TileEntity tile = world.getTileEntity(position);
-          if (tile == null) { return; } //was block destroyed before this packet and/or thread resolved? server desync? who knows https://github.com/PrinceOfAmber/Cyclic/issues/487
+          if (tile == null) {
+            return;
+          } //was block destroyed before this packet and/or thread resolved? server desync? who knows https://github.com/PrinceOfAmber/Cyclic/issues/487
           IBlockState state = world.getBlockState(position);
           NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
           tile.writeToNBT(tileData);

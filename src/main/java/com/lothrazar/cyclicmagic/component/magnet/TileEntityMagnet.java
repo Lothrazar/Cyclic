@@ -36,7 +36,9 @@ public class TileEntityMagnet extends TileEntityBaseMachine implements ITickable
   }
   @Override
   public void update() {
-    if (this.isPowered()) { return; }
+    if (this.isPowered()) {
+      return;
+    }
     boolean trigger = false;
     timer -= this.getSpeed();
     if (timer <= 0) {

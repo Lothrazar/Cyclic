@@ -112,7 +112,9 @@ public class InventoryWand extends InventoryBase implements IInventory {
   /************** public static ******************/
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
     NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
-    if (stack.isEmpty() || (stack.getItem() instanceof ItemCyclicWand) == false) { return inv; }
+    if (stack.isEmpty() || (stack.getItem() instanceof ItemCyclicWand) == false) {
+      return inv;
+    }
     if (!stack.hasTagCompound()) {
       stack.setTagCompound(new NBTTagCompound());
     }
@@ -164,7 +166,9 @@ public class InventoryWand extends InventoryBase implements IInventory {
     InventoryWand.writeToNBT(wand, invv);
   }
   public static ItemStack getFromSlot(ItemStack wand, int i) {
-    if (i < 0 || i >= InventoryWand.INV_SIZE) { return ItemStack.EMPTY; }
+    if (i < 0 || i >= InventoryWand.INV_SIZE) {
+      return ItemStack.EMPTY;
+    }
     return InventoryWand.readFromNBT(wand).get(i);
   }
   public static IBlockState getToPlaceFromSlot(ItemStack wand, int i) {

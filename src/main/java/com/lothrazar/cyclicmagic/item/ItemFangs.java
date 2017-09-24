@@ -32,14 +32,18 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
   }
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-    if (player.getCooldownTracker().hasCooldown(this)) { return false; }
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return false;
+    }
     summonFangRay(player, entity.posX, entity.posY, entity.posZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return true;
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (player.getCooldownTracker().hasCooldown(this)) { return EnumActionResult.PASS; }
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return EnumActionResult.PASS;
+    }
     summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;

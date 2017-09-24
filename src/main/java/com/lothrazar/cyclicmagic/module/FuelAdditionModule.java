@@ -65,7 +65,9 @@ public class FuelAdditionModule extends BaseModule implements IHasConfig {
     }
     @Override
     public int getBurnTime(ItemStack fuel) {
-      if (fuelMap.containsKey(fuel.getItem())) { return fuelMap.get(fuel.getItem()); }
+      if (fuelMap.containsKey(fuel.getItem())) {
+        return fuelMap.get(fuel.getItem());
+      }
       return 0;
     }
   }

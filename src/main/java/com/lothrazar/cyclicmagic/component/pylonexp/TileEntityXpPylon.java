@@ -67,7 +67,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     if (toSpew > 0 && this.getCurrentFluid() >= toSpew) {
       FluidStack actuallyDrained = this.tank.drain(toSpew, true);
       //was the correct amount drained
-      if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
+      if (actuallyDrained == null || actuallyDrained.amount == 0) {
+        return;
+      }
       if (world.isRemote == false) {
         EntityXPOrb orb = new EntityXPOrb(world);
         orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
@@ -85,7 +87,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() > XP_PER_BOTTLE) {
         //pay the cost first
         FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
-        if (actuallyDrained == null || actuallyDrained.amount == 0) { return; }
+        if (actuallyDrained == null || actuallyDrained.amount == 0) {
+          return;
+        }
         outputSlotIncrement();
         inputSlotDecrement();
       }
@@ -196,13 +200,17 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   public int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return 0; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return 0;
+    }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return null;
+    }
     return fluidHandler.getTankProperties()[0].getContents();
   }
   @Override
@@ -227,7 +235,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return;
+    }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
       fluid = new FluidStack(FluidsRegistry.fluid_exp, amt);
@@ -245,7 +255,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) { return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank); }
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
+    }
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
@@ -256,7 +268,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) { return 0; }
+    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+      return 0;
+    }
     int result = tank.fill(resource, doFill);
     //   this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result);
@@ -264,7 +278,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) { return resource; }
+    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+      return resource;
+    }
     FluidStack result = tank.drain(resource, doDrain);
     //   this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result.amount);

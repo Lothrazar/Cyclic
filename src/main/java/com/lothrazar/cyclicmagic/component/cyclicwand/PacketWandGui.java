@@ -34,7 +34,9 @@ public class PacketWandGui implements IMessage, IMessageHandler<PacketWandGui, I
   public IMessage onMessage(PacketWandGui message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == null) { return null; }
+    if (wand == null) {
+      return null;
+    }
     if (message.type == WandAction.BUILDTYPE) {
       ItemCyclicWand.BuildType.toggle(wand);
     }

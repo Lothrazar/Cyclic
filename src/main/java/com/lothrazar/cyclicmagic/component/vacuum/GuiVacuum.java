@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic.component.vacuum;
-import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
-import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -25,10 +23,9 @@ public class GuiVacuum extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 2;
-    int x = this.guiLeft +  28;
-    int y = this.guiTop +  32;
-
-    btnSize = new GuiButtonToggleSize(id++,  x, y, this.tile.getPos());
+    int x = this.guiLeft + 28;
+    int y = this.guiTop + 32;
+    btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
   }
   @SideOnly(Side.CLIENT)
@@ -39,8 +36,6 @@ public class GuiVacuum extends GuiBaseContainer {
     String s = UtilChat.lang("tile.block_vacuum.filter");
     this.drawString(s, xCenter - 30 - this.fontRenderer.getStringWidth(s) / 2, 20);
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityVacuum.Fields.SIZE.ordinal()));
-    
-   
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -55,7 +50,6 @@ public class GuiVacuum extends GuiBaseContainer {
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
- 
     for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           this.guiLeft + Const.PAD + (k + 4) * Const.SQ - 1,

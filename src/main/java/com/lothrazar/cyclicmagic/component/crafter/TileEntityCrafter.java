@@ -51,7 +51,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
   @Override
   public void update() {
-    if (!isRunning()) { return; }
+    if (!isRunning()) {
+      return;
+    }
     this.spawnParticlesAbove();
     setRecipeInput();//make sure the 3x3 inventory is linked o the crater
     findRecipe(); //does it match
@@ -108,7 +110,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     //EX: stairs need 6 wood planks. This could be 6 all from one stack, or split over a few
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
       // if there isnt enough, in any one of these spots, stop now
-      if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) { return false; }
+      if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) {
+        return false;
+      }
     }
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
       //      ModCyclic.logger.info(" PAY cost at  = " + entry);

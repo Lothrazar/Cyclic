@@ -57,7 +57,9 @@ public class EnchantLaunch extends EnchantBase {
     if (event.getEntity() instanceof EntityPlayer) {
       EntityPlayer p = (EntityPlayer) event.getEntity();
       ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-      if (feet.isEmpty()) { return; }
+      if (feet.isEmpty()) {
+        return;
+      }
       //if you are on the ground (or not airborne, should be same thing
       if ((p.isAirBorne == false || p.onGround) &&
           UtilNBT.getItemStackNBTVal(feet, NBT_USES) > 0) {
@@ -71,9 +73,15 @@ public class EnchantLaunch extends EnchantBase {
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
     ItemStack feet = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet == null || feet.isEmpty() || player.isSneaking()) { return; } //sneak to not double jump
-    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
-    if (player.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
+    if (feet == null || feet.isEmpty() || player.isSneaking()) {
+      return;
+    } //sneak to not double jump
+    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
+      return;
+    }
+    if (player.getCooldownTracker().hasCooldown(feet.getItem())) {
+      return;
+    }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
         && player.posY < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
       //JUMP IS pressed and you are moving down

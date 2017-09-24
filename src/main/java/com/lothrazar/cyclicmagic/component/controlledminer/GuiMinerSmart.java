@@ -34,9 +34,8 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //first the main top left type button
-   int id = 2;
+    int id = 2;
     int yOffset = 16;
-
     btnHeightDown = new ButtonIncrementField(
         id++,
         this.guiLeft + xHeightTextbox,

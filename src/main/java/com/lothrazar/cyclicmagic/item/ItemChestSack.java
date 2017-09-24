@@ -40,7 +40,9 @@ public class ItemChestSack extends BaseItem {
   @Override
   public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     BlockPos offset = pos.offset(side);
-    if (worldIn.isAirBlock(offset) == false) { return EnumActionResult.FAIL; }
+    if (worldIn.isAirBlock(offset) == false) {
+      return EnumActionResult.FAIL;
+    }
     ItemStack stack = playerIn.getHeldItem(hand);
     if (placeStoredTileEntity(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, ItemStack.EMPTY);

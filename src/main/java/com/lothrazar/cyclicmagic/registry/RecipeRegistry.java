@@ -109,7 +109,9 @@ public class RecipeRegistry {
   public static IRecipe addShapelessRecipe(ItemStack output, Object... recipeComponents) {
     List<ItemStack> list = Lists.<ItemStack> newArrayList();
     for (Object object : recipeComponents) {
-      if (object instanceof String) { return addShapelessOreRecipe(output, recipeComponents); }
+      if (object instanceof String) {
+        return addShapelessOreRecipe(output, recipeComponents);
+      }
       if (object instanceof ItemStack) {
         list.add(((ItemStack) object).copy());
       }
@@ -117,7 +119,9 @@ public class RecipeRegistry {
         list.add(new ItemStack((Item) object));
       }
       else {
-        if (!(object instanceof Block)) { throw new IllegalArgumentException("Invalid shapeless recipe: unknown type " + object.getClass().getName() + "!"); }
+        if (!(object instanceof Block)) {
+          throw new IllegalArgumentException("Invalid shapeless recipe: unknown type " + object.getClass().getName() + "!");
+        }
         list.add(new ItemStack((Block) object));
       }
     }
@@ -141,7 +145,9 @@ public class RecipeRegistry {
   }
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
     for (Object object : recipeComponents) {
-      if (object instanceof String) { return addShapedOreRecipe(output, recipeComponents); }
+      if (object instanceof String) {
+        return addShapedOreRecipe(output, recipeComponents);
+      }
     }
     return _addShapedRecipe(output, recipeComponents);
   }

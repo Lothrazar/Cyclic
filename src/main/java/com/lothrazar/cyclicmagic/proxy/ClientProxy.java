@@ -140,7 +140,9 @@ public class ClientProxy extends CommonProxy {
   @Override
   public BlockPos getBlockMouseoverSingle() {
     RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
-    if (mouseOver == null) { return null; }
+    if (mouseOver == null) {
+      return null;
+    }
     return mouseOver.getBlockPos();
   }
   @SideOnly(Side.CLIENT)
@@ -168,7 +170,9 @@ public class ClientProxy extends CommonProxy {
       // World world = player.worldObj;
       BlockPos blockPos = mouseOver.getBlockPos();
       if (blockPos != null && player != null && player.getEntityWorld().getBlockState(blockPos) != null
-          && player.getEntityWorld().isAirBlock(blockPos) == false) { return blockPos.offset(mouseOver.sideHit); }
+          && player.getEntityWorld().isAirBlock(blockPos) == false) {
+        return blockPos.offset(mouseOver.sideHit);
+      }
     }
     return null;
   }
@@ -204,7 +208,9 @@ public class ClientProxy extends CommonProxy {
   @Override
   @SideOnly(Side.CLIENT)
   public void renderItemOnScreen(ItemStack current, int x, int y) {
-    if (current == null) { return; }
+    if (current == null) {
+      return;
+    }
     RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
     GlStateManager.color(1, 1, 1, 1);
     RenderHelper.enableStandardItemLighting();
@@ -216,7 +222,9 @@ public class ClientProxy extends CommonProxy {
    * In a GUI we already have the context of the itemrender and font
    */
   public void renderItemOnGui(ItemStack stack, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {
-    if (stack == null) { return; }
+    if (stack == null) {
+      return;
+    }
     itemRender.renderItemAndEffectIntoGUI(stack, x, y);
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }

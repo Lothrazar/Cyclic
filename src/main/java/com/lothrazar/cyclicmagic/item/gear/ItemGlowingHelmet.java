@@ -77,7 +77,9 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
   }
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
-    if (tags.hasKey(NBT_STATUS) == false) { return true; } //default for newlycrafted//legacy items
+    if (tags.hasKey(NBT_STATUS) == false) {
+      return true;
+    } //default for newlycrafted//legacy items
     return tags.getInteger(NBT_STATUS) == 1;
   }
   /**

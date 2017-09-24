@@ -35,7 +35,9 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    if (side == null || pos == null) { return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
+    if (side == null || pos == null) {
+      return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+    }
     Map<String, Integer> mapList = new HashMap<String, Integer>();
     String name;
     EnumFacing direction = side.getOpposite();
@@ -79,7 +81,9 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   public boolean isBlockShowable(ItemStack stack) {
-    if (stack == null || stack.getItem() == null) { return false; } //nulls
+    if (stack == null || stack.getItem() == null) {
+      return false;
+    } //nulls
     String itemName = UtilItemStack.getStringForItemStack(stack);//this one includes metadata
     String itemSimpleName = UtilItemStack.getStringForItem(stack.getItem());//this one doesnt
     boolean isInList = false;

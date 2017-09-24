@@ -42,7 +42,9 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     tryActivate(player, held);
   }
   private boolean tryActivate(EntityPlayer player, ItemStack held) {
-    if (player.getCooldownTracker().hasCooldown(this)) { return false; }
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return false;
+    }
     World world = player.getEntityWorld();
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.worldhome.dim");
@@ -65,7 +67,9 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       //success = true;
       break;
     }
-    if (target == null) { return false; }
+    if (target == null) {
+      return false;
+    }
     boolean success = UtilEntity.enderTeleportEvent(player, world, target);
     if (success) {
       UtilItemStack.damageItem(player, held);

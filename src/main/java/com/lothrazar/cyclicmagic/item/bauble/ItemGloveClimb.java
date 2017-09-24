@@ -29,7 +29,9 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     if (player.isCollidedHorizontally) {
       World world = player.getEntityWorld();
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);

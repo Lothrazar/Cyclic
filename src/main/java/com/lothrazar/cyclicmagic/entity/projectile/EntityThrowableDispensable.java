@@ -17,7 +17,9 @@ public abstract class EntityThrowableDispensable extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
-    if (this.isDead) { return; }
+    if (this.isDead) {
+      return;
+    }
     if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer && mop.entityHit.world.isRemote) {
       //("thrower invalid");
       return;

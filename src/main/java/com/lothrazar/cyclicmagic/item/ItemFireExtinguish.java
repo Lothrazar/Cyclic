@@ -29,7 +29,9 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    if (pos == null) { return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ); }
+    if (pos == null) {
+      return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
+    }
     if (side != null) {
       pos = pos.offset(side);
     }

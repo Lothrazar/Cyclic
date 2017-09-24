@@ -75,9 +75,13 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-    if (!(entityIn instanceof EntityLivingBase)) { return; }
+    if (!(entityIn instanceof EntityLivingBase)) {
+      return;
+    }
     EntityLivingBase entity = (EntityLivingBase) entityIn;
-    if (!entityIn.isCollidedHorizontally) { return; }
+    if (!entityIn.isCollidedHorizontally) {
+      return;
+    }
     UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
   }
 }

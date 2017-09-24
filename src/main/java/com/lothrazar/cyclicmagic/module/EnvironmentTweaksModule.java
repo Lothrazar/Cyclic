@@ -36,7 +36,9 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       Entity entity = event.getEntity();
       ItemStack is = entityItem.getItem();
       World world = entity.getEntityWorld();
-      if (is.isEmpty()) { return; } // has not happened in the wild, yet
+      if (is.isEmpty()) {
+        return;
+      } // has not happened in the wild, yet
       Block blockhere = entity.getEntityWorld().getBlockState(entityItem.getPosition()).getBlock();
       Block blockdown = entity.getEntityWorld().getBlockState(entityItem.getPosition().down()).getBlock();
       if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {

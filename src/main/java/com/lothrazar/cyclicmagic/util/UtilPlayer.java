@@ -35,7 +35,9 @@ public class UtilPlayer {
       stack = player.inventory.getStackInSlot(i);
       if (!stack.isEmpty() &&
           stack.getItem() != null &&
-          Block.getBlockFromItem(stack.getItem()) != Blocks.AIR) { return i; }
+          Block.getBlockFromItem(stack.getItem()) != Blocks.AIR) {
+        return i;
+      }
     }
     return ret;
   }

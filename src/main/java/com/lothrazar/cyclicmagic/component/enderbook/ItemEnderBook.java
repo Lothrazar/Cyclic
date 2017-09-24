@@ -93,20 +93,28 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
   private static BookLocation getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
-    if (csv == null || csv.isEmpty()) { return null; }
+    if (csv == null || csv.isEmpty()) {
+      return null;
+    }
     return new BookLocation(csv);
   }
   public static BlockPos getLocationPos(ItemStack stack, int slot) {
     BookLocation loc = getLocation(stack, slot);
-    if (loc == null) { return null; }
+    if (loc == null) {
+      return null;
+    }
     return new BlockPos(loc.X, loc.Y, loc.Z);
   }
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
     String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
-    if (csv == null || csv.isEmpty()) { return false; }
+    if (csv == null || csv.isEmpty()) {
+      return false;
+    }
     BookLocation loc = getLocation(book, slot);
-    if (player.dimension != loc.dimension) { return false; }
+    if (player.dimension != loc.dimension) {
+      return false;
+    }
     UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
     BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
     BlockPos start = player.getPosition();
@@ -137,7 +145,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {
     ItemStack stack = entityPlayer.getHeldItem(hand);
-    if (stack == null || stack.getItem() == null) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack); }
+    if (stack == null || stack.getItem() == null) {
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+    }
     //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
@@ -180,7 +190,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
-    if (expDistRatio <= 0) { return 0; }
+    if (expDistRatio <= 0) {
+      return 0;
+    }
     BlockPos toPos = getLocationPos(book, slot);
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return (int) Math.round(distance / expDistRatio);

@@ -78,13 +78,19 @@ public class ContainerPlayerExtended extends ContainerBase {
       //        }
       //      }
       if (playerStart <= iSlot && iSlot < playerEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(copy, topStart, topEnd, false)) {
+          return ItemStack.EMPTY;
+        }
       }
       else if (topStart <= iSlot && iSlot < topEnd) {
-        if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) {
+          return ItemStack.EMPTY;
+        }
       }
       else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(copy, topStart, topEnd, false)) {
+          return ItemStack.EMPTY;
+        }
       }
       if (copy.getCount() == 0) {
         slot.putStack(ItemStack.EMPTY);
@@ -92,7 +98,9 @@ public class ContainerPlayerExtended extends ContainerBase {
       else {
         slot.onSlotChanged();
       }
-      if (copy.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
+      if (copy.getCount() == itemstack.getCount()) {
+        return ItemStack.EMPTY;
+      }
       slot.onTake(par1EntityPlayer, copy);
     }
     return itemstack;

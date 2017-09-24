@@ -95,16 +95,22 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
       World world = attacker.world;
-      if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) { return; }
+      if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) {
+        return;
+      }
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
-      if (target == null) { return; } //probably wont happen just extra safe
+      if (target == null) {
+        return;
+      } //probably wont happen just extra safe
       BlockPos pos = target.getPosition();
       if (target instanceof EntityPlayer) {
         UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((EntityPlayer) target));
         return;
       }
       int level = getCurrentLevelTool(attacker);
-      if (level < 0) { return; }
+      if (level < 0) {
+        return;
+      }
       //else the random number was less than 10, so it passed the 10% chance req
       String key = target.getClass().getName();
       ////we allow all these, which include config, to override the vanilla skulls below

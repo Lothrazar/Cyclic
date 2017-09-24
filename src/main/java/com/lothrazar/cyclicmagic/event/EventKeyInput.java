@@ -41,11 +41,17 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
-    if (!player.isSneaking() || event.getDwheel() == 0) { return; }
+    if (!player.isSneaking() || event.getDwheel() == 0) {
+      return;
+    }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand.isEmpty()) { return; }
+    if (wand.isEmpty()) {
+      return;
+    }
     //if theres only one spell, do nothing
-    if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
+    if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) {
+      return;
+    }
     if (event.getDwheel() < 0) {
       ModCyclic.network.sendToServer(new PacketSpellShiftRight());
       event.setCanceled(true);
@@ -131,7 +137,9 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseInputEvent.Pre event) {
-    if (event.getGui() == null || !(event.getGui() instanceof GuiContainer)) { return; }
+    if (event.getGui() == null || !(event.getGui() instanceof GuiContainer)) {
+      return;
+    }
     GuiContainer gui = (GuiContainer) event.getGui();
     //    EntityPlayerSP player = Minecraft.getMinecraft().player;
     boolean rightClickDown = false;
@@ -165,7 +173,9 @@ public class EventKeyInput {
   }
   @SideOnly(Side.CLIENT)
   private boolean isGuiKeyDown(KeyBinding keybinding) {
-    if (keybinding == null) { return false; } //i think this fixes the bug? : // https://github.com/PrinceOfAmber/Cyclic/issues/198
+    if (keybinding == null) {
+      return false;
+    } //i think this fixes the bug? : // https://github.com/PrinceOfAmber/Cyclic/issues/198
     // inside a GUI , we have to check the keyboard directly
     // thanks to Inventory tweaks, reminding me of alternate way to check
     // keydown while in config

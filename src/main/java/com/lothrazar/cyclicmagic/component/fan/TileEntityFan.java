@@ -127,7 +127,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     BlockPos tester;
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
-      if (canBlowThrough(tester) == false) { return i; //cant pass thru
+      if (canBlowThrough(tester) == false) {
+        return i; //cant pass thru
       }
     }
     return getRange();

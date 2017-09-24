@@ -14,7 +14,9 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     FluidStack fluid = te.getCurrentFluidStack();
-    if (fluid == null) { return; }
+    if (fluid == null) {
+      return;
+    }
     //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
     GlStateManager.pushMatrix();
     if (fluid != null) {

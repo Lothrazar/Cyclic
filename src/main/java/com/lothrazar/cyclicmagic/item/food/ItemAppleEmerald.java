@@ -49,7 +49,9 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getEntity() instanceof EntityPlayer == false) { return; }
+    if (event.getEntity() instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) event.getEntity();
     //    ItemStack held = player.getHeldItemMainhand();
     ItemStack itemstack = event.getItemStack();

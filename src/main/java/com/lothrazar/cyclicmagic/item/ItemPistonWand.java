@@ -52,7 +52,9 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand == null) {
+        return 0;
+      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }

@@ -18,16 +18,22 @@ public class UtilSound {
   public static final float PITCH = 1.0F;
   public static final boolean distanceDelay = false;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
-    if (player == null) { return; }
+    if (player == null) {
+      return;
+    }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
-    if (block == null) { return; }
+    if (block == null) {
+      return;
+    }
     SoundType type = block.getSoundType(block.getDefaultState(), player.getEntityWorld(), here, player);
     if (type != null && type.getPlaceSound() != null) {
       UtilSound.playSound(player, here, type.getPlaceSound());
     }
   }
   public static void playSoundPlaceBlock(World world, BlockPos pos, Block block) {
-    if (block == null) { return; }
+    if (block == null) {
+      return;
+    }
     SoundType type = block.getSoundType(block.getDefaultState(), world, pos, null);
     if (type != null && type.getPlaceSound() != null) {
       UtilSound.playSound(world, pos, type.getPlaceSound(), SoundCategory.BLOCKS);
@@ -41,12 +47,16 @@ public class UtilSound {
     playSound(player, here, thunk, player.getSoundCategory());
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
-    if (player == null) { return; }
+    if (player == null) {
+      return;
+    }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
     player.getEntityWorld().playSound(player, here, soundIn, cat, VOLUME, PITCH);
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat, float volume) {
-    if (player == null) { return; }
+    if (player == null) {
+      return;
+    }
     player.getEntityWorld().playSound(player, pos, soundIn, cat, volume, PITCH);
   }
   public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category) {

@@ -40,9 +40,13 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   }
   @Override
   public void update() {
-    if (!this.isRunning()) { return; }
+    if (!this.isRunning()) {
+      return;
+    }
     this.spawnParticlesAbove();
-    if (!this.updateTimerIsZero()) { return; }
+    if (!this.updateTimerIsZero()) {
+      return;
+    }
     updateCollection();
   }
   private void updateCollection() {
@@ -50,14 +54,18 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     BlockPos center = this.getTargetCenter();
     AxisAlignedBB region = new AxisAlignedBB(center).expand(size, VRADIUS, size).expand(-1 * size, -1 * VRADIUS, -1 * size);//expandXyz
     List<EntityItem> items = getWorld().getEntitiesWithinAABB(EntityItem.class, region);
-    if (items == null) { return; }
+    if (items == null) {
+      return;
+    }
     for (EntityItem itemOnGround : items) {
       processItemOnGround(itemOnGround);
     }
   }
   @SuppressWarnings("serial")
   private void processItemOnGround(EntityItem itemOnGround) {
-    if (this.canPickup(itemOnGround) == false) { return; } //its dead, or its filtered out
+    if (this.canPickup(itemOnGround) == false) {
+      return;
+    } //its dead, or its filtered out
     ItemStack contained = itemOnGround.getItem();
     //making it a list not  a single is a superhack
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(new ArrayList<ItemStack>() {
@@ -86,14 +94,18 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     return filt;
   }
   private boolean canPickup(EntityItem itemOnGround) {
-    if (itemOnGround.isDead) { return false;//nope
+    if (itemOnGround.isDead) {
+      return false;//nope
     }
     List<ItemStack> filt = this.getFilterCopy();
-    if (filt.size() == 0) { return true;//filter is empty, no problem eh
+    if (filt.size() == 0) {
+      return true;//filter is empty, no problem eh
     }
     //filter is not empty. so if its not found we return false
     for (ItemStack f : filt) {
-      if (f.isItemEqualIgnoreDurability(itemOnGround.getItem())) { return true; }
+      if (f.isItemEqualIgnoreDurability(itemOnGround.getItem())) {
+        return true;
+      }
     }
     return false;
   }
@@ -152,9 +164,8 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
         this.renderParticles = value % 2;
       break;
       case SIZE:
-        
-        this.size=value;
-        break;
+        this.size = value;
+      break;
     }
   }
   public void togglePreview() {

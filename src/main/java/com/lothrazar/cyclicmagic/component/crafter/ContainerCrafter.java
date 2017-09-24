@@ -74,21 +74,29 @@ public class ContainerCrafter extends ContainerBaseMachine {
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
       if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+          return ItemStack.EMPTY;
+        }
       }
       else if (TileEntityFurnace.isItemFuel(stack)) {
         //fuel slot
-        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) {
+          return ItemStack.EMPTY;
+        }
         //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), true)) {
+        return ItemStack.EMPTY;
+      }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
       else {
         slotObject.onSlotChanged();
       }
-      if (stackInSlot.getCount() == stack.getCount()) { return ItemStack.EMPTY; }
+      if (stackInSlot.getCount() == stack.getCount()) {
+        return ItemStack.EMPTY;
+      }
       slotObject.onTake(player, stackInSlot);
     }
     return stack;

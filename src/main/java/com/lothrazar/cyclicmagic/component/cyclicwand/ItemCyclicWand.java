@@ -47,7 +47,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   }
   @Override
   public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-    if (!slotChanged) { return false;// only item data has changed, so do notanimate
+    if (!slotChanged) {
+      return false;// only item data has changed, so do notanimate
     }
     return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
   }
@@ -137,7 +138,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand.isEmpty()) { return 0; }
+      if (wand.isEmpty()) {
+        return 0;
+      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }

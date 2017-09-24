@@ -26,7 +26,9 @@ public class InventoryWorkbench extends InventoryCrafting {
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    if (this.getStackInSlot(index).isEmpty()) { return ItemStack.EMPTY; }
+    if (this.getStackInSlot(index).isEmpty()) {
+      return ItemStack.EMPTY;
+    }
     ItemStack stack;
     if (this.getStackInSlot(index).getCount() <= count) {
       stack = this.getStackInSlot(index);

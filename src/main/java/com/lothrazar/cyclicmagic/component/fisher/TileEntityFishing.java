@@ -91,15 +91,21 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   public boolean isEquipmentValid() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (equip.isEmpty()) { return false; }
-    if (equip.getItem() instanceof ItemFishingRod) { return true; }
+    if (equip.isEmpty()) {
+      return false;
+    }
+    if (equip.getItem() instanceof ItemFishingRod) {
+      return true;
+    }
     String itemsClass = equip.getItem().getClass().getName();
     //TODO: why was i being dum. i should use resourcelocations: "modid:itemid"
     String aquaBase = "com.teammetallurgy.aquaculture.items.";
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
         || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")) { return true; }
+        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")) {
+      return true;
+    }
     return false;
   }
   @Override
@@ -115,11 +121,17 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = world.getLootTableManager();
-      if (loot == null) { return; }
+      if (loot == null) {
+        return;
+      }
       LootTable table = loot.getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
-      if (table == null) { return; }
+      if (table == null) {
+        return;
+      }
       LootContext context = lootcontext$builder.build();
-      if (context == null) { return; }
+      if (context == null) {
+        return;
+      }
       for (ItemStack itemstack : table.generateLootForPools(rand, context)) {
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_WAKE, pos.up());
         //damage phase.
@@ -183,7 +195,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP) { return new int[] { 0 }; }
+    if (side == EnumFacing.UP) {
+      return new int[] { 0 };
+    }
     return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };//for outputting stuff
   }
   @Override

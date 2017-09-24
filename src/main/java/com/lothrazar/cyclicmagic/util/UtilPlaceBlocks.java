@@ -22,7 +22,9 @@ import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
   public static boolean placeStateDetsroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
-    if (world.destroyBlock(placePos, dropBlock)) { return placeStateSafe(world, player, placePos, placeState); }
+    if (world.destroyBlock(placePos, dropBlock)) {
+      return placeStateSafe(world, player, placePos, placeState);
+    }
     return false;
   }
   /*
@@ -30,14 +32,20 @@ public class UtilPlaceBlocks {
    * https://github.com/PrinceOfAmber/Cyclic/issues/143
    */
   public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
-    if (world.setBlockToAir(placePos)) { return placeStateSafe(world, player, placePos, placeState); }
+    if (world.setBlockToAir(placePos)) {
+      return placeStateSafe(world, player, placePos, placeState);
+    }
     return false;
   }
   // from spell range build
   public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
-    if (placePos == null) { return false; }
+    if (placePos == null) {
+      return false;
+    }
     IBlockState stateHere = null;
-    if (player != null && PermissionRegistry.hasPermissionHere(player, placePos) == false) { return false; }
+    if (player != null && PermissionRegistry.hasPermissionHere(player, placePos) == false) {
+      return false;
+    }
     if (world.isAirBlock(placePos) == false) {
       // if there is a block here, we might have to stop
       stateHere = world.getBlockState(placePos);
@@ -107,10 +115,14 @@ public class UtilPlaceBlocks {
   public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere) {
     IBlockState newStateToPlace = world.getBlockState(pos);
     translateCSV();
-    if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) { return false; }
+    if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) {
+      return false;
+    }
     //negative hardness: unbreakable like bedrock
     //if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { 
-    if (newStateToPlace.getBlockHardness(world, posMoveToHere) == -1) { return false; }
+    if (newStateToPlace.getBlockHardness(world, posMoveToHere) == -1) {
+      return false;
+    }
     boolean moved = false;
     if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
       //copy tile if exists
@@ -193,9 +205,13 @@ public class UtilPlaceBlocks {
   //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public static boolean rotateBlockValidState(World worldObj, @Nullable EntityPlayer p, BlockPos pos, EnumFacing side) {
-    if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return false; }
+    if (pos == null || worldObj.getBlockState(pos) == null || side == null) {
+      return false;
+    }
     IBlockState clicked = worldObj.getBlockState(pos);
-    if (clicked.getBlock() == null) { return false; }
+    if (clicked.getBlock() == null) {
+      return false;
+    }
     Block clickedBlock = clicked.getBlock();
     //avoiding using the integer values of properties
     //int clickedMeta = clickedBlock.getMetaFromState(clicked);
@@ -252,7 +268,9 @@ public class UtilPlaceBlocks {
     if (placeState != null) {
       isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos, placeState);
     }
-    if (isDone) { return true; }
+    if (isDone) {
+      return true;
+    }
     //now try something else if not done
     for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
       if (isDone) {

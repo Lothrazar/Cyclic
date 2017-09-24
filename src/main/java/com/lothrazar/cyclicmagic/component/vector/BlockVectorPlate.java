@@ -100,7 +100,9 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     ItemStack stack = super.getPickBlock(state, target, world, pos, player);
-    if (stack == null || !(world.getTileEntity(pos) instanceof TileEntityVector)) { return null; }
+    if (stack == null || !(world.getTileEntity(pos) instanceof TileEntityVector)) {
+      return null;
+    }
     TileEntityVector tile = (TileEntityVector) world.getTileEntity(pos);
     saveTileDataToStack(stack, tile);
     return stack;
@@ -121,7 +123,9 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   }
   @SubscribeEvent
   public void onBreakEvent(BreakEvent event) {
-    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) { return; } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
+    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
+      return;
+    } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
     World world = event.getWorld();
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();

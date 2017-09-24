@@ -13,7 +13,9 @@ public class CommandEnderChest extends BaseCommand implements ICommand {
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    if (sender instanceof EntityPlayer == false) { return; }
+    if (sender instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer p = (EntityPlayer) sender;
     p.displayGUIChest(p.getInventoryEnderChest());
   }

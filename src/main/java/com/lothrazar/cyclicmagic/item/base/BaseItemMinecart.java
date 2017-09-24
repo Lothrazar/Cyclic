@@ -55,7 +55,9 @@ public abstract class BaseItemMinecart extends BaseItem {
      * particles.
      */
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-      if (stack.getItem() instanceof BaseItemMinecart == false) { return stack; }
+      if (stack.getItem() instanceof BaseItemMinecart == false) {
+        return stack;
+      }
       EnumFacing enumfacing = (EnumFacing) source.getBlockState().getValue(BlockDispenser.FACING);
       World world = source.getWorld();
       double d0 = source.getX() + (double) enumfacing.getFrontOffsetX() * 1.125D;
@@ -74,7 +76,9 @@ public abstract class BaseItemMinecart extends BaseItem {
         }
       }
       else {
-        if (iblockstate.getMaterial() != Material.AIR || !BlockRailBase.isRailBlock(world.getBlockState(blockpos.down()))) { return this.behaviourDefaultDispenseItem.dispense(source, stack); }
+        if (iblockstate.getMaterial() != Material.AIR || !BlockRailBase.isRailBlock(world.getBlockState(blockpos.down()))) {
+          return this.behaviourDefaultDispenseItem.dispense(source, stack);
+        }
         IBlockState iblockstate1 = world.getBlockState(blockpos.down());
         BlockRailBase.EnumRailDirection blockrailbase$enumraildirection1 = iblockstate1.getBlock() instanceof BlockRailBase ? ((BlockRailBase) iblockstate1.getBlock()).getRailDirection(world, blockpos.down(), iblockstate1, null) : BlockRailBase.EnumRailDirection.NORTH_SOUTH;
         if (enumfacing != EnumFacing.DOWN && blockrailbase$enumraildirection1.isAscending()) {

@@ -35,11 +35,17 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   }
   @Override
   public void update() {
-    if (!isRunning()) { return; }
-    if (!isInputValid()) { return; }
+    if (!isRunning()) {
+      return;
+    }
+    if (!isInputValid()) {
+      return;
+    }
     this.spawnParticlesAbove();
     timer -= 1;
-    if (timer > 0) { return; } //timer zero so go
+    if (timer > 0) {
+      return;
+    } //timer zero so go
     timer = TIMER_FULL;
     //now go my pretty!
     ItemStack input = this.getStackInSlot(SLOT_INPUT);
@@ -53,7 +59,9 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       outEnchants.put(keyMoved, entry.getValue());
       break;
     }
-    if (outEnchants.size() == 0 || keyMoved == null) { return; } //weird none were found. so anyweay dont pay cost
+    if (outEnchants.size() == 0 || keyMoved == null) {
+      return;
+    } //weird none were found. so anyweay dont pay cost
     enchants.remove(keyMoved);
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     dropStack(eBook); // drop the new enchanted book

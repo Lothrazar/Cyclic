@@ -49,7 +49,9 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {//176 to 240 as an example repair
     ItemStack mat = new ItemStack(Blocks.COAL_BLOCK);
-    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) { return true; }
+    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) {
+      return true;
+    }
     return super.getIsRepairable(toRepair, repair);
   }
 }

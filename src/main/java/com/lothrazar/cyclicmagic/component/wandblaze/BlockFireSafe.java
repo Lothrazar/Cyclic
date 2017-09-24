@@ -110,7 +110,9 @@ public class BlockFireSafe extends BlockFire {
   }
   private boolean canNeighborCatchFire(World worldIn, BlockPos pos) {
     for (EnumFacing enumfacing : EnumFacing.values()) {
-      if (this.canCatchFire(worldIn, pos.offset(enumfacing), enumfacing.getOpposite())) { return true; }
+      if (this.canCatchFire(worldIn, pos.offset(enumfacing), enumfacing.getOpposite())) {
+        return true;
+      }
     }
     return false;
   }

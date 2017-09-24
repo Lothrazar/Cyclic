@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileFacingToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

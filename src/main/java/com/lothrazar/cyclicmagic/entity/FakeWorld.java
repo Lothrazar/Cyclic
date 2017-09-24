@@ -63,12 +63,16 @@ public class FakeWorld extends World {
   @Override
   public IBlockState getBlockState(BlockPos blockPos) {
     if (blockPos.equals(originPos) || blockPos.getY() < 0 ||
-        blockPos.equals(this.getEntityMinecartBase().getPosition())) { return this.getEntityMinecartBase().getDisplayTile(); }
+        blockPos.equals(this.getEntityMinecartBase().getPosition())) {
+      return this.getEntityMinecartBase().getDisplayTile();
+    }
     return Blocks.AIR.getDefaultState();
   }
   @Override
   public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
-    if (blockPos.equals(originPos)) { return null; } //TODO? this.getBlockWrapper().getTileEntity();
+    if (blockPos.equals(originPos)) {
+      return null;
+    } //TODO? this.getBlockWrapper().getTileEntity();
     return null;
   }
   @Override

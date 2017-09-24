@@ -95,7 +95,9 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
   }
   protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float x, float itemHeight, float y) {
-    if (stack == null || stack.isEmpty()) { return; }
+    if (stack == null || stack.isEmpty()) {
+      return;
+    }
     GlStateManager.pushMatrix();
     //start of rotate
     GlStateManager.translate(.5, 0, .5);

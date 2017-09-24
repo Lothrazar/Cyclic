@@ -94,7 +94,9 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
     //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
-    if (isPlayerMaxHearts(playerIn)) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn); }
+    if (isPlayerMaxHearts(playerIn)) {
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+    }
     //otherwise continueto normal food process
     return super.onItemRightClick(worldIn, playerIn, hand);
   }

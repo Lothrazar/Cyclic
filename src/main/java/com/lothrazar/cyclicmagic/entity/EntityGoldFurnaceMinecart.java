@@ -141,7 +141,9 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     }
   }
   protected void applyDrag() {
-    if (this.fuel > 0) { return; }
+    if (this.fuel > 0) {
+      return;
+    }
     double d0 = this.pushX * this.pushX + this.pushZ * this.pushZ;
     if (d0 > 1.0E-4D) {
       d0 = (double) MathHelper.sqrt(d0);

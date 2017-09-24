@@ -72,7 +72,9 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
   }
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
-    if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
+    if (event.getEntityLiving() instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     World world = player.getEntityWorld();
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);

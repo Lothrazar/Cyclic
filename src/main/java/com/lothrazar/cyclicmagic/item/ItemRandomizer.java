@@ -50,7 +50,9 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand == null) {
+        return 0;
+      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -95,7 +97,9 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
+      return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+    }
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {

@@ -72,11 +72,11 @@ public class GuiClock extends GuiBaseContainer {
       break;
       case UP:
         x = xCenter + spacing;
-        y = Const.PAD*8;
+        y = Const.PAD * 8;
       break;
       case DOWN:
         x = xCenter - spacing;
-        y = Const.PAD*8;
+        y = Const.PAD * 8;
       break;
     }
     ButtonToggleFacing btn = new ButtonToggleFacing(btnId++,

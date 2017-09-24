@@ -119,7 +119,9 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   }
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
     NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
-    if (stack.isEmpty()) { return inv; }
+    if (stack.isEmpty()) {
+      return inv;
+    }
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
       // 1.7.2+ change to items.getCompoundTagAt(i)
@@ -168,7 +170,9 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     InventoryStorage.writeToNBT(stack, invv);
   }
   public static ItemStack getFromSlot(ItemStack stack, int i) {
-    if (i < 0 || i >= InventoryStorage.INV_SIZE) { return ItemStack.EMPTY; }
+    if (i < 0 || i >= InventoryStorage.INV_SIZE) {
+      return ItemStack.EMPTY;
+    }
     return InventoryStorage.readFromNBT(stack).get(i);
   }
 }

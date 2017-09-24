@@ -54,7 +54,9 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
         ModCyclic.logger.error(e.getMessage());
       }
     }
-    if (this.isDead || mop.getBlockPos() == null) { return; }
+    if (this.isDead || mop.getBlockPos() == null) {
+      return;
+    }
     //process block hit if its shearable
     BlockPos pos = mop.getBlockPos();
     //process block hit if its shearable

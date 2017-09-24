@@ -91,16 +91,22 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-    if (hand != EnumHand.MAIN_HAND) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand)); }
+    if (hand != EnumHand.MAIN_HAND) {
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
+    }
     player.setActiveHand(hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
   }
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
     //    if (entity.onGround == false) { return; }
-    if (entity instanceof EntityPlayer == false) { return; }
+    if (entity instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) entity;
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
+      return;
+    }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     //bow konws how to say , how charged up am i, ok heres your power
     float power = Math.min(MAX_POWER, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
@@ -125,7 +131,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
       //did we turn it off? is the visible timer still going?
-      if (ActionType.getTimeout(held) > 0) { return; }
+      if (ActionType.getTimeout(held) > 0) {
+        return;
+      }
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.3F);

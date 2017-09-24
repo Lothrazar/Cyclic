@@ -278,14 +278,18 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
   }
   private static BrewingRecipe addBrewingRecipe(Item input, Item ingredient, Item output) {
-    if (input == null || ingredient == null || output == null) { return null; }
+    if (input == null || ingredient == null || output == null) {
+      return null;
+    }
     return addBrewingRecipe(
         new ItemStack(input),
         new ItemStack(ingredient),
         new ItemStack(output));
   }
   private static BrewingRecipe addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
-    if (input.isEmpty() || input.getItem() == null) { return null; }
+    if (input.isEmpty() || input.getItem() == null) {
+      return null;
+    }
     BrewingRecipe recipe = new BrewingRecipe(
         input,
         ingredient,
