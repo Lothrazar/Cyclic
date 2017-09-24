@@ -34,10 +34,9 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //first the main top left type button
-    //    GuiUtils.drawContinuousTexturedBox(x, y, u, v, xHeightTextbox, xHeightTextbox, textureWidth, textureHeight, borderSize, xHeightTextbox);
-    int id = 2;
+   int id = 2;
     int yOffset = 16;
-    //tooltips be like     setTooltip("button." + stype + "." + (goUp ? "up" : "down"));
+
     btnHeightDown = new ButtonIncrementField(
         id++,
         this.guiLeft + xHeightTextbox,

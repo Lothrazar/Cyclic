@@ -47,7 +47,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final int MAX_SIZE = 7;//7 means 15x15
   private static final int INVENTORY_SIZE = 6;
   public static final int TOOLSLOT_INDEX = 4;
-  public final static int TIMER_FULL = 200;
+  public final static int TIMER_FULL = 100;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
