@@ -56,18 +56,20 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.REDSTONE, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, PARTICLE_DENSITY);
     }
   }
-  private int getPower(IBlockAccess world, BlockPos pos) {
-    if (world.getTileEntity(pos) instanceof TileEntityClock)
+  private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
+ 
+    if (world.getTileEntity(pos) instanceof TileEntityClock) {
       return ((TileEntityClock) world.getTileEntity(pos)).getPower();
+    }
     return 0;
   }
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side) : 0;
   }
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side) : 0;
   }
   @Override
   public IRecipe addRecipe() {

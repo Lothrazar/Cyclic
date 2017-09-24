@@ -35,13 +35,17 @@ public class GuiClock extends GuiBaseContainer {
     addButton(xCol2, yRow3, Fields.POWER.ordinal(), -1, "power");
     addButton(xCol3, yRow3, Fields.POWER.ordinal(), 1, "power");
   }
+  
   private int btnId = 0;
   private void addButton(int x, int y, int field, int value, String tooltip) {
     ButtonIncrementField btn = new ButtonIncrementField(btnId++,
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);
-    btn.displayString = "" + value;
+    if (value > 0)
+      btn.displayString = "+" + value;
+    else
+      btn.displayString = "" + value;
     btn.setTooltip("tile.clock." + tooltip);
     this.buttonList.add(btn);
   }
