@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
   private static final int MIN_RANGE = 1;
   private static final int TIMER_FULL = 30;
+  protected static final int MAX_SPEED = 10;//unused mostly
   private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
   private static final String NBT_RANGE = "range";

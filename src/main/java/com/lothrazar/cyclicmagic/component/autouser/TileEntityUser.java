@@ -60,6 +60,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public final static int TIMER_FULL = 120;
+  private static final int MAX_SPEED = 20;
   public static int maxHeight = 10;
   private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
   private int[] hopperOutput = { 3, 4, 5, 6, 7, 8 };// all slots for all faces
@@ -72,13 +73,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
-  public int yOffset = 0;//0,1,-1
+  public int yOffset = 0;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET;
   }
   public TileEntityUser() {
     super(10);
     timer = TIMER_FULL;
+    speed = SPEED_FUELED;
     this.setFuelSlot(9);
   }
   @Override
@@ -437,6 +439,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (this.size > MAX_SIZE) {
       this.size = 0;
     }
+  }
+  @Override
+  public int getSpeed() {
+    return speed;
+  }
+  @Override
+  public void setSpeed(int value) {
+    //    System.out.println(value);
+    if (value < 1) {
+      value = 1;
+    }
+    speed = Math.min(value, MAX_SPEED);
   }
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
