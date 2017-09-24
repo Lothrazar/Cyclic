@@ -51,14 +51,14 @@ public class GuiUser extends GuiBaseContainer {
         this.guiTop + Const.PAD * 8, this.tile.getPos(), Fields.SPEED.ordinal());
     btnSpeed.width = btnSpeed.height = 14;
     btnSpeed.displayString = "+";
-    btnSpeed.setTooltip("tile.block_user.speed");
+    btnSpeed.setTooltip("tile.block_user.speed.tooltip");
     this.buttonList.add(btnSpeed);
     ButtonIncrementField btnSpeedD = new ButtonIncrementField(btnId++,
         this.guiLeft + 88,
         btnSpeed.y + 28, this.tile.getPos(), Fields.SPEED.ordinal(), -1);
     btnSpeedD.width = btnSpeedD.height = btnSpeed.width;
     btnSpeedD.displayString = "-";
-    btnSpeedD.setTooltip("tile.block_user.speed");
+    btnSpeedD.setTooltip("tile.block_user.speed.tooltip");
     this.buttonList.add(btnSpeedD);
   }
   @Override
