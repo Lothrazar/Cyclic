@@ -208,6 +208,6 @@
 	,"1.8.3":"Fix waterwalking enchant firing when removed.  Fix waterwalking levitating you a full block above the water, it now tries to keep you at 0.1 of a block above. "
 	,"1.8.4":"Patch the Structure Builder crashing when placing a block that has a missing or invalid placement sound.  Upgraded inventory is now 4 slots bigger instead of showing player armor.  Upgraded inventory has new buttons to swap the row of items with players hotbar.  "
 	,"1.8.5":"Fixed the Fan crashing the game when changing dimensions and/or chunks unloading.  Compatible with Minecraft 1.2.2  "
-	,"1.8.6":"Added speed control buttons to Automated User.  "
+	,"1.8.6":"Added speed control buttons to Automated User.  Fix the Step height feature not letting you sneak to stay on the block (Apple of Lofty Stature player upgrade).  "
   }
 }
