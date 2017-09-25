@@ -50,7 +50,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     int i = this.pos.getX();
     int j = this.pos.getY();
     int k = this.pos.getZ();
-    int l = 5;
+   // int l = 5;
     this.beamSegments.clear();
     BeamSegment tileentitybeacon$beamsegment = new BeamSegment(EnumDyeColor.WHITE.getColorComponentValues());
     this.beamSegments.add(tileentitybeacon$beamsegment);
