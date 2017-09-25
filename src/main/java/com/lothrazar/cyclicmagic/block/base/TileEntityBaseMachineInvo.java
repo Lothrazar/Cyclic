@@ -19,9 +19,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
-  private static final int SPEED_FUELED = 8;
-  protected static final int MAX_SPEED = 10;//unused mostly
+  protected static final int SPEED_FUELED = 8;
   private static final int FUEL_FACTOR = 2;
+  private static final int MAX_SPEED = 10;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
@@ -64,7 +64,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.currentFuel = f;
   }
   public double getPercentFormatted() {
-    if (this.currentMaxFuel == 0) { return 0; }
+    if (this.currentMaxFuel == 0) {
+      return 0;
+    }
     double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
@@ -116,7 +118,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public boolean hasFuel() {
-    if (!usesFuel) { return true; }
+    if (!usesFuel) {
+      return true;
+    }
     return this.currentFuel > 0;
   }
   protected boolean updateTimerIsZero() {
@@ -206,7 +210,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    if (index < 0 || index >= getSizeInventory()) { return ItemStack.EMPTY; }
+    if (index < 0 || index >= getSizeInventory()) {
+      return ItemStack.EMPTY;
+    }
     return inv.get(index);
   }
   public ItemStack decrStackSize(int index) {
@@ -361,7 +367,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
-    if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) { return true; }
+    if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return true;
+    }
     return super.hasCapability(capability, facing);
   }
   @SuppressWarnings("unchecked")

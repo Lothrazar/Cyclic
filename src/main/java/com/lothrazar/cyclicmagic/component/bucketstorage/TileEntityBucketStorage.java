@@ -35,7 +35,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) { return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank); }
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
+    }
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
@@ -47,7 +49,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return null;
+    }
     return fluidHandler.getTankProperties()[0].getContents();
   }
   @Override
@@ -56,12 +60,16 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
   private boolean doesFluidMatchTank(FluidStack incoming) {
-    if (tank.getFluid() == null) { return true; }
+    if (tank.getFluid() == null) {
+      return true;
+    }
     return tank.getFluid().getFluid() == incoming.getFluid();
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (doesFluidMatchTank(resource) == false) { return 0; }
+    if (doesFluidMatchTank(resource) == false) {
+      return 0;
+    }
     if (resource.amount + tank.getFluidAmount() > TANK_FULL) {//enForce limit
       resource.amount = TANK_FULL - tank.getFluidAmount();
     }
@@ -72,7 +80,9 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineInvo implement
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (doesFluidMatchTank(resource) == false) { return resource; }
+    if (doesFluidMatchTank(resource) == false) {
+      return resource;
+    }
     FluidStack result = tank.drain(resource, doDrain);
     //   this.world.markChunkDirty(pos, this);
     tank.setFluid(resource);

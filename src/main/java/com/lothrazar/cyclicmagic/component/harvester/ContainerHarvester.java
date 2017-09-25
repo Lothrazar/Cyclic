@@ -53,18 +53,24 @@ public class ContainerHarvester extends ContainerBaseMachine {
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
       if (slot < tile.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
+          return ItemStack.EMPTY;
+        }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
+        return ItemStack.EMPTY;
+      }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
       else {
         slotObject.onSlotChanged();
       }
-      if (stackInSlot.getCount() == stack.getCount()) { return ItemStack.EMPTY; }
+      if (stackInSlot.getCount() == stack.getCount()) {
+        return ItemStack.EMPTY;
+      }
       slotObject.onTake(player, stackInSlot);
     }
     return stack;

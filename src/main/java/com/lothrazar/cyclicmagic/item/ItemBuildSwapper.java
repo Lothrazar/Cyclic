@@ -65,7 +65,9 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand.isEmpty()) { return 0; }
+      if (wand.isEmpty()) {
+        return 0;
+      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -112,7 +114,9 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
   public void onRender(RenderGameOverlayEvent.Post event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
-    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
+    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) {
+      return;
+    }
     if (!held.isEmpty() && held.getItem() == this) {
       int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {

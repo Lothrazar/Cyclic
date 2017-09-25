@@ -17,6 +17,7 @@ public class GuiUser extends GuiBaseContainer {
   private ButtonIncrementField actionBtn;
   private GuiButtonToggleSize btnSize;
   private ButtonIncrementField yOffsetBtn;
+  private ButtonIncrementField btnSpeed;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -45,6 +46,20 @@ public class GuiUser extends GuiBaseContainer {
     yOffsetBtn.width = Const.SQ;
     yOffsetBtn.setTooltip("tile.block_user.yoffset");
     this.buttonList.add(yOffsetBtn);
+    btnSpeed = new ButtonIncrementField(btnId++,
+        this.guiLeft + 88,
+        this.guiTop + Const.PAD * 8, this.tile.getPos(), Fields.SPEED.ordinal());
+    btnSpeed.width = btnSpeed.height = 14;
+    btnSpeed.displayString = "+";
+    btnSpeed.setTooltip("tile.block_user.speed.tooltip");
+    this.buttonList.add(btnSpeed);
+    ButtonIncrementField btnSpeedD = new ButtonIncrementField(btnId++,
+        this.guiLeft + 88,
+        btnSpeed.y + 28, this.tile.getPos(), Fields.SPEED.ordinal(), -1);
+    btnSpeedD.width = btnSpeedD.height = btnSpeed.width;
+    btnSpeedD.displayString = "-";
+    btnSpeedD.setTooltip("tile.block_user.speed.tooltip");
+    this.buttonList.add(btnSpeedD);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -70,7 +85,6 @@ public class GuiUser extends GuiBaseContainer {
           Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
-    //  Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -80,6 +94,7 @@ public class GuiUser extends GuiBaseContainer {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
+    this.drawFieldAt(btnSpeed.x - this.guiLeft + 5, btnSpeed.y - this.guiTop + 18, Fields.SPEED.ordinal());
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

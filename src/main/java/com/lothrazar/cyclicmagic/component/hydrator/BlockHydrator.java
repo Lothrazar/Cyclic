@@ -190,7 +190,9 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-    if (willHarvest) { return true; } //If it will harvest, delay deletion of the block until after getDrops
+    if (willHarvest) {
+      return true;
+    } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
   @Override

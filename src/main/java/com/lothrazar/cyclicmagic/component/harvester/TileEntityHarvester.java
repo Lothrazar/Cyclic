@@ -72,7 +72,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   //  }
   @Override
   public void update() {
-    if (!isRunning()) { return; }
+    if (!isRunning()) {
+      return;
+    }
     this.spawnParticlesAbove();
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;//harvest worked!

@@ -28,7 +28,9 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     World worldIn = living.getEntityWorld();
     if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
       living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));

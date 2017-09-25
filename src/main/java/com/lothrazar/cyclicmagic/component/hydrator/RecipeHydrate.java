@@ -15,7 +15,9 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     this(new ItemStack[] { in, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }, out);
   }
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
-    if (in.length != 4) { throw new IllegalArgumentException("Input array must be length 4"); }
+    if (in.length != 4) {
+      throw new IllegalArgumentException("Input array must be length 4");
+    }
     this.input = in;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrate_" + id + out.getUnlocalizedName()));

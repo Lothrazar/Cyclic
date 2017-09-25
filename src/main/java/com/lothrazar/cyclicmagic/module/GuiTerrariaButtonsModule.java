@@ -42,7 +42,9 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
   @SideOnly(Side.CLIENT)
   public void addButtonsToGui(InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
-    if (gui == null) { return; } // probably doesn't ever happen
+    if (gui == null) {
+      return;
+    } // probably doesn't ever happen
     // all containers by default but with a blacklist in config
     if (gui instanceof GuiContainer &&
         !(gui instanceof GuiInventory) &&
@@ -57,7 +59,9 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
           break;
         }
       }
-      if (isInBlacklist) { return; }
+      if (isInBlacklist) {
+        return;
+      }
       //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
       int button_id = 256;
       // config for different locations - left right bottom top

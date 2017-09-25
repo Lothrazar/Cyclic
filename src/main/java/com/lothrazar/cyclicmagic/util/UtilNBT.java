@@ -17,7 +17,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
   public static String posToStringCSV(BlockPos position) {
-    if (position == null) { return ""; }
+    if (position == null) {
+      return "";
+    }
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
@@ -27,21 +29,31 @@ public class UtilNBT {
   }
   public static BlockPos getItemStackBlockPos(ItemStack item) {
     if (item.getTagCompound() == null
-        || !item.getTagCompound().hasKey("xpos")) { return null; }
+        || !item.getTagCompound().hasKey("xpos")) {
+      return null;
+    }
     return new BlockPos(getItemStackNBTVal(item, "xpos"), getItemStackNBTVal(item, "ypos"), getItemStackNBTVal(item, "zpos"));
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
-    if (item.isEmpty()) { return; }
+    if (item.isEmpty()) {
+      return;
+    }
     getItemStackNBT(item).setInteger(prop, value);
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, String value) {
-    if (item.isEmpty()) { return; }
+    if (item.isEmpty()) {
+      return;
+    }
     getItemStackNBT(item).setString(prop, value);
   }
   public static int getItemStackNBTVal(ItemStack held, String prop) {
-    if (held.isEmpty()) { return 0; }
+    if (held.isEmpty()) {
+      return 0;
+    }
     NBTTagCompound tags = getItemStackNBT(held);
-    if (!tags.hasKey(prop)) { return 0; }
+    if (!tags.hasKey(prop)) {
+      return 0;
+    }
     return tags.getInteger(prop);
   }
   /**
@@ -53,9 +65,13 @@ public class UtilNBT {
    * @return
    */
   public static String getItemStackDisplayInteger(ItemStack held, String prop) {
-    if (held.isEmpty()) { return ""; }
+    if (held.isEmpty()) {
+      return "";
+    }
     NBTTagCompound tags = getItemStackNBT(held);
-    if (!tags.hasKey(prop)) { return ""; }
+    if (!tags.hasKey(prop)) {
+      return "";
+    }
     return tags.getInteger(prop) + "";
   }
   public static NBTTagCompound getItemStackNBT(ItemStack held) {
@@ -120,9 +136,13 @@ public class UtilNBT {
     return writeInventoryToTag(invo, new NBTTagCompound(), key);
   }
   public static int countItemsFromNBT(NBTTagCompound tags, String key) {
-    if (tags == null) { return 0; }
+    if (tags == null) {
+      return 0;
+    }
     NBTTagList items = tags.getTagList(key, tags.getId());
-    if (items == null) { return 0; }
+    if (items == null) {
+      return 0;
+    }
     return items.tagCount();
   }
   public static ArrayList<ItemStack> readItemsFromNBT(NBTTagCompound tags, String key) {

@@ -128,7 +128,9 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
     ItemStack held = player.getHeldItem(event.getHand());
     if (held.getItem() == this) {
       //did we turn it off? is the visible timer still going?
-      if (ActionType.getTimeout(held) > 0) { return; }
+      if (ActionType.getTimeout(held) > 0) {
+        return;
+      }
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);

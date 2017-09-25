@@ -107,8 +107,12 @@ public class RecipeFileWriter {
     }
   }
   private static Map<String, Object> serializeItem(Object thing) {
-    if (thing instanceof Item) { return serializeItem(new ItemStack((Item) thing)); }
-    if (thing instanceof Block) { return serializeItem(new ItemStack((Block) thing)); }
+    if (thing instanceof Item) {
+      return serializeItem(new ItemStack((Item) thing));
+    }
+    if (thing instanceof Block) {
+      return serializeItem(new ItemStack((Block) thing));
+    }
     if (thing instanceof ItemStack) {
       ItemStack stack = (ItemStack) thing;
       Map<String, Object> ret = new HashMap<>();
@@ -119,7 +123,9 @@ public class RecipeFileWriter {
       if (stack.getCount() > 1) {
         ret.put("count", stack.getCount());
       }
-      if (stack.hasTagCompound()) { throw new IllegalArgumentException("Too lazy to implement nbt support rn"); }
+      if (stack.hasTagCompound()) {
+        throw new IllegalArgumentException("Too lazy to implement nbt support rn");
+      }
       return ret;
     }
     if (thing instanceof String) {

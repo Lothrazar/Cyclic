@@ -246,18 +246,24 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public void update() {
-    if (!isRunning()) { return; }
+    if (!isRunning()) {
+      return;
+    }
     this.shiftAllUp(1);
     this.updateFuelIsBurning();
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;
       this.spawnParticlesAbove();
       ItemStack stack = getStackInSlot(0);
-      if (stack.isEmpty()) { return; }
+      if (stack.isEmpty()) {
+        return;
+      }
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
         List<BlockPos> shape = this.getShape();
-        if (shape.size() == 0) { return; }
+        if (shape.size() == 0) {
+          return;
+        }
         if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
           this.shapeIndex = 0;
         }

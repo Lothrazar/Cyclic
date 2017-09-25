@@ -84,7 +84,9 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
   }
   public void onHitGround(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
-    if (pos == null) { return; }
+    if (pos == null) {
+      return;
+    }
     UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, pos);
     World world = getEntityWorld();
     if (mop.sideHit != null) {

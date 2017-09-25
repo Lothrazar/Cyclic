@@ -136,11 +136,15 @@ public class GuideRegistry {
       }
     }
     public void addRecipePage(IRecipe t) {
-      if (t == null) { return; }
+      if (t == null) {
+        return;
+      }
       this.pages.add(new GuidePage(t));
     }
     public void addRecipePage(BrewingRecipe t) {
-      if (t == null) { return; }
+      if (t == null) {
+        return;
+      }
       this.pages.add(new GuidePage(t));
     }
     public void addTextPage(String t) {

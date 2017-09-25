@@ -56,7 +56,9 @@ public class EventRender {
     Minecraft mc = Minecraft.getMinecraft();
     EntityPlayerSP p = mc.player;
     ItemStack heldItem = p.getHeldItemMainhand();
-    if (heldItem == null) { return; }
+    if (heldItem == null) {
+      return;
+    }
     if (heldItem.getItem() instanceof ItemBuildSwapper) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
@@ -100,10 +102,14 @@ public class EventRender {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
-    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
+    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) {
+      return;
+    }
     EntityPlayer effectivePlayer = ModCyclic.proxy.getClientPlayer();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand.isEmpty()) { return; }
+    if (heldWand.isEmpty()) {
+      return;
+    }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (!current.isEmpty()) {
@@ -159,7 +165,9 @@ public class EventRender {
       xmain = RenderLoc.locToX(renderLocation, leftOff, rightOff);
       ymain = RenderLoc.locToY(renderLocation, topOff, bottOff);
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
+      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) {
+        return;
+      }
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh
       drawCurrentSpell(player, spellCurrent);

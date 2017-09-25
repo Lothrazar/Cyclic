@@ -48,7 +48,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand == null) {
+        return 0;
+      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -145,7 +147,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
       wand = player.getHeldItemOffhand();
     }
-    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) { return null; }
+    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
+      return null;
+    }
     return wand;
   }
   @Override
@@ -159,9 +163,13 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
   public static ItemStack getPlayerBagIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (wand != null && wand.getItem() instanceof ItemStorageBag) { return wand; }
+    if (wand != null && wand.getItem() instanceof ItemStorageBag) {
+      return wand;
+    }
     wand = player.getHeldItemOffhand();
-    if (wand != null && wand.getItem() instanceof ItemStorageBag) { return wand; }
+    if (wand != null && wand.getItem() instanceof ItemStorageBag) {
+      return wand;
+    }
     return null;
   }
   @Override

@@ -239,7 +239,9 @@ public class CapabilityRegistry {
     }
   }
   public static void syncServerDataToClient(EntityPlayerMP p) {
-    if (p == null) { return; }
+    if (p == null) {
+      return;
+    }
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(p);
     if (props != null) {
       ModCyclic.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);

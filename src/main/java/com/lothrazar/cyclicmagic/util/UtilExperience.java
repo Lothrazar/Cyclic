@@ -13,7 +13,9 @@ public class UtilExperience {
   }
   public static boolean drainExp(EntityPlayer player, float f) {
     double totalExp = getExpTotal(player);
-    if (totalExp - f < 0) { return false; }
+    if (totalExp - f < 0) {
+      return false;
+    }
     setXp(player, (int) (totalExp - f));
     return true;
   }

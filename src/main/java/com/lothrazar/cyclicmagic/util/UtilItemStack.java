@@ -22,7 +22,9 @@ public class UtilItemStack {
    * @return
    */
   public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
-    if (chestItem.isEmpty() || bagItem.isEmpty()) { return false; }
+    if (chestItem.isEmpty() || bagItem.isEmpty()) {
+      return false;
+    }
     return (bagItem.getItem().equals(chestItem.getItem())
         && bagItem.getItemDamage() == chestItem.getItemDamage()
         && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
@@ -120,7 +122,9 @@ public class UtilItemStack {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath() + "/" + itemStack.getMetadata();
   }
   public static String getStringForItem(Item item) {
-    if (item == null || item.getRegistryName() == null) { return ""; }
+    if (item == null || item.getRegistryName() == null) {
+      return "";
+    }
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
   }
   public static String getStringForBlock(Block b) {

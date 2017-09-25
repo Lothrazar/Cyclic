@@ -53,7 +53,9 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
    */
   @Override
   public boolean itemInteractionForEntity(ItemStack itemstack, net.minecraft.entity.player.EntityPlayer player, EntityLivingBase entity, net.minecraft.util.EnumHand hand) {
-    if (entity.world.isRemote) { return false; }
+    if (entity.world.isRemote) {
+      return false;
+    }
     if (entity instanceof net.minecraftforge.common.IShearable) {
       net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable) entity;
       BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
@@ -79,7 +81,9 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
    */
   @Override
   public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
-    if (player.world.isRemote || player.capabilities.isCreativeMode) { return false; }
+    if (player.world.isRemote || player.capabilities.isCreativeMode) {
+      return false;
+    }
     Block block = player.world.getBlockState(pos).getBlock();
     if (block instanceof net.minecraftforge.common.IShearable) {
       net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable) block;

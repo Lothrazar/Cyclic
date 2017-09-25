@@ -20,7 +20,9 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack heldItem = playerIn.getHeldItem(hand);
-    if (heldItem.isEmpty()) { return false; }
+    if (heldItem.isEmpty()) {
+      return false;
+    }
     Block b = Block.getBlockFromItem(heldItem.getItem());
     if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)) {
       worldIn.destroyBlock(pos, dropBlock);

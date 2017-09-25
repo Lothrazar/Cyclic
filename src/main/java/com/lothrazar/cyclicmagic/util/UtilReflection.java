@@ -44,7 +44,9 @@ public class UtilReflection {
     for (Field f : obj.getClass().getDeclaredFields()) {
       f.setAccessible(true);
       try {
-        if (f.get(obj) instanceof Block) { return (Block) f.get(obj); }
+        if (f.get(obj) instanceof Block) {
+          return (Block) f.get(obj);
+        }
       }
       catch (ClassCastException e) {
         continue;
@@ -63,7 +65,9 @@ public class UtilReflection {
     for (Field f : obj.getClass().getDeclaredFields()) {
       f.setAccessible(true);
       try {
-        if (f.get(obj) instanceof List<?> && (List<LootPool>) f.get(obj) != null) { return (List<LootPool>) f.get(obj); }
+        if (f.get(obj) instanceof List<?> && (List<LootPool>) f.get(obj) != null) {
+          return (List<LootPool>) f.get(obj);
+        }
       }
       catch (ClassCastException e) {
         continue;

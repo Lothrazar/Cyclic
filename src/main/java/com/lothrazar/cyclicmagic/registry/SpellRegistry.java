@@ -59,7 +59,9 @@ public class SpellRegistry {
     return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
   }
   public static ISpell getSpellFromID(int id) {
-    if (hashbook.containsKey(id)) { return hashbook.get(id); }
+    if (hashbook.containsKey(id)) {
+      return hashbook.get(id);
+    }
     return null;
   }
   public static List<ISpell> getSpellbook(ItemStack wand) {

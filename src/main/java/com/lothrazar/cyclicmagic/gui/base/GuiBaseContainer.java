@@ -196,7 +196,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   private String getFuelAmtDisplay() {
-    if (tile.getField(this.fieldMaxFuel) == 0) { return "0"; }
+    if (tile.getField(this.fieldMaxFuel) == 0) {
+      return "0";
+    }
     return tile.getField(this.fieldFuel) + "/" + tile.getField(this.fieldMaxFuel);
   }
   @SuppressWarnings("serial")
@@ -247,7 +249,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void tryDrawFuelSlot(int x, int y) {
-    if (this.fieldFuel < 0 || GlobalSettings.fuelEnabled == false) { return; }
+    if (this.fieldFuel < 0 || GlobalSettings.fuelEnabled == false) {
+      return;
+    }
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

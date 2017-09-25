@@ -23,7 +23,9 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
-    if (!this.canTick(stack)) { return; }
+    if (!this.canTick(stack)) {
+      return;
+    }
     World world = living.world;
     BlockPos pos = living.getPosition();
     if (world.getLight(pos, true) < lightLimit

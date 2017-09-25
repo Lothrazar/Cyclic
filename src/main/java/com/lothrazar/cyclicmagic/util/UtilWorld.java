@@ -52,7 +52,9 @@ public class UtilWorld {
       posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
       if (world.getBlockState(posCurrent).getBlock() == Blocks.AIR &&
           world.getBlockState(posCurrent.up()).getBlock() == Blocks.AIR &&
-          world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR) { return posCurrent; }
+          world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR) {
+        return posCurrent;
+      }
     }
     return null;
   }
@@ -78,7 +80,9 @@ public class UtilWorld {
     return new BlockPos(posX, here.getY(), posZ);
   }
   public static boolean tryTpPlayerToBed(World world, EntityPlayer player) {
-    if (world.isRemote) { return false; }
+    if (world.isRemote) {
+      return false;
+    }
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.home.overworld");
       return false;
@@ -205,7 +209,9 @@ public class UtilWorld {
     ArrayList<Block> waterBoth = new ArrayList<Block>();
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
-    if (pos == null) { return false; }
+    if (pos == null) {
+      return false;
+    }
     return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }

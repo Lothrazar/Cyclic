@@ -34,7 +34,9 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
     if (Keyboard.isCreated() && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       // https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
       ItemStack itemStack = event.getItemStack();
-      if (itemStack == null || itemStack.getItem() == null) { return; }
+      if (itemStack == null || itemStack.getItem() == null) {
+        return;
+      }
       if (foodDetails && itemStack.getItem() instanceof ItemFood) {
         ItemFood food = (ItemFood) itemStack.getItem();
         int hunger = food.getHealAmount(itemStack);
@@ -55,7 +57,9 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
-    if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) { return; } //if f3 is not pressed
+    if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) {
+      return;
+    } //if f3 is not pressed
     if (spawnDistanceEnabled && player.dimension == Const.Dimension.overworld) {
       addSpawnInfo(event);
     }

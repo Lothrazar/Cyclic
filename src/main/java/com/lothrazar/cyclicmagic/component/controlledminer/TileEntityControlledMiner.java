@@ -47,7 +47,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final int MAX_SIZE = 7;//7 means 15x15
   private static final int INVENTORY_SIZE = 6;
   public static final int TOOLSLOT_INDEX = 4;
-  public final static int TIMER_FULL = 200;
+  public final static int TIMER_FULL = 100;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -127,7 +127,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       if (curBlockDamage >= 1.0f) {
         isCurrentlyMining = false;
         resetProgress(targetPos);
-        if (fakePlayer.get() != null) { return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos); }
+        if (fakePlayer.get() != null) {
+          return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+        }
       }
       else {
         world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
@@ -156,7 +158,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   private boolean isTargetValid() {
     World world = getWorld();
-    if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) { return false; }
+    if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) {
+      return false;
+    }
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
     //else check blacklist
@@ -168,7 +172,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
           continue;
         }
         itemStack = inv.get(i);
-        if (itemStack.getItem() == Item.getItemFromBlock(target)) { return false; }
+        if (itemStack.getItem() == Item.getItemFromBlock(target)) {
+          return false;
+        }
       }
       return true;//blacklist means default trie
     }
@@ -192,7 +198,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
       }
       //wait, if whitelist is empty then it doesnt matter
-      if (listSize == countEmpty) { return true; }
+      if (listSize == countEmpty) {
+        return true;
+      }
       return false;//check as blacklist
     }
   }
@@ -287,7 +295,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (EnumFacing.UP == side) { return new int[] { TOOLSLOT_INDEX }; }
+    if (EnumFacing.UP == side) {
+      return new int[] { TOOLSLOT_INDEX };
+    }
     return new int[] { FUEL_SLOT };
   }
   @Override

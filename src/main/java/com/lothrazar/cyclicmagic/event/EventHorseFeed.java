@@ -9,7 +9,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EventHorseFeed {
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getEntity() instanceof EntityPlayer == false) { return; }
+    if (event.getEntity() instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
     ItemStack held = entityPlayer.getHeldItemMainhand();
     if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0

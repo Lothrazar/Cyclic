@@ -41,7 +41,9 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     ItemStack mat = new ItemStack(Blocks.OBSIDIAN);
-    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) { return true; }
+    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) {
+      return true;
+    }
     return super.getIsRepairable(toRepair, repair);
   }
   @Override
@@ -65,7 +67,9 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos posHit, EntityPlayer player) {
     RayTraceResult ray = rayTrace(player.getEntityWorld(), player, false);
-    if (ray == null) { return super.onBlockStartBreak(stack, posHit, player); }
+    if (ray == null) {
+      return super.onBlockStartBreak(stack, posHit, player);
+    }
     EnumFacing sideHit = ray.sideHit;
     World world = player.getEntityWorld();
     //use the shape builder to get region

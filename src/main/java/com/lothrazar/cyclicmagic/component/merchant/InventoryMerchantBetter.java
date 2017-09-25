@@ -60,7 +60,9 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     return ItemStackHelper.getAndRemove(this.inv, index);
   }
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-    if (index > inv.size()) { return; }
+    if (index > inv.size()) {
+      return;
+    }
     this.inv.set(index, stack);
     //    if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
     //      stack = this.getInventoryStackLimit();

@@ -18,7 +18,9 @@ public class PotionEnder extends PotionBase {
   @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
     Entity ent = event.getEntity();
-    if (ent instanceof EntityLivingBase == false) { return; }
+    if (ent instanceof EntityLivingBase == false) {
+      return;
+    }
     EntityLivingBase living = (EntityLivingBase) event.getEntity();
     if (living.isPotionActive(this)) {
       event.setAttackDamage(0);

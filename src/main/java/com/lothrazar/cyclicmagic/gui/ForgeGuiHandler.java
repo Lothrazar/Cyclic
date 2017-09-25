@@ -135,13 +135,19 @@ public class ForgeGuiHandler implements IGuiHandler {
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
       case GUI_INDEX_UNCRAFTING:
-        if (te != null && te instanceof TileEntityUncrafter) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafter) te); }
+        if (te != null && te instanceof TileEntityUncrafter) {
+          return new ContainerUncrafting(player.inventory, (TileEntityUncrafter) te);
+        }
       break;
       case GUI_INDEX_HARVESTER:
-        if (te != null && te instanceof TileEntityHarvester) { return new ContainerHarvester(player.inventory, (TileEntityHarvester) te); }
+        if (te != null && te instanceof TileEntityHarvester) {
+          return new ContainerHarvester(player.inventory, (TileEntityHarvester) te);
+        }
       break;
       case GUI_INDEX_BLOCKMINER:
-        if (te != null && te instanceof TileEntityBlockMiner) { return new ContainerBlockMiner(player.inventory, (TileEntityBlockMiner) te); }
+        if (te != null && te instanceof TileEntityBlockMiner) {
+          return new ContainerBlockMiner(player.inventory, (TileEntityBlockMiner) te);
+        }
       break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
@@ -175,19 +181,29 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_FISHER:
-        if (te != null && te instanceof TileEntityFishing) { return new ContainerFisher(player.inventory, (TileEntityFishing) te); }
+        if (te != null && te instanceof TileEntityFishing) {
+          return new ContainerFisher(player.inventory, (TileEntityFishing) te);
+        }
       break;
       case GUI_INDEX_USER:
-        if (te != null && te instanceof TileEntityUser) { return new ContainerUser(player.inventory, (TileEntityUser) te); }
+        if (te != null && te instanceof TileEntityUser) {
+          return new ContainerUser(player.inventory, (TileEntityUser) te);
+        }
       break;
       case GUI_INDEX_PATTERN:
-        if (te != null && te instanceof TileEntityPatternBuilder) { return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te); }
+        if (te != null && te instanceof TileEntityPatternBuilder) {
+          return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te);
+        }
       break;
       case GUI_INDEX_DETECTOR:
-        if (te != null && te instanceof TileEntityDetector) { return new ContainerDetector(player.inventory, (TileEntityDetector) te); }
+        if (te != null && te instanceof TileEntityDetector) {
+          return new ContainerDetector(player.inventory, (TileEntityDetector) te);
+        }
       break;
       case GUI_INDEX_VECTOR:
-        if (te != null && te instanceof TileEntityVector) { return new ContainerVector(player.inventory, (TileEntityVector) te); }
+        if (te != null && te instanceof TileEntityVector) {
+          return new ContainerVector(player.inventory, (TileEntityVector) te);
+        }
       break;
       case GUI_INDEX_VILLAGER:
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
@@ -199,28 +215,44 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_FAN:
-        if (te != null && te instanceof TileEntityFan) { return new ContainerFan(player.inventory, (TileEntityFan) te); }
+        if (te != null && te instanceof TileEntityFan) {
+          return new ContainerFan(player.inventory, (TileEntityFan) te);
+        }
       break;
       case GUI_INDEX_XP:
-        if (te instanceof TileEntityXpPylon) { return new ContainerPylon(player.inventory, (TileEntityXpPylon) te); }
+        if (te instanceof TileEntityXpPylon) {
+          return new ContainerPylon(player.inventory, (TileEntityXpPylon) te);
+        }
       break;
       case GUI_INDEX_DISENCH:
-        if (te instanceof TileEntityDisenchanter) { return new ContainerDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
+        if (te instanceof TileEntityDisenchanter) {
+          return new ContainerDisenchanter(player.inventory, (TileEntityDisenchanter) te);
+        }
       break;
       case GUI_INDEX_CRAFTER:
-        if (te instanceof TileEntityCrafter) { return new ContainerCrafter(player.inventory, (TileEntityCrafter) te); }
+        if (te instanceof TileEntityCrafter) {
+          return new ContainerCrafter(player.inventory, (TileEntityCrafter) te);
+        }
       break;
       case GUI_INDEX_WORKBENCH:
-        if (te instanceof TileEntityWorkbench) { return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te); }
+        if (te instanceof TileEntityWorkbench) {
+          return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
+        }
       break;
       case GUI_INDEX_HYDRATOR:
-        if (te instanceof TileEntityHydrator) { return new ContainerHydrator(player.inventory, (TileEntityHydrator) te); }
+        if (te instanceof TileEntityHydrator) {
+          return new ContainerHydrator(player.inventory, (TileEntityHydrator) te);
+        }
       break;
       case GUI_INDEX_VACUUM:
-        if (te instanceof TileEntityVacuum) { return new ContainerVacuum(player.inventory, (TileEntityVacuum) te); }
+        if (te instanceof TileEntityVacuum) {
+          return new ContainerVacuum(player.inventory, (TileEntityVacuum) te);
+        }
       break;
       case GUI_INDEX_CLOCK:
-        if (te instanceof TileEntityClock) { return new ContainerClock(player.inventory, (TileEntityClock) te); }
+        if (te instanceof TileEntityClock) {
+          return new ContainerClock(player.inventory, (TileEntityClock) te);
+        }
       break;
     }
     return null;
@@ -241,13 +273,19 @@ public class ForgeGuiHandler implements IGuiHandler {
           ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
           return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
         case GUI_INDEX_UNCRAFTING:
-          if (te instanceof TileEntityUncrafter) { return new GuiUncrafting(player.inventory, (TileEntityUncrafter) te); }
+          if (te instanceof TileEntityUncrafter) {
+            return new GuiUncrafting(player.inventory, (TileEntityUncrafter) te);
+          }
         break;
         case GUI_INDEX_HARVESTER:
-          if (te instanceof TileEntityHarvester) { return new GuiHarvester(player.inventory, (TileEntityHarvester) te); }
+          if (te instanceof TileEntityHarvester) {
+            return new GuiHarvester(player.inventory, (TileEntityHarvester) te);
+          }
         break;
         case GUI_INDEX_BLOCKMINER:
-          if (te instanceof TileEntityBlockMiner) { return new GuiBlockMiner(player.inventory, (TileEntityBlockMiner) te); }
+          if (te instanceof TileEntityBlockMiner) {
+            return new GuiBlockMiner(player.inventory, (TileEntityBlockMiner) te);
+          }
         break;
         case GUI_INDEX_STORAGE:
           ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
@@ -255,59 +293,95 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
         case GUI_INDEX_BUILDER:
-          if (te != null && te instanceof TileEntityStructureBuilder) { return new GuiBuilder(player.inventory, (TileEntityStructureBuilder) te); }
+          if (te != null && te instanceof TileEntityStructureBuilder) {
+            return new GuiBuilder(player.inventory, (TileEntityStructureBuilder) te);
+          }
         break;
         case GUI_INDEX_PLACER:
-          if (te != null && te instanceof TileEntityPlacer) { return new GuiPlacer(player.inventory, (TileEntityPlacer) te); }
+          if (te != null && te instanceof TileEntityPlacer) {
+            return new GuiPlacer(player.inventory, (TileEntityPlacer) te);
+          }
         break;
         case GUI_INDEX_PASSWORD:
-          if (te != null && te instanceof TileEntityPassword) { return new GuiPassword((TileEntityPassword) te); }
+          if (te != null && te instanceof TileEntityPassword) {
+            return new GuiPassword((TileEntityPassword) te);
+          }
         break;
         case GUI_INDEX_SMARTMINER:
-          if (te != null && te instanceof TileEntityControlledMiner) { return new GuiMinerSmart(player.inventory, (TileEntityControlledMiner) te); }
+          if (te != null && te instanceof TileEntityControlledMiner) {
+            return new GuiMinerSmart(player.inventory, (TileEntityControlledMiner) te);
+          }
         break;
         case GUI_INDEX_FISHER:
-          if (te != null && te instanceof TileEntityFishing) { return new GuiFisher(player.inventory, (TileEntityFishing) te); }
+          if (te != null && te instanceof TileEntityFishing) {
+            return new GuiFisher(player.inventory, (TileEntityFishing) te);
+          }
         break;
         case GUI_INDEX_USER:
-          if (te != null && te instanceof TileEntityUser) { return new GuiUser(player.inventory, (TileEntityUser) te); }
+          if (te != null && te instanceof TileEntityUser) {
+            return new GuiUser(player.inventory, (TileEntityUser) te);
+          }
         break;
         case GUI_INDEX_PATTERN:
-          if (te != null && te instanceof TileEntityPatternBuilder) { return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te); }
+          if (te != null && te instanceof TileEntityPatternBuilder) {
+            return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te);
+          }
         break;
         case GUI_INDEX_DETECTOR:
-          if (te != null && te instanceof TileEntityDetector) { return new GuiDetector(player.inventory, (TileEntityDetector) te); }
+          if (te != null && te instanceof TileEntityDetector) {
+            return new GuiDetector(player.inventory, (TileEntityDetector) te);
+          }
         break;
         case GUI_INDEX_VECTOR:
-          if (te != null && te instanceof TileEntityVector) { return new GuiVector(player.inventory, (TileEntityVector) te); }
+          if (te != null && te instanceof TileEntityVector) {
+            return new GuiVector(player.inventory, (TileEntityVector) te);
+          }
         break;
         case GUI_INDEX_VILLAGER:
           EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
-          if (v != null) { return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world); }
+          if (v != null) {
+            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
+          }
         break;
         case GUI_INDEX_FAN:
-          if (te != null && te instanceof TileEntityFan) { return new GuiFan(player.inventory, (TileEntityFan) te); }
+          if (te != null && te instanceof TileEntityFan) {
+            return new GuiFan(player.inventory, (TileEntityFan) te);
+          }
         break;
         case GUI_INDEX_XP:
-          if (te instanceof TileEntityXpPylon) { return new GuiPylon(player.inventory, (TileEntityXpPylon) te); }
+          if (te instanceof TileEntityXpPylon) {
+            return new GuiPylon(player.inventory, (TileEntityXpPylon) te);
+          }
         break;
         case GUI_INDEX_DISENCH:
-          if (te instanceof TileEntityDisenchanter) { return new GuiDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
+          if (te instanceof TileEntityDisenchanter) {
+            return new GuiDisenchanter(player.inventory, (TileEntityDisenchanter) te);
+          }
         break;
         case GUI_INDEX_CRAFTER:
-          if (te instanceof TileEntityCrafter) { return new GuiCrafter(player.inventory, (TileEntityCrafter) te); }
+          if (te instanceof TileEntityCrafter) {
+            return new GuiCrafter(player.inventory, (TileEntityCrafter) te);
+          }
         break;
         case GUI_INDEX_WORKBENCH:
-          if (te instanceof TileEntityWorkbench) { return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te); }
+          if (te instanceof TileEntityWorkbench) {
+            return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
+          }
         break;
         case GUI_INDEX_HYDRATOR:
-          if (te instanceof TileEntityHydrator) { return new GuiHydrator(player.inventory, (TileEntityHydrator) te); }
+          if (te instanceof TileEntityHydrator) {
+            return new GuiHydrator(player.inventory, (TileEntityHydrator) te);
+          }
         break;
         case GUI_INDEX_VACUUM:
-          if (te instanceof TileEntityVacuum) { return new GuiVacuum(player.inventory, (TileEntityVacuum) te); }
+          if (te instanceof TileEntityVacuum) {
+            return new GuiVacuum(player.inventory, (TileEntityVacuum) te);
+          }
         break;
         case GUI_INDEX_CLOCK:
-          if (te instanceof TileEntityClock) { return new GuiClock(player.inventory, (TileEntityClock) te); }
+          if (te instanceof TileEntityClock) {
+            return new GuiClock(player.inventory, (TileEntityClock) te);
+          }
         break;
       }
     }

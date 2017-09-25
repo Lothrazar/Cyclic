@@ -25,7 +25,9 @@ public class UtilUncraft {
     blacklistMod = new ArrayList<String>();
   }
   public static void setBlacklist(String[] list, BlacklistType type) {
-    if (list == null || list.length == 0) { return; }
+    if (list == null || list.length == 0) {
+      return;
+    }
     for (String iname : list) {
       switch (type) {
         case MODNAME:
@@ -41,7 +43,9 @@ public class UtilUncraft {
     }
   }
   private static boolean isItemInBlacklist(ItemStack drop, BlacklistType type) {
-    if (drop == null || drop.getItem() == null) { return true; }
+    if (drop == null || drop.getItem() == null) {
+      return true;
+    }
     return isItemInBlacklist(drop.getItem(), type);
   }
   private static boolean isItemInBlacklist(Item item, BlacklistType type) {
@@ -50,17 +54,23 @@ public class UtilUncraft {
       case INPUT:
         itemName = UtilItemStack.getStringForItem(item);
         for (String s : blacklistInput) {//dont use .contains on the list. must use .equals on string
-          if (s != null && s.equals(itemName)) { return true; }
+          if (s != null && s.equals(itemName)) {
+            return true;
+          }
         }
       case OUTPUT:
         itemName = UtilItemStack.getStringForItem(item);
         for (String s : blacklistOutput) {//dont use .contains on the list. must use .equals on string
-          if (s != null && s.equals(itemName)) { return true; }
+          if (s != null && s.equals(itemName)) {
+            return true;
+          }
         }
       case MODNAME:
         String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
         for (String s : blacklistMod) {//dont use .contains on the list. must use .equals on string
-          if (s != null && s.equals(modId)) { return true; }
+          if (s != null && s.equals(modId)) {
+            return true;
+          }
         }
       break;
       default:
@@ -120,8 +130,12 @@ public class UtilUncraft {
      */
     private void tryAddTrop(ItemStack stackInput) {
       // this fn is null safe, it gets nulls all the time
-      if (stackInput == null || stackInput.getItem() == null) { return; }
-      if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
+      if (stackInput == null || stackInput.getItem() == null) {
+        return;
+      }
+      if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) {
+        return;
+      }
       ItemStack stack = stackInput.copy();
       stack.setCount(1);
       if (stack.getItemDamage() == 32767) {
@@ -146,9 +160,15 @@ public class UtilUncraft {
       this.toUncraft = stuff;
       this.drops = new ArrayList<ItemStack>();
       this.outsize = 0;
-      if (toUncraft == null || toUncraft.getItem() == null) { return UncraftResultType.EMPTY; }
-      if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return UncraftResultType.BLACKLIST; }
-      if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return UncraftResultType.BLACKLIST; }
+      if (toUncraft == null || toUncraft.getItem() == null) {
+        return UncraftResultType.EMPTY;
+      }
+      if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) {
+        return UncraftResultType.BLACKLIST;
+      }
+      if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) {
+        return UncraftResultType.BLACKLIST;
+      }
       outsize = 0;
       // outsize is 3 means the recipe makes three items total. so MINUS three from the toUncraft for EACH LOOP
       UncraftResultType result = UncraftResultType.NORECIPE;//assumption

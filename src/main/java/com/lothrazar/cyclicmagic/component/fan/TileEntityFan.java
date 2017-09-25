@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
   private static final int MIN_RANGE = 1;
   private static final int TIMER_FULL = 30;
+  protected static final int MAX_SPEED = 10;//unused mostly
   private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
   private static final String NBT_RANGE = "range";
@@ -126,7 +127,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     BlockPos tester;
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
-      if (canBlowThrough(tester) == false) { return i; //cant pass thru
+      if (canBlowThrough(tester) == false) {
+        return i; //cant pass thru
       }
     }
     return getRange();

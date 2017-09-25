@@ -29,7 +29,9 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (pos == null) { return EnumActionResult.FAIL; }
+    if (pos == null) {
+      return EnumActionResult.FAIL;
+    }
     //    ItemStack stack = entityPlayer.getHeldItem(hand);
     TileEntity tile = world.getTileEntity(pos);
     IBlockState state = world.getBlockState(pos);

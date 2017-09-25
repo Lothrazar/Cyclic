@@ -44,7 +44,9 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    if (stack == null || stack.getItem() == null) { return; } // just being safe
+    if (stack == null || stack.getItem() == null) {
+      return;
+    } // just being safe
     Item carrot = stack.getItem();
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
@@ -52,8 +54,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
   public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
-    if (ahorse.isDead) { return; }
-    if (player.getCooldownTracker().hasCooldown(held.getItem())) { return; }
+    if (ahorse.isDead) {
+      return;
+    }
+    if (player.getCooldownTracker().hasCooldown(held.getItem())) {
+      return;
+    }
     World world = player.getEntityWorld();
     boolean success = false;
     switch (heldItem.upgradeType) {

@@ -94,7 +94,9 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     ItemStack held = player.getHeldItem(event.getHand());
     if (held.getItem() == this) {
       //did we turn it off? is the visible timer still going?
-      if (ActionType.getTimeout(held) > 0) { return; }
+      if (ActionType.getTimeout(held) > 0) {
+        return;
+      }
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
@@ -134,10 +136,16 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   }
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
-    if (entity instanceof EntityPlayer == false) { return; }
+    if (entity instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) entity;
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
+      return;
+    }
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
+      return;
+    }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];

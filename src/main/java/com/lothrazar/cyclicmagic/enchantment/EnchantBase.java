@@ -12,7 +12,9 @@ public abstract class EnchantBase extends Enchantment {
     this.setName(name);
   }
   protected int getCurrentLevelTool(EntityLivingBase player) {
-    if (player == null) { return -1; }
+    if (player == null) {
+      return -1;
+    }
     ItemStack main = player.getHeldItemMainhand();
     ItemStack off = player.getHeldItemOffhand();
     int mainLevel = -1, offLevel = -1;

@@ -22,7 +22,9 @@ public class ItemBlockScaffolding extends ItemBlock {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
-    if (player.isSneaking()) { return new ActionResult<ItemStack>(EnumActionResult.PASS, stack); } //skip if sneaking
+    if (player.isSneaking()) {
+      return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+    } //skip if sneaking
     BlockPos pos = player.getPosition().up();// at eye level
     int direction = MathHelper.floor((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
@@ -77,7 +79,9 @@ public class ItemBlockScaffolding extends ItemBlock {
         break;
       }
     }
-    if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) { return new ActionResult<ItemStack>(this.onItemUse(player, worldIn, pos, hand, facing, 0, 0, 0), stack); }
+    if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
+      return new ActionResult<ItemStack>(this.onItemUse(player, worldIn, pos, hand, facing, 0, 0, 0), stack);
+    }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
   /**

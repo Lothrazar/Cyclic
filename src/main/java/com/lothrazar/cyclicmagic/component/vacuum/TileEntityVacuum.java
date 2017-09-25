@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.item.EntityItem;
@@ -15,20 +16,21 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
+public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
   private static final int VRADIUS = 2;
-  public final static int HRADIUS = 4;
+  private static final int MAX_SIZE = 9;//7 means 15x15
   public static final int TIMER_FULL = 20;
   public final static int ROWS = 4;
   public final static int COLS = 9;
   public final static int FILTERSLOTS = 5 * 2;
   private final static int[] SLOTS_EXTRACT = IntStream.range(0, ROWS * COLS).toArray();
   public static enum Fields {
-    TIMER, RENDERPARTICLES, REDSTONE;
+    TIMER, RENDERPARTICLES, REDSTONE, SIZE;
   }
   private int timer = 0;
   private int needsRedstone = 1;
   private int renderParticles = 0;
+  private int size = 4;//center plus 4 in each direction = 9x9
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
   }
@@ -38,24 +40,32 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   }
   @Override
   public void update() {
-    if (!this.isRunning()) { return; }
+    if (!this.isRunning()) {
+      return;
+    }
     this.spawnParticlesAbove();
-    if (!this.updateTimerIsZero()) { return; }
+    if (!this.updateTimerIsZero()) {
+      return;
+    }
     updateCollection();
   }
   private void updateCollection() {
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
     BlockPos center = this.getTargetCenter();
-    AxisAlignedBB region = new AxisAlignedBB(center).expand(HRADIUS, VRADIUS, HRADIUS).expand(-1 * HRADIUS, -1 * VRADIUS, -1 * HRADIUS);//expandXyz
+    AxisAlignedBB region = new AxisAlignedBB(center).expand(size, VRADIUS, size).expand(-1 * size, -1 * VRADIUS, -1 * size);//expandXyz
     List<EntityItem> items = getWorld().getEntitiesWithinAABB(EntityItem.class, region);
-    if (items == null) { return; }
+    if (items == null) {
+      return;
+    }
     for (EntityItem itemOnGround : items) {
       processItemOnGround(itemOnGround);
     }
   }
   @SuppressWarnings("serial")
   private void processItemOnGround(EntityItem itemOnGround) {
-    if (this.canPickup(itemOnGround) == false) { return; } //its dead, or its filtered out
+    if (this.canPickup(itemOnGround) == false) {
+      return;
+    } //its dead, or its filtered out
     ItemStack contained = itemOnGround.getItem();
     //making it a list not  a single is a superhack
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(new ArrayList<ItemStack>() {
@@ -84,20 +94,24 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     return filt;
   }
   private boolean canPickup(EntityItem itemOnGround) {
-    if (itemOnGround.isDead) { return false;//nope
+    if (itemOnGround.isDead) {
+      return false;//nope
     }
     List<ItemStack> filt = this.getFilterCopy();
-    if (filt.size() == 0) { return true;//filter is empty, no problem eh
+    if (filt.size() == 0) {
+      return true;//filter is empty, no problem eh
     }
     //filter is not empty. so if its not found we return false
     for (ItemStack f : filt) {
-      if (f.isItemEqualIgnoreDurability(itemOnGround.getItem())) { return true; }
+      if (f.isItemEqualIgnoreDurability(itemOnGround.getItem())) {
+        return true;
+      }
     }
     return false;
   }
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), HRADIUS + 1);
+    return this.getPos().offset(this.getCurrentFacing(), size + 1);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -108,6 +122,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_RENDER, renderParticles);
+    tags.setInteger(NBT_SIZE, size);
     return super.writeToNBT(tags);
   }
   @Override
@@ -116,6 +131,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     timer = tags.getInteger(NBT_TIMER);
     this.needsRedstone = tags.getInteger(NBT_REDST);
     this.renderParticles = tags.getInteger(NBT_RENDER);
+    this.size = tags.getInteger(NBT_SIZE);
   }
   @Override
   public int getFieldCount() {
@@ -130,6 +146,8 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
         return this.renderParticles;
       case REDSTONE:
         return this.needsRedstone;
+      case SIZE:
+        return this.size;
     }
     return -1;
   }
@@ -145,6 +163,9 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
+      case SIZE:
+        this.size = value;
+      break;
     }
   }
   public void togglePreview() {
@@ -155,7 +176,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     //vertical radius goes both up and down. so to draw shape, start below and push up
     BlockPos bottmCenter = getTargetCenter().offset(EnumFacing.DOWN, VRADIUS);
     return UtilShape.repeatShapeByHeight(
-        UtilShape.squareHorizontalHollow(bottmCenter, HRADIUS),
+        UtilShape.squareHorizontalHollow(bottmCenter, size),
         VRADIUS * 2);
   }
   @Override
@@ -169,5 +190,12 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public void toggleSizeShape() {
+    this.size++;
+    if (this.size > MAX_SIZE) {
+      this.size = 0;//size zero means a 1x1 area
+    }
   }
 }

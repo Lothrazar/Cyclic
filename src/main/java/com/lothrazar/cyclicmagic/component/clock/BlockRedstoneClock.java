@@ -33,10 +33,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    //      if (meta <= 5)
     return this.getDefaultState().withProperty(POWERED, false);
-    //      else
-    //          return this.getDefaultState().withProperty(BlockButton.FACING, EnumFacing.VALUES[meta - 6]).withProperty(POWERED, Boolean.TRUE);
   }
   @Override
   public boolean canProvidePower(IBlockState state) {
@@ -56,18 +53,19 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.REDSTONE, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, PARTICLE_DENSITY);
     }
   }
-  private int getPower(IBlockAccess world, BlockPos pos) {
-    if (world.getTileEntity(pos) instanceof TileEntityClock)
-      return ((TileEntityClock) world.getTileEntity(pos)).getPower();
+  private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
+    if (world.getTileEntity(pos) instanceof TileEntityClock) {
+      return ((TileEntityClock) world.getTileEntity(pos)).getPowerForSide(side);
+    }
     return 0;
   }
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-    return blockState.getValue(POWERED) ? getPower(blockAccess, pos) : 0;
+    return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
   @Override
   public IRecipe addRecipe() {

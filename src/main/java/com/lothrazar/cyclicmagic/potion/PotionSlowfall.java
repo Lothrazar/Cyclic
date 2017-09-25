@@ -11,7 +11,9 @@ public class PotionSlowfall extends PotionBase {
   public void tick(EntityLivingBase entityLiving) {
     if (entityLiving instanceof EntityPlayer) {
       EntityPlayer p = (EntityPlayer) entityLiving;
-      if (p.isSneaking()) { return; }
+      if (p.isSneaking()) {
+        return;
+      }
     }
     // else: so we are either a non-sneaking player, or a non player
     // entity

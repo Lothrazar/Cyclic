@@ -125,7 +125,9 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       ItemStack itemStack1 = fromSlot.getStack();
       itemStack = itemStack1.copy();
       if (slotIndex == craftOutpt) {
-        if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) {
+          return ItemStack.EMPTY;
+        }
         fromSlot.onSlotChange(itemStack1, itemStack);
       }
       else if (slotIndex >= craftStart && slotIndex <= craftEnd) {
@@ -141,7 +143,9 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
       }
       else if (slotIndex >= playerStart && slotIndex <= playerEnd) {
-        if (!this.mergeItemStack(itemStack1, craftStart, craftEnd + 1, false)) { return ItemStack.EMPTY; }
+        if (!this.mergeItemStack(itemStack1, craftStart, craftEnd + 1, false)) {
+          return ItemStack.EMPTY;
+        }
       }
       if (itemStack1.getCount() == 0) {
         fromSlot.putStack(ItemStack.EMPTY);
@@ -149,7 +153,9 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       else {
         fromSlot.onSlotChanged();
       }
-      if (itemStack.getCount() == itemStack1.getCount()) { return ItemStack.EMPTY; }
+      if (itemStack.getCount() == itemStack1.getCount()) {
+        return ItemStack.EMPTY;
+      }
       fromSlot.onTake(this.thePlayer, itemStack1);
     }
     return itemStack;

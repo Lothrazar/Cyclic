@@ -51,9 +51,13 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     tryFillTankFromItems();
-    if (!isRunning()) { return; }
+    if (!isRunning()) {
+      return;
+    }
     //ignore timer when filling up water
-    if (this.getCurrentFluid() == 0) { return; }
+    if (this.getCurrentFluid() == 0) {
+      return;
+    }
     if (this.updateTimerIsZero()) { // time to burn!
       this.spawnParticlesAbove();
       if (tryProcessRecipe()) {
@@ -66,7 +70,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
     for (IRecipe irecipe : BlockHydrator.recipeList) {
-      if (irecipe.matches(this.crafting, world)) { return irecipe; }
+      if (irecipe.matches(this.crafting, world)) {
+        return irecipe;
+      }
     }
     return null;
   }
@@ -159,18 +165,24 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   public int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return 0; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return 0;
+    }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return null; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return null;
+    }
     return fluidHandler.getTankProperties()[0].getContents();
   }
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) { return; }
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return;
+    }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
       fluid = new FluidStack(FluidRegistry.WATER, amt);
@@ -218,7 +230,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) { return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank); }
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
+    }
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
@@ -229,7 +243,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.WATER) { return 0; }
+    if (resource.getFluid() != FluidRegistry.WATER) {
+      return 0;
+    }
     int result = tank.fill(resource, doFill);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result);
@@ -237,7 +253,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.WATER) { return resource; }
+    if (resource.getFluid() != FluidRegistry.WATER) {
+      return resource;
+    }
     FluidStack result = tank.drain(resource, doDrain);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result.amount);

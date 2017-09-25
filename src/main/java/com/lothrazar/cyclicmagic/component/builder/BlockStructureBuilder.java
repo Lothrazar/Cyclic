@@ -21,8 +21,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
-  // dont use blockContainer !!
-  // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockStructureBuilder() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -32,12 +30,11 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStructureBuilder.class, new MachineTESR(this, 0));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityStructureBuilder();//"tile.builder_block.name"
+    return new TileEntityStructureBuilder();
   }
   @Override
   public IRecipe addRecipe() {

@@ -41,7 +41,9 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     if (sideHit != null) {
       offset = pos.offset(sideHit);
     }
-    if (offset == null) { return; }
+    if (offset == null) {
+      return;
+    }
     World world = this.getEntityWorld();
     boolean isSideSolid = world.isSideSolid(mop.getBlockPos(), sideHit);
     boolean isValidBlockstate = BlockTorch.FACING.getAllowedValues().contains(sideHit);

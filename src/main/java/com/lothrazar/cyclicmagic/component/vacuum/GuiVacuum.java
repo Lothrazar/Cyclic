@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.vacuum;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiVacuum extends GuiBaseContainer {
+  private GuiButtonToggleSize btnSize;
   public GuiVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum tileEntity) {
     super(new ContainerVacuum(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -17,13 +19,23 @@ public class GuiVacuum extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityVacuum.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityVacuum.Fields.RENDERPARTICLES.ordinal();
   }
+  @Override
+  public void initGui() {
+    super.initGui();
+    int id = 2;
+    int x = this.guiLeft + 28;
+    int y = this.guiTop + 32;
+    btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
+    this.buttonList.add(btnSize);
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     int xCenter = this.xSize / 2;
     String s = UtilChat.lang("tile.block_vacuum.filter");
-    this.drawString(s, xCenter - 38 - this.fontRenderer.getStringWidth(s) / 2, 22);
+    this.drawString(s, xCenter - 30 - this.fontRenderer.getStringWidth(s) / 2, 20);
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityVacuum.Fields.SIZE.ordinal()));
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -38,7 +50,6 @@ public class GuiVacuum extends GuiBaseContainer {
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
     for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           this.guiLeft + Const.PAD + (k + 4) * Const.SQ - 1,

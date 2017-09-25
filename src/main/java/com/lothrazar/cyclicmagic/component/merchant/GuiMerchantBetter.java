@@ -123,7 +123,9 @@ public class GuiMerchantBetter extends GuiBaseContainer {
       super.drawButton(mc, mouseX, mouseY, p);
       if (this.visible) {
         MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
-        if (merchantrecipelist == null) { return; }
+        if (merchantrecipelist == null) {
+          return;
+        }
         if (recipeIndex >= merchantrecipelist.size()) {
           //in 1.11.2 the draw cycles happen before the recipe list is finished syncing from server, so we get index OOB errors
           //just keep it hidden if we have and index for a recipe that is valid but not in the current list.  
@@ -133,7 +135,9 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         }
         this.visible = true;
         MerchantRecipe r = merchantrecipelist.get(recipeIndex);
-        if (r == null) { return; }
+        if (r == null) {
+          return;
+        }
         int x = this.x + 2;
         int y = this.y + 1;
         GlStateManager.pushMatrix();
@@ -158,9 +162,13 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     public List<String> getTooltips() {
       List<String> tt = new ArrayList<String>();
       MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
-      if (merchantrecipelist == null) { return tt; }
+      if (merchantrecipelist == null) {
+        return tt;
+      }
       MerchantRecipe r = merchantrecipelist.get(recipeIndex);
-      if (r == null) { return tt; }
+      if (r == null) {
+        return tt;
+      }
       if (r.isRecipeDisabled()) {
         tt.add(UtilChat.lang("merchant.deprecated"));
       }

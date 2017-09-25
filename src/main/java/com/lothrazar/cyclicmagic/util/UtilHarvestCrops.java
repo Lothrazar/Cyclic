@@ -97,12 +97,18 @@ public class UtilHarvestCrops {
     boolean doBreak = false;
     IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
-    if (blockState == null) { return false; }
+    if (blockState == null) {
+      return false;
+    }
     boolean addDropsToList = true;
     Block blockCheck = blockState.getBlock();
-    if (blockCheck == Blocks.AIR) { return false; }
+    if (blockCheck == Blocks.AIR) {
+      return false;
+    }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
-    if (isItemInBlacklist(seedItem)) { return false; }
+    if (isItemInBlacklist(seedItem)) {
+      return false;
+    }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
     //    ModCyclic.logger.info(blockClassString);
     //ModCyclic.logger.info(blockClassString+ posCurrent);
@@ -285,7 +291,9 @@ public class UtilHarvestCrops {
   private static boolean isItemInBlacklist(Item seedItem) {
     String itemName = UtilItemStack.getStringForItem(seedItem);
     for (String s : blacklist) {//dont use .contains on the list. must use .equals on string
-      if (s != null && s.equals(itemName)) { return true; }
+      if (s != null && s.equals(itemName)) {
+        return true;
+      }
     }
     return false;
   }

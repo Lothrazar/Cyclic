@@ -55,7 +55,9 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
   }
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
-    if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
+    if (event.getEntityLiving() instanceof EntityPlayer == false) {
+      return;
+    }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS

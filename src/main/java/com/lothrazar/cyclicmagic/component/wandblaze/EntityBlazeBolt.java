@@ -52,7 +52,9 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
     }
     BlockPos pos = mop.getBlockPos();
     BlockPos offset = null;
-    if (pos == null) { return; } // hasn't happened yet, but..
+    if (pos == null) {
+      return;
+    } // hasn't happened yet, but..
     ArrayList<Block> waterBoth = new ArrayList<Block>();
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);

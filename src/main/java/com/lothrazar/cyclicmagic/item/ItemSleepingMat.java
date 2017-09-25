@@ -103,11 +103,17 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
    * @return
    */
   private SleepResult canPlayerSleep(EntityPlayer player, World world) {
-    if (player.isEntityAlive() == false) { return EntityPlayer.SleepResult.OTHER_PROBLEM; }
-    if (world.isDaytime()) { return EntityPlayer.SleepResult.NOT_POSSIBLE_NOW; }
+    if (player.isEntityAlive() == false) {
+      return EntityPlayer.SleepResult.OTHER_PROBLEM;
+    }
+    if (world.isDaytime()) {
+      return EntityPlayer.SleepResult.NOT_POSSIBLE_NOW;
+    }
     PlayerSleepInBedEvent event = new PlayerSleepInBedEvent(player, player.getPosition());
     MinecraftForge.EVENT_BUS.post(event);
-    if (event.getResultStatus() != null) { return event.getResultStatus(); }
+    if (event.getResultStatus() != null) {
+      return event.getResultStatus();
+    }
     return EntityPlayer.SleepResult.OK;
   }
   @SubscribeEvent

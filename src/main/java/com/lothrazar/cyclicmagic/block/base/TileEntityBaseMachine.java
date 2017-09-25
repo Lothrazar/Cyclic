@@ -29,7 +29,9 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return false;//default is no, dont only run if powered, just go
   }
   protected EnumFacing getCurrentFacing() {
-    if (!(this.getBlockType() instanceof BlockBaseFacing)) { return EnumFacing.UP; }
+    if (!(this.getBlockType() instanceof BlockBaseFacing)) {
+      return EnumFacing.UP;
+    }
     BlockBaseFacing b = ((BlockBaseFacing) this.getBlockType());
     EnumFacing facing;
     if (b == null || this.getWorld().getBlockState(this.getPos()) == null || b.getFacingFromState(this.getWorld().getBlockState(this.getPos())) == null)
@@ -78,7 +80,9 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return syncData;
   }
   protected int getDimension() {
-    if (this.world == null || this.world.provider == null) { return 0; }
+    if (this.world == null || this.world.provider == null) {
+      return 0;
+    }
     return this.world.provider.getDimension();
   }
 }

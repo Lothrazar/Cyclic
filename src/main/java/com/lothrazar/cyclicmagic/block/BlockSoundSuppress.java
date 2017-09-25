@@ -35,10 +35,14 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
-    if (event.getResultSound() == null || event.getResultSound() instanceof ITickableSound || ModCyclic.proxy.getClientWorld() == null) { return; } //long term/repeating/music
+    if (event.getResultSound() == null || event.getResultSound() instanceof ITickableSound || ModCyclic.proxy.getClientWorld() == null) {
+      return;
+    } //long term/repeating/music
     ISound sound = event.getResultSound();
     List<BlockPos> blocks = UtilWorld.findBlocks(ModCyclic.proxy.getClientWorld(), new BlockPos(sound.getXPosF(), sound.getYPosF(), sound.getZPosF()), this, RADIUS);
-    if (blocks == null || blocks.size() == 0) { return; }
+    if (blocks == null || blocks.size() == 0) {
+      return;
+    }
     try {//WARNING": DO NOT USE getVolume anywhere here it just crashes
       //we do use it inside the sound class, but the engine callss tat later on, and our factor is tacked in
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
