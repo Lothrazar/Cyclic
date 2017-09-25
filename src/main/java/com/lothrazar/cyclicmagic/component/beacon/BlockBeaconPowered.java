@@ -40,6 +40,7 @@ public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTES
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBeaconPowered();
   }
+  @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
