@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -50,7 +49,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     int i = this.pos.getX();
     int j = this.pos.getY();
     int k = this.pos.getZ();
-   // int l = 5;
+    // int l = 5;
     this.beamSegments.clear();
     BeamSegment tileentitybeacon$beamsegment = new BeamSegment(EnumDyeColor.WHITE.getColorComponentValues());
     this.beamSegments.add(tileentitybeacon$beamsegment);
@@ -99,9 +98,9 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   @SideOnly(Side.CLIENT)
   public float shouldBeamRender() {
     // if no redstone power, return zero;
-    if(world.isBlockPowered(pos) == false){
+    if (world.isBlockPowered(pos) == false) {
       return 0;
-    } 
+    }
     int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
     this.beamRenderCounter = this.world.getTotalWorldTime();
     if (i > 1) {

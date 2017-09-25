@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -47,7 +46,7 @@ public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTES
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBeaconPowered.class, new TileEntityBeaconRedstoneRenderer());
   }
   @Override
-  public IRecipe addRecipe() { 
+  public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ggg",
         "gsg",
