@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:beacon_redstone" }
+    }
+}
