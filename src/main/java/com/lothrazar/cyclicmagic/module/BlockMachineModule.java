@@ -5,6 +5,8 @@ import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.beacon.BlockBeaconPowered;
 import com.lothrazar.cyclicmagic.component.beacon.TileEntityBeaconPowered;
+import com.lothrazar.cyclicmagic.component.beaconpotion.BlockBeaconPotion;
+import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion;
 import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
@@ -62,6 +64,13 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
+    
+    
+    
+    BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
+    BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
+    GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, "beacon_potion_te");
+    
     if (emptyBeacon) {
       BlockBeaconPowered beacon_redstone = new BlockBeaconPowered();
       BlockRegistry.registerBlock(beacon_redstone, "beacon_redstone", null);
