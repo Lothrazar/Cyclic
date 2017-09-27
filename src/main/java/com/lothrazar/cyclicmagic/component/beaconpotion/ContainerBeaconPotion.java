@@ -8,20 +8,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBeaconPotion extends ContainerBaseMachine {
- 
   public ContainerBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion te) {
     this.setTile(te);
- 
-    
-    
-    int x = 176/2 - Const.SQ/2;
+    int x = 176 / 2 - Const.SQ / 2;
     int y = 38;
-    this.addSlotToContainer(new SlotSingleStack(tile, 0, 
-        x, 
+    this.addSlotToContainer(new SlotSingleStack(tile, 0,
+        x,
         y));
-    
-    
-    
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

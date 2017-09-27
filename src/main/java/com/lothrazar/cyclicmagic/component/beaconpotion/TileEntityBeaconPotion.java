@@ -6,7 +6,9 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.block.BlockStainedGlass;
@@ -34,9 +36,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int SECONDS = 8;
   private static final int RADIUS = 64;
+  public static enum Fields {
+    REDSTONE, FUEL, FUELMAX;
+  }
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
@@ -46,13 +51,19 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   /** Primary potion effect given by this beacon. */
   @Nullable
   private List<PotionEffect> effects;
+  private int needsRedstone;
   public TileEntityBeaconPotion() {
-    super(1);
+    super(2);
+    this.setFuelSlot(1);
   }
   @Override
   public void update() {
-    if (this.world.getTotalWorldTime() % 80L == 0L) {
+    if (!isRunning()) {
+      return;
+    }
+    if (this.world.getTotalWorldTime() % 80L == 0L && this.updateFuelIsBurning()) {
       this.updateBeacon();
+      
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
   }
@@ -83,7 +94,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         }
       }
     }
-    
   }
   private void addEffectsToPlayers() {
     if (this.effects != null) {
@@ -153,8 +163,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   }
   @SideOnly(Side.CLIENT)
   public float shouldBeamRender() {
-    // if no redstone power, return zero;
-    if (world.isBlockPowered(pos) == false) {
+    if (!this.isRunning() ) { // if no redstone power, return zero to hide beam
       return 0;
     }
     int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
@@ -226,6 +235,48 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
    */
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return false;
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      default:
+      break;
+    }
+    return -1;
+  }
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      default:
+      break;
+    }
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
+  }
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
   /**
    * Returns true if automation can extract the given item in the given slot

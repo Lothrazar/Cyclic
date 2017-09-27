@@ -1,4 +1,5 @@
-package com.lothrazar.cyclicmagic.component.beaconpotion;
+package com.lothrazar.cyclicmagic.component.beaconpotion;  
+import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
@@ -9,7 +10,8 @@ public class GuiBeaconPotion extends GuiBaseContainer {
   public GuiBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion tileEntity) {
     super(new ContainerBeaconPotion(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    //    this.fieldRedstoneBtn = TileEntityBlockMiner.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileEntityBeaconPotion.Fields.REDSTONE.ordinal();
+    this.setFieldFuel(TileEntityBeaconPotion.Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
@@ -23,6 +25,9 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     int x = 176 / 2 - Const.SQ / 2;
     int y = 38;
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x - 1, this.guiTop + y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+
+    super.tryDrawFuelSlot(ContainerCrafter.SLOTX_FUEL - 1, ContainerCrafter.SLOTY_FUEL - 1);
+    
   }
  
 }
