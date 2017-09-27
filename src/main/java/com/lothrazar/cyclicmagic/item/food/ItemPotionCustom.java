@@ -49,11 +49,12 @@ public class ItemPotionCustom extends ItemFood {
     this.addEffect(potionId, potionDuration, potionAmplifier);
     this.tooltip = t;
   }
-  public void addEffect(Potion potion, int potionDuration, int potionAmplifier) {
+  private void addEffect(Potion potion, int potionDuration, int potionAmplifier) {
     //currently, items pretty much just have one potion. but keeping the arrays in case that changes later
     potions.add(potion);
     potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
     potionAmplifiers.add(potionAmplifier);
+    this.setPotionEffect(new PotionEffect(potion, potionDuration, potionAmplifier), 1);
   }
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {

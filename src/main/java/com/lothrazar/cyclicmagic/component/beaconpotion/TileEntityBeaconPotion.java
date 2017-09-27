@@ -1,10 +1,14 @@
 package com.lothrazar.cyclicmagic.component.beaconpotion;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.state.IBlockState;
@@ -12,14 +16,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -28,6 +35,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable {
+  private static final int SECONDS = 8;
+  private static final int RADIUS = 64;
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
@@ -36,9 +45,9 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private String customName;
   /** Primary potion effect given by this beacon. */
   @Nullable
-  private Potion primaryEffect;
+  private List<PotionEffect> effects;
   public TileEntityBeaconPotion() {
-    super(0);
+    super(1);
   }
   @Override
   public void update() {
@@ -48,23 +57,47 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
   }
   public void updateBeacon() {
-//    this.primaryEffect = PotionEffectRegistry.BOUNCE;
-    this.primaryEffect = MobEffects.REGENERATION;
     if (this.world != null) {
+      this.updateFromSlot();
       this.updateSegmentColors();
       this.addEffectsToPlayers();
     }
   }
+  private void updateFromSlot() {
+    ItemStack s = this.getStackInSlot(0);
+    this.effects = PotionUtils.getEffectsFromStack(s);
+    if (this.effects == null || this.effects.size() == 0) {
+      this.effects = new ArrayList<PotionEffect>();
+      if (s.getItem() instanceof ItemFood) {
+        // LOL PRIVATE food . potionId
+        try {
+          java.lang.reflect.Field potionId = UtilReflection.getPrivateField("potionId", "field_77851_ca", ItemFood.class);
+          PotionEffect p = (PotionEffect) potionId.get(s.getItem());
+          if (p != null) {
+            this.effects.add(p);
+          }
+        }
+        catch (Exception e) {
+          ModCyclic.logger.error("Reflection error: Could not extract potion effect from ItemFood ");
+          e.printStackTrace();
+        }
+      }
+    }
+    
+  }
   private void addEffectsToPlayers() {
-    if (this.primaryEffect != null) {
-      double radius = 64;
+    if (this.effects != null) {
       int x = this.pos.getX();
       int y = this.pos.getY();
       int z = this.pos.getZ();
-      AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(radius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
+      AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(RADIUS).expand(0.0D, (double) this.world.getHeight(), 0.0D);
       List<EntityPlayer> list = this.world.<EntityPlayer> getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
       for (EntityPlayer entityplayer : list) {
-        entityplayer.addPotionEffect(new PotionEffect(this.primaryEffect, 800, 1, true, true));
+        if (this.effects != null) {
+          for (PotionEffect eff : this.effects) {
+            entityplayer.addPotionEffect(new PotionEffect(eff.getPotion(), Const.TICKS_PER_SEC * SECONDS, eff.getAmplifier(), true, true));
+          }
+        }
       }
     }
   }
