@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.beaconpotion;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,18 +8,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBeaconPotion extends ContainerBaseMachine {
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY = 40;
-  public static final int SQ = 18;
  
   public ContainerBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion te) {
     this.setTile(te);
  
     
     
-    
-    addSlotToContainer(new SlotSingleStack(tile, 0, 0, 0));
+    int x = 176/2 - Const.SQ/2;
+    int y = 38;
+    this.addSlotToContainer(new SlotSingleStack(tile, 0, 
+        x, 
+        y));
     
     
     
