@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionBounce;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
@@ -11,6 +12,7 @@ import com.lothrazar.cyclicmagic.potion.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -36,7 +38,7 @@ Both Potion and PotionType are implementations of IForgeRegistryEntry, so they s
 
 Once you've created and registered the Potions and PotionTypes, use PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular X, Regular X to Long X and Regular X to Strong X). For more advanced brewing recipes, you can use Forge's BrewingRecipeRegistry.
 */
-    PotionType t;
+    
     PotionEffectRegistry.registerPotionEffect(MAGNET);
     PotionEffectRegistry.registerPotionEffect(ENDER);
     PotionEffectRegistry.registerPotionEffect(WATERWALK);
@@ -47,6 +49,7 @@ Once you've created and registered the Potions and PotionTypes, use PotionHelper
   }
   public static void registerPotionEffect(PotionBase effect) {
     effect.setIcon(effect.getIcon());
+    effect.setRegistryName(new ResourceLocation(Const.MODID, effect.getName()));
     potions.add(effect);
     potionEffects.add(effect);
     ModCyclic.instance.events.register(effect);
