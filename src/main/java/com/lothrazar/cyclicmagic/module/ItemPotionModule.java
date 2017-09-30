@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -49,6 +50,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   final static int LONG = 60 * 8;
   @Override
   public void onPreInit() {
+    
+   
+    
+    
     final Item UPG_LENGTH = Items.DYE;
     final Item UPG_STRONG = Items.GOLD_INGOT;
     ItemPotionCustom potion_viscous = null;

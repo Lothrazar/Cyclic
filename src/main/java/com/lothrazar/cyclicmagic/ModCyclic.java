@@ -20,6 +20,7 @@ import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -28,11 +29,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
@@ -133,15 +137,18 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);
     MinecraftForge.EVENT_BUS.register(SoundRegistry.class);
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
+    MinecraftForge.EVENT_BUS.register(PotionTypeRegistry.class);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);
     MinecraftForge.EVENT_BUS.register(VillagerProfRegistry.class);
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     PotionEffectRegistry.register();
+ 
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
+    
     proxy.init();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ForgeGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
@@ -153,6 +160,9 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
+
+//    
+    
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
