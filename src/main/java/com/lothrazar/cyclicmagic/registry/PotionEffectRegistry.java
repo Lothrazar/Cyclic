@@ -21,13 +21,13 @@ public class PotionEffectRegistry {
   public static enum PotionSize {
     NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
   }
-  public static final PotionBase SLOWFALL = new PotionSlowfall("slowfall", true, 0);
-  public static final PotionBase MAGNET = new PotionMagnet("magnet", true, 0);
-  public static final PotionBase ENDER = new PotionEnder("ender", true, 0);
-  public static final PotionBase WATERWALK = new PotionWaterwalk("waterwalk", true, 0);
-  public static final PotionBase SNOW = new PotionSnow("snow", true, 0);
-  public static final PotionBase SWIMSPEED = new PotionSwimSpeed("swimspeed", true, 0);
-  public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0);
+  public static final PotionBase SLOWFALL = new PotionSlowfall("slowfall", true, 0xF46F20);
+  public static final PotionBase MAGNET = new PotionMagnet("magnet", true, 0x224BAF);
+  public static final PotionBase ENDER = new PotionEnder("ender", true, 0x0B4D42);
+  public static final PotionBase WATERWALK = new PotionWaterwalk("waterwalk", true, 0x7FB8A4);
+  public static final PotionBase SNOW = new PotionSnow("snow", true, 0x8EBFFF);
+  public static final PotionBase SWIMSPEED = new PotionSwimSpeed("swimspeed", true, 0xB477FF);
+  public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0x91E459);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   public static void register() {
   //  PotionType t http://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2842885-solved-how-can-i-add-my-own-potion-with-my-own
