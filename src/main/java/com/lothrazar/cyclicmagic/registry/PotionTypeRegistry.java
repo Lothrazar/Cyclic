@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -31,36 +32,27 @@ public class PotionTypeRegistry {
   private static final int NORMAL = 3600;
   private static final int LONG = 9600;
   public static void register() {
-    potionTypeSlowfall = addPotionType( new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL) ,"slowfall");
- 
+    potionTypeSlowfall = addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall");
     potions.add(potionTypeSlowfall);
-    potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL) , "waterwalk");
+    potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk");
     potions.add(potionTypeWaterwalk);
-    
-
-    potionTypeSnow = addPotionType(new PotionEffect(PotionEffectRegistry.SNOW, NORMAL) , "snow");
+    potionTypeSnow = addPotionType(new PotionEffect(PotionEffectRegistry.SNOW, NORMAL), "snow");
     potions.add(potionTypeSnow);
-    
-
-    potionTypeSwim = addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL) , "swim");
+    potionTypeSwim = addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL), "swim");
     potions.add(potionTypeSwim);
-    potionTypeBounce = addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL) , "bounce");
+    potionTypeBounce = addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce");
     potions.add(potionTypeBounce);
-    potionTypeMagnet = addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL) , "magnet");
+    potionTypeMagnet = addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL), "magnet");
     potions.add(potionTypeMagnet);
   }
-  private static PotionType addPotionType(PotionEffect eff, String name){
-    
-    return new PotionType(
-        new PotionEffect[] { eff}).setRegistryName(new ResourceLocation(Const.MODID, name));
-    
+  private static PotionType addPotionType(PotionEffect eff, String name) {
+    return new PotionTypeCyclic(name, new PotionEffect[] { eff });
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
     PotionTypeRegistry.register();
     for (PotionType b : potions) {
       event.getRegistry().register(b);
- 
     }
     //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE,PotionTypes.THICK);
     PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE, potionTypeSlowfall);
