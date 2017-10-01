@@ -105,6 +105,7 @@ public class PotionTypeRegistry {
     }
     if (ItemPotionModule.enableSaturation) {
       potionTypeSat = addPotionType(new PotionEffect(MobEffects.SATURATION, LONG), "saturation", Items.PUMPKIN_PIE);
+      potionTypeSat.base = PotionTypes.HEALING;
       potions.add(potionTypeSat);
       
     }
