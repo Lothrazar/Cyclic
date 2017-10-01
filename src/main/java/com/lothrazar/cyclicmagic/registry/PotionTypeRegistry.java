@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -21,41 +23,50 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionTypeRegistry {
-  public static ArrayList<PotionType> potions = new ArrayList<PotionType>();
-  public static PotionType potionTypeSlowfall;
-  private static PotionType potionTypeBounce;
-  private static PotionType potionTypeWaterwalk;
-  private static PotionType potionTypeSnow;
-  private static PotionType potionTypeSwim;
-  private static PotionType potionTypeMagnet;
+  public static List<PotionTypeCyclic> potions = new ArrayList<PotionTypeCyclic>();
+  private static PotionTypeCyclic potionTypeSlowfall;
+  private static PotionTypeCyclic potionTypeBounce;
+  private static PotionTypeCyclic potionTypeWaterwalk;
+  private static PotionTypeCyclic potionTypeSnow;
+  private static PotionTypeCyclic potionTypeSwim;
+  private static PotionTypeCyclic potionTypeMagnet;
   private static final int SHORT = 1800;
   private static final int NORMAL = 3600;
   private static final int LONG = 9600;
   public static void register() {
-    potionTypeSlowfall = addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall");
+    potionTypeSlowfall = addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall",   new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()));
     potions.add(potionTypeSlowfall);
-    potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk");
+    potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk",    Items.BLAZE_ROD);
     potions.add(potionTypeWaterwalk);
-    potionTypeSnow = addPotionType(new PotionEffect(PotionEffectRegistry.SNOW, NORMAL), "snow");
+    potionTypeSnow = addPotionType(new PotionEffect(PotionEffectRegistry.SNOW, NORMAL), "snow", Items.SNOWBALL);
     potions.add(potionTypeSnow);
-    potionTypeSwim = addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL), "swim");
+    potionTypeSwim = addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL), "swim",Items.CARROT_ON_A_STICK);
     potions.add(potionTypeSwim);
-    potionTypeBounce = addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce");
+    potionTypeBounce = addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce",Items.SLIME_BALL);
     potions.add(potionTypeBounce);
-    potionTypeMagnet = addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL), "magnet");
+    potionTypeMagnet = addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL), "magnet",new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
     potions.add(potionTypeMagnet);
+    
+    //health boost  Items.GOLDEN_APPLE
+  //ender pearl 
+    //resistance
+    //
   }
-  private static PotionType addPotionType(PotionEffect eff, String name) {
-    return new PotionTypeCyclic(name, new PotionEffect[] { eff });
+  private static PotionTypeCyclic addPotionType(PotionEffect eff, String name, ItemStack item) {
+    return new PotionTypeCyclic(name, new PotionEffect[] { eff }, item);
+  }
+  private static PotionTypeCyclic addPotionType(PotionEffect eff, String name, Item item) {
+    return addPotionType(eff,name, new ItemStack(item));
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
     PotionTypeRegistry.register();
-    for (PotionType b : potions) {
+    for (PotionTypeCyclic b : potions) {
       event.getRegistry().register(b);
+      b.addMix();
     }
-    //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE,PotionTypes.THICK);
-    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE, potionTypeSlowfall);
+//    //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE,PotionTypes.THICK);
+//    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE, potionTypeSlowfall);
     //    RecipeRegistry.addShapedOreRecipe(
     //
     //        BrewingRecipeRegistry.addRecipe(
