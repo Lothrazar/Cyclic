@@ -61,16 +61,15 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableSprinkler;
   private boolean enableSpikes;
   private boolean emptyBeacon;
+  private boolean beaconPotion;
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
-    
-    
-    
-    BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
-    BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
-    GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, "beacon_potion_te");
-    
+    if (beaconPotion) {
+      BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
+      BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
+      GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, "beacon_potion_te");
+    }
     if (emptyBeacon) {
       BlockBeaconPowered beacon_redstone = new BlockBeaconPowered();
       BlockRegistry.registerBlock(beacon_redstone, "beacon_redstone", null);
@@ -157,6 +156,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     emptyBeacon = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableClock = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSprinkler = config.getBoolean("Sprinkler", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
