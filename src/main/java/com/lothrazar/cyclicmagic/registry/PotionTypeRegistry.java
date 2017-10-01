@@ -104,9 +104,9 @@ public class PotionTypeRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
     PotionTypeRegistry.register();
-    for (PotionTypeCyclic b : potions) {
-      event.getRegistry().register(b);
-      b.addMix();
+    for (PotionTypeCyclic pt : potions) {
+      event.getRegistry().register(pt);
+      pt.addMix();
     }
     //    //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE,PotionTypes.THICK);
     //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE, potionTypeSlowfall);

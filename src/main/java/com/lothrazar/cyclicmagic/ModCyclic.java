@@ -66,46 +66,7 @@ public class ModCyclic {
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
-  private Item tabItem = null;
-  public void setTabItemIfNull(Item i) {
-    if (tabItem == null)
-      tabItem = i;
-  }
-  public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
-    Comparator<ItemStack> comparator = new Comparator<ItemStack>() {
-      @Override
-      public int compare(final ItemStack first, final ItemStack second) {
-        return first.getDisplayName().compareTo(second.getDisplayName());
-      }
-    };
-    @Override
-    public ItemStack getTabIconItem() {
-      return ModCyclic.instance.tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(ModCyclic.instance.tabItem);
-    }
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(NonNullList<ItemStack> list) {
-      super.displayAllRelevantItems(list);
-      Iterator<ItemStack> i = list.iterator();
-      while (i.hasNext()) {
-        ItemStack s = i.next(); // must be called before you can call i.remove()
-        if (s.getItem() == Items.ENCHANTED_BOOK)
-          i.remove();
-      }
-      Collections.sort(list, comparator);
-      for (Enchantment e : EnchantRegistry.enchants) {
-        ItemStack ebook = new ItemStack(Items.ENCHANTED_BOOK);
-        ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
-        list.add(ebook);
-      }
-      if (FluidsRegistry.fluid_poison != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME)));
-      if (FluidsRegistry.fluid_exp != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME)));
-      if (FluidsRegistry.fluid_milk != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME)));
-    }
-  };
+  public final static CreativeTabCyclic TAB = new CreativeTabCyclic();
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   static {
@@ -144,11 +105,9 @@ public class ModCyclic {
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     PotionEffectRegistry.register();
- 
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
-    
     proxy.init();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ForgeGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
@@ -160,9 +119,7 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
-
-//    
-    
+    //    
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
