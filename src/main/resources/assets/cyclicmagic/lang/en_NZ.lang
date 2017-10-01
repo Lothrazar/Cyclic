@@ -857,3 +857,17 @@ splash_potion.effect.ender=Splash Potion of Ender
 lingering_potion.effect.ender=Lingering Potion of Ender
 tipped_arrow.effect.ender=Arrow of Ender
 
+potion.effect.wither=Potion of Wither
+splash_potion.effect.wither=Splash Potion of Wither
+lingering_potion.effect.wither=Lingering Potion of Wither
+tipped_arrow.effect.wither=Arrow of Wither
+
+potion.effect.blindness=Potion of Blindness
+splash_potion.effect.blindness=Splash Potion of Blindness
+lingering_potion.effect.blindness=Lingering Potion of Blindness
+tipped_arrow.effect.blindness=Arrow of Blindness
+
+potion.effect.saturation=Potion of Saturation
+splash_potion.effect.saturation=Splash Potion of Saturation
+lingering_potion.effect.saturation=Lingering Potion of Saturation
+tipped_arrow.effect.saturation=Arrow of Saturation
