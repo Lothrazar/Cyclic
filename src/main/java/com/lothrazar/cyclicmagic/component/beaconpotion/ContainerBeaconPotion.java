@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -12,11 +14,14 @@ public class ContainerBeaconPotion extends ContainerBaseMachine {
     this.setTile(te);
     int x = 176 / 2 - Const.SQ / 2;
     int y = 38;
-    this.addSlotToContainer(new SlotSingleStack(tile, 0,
-        x,
-        y));
+    this.addSlotToContainer(new SlotSingleStack(tile, 0, x, y) {
+      @Override
+      public boolean isItemValid(ItemStack stack) {
+        return stack.getItem() instanceof ItemPotion;
+      }
+    });
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
-    bindPlayerInventory(inventoryPlayer);
+    super.bindPlayerInventory(inventoryPlayer);
   }
   @Override
   @SideOnly(Side.CLIENT)
