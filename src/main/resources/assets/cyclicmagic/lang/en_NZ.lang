@@ -844,3 +844,5 @@ world.endore.guide=These ores spawn all over the end, the details can be changed
 world.endore.title=Nether Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
 world.netherore.title=End Ore
+
+potion.potency.4=V
