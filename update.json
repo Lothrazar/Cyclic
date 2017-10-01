@@ -10,7 +10,9 @@
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
-    "1.12-recommended": "1.8.6"
+    "1.12-recommended": "1.8.6",
+    "1.12.2-latest": "1.9.0",
+    "1.12.2-recommended": "1.9.0"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -209,5 +211,8 @@
 	,"1.8.4":"Patch the Structure Builder crashing when placing a block that has a missing or invalid placement sound.  Upgraded inventory is now 4 slots bigger instead of showing player armor.  Upgraded inventory has new buttons to swap the row of items with players hotbar.  "
 	,"1.8.5":"Fixed the Fan crashing the game when changing dimensions and/or chunks unloading.  Compatible with Minecraft 1.2.2  "
 	,"1.8.6":"New block: Empty Beacon.  Added speed control buttons to Automated User.  Fix the Step height feature not letting you sneak to stay on the block, and also now sneaking will let you not walk up the block (Apple of Lofty Stature player upgrade).  Controlled Miner's dig speed has been doubled; fuel consumption unchanged.  Item Collector now has a button to control the size of the target region, instead of the previous fixed 9x9 radius.  Redstone Clock now has controls to customize which faces output a signal on tick.    "
+  }
+  ,"1.12.2":{
+	"1.9.0":"All potions remade to use vanilla system, instead of custom items.  Potions now have Splash, Lingering, and Tipped arrows for each.  Added potions for blindness, saturation, and wither.  Added ____ Beacon."
   }
 }

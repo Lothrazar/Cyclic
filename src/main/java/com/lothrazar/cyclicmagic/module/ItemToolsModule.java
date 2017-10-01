@@ -249,7 +249,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
       //      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
-      ModCyclic.instance.setTabItemIfNull(cyclic_wand_build);
+      ModCyclic.instance.TAB.setTabItemIfNull(cyclic_wand_build);
       //    ItemRegistry.registerWithJeiDescription(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {

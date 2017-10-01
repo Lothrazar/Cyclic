@@ -55,9 +55,9 @@ dependencies {
   // at runtime, use the full JEI jar
   runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
-  //compile files("lib/Baubles-${mc_version}-${baubles_version}.jar")
+  //compile files("lib/Baubles-${baubles_version}.jar")
   
-  deobfCompile name: "Baubles", version: "${mc_version}-${baubles_version}"
+  deobfCompile name: "Baubles", version: "${baubles_version}"
   
   
   
