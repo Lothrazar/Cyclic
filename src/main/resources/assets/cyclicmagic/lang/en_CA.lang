@@ -339,49 +339,7 @@ item.password_remote.invalid=Invalid position, Lever not found
 item.password_remote.name=Remote Lever
 item.password_remote.saved=Position Saved
 item.password_remote.tooltip=Bind this to a lever in the world (shift click) to activate it remotely
-item.potion_boost.guide=This health boost potion gives you 5 extra hearts for a short time.
-item.potion_boost.name=Potion of Health Boost
-item.potion_boost_long.name=Potion of Health Boost
-item.potion_bounce.guide=This makes you constantly bouncy, as if everything you land on is a slime block, but better.  Keeps some of your horizontal momentum.
-item.potion_bounce.name=Potion of Bouncing
-item.potion_bounce_long.name=Potion of Bouncing
-item.potion_ender.guide=While this is active, you immune to wall suffocation damage and from ender pearl throws.  Also, it makes enderman drop more exp.
-item.potion_ender.name=Potion of Ender
-item.potion_ender.tooltip=No damage from ender pearl throws, suffocation.  Enderman drop more exp.
-item.potion_ender_long.name=Potion of Ender
-item.potion_haste.guide=Gives you the haste effect (for mining) the same one you can get from a beacon
-item.potion_haste.name=Potion of Haste
-item.potion_haste_long.name=Potion of Haste
-item.potion_haste_strong.name=Potion of Haste II
-item.potion_levitation.guide=Gives you the shulker levitation
-item.potion_levitation.name=Potion of Levitation
-item.potion_levitation_long.name=Potion of Levitation
-item.potion_luck.guide=Gives you the luck effect.  Similar to Luck of the Sea enchant, but affects other things too.
-item.potion_luck.name=Potion of Luck
-item.potion_luck_long.name=Potion of Luck
-item.potion_magnet.guide=Makes you magnetic for items and experience.
-item.potion_magnet.guide=This makes you magnetic, all item stacks and experience orbs come towards you.
-item.potion_magnet.name=Potion of Magnet
-item.potion_magnet_long.name=Potion of Magnet
-item.potion_resistance.guide=Gives you the resistance effect, the same one you can get from a beacon.
-item.potion_resistance.name=Potion of Resistance
-item.potion_resistance_long.name=Potion of Resistance
-item.potion_resistance_strong.name=Potion of Resistance II
-item.potion_slowfall.guide=This potion is like a parachute, slows your falling descent in the air, similar to being in liquid.
-item.potion_slowfall.name=Potion of Slowfall
-item.potion_slowfall_long.name=Potion of Slowfall
-item.potion_snow.guide=Lays down flat snow wherever you work.
-item.potion_snow.name=Snow Potion
-item.potion_snow.tooltip=Unleash your inner snowman
-item.potion_snow_long.name=Snow Potion
-item.potion_swimspeed.guide=This potion effect increases your swimming speed.
-item.potion_swimspeed.name=Swim Speed Potion
-item.potion_swimspeed_long.name=Swim Speed Potion
-item.potion_viscous.guide=This is the base potion for the mod.  Brew this on top of awkward potion.  Potion upgrades use ink sacs and gold ingots for increasing duration and strength.
-item.potion_viscous.name=Viscous Potion
-item.potion_waterwalk.guide=Drink this to walk on water
-item.potion_waterwalk.name=Potion of Waterwalk
-item.potion_waterwalk_long.name=Potion of Waterwalk
+
 item.purple_boots.guide=
 item.purple_boots.name=Obsidian Boots
 item.purple_chestplate.guide=
@@ -846,3 +804,56 @@ world.netherore.guide=These ores spawn all over the nether, the details can be c
 world.netherore.title=End Ore
 
 potion.potency.4=V
+potion.potency.3=IV
+potion.potency.2=III
+
+potion.effect.slowfall=Potion of Slowfall
+splash_potion.effect.slowfall=Splash Potion of Slowfall
+lingering_potion.effect.slowfall=Lingering Potion of Slowfall
+tipped_arrow.effect.slowfall=Arrow of Slowfall
+
+potion.effect.waterwalk=Potion of Waterwalk
+splash_potion.effect.waterwalk=Splash Potion of Waterwalk
+lingering_potion.effect.waterwalk=Lingering Potion of Waterwalk
+tipped_arrow.effect.waterwalk=Arrow of Waterwalk
+
+potion.effect.snow=Potion of Snow
+splash_potion.effect.snow=Splash Potion of Snow
+lingering_potion.effect.snow=Lingering Potion of Snow
+tipped_arrow.effect.snow=Arrow of Snow
+
+potion.effect.swim=Potion of Swim Speed
+splash_potion.effect.swim=Splash Potion of Swim Speed
+lingering_potion.effect.swim=Lingering Potion of Swim Speed
+tipped_arrow.effect.swim=Arrow of Swim Speed
+
+potion.effect.bounce=Potion of Bounce
+splash_potion.effect.bounce=Splash Potion of Bounce
+lingering_potion.effect.bounce=Lingering Potion of Bounce
+tipped_arrow.effect.bounce=Arrow of Bounce
+
+potion.effect.magnet=Potion of Magnet
+splash_potion.effect.magnet=Splash Potion of Magnet
+lingering_potion.effect.magnet=Lingering Potion of Magnet
+tipped_arrow.effect.magnet=Arrow of Magnet
+
+potion.effect.haste=Potion of Haste
+splash_potion.effect.haste=Splash Potion of Haste
+lingering_potion.effect.haste=Lingering Potion of Haste
+tipped_arrow.effect.haste=Arrow of Haste
+
+potion.effect.resistance=Potion of Resistance
+splash_potion.effect.resistance=Splash Potion of Resistance
+lingering_potion.effect.resistance=Lingering Potion of Resistance
+tipped_arrow.effect.resistance=Arrow of Resistance
+
+potion.effect.healthboost=Potion of Health Boost
+splash_potion.effect.healthboost=Splash Potion of Health Boost
+lingering_potion.effect.healthboost=Lingering Potion of Health Boost
+tipped_arrow.effect.healthboost=Arrow of Health Boost
+
+potion.effect.ender=Potion of Ender
+splash_potion.effect.ender=Splash Potion of Ender
+lingering_potion.effect.ender=Lingering Potion of Ender
+tipped_arrow.effect.ender=Arrow of Ender
+
