@@ -42,32 +42,13 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   public static boolean enableLuck;
   public static boolean enableLevit;
   public static boolean enableHBoost;
-  public static boolean enableViscous;
   public static boolean enableSwimspeed;
   public static boolean enableBounce;
-  final static int SHORT = 60 + 30;
-  final static int NORMAL = 60 * 3;
-  final static int LONG = 60 * 8;
-  @Override
-  public void onPreInit() {
-    
-    
-    // https://github.com/MinecraftForge/MinecraftForge/issues/3323
-    // https://github.com/PrinceOfAmber/Cyclic/issues/124
-    //the actual effects need to be in regardless. ex: some items/charms use these even if the potion item isdisabled
-    // http://www.minecraftforge.net/forum/index.php?topic=11024.0
-    //   http://www.minecraftforge.net/forum/index.php?topic=12358.0
-  
-  }
-  private static BrewingRecipe addBrewingRecipe(Item input, Item ingredient, Item output) {
-    if (input == null || ingredient == null || output == null) {
-      return null;
-    }
-    return addBrewingRecipe(
-        new ItemStack(input),
-        new ItemStack(ingredient),
-        new ItemStack(output));
-  }
+  public static boolean enableWither;
+  public static boolean enableBlindness;
+  public static boolean enableSaturation; 
+
+ 
   private static BrewingRecipe addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
     if (input.isEmpty() || input.getItem() == null) {
       return null;
@@ -110,6 +91,12 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     enableLuck = config.getBoolean("PotionLuck", category, true, Const.ConfigCategory.contentDefaultText);
     enableLevit = config.getBoolean("PotionLevitation", category, true, Const.ConfigCategory.contentDefaultText);
     enableHBoost = config.getBoolean("PotionHealthBoost", category, true, Const.ConfigCategory.contentDefaultText);
-    enableViscous = config.getBoolean("PotionViscous", category, true, Const.ConfigCategory.contentDefaultText + ".  WARNING: any recipes using this items are gone if this is disabled; its used by every other potion");
+    enableWither = config.getBoolean("PotionWither", category, true, Const.ConfigCategory.contentDefaultText);
+    
+    enableBlindness = config.getBoolean("PotionBlindness", category, true, Const.ConfigCategory.contentDefaultText);
+    
+    enableSaturation = config.getBoolean("PotionSaturation", category, true, Const.ConfigCategory.contentDefaultText);
+    
+    
   }
 }

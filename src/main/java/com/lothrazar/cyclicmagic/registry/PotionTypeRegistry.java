@@ -37,6 +37,9 @@ public class PotionTypeRegistry {
   private static PotionTypeCyclic potionHealth;
   private static PotionTypeCyclic potionEnder;
   private static PotionTypeCyclic potionTypeLuck;
+  private static PotionTypeCyclic potionTypeWither;
+  private static PotionTypeCyclic potionTypeBlindness;
+  private static PotionTypeCyclic potionTypeSat;
   private static final int SHORT = 1800;
   private static final int NORMAL = 3600;
   private static final int LONG = 9600;
@@ -85,15 +88,35 @@ public class PotionTypeRegistry {
       potionEnder = addPotionType(new PotionEffect(PotionEffectRegistry.ENDER, NORMAL), "ender", Items.ENDER_PEARL);
       potions.add(potionEnder);
     }
-    if(ItemPotionModule.enableLuck){
-
-      potionTypeLuck = addPotionType(new PotionEffect(MobEffects.LUCK, NORMAL), "luck",     new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()));
+    if (ItemPotionModule.enableLuck) {
+      potionTypeLuck = addPotionType(new PotionEffect(MobEffects.LUCK, NORMAL), "luck", new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()));
       potions.add(potionTypeLuck);
     }
-    //health boost  Items.GOLDEN_APPLE
-    //ender pearl 
-    //resistance
-    //
+    if (ItemPotionModule.enableWither) {
+      potionTypeWither = addPotionType(new PotionEffect(MobEffects.WITHER, NORMAL), "wither", Items.FERMENTED_SPIDER_EYE);
+      potionTypeWither.base = PotionTypes.WEAKNESS;
+      potions.add(potionTypeWither);
+    }
+    if (ItemPotionModule.enableBlindness) {
+      potionTypeBlindness = addPotionType(new PotionEffect(MobEffects.BLINDNESS, NORMAL), "blindness", Items.FERMENTED_SPIDER_EYE);
+      potionTypeBlindness.base = PotionTypes.INVISIBILITY;
+      potions.add(potionTypeBlindness);
+ 
+    }
+    if (ItemPotionModule.enableSaturation) {
+      potionTypeSat = addPotionType(new PotionEffect(MobEffects.SATURATION, LONG), "saturation", Items.PUMPKIN_PIE);
+      potions.add(potionTypeSat);
+      
+    }
+     
+    // wither
+    // blindness
+    // saturation
+    // glowing
+    // ! nausea nah
+    // ! absorp ! skipping bc golden apples fill this role
+    // ! hunger, pointless
+    // ! unluck?? waste of time, skip this.
   }
   private static PotionTypeCyclic addPotionType(PotionEffect eff, String name, ItemStack item) {
     return new PotionTypeCyclic(name, new PotionEffect[] { eff }, item);
