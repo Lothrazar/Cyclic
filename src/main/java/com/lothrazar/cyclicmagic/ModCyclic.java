@@ -1,7 +1,4 @@
 package com.lothrazar.cyclicmagic;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.log.ModLogger;
@@ -13,33 +10,22 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -50,10 +36,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.11.2,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
   @Instance(value = Const.MODID)
   public static ModCyclic instance;
@@ -62,46 +46,7 @@ public class ModCyclic {
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
-  private Item tabItem = null;
-  public void setTabItemIfNull(Item i) {
-    if (tabItem == null)
-      tabItem = i;
-  }
-  public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
-    Comparator<ItemStack> comparator = new Comparator<ItemStack>() {
-      @Override
-      public int compare(final ItemStack first, final ItemStack second) {
-        return first.getDisplayName().compareTo(second.getDisplayName());
-      }
-    };
-    @Override
-    public ItemStack getTabIconItem() {
-      return ModCyclic.instance.tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(ModCyclic.instance.tabItem);
-    }
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(NonNullList<ItemStack> list) {
-      super.displayAllRelevantItems(list);
-      Iterator<ItemStack> i = list.iterator();
-      while (i.hasNext()) {
-        ItemStack s = i.next(); // must be called before you can call i.remove()
-        if (s.getItem() == Items.ENCHANTED_BOOK)
-          i.remove();
-      }
-      Collections.sort(list, comparator);
-      for (Enchantment e : EnchantRegistry.enchants) {
-        ItemStack ebook = new ItemStack(Items.ENCHANTED_BOOK);
-        ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
-        list.add(ebook);
-      }
-      if (FluidsRegistry.fluid_poison != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME)));
-      if (FluidsRegistry.fluid_exp != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME)));
-      if (FluidsRegistry.fluid_milk != null)
-        list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME)));
-    }
-  };
+  public final static CreativeTabCyclic TAB = new CreativeTabCyclic();
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   static {
@@ -133,12 +78,13 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(RecipeRegistry.class);
     MinecraftForge.EVENT_BUS.register(SoundRegistry.class);
     MinecraftForge.EVENT_BUS.register(PotionEffectRegistry.class);
+    MinecraftForge.EVENT_BUS.register(PotionTypeRegistry.class);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);
     MinecraftForge.EVENT_BUS.register(VillagerProfRegistry.class);
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
-    PotionEffectRegistry.register();
+  
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
@@ -152,7 +98,7 @@ public class ModCyclic {
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
-    }
+    }   
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {

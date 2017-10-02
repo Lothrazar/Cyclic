@@ -25,6 +25,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_INPUT = ROWS * COLS;//10
   public static final int SIZE_GRID = 3 * 3;//19
   public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
+  public static enum Fields {
+    REDSTONE, TIMER, FUEL, FUELMAX;
+  }
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
@@ -41,9 +44,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
     this.setFuelSlot(this.getSizeInventory() - 1);
-  }
-  public static enum Fields {
-    REDSTONE, TIMER, FUEL, FUELMAX;
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -213,6 +213,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

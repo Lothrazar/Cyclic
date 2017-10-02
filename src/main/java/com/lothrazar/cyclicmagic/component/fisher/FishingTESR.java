@@ -20,7 +20,7 @@ public class FishingTESR extends BaseMachineTESR<TileEntityFishing> {
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
     ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
-    if (stack != null) {
+    if (!stack.isEmpty()) {
       renderItem(te, stack, 0.5f);
     }
   }

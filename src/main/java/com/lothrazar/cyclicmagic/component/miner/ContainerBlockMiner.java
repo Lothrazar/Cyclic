@@ -10,20 +10,18 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
-  protected TileEntityBlockMiner tileEntity;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
     this.setTile(te);
-    tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }
