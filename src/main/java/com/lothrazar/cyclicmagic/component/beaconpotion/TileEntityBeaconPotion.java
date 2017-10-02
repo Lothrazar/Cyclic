@@ -19,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -227,19 +228,11 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public void setName(String name) {
     this.customName = name;
   }
-  /**
-   * Returns true if automation is allowed to insert the given stack (ignoring
-   * stack size) into the given slot. For guis use Slot.isItemValid
-   */
+ 
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return stack.getItem() != null && stack.getItem().isBeaconPayment(stack);
+    return stack.getItem() != null && stack.getItem() instanceof ItemPotion;
   }
-  public String getGuiID() {
-    return "minecraft:beacon";
-  }
-  public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-    return new ContainerBeacon(playerInventory, this);
-  }
+  
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
       this.updateBeacon();
@@ -250,14 +243,14 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
   }
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[0];
+    return new int[]{0,1,2,3,4,5,6,7,8};
   }
   /**
    * Returns true if automation can insert the given item in the given slot from
    * the given side.
    */
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-    return false;
+    return true;
   }
   @Override
   public int[] getFieldOrdinals() {
