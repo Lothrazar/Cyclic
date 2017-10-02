@@ -57,11 +57,12 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private int needsRedstone;
   private int radius = 64;
   public TileEntityBeaconPotion() {
-    super(2);
-    this.setFuelSlot(1);
+    super(10);
+    this.setFuelSlot(9);
   }
   @Override
   public void update() {
+    this.shiftAllUp(9);
     if (!isRunning()) {
       return;
     }
