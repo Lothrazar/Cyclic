@@ -6,19 +6,18 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
@@ -38,20 +37,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int SECONDS = 8;
-  private static final int RADIUS = 64;
+  private static final int MAX_RADIUS = 128;
   public static enum Fields {
-    REDSTONE, FUEL, FUELMAX;
+    REDSTONE, FUEL, FUELMAX, ENTITYTYPE, RANGE;
+  }
+  public static enum EntityType {
+    PLAYERS, NONPLAYER, ALL, MONSTER, CREATURE, AMBIENT, WATER; // ambient, monster, creature, water
   }
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
   private float beamRenderScale;
+  private EntityType entityType = EntityType.PLAYERS;
   private final List<TileEntityBeaconPotion.BeamSegment> beamSegments = Lists.<TileEntityBeaconPotion.BeamSegment> newArrayList();
   private String customName;
   /** Primary potion effect given by this beacon. */
   @Nullable
   private List<PotionEffect> effects;
   private int needsRedstone;
+  private int radius = 64;
   public TileEntityBeaconPotion() {
     super(2);
     this.setFuelSlot(1);
@@ -63,7 +67,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     if (this.world.getTotalWorldTime() % 80L == 0L && this.updateFuelIsBurning()) {
       this.updateBeacon();
-      
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
   }
@@ -71,7 +74,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     if (this.world != null) {
       this.updateFromSlot();
       this.updateSegmentColors();
-      this.addEffectsToPlayers();
+      this.addEffectsToEntities();
     }
   }
   private void updateFromSlot() {
@@ -95,21 +98,50 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       }
     }
   }
-  private void addEffectsToPlayers() {
-    if (this.effects != null) {
-      int x = this.pos.getX();
-      int y = this.pos.getY();
-      int z = this.pos.getZ();
-      AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(RADIUS).expand(0.0D, (double) this.world.getHeight(), 0.0D);
-      List<EntityPlayer> list = this.world.<EntityPlayer> getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
-      for (EntityPlayer entityplayer : list) {
-        if (this.effects != null) {
-          for (PotionEffect eff : this.effects) {
-            entityplayer.addPotionEffect(new PotionEffect(eff.getPotion(), Const.TICKS_PER_SEC * SECONDS, eff.getAmplifier(), true, true));
-          }
-        }
+  private void addEffectsToEntities() {
+    if (this.effects == null || this.effects.size() == 0) {
+      return;
+    }
+    int x = this.pos.getX();
+    int y = this.pos.getY();
+    int z = this.pos.getZ();
+    AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(radius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
+    //get players, or non players, or both. but players extend living base too.
+    boolean skipPlayers = (this.entityType == EntityType.NONPLAYER);
+    boolean showParticles = (this.entityType == EntityType.PLAYERS);
+    EnumCreatureType creatureType = this.getCreatureType();
+    List<EntityLivingBase> list = new ArrayList<EntityLivingBase>();
+    if (this.entityType == EntityType.PLAYERS) {
+      list.addAll(this.world.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb));
+    }
+    else { // we apply other filters later
+      list.addAll(this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb));
+    }
+    for (EntityLivingBase entityplayer : list) {
+      if (skipPlayers && entityplayer instanceof EntityPlayer) {
+        continue;// filter says to skip players
+      }
+      if(creatureType != null &&  entityplayer.isCreatureType(creatureType, false) == false){
+        continue;//creature type filter is enabled AND this one doesnt match, so skip
+      }
+      for (PotionEffect eff : this.effects) {
+        entityplayer.addPotionEffect(new PotionEffect(eff.getPotion(), Const.TICKS_PER_SEC * SECONDS, eff.getAmplifier(), true, showParticles));
       }
     }
+  }
+  @SuppressWarnings("incomplete-switch")
+  private EnumCreatureType getCreatureType() {
+    switch (this.entityType) {
+      case AMBIENT:
+        return EnumCreatureType.AMBIENT;
+      case CREATURE:
+        return EnumCreatureType.CREATURE;
+      case MONSTER:
+        return EnumCreatureType.MONSTER;
+      case WATER:
+        return EnumCreatureType.WATER_CREATURE;
+    }
+    return null;
   }
   private void updateSegmentColors() {
     int i = this.pos.getX();
@@ -163,7 +195,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   }
   @SideOnly(Side.CLIENT)
   public float shouldBeamRender() {
-    if (!this.isRunning() ) { // if no redstone power, return zero to hide beam
+    if (!this.isRunning()) { // if no redstone power, return zero to hide beam
       return 0;
     }
     int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
@@ -249,8 +281,10 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
-      default:
-      break;
+      case ENTITYTYPE:
+        return this.entityType.ordinal();
+      case RANGE:
+        return this.radius;
     }
     return -1;
   }
@@ -265,6 +299,16 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       break;
       case FUELMAX:
         this.setFuelMax(value);
+      break;
+      case ENTITYTYPE:
+        if (value >= EntityType.values().length)
+          value = 0;
+        if (value < 0)
+          value = EntityType.values().length - 1;
+        this.entityType = EntityType.values()[value];
+      break;
+      case RANGE:
+        this.radius = Math.min(value, MAX_RADIUS);
       break;
       default:
       break;
@@ -284,6 +328,24 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
    */
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.radius = tagCompound.getInteger("radius");
+    int eType = tagCompound.getInteger("et");
+    if (eType >= 0 && eType < EntityType.values().length)
+      this.entityType = EntityType.values()[eType];
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger("radius", radius);
+    tagCompound.setInteger("et", entityType.ordinal());
+    return super.writeToNBT(tagCompound);
+  }
+  public EntityType getEntityType() {
+    int type = this.getField(Fields.ENTITYTYPE.ordinal());
+    return EntityType.values()[type];
   }
   public static class BeamSegment {
     /** RGB (0 to 1.0) colors of this beam segment */
