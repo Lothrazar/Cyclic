@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.potion;
 import com.lothrazar.cyclicmagic.data.Const;
-import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
