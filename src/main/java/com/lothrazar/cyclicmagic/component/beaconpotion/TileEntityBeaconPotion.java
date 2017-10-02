@@ -33,9 +33,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable,  ITileRedstoneToggle { //ITileSizeToggle,
+public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITileSizeToggle {
+  private static final int MAX_POTION = 16000;
   private static final int SECONDS = 8;
-  private static final int MAX_RADIUS = 128;
+  private static final int MAX_RADIUS = 8;
   public static enum Fields {
     REDSTONE, FUEL, FUELMAX, ENTITYTYPE, RANGE;
   }
@@ -53,7 +54,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   @Nullable
   private List<PotionEffect> effects;
   private int needsRedstone;
-  private int radius = 8;
+  private int radius = MAX_RADIUS - 2;//just a mid tier default 
   public TileEntityBeaconPotion() {
     super(9);
   }
@@ -67,7 +68,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       ItemStack s = this.getStackInSlot(0);
       this.effects = PotionUtils.getEffectsFromStack(s);
       if (this.effects.size() > 0) {
-        this.setFuelMax(9000);
+        this.setFuelMax(MAX_POTION);
         this.setFuelCurrent(this.getFuelMax());
         this.setInventorySlotContents(0, ItemStack.EMPTY);
       }
@@ -94,7 +95,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     int x = this.pos.getX();
     int y = this.pos.getY();
     int z = this.pos.getZ();
-    int theRadius = 16;//this.getRadiusCalc();
+    int theRadius = ((int) Math.pow(2, this.radius));
     AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(theRadius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
     //get players, or non players, or both. but players extend living base too.
     boolean skipPlayers = (this.entityType == EntityType.NONPLAYER);
@@ -330,7 +331,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       String potion = tag.getString("potion_effect");
       int strength = tag.getInteger("potion_strength");
- 
       Potion p = Potion.getPotionFromResourceLocation(potion);
       if (p != null) {
         this.effects.add(new PotionEffect(p, strength, SECONDS));
@@ -347,10 +347,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     NBTTagList itemList = new NBTTagList();
     if (this.effects != null) {
       for (PotionEffect e : this.effects) {
-
-      
         NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("potion_effect",  e.getPotion().getRegistryName().toString());
+        tag.setString("potion_effect", e.getPotion().getRegistryName().toString());
         tag.setInteger("potion_strength", e.getAmplifier());
         itemList.appendTag(tag);
       }
@@ -384,18 +382,26 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       return this.height;
     }
   }
-  public int getRadiusCalc(){
-    return (int)Math.pow(2, this.radius);
+  public int getRadiusCalc() {
+    return (int) Math.pow(2, this.radius);
   }
-//  @Override
-//  public void toggleSizeShape() {
-//   int newRadiusPow = this.getField(Fields.RANGE.ordinal()) + 1;
-//   //goes up by power of 2
-//   //2^9 = 512
-//   //2^4 = 16
-//   if(newRadiusPow > 9){
-//     newRadiusPow = 4;
-//   }
-//   this.setField(Fields.RANGE.ordinal(), newRadiusPow);
-//  }
+  //  @Override
+  //  public void toggleSizeShape() {
+  //   int newRadiusPow = this.getField(Fields.RANGE.ordinal()) + 1;
+  //   //goes up by power of 2
+  //   //2^9 = 512
+  //   //2^4 = 16
+  //   if(newRadiusPow > 9){
+  //     newRadiusPow = 4;
+  //   }
+  //   this.setField(Fields.RANGE.ordinal(), newRadiusPow);
+  //  }
+  @Override
+  public void toggleSizeShape() {
+    int newRad = this.getField(Fields.RANGE.ordinal()) + 1;
+    if (newRad > MAX_RADIUS) {
+      newRad = 4;
+    }
+    this.setField(Fields.RANGE.ordinal(), newRad);
+  }
 }

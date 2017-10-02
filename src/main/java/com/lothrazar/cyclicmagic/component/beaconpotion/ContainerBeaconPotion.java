@@ -14,10 +14,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBeaconPotion extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 88;
+  public static final int SLOTY = 52;
   public ContainerBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion te) {
     this.setTile(te);
-    this.screenSize=ScreenSize.LARGE;
+   // this.screenSize=ScreenSize.LARGE;
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new SlotPotion(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
