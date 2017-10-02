@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.food.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -67,7 +66,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     for (Item item : ItemRegistry.itemMap.values()) {
       //YES its deprecated. but new method is not in wiki. at all. and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      if (item instanceof ItemPotionCustom == false)//YEP total hack
+//      if (item instanceof ItemPotionCustom == false)//YEP total hack
         registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
     }
     for (Block item : BlockRegistry.blocks) {

@@ -4,15 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.util.UtilReflection;
+import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,9 +19,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -35,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable,  ITileRedstoneToggle { //ITileSizeToggle,
   private static final int SECONDS = 8;
   private static final int MAX_RADIUS = 128;
   public static enum Fields {
@@ -55,17 +53,29 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   @Nullable
   private List<PotionEffect> effects;
   private int needsRedstone;
-  private int radius = 64;
+  private int radius = 8;
   public TileEntityBeaconPotion() {
-    super(10);
-    this.setFuelSlot(9);
+    super(9);
   }
   @Override
   public void update() {
-    this.shiftAllUp(9);
     if (!isRunning()) {
       return;
     }
+    if (this.getFuelCurrent() == 0) {
+      //try to consume a potion
+      ItemStack s = this.getStackInSlot(0);
+      this.effects = PotionUtils.getEffectsFromStack(s);
+      if (this.effects.size() > 0) {
+        this.setFuelMax(9000);
+        this.setFuelCurrent(this.getFuelMax());
+        this.setInventorySlotContents(0, ItemStack.EMPTY);
+      }
+    }
+    else if (this.getFuelCurrent() > 0) {
+      this.setFuelCurrent(this.getFuelCurrent() - 1);
+    }
+    this.shiftAllUp(1);
     if (this.world.getTotalWorldTime() % 80L == 0L && this.updateFuelIsBurning()) {
       this.updateBeacon();
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
@@ -73,30 +83,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   }
   public void updateBeacon() {
     if (this.world != null) {
-      this.updateFromSlot();
       this.updateSegmentColors();
       this.addEffectsToEntities();
-    }
-  }
-  private void updateFromSlot() {
-    ItemStack s = this.getStackInSlot(0);
-    this.effects = PotionUtils.getEffectsFromStack(s);
-    if (this.effects == null || this.effects.size() == 0) {
-      this.effects = new ArrayList<PotionEffect>();
-      if (s.getItem() instanceof ItemFood) {
-        // LOL PRIVATE food . potionId
-        try {
-          java.lang.reflect.Field potionId = UtilReflection.getPrivateField("potionId", "field_77851_ca", ItemFood.class);
-          PotionEffect p = (PotionEffect) potionId.get(s.getItem());
-          if (p != null) {
-            this.effects.add(p);
-          }
-        }
-        catch (Exception e) {
-          ModCyclic.logger.error("Reflection error: Could not extract potion effect from ItemFood ");
-          e.printStackTrace();
-        }
-      }
     }
   }
   private void addEffectsToEntities() {
@@ -106,7 +94,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     int x = this.pos.getX();
     int y = this.pos.getY();
     int z = this.pos.getZ();
-    AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(radius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
+    int theRadius = 16;//this.getRadiusCalc();
+    AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(theRadius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
     //get players, or non players, or both. but players extend living base too.
     boolean skipPlayers = (this.entityType == EntityType.NONPLAYER);
     boolean showParticles = (this.entityType == EntityType.PLAYERS);
@@ -122,7 +111,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       if (skipPlayers && entityplayer instanceof EntityPlayer) {
         continue;// filter says to skip players
       }
-      if(creatureType != null &&  entityplayer.isCreatureType(creatureType, false) == false){
+      if (creatureType != null && entityplayer.isCreatureType(creatureType, false) == false) {
         continue;//creature type filter is enabled AND this one doesnt match, so skip
       }
       for (PotionEffect eff : this.effects) {
@@ -335,13 +324,38 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     super.readFromNBT(tagCompound);
     this.radius = tagCompound.getInteger("radius");
     int eType = tagCompound.getInteger("et");
-    if (eType >= 0 && eType < EntityType.values().length)
+    NBTTagList tagList = tagCompound.getTagList("potion_list", 10);
+    this.effects = new ArrayList<PotionEffect>();
+    for (int i = 0; i < tagList.tagCount(); i++) {
+      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      String potion = tag.getString("potion_effect");
+      int strength = tag.getInteger("potion_strength");
+ 
+      Potion p = Potion.getPotionFromResourceLocation(potion);
+      if (p != null) {
+        this.effects.add(new PotionEffect(p, strength, SECONDS));
+      }
+    }
+    if (eType >= 0 && eType < EntityType.values().length) {
       this.entityType = EntityType.values()[eType];
+    }
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("radius", radius);
     tagCompound.setInteger("et", entityType.ordinal());
+    NBTTagList itemList = new NBTTagList();
+    if (this.effects != null) {
+      for (PotionEffect e : this.effects) {
+
+      
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setString("potion_effect",  e.getPotion().getRegistryName().toString());
+        tag.setInteger("potion_strength", e.getAmplifier());
+        itemList.appendTag(tag);
+      }
+    }
+    tagCompound.setTag("potion_list", itemList);
     return super.writeToNBT(tagCompound);
   }
   public EntityType getEntityType() {
@@ -370,4 +384,18 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       return this.height;
     }
   }
+  public int getRadiusCalc(){
+    return (int)Math.pow(2, this.radius);
+  }
+//  @Override
+//  public void toggleSizeShape() {
+//   int newRadiusPow = this.getField(Fields.RANGE.ordinal()) + 1;
+//   //goes up by power of 2
+//   //2^9 = 512
+//   //2^4 = 16
+//   if(newRadiusPow > 9){
+//     newRadiusPow = 4;
+//   }
+//   this.setField(Fields.RANGE.ordinal(), newRadiusPow);
+//  }
 }
