@@ -1,11 +1,15 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockLeaves;
@@ -15,12 +19,15 @@ import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
@@ -115,7 +122,34 @@ public class UtilHarvestCrops {
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     final NonNullList<ItemStack> drops = NonNullList.create();
-    if (blockCheck instanceof BlockNetherWart) {
+    BlockCrops test;
+    //new generic harvest
+    UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
+    while (unmodifiableiterator.hasNext()) {
+      Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
+      IProperty<?> iproperty = entry.getKey();
+      if (iproperty.getName() == "age" && iproperty instanceof PropertyInteger) {
+        PropertyInteger propInt = (PropertyInteger) iproperty;
+        int maxAge = Collections.max(propInt.getAllowedValues());
+        int currentAge = blockState.getValue(propInt);
+        if (currentAge >= maxAge) {
+          doBreak = true;
+        }
+        break;
+      }
+    }
+    // (A): garden scythe and harvester use this; 
+    //      BUT type LEAVES and WEEDS harvester use DIFFERENT NEW class
+    //     then each scythe has config list of what it breaks (maybe just scythe for all the modplants. also maybe hardcoded)
+    // (B):  use this new "age" finding thing by default for harvest/replant
+    // (C): figure out config system for anything that DOESNT work with this "age" system
+    // (D): another  list of "just break it" blocks mapped by "mod:name"
+    // PROBABLY: scythe will not have the break-it methods
+    // "minecraft:pumpkin","minecraft:cactus", "minecraft:melon_block","minecraft:reeds"
+    //  EXAMPLE: pumpkin, melon
+    // (E): an ignore list of ones to skip EXAMPLE: stem
+    // TODO SPECIAL: cactus has "age" but we dont want to harvest bottom. Logic? or ignore?
+    if (blockCheck instanceof BlockNetherWart) { // has age prop
       if (conf.doesCrops) {
         int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
         if (age == 3) {//this is hardcoded in base class
@@ -124,7 +158,7 @@ public class UtilHarvestCrops {
         }
       }
     }
-    if (blockCheck instanceof BlockCocoa) {
+    if (blockCheck instanceof BlockCocoa) { // has age prop
       if (conf.doesCrops) {
         int age = ((Integer) blockState.getValue(BlockCocoa.AGE)).intValue();
         if (age == 2) {//this is hardcoded in base class
@@ -134,15 +168,15 @@ public class UtilHarvestCrops {
         }
       }
     }
-    else if (blockCheck instanceof BlockStem) {
+    else if (blockCheck instanceof BlockStem) { // keep this: we want to ignore stems
       if (conf.doesStem)
         doBreak = true;
     }
-    else if (blockCheck instanceof BlockSapling) {
+    else if (blockCheck instanceof BlockSapling) {// true for ItemScythe type WEEDS
       if (conf.doesSapling)
         doBreak = true;
     }
-    else if (blockCheck instanceof BlockTallGrass) {
+    else if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS
       if (conf.doesTallgrass) {
         doBreak = true;
         if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
@@ -153,7 +187,7 @@ public class UtilHarvestCrops {
         }
       }
     }
-    else if (blockCheck instanceof BlockDoublePlant) {
+    else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS
       if (conf.doesTallgrass) {
         doBreak = true;
         if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
@@ -164,7 +198,7 @@ public class UtilHarvestCrops {
         }
       }
     }
-    else if (blockCheck instanceof BlockMushroom) {
+    else if (blockCheck instanceof BlockMushroom) {//remove from harvester tile? used by weeds though
       if (conf.doesMushroom)
         doBreak = true;
     }
@@ -190,16 +224,17 @@ public class UtilHarvestCrops {
         || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
         || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
         || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
-      if (conf.doesFlowers) {
+      if (conf.doesFlowers) {                   // true for ItemScythe type WEEDS
         doBreak = true;
       }
     }
-    else if (blockCheck instanceof BlockLeaves) { //  || blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2
+    else if (blockCheck instanceof BlockLeaves) {// true for ItemScythe type LEAVES
       if (conf.doesLeaves) {
         doBreak = true;
       }
     }
     else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
+       
       if (conf.doesCactus) { //never breaking the bottom one
         doBreak = true;
         if (bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS) {
