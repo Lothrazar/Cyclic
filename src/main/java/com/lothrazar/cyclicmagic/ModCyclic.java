@@ -84,7 +84,6 @@ public class ModCyclic {
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
-  
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
@@ -98,7 +97,7 @@ public class ModCyclic {
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
-    }   
+    }
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {

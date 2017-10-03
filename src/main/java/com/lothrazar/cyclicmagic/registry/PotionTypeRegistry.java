@@ -94,15 +94,12 @@ public class PotionTypeRegistry {
       potionTypeBlindness = addPotionType(new PotionEffect(MobEffects.BLINDNESS, NORMAL), "blindness", Items.FERMENTED_SPIDER_EYE);
       potionTypeBlindness.base = PotionTypes.INVISIBILITY;
       potions.add(potionTypeBlindness);
- 
     }
     if (ItemPotionModule.enableSaturation) {
       potionTypeSat = addPotionType(new PotionEffect(MobEffects.SATURATION, LONG), "saturation", Items.PUMPKIN_PIE);
       potionTypeSat.base = PotionTypes.HEALING;
       potions.add(potionTypeSat);
-      
     }
-     
     // wither
     // blindness
     // saturation

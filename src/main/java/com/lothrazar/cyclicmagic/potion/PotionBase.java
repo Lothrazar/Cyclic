@@ -21,9 +21,7 @@ public abstract class PotionBase extends Potion {
     this.setPotionName("potion." + name);
   }
   @Override
-
-  public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health)
-   {
+  public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health) {
     super.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
   }
   @SideOnly(Side.CLIENT)

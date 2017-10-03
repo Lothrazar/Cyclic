@@ -23,9 +23,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   public static boolean enableBounce;
   public static boolean enableWither;
   public static boolean enableBlindness;
-  public static boolean enableSaturation; 
-
- 
+  public static boolean enableSaturation;
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
@@ -50,11 +48,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     enableLevit = config.getBoolean("PotionLevitation", category, true, Const.ConfigCategory.contentDefaultText);
     enableHBoost = config.getBoolean("PotionHealthBoost", category, true, Const.ConfigCategory.contentDefaultText);
     enableWither = config.getBoolean("PotionWither", category, true, Const.ConfigCategory.contentDefaultText);
-    
     enableBlindness = config.getBoolean("PotionBlindness", category, true, Const.ConfigCategory.contentDefaultText);
-    
     enableSaturation = config.getBoolean("PotionSaturation", category, true, Const.ConfigCategory.contentDefaultText);
-    
-    
   }
 }

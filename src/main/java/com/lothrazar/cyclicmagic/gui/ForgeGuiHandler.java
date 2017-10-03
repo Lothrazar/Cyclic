@@ -259,11 +259,10 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_BEACON:
-
         if (te instanceof TileEntityBeaconPotion) {
           return new ContainerBeaconPotion(player.inventory, (TileEntityBeaconPotion) te);
         }
-        break;
+      break;
     }
     return null;
   }
@@ -394,11 +393,10 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_BEACON:
-
           if (te instanceof TileEntityBeaconPotion) {
             return new GuiBeaconPotion(player.inventory, (TileEntityBeaconPotion) te);
           }
-          break;
+        break;
       }
     }
     return null;

@@ -53,7 +53,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         x + this.rangeX, y + this.rangeY, z + this.rangeZ);
     List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), entityRange);
     int entitiesFound = (entityList == null) ? 0 : entityList.size();
-    
     boolean trigger = false;
     switch (this.compType) {
       case LESS:
