@@ -18,7 +18,9 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     super(new ContainerBeaconPotion(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityBeaconPotion.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.FUEL.ordinal(), Fields.FUELMAX.ordinal());
+    if (TileEntityBeaconPotion.doesConsumePotions) {
+      this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.FUEL.ordinal(), Fields.FUELMAX.ordinal());
+    }
   }
   @Override
   public void initGui() {
@@ -45,7 +47,6 @@ public class GuiBeaconPotion extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    progressBar.maxValue = tile.getField(Fields.FUELMAX.ordinal());
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_BOTTLE);
     for (int k = 0; k < 9; k++) {
@@ -53,6 +54,9 @@ public class GuiBeaconPotion extends GuiBaseContainer {
           this.guiLeft + ContainerBeaconPotion.SLOTX_START - 1 + k * Const.SQ,
           this.guiTop + ContainerBeaconPotion.SLOTY - 1,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    if (progressBar != null) {
+      progressBar.maxValue = tile.getField(Fields.FUELMAX.ordinal());
     }
   }
   @SideOnly(Side.CLIENT)

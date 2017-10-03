@@ -41,6 +41,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public static enum EntityType {
     PLAYERS, NONPLAYER, ALL, MONSTER, CREATURE, AMBIENT, WATER; // ambient, monster, creature, water
   }
+  static boolean doesConsumePotions;
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
@@ -69,7 +70,9 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       if (newEffects != null && newEffects.size() > 0) {
         this.setFuelMax(MAX_POTION);
         this.setFuelCurrent(this.getFuelMax());
-        this.setInventorySlotContents(0, ItemStack.EMPTY);
+        if (doesConsumePotions) {
+          this.setInventorySlotContents(0, ItemStack.EMPTY);
+        }
         effects = new ArrayList<PotionEffect>();
         for (PotionEffect eff : newEffects) {
           //cannot set the duration time so we must copy it
@@ -77,7 +80,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         }
       }
     }
-    else if (this.getFuelCurrent() > 0) {
+    else if (this.getFuelCurrent() > 0 && doesConsumePotions) {
       this.setFuelCurrent(this.getFuelCurrent() - 1);
     }
     this.shiftAllUp(1);
@@ -339,7 +342,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       int strength = tag.getInteger("potion_strength");
       Potion p = Potion.getPotionFromResourceLocation(potion);
       if (p != null) {
-        this.effects.add(new PotionEffect(p, strength, POTION_TICKS));
+        this.effects.add(new PotionEffect(p,POTION_TICKS, strength));
       }
     }
     if (eType >= 0 && eType < EntityType.values().length) {
@@ -391,17 +394,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public int getRadiusCalc() {
     return (int) Math.pow(2, this.radius);
   }
-  //  @Override
-  //  public void toggleSizeShape() {
-  //   int newRadiusPow = this.getField(Fields.RANGE.ordinal()) + 1;
-  //   //goes up by power of 2
-  //   //2^9 = 512
-  //   //2^4 = 16
-  //   if(newRadiusPow > 9){
-  //     newRadiusPow = 4;
-  //   }
-  //   this.setField(Fields.RANGE.ordinal(), newRadiusPow);
-  //  }
   @Override
   public void toggleSizeShape() {
     int newRad = this.getField(Fields.RANGE.ordinal()) + 1;
