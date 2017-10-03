@@ -106,6 +106,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+  public void drawStringCentered(String s, int x, int y) {
+    this.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, y);
+  }
   public void drawString(String s, int x, int y) {
     this.fontRenderer.drawString(UtilChat.lang(s), x, y, FONTCOLOR);
   }

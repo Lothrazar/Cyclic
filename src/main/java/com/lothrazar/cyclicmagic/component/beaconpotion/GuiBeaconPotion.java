@@ -58,11 +58,17 @@ public class GuiBeaconPotion extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    TileEntityBeaconPotion.EntityType t = ((TileEntityBeaconPotion) this.tile).getEntityType();
+    TileEntityBeaconPotion te = ((TileEntityBeaconPotion) this.tile);
+    TileEntityBeaconPotion.EntityType t = te.getEntityType();
     this.btnEntityType.displayString = UtilChat.lang("tile.beacon_potion." + t.name().toLowerCase());
     int r = tile.getField(TileEntityBeaconPotion.Fields.RANGE.ordinal());
     r = ((int) Math.pow(2, r));
     btnSize.displayString = UtilChat.lang(r + " x " + r);
+    String effect = te.getFirstEffectName();
+    if (effect.isEmpty() == false) {
+      effect = "<" + UtilChat.lang(effect) + ">";
+      this.drawStringCentered(effect, this.width / 4, 16);
+    }
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

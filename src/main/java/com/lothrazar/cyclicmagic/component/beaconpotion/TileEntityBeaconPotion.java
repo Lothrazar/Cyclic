@@ -14,10 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -36,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITileSizeToggle {
   private static final int MAX_POTION = 16000;
-  private static final int SECONDS = 8;
+  private static final int POTION_TICKS = Const.TICKS_PER_SEC * 8;// 8 seconds
   private static final int MAX_RADIUS = 8;
   public static enum Fields {
     REDSTONE, FUEL, FUELMAX, ENTITYTYPE, RANGE;
@@ -67,11 +64,17 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     if (this.getFuelCurrent() == 0) {
       //try to consume a potion
       ItemStack s = this.getStackInSlot(0);
-      this.effects = PotionUtils.getEffectsFromStack(s);
-      if (this.effects.size() > 0) {
+      //      this.effects = 
+      List<PotionEffect> newEffects = PotionUtils.getEffectsFromStack(s);
+      if (newEffects != null && newEffects.size() > 0) {
         this.setFuelMax(MAX_POTION);
         this.setFuelCurrent(this.getFuelMax());
         this.setInventorySlotContents(0, ItemStack.EMPTY);
+        effects = new ArrayList<PotionEffect>();
+        for (PotionEffect eff : newEffects) {
+          //cannot set the duration time so we must copy it
+          effects.add(new PotionEffect(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
+        }
       }
     }
     else if (this.getFuelCurrent() > 0) {
@@ -88,6 +91,12 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       this.updateSegmentColors();
       this.addEffectsToEntities();
     }
+  }
+  public String getFirstEffectName() {
+    if (this.effects == null || this.effects.size() == 0) {
+      return "";
+    }
+    return this.effects.get(0).getEffectName();
   }
   private void addEffectsToEntities() {
     if (this.effects == null || this.effects.size() == 0) {
@@ -109,15 +118,21 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     else { // we apply other filters later
       list.addAll(this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb));
     }
-    for (EntityLivingBase entityplayer : list) {
-      if (skipPlayers && entityplayer instanceof EntityPlayer) {
+    for (EntityLivingBase entity : list) {
+      if (skipPlayers && entity instanceof EntityPlayer) {
         continue;// filter says to skip players
       }
-      if (creatureType != null && entityplayer.isCreatureType(creatureType, false) == false) {
+      if (creatureType != null && entity.isCreatureType(creatureType, false) == false) {
         continue;//creature type filter is enabled AND this one doesnt match, so skip
       }
       for (PotionEffect eff : this.effects) {
-        entityplayer.addPotionEffect(new PotionEffect(eff.getPotion(), Const.TICKS_PER_SEC * SECONDS, eff.getAmplifier(), true, showParticles));
+        if (entity.getActivePotionEffect(eff.getPotion()) != null) {
+          //important to use combine for thing effects that apply attributes such as health
+          entity.getActivePotionEffect(eff.getPotion()).combine(eff);
+        }
+        else {
+          entity.addPotionEffect(new PotionEffect(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, showParticles));
+        }
       }
     }
   }
@@ -228,11 +243,9 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public void setName(String name) {
     this.customName = name;
   }
- 
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem() instanceof ItemPotion;
   }
-  
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
       this.updateBeacon();
@@ -243,7 +256,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
   }
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[]{0,1,2,3,4,5,6,7,8};
+    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
   }
   /**
    * Returns true if automation can insert the given item in the given slot from
@@ -326,7 +339,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       int strength = tag.getInteger("potion_strength");
       Potion p = Potion.getPotionFromResourceLocation(potion);
       if (p != null) {
-        this.effects.add(new PotionEffect(p, strength, SECONDS));
+        this.effects.add(new PotionEffect(p, strength, POTION_TICKS));
       }
     }
     if (eType >= 0 && eType < EntityType.values().length) {
