@@ -37,7 +37,7 @@ public class CyclicGuideBook implements IGuideBook {
   private Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItems = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
-  private Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
+//  private Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesBlockMachine = new HashMap<ResourceLocation, EntryAbstract>();
@@ -56,9 +56,9 @@ public class CyclicGuideBook implements IGuideBook {
       case GEAR:
         entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
-      case POTION:
-        entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
-      break;
+//      case POTION:
+//        entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+//      break;
       case WORLD:
         entriesWorld.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
@@ -123,7 +123,7 @@ public class CyclicGuideBook implements IGuideBook {
     addCategory(entriesBlockMachine, GuideCategory.BLOCKMACHINE);
     addCategory(entriesItems, GuideCategory.ITEM);
     addCategory(entriesGear, GuideCategory.GEAR);
-    addCategory(entriesPotion, GuideCategory.POTION);
+//    addCategory(entriesPotion, GuideCategory.POTION);
     addCategory(entriesEnchants, GuideCategory.ENCHANT);
     addCategory(entriesWorld, GuideCategory.WORLD);
     addCategory(entriesBlockPlate, GuideCategory.BLOCKPLATE);

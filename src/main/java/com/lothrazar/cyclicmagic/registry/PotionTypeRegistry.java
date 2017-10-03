@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
 import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -27,6 +28,7 @@ public class PotionTypeRegistry {
   private static PotionTypeCyclic potionTypeLevitation;
   private static PotionTypeCyclic potionTypeHaste;
   private static PotionTypeCyclic potionTypeResistance;
+  private static PotionTypeCyclic potionTypeResistanceII;
   private static PotionTypeCyclic potionHealth;
   private static PotionTypeCyclic potionEnder;
   private static PotionTypeCyclic potionTypeLuck;
@@ -42,7 +44,7 @@ public class PotionTypeRegistry {
       potions.add(potionTypeSlowfall);
     }
     if (ItemPotionModule.enableWaterwalk) {
-      potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk", Items.BLAZE_ROD);
+      potionTypeWaterwalk = addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.COD.getMetadata()));
       potions.add(potionTypeWaterwalk);
     }
     if (ItemPotionModule.enableSnow) {
@@ -66,12 +68,18 @@ public class PotionTypeRegistry {
       potions.add(potionTypeLevitation);
     }
     if (ItemPotionModule.enableHaste) {
-      potionTypeHaste = addPotionType(new PotionEffect(MobEffects.HASTE, NORMAL), "haste", Items.EMERALD);
+      potionTypeHaste = addPotionType(new PotionEffect(MobEffects.HASTE, NORMAL), "haste", Items.COOKIE);
       potions.add(potionTypeHaste);
+      PotionTypeCyclic potionTypeHasteII = addPotionType(new PotionEffect(MobEffects.HASTE, SHORT, Const.Potions.II), "haste2", Items.GLOWSTONE_DUST);
+      potionTypeHasteII.base = potionTypeHaste;
+      potions.add(potionTypeHasteII);
     }
     if (ItemPotionModule.enableResist) {
-      potionTypeResistance = addPotionType(new PotionEffect(MobEffects.RESISTANCE, NORMAL), "resistance", Items.DIAMOND);
+      potionTypeResistance = addPotionType(new PotionEffect(MobEffects.RESISTANCE, NORMAL), "resistance", new ItemStack(Blocks.OBSIDIAN));
       potions.add(potionTypeResistance);
+      potionTypeResistanceII = addPotionType(new PotionEffect(MobEffects.RESISTANCE, SHORT, Const.Potions.II), "resistance2", Items.GLOWSTONE_DUST);
+      potionTypeResistanceII.base = potionTypeResistance;
+      potions.add(potionTypeResistanceII);
     }
     if (ItemPotionModule.enableHBoost) {
       potionHealth = addPotionType(new PotionEffect(MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V), "healthboost", Items.GOLDEN_APPLE);
@@ -96,7 +104,7 @@ public class PotionTypeRegistry {
       potions.add(potionTypeBlindness);
     }
     if (ItemPotionModule.enableSaturation) {
-      potionTypeSat = addPotionType(new PotionEffect(MobEffects.SATURATION, LONG), "saturation", Items.PUMPKIN_PIE);
+      potionTypeSat = addPotionType(new PotionEffect(MobEffects.SATURATION, NORMAL), "saturation", Items.CAKE);
       potionTypeSat.base = PotionTypes.HEALING;
       potions.add(potionTypeSat);
     }

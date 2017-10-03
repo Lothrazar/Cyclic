@@ -853,11 +853,19 @@ potion.effect.haste=Potion of Haste
 splash_potion.effect.haste=Splash Potion of Haste
 lingering_potion.effect.haste=Lingering Potion of Haste
 tipped_arrow.effect.haste=Arrow of Haste
+potion.effect.haste2=Potion of Haste
+splash_potion.effect.haste2=Splash Potion of Haste
+lingering_potion.effect.haste2=Lingering Potion of Haste
+tipped_arrow.effect.haste2=Arrow of Haste
 
 potion.effect.resistance=Potion of Resistance
 splash_potion.effect.resistance=Splash Potion of Resistance
 lingering_potion.effect.resistance=Lingering Potion of Resistance
 tipped_arrow.effect.resistance=Arrow of Resistance
+potion.effect.resistance2=Potion of Resistance
+splash_potion.effect.resistance2=Splash Potion of Resistance
+lingering_potion.effect.resistance2=Lingering Potion of Resistance
+tipped_arrow.effect.resistance2=Arrow of Resistance
 
 potion.effect.healthboost=Potion of Health Boost
 splash_potion.effect.healthboost=Splash Potion of Health Boost
