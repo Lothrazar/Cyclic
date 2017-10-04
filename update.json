@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.29",
-    "1.10.2-recommended": "1.10.29",
+    "1.10.2-latest":  "1.10.30",
+    "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
@@ -137,6 +137,7 @@
   	,"1.10.27":"No longer adds Dynamite VI to dungeon loot tables.  Fixed uncommon crash that happens when a Sack of Storage is spawned in from a loot table instead of being crafted (somehow gets created with bad data, hard to explain and replicate, example given is new world bonus chest)"
  	,"1.10.28":"Minimum forge version changed to 12.18.3.2316.  Harvester now works on Resourceful Crops mod. "
 	,"1.10.29":"Donkeys will no longer eat lapis carrots (they are immune anyway).  The horse upgrade carrots will now get eaten only one at a time, and will no longer someties get set to item stack zero / crash the game.  Interfaces with textboxes now allow you to hold down the button, such as a letter or the delete key (Ender Book, Faith Plate, Password Detector).  "
+	,"1.10.30":"Fixed some scaffolding blocks auto-breaking when they shouldn't.  Fixed ConcurrentModificationException error when using Cyclic Building Scepter.  "
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
@@ -213,6 +214,6 @@
 	,"1.8.6":"New block: Empty Beacon.  Added speed control buttons to Automated User.  Fix the Step height feature not letting you sneak to stay on the block, and also now sneaking will let you not walk up the block (Apple of Lofty Stature player upgrade).  Controlled Miner's dig speed has been doubled; fuel consumption unchanged.  Item Collector now has a button to control the size of the target region, instead of the previous fixed 9x9 radius.  Redstone Clock now has controls to customize which faces output a signal on tick.    "
   }
   ,"1.12.2":{
-	"1.9.0":"All potions remade to use vanilla system, instead of custom items.  Potions now have Splash, Lingering, and Tipped arrows for each.  Added potions for blindness, saturation, and wither.  Added ____ Beacon."
+	"1.9.0":"All potions remade to use vanilla system, instead of custom items; as a result of this you will see many items removed from the game since they have been replaced.  This helps for modpacks since many less IDs get used.  Potions now have Splash, Lingering, and Tipped arrows for each.  Added brewable potions for blindness, saturation, and wither.  Added Pharos Beacon, which works like a vanilla beacon but it eats potions to give out effects.  Cyclic Guide Book will now show up in Cyclic creative tab (if Guide API is installed).  Minimum forge version required is now 14.23.0.2494. "
   }
 }

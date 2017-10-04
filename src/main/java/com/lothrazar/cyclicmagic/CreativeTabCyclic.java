@@ -42,13 +42,15 @@ public class CreativeTabCyclic extends CreativeTabs {
   public void displayAllRelevantItems(NonNullList<ItemStack> list) {
     super.displayAllRelevantItems(list);
     Iterator<ItemStack> i = list.iterator();
+    Item guidebook = Item.getByNameOrId("guideapi:" + Const.MODID + "-guide");
     while (i.hasNext()) {
       Item s = i.next().getItem(); // must be called before you can call i.remove()
       if (s == Items.ENCHANTED_BOOK
           || s == Items.LINGERING_POTION
           || s == Items.POTIONITEM
           || s == Items.SPLASH_POTION
-          || s == Items.TIPPED_ARROW) {
+          || s == Items.TIPPED_ARROW
+          || s == guidebook) {
         i.remove();
       }
     }
@@ -74,6 +76,9 @@ public class CreativeTabCyclic extends CreativeTabs {
       list.add(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), pt));
       list.add(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), pt));
       list.add(PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), pt));
+    }
+    if (guidebook != null) {
+      list.add(new ItemStack(guidebook));
     }
   }
   public void setTabItemIfNull(Item i) {

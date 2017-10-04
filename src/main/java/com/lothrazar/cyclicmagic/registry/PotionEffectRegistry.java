@@ -29,15 +29,22 @@ public class PotionEffectRegistry {
   public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0x91E459);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   private static void register() {
-  //  PotionType t http://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2842885-solved-how-can-i-add-my-own-potion-with-my-own
-    
-    /*Assuming you've created and registered the Potion instances, you then need to create and register a PotionType for each brewable potion. For most vanilla Potions there are one to three PotionTypes: regular (e.g. Regeneration, 0:45) , long (e.g. Regeneration, 1:30) and strong (e.g. Regeneration II, 0:22).
-
-Both Potion and PotionType are implementations of IForgeRegistryEntry, so they should be registered during the appropriate registry events.
-
-Once you've created and registered the Potions and PotionTypes, use PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular X, Regular X to Long X and Regular X to Strong X). For more advanced brewing recipes, you can use Forge's BrewingRecipeRegistry.
-*/
-    
+    //  PotionType t http://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2842885-solved-how-can-i-add-my-own-potion-with-my-own
+    /*
+     * Assuming you've created and registered the Potion instances, you then
+     * need to create and register a PotionType for each brewable potion. For
+     * most vanilla Potions there are one to three PotionTypes: regular (e.g.
+     * Regeneration, 0:45) , long (e.g. Regeneration, 1:30) and strong (e.g.
+     * Regeneration II, 0:22).
+     * 
+     * Both Potion and PotionType are implementations of IForgeRegistryEntry, so
+     * they should be registered during the appropriate registry events.
+     * 
+     * Once you've created and registered the Potions and PotionTypes, use
+     * PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular
+     * X, Regular X to Long X and Regular X to Strong X). For more advanced
+     * brewing recipes, you can use Forge's BrewingRecipeRegistry.
+     */
     PotionEffectRegistry.registerPotionEffect(MAGNET);
     PotionEffectRegistry.registerPotionEffect(ENDER);
     PotionEffectRegistry.registerPotionEffect(WATERWALK);
@@ -57,10 +64,8 @@ Once you've created and registered the Potions and PotionTypes, use PotionHelper
   public static void onRegistryEvent(RegistryEvent.Register<Potion> event) {
     PotionEffectRegistry.register();
     for (Potion b : potions) {
-       
       event.getRegistry().register(b);
     }
-
   }
   public static String getStrForLevel(int lvl) {
     //TODO: probs a better roman numeral way\

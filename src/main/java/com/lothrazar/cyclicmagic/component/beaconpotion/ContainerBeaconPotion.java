@@ -30,8 +30,6 @@ public class ContainerBeaconPotion extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
-  
-
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

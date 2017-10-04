@@ -17,11 +17,10 @@ public class PotionTypeCyclic extends PotionType {
     recipeStack = ingredient;
     base = PotionTypes.AWKWARD;
   }
-//  public void addMix(Item item) {
-//    PotionHelper.addMix(PotionTypes.AWKWARD, item, this);
-//  }
+  //  public void addMix(Item item) {
+  //    PotionHelper.addMix(PotionTypes.AWKWARD, item, this);
+  //  }
   public void addMix() {
-   
     PotionHelper.addMix(base, Ingredient.fromStacks(recipeStack), this);
   }
 }

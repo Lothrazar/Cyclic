@@ -342,7 +342,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       int strength = tag.getInteger("potion_strength");
       Potion p = Potion.getPotionFromResourceLocation(potion);
       if (p != null) {
-        this.effects.add(new PotionEffect(p,POTION_TICKS, strength));
+        this.effects.add(new PotionEffect(p, POTION_TICKS, strength));
       }
     }
     if (eType >= 0 && eType < EntityType.values().length) {
