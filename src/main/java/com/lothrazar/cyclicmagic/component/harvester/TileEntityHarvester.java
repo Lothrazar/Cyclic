@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
+import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
@@ -102,14 +104,15 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.consumeFuel(success * 10);//10 fuel per item instead of one
   }
   private void tryHarvestSingle() {
-    conf.resetDrops();
+ 
     BlockPos harvest = getTargetPos();
-    if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
+    NonNullList<ItemStack>    drops = UtilHarvester.harvestSingle(getWorld(), harvest);
+    if (drops.size() > 0) {
       this.updateFuelIsBurning();
       UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
-      if (conf.drops != null) {
-        setOutputItems(conf.drops);
-      }
+//      if (conf.drops != null) {
+        setOutputItems(drops);
+//      }
     }
     else {
       timer = 1;//harvest didnt work, try again really quick

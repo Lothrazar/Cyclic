@@ -134,6 +134,8 @@ public class UtilHarvestCrops {
         int currentAge = blockState.getValue(propInt);
         if (currentAge >= maxAge) {
           doBreak = true;
+          //TODO: COCOA REPLANTING facing directon hmm fffffff
+          //aha! COPY the block state and just set age 
         }
         break;
       }
@@ -149,26 +151,27 @@ public class UtilHarvestCrops {
     //  EXAMPLE: pumpkin, melon
     // (E): an ignore list of ones to skip EXAMPLE: stem
     // TODO SPECIAL: cactus has "age" but we dont want to harvest bottom. Logic? or ignore?
-    if (blockCheck instanceof BlockNetherWart) { // has age prop
-      if (conf.doesCrops) {
-        int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
-        if (age == 3) {//this is hardcoded in base class
-          doBreak = true;
-          stateReplant = blockCheck.getDefaultState();
-        }
-      }
-    }
-    if (blockCheck instanceof BlockCocoa) { // has age prop
-      if (conf.doesCrops) {
-        int age = ((Integer) blockState.getValue(BlockCocoa.AGE)).intValue();
-        if (age == 2) {//this is hardcoded in base class
-          doBreak = true;
-          // a new state that copies the property but NOT the age
-          stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, blockState.getValue(BlockCocoa.FACING));
-        }
-      }
-    }
-    else if (blockCheck instanceof BlockStem) { // keep this: we want to ignore stems
+//    if (blockCheck instanceof BlockNetherWart) { // has age prop
+//      if (conf.doesCrops) {
+//        int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
+//        if (age == 3) {//this is hardcoded in base class
+//          doBreak = true;
+//          stateReplant = blockCheck.getDefaultState();
+//        }
+//      }
+//    }
+//    if (blockCheck instanceof BlockCocoa) { // has age prop
+//      if (conf.doesCrops) {
+//        int age = ((Integer) blockState.getValue(BlockCocoa.AGE)).intValue();
+//        if (age == 2) {//this is hardcoded in base class
+//          doBreak = true;
+//          // a new state that copies the property but NOT the age
+//          stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, blockState.getValue(BlockCocoa.FACING));
+//        }
+//      }
+//    }
+//    else 
+      if (blockCheck instanceof BlockStem) { // keep this: we want to ignore stems
       if (conf.doesStem)
         doBreak = true;
     }
