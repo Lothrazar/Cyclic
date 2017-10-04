@@ -37,10 +37,8 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe {
         " g ",
         "ooo",
         'o', Blocks.MOSSY_COBBLESTONE,
-        'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+        'g', Items.IRON_PICKAXE,
         's', Blocks.DISPENSER,
-        'r', "bone"
-    //            'b', Items.BLAZE_POWDER
-    );
+        'r', "bone");
   }
 }

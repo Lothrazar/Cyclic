@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -14,6 +15,8 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.brewing.BrewingRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -161,5 +164,34 @@ public class RecipeRegistry {
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
     FluidsRegistry.addPoisonRecipe();//yeah kinda hacky since fluids have no register event yet
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
+  }
+  /**
+   * Currently not used but it does work.
+   * 
+   * has built in unit test
+   * 
+   * @param input
+   * @param ingredient
+   * @param output
+   * @return
+   */
+  public static BrewingRecipe addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
+    if (input.isEmpty() || input.getItem() == null) {
+      return null;
+    }
+    BrewingRecipe recipe = new BrewingRecipe(
+        input,
+        ingredient,
+        output);
+    BrewingRecipeRegistry.addRecipe(recipe);
+    if (ModCyclic.logger.sendInfo) {//OMG UNIT TESTING WAAT
+      ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
+      if (output0.getItem() == output.getItem())
+        ModCyclic.logger.log("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+      else {
+        ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+      }
+    }
+    return recipe;
   }
 }

@@ -16,17 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle {
-  public TileEntityDetector() {
-    super(0);
-  }
-  private int rangeX = 5;
-  private int rangeY = 5;
-  private int rangeZ = 5;
-  private int limitUntilRedstone = 5;
-  private boolean isPoweredNow = false;
-  private CompareType compType = CompareType.GREATER;
-  private EntityType entityType = EntityType.LIVING;
-  private int renderParticles;
   private static final int MAX_RANGE = 16;
   public static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES;
@@ -36,6 +25,17 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   }
   public static enum CompareType {
     LESS, GREATER, EQUAL;
+  }
+  private int rangeX = 5;
+  private int rangeY = 5;
+  private int rangeZ = 5;
+  private int limitUntilRedstone = 5;
+  private boolean isPoweredNow = false;
+  private CompareType compType = CompareType.GREATER;
+  private EntityType entityType = EntityType.LIVING;
+  private int renderParticles;
+  public TileEntityDetector() {
+    super(0);
   }
   @Override
   public int[] getFieldOrdinals() {

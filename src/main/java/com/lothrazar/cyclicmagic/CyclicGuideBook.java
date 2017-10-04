@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
@@ -24,6 +25,8 @@ import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
@@ -37,7 +40,7 @@ public class CyclicGuideBook implements IGuideBook {
   private Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItems = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
-  private Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
+  //  private Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesBlockMachine = new HashMap<ResourceLocation, EntryAbstract>();
@@ -56,9 +59,9 @@ public class CyclicGuideBook implements IGuideBook {
       case GEAR:
         entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
-      case POTION:
-        entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
-      break;
+      //      case POTION:
+      //        entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      //      break;
       case WORLD:
         entriesWorld.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
@@ -123,7 +126,7 @@ public class CyclicGuideBook implements IGuideBook {
     addCategory(entriesBlockMachine, GuideCategory.BLOCKMACHINE);
     addCategory(entriesItems, GuideCategory.ITEM);
     addCategory(entriesGear, GuideCategory.GEAR);
-    addCategory(entriesPotion, GuideCategory.POTION);
+    //    addCategory(entriesPotion, GuideCategory.POTION);
     addCategory(entriesEnchants, GuideCategory.ENCHANT);
     addCategory(entriesWorld, GuideCategory.WORLD);
     addCategory(entriesBlockPlate, GuideCategory.BLOCKPLATE);
@@ -152,5 +155,14 @@ public class CyclicGuideBook implements IGuideBook {
     GuideAPI.setModel(book);
   }
   @Override
-  public void handlePost(ItemStack bookStack) {}
+  public void handlePost(ItemStack bookStack) {
+    //TODO: LUL THIS DOESNT WORK
+    RecipeRegistry.addShapedRecipe(bookStack,
+        "b",
+        "o",
+        "s",
+        'b', Items.BOOK,
+        'o', Blocks.GRAVEL,
+        's', Items.STICK);
+  }
 }

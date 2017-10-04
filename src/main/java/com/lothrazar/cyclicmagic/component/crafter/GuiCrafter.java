@@ -11,9 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiCrafter extends GuiBaseContainer {
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
-    screenSize = ScreenSize.LARGE;
-    this.xSize = screenSize.width();
-    this.ySize = screenSize.height();
+    this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
