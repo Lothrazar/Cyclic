@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -57,19 +58,27 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   }
   @Override
   public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
-    if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer p = ctx.getServerHandler().playerEntity;
-      // if(
-      // p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
-      // message.pos)){
-      ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
-      if (spell != null && spell instanceof ISpellFromServer) {
-        ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
-      }
-      else {
-        ModCyclic.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
-      }
-    }
+    checkThreadAndEnqueue(message, ctx);
     return null;
+  }
+  private void checkThreadAndEnqueue(final PacketSpellFromServer message, final MessageContext ctx) {
+    IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
+    thread.addScheduledTask(new Runnable() {
+      public void run() {
+        if (ctx.side.isServer() && message != null && message.pos != null) {
+          EntityPlayer p = ctx.getServerHandler().playerEntity;
+          // if(
+          // p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
+          // message.pos)){
+          ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
+          if (spell != null && spell instanceof ISpellFromServer) {
+            ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
+          }
+          else {
+            ModCyclic.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
+          }
+        }
+      }
+    });
   }
 }
