@@ -56,12 +56,12 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
     if (side != null) {
       offset = pos.offset(side);
     }
-    int r = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
-    UtilHarvestCrops.harvestArea(worldObj, offset.down().down(), r, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.down(), r, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset, r, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.up(), r, conf);
-    UtilHarvestCrops.harvestArea(worldObj, offset.up().up(), r, conf);
+    int radius = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
+    UtilHarvestCrops.harvestArea(worldObj, offset.down().down(), radius, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.down(), radius, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset, radius, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.up(), radius, conf);
+    UtilHarvestCrops.harvestArea(worldObj, offset.up().up(), radius, conf);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
