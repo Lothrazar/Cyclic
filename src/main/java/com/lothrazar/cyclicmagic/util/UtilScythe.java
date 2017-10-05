@@ -21,22 +21,17 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class UtilScythe  {
+public class UtilScythe {
   private static String[] blacklist;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
-  private static class ScytheConfig{
+  private static class ScytheConfig {
     NonNullList<String> blockWhitelist = NonNullList.create();
     NonNullList<String> oreDictWhitelist = NonNullList.create();
-    
   }
   public static void syncConfig(Configuration config) {
-  
-    
-    //TODO: config it after its decided
-    //TODO: actually use these things
-    
-    
+    //TODO: config it after its decided? maybe? maybe not?
+/* @formatter:off */
     leafConfig.blockWhitelist = NonNullList.from(
         "extratrees:leaves.decorative.0"
        , "extratrees:leaves.decorative.1"
@@ -54,7 +49,6 @@ public class UtilScythe  {
     leafConfig.oreDictWhitelist = NonNullList.from(
         "treeLeaves"
         );
-    
     
     brushConfig.oreDictWhitelist = NonNullList.from("vine", "plant","flowerYellow");
     brushConfig.blockWhitelist = NonNullList.from(
@@ -87,30 +81,29 @@ public class UtilScythe  {
         ,"abyssalcraft:luminousthistle"
         ,"harvestcraft:garden"
         );
-    
+    /* @formatter:on */
     //    String[] deflist = new String[] {
     //        "terraqueous:pergola"
     //    };
-   // String category = Const.ConfigCategory.modpackMisc;
+    // String category = Const.ConfigCategory.modpackMisc;
     //    blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
   }
-  private static boolean doesMatch(Block blockCheck, ScytheConfig type){
-    if(type.blockWhitelist.contains(blockCheck.getRegistryName().toString())){
+  private static boolean doesMatch(Block blockCheck, ScytheConfig type) {
+    if (type.blockWhitelist.contains(blockCheck.getRegistryName().toString())) {
       return true;
     }
     else {
-      ItemStack bStack= new ItemStack(blockCheck);
-      for(String oreId : type.oreDictWhitelist){
-        if(OreDictionary.doesOreNameExist(oreId)){
-          for(ItemStack s : OreDictionary.getOres(oreId)){
-            if(OreDictionary.itemMatches(s,bStack, false)){
+      ItemStack bStack = new ItemStack(blockCheck);
+      for (String oreId : type.oreDictWhitelist) {
+        if (OreDictionary.doesOreNameExist(oreId)) {
+          for (ItemStack s : OreDictionary.getOres(oreId)) {
+            if (OreDictionary.itemMatches(s, bStack, false)) {
               return true;
             }
           }
         }
       }
     }
-    
     return false;//
   }
   public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
@@ -131,27 +124,22 @@ public class UtilScythe  {
       //      ModCyclic.logger.error("Error: a block has not been registered");
     }
     else {
-      
-      switch(type){
+      switch (type) {
         case CROPS:
-          break;
+        break;
         case LEAVES:
-          if(doesMatch(blockCheck, leafConfig)){
+          if (doesMatch(blockCheck, leafConfig)) {
             doBreak = true;
           }
-          break;
+        break;
         case WEEDS:
-          if(doesMatch(blockCheck, brushConfig)){
+          if (doesMatch(blockCheck, brushConfig)) {
             doBreak = true;
           }
-          break;
+        break;
         default:
-          break;
-        
+        break;
       }
-      
-      
-      
     }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
