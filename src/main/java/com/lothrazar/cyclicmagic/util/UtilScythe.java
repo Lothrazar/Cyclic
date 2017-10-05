@@ -82,11 +82,14 @@ public class UtilScythe {
         ,"harvestcraft:garden"
         );
     /* @formatter:on */
-    //    String[] deflist = new String[] {
-    //        "terraqueous:pergola"
-    //    };
+        String[] deflist = new String[] {
+            "terraqueous:pergola"
+        };
     // String category = Const.ConfigCategory.modpackMisc;
-    //    blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
+        blacklist = deflist;
+        
+        
+        //= config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
   }
   private static boolean doesMatch(Block blockCheck, ScytheConfig type) {
     if (type.blockWhitelist.contains(blockCheck.getRegistryName().toString())) {
