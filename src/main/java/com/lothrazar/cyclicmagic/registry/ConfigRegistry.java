@@ -24,9 +24,12 @@ public class ConfigRegistry {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
       conf.syncConfig(config);
     }
+    
+    
     //NOT only used by harvester machine, also scythe. so 
     //PRETTTY much a hack puting this here. but we cant put i in one item since both use it
     UtilScythe.syncConfig(config);
+    
     config.save();
   }
 }

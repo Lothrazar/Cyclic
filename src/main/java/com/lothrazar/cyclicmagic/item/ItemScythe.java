@@ -5,8 +5,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
-import com.lothrazar.cyclicmagic.util.UtilShape;
-import com.lothrazar.cyclicmagic.util.UtilScythe.HarvestSetting;
+import com.lothrazar.cyclicmagic.util.UtilShape; 
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,32 +22,15 @@ import net.minecraft.world.World;
 public class ItemScythe extends BaseTool implements IHasRecipe {
   private static final int RADIUS = 6;//13x13
   private static final int RADIUS_SNEAKING = 2;//2x2
-  private HarvestSetting conf;
-  public enum HarvestType {
+ 
+  public enum ScytheType {
     WEEDS, LEAVES, CROPS;
   }
-  private HarvestType harvestType;
-  public ItemScythe(HarvestType c) {
+  private ScytheType harvestType;
+  public ItemScythe(ScytheType c) {
     super(1000);
     harvestType = c;
-    conf = new HarvestSetting();//by default all are set false
-    switch (harvestType) {
-      case CROPS:
-      break;
-      case WEEDS:
-        conf.doesFlowers = true;
-        conf.doesMushroom = true;
-        conf.doesTallgrass = true;
-        //        conf.doesSapling = true;
-        //new : NOTE THIS IN CHANGELOG: weed scythe no longer hits saplings eh
-        conf.doesIShearable = true;
-      break;
-      case LEAVES:
-        conf.doesLeaves = true;
-      break;
-      default:
-      break;
-    }
+ 
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -63,7 +45,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
       case CROPS:
         //here we use UtilHarvester, which is the new v2 one
         final NonNullList<ItemStack> drops = NonNullList.create();
-        for (BlockPos p : shape) {
+        for (BlockPos p : shape) {//now it lands drops on top of player
           drops.addAll(UtilHarvester.harvestSingle(world, p));
         }
         for (ItemStack d : drops) {
@@ -71,9 +53,9 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
         }
       break;
       case LEAVES:
-      case WEEDS:
+      case WEEDS://NO LONGER DOES SAPLINGS
         for (BlockPos p : shape) {
-          UtilScythe.harvestSingle(world, p, conf);
+          UtilScythe.harvestSingle(world, p, this.harvestType);
         }
       break;
     }

@@ -1,77 +1,123 @@
 package com.lothrazar.cyclicmagic.util;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.item.ItemScythe.ScytheType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockMushroom;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.BlockStem;
 import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class UtilScythe {
-  public static class HarvestSetting {
-    public boolean doesStem = false;
-    public boolean doesSapling = false;
-    public boolean doesMushroom = false;
-    public boolean doesPumpkinBlocks = false;
-    public boolean doesMelonBlocks = false;
-    public boolean doesFlowers = false;
-    public boolean doesLeaves = false;
-    public boolean doesCrops = false;
-    // this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
-    public boolean doesTallgrass = false;
-    public boolean doesCactus = false;
-    public boolean doesReeds = false;
-    public boolean doesIShearable = false;
-    public List<ItemStack> drops;
-    @Override
-    public String toString() {
-      String s = "";
-      s += "doesHarvestStem = " + doesStem + System.lineSeparator();
-      s += "doesHarvestSapling = " + doesSapling + System.lineSeparator();
-      s += "doesHarvestMushroom = " + doesMushroom + System.lineSeparator();
-      s += "doesPumpkinBlocks = " + doesPumpkinBlocks + System.lineSeparator();
-      s += "doesMelonBlocks = " + doesMelonBlocks + System.lineSeparator();
-      s += "doesFlowers = " + doesFlowers + System.lineSeparator();
-      s += "doesCrops = " + doesCrops + System.lineSeparator();
-      s += "doesHarvestTallgrass = " + doesTallgrass + System.lineSeparator();
-      return s;
-    }
-  }
+public class UtilScythe  {
   private static String[] blacklist;
-  public static boolean harvestSingle(World world, BlockPos posCurrent, HarvestSetting conf) {
+  private static ScytheConfig leafConfig = new ScytheConfig();
+  private static ScytheConfig brushConfig = new ScytheConfig();
+  private static class ScytheConfig{
+    NonNullList<String> blockWhitelist = NonNullList.create();
+    NonNullList<String> oreDictWhitelist = NonNullList.create();
+    
+  }
+  public static void syncConfig(Configuration config) {
+  
+    
+    //TODO: config it after its decided
+    //TODO: actually use these things
+    
+    
+    leafConfig.blockWhitelist = NonNullList.from(
+        "extratrees:leaves.decorative.0"
+       , "extratrees:leaves.decorative.1"
+       , "extratrees:leaves.decorative.2"
+       , "extratrees:leaves.decorative.3"
+       , "extratrees:leaves.decorative.4"
+       , "extratrees:leaves.decorative.5"
+       , "forestry:leaves.decorative.0"
+       , "forestry:leaves.decorative.1"
+       , "terraqueous:foliage3:5"
+       , "plants2:nether_leaves"
+       , "plants2:crystal_leaves"
+       , "plants2:leaves_0");
+    
+    leafConfig.oreDictWhitelist = NonNullList.from(
+        "treeLeaves"
+        );
+    
+    
+    brushConfig.oreDictWhitelist = NonNullList.from("vine", "plant","flowerYellow");
+    brushConfig.blockWhitelist = NonNullList.from(
+        "plants2:cosmetic_0"
+        ,"plants2:cosmetic_1"
+        ,"plants2:cosmetic_2"
+        ,"plants2:cosmetic_3"
+        ,"plants2:cosmetic_4"
+        ,"plants2:desert_0"
+        ,"plants2:desert_1"
+        ,"plants2:double_0"
+        ,"plants2:cataplant"
+        ,"botany:itemflower"
+        ,"biomesoplenty:flower_0"
+        ,"biomesoplenty:flower_1"
+        ,"biomesoplenty:plant_0"
+        ,"biomesoplenty:plant_1"
+        ,"biomesoplenty:mushroom"
+        ,"biomesoplenty:doubleplant"
+        ,"biomesoplenty:flower_vine"
+        ,"biomesoplenty:ivy"
+        ,"biomesoplenty:tree_moss"
+        ,"biomesoplenty:willow_vine"
+        ,"croparia:fruit_grass"
+        ,"plants2:androsace_a"
+        ,"plants2:akebia_q_vine"
+        ,"plants2:ampelopsis_a_vine"
+        ,"plants2:adlumia_f"
+        ,"abyssalcraft:wastelandsthorn"
+        ,"abyssalcraft:luminousthistle"
+        ,"harvestcraft:garden"
+        );
+    
+    //    String[] deflist = new String[] {
+    //        "terraqueous:pergola"
+    //    };
+   // String category = Const.ConfigCategory.modpackMisc;
+    //    blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
+  }
+  private static boolean doesMatch(Block blockCheck, ScytheConfig type){
+    if(type.blockWhitelist.contains(blockCheck.getRegistryName().toString())){
+      return true;
+    }
+    else {
+      ItemStack bStack= new ItemStack(blockCheck);
+      for(String oreId : type.oreDictWhitelist){
+        if(OreDictionary.doesOreNameExist(oreId)){
+          for(ItemStack s : OreDictionary.getOres(oreId)){
+            if(OreDictionary.itemMatches(s,bStack, false)){
+              return true;
+            }
+          }
+        }
+      }
+    }
+    
+    return false;//
+  }
+  public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
-    IBlockState stateReplant = null;
     IBlockState blockState = world.getBlockState(posCurrent);
-    if (blockState == null) {
-      return false;
-    }
     boolean addDropsToList = true;
     Block blockCheck = blockState.getBlock();
     if (blockCheck == Blocks.AIR) {
@@ -81,9 +127,32 @@ public class UtilScythe {
     if (isItemInBlacklist(seedItem)) {
       return false;
     }
-    String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
-    //    ModCyclic.logger.info(blockClassString);
-    //ModCyclic.logger.info(blockClassString+ posCurrent);
+    if (blockCheck.getRegistryName() == null) {
+      //      ModCyclic.logger.error("Error: a block has not been registered");
+    }
+    else {
+      
+      switch(type){
+        case CROPS:
+          break;
+        case LEAVES:
+          if(doesMatch(blockCheck, leafConfig)){
+            doBreak = true;
+          }
+          break;
+        case WEEDS:
+          if(doesMatch(blockCheck, brushConfig)){
+            doBreak = true;
+          }
+          break;
+        default:
+          break;
+        
+      }
+      
+      
+      
+    }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     final NonNullList<ItemStack> drops = NonNullList.create();
@@ -97,100 +166,62 @@ public class UtilScythe {
     // "minecraft:pumpkin","minecraft:cactus", "minecraft:melon_block","minecraft:reeds"
     //  EXAMPLE: pumpkin, melon
     // (E): an ignore list of ones to skip EXAMPLE: stem
-    if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS
-      if (conf.doesTallgrass) {
-        doBreak = true;
-        if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
-          doBreakAbove = true;
+    switch (type) {
+      case WEEDS:
+        if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS
+          doBreak = true;
+          if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
+            doBreakAbove = true;
+          }
+          if (bsBelow instanceof BlockTallGrass && bsBelow != null && bsBelow.getBlock() instanceof BlockTallGrass) {
+            doBreakBelow = true;
+          }
         }
-        if (bsBelow instanceof BlockTallGrass && bsBelow != null && bsBelow.getBlock() instanceof BlockTallGrass) {
-          doBreakBelow = true;
+        else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS
+          doBreak = true;
+          if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
+            doBreakAbove = true;
+          }
+          if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
+            doBreakBelow = true;
+          }
         }
-      }
+        else if (blockCheck instanceof BlockMushroom) {//remove from harvester tile? used by weeds though
+          doBreak = true;
+        }
+      break;
+      case CROPS:
+      break;
+      case LEAVES:
+        if (blockCheck instanceof BlockLeaves) {// true for ItemScythe type LEAVES
+          doBreak = true;
+        }
+      break;
     }
-    else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS
-      if (conf.doesTallgrass) {
-        doBreak = true;
-        if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
-          doBreakAbove = true;
-        }
-        if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
-          doBreakBelow = true;
-        }
-      }
-    }
-    else if (blockCheck instanceof BlockMushroom) {//remove from harvester tile? used by weeds though
-      if (conf.doesMushroom)
-        doBreak = true;
-    }
-    //    else if (blockCheck == Blocks.PUMPKIN) {
-    //      if (conf.doesPumpkinBlocks) {
+    //cant do BlockBush, too generic, too many things use
+    //many bushes are also crops.  
+    //    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER
+    //        || blockCheck instanceof BlockFlower
+    //        || blockClassString.equals("shadows.plants.block.PlantBase")
+    //        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
+    //        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")
+    //        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.BlockBlackLotus")
+    //        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
+    //        || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
+    //        || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
+    //      if (conf.doesFlowers) { // true for ItemScythe type WEEDS
     //        doBreak = true;
     //      }
     //    }
-    //    else if (blockCheck == Blocks.MELON_BLOCK) {
-    //      if (conf.doesMelonBlocks) {
-    //        doBreak = false;//not the standard break - custom rules to mimic silktouch
-    //        world.destroyBlock(posCurrent, false);
-    //        UtilItemStack.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
-    //      }
-    //    }
-    //cant do BlockBush, too generic, too many things use.  
-    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER
-        || blockCheck instanceof BlockFlower
-        || blockClassString.equals("shadows.plants.block.PlantBase")
-        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
-        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")
-        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.BlockBlackLotus")
-        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
-        || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
-        || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
-      if (conf.doesFlowers) { // true for ItemScythe type WEEDS
-        doBreak = true;
-      }
-    }
-    else if (blockCheck instanceof BlockLeaves) {// true for ItemScythe type LEAVES
-      if (conf.doesLeaves) {
-        doBreak = true;
-      }
-    }
-    //    else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
+    //    else if (blockCheck instanceof IShearable) {
+    //      if (conf.doesIShearable) {
+    //        addDropsToList = false;
+    //        drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
     //       
-    //      if (conf.doesCactus) { //never breaking the bottom one
     //        doBreak = true;
-    //        if (bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS) {
-    //          doBreakAbove = true;
-    //        }
     //      }
     //    }
-    //    else if (blockCheck == Blocks.REEDS && bsBelow != null && bsBelow.getBlock() == Blocks.REEDS) {
-    //      if (conf.doesReeds) {//never breaking the bottom one
-    //        doBreak = true;
-    //        if (bsAbove != null && bsAbove.getBlock() == Blocks.REEDS) {
-    //          doBreakAbove = true;
-    //        }
-    //      }
-    //    }
-    //    else if (blockCheck instanceof IGrowable) {
-    //      if (conf.doesCrops) {
-    //        IGrowable plant = (IGrowable) blockCheck;
-    //        // only if its full grown
-    //        if (plant.canGrow(world, posCurrent, blockState, world.isRemote) == false) {
-    //          doBreak = true;
-    //          stateReplant = blockCheck.getDefaultState();
-    //        }
-    //      }
-    //    }
-    else if (blockCheck instanceof IShearable) {
-      if (conf.doesIShearable) {
-        addDropsToList = false;
-        drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
-        //        int test = drops.size();
-        doBreak = true;
-      }
-    }
-    //    else  ModCyclic.logger.info("!"+blockClassString);
-    // no , for now is fine, do not do blocks
+    // 
     if (doBreak) {
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
@@ -219,12 +250,5 @@ public class UtilScythe {
       }
     }
     return false;
-  }
-  public static void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.modpackMisc;
-    String[] deflist = new String[] {
-        "terraqueous:pergola"
-    };
-    blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
   }
 }
