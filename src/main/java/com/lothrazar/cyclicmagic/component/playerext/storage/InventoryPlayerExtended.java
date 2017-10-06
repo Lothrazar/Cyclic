@@ -15,6 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class InventoryPlayerExtended extends InventoryBase implements IInventory {
@@ -33,17 +35,14 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   public void setEventHandler(Container eventHandler) {
     this.eventHandler = eventHandler;
   }
-  //  @Override
-  //  public ItemStack removeStackFromSlot(int s) {
-  //    if (this.inv[s] != ItemStack.EMPTY) {
-  //      ItemStack itemstack = this.inv[s];
-  //      this.inv[s] = ItemStack.EMPTY;
-  //      return itemstack;
-  //    }
-  //    else {
-  //      return null;
-  //    }
-  //  }
+  @Override
+  public ITextComponent getDisplayName() {
+    ITextComponent name = super.getDisplayName();
+    if (name == null) {
+      return new TextComponentTranslation("cyclic.inventory.extended");
+    }
+    return name;
+  }
   /**
    * Removes from an inventory slot (first arg) up to a specified number (second
    * arg) of items and returns them in a new stack.
@@ -51,38 +50,9 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack r = super.decrStackSize(index, count);
-    //    if (eventHandler != null) {
-    //      this.eventHandler.onCraftMatrixChanged(this);
-    //    }
     syncSlotToClients(index);
     return r;
   }
-  //  public ItemStack decrStackSize(int index, int count) {
-  //    if (this.inv[index] != null) {
-  //      ItemStack itemstack;
-  //      if (this.inv[index].getCount()  <= count) {
-  //        itemstack = this.inv[index];
-  //        this.inv[index] = null;
-  //        if (eventHandler != null)
-  //          this.eventHandler.onCraftMatrixChanged(this);
-  //        syncSlotToClients(index);
-  //        return itemstack;
-  //      }
-  //      else {
-  //        itemstack = this.inv[index].splitStack(count);
-  //        if (this.inv[index].getCount()  == 0) {
-  //          this.inv[index] = null;
-  //        }
-  //        if (eventHandler != null)
-  //          this.eventHandler.onCraftMatrixChanged(this);
-  //        syncSlotToClients(index);
-  //        return itemstack;
-  //      }
-  //    }
-  //    else {
-  //      return null;
-  //    }
-  //  }
   /**
    * Sets the given item stack to the specified slot in the inventory (can be
    * crafting or armor sections).
@@ -98,16 +68,6 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   }
   @Override
   public ItemStack getStackInSlot(int s) {
-    //somehow here we are getting java.lang.AbstractMethodError: com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended.func_70301_a(I)Lnet/minecraft/item/ItemStack;
-    //which translates to getStackInSlot() that returns ItemStack
-    //    ModCyclic.logger.info("stack " + s);
-    //    ModCyclic.logger.info("player?  " + this.player);
-    //    if (this.player != null && this.player.get() != null) {
-    //      ModCyclic.logger.info("isRemote    " + this.player.get().getEntityWorld().isRemote);
-    //    }
-    //    ModCyclic.logger.info("this " + this);
-    //    ModCyclic.logger.info("this.inv " + this.inv);
-    //    ModCyclic.logger.info("this.inv.size " + this.inv.size());
     try {
       return s >= this.getSizeInventory() ? ItemStack.EMPTY : this.inv.get(s);
     }

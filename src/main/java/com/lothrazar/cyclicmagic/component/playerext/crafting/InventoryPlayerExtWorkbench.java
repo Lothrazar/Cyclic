@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.playerext.crafting;
 import java.lang.ref.WeakReference;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
@@ -8,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   protected NonNullList<ItemStack> inv;
@@ -24,6 +27,14 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   @Override
   public int getSizeInventory() {
     return this.inv.size();
+  }
+  @Override
+  public ITextComponent getDisplayName() {
+    ITextComponent name = super.getDisplayName();
+    if (name == null) {
+      return new TextComponentTranslation("cyclic.inventory.crafting");
+    }
+    return name;
   }
   @Override
   public ItemStack getStackInSlot(int s) {

@@ -35,6 +35,7 @@ public class PotionTypeRegistry {
   private static PotionTypeCyclic potionTypeWither;
   private static PotionTypeCyclic potionTypeBlindness;
   private static PotionTypeCyclic potionTypeSat;
+  private static PotionTypeCyclic potionTypeIce;
   private static final int SHORT = 1800;
   private static final int NORMAL = 3600;
   private static final int LONG = 9600;
@@ -58,6 +59,10 @@ public class PotionTypeRegistry {
     if (ItemPotionModule.enableBounce) {
       potionTypeBounce = addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce", Items.SLIME_BALL);
       potions.add(potionTypeBounce);
+    }
+    if (ItemPotionModule.enableFrostw) {
+      potionTypeIce = addPotionType(new PotionEffect(PotionEffectRegistry.FROSTW, NORMAL), "frostwalker", new ItemStack(Blocks.ICE));
+      potions.add(potionTypeIce);
     }
     if (ItemPotionModule.enableMagnet) {
       potionTypeMagnet = addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL), "magnet", new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));

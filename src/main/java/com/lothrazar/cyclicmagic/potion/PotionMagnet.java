@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.potion;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
-
+ 
 public class PotionMagnet extends PotionBase {
   private final static int ITEM_HRADIUS = 20;
   private final static int ITEM_VRADIUS = 4;
