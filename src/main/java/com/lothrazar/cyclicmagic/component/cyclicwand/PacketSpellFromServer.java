@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cyclicwand;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
@@ -7,6 +8,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -56,13 +58,24 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   }
   @Override
   public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
-    if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer p = ctx.getServerHandler().player;
-      ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
-      if (spell != null && spell instanceof ISpellFromServer) {
-        ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
-      }
-    }
+    checkThreadAndEnqueue(message, ctx);
     return null;
+  }
+  private void checkThreadAndEnqueue(final PacketSpellFromServer message, final MessageContext ctx) {
+    IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
+    thread.addScheduledTask(new Runnable() {
+      public void run() {
+        if (ctx.side.isServer() && message != null && message.pos != null) {
+          EntityPlayer p = ctx.getServerHandler().player;
+          ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
+          if (spell != null && spell instanceof ISpellFromServer) {
+            ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
+          }
+          else {
+            ModCyclic.logger.error("WARNING: Message from server: spell not found" + message.spellID);
+          }
+        }
+      }
+    });
   }
 }
