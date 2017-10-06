@@ -17,20 +17,75 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
-  private static List<Block> BLACKLIST_DONTHARVEST = Arrays.asList(Blocks.PUMPKIN_STEM, Blocks.MELON_STEM,Blocks.AIR);
-  private static List<Block> WHITELIST_BREAK = Arrays.asList(Blocks.PUMPKIN, Blocks.MELON_BLOCK);
+  private static NonNullList<String> blocksBreak;
+  private static NonNullList<String> blocksSilkTouch;
+  private static NonNullList<String> blockIgnore;
   static final boolean tryRemoveOneSeed = true;
+  public static void syncConfig(Configuration config) {
+    //TODO: config it after its decided? maybe? maybe not?
+    blockIgnore = NonNullList.from("",
+        "minecraft:pumpkin_stem", "minecraft:melon_stem");
+    blocksBreak = NonNullList.from("",
+        "minecraft:pumpkin", "croparia:block_plant_emerald");
+    blocksSilkTouch = NonNullList.from("",
+        "minecraft:melon_block");
+  }
+  private static boolean isIgnored(String blockId) {
+ 
+    for (String s : blockIgnore) {
+      if (s.equals(blockId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  private static boolean isSimpleBreak(String blockId) {
+ 
+    for (String s : blocksBreak) {
+      if (s.equals(blockId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  private static boolean isSimpleSilktouch(String blockId) {
+ 
+    for (String s : blocksSilkTouch) {
+ 
+      if (s.equals(blockId)) {
+        return true;
+      }
+    }
+    return false;
+  }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
-    IBlockState blockState = world.getBlockState(posCurrent);
-    Block blockCheck = blockState.getBlock();
-    if(BLACKLIST_DONTHARVEST.contains(blockCheck)){
+    if (world.isAirBlock(posCurrent)) {
       return drops;
     }
-   
-//    String blockId = blockCheck.getRegistryName().toString();
+    IBlockState blockState = world.getBlockState(posCurrent);
+    Block blockCheck = blockState.getBlock();
+    String blockId = blockCheck.getRegistryName().toString();
+    if (isIgnored(blockId)) {
+      ModCyclic.logger.log("isIgnored MATCH " + blockId);
+      return drops;
+    }
+    if (isSimpleBreak(blockId)) {
+      ModCyclic.logger.log("isSimpleBreak MATCH " + blockId);
+      blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
+      world.setBlockToAir(posCurrent);
+      return drops;
+    }
+    if (isSimpleSilktouch(blockId)) {
+      ModCyclic.logger.log("SILK TOUCH MATCH " + blockId);
+      drops.add(new ItemStack(blockCheck));
+      world.setBlockToAir(posCurrent);
+      return drops;
+    }
+    //    String blockId = blockCheck.getRegistryName().toString();
     //new generic harvest
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
     boolean isDone = false;
@@ -82,17 +137,6 @@ public class UtilHarvester {
         }
         break;
       }
-    }
-    if (isDone == false) {
-      if (WHITELIST_BREAK.contains(blockCheck)) {
-        drops.add(new ItemStack(blockCheck));//example: adds a melon
-        world.destroyBlock(posCurrent, false);
-      }
-    }
-    if (blockCheck instanceof IShearable) {
-      //      addDropsToList = false;
-      //      drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
-      //      doBreak = true;
     }
     return drops;
   }

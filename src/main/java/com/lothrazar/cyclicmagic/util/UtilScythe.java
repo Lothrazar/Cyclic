@@ -32,7 +32,7 @@ public class UtilScythe {
   public static void syncConfig(Configuration config) {
     //TODO: config it after its decided? maybe? maybe not?
 /* @formatter:off */
-    leafConfig.blockWhitelist = NonNullList.from(
+    leafConfig.blockWhitelist = NonNullList.from("",
         "extratrees:leaves.decorative.0"
        , "extratrees:leaves.decorative.1"
        , "extratrees:leaves.decorative.2"
@@ -46,12 +46,13 @@ public class UtilScythe {
        , "plants2:crystal_leaves"
        , "plants2:leaves_0");
     
-    leafConfig.oreDictWhitelist = NonNullList.from(
+    leafConfig.oreDictWhitelist = NonNullList.from("",
         "treeLeaves"
         );
     
-    brushConfig.oreDictWhitelist = NonNullList.from("vine", "plant","flowerYellow");
-    brushConfig.blockWhitelist = NonNullList.from(
+    brushConfig.oreDictWhitelist = NonNullList.from("",
+        "vine", "plant","flowerYellow");
+    brushConfig.blockWhitelist = NonNullList.from("",
         "plants2:cosmetic_0"
         ,"plants2:cosmetic_1"
         ,"plants2:cosmetic_2"
@@ -124,7 +125,8 @@ public class UtilScythe {
       return false;
     }
     if (blockCheck.getRegistryName() == null) {
-      //      ModCyclic.logger.error("Error: a block has not been registered");
+        ModCyclic.logger.error("Error: a block has not been registered correctly");
+      return false;
     }
     else {
       switch (type) {
