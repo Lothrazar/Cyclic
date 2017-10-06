@@ -37,7 +37,7 @@ public abstract class PotionBase extends Potion {
   @SideOnly(Side.CLIENT)
   public void renderHUDEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc, float alpha) {
     if (mc.gameSettings.showDebugInfo == false)//dont texture on top of the debug text
-      UtilTextureRender.drawTextureSquare(getIcon(), x + 4, y + 3, Const.SQ - 2);
+      UtilTextureRender.drawTextureSquare(getIcon(), x + 4, y + 4, Const.SQ - 2);
   }
   public ResourceLocation getIcon() {
     return icon;

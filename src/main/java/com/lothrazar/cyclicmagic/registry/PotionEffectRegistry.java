@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionBounce;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
+import com.lothrazar.cyclicmagic.potion.PotionFrostWalker;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.PotionSnow;
@@ -27,6 +28,7 @@ public class PotionEffectRegistry {
   public static final PotionBase SNOW = new PotionSnow("snow", true, 0x8EBFFF);
   public static final PotionBase SWIMSPEED = new PotionSwimSpeed("swimspeed", true, 0xB477FF);
   public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0x91E459);
+  public static final PotionBase FROSTW = new PotionFrostWalker("frostwalker", true, 0x42f4d7);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   private static void register() {
     //  PotionType t http://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2842885-solved-how-can-i-add-my-own-potion-with-my-own
@@ -52,6 +54,7 @@ public class PotionEffectRegistry {
     PotionEffectRegistry.registerPotionEffect(SNOW);
     PotionEffectRegistry.registerPotionEffect(SWIMSPEED);
     PotionEffectRegistry.registerPotionEffect(BOUNCE);
+    PotionEffectRegistry.registerPotionEffect(FROSTW);
   }
   private static void registerPotionEffect(PotionBase effect) {
     effect.setIcon(effect.getIcon());
