@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
@@ -58,52 +59,39 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    ItemStack itemstack = ItemStack.EMPTY;
+    ItemStack stack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36 + 9, hotbarStart = 63, hotbarEnd = 72;
-    //36 to 62 is lower
-    //4 to 40 is bottom
+    int playerStart = 36, playerEnd = 63, topStart = 0, topEnd = 35, hotbarStart = 63, hotbarEnd = 72;
     if (slot != null && slot.getHasStack()) {
-      ItemStack copy = slot.getStack();
-      itemstack = copy.copy();
-      //      if (itemstack.getItem() instanceof ItemArmor) {
-      //        //ItemArmor armor = (ItemArmor) copy.getItem();
-      //        //int armorSlot = 8 - armor.armorType.getIndex();
-      //        //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
-      //        if (armorStart <= iSlot && iSlot < armorEnd) {
-      //          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
-      //        }
-      //        else {
-      //          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
-      //        }
-      //      }
+      ItemStack stackInSlot = slot.getStack();
+      stack = stackInSlot.copy();
       if (playerStart <= iSlot && iSlot < playerEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) {
+        if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
       else if (topStart <= iSlot && iSlot < topEnd) {
-        if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) {
+        if (!this.mergeItemStack(stackInSlot, playerStart, playerEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
       else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) {
+        if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
-      if (copy.getCount() == 0) {
+      if (stackInSlot.getCount() == 0) {
         slot.putStack(ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (copy.getCount() == itemstack.getCount()) {
+      if (stackInSlot.getCount() == stack.getCount()) {
         return ItemStack.EMPTY;
       }
-      slot.onTake(par1EntityPlayer, copy);
+      slot.onTake(par1EntityPlayer, stackInSlot);
     }
-    return itemstack;
+    return stack;
   }
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;

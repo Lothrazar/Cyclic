@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.9.0",
-    "1.12.2-recommended": "1.9.0"
+    "1.12.2-latest": "1.9.1",
+    "1.12.2-recommended": "1.9.1"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -215,5 +215,6 @@
   }
   ,"1.12.2":{
 	"1.9.0":"All potions remade to use vanilla system, instead of custom items; as a result of this you will see many items removed from the game since they have been replaced.  This helps for modpacks since many less IDs get used.  Potions now have Splash, Lingering, and Tipped arrows for each.  Added brewable potions for blindness, saturation, and wither.  Added Pharos Beacon, which works like a vanilla beacon but it eats potions to give out effects.  Cyclic Guide Book will now show up in Cyclic creative tab (if Guide API is installed).  Minimum forge version required is now 14.23.0.2494. "
+	,"1.9.1":"Fixed an item dupe glitch.  "
   }
 }
