@@ -15,6 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class InventoryPlayerExtended extends InventoryBase implements IInventory {
@@ -32,6 +34,14 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   }
   public void setEventHandler(Container eventHandler) {
     this.eventHandler = eventHandler;
+  }
+  @Override
+  public ITextComponent getDisplayName() {
+    ITextComponent name = super.getDisplayName();
+    if (name == null) {
+      return new TextComponentTranslation("cyclic.inventory.extended");
+    }
+    return name;
   }
   //  @Override
   //  public ItemStack removeStackFromSlot(int s) {
