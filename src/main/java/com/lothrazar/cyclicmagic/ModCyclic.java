@@ -21,6 +21,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -98,6 +99,8 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
+    
+  //  UtilString.unitTests();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {

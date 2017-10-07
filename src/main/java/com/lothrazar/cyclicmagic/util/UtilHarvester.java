@@ -1,65 +1,56 @@
 package com.lothrazar.cyclicmagic.util;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
-  private static NonNullList<String> blocksBreak;
+  private static final String AGE = "age";
+  private static NonNullList<String> blocksGetDrop;
   private static NonNullList<String> blocksSilkTouch;
   private static NonNullList<String> blockIgnore;
   static final boolean tryRemoveOneSeed = true;
   public static void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.modpackMisc;
+    String[] deflist = new String[] {
+        "terraqueous:pergola", "minecraft:*_stem"
+    };
+    String[] blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  A star is for a wildcard");
     //TODO: config it after its decided? maybe? maybe not?
+    /* @formatter:off */
     blockIgnore = NonNullList.from("",
-        "minecraft:pumpkin_stem", "minecraft:melon_stem");
-    blocksBreak = NonNullList.from("",
-        "minecraft:pumpkin", "croparia:block_plant_emerald");
-    blocksSilkTouch = NonNullList.from("",
-        "minecraft:melon_block");
+        blacklist);
+    blocksGetDrop = NonNullList.from("",
+        "minecraft:pumpkin"
+        ,"attaineddrops2:bulb"
+        , "croparia:block_plant_*"
+        , "croparia:block_cane_*"
+        );
+    blocksSilkTouch = NonNullList.from(""
+        ,"minecraft:melon_block");
+    /* @formatter:on */
   }
-  private static boolean isIgnored(String blockId) {
- 
-    for (String s : blockIgnore) {
-      if (s.equals(blockId)) {
-        return true;
-      }
-    }
-    return false;
+  private static boolean isIgnored(ResourceLocation blockId) {
+    return UtilString.isInList(blockIgnore, blockId);
   }
-  private static boolean isSimpleBreak(String blockId) {
- 
-    for (String s : blocksBreak) {
-      if (s.equals(blockId)) {
-        return true;
-      }
-    }
-    return false;
+  private static boolean isGetDrops(ResourceLocation blockId) {
+    return UtilString.isInList(blocksGetDrop, blockId);
   }
-  private static boolean isSimpleSilktouch(String blockId) {
- 
-    for (String s : blocksSilkTouch) {
- 
-      if (s.equals(blockId)) {
-        return true;
-      }
-    }
-    return false;
+  private static boolean isSimpleSilktouch(ResourceLocation blockId) {
+    return UtilString.isInList(blocksSilkTouch, blockId);
   }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
@@ -68,19 +59,19 @@ public class UtilHarvester {
     }
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
-    String blockId = blockCheck.getRegistryName().toString();
+    ResourceLocation blockId = blockCheck.getRegistryName();
+    String modId = blockId.getResourceDomain();
     if (isIgnored(blockId)) {
-      ModCyclic.logger.log("isIgnored MATCH " + blockId);
       return drops;
     }
-    if (isSimpleBreak(blockId)) {
-      ModCyclic.logger.log("isSimpleBreak MATCH " + blockId);
+    if (isGetDrops(blockId)) {
+      ModCyclic.logger.log("getDrops on " + blockId);
       blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
       world.setBlockToAir(posCurrent);
       return drops;
     }
     if (isSimpleSilktouch(blockId)) {
-      ModCyclic.logger.log("SILK TOUCH MATCH " + blockId);
+      ModCyclic.logger.log("isSimpleSilktouch on " + blockId);
       drops.add(new ItemStack(blockCheck));
       world.setBlockToAir(posCurrent);
       return drops;
@@ -88,11 +79,14 @@ public class UtilHarvester {
     //    String blockId = blockCheck.getRegistryName().toString();
     //new generic harvest
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
-    boolean isDone = false;
     while (unmodifiableiterator.hasNext()) {
       Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
       IProperty<?> iproperty = entry.getKey();
-      if (iproperty.getName() == "age" && iproperty instanceof PropertyInteger) {
+      //      if (modId.equals("harvestcraft")) {
+      //        ModCyclic.logger.log("BLOCK PROPERTY " + iproperty.getName());
+      //      }
+      if (iproperty.getName() != null &&
+          iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
         PropertyInteger propInt = (PropertyInteger) iproperty;
         int currentAge = blockState.getValue(propInt);
         int minAge = Collections.min(propInt.getAllowedValues());
@@ -103,13 +97,13 @@ public class UtilHarvester {
           continue;
         }
         if (currentAge == maxAge) {
-          isDone = true;
+          //  isDone = true;
           //dont set a brand new state, we want to keep all properties the same and only reset age
           //EXAMPLE cocoa beans have a property for facing direction == where they attach to log
           //so when replanting, keep that facing data
           world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
           blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
-          ModCyclic.logger.log("harvesting age " + currentAge + " == " + maxAge + ":" + blockCheck.getLocalizedName() + " dropSize=>" + drops.size());
+          ModCyclic.logger.log("harvesting  " + blockId + " dropSize=>" + drops.size());
           if (tryRemoveOneSeed) {
             Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
             if (seedItem == null) {
@@ -137,6 +131,9 @@ public class UtilHarvester {
         }
         break;
       }
+    }
+    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
+      ModCyclic.logger.log("HARVEST IGNORED " + blockId);
     }
     return drops;
   }
