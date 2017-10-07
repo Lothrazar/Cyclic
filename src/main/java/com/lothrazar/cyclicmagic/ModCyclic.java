@@ -57,6 +57,7 @@ public class ModCyclic {
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
+    ConfigRegistry.register(logger);
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();
@@ -99,8 +100,12 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
-    
-  //  UtilString.unitTests();
+    /**
+     * TODO: unit test module with a post init to do this stuff
+     */
+    if (logger.runUnitTests()) {
+      UtilString.unitTests();
+    }
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {

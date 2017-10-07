@@ -128,7 +128,7 @@ public class UtilHarvester {
                   final ItemStack drop = iterator.next();
                   if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
                     iterator.remove();
-                    ModCyclic.logger.info("yay remove seed " + drop.getDisplayName());
+                    ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
                     break;
                   }
                 }

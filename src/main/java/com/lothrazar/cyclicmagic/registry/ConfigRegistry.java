@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
 import net.minecraftforge.common.config.Configuration;
@@ -25,10 +26,7 @@ public class ConfigRegistry {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
       conf.syncConfig(config);
     }
-    
-    
-    //NOT only used by harvester machine, also scythe. so 
-    //PRETTTY much a hack puting this here. but we cant put i in one item since both use it
+   //TODO: static modules or something?
     UtilScythe.syncConfig(config);
     UtilHarvester.syncConfig(config);
     config.save();
