@@ -18,7 +18,6 @@ public class PotionBounce extends PotionBase {
   private static final String NBT_MOTIONY = "motionY";//is float stored as int so we use 100 factor each way
   private static final String NBT_TICK = "ticksExisted";
   public PotionBounce(String name, boolean b, int potionColor) {
-    
     super(name, b, potionColor);
   }
   @SubscribeEvent

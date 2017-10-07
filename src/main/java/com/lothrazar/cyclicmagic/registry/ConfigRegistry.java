@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
 import net.minecraftforge.common.config.Configuration;
@@ -26,7 +25,7 @@ public class ConfigRegistry {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
       conf.syncConfig(config);
     }
-   //TODO: static modules or something?
+    //TODO: static modules or something?
     UtilScythe.syncConfig(config);
     UtilHarvester.syncConfig(config);
     config.save();

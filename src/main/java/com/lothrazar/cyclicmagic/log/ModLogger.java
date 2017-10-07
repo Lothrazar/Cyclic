@@ -13,8 +13,9 @@ public class ModLogger implements IHasConfig {
     logger = l;
   }
   /**
-   * info defaults to TRUE in config file
-   * use this for logs you want to run in release
+   * info defaults to TRUE in config file use this for logs you want to run in
+   * release
+   * 
    * @param string
    */
   public void info(String string) {
@@ -22,9 +23,9 @@ public class ModLogger implements IHasConfig {
       logger.info(string);
   }
   /**
-   * Defaults to FALSE in config file
-   * use for dev debugging, and then leave some in place for release
-   * that will safely not spam out unless turned on
+   * Defaults to FALSE in config file use for dev debugging, and then leave some
+   * in place for release that will safely not spam out unless turned on
+   * 
    * @param string
    */
   public void log(String string) {
@@ -33,6 +34,7 @@ public class ModLogger implements IHasConfig {
   }
   /**
    * Always send the log in every environment
+   * 
    * @param string
    */
   public void error(String string) {
@@ -40,6 +42,7 @@ public class ModLogger implements IHasConfig {
   }
   /**
    * always check this before running a unit test
+   * 
    * @return
    */
   public boolean runUnitTests() {
@@ -47,6 +50,7 @@ public class ModLogger implements IHasConfig {
   }
   /**
    * logs only if runUnitTests() is true
+   * 
    * @param string
    */
   public void logTestResult(String string) {

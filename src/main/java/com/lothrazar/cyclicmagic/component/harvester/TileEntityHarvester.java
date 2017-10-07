@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
-import com.lothrazar.cyclicmagic.util.UtilScythe;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -30,7 +29,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
   }
- 
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
@@ -38,12 +36,11 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     super(1 + 3 * 9);
     this.setFuelSlot(27);
     this.timer = TIMER_FULL;
-    
   }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
-  } 
+  }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);

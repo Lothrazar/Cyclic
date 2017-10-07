@@ -4,10 +4,10 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilScythe;
-import com.lothrazar.cyclicmagic.util.UtilShape; 
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilScythe;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 public class ItemScythe extends BaseTool implements IHasRecipe {
   private static final int RADIUS = 6;//13x13
   private static final int RADIUS_SNEAKING = 2;//2x2
- 
   public enum ScytheType {
     WEEDS, LEAVES, CROPS;
   }
@@ -30,7 +29,6 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
   public ItemScythe(ScytheType c) {
     super(1000);
     harvestType = c;
- 
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {

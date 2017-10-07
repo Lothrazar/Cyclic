@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -63,7 +62,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     if (!isRunning()) {
       return;
     }
- 
     if (this.getFuelCurrent() == 0) {
       //wipe out the current effects and try to consume a potion
       ItemStack s = this.getStackInSlot(0);

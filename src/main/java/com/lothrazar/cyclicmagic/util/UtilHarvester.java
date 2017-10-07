@@ -67,7 +67,6 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
-    
     if (isIgnored(blockId)) {
       return drops;
     }

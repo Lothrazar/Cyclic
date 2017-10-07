@@ -17,7 +17,7 @@ public class GuideRegistry {
   private static List<GuideItem> items = new ArrayList<GuideItem>();
   private static final String SUFFIX = ".guide";
   public enum GuideCategory {
-    BLOCK, ITEM, WORLD, GEAR,  ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
+    BLOCK, ITEM, WORLD, GEAR, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
     public String text() {
       return "guide.category." + name().toLowerCase();
     }
@@ -33,8 +33,8 @@ public class GuideRegistry {
           return new ItemStack(Items.DIAMOND_SWORD);
         case ITEM:
           return new ItemStack(Items.STICK);
-//        case POTION:
-//          return new ItemStack(Items.POTIONITEM);
+        //        case POTION:
+        //          return new ItemStack(Items.POTIONITEM);
         case WORLD:
           return new ItemStack(Blocks.GOLD_ORE);
         case BLOCKPLATE:
