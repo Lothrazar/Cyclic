@@ -18,11 +18,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
+  private static final int FORTUNE = 1;
   private static final String AGE = "age";
+  static final boolean tryRemoveOneSeed = true;
+  private static NonNullList<String> blocksBreakInPlace;
   private static NonNullList<String> blocksGetDrop;
   private static NonNullList<String> blocksSilkTouch;
   private static NonNullList<String> blockIgnore;
-  static final boolean tryRemoveOneSeed = true;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -35,13 +37,18 @@ public class UtilHarvester {
         blacklist);
     blocksGetDrop = NonNullList.from("",
         "minecraft:pumpkin"
-        ,"attaineddrops2:bulb"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
+        );
+    blocksBreakInPlace = NonNullList.from("",
+        "attaineddrops2:bulb"
         );
     blocksSilkTouch = NonNullList.from(""
         ,"minecraft:melon_block");
     /* @formatter:on */
+  }
+  private static boolean isBreakInPlace(ResourceLocation blockId) {
+    return UtilString.isInList(blocksBreakInPlace, blockId);
   }
   private static boolean isIgnored(ResourceLocation blockId) {
     return UtilString.isInList(blockIgnore, blockId);
@@ -60,13 +67,13 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
-    String modId = blockId.getResourceDomain();
+    
     if (isIgnored(blockId)) {
       return drops;
     }
     if (isGetDrops(blockId)) {
       ModCyclic.logger.log("getDrops on " + blockId);
-      blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
+      blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       world.setBlockToAir(posCurrent);
       return drops;
     }
@@ -74,6 +81,11 @@ public class UtilHarvester {
       ModCyclic.logger.log("isSimpleSilktouch on " + blockId);
       drops.add(new ItemStack(blockCheck));
       world.setBlockToAir(posCurrent);
+      return drops;
+    }
+    if (isBreakInPlace(blockId)) {
+      ModCyclic.logger.log("isBreakInPlace on " + blockId);
+      world.destroyBlock(posCurrent, true);
       return drops;
     }
     //    String blockId = blockCheck.getRegistryName().toString();
@@ -102,7 +114,7 @@ public class UtilHarvester {
           //EXAMPLE cocoa beans have a property for facing direction == where they attach to log
           //so when replanting, keep that facing data
           world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
-          blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
+          blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
           ModCyclic.logger.log("harvesting  " + blockId + " dropSize=>" + drops.size());
           if (tryRemoveOneSeed) {
             Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);

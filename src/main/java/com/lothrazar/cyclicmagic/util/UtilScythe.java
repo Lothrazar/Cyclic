@@ -22,6 +22,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class UtilScythe {
+  private static final int FORTUNE = 5;
   private static NonNullList<String> blacklistAll;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
@@ -31,16 +32,13 @@ public class UtilScythe {
   }
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-
     String[] deflist = new String[] {
-        "terraqueous:pergola" 
-        ,"harvestcraft:*_sapling"
+        "terraqueous:pergola", "harvestcraft:*_sapling"
     };
     String[] blacklist = config.getStringList("ScytheBlacklist",
         category, deflist, "Crops & leaves that are blocked from harvesting (Brush Scythe and Tree Scythe). A star is for a wildcard ");
-
     blacklistAll = NonNullList.from("",
-        blacklist );
+        blacklist);
     //TODO: config it after its decided? maybe? maybe not?
 /* @formatter:off */
     leafConfig.blockWhitelist = NonNullList.from("",
@@ -101,7 +99,7 @@ public class UtilScythe {
     /* @formatter:on */
   }
   //TODO:::::::::: brush scythe DOES hit
-//  <harvestcraft:pampeach>
+  //  <harvestcraft:pampeach>
   //which has zero ore dict entries. soo.. hmm. 
   //treescythe <harvestcraft:groundtrap>
   private static boolean doesMatch(Block blockCheck, ScytheConfig type) {
@@ -123,12 +121,10 @@ public class UtilScythe {
     return false;//
   }
   public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
-  
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
     IBlockState blockState = world.getBlockState(posCurrent);
-    boolean addDropsToList = true;
     Block blockCheck = blockState.getBlock();
     if (blockCheck == Blocks.AIR) {
       return false;
@@ -206,37 +202,11 @@ public class UtilScythe {
         }
       break;
     }
-    //cant do BlockBush, too generic, too many things use
-    //many bushes are also crops.  
-    //    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER
-    //        || blockCheck instanceof BlockFlower
-    //        || blockClassString.equals("shadows.plants.block.PlantBase")
-    //        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
-    //        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")
-    //        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.BlockBlackLotus")
-    //        || blockClassString.equals("de.ellpeck.actuallyadditions.mod.blocks.base.BlockWildPlant")
-    //        || blockClassString.equals("biomesoplenty.common.block.BlockBOPMushroom")
-    //        || blockClassString.equals("rustic.common.blocks.crops.Herbs$1")) {
-    //      if (conf.doesFlowers) { // true for ItemScythe type WEEDS
-    //        doBreak = true;
-    //      }
-    //    }
-    //    else if (blockCheck instanceof IShearable) {
-    //      if (conf.doesIShearable) {
-    //        addDropsToList = false;
-    //        drops.addAll(((IShearable) blockCheck).onSheared(ItemStack.EMPTY, world, posCurrent, 0));
-    //       
-    //        doBreak = true;
-    //      }
-    //    }
-    // 
     if (doBreak) {
-      ModCyclic.logger.log("scythe break  "+blockId);
+      ModCyclic.logger.log("scythe break  " + blockId);
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
-      if (addDropsToList) {
-        blockCheck.getDrops(drops, world, posCurrent, blockState, 0);
-      }
+      blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -249,9 +219,8 @@ public class UtilScythe {
       }
       return true;
     }
-    if(blockCheck.getRegistryName().getResourceDomain().equals("minecraft")==false){
-
-      ModCyclic.logger.log("SCYTHE IGNORED "+blockId);
+    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
+      ModCyclic.logger.log("SCYTHE IGNORED " + blockId);
     }
     return false;
   }
