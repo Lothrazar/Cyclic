@@ -55,8 +55,8 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "ggg",
-        "gsg",
+        "sss",
+        "sgs",
         "ooo",
         'o', "blockEmerald",
         's', Blocks.END_STONE,

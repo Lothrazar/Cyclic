@@ -33,6 +33,7 @@ import net.minecraft.util.ResourceLocation;
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
   private static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+  @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's
@@ -64,12 +65,8 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
     for (Item item : ItemRegistry.itemMap.values()) {
-      //YES its deprecated. but new method is not in wiki. at all. and didnt work when i tried
-      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      //      if (item instanceof ItemPotionCustom == false)//YEP total hack
-      registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
-    }
-    for (Block item : BlockRegistry.blocks) {
+      //YES its deprecated. but new method is NOT in wiki. at all. 
+      // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
       registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
     }
