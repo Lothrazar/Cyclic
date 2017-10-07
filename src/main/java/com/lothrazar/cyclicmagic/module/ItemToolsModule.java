@@ -209,20 +209,20 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       // ItemRegistry.registerWithJeiDescription(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
-      ItemScythe tool_harvest_weeds = new ItemScythe(ItemScythe.HarvestType.WEEDS);
+      ItemScythe tool_harvest_weeds = new ItemScythe(ItemScythe.ScytheType.WEEDS);
       ItemRegistry.register(tool_harvest_weeds, "tool_harvest_weeds");
       LootTableRegistry.registerLoot(tool_harvest_weeds, ChestType.BONUS);
       //  ItemRegistry.registerWithJeiDescription(tool_harvest_weeds);
     }
     if (enableToolHarvest) {
-      ItemScythe tool_harvest_crops = new ItemScythe(ItemScythe.HarvestType.CROPS);
+      ItemScythe tool_harvest_crops = new ItemScythe(ItemScythe.ScytheType.CROPS);
       ItemRegistry.register(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
       //      AchievementRegistry.registerItemAchievement(tool_harvest_crops);
       // ItemRegistry.registerWithJeiDescription(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
-      ItemScythe tool_harvest_leaves = new ItemScythe(ItemScythe.HarvestType.LEAVES);
+      ItemScythe tool_harvest_leaves = new ItemScythe(ItemScythe.ScytheType.LEAVES);
       ItemRegistry.register(tool_harvest_leaves, "tool_harvest_leaves");
       LootTableRegistry.registerLoot(tool_harvest_leaves, ChestType.BONUS);
       // ItemRegistry.registerWithJeiDescription(tool_harvest_leaves);
