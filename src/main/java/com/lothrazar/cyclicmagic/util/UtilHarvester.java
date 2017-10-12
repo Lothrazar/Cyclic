@@ -28,7 +28,9 @@ public class UtilHarvester {
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
-        "terraqueous:pergola", "minecraft:*_stem"
+        "terraqueous:pergola"
+        , "minecraft:*_stem"
+        , "croparia:stem_*"
     };
     String[] blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  A star is for a wildcard");
     //TODO: config it after its decided? maybe? maybe not?
