@@ -5,8 +5,7 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
+import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -17,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
@@ -29,7 +29,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
   }
-  private HarvestSetting conf;
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
@@ -37,19 +36,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     super(1 + 3 * 9);
     this.setFuelSlot(27);
     this.timer = TIMER_FULL;
-    conf = new HarvestSetting();
-    conf.doesCrops = true;
-    conf.doesMushroom = true;
-    conf.doesPumpkinBlocks = true;
-    conf.doesMelonBlocks = true;
-    conf.dropInPlace = false;
   }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
-  }
-  public HarvestSetting getHarvestConf() {
-    return conf;
   }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
@@ -80,7 +70,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       timer = TIMER_FULL;//harvest worked!
       this.spawnParticlesAbove();
       if (this.normalModeIfZero == 0) {
-        tryHarvestSingle();
+        if (tryHarvestSingle(getTargetPos()) == false) {
+          timer = 1;//harvest didnt work, try again really quick
+        }
       }
       else {
         tryHarvestArea();
@@ -91,28 +83,21 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
   }
   private void tryHarvestArea() {
-    int success = UtilHarvestCrops.harvestArea(world, getTargetCenter(), this.size, conf);
-    if (conf.drops != null) {
-      setOutputItems(conf.drops);
+    List<BlockPos> shape = getShapeFilled();
+    for (BlockPos posCurrent : shape) {
+      this.tryHarvestSingle(posCurrent);
     }
-    //POTENTIAL to exploit here. if fuel is at say 2, and harvesting wants to pay cost of 18
-    //well its too late so, 
-    // then youre getting something for free
-    //not terribly worried about it. after that it wont work again until you refuel which will be max
-    this.consumeFuel(success * 10);//10 fuel per item instead of one
   }
-  private void tryHarvestSingle() {
-    conf.resetDrops();
-    BlockPos harvest = getTargetPos();
-    if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
+  private boolean tryHarvestSingle(BlockPos harvestPos) {
+    NonNullList<ItemStack> drops = UtilHarvester.harvestSingle(getWorld(), harvestPos);
+    if (drops.size() > 0) {
       this.updateFuelIsBurning();
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
-      if (conf.drops != null) {
-        setOutputItems(conf.drops);
-      }
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvestPos);
+      setOutputItems(drops);
+      return true;
     }
     else {
-      timer = 1;//harvest didnt work, try again really quick
+      return false;
     }
   }
   private void setOutputItems(List<ItemStack> output) {
@@ -215,6 +200,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+  }
+  private List<BlockPos> getShapeFilled() {
+    return UtilShape.squareHorizontalFull(getTargetCenter(), this.size);
   }
   @Override
   public boolean isPreviewVisible() {

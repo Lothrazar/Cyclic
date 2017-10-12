@@ -184,12 +184,12 @@ public class RecipeRegistry {
         ingredient,
         output);
     BrewingRecipeRegistry.addRecipe(recipe);
-    if (ModCyclic.logger.sendInfo) {//OMG UNIT TESTING WAAT
+    if (ModCyclic.logger.runUnitTests()) {//OMG UNIT TESTING WAAT
       ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
       if (output0.getItem() == output.getItem())
-        ModCyclic.logger.log("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
       else {
-        ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
       }
     }
     return recipe;

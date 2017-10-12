@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -50,7 +53,12 @@ public class ContainerHydrator extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, 36, false)) {
+      else if (UtilFluid.getFluidType(stackInSlot) == FluidRegistry.WATER) {// shortcut to middle stack if water
+        if (!this.mergeItemStack(stackInSlot, 8, 9, true)) {
+          return ItemStack.EMPTY;
+        }
+      }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {

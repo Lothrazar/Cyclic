@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
@@ -25,7 +24,6 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +31,7 @@ import net.minecraft.util.ResourceLocation;
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
   private static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+  @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's
@@ -64,12 +63,8 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
     for (Item item : ItemRegistry.itemMap.values()) {
-      //YES its deprecated. but new method is not in wiki. at all. and didnt work when i tried
-      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      //      if (item instanceof ItemPotionCustom == false)//YEP total hack
-      registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
-    }
-    for (Block item : BlockRegistry.blocks) {
+      //YES its deprecated. but new method is NOT in wiki. at all. 
+      // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
       registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
     }

@@ -111,6 +111,9 @@ public class CyclicGuideBook implements IGuideBook {
           pages.add(new PageBrewingRecipe(p.brewRecipe));
         }
       }
+      if (item.cat == null) {
+        item.cat = GuideCategory.WORLD;
+      }
       addEntry(item.cat, pages, item.title, new ItemStack(item.icon));
     }
   }
@@ -153,16 +156,16 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
-  }
-  @Override
-  public void handlePost(ItemStack bookStack) {
-    //TODO: LUL THIS DOESNT WORK
+    // recipe used to work in handle post, its here now
     RecipeRegistry.addShapedRecipe(bookStack,
-        "b",
-        "o",
-        "s",
+        " b ",
+        "coc",
+        " s ",
+        'c', Blocks.COBBLESTONE_WALL,
         'b', Items.BOOK,
         'o', Blocks.GRAVEL,
         's', Items.STICK);
   }
+  @Override
+  public void handlePost(ItemStack bookStack) {}
 }

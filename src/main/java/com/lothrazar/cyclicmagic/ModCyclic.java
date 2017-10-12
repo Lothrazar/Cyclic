@@ -21,6 +21,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -56,6 +57,7 @@ public class ModCyclic {
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
+    ConfigRegistry.register(logger);
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();
@@ -97,6 +99,12 @@ public class ModCyclic {
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
+    }
+    /**
+     * TODO: unit test module with a post init to do this stuff
+     */
+    if (logger.runUnitTests()) {
+      UtilString.unitTests();
     }
   }
   @EventHandler

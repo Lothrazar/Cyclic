@@ -80,6 +80,13 @@ public class UtilFluid {
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
     return FluidUtil.getFluidContained(returnMe) == null;
   }
+  public static FluidStack getFluidContained(ItemStack returnMe) {
+    return FluidUtil.getFluidContained(returnMe);
+  }
+  public static Fluid getFluidType(ItemStack returnMe) {
+    FluidStack f = FluidUtil.getFluidContained(returnMe);
+    return (f == null) ? null : f.getFluid();
+  }
   public static boolean stackHasFluidHandler(ItemStack stackIn) {
     return FluidUtil.getFluidHandler(stackIn) != null;
   }

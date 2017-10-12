@@ -63,9 +63,9 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       return;
     }
     if (this.getFuelCurrent() == 0) {
-      //try to consume a potion
+      //wipe out the current effects and try to consume a potion
       ItemStack s = this.getStackInSlot(0);
-      //      this.effects = 
+      this.effects = new ArrayList<PotionEffect>();
       List<PotionEffect> newEffects = PotionUtils.getEffectsFromStack(s);
       if (newEffects != null && newEffects.size() > 0) {
         this.setFuelMax(MAX_POTION);
@@ -333,6 +333,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.radius = tagCompound.getInteger("radius");
+    this.needsRedstone = tagCompound.getInteger("red");
     int eType = tagCompound.getInteger("et");
     NBTTagList tagList = tagCompound.getTagList("potion_list", 10);
     this.effects = new ArrayList<PotionEffect>();
@@ -353,6 +354,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("radius", radius);
     tagCompound.setInteger("et", entityType.ordinal());
+    tagCompound.setInteger("red", this.needsRedstone);
     NBTTagList itemList = new NBTTagList();
     if (this.effects != null) {
       for (PotionEffect e : this.effects) {
