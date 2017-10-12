@@ -149,20 +149,22 @@ public class CyclicGuideBook implements IGuideBook {
     book.setCategoryList(categories);
     book.setRegistryName(new ResourceLocation(Const.MODID, "guide"));
     book.setSpawnWithBook(true);
+    
   }
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
-  }
-  @Override
-  public void handlePost(ItemStack bookStack) {
-    //TODO: LUL THIS DOESNT WORK
+    // recipe used to work in handle post, its here now
     RecipeRegistry.addShapedRecipe(bookStack,
-        "b",
-        "o",
-        "s",
+        " b ",
+        "coc",
+        " s ",
+        'c', Blocks.COBBLESTONE_WALL,
         'b', Items.BOOK,
         'o', Blocks.GRAVEL,
         's', Items.STICK);
+  }
+  @Override
+  public void handlePost(ItemStack bookStack) {
   }
 }
