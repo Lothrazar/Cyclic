@@ -44,13 +44,11 @@ public class ContainerHydrator extends ContainerBaseMachine {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
-    ModCyclic.logger.log("s" + slot);
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity 
       if (slot < tile.getSizeInventory()) {
-        ModCyclic.logger.log("s to player?");
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
