@@ -111,6 +111,9 @@ public class CyclicGuideBook implements IGuideBook {
           pages.add(new PageBrewingRecipe(p.brewRecipe));
         }
       }
+      if (item.cat == null) {
+        item.cat = GuideCategory.WORLD;
+      }
       addEntry(item.cat, pages, item.title, new ItemStack(item.icon));
     }
   }
@@ -149,7 +152,6 @@ public class CyclicGuideBook implements IGuideBook {
     book.setCategoryList(categories);
     book.setRegistryName(new ResourceLocation(Const.MODID, "guide"));
     book.setSpawnWithBook(true);
-    
   }
   @Override
   public void handleModel(ItemStack bookStack) {
@@ -165,6 +167,5 @@ public class CyclicGuideBook implements IGuideBook {
         's', Items.STICK);
   }
   @Override
-  public void handlePost(ItemStack bookStack) {
-  }
+  public void handlePost(ItemStack bookStack) {}
 }
