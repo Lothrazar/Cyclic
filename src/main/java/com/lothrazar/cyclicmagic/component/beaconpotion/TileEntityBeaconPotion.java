@@ -42,6 +42,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     PLAYERS, NONPLAYER, ALL, MONSTER, CREATURE, AMBIENT, WATER; // ambient, monster, creature, water
   }
   static boolean doesConsumePotions;
+  static List<String> blacklist;
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
@@ -63,21 +64,28 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       return;
     }
     if (this.getFuelCurrent() == 0) {
-      //wipe out the current effects and try to consume a potion
-      ItemStack s = this.getStackInSlot(0);
+      //wipe out the current effects
       this.effects = new ArrayList<PotionEffect>();
+      // and try to consume a potion
+      ItemStack s = this.getStackInSlot(0);
       List<PotionEffect> newEffects = PotionUtils.getEffectsFromStack(s);
       if (newEffects != null && newEffects.size() > 0) {
-        this.setFuelMax(MAX_POTION);
-        this.setFuelCurrent(this.getFuelMax());
-        if (doesConsumePotions) {
-          this.setInventorySlotContents(0, ItemStack.EMPTY);
-        }
         effects = new ArrayList<PotionEffect>();
-        for (PotionEffect eff : newEffects) {
-          //cannot set the duration time so we must copy it
-          effects.add(new PotionEffect(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
+        if (this.isPotionValid(newEffects)) {
+          //first read all potins
+          for (PotionEffect eff : newEffects) {
+            //cannot set the duration time so we must copy it
+            effects.add(new PotionEffect(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
+          }
+          //then refil progress bar
+          this.setFuelMax(MAX_POTION);
+          this.setFuelCurrent(this.getFuelMax());
+          //then consume the item, unless disabled
+          if (doesConsumePotions) {
+            this.setInventorySlotContents(0, ItemStack.EMPTY);
+          }
         }
+        // else at least one is not valid, do not eat the potoin
       }
     }
     else if (this.getFuelCurrent() > 0 && doesConsumePotions) {
@@ -88,6 +96,18 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       this.updateBeacon();
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
+  }
+  private boolean isPotionValid(List<PotionEffect> newEffects) {
+    String id;
+    for (PotionEffect eff : newEffects) {
+      id = eff.getPotion().getRegistryName().toString();
+      for (String match : blacklist) {
+        if (id.equals(match)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
   public void updateBeacon() {
     if (this.world != null) {

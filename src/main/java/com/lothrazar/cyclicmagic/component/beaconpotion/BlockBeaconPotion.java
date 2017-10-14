@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic.component.beaconpotion;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -65,5 +68,13 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
   @Override
   public void syncConfig(Configuration config) {
     TileEntityBeaconPotion.doesConsumePotions = config.getBoolean("PharosBeaconDoesConsumePotions", Const.ConfigCategory.modpackMisc, true, "Set to make Pharos Beacon free and perpetual, so it will not consume potions.  However if this set false, once it reads an effect from a potion, you must break and replace the beacon to wipe out its current effect. ");
+    String[] defList = new String[] {
+        "minecraft:instant_health",
+        "minecraft:instant_damage",
+        "minecraft:wither",
+        "minecraft:poison"
+    };
+    String[] blacklist = config.getStringList("PharosBeaconBlacklist", Const.ConfigCategory.modpackMisc, defList, "Potions that are blacklisted from this beacon");
+    TileEntityBeaconPotion.blacklist = Arrays.asList(blacklist);
   }
 }
