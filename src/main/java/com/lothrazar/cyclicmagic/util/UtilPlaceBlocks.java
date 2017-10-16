@@ -159,7 +159,16 @@ public class UtilPlaceBlocks {
     if (world.getTileEntity(pos) != null) {
       world.removeTileEntity(pos);
     }
-    world.setBlockToAir(pos);
+    try {
+      boolean setToAirSuccess = world.setBlockToAir(pos);
+      if (setToAirSuccess == false) {
+        setToAirSuccess = world.destroyBlock(pos, false);//destroy with no drops if setToAir failed
+      }
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: "+e.getMessage());
+      e.printStackTrace();
+    }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
     // IN CASE OF DOUBLE CHESTS
     tryUpdateNeighbour(world, pos.north());
