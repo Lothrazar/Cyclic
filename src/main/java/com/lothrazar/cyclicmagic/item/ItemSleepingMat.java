@@ -1,14 +1,17 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
 import com.lothrazar.cyclicmagic.net.PacketSleepClient;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,6 +20,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUseBed;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
@@ -31,14 +35,16 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig {
+public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig, IHasClickToggle {
   // thank you for the examples forge. player data storage based on API source
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
+  private static final String NBT_STATUS = "cyclic_spawn";
   private static int seconds;
   public static boolean doPotions;
-  private boolean doesSetSpawn;
   public ItemSleepingMat() {
     super(100);
   }
@@ -91,7 +97,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
     player.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
     player.connection.sendPacket(sleepPacket);
-    if (doesSetSpawn) {
+    if (this.isOn(stack)) {
       player.setSpawnPoint(player.getPosition(), true);//true means it wont check for bed block
     }
   }
@@ -151,7 +157,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   public void syncConfig(Configuration config) {
     doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
-    doesSetSpawn = config.getBoolean("SleepingMatSetsSpawn", Const.ConfigCategory.items, false, "True means using this at night will set your spawn point, just like a bed.");
+   // doesSetSpawn = config.getBoolean("SleepingMatSetsSpawn", Const.ConfigCategory.items, false, "True means using this at night will set your spawn point, just like a bed.");
   }
   @Override
   public IRecipe addRecipe() {
@@ -159,10 +165,33 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         "leather");
   } //stupid private functions in entity player
-  public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing p_175139_1_) {
-    mp.renderOffsetX = -1.8F * (float) p_175139_1_.getFrontOffsetX();
-    mp.renderOffsetZ = -1.8F * (float) p_175139_1_.getFrontOffsetZ();
+  public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing fac) {
+    mp.renderOffsetX = -1.8F * (float) fac.getFrontOffsetX();
+    mp.renderOffsetZ = -1.8F * (float) fac.getFrontOffsetZ();
     //maybe one day.. meh
     //UtilReflection.callPrivateMethod(Entity.class, mp, "setSize", "setSize", new Object[]{0.2F,0.2F});
+  }
+  public void toggle(EntityPlayer player, ItemStack held) {
+    NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
+    int vnew = isOn(held) ? 0 : 1;
+    tags.setInteger(NBT_STATUS, vnew);
+  }
+  public boolean isOn(ItemStack held) {
+    NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
+    if (tags.hasKey(NBT_STATUS) == false) {
+      return false;//default for newlycrafted//legacy items
+    }
+    return tags.getInteger(NBT_STATUS) == 1;
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
+    super.addInformation(held, player, list, par4);
+    String onoff = this.isOn(held) ? "on" : "off";
+    list.add(UtilChat.lang("item.sleeping_mat.tooltip.info") + UtilChat.lang("item.sleeping_mat.tooltip." + onoff));
+  }
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return this.isOn(stack);
   }
 }

@@ -29,7 +29,7 @@ public class ModLogger implements IHasConfig {
    * @param string
    */
   public void log(String string) {
-    if (sendLogs)
+  if (sendLogs)
       logger.info(string);
   }
   /**
