@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
@@ -11,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -92,7 +94,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           }
           //if what we are going to be pulling from this slot not more than what it contains
           if (slotsToPay.get(j) + 1 <= fromInput.getCount()) {
-            //            ModCyclic.logger.info(" founnd slot  = " + j + " so will drain " + (slotsToPay.get(j) + 1));
             slotsToPay.put(j, slotsToPay.get(j) + 1);
             thisPaid = true;
             break;//break only the j loop
@@ -114,9 +115,14 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         return false;
       }
     }
+    //now we know there is enough everywhere. we validated
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
       //      ModCyclic.logger.info(" PAY cost at  = " + entry);
-      //now we know there is enough everywhere. we validated
+      Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
+      if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
+        //example: making cake, dump out empty bucket
+        this.sendOutput(new ItemStack(bucketThing));
+      }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
     return true;
