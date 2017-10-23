@@ -220,6 +220,6 @@
 	,"1.9.3":"Added croparia:stem_* to the default HarvesterBlacklist config to avoid harvesting melon stems.  Fixed another item dupe glitch.  Shift clicking a water bucket in a Hydrator now puts it in the middle slot.  Fixed the Cyclic Guidebook from Guide-API not loading its recipe. "
   	,"1.9.4":"Added blacklist for pharos beacon, PharosBeaconBlacklist, so you can block some potion effects from the beacon.  "
 	,"1.9.5":"Updated zh_CN translation (thanks to Aemande123).  Sleeping Mat now has a feature where you right-click in your inventory and you can toggle whether or not it will set your spawn when you sleep; because of this SleepingMatSetsSpawn config has been removed.  Fixed the empty Chest Sack not being consumed when used on a Botania Mana Pool.  "
-  	,"1.9.6":"Autocrafter will now correctly save container items, such as emtpy buckets, when crafting with full containers (example: it now saves empty buckets when auto-crafting cake).  "
+  	,"1.9.6":"Autocrafter will now correctly save container items, such as emtpy buckets, when crafting with full containers (example: it now saves empty buckets when auto-crafting cake).  Changed all blocks/machines to open their GUIs on serverside first; for compatibility with FTB Utilities permissions checks for claimed chunks.   "
   }
 }
