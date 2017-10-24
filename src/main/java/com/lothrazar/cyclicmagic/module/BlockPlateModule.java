@@ -66,16 +66,6 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
-      //      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
-      //      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      //      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
-      //          "ttt",
-      //          "idi",
-      //          "bbb",
-      //          'i', Items.IRON_INGOT,
-      //          'd', Items.DIAMOND,
-      //          'b', base,
-      //          't', top));
     }
   }
   @Override
@@ -87,5 +77,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     BlockConveyor.keepEntityGrounded = config.getBoolean("SlimeConveyorKeepEntityGrounded", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will keep entities grounded so they dont get sudden bursts of speed when falling down a block onto a conveyor on a lower level");
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
+    BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
+    BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
   }
 }

@@ -27,6 +27,7 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
   public static enum LaunchType {
     SMALL, MEDIUM, LARGE;
   }
+  public static boolean sneakPlayerAvoid;
   private LaunchType type;
   private float power;
   private SoundEvent sound;
@@ -70,6 +71,9 @@ public class BlockLaunch extends BlockBasePressurePlate implements IHasRecipe {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+      return;
+    }
     UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }

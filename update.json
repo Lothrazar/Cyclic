@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.9.6",
-    "1.12.2-recommended": "1.9.6"
+    "1.12.2-latest": "1.9.7",
+    "1.12.2-recommended": "1.9.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -221,5 +221,6 @@
   	,"1.9.4":"Added blacklist for pharos beacon, PharosBeaconBlacklist, so you can block some potion effects from the beacon.  "
 	,"1.9.5":"Updated zh_CN translation (thanks to Aemande123).  Sleeping Mat now has a feature where you right-click in your inventory and you can toggle whether or not it will set your spawn when you sleep; because of this SleepingMatSetsSpawn config has been removed.  Fixed the empty Chest Sack not being consumed when used on a Botania Mana Pool.  "
   	,"1.9.6":"Autocrafter will now correctly save container items, such as empty buckets, when crafting with full containers (example: it now saves empty buckets when auto-crafting cake).  Changed all blocks/machines to open their GUIs on serverside first: for compatibility with FTB Utilities permissions checks for claimed chunks.   "
+	,"1.9.7":"You can now sneak to avoid being pushed/launched by the Slime Conveyors and Slime Plates (can toggle in config file).  Updated the FTB Utilities permissions fix (from previous release)."
   }
 }

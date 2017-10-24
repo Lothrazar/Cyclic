@@ -37,7 +37,14 @@ public class UtilPlaceBlocks {
     }
     return false;
   }
-  // from spell range build
+  /**
+   * This will return true only if world.setBlockState(..) returns true
+   * @param world
+   * @param player
+   * @param placePos
+   * @param placeState
+   * @return
+   */
   public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (placePos == null) {
       return false;

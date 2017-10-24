@@ -43,6 +43,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   private SoundEvent sound;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
+  public static boolean sneakPlayerAvoid;
   public BlockConveyor(SpeedType t) {
     super(Material.IRON, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
@@ -95,6 +96,9 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
     EnumFacing face = getFacingFromState(state);
     if (keepEntityGrounded) {
       entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
+    }
+    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+      return;
     }
     //for example when you have these layering down stairs, and then they speed up when going down one block ledge
     UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
