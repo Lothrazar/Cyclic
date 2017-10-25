@@ -6,8 +6,8 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ModLogger implements IHasConfig {
   private Logger logger;
-  private boolean sendInfo = true;//info are things we WANT to stay on release
-  private boolean sendLogs = false;// disable this for release
+  private boolean sendInfo = true;//info are things we WANT to stay on release. by default
+  private boolean sendLogs = false;//in config. only used for dev or live debugging
   private boolean runUnitTests;
   public ModLogger(Logger l) {
     logger = l;
