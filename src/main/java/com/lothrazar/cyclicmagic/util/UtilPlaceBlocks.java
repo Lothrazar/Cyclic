@@ -84,17 +84,16 @@ public class UtilPlaceBlocks {
         placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
       }
       success = world.setBlockState(placePos, placeState, 3);
-      // }
-      // else {//this often gets called from only serverside, but not always (structurebuilder)
+   
       if (success) {
         UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
+        world.markBlockRangeForRenderUpdate(placePos, placePos.up());
+        world.markChunkDirty(placePos, null);
       }
-      // }
-      world.markBlockRangeForRenderUpdate(placePos, placePos.up());
-      world.markChunkDirty(placePos, null);
+  
     }
-    catch (ConcurrentModificationException e) {
-      ModCyclic.logger.error("ConcurrentModificationException");
+    catch (Exception e) {
+      ModCyclic.logger.error("Error attempting to place block ");
       ModCyclic.logger.error(e.getMessage());// message is null??
       ModCyclic.logger.error(e.getStackTrace().toString());
       success = false;
