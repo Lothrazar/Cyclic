@@ -12,6 +12,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
@@ -36,7 +37,7 @@ public class UtilEntity {
   public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target) {
     EnderTeleportEvent event = new EnderTeleportEvent(player, target.getX(), target.getY(), target.getZ(), 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
-    if (!wasCancelled) {
+    if (wasCancelled == false) {
       //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
       UtilEntity.teleportWallSafe(player, world,
           new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()));
@@ -44,6 +45,9 @@ public class UtilEntity {
     return !wasCancelled;
   }
   public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
+    world.markBlockRangeForRenderUpdate(coords, coords);
+    //CommandTP ?
+    //       ((EntityPlayerMP)p_189863_0_).connection.setPlayerLocation(p_189863_1_.getAmount(), p_189863_2_.getAmount(), p_189863_3_.getAmount(), f, f1, set);
     player.setPositionAndUpdate(coords.getX(), coords.getY(), coords.getZ());
     moveEntityWallSafe(player, world);
   }
