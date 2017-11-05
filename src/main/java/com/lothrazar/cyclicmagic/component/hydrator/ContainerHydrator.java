@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilFluid;

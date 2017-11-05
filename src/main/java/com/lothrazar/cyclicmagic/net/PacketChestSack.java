@@ -81,12 +81,9 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
               if (chest_sack != null) {
                 ItemStack drop = new ItemStack(chest_sack);
                 drop.setTagCompound(itemData);
-             
                 UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
-   
                 UtilPlaceBlocks.destroyBlock(world, position);
                 if (player.capabilities.isCreativeMode == false && held.getCount() > 0) {
-             
                   held.shrink(1);
                   if (held.getCount() == 0) {
                     held = ItemStack.EMPTY;

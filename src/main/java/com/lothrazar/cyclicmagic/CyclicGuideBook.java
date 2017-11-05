@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry.Util1pt12;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
@@ -176,5 +175,5 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handlePost(ItemStack bookStack) {
     // recipe used to work in handle post, had to move into handleModel in 1.12
-    }
+  }
 }

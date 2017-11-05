@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
@@ -39,6 +38,7 @@ public class UtilPlaceBlocks {
   }
   /**
    * This will return true only if world.setBlockState(..) returns true
+   * 
    * @param world
    * @param player
    * @param placePos
@@ -84,18 +84,16 @@ public class UtilPlaceBlocks {
         placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
       }
       success = world.setBlockState(placePos, placeState, 3);
-   
       if (success) {
         UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
         world.markBlockRangeForRenderUpdate(placePos, placePos.up());
         world.markChunkDirty(placePos, null);
       }
-  
     }
     catch (Exception e) {
+      //blocked by perms or something, no need to log
       ModCyclic.logger.error("Error attempting to place block ");
-      ModCyclic.logger.error(e.getMessage());// message is null??
-      ModCyclic.logger.error(e.getStackTrace().toString());
+      e.printStackTrace();
       success = false;
     }
     return success;
@@ -172,7 +170,7 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: "+e.getMessage());
+      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
       e.printStackTrace();
     }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync

@@ -161,7 +161,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
     return super.onItemRightClick(world, player, hand);
   }
-
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
