@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.9.8",
-    "1.12.2-recommended": "1.9.8"
+    "1.12.2-latest": "1.9.9",
+    "1.12.2-recommended": "1.9.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -223,5 +223,6 @@
   	,"1.9.6":"Autocrafter will now correctly save container items, such as empty buckets, when crafting with full containers (example: it now saves empty buckets when auto-crafting cake).  Changed all blocks/machines to open their GUIs on serverside first: for compatibility with FTB Utilities permissions checks for claimed chunks.   "
 	,"1.9.7":"You can now sneak to avoid being pushed/launched by the Slime Conveyors and Slime Plates (can toggle in config file).  Updated the FTB Utilities permissions fix (from previous release)."
   	,"1.9.8":"Fixed world sync issue that can cause player kicked from server while Auto-Torch.  Attempt to gently preload chunks when teleporting using Ender Wings.     "
+	,"1.9.9":"Fixed the Area mode in the Harvester not affecting one of the edges of the region.  "
   }
 }
