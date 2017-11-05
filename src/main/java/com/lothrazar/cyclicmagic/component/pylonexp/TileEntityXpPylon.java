@@ -25,7 +25,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final int VRADIUS = 2;
   private static final int XP_PER_SPEWORB = 50;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
-  public static final int TIMER_FULL = 18;
+  public static final int TIMER_FULL = 22;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   private static final String NBT_TIMER = "Timer";
@@ -52,14 +52,18 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public void update() {
-    if (this.collect == 1) {
-      updateCollection();
-    }
-    if (this.bottle == 1) {
-      updateBottle();
-    }
     if (this.spray == 1) {
       updateSpray();
+    }
+    this.timer--;
+    if (this.timer <= 0) {
+      this.timer = TIMER_FULL;
+      if (this.collect == 1) {
+        updateCollection();
+      }
+      if (this.bottle == 1) {
+        updateBottle();
+      }
     }
   }
   private void updateSpray() {
@@ -81,18 +85,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void updateBottle() {
-    this.timer--;
-    if (this.timer <= 0) {
-      this.timer = TIMER_FULL;
-      if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() > XP_PER_BOTTLE) {
-        //pay the cost first
-        FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
-        if (actuallyDrained == null || actuallyDrained.amount == 0) {
-          return;
-        }
-        outputSlotIncrement();
-        inputSlotDecrement();
+    if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() > XP_PER_BOTTLE) {
+      //pay the cost first
+      FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
+      if (actuallyDrained == null || actuallyDrained.amount == 0) {
+        return;
       }
+      outputSlotIncrement();
+      inputSlotDecrement();
     }
   }
   private void updateCollection() {
