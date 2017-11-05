@@ -223,6 +223,6 @@
   	,"1.9.6":"Autocrafter will now correctly save container items, such as empty buckets, when crafting with full containers (example: it now saves empty buckets when auto-crafting cake).  Changed all blocks/machines to open their GUIs on serverside first: for compatibility with FTB Utilities permissions checks for claimed chunks.   "
 	,"1.9.7":"You can now sneak to avoid being pushed/launched by the Slime Conveyors and Slime Plates (can toggle in config file).  Updated the FTB Utilities permissions fix (from previous release)."
   	,"1.9.8":"Fixed world sync issue that can cause player kicked from server while Auto-Torch.  Attempt to gently preload chunks when teleporting using Ender Wings.     "
-	,"1.9.9":"Fixed the Area mode in the Harvester not affecting one of the edges of the region.  Experience Pylon will now only collect orbs from the world every 22 ticks, instead of every single tick; this reduces load on  TPS & lag.  "
+	,"1.9.9":"Fixed the Area mode in the Harvester not affecting one of the edges of the region.  Experience Pylon will now only collect orbs from the world every 22 ticks, instead of every single tick; this reduces load on  TPS & lag.  Fixed warning message in log startup about guideapi recipe registry.  "
   }
 }
