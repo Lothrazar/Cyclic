@@ -26,8 +26,7 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
     Block b = Block.getBlockFromItem(heldItem.getItem());
     if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)) {
       worldIn.destroyBlock(pos, dropBlock);
-      //     worldIn.setBlockState(pos, Block.getBlockFromItem(heldItem.getItem()) .getDefaultState()); //.useItemRightClick(worldIn, playerIn, hand);ee
-      heldItem.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+     heldItem.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
       return true;//to cancel event chains
     }
     return false;
