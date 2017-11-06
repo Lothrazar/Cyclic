@@ -88,7 +88,7 @@ public class RecipeRegistry {
       return list;
     }
   }
-  private static void add(IRecipe r, ResourceLocation location) {
+  public static void add(IRecipe r, ResourceLocation location) {
     r.setRegistryName(location);
     recipes.add(r);
   }

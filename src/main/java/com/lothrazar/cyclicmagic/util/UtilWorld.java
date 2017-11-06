@@ -229,6 +229,21 @@ public class UtilWorld {
     }
     return posToPlaceAt;
   }
+  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
+    BlockPos posToPlaceAt = new BlockPos(posIn);
+    BlockPos posLoop = new BlockPos(posIn);
+    for (int i = 0; i < max; i++) {
+      if (world.getBlockState(posLoop).getBlock() != null &&
+          world.getBlockState(posLoop).getBlock().isReplaceable(world, posLoop)) {
+        posToPlaceAt = posLoop;
+        break;
+      }
+      else {
+        posLoop = posLoop.offset(facing);
+      }
+    }
+    return posToPlaceAt;
+  }
   /**
    * Everything in this inner class is From a mod that has MIT license owned by
    * romelo333 and maintained by McJty

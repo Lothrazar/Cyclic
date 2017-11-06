@@ -26,3 +26,5 @@ crash-reports/
 .gitattributes
 *.launch
 *.lnk
+*.jks
+gradle.properties

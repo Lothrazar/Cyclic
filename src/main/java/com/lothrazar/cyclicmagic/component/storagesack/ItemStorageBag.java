@@ -161,17 +161,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
     return super.onItemRightClick(world, player, hand);
   }
-  public static ItemStack getPlayerBagIfHeld(EntityPlayer player) {
-    ItemStack wand = player.getHeldItemMainhand();
-    if (wand != null && wand.getItem() instanceof ItemStorageBag) {
-      return wand;
-    }
-    wand = player.getHeldItemOffhand();
-    if (wand != null && wand.getItem() instanceof ItemStorageBag) {
-      return wand;
-    }
-    return null;
-  }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",

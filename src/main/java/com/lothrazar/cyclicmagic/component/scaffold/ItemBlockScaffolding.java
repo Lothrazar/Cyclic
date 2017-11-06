@@ -99,7 +99,7 @@ public class ItemBlockScaffolding extends ItemBlock {
     //instanceof ItemBlockScaffolding 
     if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getEntityPlayer().isSneaking()) {
       EnumFacing opp = event.getFace().getOpposite();
-      BlockPos dest = UtilWorld.nextAirInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
+      BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
       this.onItemUse(event.getEntityPlayer(), event.getWorld(), dest, event.getHand(), opp, 0, 0, 0);
       event.setCanceled(true);
     }

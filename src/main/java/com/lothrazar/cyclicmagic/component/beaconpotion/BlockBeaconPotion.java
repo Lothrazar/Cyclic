@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.component.beaconpotion;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;

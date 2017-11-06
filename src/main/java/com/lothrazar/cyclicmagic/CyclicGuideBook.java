@@ -28,12 +28,15 @@ import amerifrance.guideapi.page.PageIRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
+  private static final String GUIDE_API_MOD_ID = "guideapi";
   private static final int MAX_PAGE_LENGTH = 314;
   private static Book book;
   private List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
@@ -156,8 +159,8 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
-    // recipe used to work in handle post, its here now
-    RecipeRegistry.addShapedRecipe(bookStack,
+    ResourceLocation location = new ResourceLocation(GUIDE_API_MOD_ID, Const.MODID + "_guidebook");
+    IRecipe recipe = new ShapedOreRecipe(location, bookStack,
         " b ",
         "coc",
         " s ",
@@ -165,7 +168,12 @@ public class CyclicGuideBook implements IGuideBook {
         'b', Items.BOOK,
         'o', Blocks.GRAVEL,
         's', Items.STICK);
+    //replace with guideapi prefix
+    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
+    RecipeRegistry.add(recipe, location);
   }
   @Override
-  public void handlePost(ItemStack bookStack) {}
+  public void handlePost(ItemStack bookStack) {
+    // recipe used to work in handle post, had to move into handleModel in 1.12
+  }
 }

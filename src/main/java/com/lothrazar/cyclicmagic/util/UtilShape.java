@@ -170,7 +170,7 @@ public class UtilShape {
     int zMax = pos.getZ() + radius;
     int y = pos.getY();
     for (int x = xMin; x <= xMax; x++) {
-      for (int z = zMin; z < zMax; z++) {
+      for (int z = zMin; z <= zMax; z++) {
         shape.add(new BlockPos(x, y, z));
         shape.add(new BlockPos(x, y, z));
       }
