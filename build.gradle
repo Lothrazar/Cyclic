@@ -24,9 +24,34 @@ minecraft {
     version = "${mc_version}-${forge_version}"
     mappings = "snapshot_20170624"
     runDir = "run"
-    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    makeObfSourceJar = false
     useDepAts = true
+    //Makes those replacement changes to the main mod class.
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    replaceIn "ModCyclic.java"
 }
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+
+    // Skips if the keyStore property is missing.
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
+
+    // findProperty allows us to reference the property without it existing. 
+    // Using project.propName would cause the script to fail validation if 
+    // the property did not exist. 
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
+}
+
+// Runs this task automatically when build is ran. 
+build.dependsOn signJar
+
 //Defines basic patterns for pulling various dependencies.
 repositories {
     maven {
@@ -82,3 +107,4 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
