@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -17,16 +16,13 @@ public class GuiPylon extends GuiBaseContainer {
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
   public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
-  
   private TileEntityXpPylon tile;
   boolean debugLabels = false;
   private ButtonExpPylon btnCollect;
- 
   private ButtonExpPylon btnDepositAll;
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    
     this.setScreenSize(ScreenSize.LARGE);
   }
   @Override
@@ -36,15 +32,13 @@ public class GuiPylon extends GuiBaseContainer {
     int w = 58, h = 20;
     int x = this.guiLeft + Const.PAD;
     int y = this.guiTop + Const.PAD * 3;
-    int hSpacing = w / 2 + Const.PAD / 2 ;
+    int hSpacing = w / 2 + Const.PAD / 2;
     btnCollect = new ButtonExpPylon(btnId++,
         x, y, w, h, "");
     btnCollect.setTooltip("button.exp_pylon.collect.tooltip" + TileEntityXpPylon.RADIUS);
     this.buttonList.add(btnCollect);
     y += h + Const.PAD / 2;
- 
     //collect and bottle are done, now the rest
- 
     ButtonExpPylon btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "+" + 10);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
@@ -70,7 +64,7 @@ public class GuiPylon extends GuiBaseContainer {
     btn.setTooltip("button.exp_pylon.drain.tooltip");
     btn.setValue(-10);
     this.buttonList.add(btn);
-    x +=hSpacing;
+    x += hSpacing;
     btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "-" + 50);
     btn.setTooltip("button.exp_pylon.drain.tooltip");
@@ -95,8 +89,6 @@ public class GuiPylon extends GuiBaseContainer {
     if (button.id == btnCollect.id) {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.COLLECT));
     }
- 
- 
     else if (button.id == btnDepositAll.id) {
       //fake: exp really means deposit
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 0, TileEntityXpPylon.Fields.EXP));
@@ -105,7 +97,6 @@ public class GuiPylon extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), ((ButtonExpPylon) button).getValue(), TileEntityXpPylon.Fields.EXP));
     }
   }
- 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -126,7 +117,6 @@ public class GuiPylon extends GuiBaseContainer {
     //    IFluidHandler fluidHandler = tile.getWorld().getTileEntity(tile.getPos()).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     //    
-    
     int currentFluid = tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
     this.drawString("" + currentFluid, 0, 0);
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
@@ -140,7 +130,6 @@ public class GuiPylon extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID_EXP);
     float percent = ((float) currentFluid / ((float) TileEntityXpPylon.TANK_FULL));
     int hpct = (int) (h * percent);
-   
     Gui.drawModalRectWithCustomSizedTexture(
         x + 1, y + 1 + h - hpct,
         u, v,
@@ -151,6 +140,6 @@ public class GuiPylon extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
-     this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 + 8, 108);
+    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 + 8, 108);
   }
 }

@@ -53,25 +53,25 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   }
   @Override
   public void update() {
-   // if (world.isRemote == false) {
-      this.timer++;
-      boolean powered;
-      boolean prevPowered = world.getBlockState(pos).getValue(BlockRedstoneClock.POWERED);
-      if (timer < timeOff) {
-        powered = false;
-      }
-      else if (timer < timeOff + timeOn) {
-        //we are in the ON section
-        powered = true;
-      }
-      else {
-        timer = 0;
-        powered = false;
-      }
-      if (prevPowered != powered){
-        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
-      }
-   // }
+    // if (world.isRemote == false) {
+    this.timer++;
+    boolean powered;
+    boolean prevPowered = world.getBlockState(pos).getValue(BlockRedstoneClock.POWERED);
+    if (timer < timeOff) {
+      powered = false;
+    }
+    else if (timer < timeOff + timeOn) {
+      //we are in the ON section
+      powered = true;
+    }
+    else {
+      timer = 0;
+      powered = false;
+    }
+    if (prevPowered != powered) {
+      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
+    }
+    // }
   }
   @Override
   public int getField(int id) {

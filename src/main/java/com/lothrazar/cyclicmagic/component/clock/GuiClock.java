@@ -93,7 +93,7 @@ public class GuiClock extends GuiBaseContainer {
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);
     btn.displayString = (value > 0) ? "+" + value : "" + value;
-   btn.setTooltip("tile.clock."+tooltip);
+    btn.setTooltip("tile.clock." + tooltip);
     this.buttonList.add(btn);
   }
   @SideOnly(Side.CLIENT)

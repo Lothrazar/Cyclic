@@ -73,8 +73,8 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
         }
         else { // so message.value < 0
           // so DRAIN FROM PYLON, add to PLAYER. BUT only if PYLON has enough
-          int toDrain = message.value *-1;
-          if (pylonHas >= toDrain ) {
+          int toDrain = message.value * -1;
+          if (pylonHas >= toDrain) {
             tile.setField(message.type.ordinal(), pylonHas - toDrain);
             UtilExperience.incrementExp(player, toDrain);
           }

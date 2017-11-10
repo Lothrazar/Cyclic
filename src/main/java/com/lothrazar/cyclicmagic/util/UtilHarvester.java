@@ -87,13 +87,11 @@ public class UtilHarvester {
       world.destroyBlock(posCurrent, true);
       return drops;
     }
- 
     //new generic harvest
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
     while (unmodifiableiterator.hasNext()) {
       Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
       IProperty<?> iproperty = entry.getKey();
-   
       if (iproperty.getName() != null &&
           iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
         PropertyInteger propInt = (PropertyInteger) iproperty;
@@ -112,7 +110,7 @@ public class UtilHarvester {
           //so when replanting, keep that facing data
           world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
           blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-          ModCyclic.logger.log("harvesting  " + blockId + " dropSize=>" + drops.size()+" currentAge = "+currentAge + " maxAge= "+maxAge);
+          ModCyclic.logger.log("harvesting  " + blockId + " dropSize=>" + drops.size() + " currentAge = " + currentAge + " maxAge= " + maxAge);
           if (tryRemoveOneSeed) {
             Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
             if (seedItem == null) {
@@ -141,9 +139,9 @@ public class UtilHarvester {
         break;
       }
     }
-//    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
-//      ModCyclic.logger.log("HARVEST IGNORED " + blockId);
-//    }
+    //    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
+    //      ModCyclic.logger.log("HARVEST IGNORED " + blockId);
+    //    }
     return drops;
   }
 }
