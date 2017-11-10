@@ -39,7 +39,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory", certificateFingerprint  = "@FINGERPRINT@")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory", certificateFingerprint = "@FINGERPRINT@")
 public class ModCyclic {
   @Instance(value = Const.MODID)
   public static ModCyclic instance;
@@ -117,6 +117,13 @@ public class ModCyclic {
   @EventHandler
   public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
     // https://tutorials.darkhax.net/tutorials/jar_signing/
-    ModCyclic.logger.error("Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported by the author!");
+    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
+    String msg = "Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
+    if (logger == null) {
+      System.out.println(msg);
+    }
+    else {
+      ModCyclic.logger.error(msg);
+    }
   }
 }

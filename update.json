@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.9.9",
-    "1.12.2-recommended": "1.9.9"
+    "1.12.2-latest": "1.9.10",
+    "1.12.2-recommended": "1.9.10"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -224,5 +224,6 @@
 	,"1.9.7":"You can now sneak to avoid being pushed/launched by the Slime Conveyors and Slime Plates (can toggle in config file).  Updated the FTB Utilities permissions fix (from previous release)."
   	,"1.9.8":"Fixed world sync issue that can cause player kicked from server while Auto-Torch.  Attempt to gently preload chunks when teleporting using Ender Wings.     "
 	,"1.9.9":"Fixed the Area mode in the Harvester not affecting one of the edges of the region.  Experience Pylon will now only collect orbs from the world every 22 ticks, instead of every single tick; this reduces load on  TPS & lag.  Fixed warning message in log startup about guideapi recipe registry.  Mod has now been jar-signed using the system built into forge.  "
+  	,"1.9.10":"Fixed some typos from Password Block.  Fixed Magic Bean crop only giving seeds and not loot when gathered with some machines.  "
   }
 }
