@@ -139,7 +139,6 @@ public class GuiBuilder extends GuiBaseContainer {
     //move it over if more than 1 digit
     int x = (display.length() > 1) ? xRotTextbox - 3 : xRotTextbox;
     this.drawString(display, x, yHeightTxtbox + yOffset - 4);
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }
   private void updateDisabledButtons() {
