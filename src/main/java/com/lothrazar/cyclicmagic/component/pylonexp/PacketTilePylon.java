@@ -49,25 +49,35 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
       int pylonSpace = TileEntityXpPylon.TANK_FULL - pylonHas;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
         int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
-        int toDeposit;
-        if (message.value == -1) {
-          //deposit all
-          toDeposit = Math.min(playerHas, pylonSpace);
-        }
-        else {//try deposit specified amt
-          toDeposit = Math.min(message.value, pylonSpace);
-        }
-        if (pylonHas + toDeposit <= TileEntityXpPylon.TANK_FULL) {//is it full
-          if (UtilExperience.drainExp(player, toDeposit)) {//does player have enough
-            //then deposit that much into it if drain worked
-            tile.setField(message.type.ordinal(), pylonHas + toDeposit);
+        if (message.value >= 0) {
+          int toDeposit;
+          if (message.value == 0) {
+            //deposit all
+            toDeposit = Math.min(playerHas, pylonSpace);
           }
-          else { //  not enouh
-            UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
+          else {//try deposit specified amt
+            toDeposit = Math.min(message.value, pylonSpace);
+          }
+          if (pylonHas + toDeposit <= TileEntityXpPylon.TANK_FULL) {//is it full
+            if (UtilExperience.drainExp(player, toDeposit)) {//does player have enough
+              //then deposit that much into it if drain worked
+              tile.setField(message.type.ordinal(), pylonHas + toDeposit);
+            }
+            else { //  not enouh
+              UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
+            }
+          }
+          else { //  full
+            UtilChat.addChatMessage(player, "tile.exp_pylon.full");
           }
         }
-        else { //  full
-          UtilChat.addChatMessage(player, "tile.exp_pylon.full");
+        else { // so message.value < 0
+          // so DRAIN FROM PYLON, add to PLAYER. BUT only if PYLON has enough
+          int toDrain = message.value *-1;
+          if (pylonHas >= toDrain ) {
+            tile.setField(message.type.ordinal(), pylonHas - toDrain);
+            UtilExperience.incrementExp(player, toDrain);
+          }
         }
       }
       else {//normal field toggle/value will be + or 1 something so increment by that

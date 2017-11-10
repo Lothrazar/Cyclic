@@ -23,25 +23,20 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler {
   public static final int TANK_FULL = 20000;
   private static final int VRADIUS = 2;
-  private static final int XP_PER_SPEWORB = 50;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 22;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_COLLECT = "collect";
-  private static final String NBT_SPRAY = "spray";
-  private static final String NBT_BOTTLE = "bottle";
   public final static int RADIUS = 16;
   private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
   private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
-    TIMER, EXP, COLLECT, SPRAY, BOTTLE;//MIGHT remove redstone eh
+    TIMER, EXP, COLLECT, REDSTONE, BOTTLE;//MIGHT remove redstone eh
   }
   private int timer = 0;
   private int collect = 1;
-  private int bottle = 0;
-  private int spray = 0;
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
@@ -52,36 +47,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public void update() {
-    if (this.spray == 1) {
-      updateSpray();
-    }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
       if (this.collect == 1) {
         updateCollection();
       }
-      if (this.bottle == 1) {
-        updateBottle();
-      }
-    }
-  }
-  private void updateSpray() {
-    int toSpew = Math.min(XP_PER_SPEWORB, this.getCurrentFluid());
-    if (toSpew > 0 && this.getCurrentFluid() >= toSpew) {
-      FluidStack actuallyDrained = this.tank.drain(toSpew, true);
-      //was the correct amount drained
-      if (actuallyDrained == null || actuallyDrained.amount == 0) {
-        return;
-      }
-      if (world.isRemote == false) {
-        EntityXPOrb orb = new EntityXPOrb(world);
-        orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-        orb.xpValue = toSpew;
-        orb.delayBeforeCanPickup = 0;
-        world.spawnEntity(orb);
-        setOrbVelocity(orb);
-      }
+      updateBottle();
     }
   }
   private void updateBottle() {
@@ -124,7 +96,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   private boolean outputSlotHasRoom() {
     ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
-    return UtilItemStack.isEmpty(fullOnes) || (fullOnes.getCount() < 64);
+    if (fullOnes.getItem() != Items.GLASS_BOTTLE) {
+      return false;
+    }
+    return fullOnes.getCount() < 64;
   }
   private boolean inputSlotHasSome() {
     ItemStack emptyOnes = this.getStackInSlot(SLOT_INPUT);
@@ -147,25 +122,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       return SLOTS_INSERT;
     }
   }
-  //  private boolean tryDecrExp(int xpValue) {
-  //    if (this.currentExp - xpValue < 0) { return false; }
-  //    this.currentExp -= xpValue;
-  //    return true;
-  //  }
-  //  private boolean tryIncrExp(int xpValue) {
-  //    if (this.currentExp + xpValue > MAX_EXP_HELD) { return false; }
-  //    this.currentExp += xpValue;
-  //    return true;
-  //  }
-  private void setOrbVelocity(EntityXPOrb orb) {
-    orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
-  }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_COLLECT, this.collect);
-    tags.setInteger(NBT_SPRAY, this.spray);
-    tags.setInteger(NBT_BOTTLE, this.bottle);
     tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
     return super.writeToNBT(tags);
   }
@@ -174,8 +134,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
     collect = tags.getInteger(NBT_COLLECT);
-    spray = tags.getInteger(NBT_SPRAY);
-    bottle = tags.getInteger(NBT_BOTTLE);
     tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
   }
   @Override
@@ -189,12 +147,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         return timer;
       case EXP:
         return this.getCurrentFluid();
-      case BOTTLE:
-        return bottle;
       case COLLECT:
         return collect;
-      case SPRAY:
-        return spray;
     }
     return -1;
   }
@@ -222,14 +176,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       case EXP:
         this.setCurrentFluid(value);
       break;
-      case BOTTLE:
-        this.bottle = value % 2;
-      break;
       case COLLECT:
         this.collect = value % 2;
-      break;
-      case SPRAY:
-        this.spray = value % 2;
       break;
     }
   }
