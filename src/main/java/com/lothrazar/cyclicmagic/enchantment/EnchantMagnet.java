@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantMagnet extends EnchantBase {
-  private static final int ITEM_HRADIUS = 5;
+  private static final int ITEM_HRADIUS = 4;
   private static final int HRADIUS_PER_LEVEL = 4;
   private static final int ITEM_VRADIUS = 4;
   public EnchantMagnet() {
