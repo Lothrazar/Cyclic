@@ -21,7 +21,7 @@ public class GuiBuilder extends GuiBaseContainer {
   private ButtonIncrementField btnHeightDown;
   private final static int yRowTextbox = 20;
   private int xControlsStart = 134;
-  private final static int xControlsSpacing = 28;
+  private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
@@ -36,8 +36,9 @@ public class GuiBuilder extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //first the main top left type button
+    TileEntityStructureBuilder.Fields fld;
     int width = 50;
-    int h = 15;
+    int h = 20;
     int id = 2;
     int x = this.guiLeft + Const.PAD + h;
     int y = this.guiTop + yOffset + Const.PAD;
@@ -46,15 +47,32 @@ public class GuiBuilder extends GuiBaseContainer {
         y,
         tile.getPos(),
         TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
-        width, 20);
+        width, h);
     btn.setTooltip("button.builder.tooltip");
     this.buttonList.add(btn);
-    width = 12;
-    h = width;
-    TileEntityStructureBuilder.Fields fld = TileEntityStructureBuilder.Fields.SIZE;
+    //shape btns in loop
+    ButtonIncrementField btnShape;
+    width = 20;
+    x = this.guiLeft + Const.PAD;
+    y = this.guiTop + 60;
+    fld = TileEntityStructureBuilder.Fields.BUILDTYPE;
+    for (TileEntityStructureBuilder.BuildType shape : TileEntityStructureBuilder.BuildType.values()) {
+      btnShape = new ButtonIncrementField(id++,
+          x,
+          y,
+          tile.getPos(),
+          fld.ordinal(),
+          shape.ordinal(), width, h);
+      String n = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
+      this.addButton(btnShape).setTooltip(n).displayString = shape.shortcode();
+      x += width+2;
+    }
     //////// all the control groups
+    width = xControlsSpacing - 2;
+    h = width;
     int yTopRow = this.guiTop + yOffset;
     int yBottomRow = this.guiTop + yRowTextbox + yOffset + Const.PAD;
+    fld = TileEntityStructureBuilder.Fields.SIZE;
     ////////// SIZE 
     x = this.guiLeft + xControlsStart;
     btnSizeUp = new ButtonIncrementField(id++,
@@ -65,7 +83,7 @@ public class GuiBuilder extends GuiBaseContainer {
         1, width, h);
     btnSizeUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnSizeUp.displayString = "+";
-    this.buttonList.add(btnSizeUp);
+    this.addButton(btnSizeUp);
     btnSizeDown = new ButtonIncrementField(id++,
         x,
         yBottomRow,
@@ -74,7 +92,7 @@ public class GuiBuilder extends GuiBaseContainer {
         -1, width, h);
     btnSizeDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnSizeDown.displayString = "-";
-    this.buttonList.add(btnSizeDown);
+    this.addButton(btnSizeDown);
     //////////////HEIGHT BUTTONS
     fld = TileEntityStructureBuilder.Fields.HEIGHT;
     x = this.guiLeft + xControlsStart - xControlsSpacing;
@@ -86,7 +104,7 @@ public class GuiBuilder extends GuiBaseContainer {
         1, width, h);
     btnHeightUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnHeightUp.displayString = "+";
-    this.buttonList.add(btnHeightUp);
+    this.addButton(btnHeightUp);
     btnHeightDown = new ButtonIncrementField(id++,
         x,
         yBottomRow,
@@ -95,7 +113,7 @@ public class GuiBuilder extends GuiBaseContainer {
         -1, width, h);
     btnHeightDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnHeightDown.displayString = "-";
-    this.buttonList.add(btnHeightDown);
+    this.addButton(btnHeightDown);
     //////////////////ROTATION BUTTONS
     fld = TileEntityStructureBuilder.Fields.ROTATIONS;
     x = this.guiLeft + xControlsStart - 2 * xControlsSpacing;
@@ -107,7 +125,7 @@ public class GuiBuilder extends GuiBaseContainer {
         1, width, h);
     btnRotUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnRotUp.displayString = "+";
-    this.buttonList.add(btnRotUp);
+    this.addButton(btnRotUp);
     ButtonIncrementField btnRotDown = new ButtonIncrementField(id++,
         x,
         yBottomRow,
@@ -116,7 +134,7 @@ public class GuiBuilder extends GuiBaseContainer {
         -1, width, h);
     btnRotDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnRotDown.displayString = "-";
-    this.buttonList.add(btnRotDown);
+    this.addButton(btnRotDown);
   }
   @SideOnly(Side.CLIENT)
   @Override

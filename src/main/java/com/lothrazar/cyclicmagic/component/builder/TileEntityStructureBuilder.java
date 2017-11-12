@@ -53,6 +53,25 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         return false;
       return true;
     }
+    public String shortcode() {
+      switch (this) {
+        case CIRCLE:
+          return "CI";
+        case DIAGONAL:
+          return "DI";
+        case FACING:
+          return "FA";
+        case SOLID:
+          return "SO";
+        case SPHERE:
+          return "SP";
+        case SQUARE:
+          return "SQ";
+        case STAIRWAY:
+          return "ST";
+      }
+      return "";
+    }
   }
   public TileEntityStructureBuilder() {
     super(10);

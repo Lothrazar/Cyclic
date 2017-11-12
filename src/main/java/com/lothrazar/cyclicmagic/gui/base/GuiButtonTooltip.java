@@ -17,9 +17,10 @@ public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
   public void setTooltips(List<String> t) {
     tooltip = t;
   }
-  public void setTooltip(final String t) {
+  public GuiButtonTooltip setTooltip(final String t) {
     List<String> remake = new ArrayList<String>();
     remake.add(UtilChat.lang(t));
     tooltip = remake;
+    return this;
   }
 }
