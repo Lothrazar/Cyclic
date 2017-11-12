@@ -53,24 +53,29 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   }
   @Override
   public void update() {
-    if (world.isRemote == false) {
-      this.timer++;
-      boolean powered;
-      boolean prevPowered = world.getBlockState(pos).getValue(BlockRedstoneClock.POWERED);
-      if (timer < timeOff) {
-        powered = false;
-      }
-      else if (timer < timeOff + timeOn) {
-        //we are in the ON section
-        powered = true;
-      }
-      else {
-        timer = 0;
-        powered = false;
-      }
-      if (prevPowered != powered)
-        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
+    if(this.power == 0){
+      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, false));
+      return;
     }
+    // if (world.isRemote == false) {
+    this.timer++;
+    boolean powered;
+    boolean prevPowered = world.getBlockState(pos).getValue(BlockRedstoneClock.POWERED);
+    if (timer < timeOff) {
+      powered = false;
+    }
+    else if (timer < timeOff + timeOn) {
+      //we are in the ON section
+      powered = true;
+    }
+    else {
+      timer = 0;
+      powered = false;
+    }
+    if (prevPowered != powered) {
+      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
+    }
+    // }
   }
   @Override
   public int getField(int id) {
@@ -92,8 +97,8 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
       case POWER:
-        if (value < 1) {
-          value = 1;
+        if (value < 0) {
+          value = 0;
         }
         if (value > 15) {
           value = 15;

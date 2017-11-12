@@ -10,16 +10,16 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantMagnet extends EnchantBase {
-  private static final int ITEM_HRADIUS = 5;
+  private static final int ITEM_HRADIUS = 4;
   private static final int HRADIUS_PER_LEVEL = 4;
   private static final int ITEM_VRADIUS = 4;
   public EnchantMagnet() {
-    super("magnet", Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("magnet", Rarity.VERY_RARE, EnumEnchantmentType.ALL, EntityEquipmentSlot.values());
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(HRADIUS_PER_LEVEL + "")));
   }
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 3;
   }
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {

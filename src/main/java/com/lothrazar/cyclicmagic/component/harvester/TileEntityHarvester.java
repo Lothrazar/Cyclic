@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -57,9 +58,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     tags.setInteger("HM", normalModeIfZero);
     return super.writeToNBT(tags);
   }
-  //  public boolean isFuelBurning() {
-  //    return this.timer > 0 && this.timer < TIMER_FULL;
-  //  }
   @Override
   public void update() {
     if (!isRunning()) {
@@ -101,6 +99,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
   }
   private void setOutputItems(List<ItemStack> output) {
+    for (ItemStack wtf : output) {
+      ModCyclic.logger.info("SET OUTPUT" + wtf.getDisplayName());
+    }
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory());
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {

@@ -21,6 +21,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -36,6 +37,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   private boolean allowBonemeal;
   private boolean dropSeedOnHarvest;
   private ArrayList<String> myDropStrings;
+  private Random rand = new Random();
   public BlockCropMagicBean() {
     Item[] drops = new Item[] {
         //treasure
@@ -103,7 +105,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   @Nullable
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
+    return this.isMaxAge(state) ? this.getSeed() : this.getSeed();
   }
   @Override
   protected Item getSeed() {
@@ -114,9 +116,9 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   }
   @Override
   protected Item getCrop() {
-    return null;//ItemRegistry.sprout_seed;
+    return null;//the null tells harvestcraft hey: dont remove my drops
   }
-  private ItemStack getCropStack(Random rand) {
+  private ItemStack getCropStack() {
     String res = this.myDropStrings.get(rand.nextInt(myDropStrings.size()));
     try {
       String[] ares = res.split(Pattern.quote("*"));
@@ -124,7 +126,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
       if (item == null) {
         ModCyclic.logger.error("Magic Bean config: loot item not found " + res);
         this.myDropStrings.remove(res);
-        return getCropStack(rand);
+        return getCropStack();
       }
       String meta = (ares.length > 1) ? ares[1] : "0";
       int imeta = Integer.parseInt(meta);
@@ -148,20 +150,24 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    NonNullList<ItemStack> ret = NonNullList.create();
+    this.getDrops(ret, world, pos, state, fortune);
+    return ret;
+  }
+  @Override
+  public void getDrops(NonNullList<ItemStack> ret, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     // Used by regular 'block break' and also by other harvesting features
-    java.util.List<ItemStack> ret = new ArrayList<ItemStack>();
     boolean isGrown = this.isMaxAge(state);
     if (isGrown) {
-      Random rand = world instanceof World ? ((World) world).rand : new Random();
       int count = quantityDropped(state, fortune, rand);
       for (int i = 0; i < count; i++) {
-        ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
+        ret.add(getCropStack().copy()); //copy to make sure we return a new instance
       }
     }
     if (!isGrown || dropSeedOnHarvest) {//either its !grown, so drop seed, OR it is grown, but config says drop on full grown
       ret.add(new ItemStack(getSeed()));//always a seed, grown or not
     }
-    return ret;
+    //    return ret;
   }
   @Override
   public int getMaxAge() {

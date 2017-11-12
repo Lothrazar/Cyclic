@@ -103,9 +103,9 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     if (wasFound > 0) {
       event.setCanceled(true);//If this event is canceled, the chat message is never distributed to all clients.
       if (wasFound == 1)
-        UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".triggered") + " : " + event.getMessage());
+        UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".triggered") + event.getMessage());
       else
-        UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getUnlocalizedName() + ".triggeredmany") + " : " + event.getMessage());
+        UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getUnlocalizedName() + ".triggeredmany") + event.getMessage());
     }
   }
   @Override
