@@ -23,10 +23,10 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
-  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
+  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
+  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private int buildType;
   private int buildSize = 3;
   private int buildHeight = 3;
@@ -40,7 +40,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS;
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE, DIAGONAL;
+    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE, DIAGONAL, DOME, CUP;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
@@ -50,7 +50,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return BuildType.values()[type];
     }
     public boolean hasHeight() {
-      if (this == STAIRWAY || this == SPHERE || this == DIAGONAL)
+      if (this == STAIRWAY || this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
         return false;
       return true;
     }
@@ -70,6 +70,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return "SQ";
         case STAIRWAY:
           return "ST";
+        case DOME:
+          return "DO";
+        case CUP:
+          return "CU";
       }
       return "";
     }
@@ -105,6 +109,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPos(), this.getSize());
+      break;
+      case DOME:
+        shape = UtilShape.sphereDome(this.getPos(), this.getSize());
+      break;
+      case CUP:
+        shape = UtilShape.sphereCup(this.getPos().up(this.getSize()), this.getSize());
       break;
       case DIAGONAL:
         shape = UtilShape.diagonal(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);

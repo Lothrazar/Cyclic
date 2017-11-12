@@ -15,13 +15,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
-  private ButtonTileEntityField btn;
   private ButtonTileEntityField btnSizeUp;
   private ButtonTileEntityField btnSizeDown;
   private ButtonTileEntityField btnHeightUp;
   private ButtonTileEntityField btnHeightDown;
-  private final static int yRowTextbox = 20;
-  private int xControlsStart = 134;
+  private final static int yRowTextbox = 30;
+  private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
@@ -43,21 +42,24 @@ public class GuiBuilder extends GuiBaseContainer {
     int id = 2;
     int x = this.guiLeft + Const.PAD + h;
     int y = this.guiTop + yOffset + Const.PAD;
-    btn = new ButtonTileEntityField(id++,
-        x,
-        y,
-        tile.getPos(),
-        TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
-        width, h);
-    btn.setTooltip("button.builder.tooltip");
-    this.addButton(btn);
+ 
     //shape btns in loop
     ButtonTileEntityField btnShape;
-    width = 20;
-    x = this.guiLeft + Const.PAD;
-    y = this.guiTop + 60;
+    width = 18;
+    h=width;
+    x = this.guiLeft + Const.PAD/2;
+    y = this.guiTop + 50;
     fld = TileEntityStructureBuilder.Fields.BUILDTYPE;
+    int numInRow=0;
     for (TileEntityStructureBuilder.BuildType shape : TileEntityStructureBuilder.BuildType.values()) {
+      numInRow++;
+      if(numInRow==7){//only 6 per row fit on screen
+      //so just reset x back to left side and bump up the y
+
+        x = this.guiLeft + Const.PAD/2;
+        y += h + Const.PAD/2;
+      }
+      
       btnShape = new ButtonTileEntityField(id++,
           x,
           y,
@@ -73,7 +75,7 @@ public class GuiBuilder extends GuiBaseContainer {
     //////// all the control groups
     width = xControlsSpacing - 2;
     h = width;
-    int yTopRow = this.guiTop + yOffset;
+    int yTopRow = this.guiTop +yRowTextbox;
     int yBottomRow = this.guiTop + yRowTextbox + yOffset + Const.PAD;
     fld = TileEntityStructureBuilder.Fields.SIZE;
     ////////// SIZE 
@@ -126,7 +128,7 @@ public class GuiBuilder extends GuiBaseContainer {
     x = this.guiLeft + xControlsStart - 2 * xControlsSpacing;
     ButtonTileEntityField btnRotUp = new ButtonTileEntityField(id++,
         x,
-        this.guiTop + yOffset,
+        yTopRow,
         tile.getPos(),
         fld.ordinal(),
         1, width, h);
@@ -148,7 +150,8 @@ public class GuiBuilder extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
+  //TODO: maybe  a text label here? 
+    //  this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
     int sp = Const.PAD / 2;
     int x = xControlsStart + sp;
     int y = yRowTextbox + yOffset - sp;
