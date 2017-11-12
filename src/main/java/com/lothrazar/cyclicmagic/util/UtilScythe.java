@@ -199,7 +199,6 @@ public class UtilScythe {
       break;
     }
     if (doBreak) {
-      ModCyclic.logger.log("scythe break  " + blockId);
       //break with false so that we can get the drops our own way
       world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);

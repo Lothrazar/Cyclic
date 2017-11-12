@@ -448,7 +448,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void setSpeed(int value) {
-    //    System.out.println(value);
     if (value < 1) {
       value = 1;
     }

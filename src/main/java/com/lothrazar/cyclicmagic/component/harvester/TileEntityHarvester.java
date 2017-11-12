@@ -99,9 +99,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
   }
   private void setOutputItems(List<ItemStack> output) {
-    for (ItemStack wtf : output) {
-      ModCyclic.logger.info("SET OUTPUT" + wtf.getDisplayName());
-    }
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory());
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {

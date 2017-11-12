@@ -84,6 +84,6 @@ public class EntityMinecartModule extends BaseEventModule implements IHasConfig 
   //  @SubscribeEvent
   //  public void onMinecartCollision(MinecartCollisionEvent event) {
   //     import net.minecraftforge.event.entity.minecart.MinecartCollisionEvent;
-  //    System.out.println("MinecartCollisionEvent");//this never fires. literally never. wtf?
+  //   //this never fires. literally never. wtf?
   //  }
 }
