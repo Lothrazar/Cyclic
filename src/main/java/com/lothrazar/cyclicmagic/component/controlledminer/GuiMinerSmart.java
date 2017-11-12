@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -36,26 +38,34 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //first the main top left type button
     int id = 2;
     int yOffset = 16;
+    int bSize=14;
     btnHeightDown = new ButtonTileEntityField(
         id++,
         this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox + yOffset,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, 14, 14);
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, bSize, bSize);
     btnHeightDown.setTooltip("button.height.down");
     btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
+    this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL,  TileEntityControlledMiner.Fields.HEIGHT.ordinal(),1);
+    
+    
     btnHeightUp = new ButtonTileEntityField(
         id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox - yOffset - 4,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, 14, 14);
+        this.guiTop + yHeightTxtbox - yOffset - Const.PAD/2,
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, bSize, bSize);
     btnHeightUp.setTooltip("button.height.up");
     btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
+    this.registerButtonDisableTrigger(btnHeightUp, ButtonTriggerType.EQUAL,  TileEntityControlledMiner.Fields.HEIGHT.ordinal(),  TileEntityControlledMiner.maxHeight);
+    
+    
+    
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
     int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
     btnWhitelist = new ButtonTileEntityField(id++,
         x, y,
-        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, 14, 14);
+        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, bSize, bSize);
     btnWhitelist.width = 50;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
@@ -65,10 +75,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
   }
-  private void updateDisabledButtons() {
-    this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityControlledMiner.maxHeight);
-  }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -97,6 +104,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.drawString(display, x, yHeightTxtbox);
-    updateDisabledButtons();
+ 
   }
 }

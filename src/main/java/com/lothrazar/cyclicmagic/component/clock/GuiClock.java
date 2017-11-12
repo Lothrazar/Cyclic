@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.component.clock;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonToggleFacing;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -92,7 +94,18 @@ public class GuiClock extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);
-    btn.displayString = (value > 0) ? "+" + value : "" + value;
+    if (value > 0) {
+      btn.displayString = "+" + value;
+      if (field == Fields.POWER.ordinal()) {
+        //TODO: setup/find magic numbers for redstone, 15 is max
+        this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 15);
+      }
+    }
+    else {
+      btn.displayString = "" + value;
+      int min = (field == Fields.POWER.ordinal()) ? 0 : 1;
+      this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, min);
+    }
     btn.setTooltip("tile.clock." + tooltip);
     this.buttonList.add(btn);
   }

@@ -60,7 +60,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public final static int TIMER_FULL = 120;
-  private static final int MAX_SPEED = 20;
+  public static final int MAX_SPEED = 20;
   public static int maxHeight = 10;
   private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
   private int[] hopperOutput = { 3, 4, 5, 6, 7, 8 };// all slots for all faces

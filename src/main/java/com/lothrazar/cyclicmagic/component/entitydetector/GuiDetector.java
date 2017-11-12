@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.component.entitydetector;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -32,7 +34,9 @@ public class GuiDetector extends GuiBaseContainer {
     leftColX = 176 - 148;
     limitColX = leftColX + 108;
     addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
-    addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
+    ButtonTileEntityField btnDown=   addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
+ this.registerButtonDisableTrigger(btnDown, ButtonTriggerType.EQUAL, Fields.LIMIT.ordinal(),0);
+ 
     int x = leftColX + 40;
     int y = sizeY - 5;
     this.greaterLessBtn = addPatternButtonAt(id++, x, y, true, Fields.GREATERTHAN, 60, 20);

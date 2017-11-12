@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.component.fan;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -31,58 +33,70 @@ public class GuiFan extends GuiBaseContainer {
     int yOffset = 14;
     int x = this.guiLeft + xRange;
     int y = this.guiTop + yHeightTxtbox + yOffset;
+    int field = TileEntityFan.Fields.RANGE.ordinal();
     ButtonTileEntityField btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
-        TileEntityFan.Fields.RANGE.ordinal(), -1, w, h);
+        field, -1, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-1";
-    this.buttonList.add(btn);
+    this.buttonList.add(btn); 
+this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
+    
     btn = new ButtonTileEntityField(id++, x, y + h + 1, tile.getPos(),
-        TileEntityFan.Fields.RANGE.ordinal(), -5, w, h);
+     field, -5, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-5";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
     y = this.guiTop + yHeightTxtbox - yOffset;
     btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
-        TileEntityFan.Fields.RANGE.ordinal(), +1, w, h);
+        field, +1, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "+1";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_RANGE);
     btn = new ButtonTileEntityField(id++, x, y - h - 1, tile.getPos(),
-        TileEntityFan.Fields.RANGE.ordinal(), +5, w, h);
+        field, +5, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "+5";
-    this.buttonList.add(btn);
-    // SPEED BUTTONS
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_RANGE);
+    ///////////////// SPEED BUTTONS
+    field = TileEntityFan.Fields.SPEED.ordinal();
     int xSpeed = this.guiLeft + xRange - 20;
     y = this.guiTop + yHeightTxtbox + yOffset;
     btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), -5, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-5";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
     btn = new ButtonTileEntityField(id++, xSpeed, y + h + 1, tile.getPos(),
-        TileEntityFan.Fields.SPEED.ordinal(), -1, w, h);
+        field, -1, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-1";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
     y = this.guiTop + yHeightTxtbox - yOffset;
     btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
-        TileEntityFan.Fields.SPEED.ordinal(), +1, w, h);
+        field, +1, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "+1";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_SPEED);
     btn = new ButtonTileEntityField(id++, xSpeed, y - h - 1, tile.getPos(),
-        TileEntityFan.Fields.SPEED.ordinal(), +5, w, h);
+        field, +5, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "+5";
-    this.buttonList.add(btn);
+    this.addButton(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_SPEED);
+    //the big push pull toggle button
     w = 70;
     h = 20;
     x = this.guiLeft + 50;
     y = this.guiTop + 38;
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
-    this.buttonList.add(btnTogglePush);
+    this.addButton(btnTogglePush);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
