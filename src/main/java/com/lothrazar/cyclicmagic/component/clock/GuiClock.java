@@ -4,7 +4,7 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonToggleFacing;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
@@ -88,7 +88,7 @@ public class GuiClock extends GuiBaseContainer {
     poweredButtons.put(side, btn);
   }
   private void addButton(int x, int y, int field, int value, String tooltip) {
-    ButtonIncrementField btn = new ButtonIncrementField(btnId++,
+    ButtonTileEntityField btn = new ButtonTileEntityField(btnId++,
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);

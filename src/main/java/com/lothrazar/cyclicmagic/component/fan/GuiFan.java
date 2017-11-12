@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -16,7 +16,7 @@ public class GuiFan extends GuiBaseContainer {
   private int xRange = 176 - 25;
   private int yHeightTxtbox = 38;
   //  private ButtonFan btnTogglePrt;
-  private ButtonIncrementField btnTogglePush;
+  private ButtonTileEntityField btnTogglePush;
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -31,23 +31,23 @@ public class GuiFan extends GuiBaseContainer {
     int yOffset = 14;
     int x = this.guiLeft + xRange;
     int y = this.guiTop + yHeightTxtbox + yOffset;
-    ButtonIncrementField btn = new ButtonIncrementField(id++, x, y, tile.getPos(),
+    ButtonTileEntityField btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.RANGE.ordinal(), -1, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-1";
     this.buttonList.add(btn);
-    btn = new ButtonIncrementField(id++, x, y + h + 1, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, x, y + h + 1, tile.getPos(),
         TileEntityFan.Fields.RANGE.ordinal(), -5, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-5";
     this.buttonList.add(btn);
     y = this.guiTop + yHeightTxtbox - yOffset;
-    btn = new ButtonIncrementField(id++, x, y, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.RANGE.ordinal(), +1, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "+1";
     this.buttonList.add(btn);
-    btn = new ButtonIncrementField(id++, x, y - h - 1, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, x, y - h - 1, tile.getPos(),
         TileEntityFan.Fields.RANGE.ordinal(), +5, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "+5";
@@ -55,23 +55,23 @@ public class GuiFan extends GuiBaseContainer {
     // SPEED BUTTONS
     int xSpeed = this.guiLeft + xRange - 20;
     y = this.guiTop + yHeightTxtbox + yOffset;
-    btn = new ButtonIncrementField(id++, xSpeed, y, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), -5, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-5";
     this.buttonList.add(btn);
-    btn = new ButtonIncrementField(id++, xSpeed, y + h + 1, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, xSpeed, y + h + 1, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), -1, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "-1";
     this.buttonList.add(btn);
     y = this.guiTop + yHeightTxtbox - yOffset;
-    btn = new ButtonIncrementField(id++, xSpeed, y, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), +1, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "+1";
     this.buttonList.add(btn);
-    btn = new ButtonIncrementField(id++, xSpeed, y - h - 1, tile.getPos(),
+    btn = new ButtonTileEntityField(id++, xSpeed, y - h - 1, tile.getPos(),
         TileEntityFan.Fields.SPEED.ordinal(), +5, w, h);
     btn.setTooltip("button.fan.speed.tooltip");
     btn.displayString = "+5";
@@ -80,7 +80,7 @@ public class GuiFan extends GuiBaseContainer {
     h = 20;
     x = this.guiLeft + 50;
     y = this.guiTop + 38;
-    btnTogglePush = new ButtonIncrementField(id++, x, y, tile.getPos(),
+    btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.buttonList.add(btnTogglePush);
   }

@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion.F
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBeaconPotion extends GuiBaseContainer {
   private GuiButtonToggleSize btnSize;
-  private ButtonIncrementField btnEntityType;
+  private ButtonTileEntityField btnEntityType;
   public GuiBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion tileEntity) {
     super(new ContainerBeaconPotion(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -29,7 +29,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     int x = Const.PAD / 2, w = 70, h = 20;
     int y = Const.PAD * 3 + 2;
     TileEntityBeaconPotion.Fields f = TileEntityBeaconPotion.Fields.ENTITYTYPE;
-    btnEntityType = new ButtonIncrementField(id,
+    btnEntityType = new ButtonTileEntityField(id,
         this.guiLeft + x,
         this.guiTop + y,
         tile.getPos(),

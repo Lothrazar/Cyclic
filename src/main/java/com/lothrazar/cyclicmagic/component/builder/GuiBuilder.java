@@ -5,7 +5,8 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,11 +15,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
-  private ButtonIncrementField btn;
-  private ButtonIncrementField btnSizeUp;
-  private ButtonIncrementField btnSizeDown;
-  private ButtonIncrementField btnHeightUp;
-  private ButtonIncrementField btnHeightDown;
+  private ButtonTileEntityField btn;
+  private ButtonTileEntityField btnSizeUp;
+  private ButtonTileEntityField btnSizeDown;
+  private ButtonTileEntityField btnHeightUp;
+  private ButtonTileEntityField btnHeightDown;
   private final static int yRowTextbox = 20;
   private int xControlsStart = 134;
   private final static int xControlsSpacing = 14;
@@ -42,30 +43,32 @@ public class GuiBuilder extends GuiBaseContainer {
     int id = 2;
     int x = this.guiLeft + Const.PAD + h;
     int y = this.guiTop + yOffset + Const.PAD;
-    btn = new ButtonIncrementField(id++,
+    btn = new ButtonTileEntityField(id++,
         x,
         y,
         tile.getPos(),
         TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
         width, h);
     btn.setTooltip("button.builder.tooltip");
-    this.buttonList.add(btn);
+    this.addButton(btn);
     //shape btns in loop
-    ButtonIncrementField btnShape;
+    ButtonTileEntityField btnShape;
     width = 20;
     x = this.guiLeft + Const.PAD;
     y = this.guiTop + 60;
     fld = TileEntityStructureBuilder.Fields.BUILDTYPE;
     for (TileEntityStructureBuilder.BuildType shape : TileEntityStructureBuilder.BuildType.values()) {
-      btnShape = new ButtonIncrementField(id++,
+      btnShape = new ButtonTileEntityField(id++,
           x,
           y,
           tile.getPos(),
           fld.ordinal(),
           shape.ordinal(), width, h);
-      String n = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
+      String n = UtilChat.lang("buildertype." + shape.name().toLowerCase() + ".name");
       this.addButton(btnShape).setTooltip(n).displayString = shape.shortcode();
-      x += width+2;
+      btnShape.buttonMode = ButtonTileEntityField.ButtonMode.SET;
+      x += width + 2;
+      this.registerButtonDisableTrigger(btnShape, ButtonTriggerType.EQUAL, fld.ordinal(), shape.ordinal());
     }
     //////// all the control groups
     width = xControlsSpacing - 2;
@@ -75,7 +78,7 @@ public class GuiBuilder extends GuiBaseContainer {
     fld = TileEntityStructureBuilder.Fields.SIZE;
     ////////// SIZE 
     x = this.guiLeft + xControlsStart;
-    btnSizeUp = new ButtonIncrementField(id++,
+    btnSizeUp = new ButtonTileEntityField(id++,
         x,
         yTopRow,
         tile.getPos(),
@@ -84,7 +87,8 @@ public class GuiBuilder extends GuiBaseContainer {
     btnSizeUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnSizeUp.displayString = "+";
     this.addButton(btnSizeUp);
-    btnSizeDown = new ButtonIncrementField(id++,
+    this.registerButtonDisableTrigger(btnSizeUp, ButtonTriggerType.EQUAL, fld.ordinal(), TileEntityStructureBuilder.maxSize);
+    btnSizeDown = new ButtonTileEntityField(id++,
         x,
         yBottomRow,
         tile.getPos(),
@@ -93,10 +97,11 @@ public class GuiBuilder extends GuiBaseContainer {
     btnSizeDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnSizeDown.displayString = "-";
     this.addButton(btnSizeDown);
+    this.registerButtonDisableTrigger(btnSizeDown, ButtonTriggerType.EQUAL, fld.ordinal(), 1);
     //////////////HEIGHT BUTTONS
     fld = TileEntityStructureBuilder.Fields.HEIGHT;
     x = this.guiLeft + xControlsStart - xControlsSpacing;
-    btnHeightUp = new ButtonIncrementField(id++,
+    btnHeightUp = new ButtonTileEntityField(id++,
         x,
         yTopRow,
         tile.getPos(),
@@ -105,7 +110,8 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnHeightUp.displayString = "+";
     this.addButton(btnHeightUp);
-    btnHeightDown = new ButtonIncrementField(id++,
+    this.registerButtonDisableTrigger(btnHeightUp, ButtonTriggerType.EQUAL, fld.ordinal(), TileEntityStructureBuilder.maxHeight);
+    btnHeightDown = new ButtonTileEntityField(id++,
         x,
         yBottomRow,
         tile.getPos(),
@@ -114,10 +120,11 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnHeightDown.displayString = "-";
     this.addButton(btnHeightDown);
+    this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL, fld.ordinal(), 1);
     //////////////////ROTATION BUTTONS
     fld = TileEntityStructureBuilder.Fields.ROTATIONS;
     x = this.guiLeft + xControlsStart - 2 * xControlsSpacing;
-    ButtonIncrementField btnRotUp = new ButtonIncrementField(id++,
+    ButtonTileEntityField btnRotUp = new ButtonTileEntityField(id++,
         x,
         this.guiTop + yOffset,
         tile.getPos(),
@@ -126,7 +133,7 @@ public class GuiBuilder extends GuiBaseContainer {
     btnRotUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
     btnRotUp.displayString = "+";
     this.addButton(btnRotUp);
-    ButtonIncrementField btnRotDown = new ButtonIncrementField(id++,
+    ButtonTileEntityField btnRotDown = new ButtonTileEntityField(id++,
         x,
         yBottomRow,
         tile.getPos(),
@@ -135,6 +142,7 @@ public class GuiBuilder extends GuiBaseContainer {
     btnRotDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnRotDown.displayString = "-";
     this.addButton(btnRotDown);
+    this.registerButtonDisableTrigger(btnRotDown, ButtonTriggerType.EQUAL, fld.ordinal(), 0);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -162,10 +170,7 @@ public class GuiBuilder extends GuiBaseContainer {
     updateDisabledButtons();
   }
   private void updateDisabledButtons() {
-    this.btnSizeDown.enabled = (this.tile.getSize() > 1);
-    this.btnSizeUp.enabled = (this.tile.getSize() < TileEntityStructureBuilder.maxSize);
-    this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityStructureBuilder.maxHeight);
+
     //a semi hack to hide btns
     this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
     this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -68,7 +68,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.buttonList.add(bt);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
-    ButtonIncrementField btn = new ButtonIncrementField(id,
+    ButtonTileEntityField btn = new ButtonTileEntityField(id,
         this.guiLeft + x, this.guiTop + y, tile.getPos(),
         f.ordinal(), (isUp) ? 1 : -1,
         15, 10);

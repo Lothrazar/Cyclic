@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -14,10 +14,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContainer {
-  private ButtonIncrementField actionBtn;
+  private ButtonTileEntityField actionBtn;
   private GuiButtonToggleSize btnSize;
-  private ButtonIncrementField yOffsetBtn;
-  private ButtonIncrementField btnSpeed;
+  private ButtonTileEntityField yOffsetBtn;
+  private ButtonTileEntityField btnSpeed;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -34,26 +34,26 @@ public class GuiUser extends GuiBaseContainer {
         this.guiLeft + 24 + Const.PAD,
         this.guiTop + Const.PAD + 18, this.tile.getPos());
     this.buttonList.add(btnSize);
-    actionBtn = new ButtonIncrementField(btnId++,
+    actionBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
         this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());
     actionBtn.width = 44;
     actionBtn.setTooltip("tile.block_user.action");
     this.buttonList.add(actionBtn);
-    yOffsetBtn = new ButtonIncrementField(btnId++,
+    yOffsetBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + Const.PAD / 2,
         this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.Y_OFFSET.ordinal());
     yOffsetBtn.width = Const.SQ;
     yOffsetBtn.setTooltip("tile.block_user.yoffset");
     this.buttonList.add(yOffsetBtn);
-    btnSpeed = new ButtonIncrementField(btnId++,
+    btnSpeed = new ButtonTileEntityField(btnId++,
         this.guiLeft + 88,
         this.guiTop + Const.PAD * 8, this.tile.getPos(), Fields.SPEED.ordinal());
     btnSpeed.width = btnSpeed.height = 14;
     btnSpeed.displayString = "+";
     btnSpeed.setTooltip("tile.block_user.speed.tooltip");
     this.buttonList.add(btnSpeed);
-    ButtonIncrementField btnSpeedD = new ButtonIncrementField(btnId++,
+    ButtonTileEntityField btnSpeedD = new ButtonTileEntityField(btnId++,
         this.guiLeft + 88,
         btnSpeed.y + 28, this.tile.getPos(), Fields.SPEED.ordinal(), -1);
     btnSpeedD.width = btnSpeedD.height = btnSpeed.width;

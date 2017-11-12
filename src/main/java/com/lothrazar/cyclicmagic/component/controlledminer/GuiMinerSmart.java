@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -17,10 +17,10 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private TileEntityControlledMiner tile;
   private int xHeightTextbox = 100;
   private int yHeightTxtbox = 38;
-  private ButtonIncrementField btnHeightDown;
-  private ButtonIncrementField btnHeightUp;
+  private ButtonTileEntityField btnHeightDown;
+  private ButtonTileEntityField btnHeightUp;
   private GuiButtonToggleSize btnSize;
-  private ButtonIncrementField btnWhitelist;
+  private ButtonTileEntityField btnWhitelist;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -36,7 +36,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //first the main top left type button
     int id = 2;
     int yOffset = 16;
-    btnHeightDown = new ButtonIncrementField(
+    btnHeightDown = new ButtonTileEntityField(
         id++,
         this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox + yOffset,
@@ -44,7 +44,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnHeightDown.setTooltip("button.height.down");
     btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
-    btnHeightUp = new ButtonIncrementField(
+    btnHeightUp = new ButtonTileEntityField(
         id++, this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox - yOffset - 4,
         tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, 14, 14);
@@ -53,7 +53,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
     int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
-    btnWhitelist = new ButtonIncrementField(id++,
+    btnWhitelist = new ButtonTileEntityField(id++,
         x, y,
         tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, 14, 14);
     btnWhitelist.width = 50;

@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Com
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,8 +16,8 @@ public class GuiDetector extends GuiBaseContainer {
   private int sizeY;
   private int limitColX;
   private int[] yRows = new int[3];
-  private ButtonIncrementField greaterLessBtn;
-  private ButtonIncrementField entityBtn;
+  private ButtonTileEntityField greaterLessBtn;
+  private ButtonTileEntityField entityBtn;
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -50,12 +50,12 @@ public class GuiDetector extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
     //TODO: PREVIEW BUTTON
   }
-  private ButtonIncrementField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
+  private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
     return this.addPatternButtonAt(id, x, y, isUp, f, 15, 10);
   }
-  private ButtonIncrementField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
+  private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
     int val = (isUp) ? 1 : -1;
-    ButtonIncrementField btn = new ButtonIncrementField(id,
+    ButtonTileEntityField btn = new ButtonTileEntityField(id,
         this.guiLeft + x,
         this.guiTop + y,
         tile.getPos(),
