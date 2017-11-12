@@ -19,12 +19,10 @@ public class GuiBuilder extends GuiBaseContainer {
   private ButtonIncrementField btnSizeDown;
   private ButtonIncrementField btnHeightUp;
   private ButtonIncrementField btnHeightDown;
-  private int xSizeTextbox;
-  private int ySizeTxtbox;
-  private int xHeightTextbox;
-  private int yHeightTxtbox;
+  private final static int yRowTextbox = 20;
+  private int xControlsStart = 134;
+  private final static int xControlsSpacing = 28;
   private int yOffset = 10 + Const.PAD;
-  private int xRotTextbox;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -41,23 +39,27 @@ public class GuiBuilder extends GuiBaseContainer {
     int width = 50;
     int h = 15;
     int id = 2;
+    int x = this.guiLeft + Const.PAD + h;
     int y = this.guiTop + yOffset + Const.PAD;
     btn = new ButtonIncrementField(id++,
-        this.guiLeft + Const.PAD + h,
+        x,
         y,
         tile.getPos(),
         TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal(), 1,
         width, 20);
     btn.setTooltip("button.builder.tooltip");
     this.buttonList.add(btn);
-    width = 15;
+    width = 12;
+    h = width;
     TileEntityStructureBuilder.Fields fld = TileEntityStructureBuilder.Fields.SIZE;
-    //size buttons
-    xSizeTextbox = 176 - 52;
-    // this.setTooltip("button." + fld.name().toLowerCase() + "." + (goUp ? "up" : "down"));
+    //////// all the control groups
+    int yTopRow = this.guiTop + yOffset;
+    int yBottomRow = this.guiTop + yRowTextbox + yOffset + Const.PAD;
+    ////////// SIZE 
+    x = this.guiLeft + xControlsStart;
     btnSizeUp = new ButtonIncrementField(id++,
-        this.guiLeft + xSizeTextbox,
-        this.guiTop + yOffset,
+        x,
+        yTopRow,
         tile.getPos(),
         fld.ordinal(),
         1, width, h);
@@ -65,21 +67,20 @@ public class GuiBuilder extends GuiBaseContainer {
     btnSizeUp.displayString = "+";
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonIncrementField(id++,
-        this.guiLeft + xSizeTextbox,
-        this.guiTop + 22 + yOffset + Const.PAD,
+        x,
+        yBottomRow,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
     btnSizeDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnSizeDown.displayString = "-";
     this.buttonList.add(btnSizeDown);
-    xSizeTextbox += width / 2 - 2;
-    ySizeTxtbox = 22;
-    //HEIGHT BUTTONS
+    //////////////HEIGHT BUTTONS
     fld = TileEntityStructureBuilder.Fields.HEIGHT;
-    xHeightTextbox = xSizeTextbox - 28;
+    x = this.guiLeft + xControlsStart - xControlsSpacing;
     btnHeightUp = new ButtonIncrementField(id++,
-        this.guiLeft + xHeightTextbox, this.guiTop + yOffset,
+        x,
+        yTopRow,
         tile.getPos(),
         fld.ordinal(),
         1, width, h);
@@ -87,20 +88,20 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonIncrementField(id++,
-        this.guiLeft + xHeightTextbox, this.guiTop + ySizeTxtbox + yOffset + Const.PAD,
+        x,
+        yBottomRow,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
     btnHeightDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
-    xHeightTextbox += width / 2 - 2;
-    yHeightTxtbox = ySizeTxtbox;
-    //ROTATION BUTTONS
+    //////////////////ROTATION BUTTONS
     fld = TileEntityStructureBuilder.Fields.ROTATIONS;
-    xRotTextbox = xHeightTextbox - 28;
+    x = this.guiLeft + xControlsStart - 2 * xControlsSpacing;
     ButtonIncrementField btnRotUp = new ButtonIncrementField(id++,
-        this.guiLeft + xRotTextbox, this.guiTop + yOffset,
+        x,
+        this.guiTop + yOffset,
         tile.getPos(),
         fld.ordinal(),
         1, width, h);
@@ -108,37 +109,38 @@ public class GuiBuilder extends GuiBaseContainer {
     btnRotUp.displayString = "+";
     this.buttonList.add(btnRotUp);
     ButtonIncrementField btnRotDown = new ButtonIncrementField(id++,
-        this.guiLeft + xRotTextbox, this.guiTop + ySizeTxtbox + yOffset + Const.PAD,
+        x,
+        yBottomRow,
         tile.getPos(),
         fld.ordinal(),
         -1, width, h);
     btnRotDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
     btnRotDown.displayString = "-";
     this.buttonList.add(btnRotDown);
-    xRotTextbox += width / 2 - 2;
-    yHeightTxtbox = ySizeTxtbox;
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
+    int sp = Const.PAD / 2;
+    int x = xControlsStart + sp;
+    int y = yRowTextbox + yOffset - sp;
     if (this.tile.getSize() > 0) {
       String display = "" + this.tile.getSize();
-      //move it over if more than 1 digit
-      int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
-      this.drawString(display, x, ySizeTxtbox + yOffset - 4);
+      //move it over if more than 1 digit 
+      this.drawStringCenteredCheckLength(display, x, y);
     }
+    x = xControlsStart - xControlsSpacing + sp;
     if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
       String display = "" + this.tile.getHeight();
-      //move it over if more than 1 digit
-      int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
-      this.drawString(display, x, yHeightTxtbox + yOffset - 4);
+      //move it over if more than 1 digit 
+      this.drawStringCenteredCheckLength(display, x, y);
     }
+    x = xControlsStart - 2 * xControlsSpacing + sp;
     String display = "" + this.tile.getField(Fields.ROTATIONS.ordinal());
-    //move it over if more than 1 digit
-    int x = (display.length() > 1) ? xRotTextbox - 3 : xRotTextbox;
-    this.drawString(display, x, yHeightTxtbox + yOffset - 4);
+    //move it over if more than 1 digit 
+    this.drawStringCenteredCheckLength(display, x, y);
     updateDisabledButtons();
   }
   private void updateDisabledButtons() {

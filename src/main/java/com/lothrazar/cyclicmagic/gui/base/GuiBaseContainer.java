@@ -87,6 +87,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
       drawFuelText();
     }
   }
+  /**
+   * shift the x param over if the length is over 1, to center between the two digits
+   * made for numeric strings up to 99
+   * @param display
+   * @param x
+   * @param y
+   */
+  public void drawStringCenteredCheckLength(String display, int x, int y) {
+    x = (display.length() > 1) ? x - 3 : x;
+    this.drawString(display, x, y);
+  }
   public void drawNameText() {
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
