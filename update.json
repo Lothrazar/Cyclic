@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.9.10",
-    "1.12.2-recommended": "1.9.10"
+    "1.12.2-latest": "1.9.11",
+    "1.12.2-recommended": "1.9.11"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -225,5 +225,6 @@
   	,"1.9.8":"Fixed world sync issue that can cause player kicked from server while Auto-Torch.  Attempt to gently preload chunks when teleporting using Ender Wings.     "
 	,"1.9.9":"Fixed the Area mode in the Harvester not affecting one of the edges of the region.  Experience Pylon will now only collect orbs from the world every 22 ticks, instead of every single tick; this reduces load on  TPS & lag.  Fixed warning message in log startup about guideapi recipe registry.  Mod has now been jar-signed using the system built into forge.  "
   	,"1.9.10":"Fixed some typos from Password Block.  Fixed Magic Bean crop only giving seeds and not loot when gathered with some machines.   Fixed a bug where the  Experience Pylon would consume invalid items while bottling.  Experience Pylon now has more buttons to add and remove EXP; for this the Spray button was removed, as was the Bottle button, so it now processes empty bottles no matter what if they are in the slot.  Magnet Enchant: It can now be on any piece of gear, not just some tools; also its rarity was changed to VERY_RARE(4), used to be COMMON(1).  Magnet enchant can now reach up to level III; each level increases its range (4 + 4 per level, so level 1 is 8, 2 is 12, 3 is 16).  Fixed missing button tooltips in the Redstone Clock.  Fixed the Redstone Clock not sending block updates to the client.   Redstone Clock can now be set to power zero (0) to turn it off completely.      "
+	,"1.9.11":"Removed some logging spam from Harvester.  "
   }
 }
