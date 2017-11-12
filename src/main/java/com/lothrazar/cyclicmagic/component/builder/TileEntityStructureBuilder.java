@@ -40,7 +40,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS;
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE, DIAGONAL, DOME, CUP;
+    FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
@@ -50,7 +50,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return BuildType.values()[type];
     }
     public boolean hasHeight() {
-      if (this == STAIRWAY || this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
+      if (this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
         return false;
       return true;
     }
@@ -68,12 +68,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return "SP";
         case SQUARE:
           return "SQ";
-        case STAIRWAY:
-          return "ST";
         case DOME:
           return "DO";
         case CUP:
           return "CU";
+        case PYRAMID:
+          return "PY";
       }
       return "";
     }
@@ -94,18 +94,19 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     switch (buildType) {
       case CIRCLE:
         shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case FACING:
         shape = UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SQUARE:
         shape = UtilShape.squareHorizontalHollow(this.getPos(), this.getSize());
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SOLID:
         shape = UtilShape.squareHorizontalFull(this.getTargetCenter(), this.getSize());
-      break;
-      case STAIRWAY:
-        shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPos(), this.getSize());
@@ -119,11 +120,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       case DIAGONAL:
         shape = UtilShape.diagonal(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
       break;
-      default:
+      case PYRAMID:
+        shape = UtilShape.squarePyramid(this.getPos(), this.getSize(), this.getHeight());
       break;
-    }
-    if (buildType.hasHeight() && this.buildHeight > 1) { //first layer is already done, add remaining
-      shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     return shape;
   }

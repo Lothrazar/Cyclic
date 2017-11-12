@@ -200,25 +200,36 @@ public class UtilShape {
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     return rectHollow(pos, radius, radius);
   }
-  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
+  public static List<BlockPos> squarePyramid(final BlockPos pos, int radius, int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    //    BlockPos posCurrent = position.down().offset(pfacing);
-    boolean goVert = false;
-    for (int i = 1; i < want + 1; i++) {
-      if (goVert) {
-        if (isLookingUp)
-          posCurrent = posCurrent.up();
-        else
-          posCurrent = posCurrent.down();
-      }
-      else {
-        posCurrent = posCurrent.offset(pfacing);
-      }
-      shape.add(posCurrent);
-      goVert = (i % 2 == 0);// alternate between going forward vertical
+ 
+    int radiusCurrent = radius;
+    BlockPos posCurrent = new BlockPos(pos);
+    for (int i = 0;i< radius ; i++) {
+      shape.addAll(rectHollow(posCurrent, radiusCurrent, radiusCurrent));
+      radiusCurrent--;
+      posCurrent = posCurrent.up();
     }
     return shape;
   }
+  //  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
+  //    List<BlockPos> shape = new ArrayList<BlockPos>();
+  //    boolean goVert = false;
+  //    for (int i = 1; i < want + 1; i++) {
+  //      if (goVert) {
+  //        if (isLookingUp)
+  //          posCurrent = posCurrent.up();
+  //        else
+  //          posCurrent = posCurrent.down();
+  //      }
+  //      else {
+  //        posCurrent = posCurrent.offset(pfacing);
+  //      }
+  //      shape.add(posCurrent);
+  //      goVert = (i % 2 == 0);// alternate between going forward vertical
+  //    }
+  //    return shape;
+  //  }
   public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {
