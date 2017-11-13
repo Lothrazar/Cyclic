@@ -3,11 +3,8 @@ import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockStone;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockStone.EnumType;
-import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -16,11 +13,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
-  public static boolean placeStateDetsroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
+  public static boolean placeStateDestroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
     if (world.destroyBlock(placePos, dropBlock)) {
       return placeStateSafe(world, player, placePos, placeState);
     }
@@ -65,39 +63,37 @@ public class UtilPlaceBlocks {
         }
         // ok its a soft block so try to break it first try to destroy it
         // unless it is liquid, don't try to destroy liquid
-        //blockHere.getMaterial(stateHere)
+        // blockHere.getMaterial(stateHere)
         if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
-          boolean dropBlock = true;
-          if (!world.isRemote) {
-            world.destroyBlock(placePos, dropBlock);
+          if (world.isRemote == false) {
+            world.destroyBlock(placePos, true);
           }
         }
       }
     }
+    if (placeState.getBlock() instanceof BlockLeaves) { //dont let them decay
+      placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
+    }
     boolean success = false;
     try {
-      // as soon as i added the try catch, it started never (rarely) happening
-      // we used to pass a flag as third argument, such as '2'
-      // default is '3'
-      // if (!world.isRemote) {
-      if (placeState.getBlock() instanceof BlockLeaves) {//dont let them decay
-        placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
-      }
-      success = world.setBlockState(placePos, placeState, 3);
-      if (success) {
-        UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
-        world.markBlockRangeForRenderUpdate(placePos, placePos.up());
-        world.markChunkDirty(placePos, null);
+      // flags specifies what to update, '3' means notify client & neighbors
+      // isRemote to make sure we are in a server thread
+      if (world.isRemote == false) {
+        success = world.setBlockState(placePos, placeState, 3); // returns false when placement failed
       }
     }
     catch (Exception e) {
-      if(world.getBlockState(placePos).getMaterial().equals(placeState.getMaterial())){
-        return true;
-      }
-      //blocked by perms or something, no need to log
+      // show exception from above, possibly failed placement
       ModCyclic.logger.error("Error attempting to place block ");
       e.printStackTrace();
-      success = false;
+    }
+    // play sound to area when placement is a success
+    if (success) {
+      SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, placePos);
+      if (type != null && type.getPlaceSound() != null) {
+        int range = 18;
+        UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, placePos, world.provider.getDimension(), range);
+      }
     }
     return success;
   }
