@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.creativetab;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
