@@ -212,24 +212,7 @@ public class UtilShape {
     }
     return shape;
   }
-  //  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
-  //    List<BlockPos> shape = new ArrayList<BlockPos>();
-  //    boolean goVert = false;
-  //    for (int i = 1; i < want + 1; i++) {
-  //      if (goVert) {
-  //        if (isLookingUp)
-  //          posCurrent = posCurrent.up();
-  //        else
-  //          posCurrent = posCurrent.down();
-  //      }
-  //      else {
-  //        posCurrent = posCurrent.offset(pfacing);
-  //      }
-  //      shape.add(posCurrent);
-  //      goVert = (i % 2 == 0);// alternate between going forward vertical
-  //    }
-  //    return shape;
-  //  }
+ 
   public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {

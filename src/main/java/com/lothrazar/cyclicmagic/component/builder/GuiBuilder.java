@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -9,11 +10,13 @@ import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
+import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiBaseContainer {
+public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
   private TileEntityStructureBuilder tile;
   private ButtonTileEntityField btnSizeUp;
   private ButtonTileEntityField btnSizeDown;
@@ -37,11 +40,28 @@ public class GuiBuilder extends GuiBaseContainer {
     super.initGui();
     //first the main top left type button
     TileEntityStructureBuilder.Fields fld;
-    int width = 50;
-    int h = 20;
-    int id = 2;
-    int x = this.guiLeft + Const.PAD + h;
-    int y = this.guiTop + yOffset + Const.PAD;
+    int id = 1;
+    float maxOffset = 16F;
+    int width = 80;
+    int h = 10;
+    int x = this.guiLeft + 24;
+    int y = this.guiTop + 16;
+    GuiSliderInteger sliderX = new GuiSliderInteger(this, id, x, y, width, h, -1 * maxOffset, maxOffset, 0);
+    sliderX.setTooltip("X");
+    this.addButton(sliderX);
+    id++;
+    y += h + 2;
+    GuiSliderInteger sliderY = new GuiSliderInteger(this, id, x, y, width, h, -1 * maxOffset, maxOffset, 0);
+    sliderX.setTooltip("Y");
+    this.addButton(sliderY);
+    id++;
+    y += h + 2;
+    GuiSliderInteger sliderZ = new GuiSliderInteger(this, id, x, y, width, h, -1 * maxOffset, maxOffset, 0);
+    sliderX.setTooltip("Z");
+    this.addButton(sliderZ);
+    id++;
+    x = this.guiLeft + Const.PAD + h;
+    y = this.guiTop + yOffset + Const.PAD;
     //shape btns in loop
     ButtonTileEntityField btnShape;
     width = 18;
@@ -147,7 +167,7 @@ public class GuiBuilder extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String label =   UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name") ;
+    String label = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
     this.drawString(label, 112, 76);
     int sp = Const.PAD / 2;
     int x = xControlsStart + sp;
@@ -171,8 +191,10 @@ public class GuiBuilder extends GuiBaseContainer {
   }
   private void updateDisabledButtons() {
     //a semi hack to hide btns
-    this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
-    this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
+    if (btnHeightDown != null)
+      this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
+    if (btnHeightUp != null)
+      this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -183,7 +205,13 @@ public class GuiBuilder extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
-    //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    //    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+ }
+  @Override
+  public void setEntryValue(int id, boolean value) {}
+  @Override
+  public void setEntryValue(int id, float value) {
+    System.out.println("Set Slider Valuue" + id + "   " + value);
   }
+  @Override
+  public void setEntryValue(int id, String value) {}
 }
