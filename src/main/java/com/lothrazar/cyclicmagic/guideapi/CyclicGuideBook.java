@@ -62,9 +62,7 @@ public class CyclicGuideBook implements IGuideBook {
       case GEAR:
         entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
-      //      case POTION:
-      //        entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
-      //      break;
+ 
       case WORLD:
         entriesWorld.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
