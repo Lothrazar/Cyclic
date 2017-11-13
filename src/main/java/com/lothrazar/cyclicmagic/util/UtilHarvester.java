@@ -71,19 +71,16 @@ public class UtilHarvester {
       return drops;
     }
     if (isGetDrops(blockId)) {
-      ModCyclic.logger.log("getDrops on " + blockId);
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       world.setBlockToAir(posCurrent);
       return drops;
     }
     if (isSimpleSilktouch(blockId)) {
-      ModCyclic.logger.log("isSimpleSilktouch on " + blockId);
       drops.add(new ItemStack(blockCheck));
       world.setBlockToAir(posCurrent);
       return drops;
     }
     if (isBreakInPlace(blockId)) {
-      ModCyclic.logger.log("isBreakInPlace on " + blockId);
       world.destroyBlock(posCurrent, true);
       return drops;
     }
@@ -110,7 +107,6 @@ public class UtilHarvester {
           //so when replanting, keep that facing data
           world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
           blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-          ModCyclic.logger.log("harvesting  " + blockId + " dropSize=>" + drops.size() + " currentAge = " + currentAge + " maxAge= " + maxAge);
           if (tryRemoveOneSeed) {
             Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
             if (seedItem == null) {

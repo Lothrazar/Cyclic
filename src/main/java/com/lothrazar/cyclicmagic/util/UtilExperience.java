@@ -58,6 +58,9 @@ public class UtilExperience {
     setXp(player, (int) getExpTotal(player) + xp);
   }
   public static void setXp(EntityPlayer player, int xp) {
+    if (xp < 0) {
+      xp = 0;
+    }
     player.experienceTotal = xp;
     player.experienceLevel = getLevelForXp(xp);
     int next = getXpForLevel(player.experienceLevel);

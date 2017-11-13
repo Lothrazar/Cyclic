@@ -1,8 +1,11 @@
 builder.toggle.name=Toggle
 buildertype.circle.name=Circle
+buildertype.cup.name=Cup
+buildertype.dome.name=Dome
 buildertype.diagonal.name=Diagonal
 buildertype.facing.name=Facing
 buildertype.solid.name=Solid
+buildertype.pyramid.name=Pyramid
 buildertype.sphere.name=Sphere
 buildertype.square.name=Square
 buildertype.stairway.name=Stairway

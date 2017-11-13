@@ -22,10 +22,10 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
-  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
+  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
+  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private int buildType;
   private int buildSize = 3;
   private int buildHeight = 3;
@@ -35,11 +35,14 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int rotations = 0;
   public static int maxSize;
   public static int maxHeight = 10;
+  private int offsetX = 0;
+  private int offsetY = 0;
+  private int offsetZ = 0;
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS, OX, OY, OZ;
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE, DIAGONAL;
+    FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
@@ -49,9 +52,32 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return BuildType.values()[type];
     }
     public boolean hasHeight() {
-      if (this == STAIRWAY || this == SPHERE || this == DIAGONAL)
+      if (this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
         return false;
       return true;
+    }
+    public String shortcode() {
+      switch (this) {
+        case CIRCLE:
+          return "CI";
+        case DIAGONAL:
+          return "DI";
+        case FACING:
+          return "FA";
+        case SOLID:
+          return "SO";
+        case SPHERE:
+          return "SP";
+        case SQUARE:
+          return "SQ";
+        case DOME:
+          return "DO";
+        case CUP:
+          return "CU";
+        case PYRAMID:
+          return "PY";
+      }
+      return "";
     }
   }
   public TileEntityStructureBuilder() {
@@ -69,37 +95,45 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     // only rebuild shapes if they are different
     switch (buildType) {
       case CIRCLE:
-        shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
+        shape = UtilShape.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case FACING:
-        shape = UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
+        shape = UtilShape.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SQUARE:
-        shape = UtilShape.squareHorizontalHollow(this.getPos(), this.getSize());
+        shape = UtilShape.squareHorizontalHollow(this.getPosTarget(), this.getSize());
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SOLID:
-        shape = UtilShape.squareHorizontalFull(this.getTargetCenter(), this.getSize());
-      break;
-      case STAIRWAY:
-        shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
+        shape = UtilShape.squareHorizontalFull(this.getTargetFacing(), this.getSize());
+        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
       break;
       case SPHERE:
-        shape = UtilShape.sphere(this.getPos(), this.getSize());
+        shape = UtilShape.sphere(this.getPosTarget(), this.getSize());
+      break;
+      case DOME:
+        shape = UtilShape.sphereDome(this.getPosTarget(), this.getSize());
+      break;
+      case CUP:
+        shape = UtilShape.sphereCup(this.getPosTarget().up(this.getSize()), this.getSize());
       break;
       case DIAGONAL:
-        shape = UtilShape.diagonal(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
+        shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
       break;
-      default:
+      case PYRAMID:
+        shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), this.getHeight());
       break;
-    }
-    if (buildType.hasHeight() && this.buildHeight > 1) { //first layer is already done, add remaining
-      shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     return shape;
   }
-  public BlockPos getTargetCenter() {
+  private BlockPos getPosTarget() {
+    return this.getPos().add(this.offsetX, this.offsetY, this.offsetZ);
+  }
+  public BlockPos getTargetFacing() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), this.getSize() + 1);
+    return this.getPosTarget().offset(this.getCurrentFacing(), this.getSize() + 1);
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -129,6 +163,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.getFuelMax();
         case ROTATIONS:
           return this.rotations;
+        case OX:
+          return this.offsetX;
+        case OY:
+          return this.offsetY;
+        case OZ:
+          return this.offsetZ;
         default:
         break;
       }
@@ -174,6 +214,15 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         break;
         case ROTATIONS:
           this.rotations = Math.max(0, value);
+        break;
+        case OX:
+          this.offsetX = value;
+        break;
+        case OY:
+          this.offsetY = value;
+        break;
+        case OZ:
+          this.offsetZ = value;
         break;
         default:
         break;
@@ -232,6 +281,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
     this.rotations = tagCompound.getInteger("rotations");
+    this.offsetX = tagCompound.getInteger("ox");
+    this.offsetY = tagCompound.getInteger("oy");
+    this.offsetZ = tagCompound.getInteger("oz");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -242,6 +294,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     tagCompound.setInteger("rotations", rotations);
+    tagCompound.setInteger("ox", this.offsetX);
+    tagCompound.setInteger("oy", this.offsetY);
+    tagCompound.setInteger("oz", this.offsetZ);
     return super.writeToNBT(tagCompound);
   }
   @Override

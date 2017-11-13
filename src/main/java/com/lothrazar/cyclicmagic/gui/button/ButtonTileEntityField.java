@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.button;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
+import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,17 +14,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Sam
  *
  */
-public class ButtonIncrementField extends GuiButtonTooltip {
+public class ButtonTileEntityField extends GuiButtonTooltip {
   private BlockPos pos;
   private int field;
   private int value;
-  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld) {
+  public static enum ButtonMode {
+    INCREMENT, SET;
+  }
+  public ButtonMode buttonMode = ButtonMode.INCREMENT;
+  public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p, int fld) {
     this(buttonId, x, y, p, fld, 1);
   }
-  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
+  public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
     this(buttonId, x, y, p, fld, diff, 40, 20);
   }
-  public ButtonIncrementField(int buttonId, int x, int y, BlockPos p,
+  public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p,
       int fld, int diff,
       int w, int h) {
     super(buttonId, x, y, w, h, "");
@@ -36,7 +41,14 @@ public class ButtonIncrementField extends GuiButtonTooltip {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, field, value));
+      switch (this.buttonMode) {
+        case INCREMENT:
+          ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, field, value));
+        break;
+        case SET:
+          ModCyclic.network.sendToServer(new PacketTileSetField(pos, field, value));
+        break;
+      }
     }
     return pressed;
   }

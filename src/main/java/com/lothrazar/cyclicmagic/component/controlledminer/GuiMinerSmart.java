@@ -5,7 +5,8 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.button.ButtonIncrementField;
+import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -17,10 +18,10 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private TileEntityControlledMiner tile;
   private int xHeightTextbox = 100;
   private int yHeightTxtbox = 38;
-  private ButtonIncrementField btnHeightDown;
-  private ButtonIncrementField btnHeightUp;
+  private ButtonTileEntityField btnHeightDown;
+  private ButtonTileEntityField btnHeightUp;
   private GuiButtonToggleSize btnSize;
-  private ButtonIncrementField btnWhitelist;
+  private ButtonTileEntityField btnWhitelist;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -36,26 +37,29 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //first the main top left type button
     int id = 2;
     int yOffset = 16;
-    btnHeightDown = new ButtonIncrementField(
+    int bSize = 14;
+    btnHeightDown = new ButtonTileEntityField(
         id++,
         this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox + yOffset,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, 14, 14);
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, bSize, bSize);
     btnHeightDown.setTooltip("button.height.down");
     btnHeightDown.displayString = "-";
     this.buttonList.add(btnHeightDown);
-    btnHeightUp = new ButtonIncrementField(
+    this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL, TileEntityControlledMiner.Fields.HEIGHT.ordinal(), 1);
+    btnHeightUp = new ButtonTileEntityField(
         id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox - yOffset - 4,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, 14, 14);
+        this.guiTop + yHeightTxtbox - yOffset - Const.PAD / 2,
+        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, bSize, bSize);
     btnHeightUp.setTooltip("button.height.up");
     btnHeightUp.displayString = "+";
     this.buttonList.add(btnHeightUp);
+    this.registerButtonDisableTrigger(btnHeightUp, ButtonTriggerType.EQUAL, TileEntityControlledMiner.Fields.HEIGHT.ordinal(), TileEntityControlledMiner.maxHeight);
     int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
     int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
-    btnWhitelist = new ButtonIncrementField(id++,
+    btnWhitelist = new ButtonTileEntityField(id++,
         x, y,
-        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, 14, 14);
+        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, bSize, bSize);
     btnWhitelist.width = 50;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
@@ -64,10 +68,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
-  }
-  private void updateDisabledButtons() {
-    this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityControlledMiner.maxHeight);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -97,6 +97,5 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.drawString(display, x, yHeightTxtbox);
-    updateDisabledButtons();
   }
 }

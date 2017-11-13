@@ -200,22 +200,14 @@ public class UtilShape {
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     return rectHollow(pos, radius, radius);
   }
-  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
+  public static List<BlockPos> squarePyramid(final BlockPos pos, int radius, int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    //    BlockPos posCurrent = position.down().offset(pfacing);
-    boolean goVert = false;
-    for (int i = 1; i < want + 1; i++) {
-      if (goVert) {
-        if (isLookingUp)
-          posCurrent = posCurrent.up();
-        else
-          posCurrent = posCurrent.down();
-      }
-      else {
-        posCurrent = posCurrent.offset(pfacing);
-      }
-      shape.add(posCurrent);
-      goVert = (i % 2 == 0);// alternate between going forward vertical
+    int radiusCurrent = radius;
+    BlockPos posCurrent = new BlockPos(pos);
+    for (int i = 0; i < radius; i++) {
+      shape.addAll(rectHollow(posCurrent, radiusCurrent, radiusCurrent));
+      radiusCurrent--;
+      posCurrent = posCurrent.up();
     }
     return shape;
   }
@@ -240,15 +232,41 @@ public class UtilShape {
     }
     return shape;
   }
+  public static List<BlockPos> sphereDome(BlockPos pos, int radius) {
+    return sphere(pos, radius, true, false);
+  }
+  public static List<BlockPos> sphereCup(BlockPos pos, int radius) {
+    return sphere(pos, radius, false, true);
+  }
   public static List<BlockPos> sphere(BlockPos pos, int radius) {
+    return sphere(pos, radius, false, false);
+  }
+  /**
+   * top and bottom should not be both true
+   * 
+   * @param pos
+   * @param radius
+   * @param topHalfOnly
+   * @param bottomHalfOnly
+   * @return
+   */
+  public static List<BlockPos> sphere(BlockPos pos, int radius, boolean topHalfOnly, boolean bottomHalfOnly) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     //http://www.minecraftforge.net/forum/index.php?topic=24403.0
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     int squareDistance;
     int radiusInner = radius - 1;
     int xCurr, yCurr, zCurr;
+    int yMin = y - radius;
+    int yMax = y + radius;
+    if (topHalfOnly) {
+      yMin = pos.getY();
+    }
+    else if (bottomHalfOnly) {
+      yMax = pos.getY();
+    }
     for (xCurr = x - radius; xCurr <= x + radius; xCurr++) {
-      for (yCurr = y - radius; yCurr <= y + radius; yCurr++) {
+      for (yCurr = yMin; yCurr <= yMax; yCurr++) {
         for (zCurr = z - radius; zCurr <= z + radius; zCurr++) {
           squareDistance = (xCurr - x) * (xCurr - x) + (yCurr - y) * (yCurr - y) + (zCurr - z) * (zCurr - z);
           if (squareDistance <= (radius * radius)

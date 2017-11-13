@@ -109,7 +109,6 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       this.motionX /= speedHReduction;
       this.motionY /= speedVReduction;
       this.motionZ /= speedHReduction;
-      //      System.out.println(ticksExisted + "  speedHReduction " + speedHReduction);
     }
     if (this.ticksExisted > 9999) {
       this.setDead();

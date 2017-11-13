@@ -114,9 +114,6 @@ public class GuiPylon extends GuiBaseContainer {
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
-    //    IFluidHandler fluidHandler = tile.getWorld().getTileEntity(tile.getPos()).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    //    
     int currentFluid = tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
     this.drawString("" + currentFluid, 0, 0);
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);

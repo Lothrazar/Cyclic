@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
@@ -87,6 +88,18 @@ public abstract class GuiBaseContainer extends GuiContainer {
       drawFuelText();
     }
   }
+  /**
+   * shift the x param over if the length is over 1, to center between the two
+   * digits made for numeric strings up to 99
+   * 
+   * @param display
+   * @param x
+   * @param y
+   */
+  public void drawStringCenteredCheckLength(String display, int x, int y) {
+    x = (display.length() > 1) ? x - 3 : x;
+    this.drawString(display, x, y);
+  }
   public void drawNameText() {
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
@@ -105,6 +118,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         btnPreview.setStateOff();
       }
     }
+    updateDisabledButtonTriggers();
   }
   public void drawStringCentered(String s, int x, int y) {
     this.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, y);
@@ -258,5 +272,50 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+  }
+  @Override
+  protected <T extends GuiButton> T addButton(T buttonIn) {
+    return super.addButton(buttonIn);
+  }
+  protected void registerButtonDisableTrigger(GuiButton buttonIn, ButtonTriggerWrapper.ButtonTriggerType trigger,
+      int fieldId, int fv) {
+    this.buttonWrappers.add(new ButtonTriggerWrapper(buttonIn, trigger, fieldId, fv));
+  }
+  private void updateDisabledButtonTriggers() {
+    for (ButtonTriggerWrapper btnWrap : this.buttonWrappers) {
+      int fieldValue = this.tile.getField(btnWrap.fld);
+      boolean isDisabled = true;
+      switch (btnWrap.trig) {
+        case EQUAL:
+          isDisabled = (fieldValue == btnWrap.triggerValue);
+        break;
+        case GREATER:
+          isDisabled = (fieldValue > btnWrap.triggerValue);
+        break;
+        case LESS:
+          isDisabled = (fieldValue < btnWrap.triggerValue);
+        break;
+        case NOTEQUAL:
+          isDisabled = (fieldValue != btnWrap.triggerValue);
+        break;
+      }
+      btnWrap.btn.enabled = !isDisabled;
+    }
+  }
+  public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
+  public static class ButtonTriggerWrapper {
+    public static enum ButtonTriggerType {
+      GREATER, LESS, EQUAL, NOTEQUAL;
+    }
+    public GuiButton btn;
+    public ButtonTriggerType trig;
+    public int fld;
+    public int triggerValue;
+    public ButtonTriggerWrapper(GuiButton buttonIn, ButtonTriggerType trigger, int fieldId, int tval) {
+      this.btn = buttonIn;
+      this.trig = trigger;
+      this.fld = fieldId;
+      this.triggerValue = tval;
+    }
   }
 }
