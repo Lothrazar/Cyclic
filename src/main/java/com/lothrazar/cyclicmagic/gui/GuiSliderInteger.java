@@ -1,14 +1,12 @@
 package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiPageButtonList;
-import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
@@ -17,34 +15,49 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   public boolean isMouseDown;
   private final float min;
   private final float max;
-  private final GuiPageButtonList.GuiResponder responder;
+  private final TileEntityBaseMachineInvo responder;
+  private int responderField;
   /**
-   * mimic of net.minecraft.client.gui.GuiSlider;
-   * uses integers instead of float
+   * mimic of net.minecraft.client.gui.GuiSlider; uses integers instead of float
+   * 
+   * for input responder , we basically just need an IInventory & getPos()
    */
-  public GuiSliderInteger(GuiResponder guiResponder, int idIn, int x, int y,
+  public GuiSliderInteger(TileEntityBaseMachineInvo guiResponder, int idIn, int x, int y,
       int widthIn, int heightIn,
-      float minIn, float maxIn, float defaultValue) {
+      float minIn, float maxIn, int fieldId) {
     super(idIn, x, y, widthIn, heightIn, "");
     this.updateDisplay();
     responder = guiResponder;
     this.min = minIn;
     this.max = maxIn;
-    this.setSliderValue(defaultValue, false);
+    this.responderField = fieldId;
+    this.setSliderValue(responder.getField(responderField), false);
   }
   public void setSliderValue(float value, boolean notifyResponder) {
     this.sliderPosition = (value - this.min) / (this.max - this.min);
     this.updateDisplay();
     if (notifyResponder) {
-      this.responder.setEntryValue(this.id, this.getSliderValue());
+      notifyResponder();
     }
+  }
+  private void notifyResponder() {
+    int val = (int) this.getSliderValue();
+    this.responder.setField(this.responderField, val);
+    ModCyclic.network.sendToServer(new PacketTileSetField(this.responder.getPos(), this.responderField, val));
   }
   public float getSliderValue() {
     float val = this.min + (this.max - this.min) * this.sliderPosition;
     return MathHelper.floor(val);
   }
   private void updateDisplay() {
-    this.displayString = "" + (int) this.getSliderValue();
+    int val = (int) this.getSliderValue();
+    if (val > 0) {
+      this.displayString = "+" + val;
+    }
+    else {
+      // zero is just "0", negavite sign is automatic
+      this.displayString = "" + val;
+    }
   }
   public void setTooltip(final String t) {
     List<String> remake = new ArrayList<String>();
@@ -67,8 +80,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
         this.sliderPosition = 1.0F;
       }
       this.updateDisplay();
-      //          this.displayString = this.getDisplayString();
-      this.responder.setEntryValue(this.id, this.getSliderValue());
+      this.notifyResponder();
       this.isMouseDown = true;
       return true;
     }
@@ -89,7 +101,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
           this.sliderPosition = 1.0F;
         }
         this.updateDisplay();
-        this.responder.setEntryValue(this.id, this.getSliderValue());
+        this.notifyResponder();
       }
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.drawTexturedModalRect(this.x + (int) (this.sliderPosition * (float) (this.width - 8)), this.y, 0, 66, 4, height);
@@ -101,8 +113,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
     super.mouseReleased(mouseX, mouseY);
     this.isMouseDown = false;
   }
-  protected int getHoverState(boolean mouseOver)
-  {
-      return 0;
+  protected int getHoverState(boolean mouseOver) {
+    return 0;
   }
 }

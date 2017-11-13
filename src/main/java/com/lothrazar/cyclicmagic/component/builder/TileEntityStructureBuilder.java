@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.builder;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
@@ -282,6 +283,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
     this.rotations = tagCompound.getInteger("rotations");
+    this.offsetX = tagCompound.getInteger("ox");
+    this.offsetY = tagCompound.getInteger("oy");
+    this.offsetZ = tagCompound.getInteger("oz");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -292,6 +296,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     tagCompound.setInteger("rotations", rotations);
+    tagCompound.setInteger("ox", this.offsetX);
+    tagCompound.setInteger("oy", this.offsetY);
+    tagCompound.setInteger("oz",this.offsetZ);
     return super.writeToNBT(tagCompound);
   }
   @Override
