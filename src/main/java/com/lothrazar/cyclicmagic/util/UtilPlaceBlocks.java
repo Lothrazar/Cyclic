@@ -91,6 +91,9 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
+      if(world.getBlockState(placePos).getMaterial().equals(placeState.getMaterial())){
+        return true;
+      }
       //blocked by perms or something, no need to log
       ModCyclic.logger.error("Error attempting to place block ");
       e.printStackTrace();
