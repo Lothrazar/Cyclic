@@ -281,7 +281,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void registerButtonDisableTrigger(GuiButton buttonIn, ButtonTriggerWrapper.ButtonTriggerType trigger,
       int fieldId, int fv) {
     this.buttonWrappers.add(new ButtonTriggerWrapper(buttonIn, trigger, fieldId, fv));
-    //    return buttonIn;
+ 
   }
   private void updateDisabledButtonTriggers() {
     for (ButtonTriggerWrapper btnWrap : this.buttonWrappers) {
