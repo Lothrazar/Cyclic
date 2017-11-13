@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -55,8 +54,6 @@ public class GuiUser extends GuiBaseContainer {
     btnSpeed.displayString = "+";
     btnSpeed.setTooltip("tile.block_user.speed.tooltip");
     this.registerButtonDisableTrigger(btnSpeed, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), TileEntityUser.MAX_SPEED);
-    
-    
     this.addButton(btnSpeed);
     ButtonTileEntityField btnSpeedD = new ButtonTileEntityField(btnId++,
         this.guiLeft + 88,

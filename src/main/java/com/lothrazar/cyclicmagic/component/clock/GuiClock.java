@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.clock;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;

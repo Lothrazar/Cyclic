@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.builder;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
@@ -13,7 +12,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -298,7 +296,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger("rotations", rotations);
     tagCompound.setInteger("ox", this.offsetX);
     tagCompound.setInteger("oy", this.offsetY);
-    tagCompound.setInteger("oz",this.offsetZ);
+    tagCompound.setInteger("oz", this.offsetZ);
     return super.writeToNBT(tagCompound);
   }
   @Override

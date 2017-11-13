@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
-import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -55,7 +54,7 @@ public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
     sliderX.setTooltip("Y");
     this.addButton(sliderY);
     id++;
-    y += h +  1;
+    y += h + 1;
     GuiSliderInteger sliderZ = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OZ.ordinal());
     sliderX.setTooltip("Z");
     this.addButton(sliderZ);
@@ -205,7 +204,7 @@ public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
- }
+  }
   @Override
   public void setEntryValue(int id, boolean value) {}
   @Override

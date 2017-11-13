@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.fan;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
@@ -38,11 +37,10 @@ public class GuiFan extends GuiBaseContainer {
         field, -1, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-1";
-    this.buttonList.add(btn); 
-this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
-    
+    this.buttonList.add(btn);
+    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
     btn = new ButtonTileEntityField(id++, x, y + h + 1, tile.getPos(),
-     field, -5, w, h);
+        field, -5, w, h);
     btn.setTooltip("button.fan.range.tooltip");
     btn.displayString = "-5";
     this.addButton(btn);

@@ -41,14 +41,13 @@ public class ButtonTileEntityField extends GuiButtonTooltip {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      switch(this.buttonMode){
+      switch (this.buttonMode) {
         case INCREMENT:
           ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, field, value));
-          break;
+        break;
         case SET:
           ModCyclic.network.sendToServer(new PacketTileSetField(pos, field, value));
-          break;
-        
+        break;
       }
     }
     return pressed;

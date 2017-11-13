@@ -202,17 +202,15 @@ public class UtilShape {
   }
   public static List<BlockPos> squarePyramid(final BlockPos pos, int radius, int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
- 
     int radiusCurrent = radius;
     BlockPos posCurrent = new BlockPos(pos);
-    for (int i = 0;i< radius ; i++) {
+    for (int i = 0; i < radius; i++) {
       shape.addAll(rectHollow(posCurrent, radiusCurrent, radiusCurrent));
       radiusCurrent--;
       posCurrent = posCurrent.up();
     }
     return shape;
   }
- 
   public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {
