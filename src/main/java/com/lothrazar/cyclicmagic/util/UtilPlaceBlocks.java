@@ -38,6 +38,7 @@ public class UtilPlaceBlocks {
   }
   /**
    * This will return true only if world.setBlockState(..) returns true
+   * or if the block here is already identical
    * 
    * @param world
    * @param player
@@ -63,10 +64,10 @@ public class UtilPlaceBlocks {
           // in the empty space
           return false;
         }
-        // ok its a soft block so try to break it first try to destroy it
+        // ok its a soft (isReplaceable == true) block so try to break it first try to destroy it
         // unless it is liquid, don't try to destroy liquid
         //blockHere.getMaterial(stateHere)
-        if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
+        if (stateHere.getMaterial().isLiquid() == false) {
           boolean dropBlock = true;
           if (!world.isRemote) {
             world.destroyBlock(placePos, dropBlock);
@@ -76,6 +77,9 @@ public class UtilPlaceBlocks {
     }
     boolean success = false;
     try {
+      if(world.getBlockState(placePos).getMaterial().equals(placeState.getMaterial())){
+        return true;
+      }
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
@@ -91,6 +95,7 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
+      // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
       if(world.getBlockState(placePos).getMaterial().equals(placeState.getMaterial())){
         return true;
       }
