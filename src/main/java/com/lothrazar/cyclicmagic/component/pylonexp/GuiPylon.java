@@ -35,7 +35,7 @@ public class GuiPylon extends GuiBaseContainer {
     int hSpacing = w / 2 + Const.PAD / 2;
     btnCollect = new ButtonExpPylon(btnId++,
         x, y, w, h, "");
-    btnCollect.setTooltip("button.exp_pylon.collect.tooltip" + TileEntityXpPylon.RADIUS);
+    btnCollect.setTooltip(UtilChat.lang("button.exp_pylon.collect.tooltip") + TileEntityXpPylon.RADIUS);
     this.buttonList.add(btnCollect);
     y += h + Const.PAD / 2;
     //collect and bottle are done, now the rest

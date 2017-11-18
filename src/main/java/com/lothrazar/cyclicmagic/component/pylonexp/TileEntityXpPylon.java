@@ -96,13 +96,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   private boolean outputSlotHasRoom() {
     ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
-    if (fullOnes.getItem() != Items.GLASS_BOTTLE) {
-      return false;
-    }
     return fullOnes.getCount() < 64;
   }
   private boolean inputSlotHasSome() {
     ItemStack emptyOnes = this.getStackInSlot(SLOT_INPUT);
+    if (emptyOnes.getItem() != Items.GLASS_BOTTLE) {
+      return false;
+    }
     return !UtilItemStack.isEmpty(emptyOnes) && (emptyOnes.getCount() > 0);
   }
   private void inputSlotDecrement() {

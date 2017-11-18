@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class UtilExperience {
@@ -16,7 +17,8 @@ public class UtilExperience {
     if (totalExp - f < 0) {
       return false;
     }
-    setXp(player, (int) (totalExp - f));
+    int result = (int) (totalExp - f);
+    setXp(player, result);
     return true;
   }
   public static int getXpToGainLevel(int level) {
@@ -64,6 +66,11 @@ public class UtilExperience {
     player.experienceTotal = xp;
     player.experienceLevel = getLevelForXp(xp);
     int next = getXpForLevel(player.experienceLevel);
-    player.experience = (float) (player.experienceTotal - next) / (float) player.xpBarCap();
+    if (player.experienceTotal == 0 || player.experienceLevel == 0) {
+      player.experience = 0;
+    }
+    else {
+      player.experience = (float) (player.experienceTotal - next) / (float) player.xpBarCap();
+    }
   }
 }
