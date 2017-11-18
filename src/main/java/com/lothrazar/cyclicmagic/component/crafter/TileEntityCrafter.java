@@ -223,15 +223,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     return this.needsRedstone == 1;
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    needsRedstone = tagCompound.getInteger(NBT_REDST);
-    timer = tagCompound.getInteger(NBT_TIMER);
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    timer = compound.getInteger(NBT_TIMER);
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
-    tagCompound.setInteger(NBT_REDST, needsRedstone);
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger(NBT_REDST, needsRedstone);
+    return super.writeToNBT(compound);
   }
 }

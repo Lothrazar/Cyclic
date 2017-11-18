@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileFacingToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -10,13 +11,14 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle {
+public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle,ITileRedstoneToggle {
   public static enum Fields {
-    TIMER, TOFF, TON, POWER;
+    TIMER, TOFF, TON, POWER,REDSTONE;
   }
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
   private int power;
+  private int needsRedstone = 0;
   private Map<EnumFacing, Boolean> poweredSides = new HashMap<EnumFacing, Boolean>();
   public TileEntityClock() {
     super(0);
@@ -53,6 +55,9 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   }
   @Override
   public void update() {
+    if(this.isRunning() == false){
+      return;
+    }
     if (this.power == 0) {
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, false));
       return;
@@ -86,6 +91,8 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
         return timeOff;
       case TON:
         return timeOn;
+      case REDSTONE:
+        return this.needsRedstone;
       default:
       break;
     }
@@ -112,6 +119,8 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       case TON:
         timeOn = Math.max(value, 1);
       break;
+      case REDSTONE:
+        this.needsRedstone = value % 2;
       default:
       break;
     }
@@ -121,6 +130,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     compound.setInteger("off", timeOff);
     compound.setInteger("on", timeOn);
     compound.setInteger("power", power);
+    compound.setInteger(NBT_REDST, needsRedstone);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setBoolean(f.getName(), poweredSides.get(f));
     }
@@ -132,6 +142,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = compound.getInteger("off");
     timeOn = compound.getInteger("on");
     power = compound.getInteger("power");
+    needsRedstone = compound.getInteger(NBT_REDST);
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, compound.getBoolean(f.getName()));
     }
@@ -150,5 +161,14 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, true);
     }
+  }
+
+  @Override
+  public void toggleNeedsRedstone() {
+    this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
+  }
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

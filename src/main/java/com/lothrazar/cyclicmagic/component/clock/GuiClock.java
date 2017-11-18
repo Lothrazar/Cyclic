@@ -24,7 +24,7 @@ public class GuiClock extends GuiBaseContainer {
   int xColText = xCol2 + 24;
   int xCol3 = xColText + 18;
   int xCol4 = xCol3 + w + colOffset;
-  int yRow1 = Const.PAD * 2 + rowOffset;
+  int yRow1 = Const.PAD * 2 + rowOffset+6;
   int yRow2 = yRow1 + h + colOffset;
   int yRow3 = yRow2 + h + colOffset;
   int xColFacing = xCol4 + w + Const.PAD;
@@ -32,6 +32,7 @@ public class GuiClock extends GuiBaseContainer {
   public GuiClock(InventoryPlayer inventoryPlayer, TileEntityClock tileEntity) {
     super(new ContainerClock(inventoryPlayer, tileEntity), tileEntity);
     tileClock = (TileEntityClock) this.tile;
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
