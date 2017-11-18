@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter.Fields;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -20,8 +22,9 @@ import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler {
+public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
   public static final int TANK_FULL = 20000;
+  private static final int XP_PER_SPEWORB = 50;
   private static final int VRADIUS = 2;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 22;
@@ -33,10 +36,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
   private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
-    TIMER, EXP, COLLECT, REDSTONE, BOTTLE;//MIGHT remove redstone eh
+    TIMER, EXP, COLLECT, REDSTONE;//MIGHT remove redstone eh
+  }
+  public static enum ActionMode {
+    SPRAY, COLLECT;
   }
   private int timer = 0;
   private int collect = 1;
+  private int needsRedstone = 0;
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
@@ -47,11 +54,17 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public void update() {
+    if (this.isRunning() == false) {
+      return;
+    }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      if (this.collect == 1) {
+      if (this.collect == ActionMode.COLLECT.ordinal()) {
         updateCollection();
+      }
+      if (this.collect == ActionMode.SPRAY.ordinal()) {
+        updateSpray();
       }
       updateBottle();
     }
@@ -65,6 +78,24 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
       outputSlotIncrement();
       inputSlotDecrement();
+    }
+  }
+  private void updateSpray() {
+    int toSpew = Math.min(XP_PER_SPEWORB, this.getCurrentFluid());
+    if (toSpew > 0 && this.getCurrentFluid() >= toSpew) {
+      FluidStack actuallyDrained = this.tank.drain(toSpew, true);
+      //was the correct amount drained
+      if (actuallyDrained == null || actuallyDrained.amount == 0) {
+        return;
+      }
+      if (world.isRemote == false) {
+        EntityXPOrb orb = new EntityXPOrb(world);
+        orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+        orb.xpValue = toSpew;
+        orb.delayBeforeCanPickup = 0;
+        world.spawnEntity(orb);
+        orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
+      }
     }
   }
   private void updateCollection() {
@@ -127,6 +158,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_COLLECT, this.collect);
     tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    tags.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tags);
   }
   @Override
@@ -135,6 +167,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     timer = tags.getInteger(NBT_TIMER);
     collect = tags.getInteger(NBT_COLLECT);
     tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
+    this.needsRedstone = tags.getInteger(NBT_REDST);
   }
   @Override
   public int getFieldCount() {
@@ -149,6 +182,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         return this.getCurrentFluid();
       case COLLECT:
         return collect;
+      case REDSTONE:
+        return needsRedstone;
+      default:
+      break;
     }
     return -1;
   }
@@ -178,6 +215,11 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       break;
       case COLLECT:
         this.collect = value % 2;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+      default:
       break;
     }
   }
@@ -240,5 +282,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     // this.world.markChunkDirty(pos, this);
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
+  }
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

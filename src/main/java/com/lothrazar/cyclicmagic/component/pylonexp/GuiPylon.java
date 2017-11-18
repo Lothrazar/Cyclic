@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -24,6 +25,7 @@ public class GuiPylon extends GuiBaseContainer {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
@@ -31,11 +33,11 @@ public class GuiPylon extends GuiBaseContainer {
     int btnId = 0;
     int w = 58, h = 20;
     int x = this.guiLeft + Const.PAD;
-    int y = this.guiTop + Const.PAD * 3;
-    int hSpacing = w / 2 + Const.PAD / 2;
+    int y = this.guiTop + Const.PAD * 3 + Const.PAD / 2;
+    int hSpacing = w / 2 + Const.PAD / 4;
     btnCollect = new ButtonExpPylon(btnId++,
-        x, y, w, h, "");
-    btnCollect.setTooltip(UtilChat.lang("button.exp_pylon.collect.tooltip") + TileEntityXpPylon.RADIUS);
+        x, y, w + 12, h, "");
+    btnCollect.setTooltip("button.exp_pylon.collect.tooltip");
     this.buttonList.add(btnCollect);
     y += h + Const.PAD / 2;
     //collect and bottle are done, now the rest
