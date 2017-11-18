@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.jei;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;

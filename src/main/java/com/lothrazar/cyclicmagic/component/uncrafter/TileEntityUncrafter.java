@@ -166,6 +166,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

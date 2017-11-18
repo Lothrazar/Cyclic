@@ -168,9 +168,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
    */
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.DOWN)
-      return hopperOUTPUT;
-    return hopperInputFuel;
+    if (side == EnumFacing.UP)
+      return hopperInputFuel;
+    return hopperOUTPUT;
   }
   public void toggleSizeShape() {
     this.size++;

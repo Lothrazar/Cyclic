@@ -62,9 +62,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public final static int TIMER_FULL = 120;
   public static final int MAX_SPEED = 20;
   public static int maxHeight = 10;
-  private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
+  private int[] hopperInput = { 0, 1, 2, 9 };// all slots for all faces
   private int[] hopperOutput = { 3, 4, 5, 6, 7, 8 };// all slots for all faces
-  private int[] hopperInputFuel = { 9 };// all slots for all faces
   //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
@@ -174,15 +173,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
-    //    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
-    else if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non block item
+    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non block item
       //dont ever place a block. they want to use it on an entity
       EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
       if (r != EnumActionResult.SUCCESS) {
+        //if its a throwable item, it happens on this line down below, the process right click
         r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+        //if throw has happened, success is true
         if (r != EnumActionResult.SUCCESS) {
           ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
           if (res == null || res.getType() != EnumActionResult.SUCCESS) {
@@ -340,11 +340,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP)
-      return hopperInput;
     if (side == EnumFacing.DOWN)
       return hopperOutput;
-    return hopperInputFuel;
+    return hopperInput;
   }
   @Override
   public int getField(int id) {

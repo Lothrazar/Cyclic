@@ -3,9 +3,12 @@ import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,15 +38,24 @@ public class UtilPlaceBlocks {
     return false;
   }
   /**
-   * This will return true only if world.setBlockState(..) returns true
+   * overloaded version to disable sound
+   */
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
+      BlockPos placePos, IBlockState placeState) {
+    return placeStateSafe(world, player, placePos, placeState, false);
+  }
+  /**
+   * This will return true only if world.setBlockState(..) returns true or if
+   * the block here is already identical
    * 
    * @param world
    * @param player
    * @param placePos
    * @param placeState
+   * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -61,12 +73,13 @@ public class UtilPlaceBlocks {
           // in the empty space
           return false;
         }
-        // ok its a soft block so try to break it first try to destroy it
+        // ok its a soft (isReplaceable == true) block so try to break it first try to destroy it
         // unless it is liquid, don't try to destroy liquid
-        // blockHere.getMaterial(stateHere)
-        if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
+        //blockHere.getMaterial(stateHere)
+        if (stateHere.getMaterial().isLiquid() == false) {
+          boolean dropBlock = true;
           if (world.isRemote == false) {
-            world.destroyBlock(placePos, true);
+            world.destroyBlock(placePos, dropBlock);
           }
         }
       }
@@ -83,16 +96,17 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
+      // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
+      // and  https://github.com/PrinceOfAmber/Cyclic/pull/579/files
       // show exception from above, possibly failed placement
       ModCyclic.logger.error("Error attempting to place block ");
       e.printStackTrace();
     }
     // play sound to area when placement is a success
-    if (success) {
+    if (success && playSound) {
       SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, placePos);
       if (type != null && type.getPlaceSound() != null) {
-        int range = 18;
-        UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, placePos, world.provider.getDimension(), range);
+        UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, placePos, world.provider.getDimension(), UtilSound.RANGE_DEFAULT);
       }
     }
     return success;

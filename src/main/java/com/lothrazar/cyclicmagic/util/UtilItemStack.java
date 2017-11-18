@@ -10,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilItemStack {
@@ -34,8 +33,6 @@ public class UtilItemStack {
     int moveover = 0;
     if (room > 0) {
       moveover = Math.min(takeFrom.getCount(), room);
-      //      moveTo.stackSize += moveover;
-      //      takeFrom.stackSize -= moveover;
       moveTo.grow(moveover);
       takeFrom.shrink(moveover);
     }
@@ -43,9 +40,6 @@ public class UtilItemStack {
   }
   public static boolean isEmpty(ItemStack is) {
     return is == null || is.isEmpty() || is == ItemStack.EMPTY;
-  }
-  public static int getMaxDmgFraction(Item tool, int d) {
-    return tool.getMaxDamage() - (int) MathHelper.floor(tool.getMaxDamage() / d);
   }
   public static void damageItem(EntityLivingBase p, ItemStack s) {
     if (p instanceof EntityPlayer) {
@@ -63,9 +57,6 @@ public class UtilItemStack {
       s.damageItem(num, p);
     }
   }
-  public static String getRawName(Item item) {
-    return item.getUnlocalizedName().replaceAll("item.", "");
-  }
   /**
    * Created becuase getStateFromMeta is deprecated, and its used everywhere so
    * tons of warnings, and i have no idea how simple/complex the solution will
@@ -75,6 +66,7 @@ public class UtilItemStack {
    * @param meta
    * @return
    */
+  @SuppressWarnings("deprecation")
   public static IBlockState getStateFromMeta(Block b, int meta) {
     return b.getStateFromMeta(meta);
   }
@@ -139,7 +131,9 @@ public class UtilItemStack {
     Block stuff = Block.getBlockFromItem(stack.getItem());
     return UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
   }
-  //stupid Block class has this not public
+  /*
+   * stupid Block class has this not public
+   */
   public static ItemStack getSilkTouchDrop(IBlockState state) {
     Item item = Item.getItemFromBlock(state.getBlock());
     int i = 0;
@@ -148,31 +142,4 @@ public class UtilItemStack {
     }
     return new ItemStack(item, 1, i);
   }
-  /**
-   * STOLEN from ItemGlassBottle which is for osme reason protected
-   * 
-   * @param is
-   * @param player
-   * @param stack
-   * @return
-   */
-  //  public static ItemStack turnBottleIntoItem(ItemStack is, EntityPlayer player, ItemStack stack)
-  //  {
-  //      is.shrink(1);
-  //      player.addStat(StatList.getObjectUseStats(is.getItem()));
-  //
-  //      if (is.isEmpty())
-  //      {
-  //          return stack;
-  //      }
-  //      else
-  //      {
-  //          if (!player.inventory.addItemStackToInventory(stack))
-  //          {
-  //              player.dropItem(stack, false);
-  //          }
-  //
-  //          return is;
-  //      }
-  //  }
 }
