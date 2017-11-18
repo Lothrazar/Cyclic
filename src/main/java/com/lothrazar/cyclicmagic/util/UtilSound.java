@@ -17,6 +17,7 @@ public class UtilSound {
   public static final float VOLUME = 1.0F;
   public static final float PITCH = 1.0F;
   public static final boolean distanceDelay = false;
+  public static final int  RANGE_DEFAULT = 18;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
     if (player == null) {
       return;
