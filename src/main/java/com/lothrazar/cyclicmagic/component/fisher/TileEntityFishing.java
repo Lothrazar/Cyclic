@@ -27,13 +27,17 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
+  // currently only used by the thermal fishing rod
+  private static final int ENERGY_PER_FISH = 100;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
-  public static final float SPEEDFACTOR = 0.00089F;//0.00089F;//// bigger == faster
+  public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
   static final int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   public TileEntityFishing() {
@@ -180,17 +184,29 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void damageTool() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (!equip.isEmpty()) {
-      equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
-      //IF enchanted and IF about to break, then spit it out
-      int damageRem = equip.getMaxDamage() - equip.getItemDamage();
-      if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
-        sendOutputItem(equip);
-        this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
-      } //otherwise we also make sure if its fullly damanged
-      if (equip.getItemDamage() >= equip.getMaxDamage()) {
-        this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+    if (equip.isEmpty()) {
+      return;
+    }
+    if (equip.hasCapability(CapabilityEnergy.ENERGY, null)) {
+      IEnergyStorage storage = equip.getCapability(CapabilityEnergy.ENERGY, null);
+      if (storage != null) {
+        storage.extractEnergy(ENERGY_PER_FISH, false);
+        if (storage.getEnergyStored() <= 0) {
+          this.sendOutputItem(equip);
+          this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+        }
+        return;
       }
+    }
+    equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
+    //IF enchanted and IF about to break, then spit it out
+    int damageRem = equip.getMaxDamage() - equip.getItemDamage();
+    if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
+      sendOutputItem(equip);
+      this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+    } //otherwise we also make sure if its fullly damanged
+    if (equip.getItemDamage() >= equip.getMaxDamage()) {
+      this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
     }
   }
   @Override
