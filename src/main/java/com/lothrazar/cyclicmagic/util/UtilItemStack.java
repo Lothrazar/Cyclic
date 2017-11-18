@@ -10,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilItemStack {
@@ -34,7 +33,6 @@ public class UtilItemStack {
     int moveover = 0;
     if (room > 0) {
       moveover = Math.min(takeFrom.getCount(), room);
-
       moveTo.grow(moveover);
       takeFrom.shrink(moveover);
     }
@@ -43,7 +41,6 @@ public class UtilItemStack {
   public static boolean isEmpty(ItemStack is) {
     return is == null || is.isEmpty() || is == ItemStack.EMPTY;
   }
-
   public static void damageItem(EntityLivingBase p, ItemStack s) {
     if (p instanceof EntityPlayer) {
       damageItem((EntityPlayer) p, s);
@@ -60,7 +57,6 @@ public class UtilItemStack {
       s.damageItem(num, p);
     }
   }
- 
   /**
    * Created becuase getStateFromMeta is deprecated, and its used everywhere so
    * tons of warnings, and i have no idea how simple/complex the solution will

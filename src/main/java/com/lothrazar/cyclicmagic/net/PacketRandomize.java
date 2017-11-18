@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemRandomizer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -111,12 +110,12 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       IBlockState stateHere = null;
       for (BlockPos p : places) {
         stateHere = world.getBlockState(p);
-        if (stateHere != null 
-            && world.getTileEntity(p) == null 
+        if (stateHere != null
+            && world.getTileEntity(p) == null
             && world.isAirBlock(p) == false
             && stateHere.getMaterial().isLiquid() == false) {
           //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
-         rpos.add(p);
+          rpos.add(p);
           rstates.add(stateHere);
         }
       }
@@ -125,10 +124,9 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       IBlockState swapState;
       synchronized (rpos) {//just in case
         for (int i = 0; i < rpos.size(); i++) {
-       
           swapPos = rpos.get(i);
           swapState = rstates.get(i);
-         world.destroyBlock(swapPos, false);
+          world.destroyBlock(swapPos, false);
           //playing sound here in large areas causes ConcurrentModificationException
           UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false);
         }
