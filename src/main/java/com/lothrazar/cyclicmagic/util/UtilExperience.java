@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class UtilExperience {
   public static double getExpTotal(EntityPlayer player) {
+    validateExpPositive(player);
     int level = player.experienceLevel;
     // numeric reference:
     // http://minecraft.gamepedia.com/Experience#Leveling_up
@@ -71,6 +71,20 @@ public class UtilExperience {
     }
     else {
       player.experience = (float) (player.experienceTotal - next) / (float) player.xpBarCap();
+    }
+    //previous versions had bugs and set to a bad state
+    //so backfill and sanity check all values
+    validateExpPositive(player);
+  }
+  private static void validateExpPositive(EntityPlayer player) {
+    if (player.experience < 0) {
+      player.experience = 0;
+    }
+    if (player.experienceTotal < 0) {
+      player.experienceTotal = 0;
+    }
+    if (player.experienceLevel < 0) {
+      player.experienceLevel = 0;
     }
   }
 }

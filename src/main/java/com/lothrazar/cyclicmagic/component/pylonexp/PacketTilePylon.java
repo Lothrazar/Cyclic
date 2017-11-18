@@ -50,11 +50,12 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
       int pylonSpace = TileEntityXpPylon.TANK_FULL - pylonHas;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
         int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
+         
         if (message.value >= 0) {
           int toDeposit;
           if (message.value == 0) {
             //deposit all
-            toDeposit = Math.min(playerHas, pylonSpace);
+            toDeposit = Math.min(playerHas, pylonSpace) ;
           }
           else {//try deposit specified amt
             toDeposit = Math.min(message.value, pylonSpace);
