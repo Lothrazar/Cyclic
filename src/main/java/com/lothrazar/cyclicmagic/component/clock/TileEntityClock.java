@@ -11,9 +11,9 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle,ITileRedstoneToggle {
+public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle, ITileRedstoneToggle {
   public static enum Fields {
-    TIMER, TOFF, TON, POWER,REDSTONE;
+    TIMER, TOFF, TON, POWER, REDSTONE;
   }
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
@@ -55,7 +55,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   }
   @Override
   public void update() {
-    if(this.isRunning() == false){
+    if (this.isRunning() == false) {
       return;
     }
     if (this.power == 0) {
@@ -162,7 +162,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       poweredSides.put(f, true);
     }
   }
-
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
