@@ -35,6 +35,13 @@ public class UtilPlaceBlocks {
     return false;
   }
   /**
+   * overloaded version to disable sound
+   */
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
+      BlockPos placePos, IBlockState placeState) {
+    return placeStateSafe(world, player, placePos, placeState, false);
+  }
+  /**
    * This will return true only if world.setBlockState(..) returns true or if
    * the block here is already identical
    * 
@@ -42,9 +49,10 @@ public class UtilPlaceBlocks {
    * @param player
    * @param placePos
    * @param placeState
+   * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -92,7 +100,7 @@ public class UtilPlaceBlocks {
       e.printStackTrace();
     }
     // play sound to area when placement is a success
-    if (success) {
+    if (success && playSound) {
       SoundType type = UtilSound.getSoundFromBlockstate(placeState, world, placePos);
       if (type != null && type.getPlaceSound() != null) {
         UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, placePos, world.provider.getDimension(), UtilSound.RANGE_DEFAULT);

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemRandomizer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -53,7 +54,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
   public IMessage onMessage(PacketRandomize message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       EntityPlayer player = ctx.getServerHandler().player;
-      World worldObj = player.getEntityWorld();
+      World world = player.getEntityWorld();
       List<BlockPos> places = new ArrayList<BlockPos>();
       int xMin = message.pos.getX();
       int yMin = message.pos.getY();
@@ -106,23 +107,30 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       }
       List<BlockPos> rpos = new ArrayList<BlockPos>();
       List<IBlockState> rstates = new ArrayList<IBlockState>();
+      //ignore liquid/tile entities IE do not break chests / etc
+      IBlockState stateHere = null;
       for (BlockPos p : places) {
-        if (worldObj.getTileEntity(p) == null && worldObj.isAirBlock(p) == false
-            && worldObj.isSideSolid(p, message.side) && worldObj.getBlockState(p) != null) {
-          rpos.add(p);
-          rstates.add(worldObj.getBlockState(p));
-          //ignore liquid/tile entities IE do not break chests / etc
+        stateHere = world.getBlockState(p);
+        if (stateHere != null 
+            && world.getTileEntity(p) == null 
+            && world.isAirBlock(p) == false
+            && stateHere.getMaterial().isLiquid() == false) {
+          //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
+         rpos.add(p);
+          rstates.add(stateHere);
         }
       }
-      Collections.shuffle(rpos, worldObj.rand);
+      Collections.shuffle(rpos, world.rand);
       BlockPos swapPos;
       IBlockState swapState;
       synchronized (rpos) {//just in case
         for (int i = 0; i < rpos.size(); i++) {
+       
           swapPos = rpos.get(i);
           swapState = rstates.get(i);
-          worldObj.destroyBlock(swapPos, false);
-          UtilPlaceBlocks.placeStateSafe(worldObj, player, swapPos, swapState);
+         world.destroyBlock(swapPos, false);
+          //playing sound here in large areas causes ConcurrentModificationException
+          UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false);
         }
       }
     }
