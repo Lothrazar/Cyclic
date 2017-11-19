@@ -66,25 +66,26 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableSpikes;
   private boolean emptyBeacon;
   private boolean beaconPotion;
+  private boolean wireless;
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
     
     
-    
+    if(wireless){
     BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
   
     
     
     BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
-    BlockRegistry.registerBlock(wireless_transmitter,new ItemBlockWireless(wireless_transmitter), "wireless_transmitter", null);
-    BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver", null);
+    BlockRegistry.registerBlock(wireless_transmitter,new ItemBlockWireless(wireless_transmitter), "wireless_transmitter",GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver",GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
     GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
 
     ModCyclic.instance.events.register(BlockRedstoneWireless.class);
     
-    
+    }
     
     if (beaconPotion) {
       BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
@@ -177,6 +178,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
+    
+    
     beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     emptyBeacon = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableClock = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

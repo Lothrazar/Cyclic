@@ -92,10 +92,11 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     if (world.getTileEntity(pos) instanceof TileEntityWirelessTr) {
       TileEntityWirelessTr te = (TileEntityWirelessTr) world.getTileEntity(pos);
       if (te.getTargetPos() == null) {
-        UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.__.empty"));
+        UtilChat.sendStatusMessage(player, "block.wireless_transmitter.empty");
       }
       else {
-        UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.__.__") + te.getTargetPos().toString());
+        UtilChat.sendStatusMessage(player,UtilChat.lang("block.wireless_transmitter.saved")+UtilChat.blockPosToString(te.getTargetPos()));
+
       }
     }
     return true;
@@ -118,7 +119,8 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     ItemStack stack = event.getItemStack();//player held item
     if (world.getTileEntity(pos) instanceof TileEntityWirelessRec
         && stack.getItem() == Item.getByNameOrId("cyclicmagic:wireless_transmitter")) {
-      System.out.println("write pos from targeted reciever to handheld transmitter");
+
+      UtilChat.sendStatusMessage(event.getEntityPlayer(),"block.wireless_transmitter.saved");
       UtilNBT.setItemStackBlockPos(stack, pos);
     }
   }
@@ -128,10 +130,10 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     stack.getItem().updateItemStackNBT(stack.getTagCompound());
-    TileEntityWirelessTr tile = (TileEntityWirelessTr) worldIn.getTileEntity(pos);
+    TileEntity tile =  worldIn.getTileEntity(pos);
     BlockPos posTarget = UtilNBT.getItemStackBlockPos(stack);
-    if (tile != null && posTarget != null) {
-      tile.setTargetPos(posTarget);
+    if (tile != null && posTarget != null && tile instanceof TileEntityWirelessTr) {
+      ((TileEntityWirelessTr)tile).setTargetPos(posTarget);
     }
   }
   /**
@@ -151,7 +153,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     if (ent != null && ent instanceof TileEntityWirelessTr) {
       TileEntityWirelessTr t = (TileEntityWirelessTr) ent;
       ItemStack stack = new ItemStack(state.getBlock());
-      //TODO: tile.getTargetPos
+     if(t.getTargetPos() != null)
       UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
       //      saveTileDataToStack(stack, t);
       UtilItemStack.dropItemStackInWorld(world, pos, stack);

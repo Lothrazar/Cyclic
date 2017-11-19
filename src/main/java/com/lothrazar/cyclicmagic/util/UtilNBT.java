@@ -35,6 +35,9 @@ public class UtilNBT {
     return new BlockPos(item.getInteger("xpos"), item.getInteger("ypos"), item.getInteger("zpos"));
   }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
+    if(pos == null){
+      return;
+    }
     UtilNBT.setItemStackNBTVal(item, "xpos", pos.getX());
     UtilNBT.setItemStackNBTVal(item, "ypos", pos.getY());
     UtilNBT.setItemStackNBTVal(item, "zpos", pos.getZ());
