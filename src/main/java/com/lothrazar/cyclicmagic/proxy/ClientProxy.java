@@ -17,6 +17,7 @@ import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye.FactoryDungeon;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
@@ -124,6 +125,10 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new FactoryBall());
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
+
+    RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
+  
+  
   }
   @SideOnly(Side.CLIENT)
   @Override
