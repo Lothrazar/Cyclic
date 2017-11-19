@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.command.CommandGetHome;
 import com.lothrazar.cyclicmagic.command.CommandHeal;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
 import com.lothrazar.cyclicmagic.command.CommandHome;
+import com.lothrazar.cyclicmagic.command.CommandNbt;
 import com.lothrazar.cyclicmagic.command.CommandPing;
 import com.lothrazar.cyclicmagic.command.CommandSearchItem;
 import com.lothrazar.cyclicmagic.command.CommandSearchSpawner;
@@ -25,6 +26,9 @@ public class CommandModule extends BaseModule implements IHasConfig {
   private static String category;
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
+    if (configToggle.get(CommandNbt.name)) {
+      event.registerServerCommand(new CommandNbt(commandNeedsOp.get(CommandNbt.name)));
+    }
     if (configToggle.get(CommandEnderChest.name)) {
       event.registerServerCommand(new CommandEnderChest(commandNeedsOp.get(CommandEnderChest.name)));
     }
@@ -74,18 +78,17 @@ public class CommandModule extends BaseModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     category = Const.ConfigCategory.commands;
     config.setCategoryComment(category, "Disable any command that was added");
+    syncCommandConfig(config, CommandNbt.name, true, "Read NBT data from your held item");
     syncCommandConfig(config, CommandEnderChest.name, true, "Opens your ender chest");
     syncCommandConfig(config, CommandGetHome.name, false, "Get where your current spawn is set (by a bed)");
     syncCommandConfig(config, CommandHeal.name, true, "Heal yourself (or a target player) to full");
     syncCommandConfig(config, CommandHearts.name, true, "Increase the maximum hearts of a target player (lasts until death)");
     syncCommandConfig(config, CommandHome.name, true, "Teleport you to your current spawn (if its set)");
     syncCommandConfig(config, CommandPing.name, false, "Display your current coordinates");
-    //    syncCommandConfig(config, CommandRecipe.name, false, "Find recipes for an item");
     syncCommandConfig(config, CommandSearchItem.name, false, "Search for an item in nearby containers");
     syncCommandConfig(config, CommandSearchSpawner.name, true, "Search the world nearby for spawners (dungeons, etc)");
     syncCommandConfig(config, CommandSearchTrades.name, false, "Search nearby villagers for trades based on item names");
     syncCommandConfig(config, CommandTodoList.name, false, "Set reminders on screen for yourself");
-    //    syncCommandConfig(config, CommandUses.name, false, "Find how an item is used in other recipes");
     syncCommandConfig(config, CommandVillageInfo.name, false, "Get the stats on the nearest village (if any)");
     syncCommandConfig(config, CommandWorldHome.name, true, "Teleport to true worldspawn");
   }

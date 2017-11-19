@@ -222,4 +222,8 @@ public class UtilNBT {
   public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
     return entityevokerfangs.getEntityData().getBoolean(string);
   }
+  public static boolean hasTagCompund(ItemStack held) {
+    return held.hasTagCompound() &&
+        held.getTagCompound().getSize() > 0;
+  }
 }
