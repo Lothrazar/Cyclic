@@ -32,12 +32,7 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
       }
     }
   }
-  //  @Override
-  //  public int getField(int id) {
-  //    return 0;
-  //  }
-  //  @Override
-  //  public void setField(int id, int value) {}
+ 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     return super.writeToNBT(compound);
