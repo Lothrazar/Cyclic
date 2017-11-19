@@ -37,6 +37,7 @@ import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
 import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.component.wandblaze.BlockFireSafe;
 import com.lothrazar.cyclicmagic.component.wireless.BlockRedstoneWireless;
+import com.lothrazar.cyclicmagic.component.wireless.ItemBlockWireless;
 import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessRec;
 import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -72,13 +73,16 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     
     
     BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
+  
+    
+    
     BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
-    BlockRegistry.registerBlock(wireless_transmitter, "wireless_transmitter", null);
+    BlockRegistry.registerBlock(wireless_transmitter,new ItemBlockWireless(wireless_transmitter), "wireless_transmitter", null);
     BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver", null);
     GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
     GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
 
-    
+    ModCyclic.instance.events.register(BlockRedstoneWireless.class);
     
     
     

@@ -22,6 +22,18 @@ public class UtilNBT {
     }
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
+  public static void setTagBlockPos(NBTTagCompound item, BlockPos pos) {
+    item.setInteger("xpos", pos.getX());
+    item.setInteger("ypos", pos.getY());
+    item.setInteger("zpos", pos.getZ());
+  }
+  public static BlockPos getTagBlockPos(NBTTagCompound item) {
+    if (item == null
+        || !item.hasKey("xpos")) {
+      return null;
+    }
+    return new BlockPos(item.getInteger("xpos"), item.getInteger("ypos"), item.getInteger("zpos"));
+  }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
     UtilNBT.setItemStackNBTVal(item, "xpos", pos.getX());
     UtilNBT.setItemStackNBTVal(item, "ypos", pos.getY());
