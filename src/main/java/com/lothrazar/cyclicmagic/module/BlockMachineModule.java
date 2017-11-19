@@ -36,6 +36,9 @@ import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
 import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.component.wandblaze.BlockFireSafe;
+import com.lothrazar.cyclicmagic.component.wireless.BlockRedstoneWireless;
+import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessRec;
+import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -65,6 +68,20 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
+    
+    
+    
+    BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
+    BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
+    BlockRegistry.registerBlock(wireless_transmitter, "wireless_transmitter", null);
+    BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver", null);
+    GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
+    GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
+
+    
+    
+    
+    
     if (beaconPotion) {
       BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
       BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
