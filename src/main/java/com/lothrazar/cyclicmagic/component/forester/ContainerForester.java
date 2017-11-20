@@ -12,23 +12,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerForester extends ContainerBaseMachine {
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = 92;
-
-  public static final int SLOTEQUIP_X = SLOTX_START + ( 2) * Const.SQ;
-  public static final int SLOTEQUIP_Y = SLOTY;
+  public static final int SLOTY = 38; 
   public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
-    this.screenSize = ScreenSize.LARGE;
+    this.screenSize = ScreenSize.STANDARD;
     this.setTile(te);
-    for (int i = 0; i < TileEntityForester.INVENTORY_SIZE; i++) {
+    for (int i = 0; i < TileEntityForester.INVENTORY_SIZE - 1; i++) {
       addSlotToContainer(new Slot(tile, i,
-          SLOTX_START + i%9 * Const.SQ, 
-          SLOTY+((int)i/9) * Const.SQ));
+          SLOTX_START + i % 8 * Const.SQ + Const.SQ,
+          SLOTY + ((int) i / 8) * Const.SQ));
     }
-    //addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
-    
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

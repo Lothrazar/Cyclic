@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiForester extends GuiBaseContainer {
   public GuiForester(InventoryPlayer inventoryPlayer, TileEntityForester tileEntity) {
     super(new ContainerForester(inventoryPlayer, tileEntity), tileEntity);
-    setScreenSize(ScreenSize.LARGE);
+    setScreenSize(ScreenSize.STANDARD);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.setFieldFuel(Fields.FUEL.ordinal());
@@ -28,9 +28,12 @@ public class GuiForester extends GuiBaseContainer {
     int u = 0, v = 0 ;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_SAPLING);
     for (int k = 0; k < TileEntityForester.INVENTORY_SIZE - 1; k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerForester.SLOTX_START - 1 + (k % 9) * Const.SQ, this.guiTop + ContainerForester.SLOTY - 1 + ((int) k / 9) * Const.SQ,
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerForester.SLOTX_START - 1 + (k % 8) * Const.SQ+Const.SQ, 
+          this.guiTop + ContainerForester.SLOTY - 1 + ((int) k / 8) * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
   }
   @SideOnly(Side.CLIENT)
   @Override

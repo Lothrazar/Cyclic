@@ -40,9 +40,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
-  public static final int INVENTORY_SIZE = 19;
+  public static final int INVENTORY_SIZE = 17;
   private static final int FUEL_SLOT = INVENTORY_SIZE - 1;
-  public final static int TIMER_FULL = 22;
+  public final static int TIMER_FULL = 4;//quite fast
   private static final int HEIGHT = 32;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -73,20 +73,26 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public void update() {
-    if (isRunning()) {
-      this.spawnParticlesAbove();
+    if (!isRunning()) {
+      return;
     }
-    if (world instanceof WorldServer) {
+    this.spawnParticlesAbove();
+    if (world instanceof WorldServer && this.updateTimerIsZero()) {
+      this.timer = TIMER_FULL;//reset timer to fire later
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
       tryEquipItem();
       if (targetPos == null) {
         targetPos = this.getTargetCenter(); //not sure if this is needed
       }
-      if (isRunning() && this.updateFuelIsBurning() && this.updateTimerIsZero()) {
+      if (this.updateFuelIsBurning()) {
+        this.shiftAllUp(1);
         this.updatePlantSaplings();
-        if (updateMiningProgress()) {
-          this.timer = TIMER_FULL;
+        this.updateMiningProgress();
+        // this.timer = TIMER_FULL;
+        //shortcut: if its air skip ahead
+        if (world.isAirBlock(this.targetPos)) {
+          this.timer = 0;
         }
       }
       else { // we do not have power
@@ -345,11 +351,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public List<BlockPos> getShape() {
-    List<BlockPos> allPos = new ArrayList<BlockPos>();
-    for (int i = 0; i < 2; i++) {
-      allPos.addAll(UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size));
-    }
-    return allPos;
+    return UtilShape.squareHorizontalHollow(this.pos, size);
   }
   @Override
   public boolean isPreviewVisible() {
