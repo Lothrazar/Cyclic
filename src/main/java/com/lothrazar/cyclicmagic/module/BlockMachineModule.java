@@ -13,6 +13,8 @@ import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
 import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.forester.BlockForester;
+import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
@@ -67,11 +69,16 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean emptyBeacon;
   private boolean beaconPotion;
   private boolean wireless;
+  private boolean forester;
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
     
-    
+    if(forester){
+    BlockForester block_forester = new BlockForester();
+    BlockRegistry.registerBlock(block_forester, "block_forester",GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
+    }
     if(wireless){
     BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
   
@@ -181,6 +188,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     
     
+    forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     
     beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     emptyBeacon = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

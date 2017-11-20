@@ -2,9 +2,6 @@ package com.lothrazar.cyclicmagic.component.wireless;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.component.bucketstorage.TileEntityBucketStorage;
-import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -113,7 +110,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
   public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
     BlockPos pos = event.getPos();
     World world = event.getWorld();
-    //    EntityPlayer player = event.getEntityPlayer();
+ 
     ItemStack stack = event.getItemStack();//player held item
     if (world.getTileEntity(pos) instanceof TileEntityWirelessRec
         && stack.getItem() == Item.getByNameOrId("cyclicmagic:wireless_transmitter")) {
