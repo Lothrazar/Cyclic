@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
@@ -18,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
@@ -97,11 +99,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         }
         else if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
           IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
-          if (storage != null ) {
+          if (storage != null) {
             int canWithdraw = Math.min(1000, storage.getEnergyStored());
             if (canWithdraw > 0) {
               storage.extractEnergy(canWithdraw, false);
-              
               this.currentFuel = canWithdraw;
               this.currentMaxFuel = canWithdraw;
               //            if (storage.getEnergyStored() <= 0) {
@@ -384,6 +385,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
   net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
   net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
+  private EnergyStorage energyStorage;
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -394,13 +396,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
-    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       if (facing == EnumFacing.DOWN)
         return (T) handlerBottom;
       else if (facing == EnumFacing.UP)
         return (T) handlerTop;
       else
         return (T) handlerSide;
+    }
+    if (usesFuel && capability == CapabilityEnergy.ENERGY) {
+      //TODO: store in NBT and consume as fuel
+      if (energyStorage == null)
+        energyStorage = new EnergyStorage(10000);
+      return CapabilityEnergy.ENERGY.cast(energyStorage);
+    }
+    //    
     return super.getCapability(capability, facing);
   }
 }
