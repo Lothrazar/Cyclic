@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.slot.SlotFuel;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -69,7 +70,7 @@ public class ContainerBaseMachine extends ContainerBase {
   public void addFurnaceFuelSlot(int slotxFuel, int slotyFuel) {
     Slot fuel;
     if (GlobalSettings.fuelEnabled) {
-      fuel = new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel);
+      fuel = new SlotFuel(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel);
     }
     else {
       fuel = new SlotOutputOnly(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel + 9999);//LITERALLY OFF SCREEN

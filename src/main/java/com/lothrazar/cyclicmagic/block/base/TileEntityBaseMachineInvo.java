@@ -17,6 +17,8 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
@@ -91,6 +93,23 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
           }
           else {
             itemstack.shrink(1);
+          }
+        }
+        else if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+          IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
+          if (storage != null ) {
+            int canWithdraw = Math.min(1000, storage.getEnergyStored());
+            if (canWithdraw > 0) {
+              storage.extractEnergy(canWithdraw, false);
+              
+              this.currentFuel = canWithdraw;
+              this.currentMaxFuel = canWithdraw;
+              //            if (storage.getEnergyStored() <= 0) {
+              //              this.sendOutputItem(equip);
+              //              this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+              //            }
+              //            return;
+            }
           }
         }
       }
