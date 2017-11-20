@@ -7,16 +7,15 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -31,13 +30,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- * 
- * SEE TileMachineMiner
- * 
- */
 public class TileEntityForester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
   private static final String[] validTargetsOreDict = new String[] { "logWood" };
+  private static final String[] validSaplingsOreDict = new String[] { "treeSapling" };
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -45,7 +40,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
-  private static final String NBTTARGET = "target";
   public static final int INVENTORY_SIZE = 19;
   private static final int FUEL_SLOT = INVENTORY_SIZE - 1;
   public final static int TIMER_FULL = 22;
@@ -59,7 +53,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    REDSTONE, TYPEHARVEST, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
+    REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
   }
   public TileEntityForester() {
     super(INVENTORY_SIZE);
@@ -89,11 +83,10 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       if (targetPos == null) {
         targetPos = this.getTargetCenter(); //not sure if this is needed
       }
-      if (isRunning()) {
-        if (this.updateFuelIsBurning() && this.updateTimerIsZero()) {
-          if (updateMiningProgress()) {
-            this.timer = TIMER_FULL;
-          }
+      if (isRunning() && this.updateFuelIsBurning() && this.updateTimerIsZero()) {
+        this.updatePlantSaplings();
+        if (updateMiningProgress()) {
+          this.timer = TIMER_FULL;
         }
       }
       else { // we do not have power
@@ -104,13 +97,24 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+  private void updatePlantSaplings() {
+    ItemStack sapling = this.getStackInSlot(0);
+    if (this.isSaplingValid(sapling)
+        && targetPos.getY() == this.pos.getY() //only at same level as machine
+        && world.isAirBlock(this.targetPos)
+        && world.isSideSolid(targetPos.down(), EnumFacing.UP)) {
+      if (fakePlayer.get().getHeldItemOffhand().isEmpty()) {
+        fakePlayer.get().setHeldItem(EnumHand.OFF_HAND, sapling);
+      }
+      //player uses the sapling with offhand
+      fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, sapling, EnumHand.OFF_HAND,
+          this.targetPos.down(), EnumFacing.UP, 0.5F, 0.5F, 0.5F);
+    }
+  }
   /**
    * return true if block is harvested/broken
    */
   private boolean updateMiningProgress() {
-//    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
-//      updateTargetPos();
-//    }
     if (this.isPreviewVisible()) {
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos);
     }
@@ -154,6 +158,18 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       IBlockState state = world.getBlockState(this.pos);
       world.notifyBlockUpdate(pos, state, state, 3);
     }
+  }
+  private boolean isSaplingValid(ItemStack sapling) {
+    for (String oreId : validSaplingsOreDict) {
+      if (OreDictionary.doesOreNameExist(oreId)) {
+        for (ItemStack s : OreDictionary.getOres(oreId)) {
+          if (OreDictionary.itemMatches(s, sapling, false)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
   private boolean isTargetValid() {
     World world = getWorld();
@@ -214,13 +230,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (uuid != null) {
       tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
-    if (targetPos != null) {
-      tagCompound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
-    }
     tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_RENDER, renderParticles);
+    if (targetPos != null) {
+      UtilNBT.setTagBlockPos(tagCompound, targetPos);
+    }
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -231,12 +247,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (tagCompound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    if (tagCompound.hasKey(NBTTARGET)) {
-      int[] coords = tagCompound.getIntArray(NBTTARGET);
-      if (coords.length >= 3) {
-        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
-      }
-    }
+    this.targetPos = UtilNBT.getTagBlockPos(tagCompound);
     isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
@@ -273,10 +284,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         return this.getFuelMax();
       case TIMER:
         return this.timer;
-      case TYPEHARVEST:
-      break;
-      default:
-      break;
     }
     return 0;
   }
@@ -297,10 +304,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case TYPEHARVEST:
-      break;
-      default:
       break;
     }
   }

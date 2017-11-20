@@ -23,6 +23,9 @@ public class UtilNBT {
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
   public static void setTagBlockPos(NBTTagCompound item, BlockPos pos) {
+    if (pos == null) {
+      return;
+    }
     item.setInteger("xpos", pos.getX());
     item.setInteger("ypos", pos.getY());
     item.setInteger("zpos", pos.getZ());
@@ -35,7 +38,7 @@ public class UtilNBT {
     return new BlockPos(item.getInteger("xpos"), item.getInteger("ypos"), item.getInteger("zpos"));
   }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
-    if(pos == null){
+    if (pos == null) {
       return;
     }
     UtilNBT.setItemStackNBTVal(item, "xpos", pos.getX());

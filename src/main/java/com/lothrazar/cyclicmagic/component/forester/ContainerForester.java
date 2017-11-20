@@ -22,7 +22,9 @@ public class ContainerForester extends ContainerBaseMachine {
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
     for (int i = 0; i < TileEntityForester.INVENTORY_SIZE; i++) {
-      addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
+      addSlotToContainer(new Slot(tile, i,
+          SLOTX_START + i%9 * Const.SQ, 
+          SLOTY+((int)i/9) * Const.SQ));
     }
     //addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
