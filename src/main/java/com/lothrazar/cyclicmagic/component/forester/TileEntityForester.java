@@ -108,10 +108,12 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
    * return true if block is harvested/broken
    */
   private boolean updateMiningProgress() {
-    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
-      updateTargetPos();
+//    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
+//      updateTargetPos();
+//    }
+    if (this.isPreviewVisible()) {
+      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos);
     }
-    UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos);
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
       isCurrentlyMining = true;
     }
