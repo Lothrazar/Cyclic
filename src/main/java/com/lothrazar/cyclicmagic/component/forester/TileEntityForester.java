@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +23,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -47,6 +49,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   public static final int INVENTORY_SIZE = 19;
   private static final int FUEL_SLOT = INVENTORY_SIZE - 1;
   public final static int TIMER_FULL = 22;
+  private static final int HEIGHT = 32;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
   private BlockPos targetPos = null;
@@ -84,7 +87,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       verifyFakePlayer((WorldServer) world);
       tryEquipItem();
       if (targetPos == null) {
-        targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
+        targetPos = this.getTargetCenter(); //not sure if this is needed
       }
       if (isRunning()) {
         if (this.updateFuelIsBurning() && this.updateTimerIsZero()) {
@@ -108,6 +111,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
       updateTargetPos();
     }
+    UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos);
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
       isCurrentlyMining = true;
     }
@@ -173,35 +177,34 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     return getPos();
   }
   private void updateTargetPos() {
-    //lets make it a AxA?
-    //always restart here so we dont offset out of bounds
-    BlockPos center = getTargetCenter();
-    targetPos = center;
-    World world = getWorld();
-    int rollHeight = 0;//world.rand.nextInt(height);
-    //now do the vertical
-    if (rollHeight > 0) {
-      targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
+    //spiraling outward from center
+    //first are we out of bounds? if so start at center + 1
+    int minX = this.pos.getX() - this.size;
+    int maxX = this.pos.getX() + this.size;
+    int minY = this.pos.getY();
+    int maxY = this.pos.getY() + HEIGHT;
+    int minZ = this.pos.getZ() - this.size;
+    int maxZ = this.pos.getZ() + this.size;
+    //first we see if this column is done by going bottom to top
+    this.targetPos = this.targetPos.add(0, 1, 0);
+    if (this.targetPos.getY() <= maxY) {
+      return;//next position is valid
     }
-    //negative doesnt work ,but lets not. quarries already exist 
-    //HORIZONTAL
-    int randNS = world.rand.nextInt(size * 2 + 1) - size;
-    int randEW = world.rand.nextInt(size * 2 + 1) - size;
-    //(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
-    //both can be zero
-    if (randNS > 0) {
-      targetPos = targetPos.offset(EnumFacing.NORTH, randNS);
+    //when we are at the top, only THEN we move to a new horizontal x,z coordinate
+    //starting from the base. first move X left to right only
+    targetPos = new BlockPos(targetPos.getX() + 1, minY, targetPos.getZ());
+    if (targetPos.getX() <= maxX) {
+      return;
     }
-    else if (randNS < 0) {
-      targetPos = targetPos.offset(EnumFacing.SOUTH, -1 * randNS);
+    //end of the line
+    //so start over like a typewriter, moving up one Z row
+    targetPos = new BlockPos(minX, targetPos.getY(), targetPos.getZ() + 1);
+    if (targetPos.getZ() <= maxZ) {
+      return;
     }
-    if (randEW > 0) {
-      targetPos = targetPos.offset(EnumFacing.EAST, randEW);
-    }
-    else if (randEW < 0) {
-      targetPos = targetPos.offset(EnumFacing.WEST, -1 * randEW);
-    }
-    curBlockDamage = 0;
+    //this means we have passed over the threshold of ALL coordinates
+    targetPos = new BlockPos(minX, minY, minZ);
+    //    curBlockDamage = 0;
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -251,7 +254,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (EnumFacing.UP == side) {
-      return new int[] { 0,1,2,3,4,5 };
+      return new int[] { 0, 1, 2, 3, 4, 5 };
     }
     return new int[] { FUEL_SLOT };
   }
@@ -269,7 +272,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       case TIMER:
         return this.timer;
       case TYPEHARVEST:
-        break;
+      break;
       default:
       break;
     }
@@ -294,9 +297,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         this.timer = value;
       break;
       case TYPEHARVEST:
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
   @Override
@@ -331,7 +334,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
- 
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
