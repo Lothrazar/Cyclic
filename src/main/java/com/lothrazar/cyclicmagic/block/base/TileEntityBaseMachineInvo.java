@@ -87,6 +87,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
       else {
         ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+        if (!itemstack.isEmpty())
+          ModCyclic.logger.log("does this have energy cap " + itemstack.getDisplayName() + "?" + itemstack.hasCapability(CapabilityEnergy.ENERGY, null));
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
           this.currentMaxFuel = this.currentFuel;//100% full
@@ -144,6 +146,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.currentFuel > 0;
   }
   protected boolean updateTimerIsZero() {
+    
     timer -= this.getSpeed();
     if (timer < 0) {
       timer = 0;

@@ -77,7 +77,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       return;
     }
     this.spawnParticlesAbove();
-    if (world instanceof WorldServer && this.updateTimerIsZero()) {
+    if (world instanceof WorldServer && this.updateFuelIsBurning()&& this.updateTimerIsZero()) {
       this.timer = TIMER_FULL;//reset timer to fire later
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -85,7 +85,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       if (targetPos == null) {
         targetPos = this.getTargetCenter(); //not sure if this is needed
       }
-      if (this.updateFuelIsBurning()) {
+     
         this.shiftAllUp(1);
         this.updatePlantSaplings();
         this.updateMiningProgress();
@@ -94,13 +94,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         if (world.isAirBlock(this.targetPos)) {
           this.timer = 0;
         }
-      }
-      else { // we do not have power
-        if (isCurrentlyMining) {
-          isCurrentlyMining = false;
-          resetProgress(targetPos);
-        }
-      }
+//      }
+//      else { // we do not have power
+//        if (isCurrentlyMining) {
+//          isCurrentlyMining = false;
+//          resetProgress(targetPos);
+//        }
+//      }
     }
   }
   private void updatePlantSaplings() {
