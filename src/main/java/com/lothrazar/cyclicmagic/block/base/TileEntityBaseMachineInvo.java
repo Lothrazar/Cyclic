@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -41,7 +42,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected NonNullList<ItemStack> inv;
   private int currentMaxFuel;
   private int fuelSlot = -1;
-  private int currentFuel;
+  //  private int currentFuel;
   protected int speed = 1;
   protected int timer;
   private boolean usesFuel = false;
@@ -63,16 +64,18 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.currentMaxFuel = f;
   }
   public int getFuelCurrent() {
-    return this.currentFuel;
+    this.initEnergyStorage();
+    return this.energyStorage.getEnergyStored();
   }
   protected void setFuelCurrent(int f) {
-    this.currentFuel = f;
+    this.initEnergyStorage();
+    this.energyStorage.setEnergyStored(f);
   }
   public double getPercentFormatted() {
     if (this.currentMaxFuel == 0) {
       return 0;
     }
-    double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
+    double percent = ((float) this.getFuelCurrent() / (float) this.currentMaxFuel);
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
@@ -83,14 +86,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public void consumeFuel() {
     if (usesFuel) {// && !this.world.isRemote
-      if (this.currentFuel > 0) {
-        this.currentFuel--;
+      if (this.getFuelCurrent() > 0) {
+        //        this.currentFuel--;
+        this.energyStorage.extractEnergy(1, false);
       }
       else {
         ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
         if (this.isItemFuel(itemstack)) {
-          this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-          this.currentMaxFuel = this.currentFuel;//100% full
+          this.setFuelCurrent(FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack));
+          this.currentMaxFuel = this.getFuelCurrent();
           if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
             this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
           }
@@ -104,8 +108,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
             int canWithdraw = Math.min(1000, storage.getEnergyStored());
             if (canWithdraw > 0) {
               storage.extractEnergy(canWithdraw, false);
-              this.currentFuel = canWithdraw;
-              this.currentMaxFuel = canWithdraw;
+              this.setFuelCurrent(canWithdraw);
+              this.currentMaxFuel = getFuelCurrent();
               //            if (storage.getEnergyStored() <= 0) {
               //              this.sendOutputItem(equip);
               //              this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
@@ -142,7 +146,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (!usesFuel) {
       return true;
     }
-    return this.currentFuel > 0;
+    return this.getFuelCurrent() > 0;
   }
   protected boolean updateTimerIsZero() {
     timer -= this.getSpeed();
@@ -290,8 +294,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     speed = compound.getInteger(NBT_SPEED);
     this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
-    if (energyStorage != null && usesFuel)
+    this.initEnergyStorage();
+    if (energyStorage != null && usesFuel && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
+    }
     super.readFromNBT(compound);
   }
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
@@ -311,8 +317,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_FUEL, getFuelCurrent());
     compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
     compound.setInteger(NBT_TIMER, timer);
-    if (energyStorage != null && usesFuel)
+    this.initEnergyStorage();
+    if (energyStorage != null && usesFuel) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
+    }
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {
@@ -366,7 +374,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
-      if (this.currentFuel == 0) {
+      if (this.getFuelCurrent() == 0) {
         return 0; // do not run without fuel
       }
       else {
@@ -390,7 +398,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
   net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
   net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
-  private EnergyStorage energyStorage;
+  private EnergyStore energyStorage;
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -411,11 +419,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     if (usesFuel && capability == CapabilityEnergy.ENERGY) {
       //TODO: store in NBT and consume as fuel
-      if (energyStorage == null)
-        energyStorage = new EnergyStorage(10000);
+      this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     //    
     return super.getCapability(capability, facing);
+  }
+  public void initEnergyStorage() {
+    if (energyStorage == null)
+      energyStorage = new EnergyStore(10000);
   }
 }
