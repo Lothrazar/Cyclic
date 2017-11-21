@@ -37,6 +37,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_RENDER = "render";
   public static final String NBT_FUELMAX = "maxFuel";
   public static final String NBT_TANK = "tankwater";
+  private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
   private int currentMaxFuel;
   private int fuelSlot = -1;
@@ -87,8 +88,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
       else {
         ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-        if (!itemstack.isEmpty())
-          ModCyclic.logger.log("does this have energy cap " + itemstack.getDisplayName() + "?" + itemstack.hasCapability(CapabilityEnergy.ENERGY, null));
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
           this.currentMaxFuel = this.currentFuel;//100% full
@@ -146,7 +145,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.currentFuel > 0;
   }
   protected boolean updateTimerIsZero() {
-    
     timer -= this.getSpeed();
     if (timer < 0) {
       timer = 0;
@@ -292,6 +290,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     speed = compound.getInteger(NBT_SPEED);
     this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
+    if (energyStorage != null && usesFuel)
+      CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     super.readFromNBT(compound);
   }
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
@@ -311,6 +311,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_FUEL, getFuelCurrent());
     compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
     compound.setInteger(NBT_TIMER, timer);
+    if (energyStorage != null && usesFuel)
+      compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {
