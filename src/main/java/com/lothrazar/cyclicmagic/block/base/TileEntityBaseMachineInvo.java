@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
@@ -20,12 +19,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
-  private static final int FUEL_FACTOR = 2;
+  /**
+   * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal
+   * item has 1600 burn time and 1 coal item also gives 80,000 RF (max output
+   * based on survey of mods) so i want to make internal consumption of fuel
+   * more efficient than just getting raw power especially because actual RF
+   * mods will have better power gen anyway
+   */
+  private static final int FUEL_FACTOR = 50;
   private static final int MAX_SPEED = 10;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -36,11 +41,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBTPLAYERID = "uuid";
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
-  public static final String NBT_FUELMAX = "maxFuel";
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
-  private int currentMaxFuel;
   private int fuelSlot = -1;
   //  private int currentFuel;
   protected int speed = 1;
@@ -58,10 +61,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
   }
   public int getFuelMax() {
-    return this.currentMaxFuel;
-  }
-  protected void setFuelMax(int f) {
-    this.currentMaxFuel = f;
+    this.initEnergyStorage();
+    return this.energyStorage.getMaxEnergyStored();
   }
   public int getFuelCurrent() {
     this.initEnergyStorage();
@@ -72,10 +73,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.energyStorage.setEnergyStored(f);
   }
   public double getPercentFormatted() {
-    if (this.currentMaxFuel == 0) {
+    if (this.getFuelMax() == 0) {
       return 0;
     }
-    double percent = ((float) this.getFuelCurrent() / (float) this.currentMaxFuel);
+    double percent = ((float) this.getFuelCurrent() / (float) this.getFuelMax());
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
@@ -90,32 +91,27 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         //        this.currentFuel--;
         this.energyStorage.extractEnergy(1, false);
       }
-      else {
-        ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-        if (this.isItemFuel(itemstack)) {
-          this.setFuelCurrent(FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack));
-          this.currentMaxFuel = this.getFuelCurrent();
-          if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
-            this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
-          }
-          else {
-            itemstack.shrink(1);
-          }
+      ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+      //pull in item from fuel slot, if it has fuel burn time
+      int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
+      if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack) {
+        int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
+        this.energyStorage.setEnergyStored(newEnergy);
+        if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
+          this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
         }
-        else if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-          IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
-          if (storage != null) {
-            int canWithdraw = Math.min(1000, storage.getEnergyStored());
-            if (canWithdraw > 0) {
-              storage.extractEnergy(canWithdraw, false);
-              this.setFuelCurrent(canWithdraw);
-              this.currentMaxFuel = getFuelCurrent();
-              //            if (storage.getEnergyStored() <= 0) {
-              //              this.sendOutputItem(equip);
-              //              this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
-              //            }
-              //            return;
-            }
+        else {
+          itemstack.shrink(1);
+        }
+      }
+      //what if item in fuel slot is an RF battery type item? start draining it ya
+      if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+        IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
+        if (storage != null) {
+          int canWithdraw = Math.min(EnergyStore.DEFAULT_FLOW, storage.getEnergyStored());
+          if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
+            storage.extractEnergy(canWithdraw, false);
+            this.setFuelCurrent(this.getFuelCurrent() + canWithdraw);
           }
         }
       }
@@ -123,9 +119,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
-  }
-  private boolean isItemFuel(ItemStack itemstack) {
-    return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
   }
   public boolean updateFuelIsBurning() {
     if (usesFuel) {
@@ -292,7 +285,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.readInvoFromNBT(compound);
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
-    this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
     this.initEnergyStorage();
     if (energyStorage != null && usesFuel && compound.hasKey(NBT_ENERGY)) {
@@ -315,7 +307,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.writeInvoToNBT(compound);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_FUEL, getFuelCurrent());
-    compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
     compound.setInteger(NBT_TIMER, timer);
     this.initEnergyStorage();
     if (energyStorage != null && usesFuel) {
@@ -430,6 +421,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public void initEnergyStorage() {
     if (energyStorage == null)
-      energyStorage = new EnergyStore(10000);
+      energyStorage = new EnergyStore();
+  }
+  public void setFuelMax(int value) {
+    // TODO delete me
   }
 }
