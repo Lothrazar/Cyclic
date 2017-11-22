@@ -4,14 +4,9 @@ import net.minecraftforge.energy.EnergyStorage;
 public class EnergyStore extends EnergyStorage {
   public EnergyStore(int capacity) {
     super(capacity);
+    this.maxReceive = 100;
   }
-  
-  public void setEnergyStored(int en){
+  public void setEnergyStored(int en) {
     this.energy = Math.min(en, this.capacity);
-   
   }
-  
-  
-  
-  
 }

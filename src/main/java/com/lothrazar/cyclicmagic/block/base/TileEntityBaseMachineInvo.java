@@ -404,6 +404,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return true;
     }
+    if (usesFuel && capability == CapabilityEnergy.ENERGY) {
+      return true;
+    }
     return super.hasCapability(capability, facing);
   }
   @SuppressWarnings("unchecked")
