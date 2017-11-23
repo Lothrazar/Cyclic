@@ -151,7 +151,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case HARVESTMODE:
         this.normalModeIfZero = value % 2;

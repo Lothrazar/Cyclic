@@ -306,7 +306,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case TIMER:
         this.timer = value;

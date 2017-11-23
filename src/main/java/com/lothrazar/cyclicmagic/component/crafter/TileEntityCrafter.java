@@ -203,8 +203,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       case FUEL:
         this.setFuelCurrent(value);
       break;
-      case FUELMAX:
-        this.setFuelMax(value);
+      case FUELMAX: 
       break;
       default:
       break;

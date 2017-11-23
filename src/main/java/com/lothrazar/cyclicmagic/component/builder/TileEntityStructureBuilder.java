@@ -207,7 +207,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.setFuelCurrent(value);
         break;
         case FUELMAX:
-          this.setFuelMax(value);
         break;
         case ROTATIONS:
           this.rotations = Math.max(0, value);

@@ -402,7 +402,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;

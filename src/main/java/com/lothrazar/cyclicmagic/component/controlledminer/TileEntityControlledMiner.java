@@ -349,7 +349,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case TIMER:
         this.timer = value;

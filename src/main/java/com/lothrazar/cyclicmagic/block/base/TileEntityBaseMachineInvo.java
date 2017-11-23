@@ -412,7 +412,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         return (T) handlerSide;
     }
     if (usesFuel && capability == CapabilityEnergy.ENERGY) {
-      //TODO: store in NBT and consume as fuel
       this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
@@ -422,8 +421,5 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void initEnergyStorage() {
     if (energyStorage == null)
       energyStorage = new EnergyStore();
-  }
-  public void setFuelMax(int value) {
-    // TODO delete me
   }
 }
