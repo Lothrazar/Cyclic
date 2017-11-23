@@ -45,6 +45,7 @@ import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -73,27 +74,21 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
-    
-    if(forester){
-    BlockForester block_forester = new BlockForester();
-    BlockRegistry.registerBlock(block_forester, "block_forester",GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
-    }
-    if(wireless){
-    BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
-  
-    
-    
-    BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
-    BlockRegistry.registerBlock(wireless_transmitter,new ItemBlockWireless(wireless_transmitter), "wireless_transmitter",GuideCategory.BLOCK);
-    BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver",GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
-    GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
-
-    ModCyclic.instance.events.register(BlockRedstoneWireless.class);
+    if (forester) {
+      BlockForester block_forester = new BlockForester();
+      BlockRegistry.registerBlock(block_forester, "block_forester", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
     
     }
-    
+    if (wireless) {
+      BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
+      BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
+      BlockRegistry.registerBlock(wireless_transmitter, new ItemBlockWireless(wireless_transmitter), "wireless_transmitter", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
+      GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
+      ModCyclic.instance.events.register(BlockRedstoneWireless.class);
+    }
     if (beaconPotion) {
       BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
       BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
@@ -186,10 +181,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
-    
     forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
     beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     emptyBeacon = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableClock = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

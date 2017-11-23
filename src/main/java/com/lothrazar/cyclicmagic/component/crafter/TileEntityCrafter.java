@@ -44,7 +44,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.setFuelSlot(this.getSizeInventory() - 1);
+    this.setFuelSlot(this.getSizeInventory() - 1,BlockCrafter.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {

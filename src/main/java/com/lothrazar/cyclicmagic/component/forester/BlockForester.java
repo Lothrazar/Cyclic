@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.MachineTESR;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -18,12 +20,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe{//, IBlockHasTESR 
+public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {//, IBlockHasTESR 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
+  public static int FUEL_COST = 0;
   public BlockForester() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_FORESTER);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -33,12 +37,12 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityForester();
   }
-//  @SideOnly(Side.CLIENT)
-//  public void initModel() {
-//    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-//    // Bind our TESR to our tile entity
-//    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForester.class, new MachineTESR(this, 0));
-//  }
+  //  @SideOnly(Side.CLIENT)
+  //  public void initModel() {
+  //    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+  //    // Bind our TESR to our tile entity
+  //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForester.class, new MachineTESR(this, 0));
+  //  }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -51,5 +55,9 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
         's', Blocks.OBSERVER,
         'r', "blockLapis",
         'b', Blocks.BED);
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, "Fuel cost to run machine");
   }
 }

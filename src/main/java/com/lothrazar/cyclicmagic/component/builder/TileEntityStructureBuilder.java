@@ -79,7 +79,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   public TileEntityStructureBuilder() {
     super(10);
-    this.setFuelSlot(9);
+    this.setFuelSlot(9,BlockStructureBuilder.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {

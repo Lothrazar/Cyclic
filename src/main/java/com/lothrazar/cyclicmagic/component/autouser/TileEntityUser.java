@@ -80,7 +80,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     super(10);
     timer = TIMER_FULL;
     speed = SPEED_FUELED;
-    this.setFuelSlot(9);
+    this.setFuelSlot(9,BlockUser.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {

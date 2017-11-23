@@ -41,7 +41,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
       hopperOutput[i - 1] = i;
     }
-    this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1);
+    this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1  , BlockUncrafting.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {

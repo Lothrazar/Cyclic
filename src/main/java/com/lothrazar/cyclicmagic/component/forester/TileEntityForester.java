@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.forester;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -57,7 +56,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   public TileEntityForester() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(FUEL_SLOT);
+    this.setFuelSlot(FUEL_SLOT, BlockForester.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {

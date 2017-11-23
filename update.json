@@ -235,6 +235,6 @@
 
 
 
-	,"?":"new command NBT to get item data.  New item: Strong Ender Eye.  Wireless content.  RF battery compatibility."
+	,"?":"new command NBT to get item data.  New item: Strong Ender Eye.  Wireless content.  RF battery compatibility. MachinesNeedFuel config removed, but each machine can have its fuel needs set one by one, and zero means fuel not needed"
  }
 }

@@ -44,20 +44,19 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
+  private int fuelCost = 0;
   private int fuelSlot = -1;
-  //  private int currentFuel;
   protected int speed = 1;
   protected int timer;
-  private boolean usesFuel = false;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     this.fuelSlot = -1;
   }
-  protected void setFuelSlot(int slot) {
-    if (GlobalSettings.fuelEnabled) {
-      usesFuel = true;
+  protected void setFuelSlot(int slot, int fcost) {
+    if (fcost > 0) {
       this.fuelSlot = slot;
+      this.fuelCost = fcost;
     }
   }
   public int getFuelMax() {
@@ -85,11 +84,16 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       this.consumeFuel();
     }
   }
+  public boolean doesUseFuel() {
+    return this.fuelCost > 0;
+  }
+  public int getFuelCost() {
+    return this.fuelCost;
+  }
   public void consumeFuel() {
-    if (usesFuel) {// && !this.world.isRemote
+    if (doesUseFuel()) {
       if (this.getFuelCurrent() > 0) {
-        //        this.currentFuel--;
-        this.energyStorage.extractEnergy(1, false);
+        this.energyStorage.extractEnergy(getFuelCost(), false);
       }
       ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
       //pull in item from fuel slot, if it has fuel burn time
@@ -121,7 +125,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return IntStream.rangeClosed(0, length - 1).toArray();
   }
   public boolean updateFuelIsBurning() {
-    if (usesFuel) {
+    if (doesUseFuel()) {
       this.consumeFuel();
       return hasFuel();
     }
@@ -136,7 +140,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public boolean hasFuel() {
-    if (!usesFuel) {
+    if (doesUseFuel() == false) {
       return true;
     }
     return this.getFuelCurrent() > 0;
@@ -287,7 +291,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     speed = compound.getInteger(NBT_SPEED);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
     this.initEnergyStorage();
-    if (energyStorage != null && usesFuel && compound.hasKey(NBT_ENERGY)) {
+    if (energyStorage != null && doesUseFuel() && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
     super.readFromNBT(compound);
@@ -309,7 +313,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_FUEL, getFuelCurrent());
     compound.setInteger(NBT_TIMER, timer);
     this.initEnergyStorage();
-    if (energyStorage != null && usesFuel) {
+    if (energyStorage != null && doesUseFuel()) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
     return super.writeToNBT(compound);
@@ -361,7 +365,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
   public int getSpeed() {
-    if (this.usesFuel == false) {
+    if (this.doesUseFuel() == false) {
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
@@ -395,7 +399,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return true;
     }
-    if (usesFuel && capability == CapabilityEnergy.ENERGY) {
+    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
       return true;
     }
     return super.hasCapability(capability, facing);
@@ -411,7 +415,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       else
         return (T) handlerSide;
     }
-    if (usesFuel && capability == CapabilityEnergy.ENERGY) {
+    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
       this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
