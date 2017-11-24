@@ -6,6 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
   public ItemSandstonePickaxe() {
@@ -13,7 +14,7 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-    if (net.minecraftforge.oredict.OreDictionary.itemMatches(new ItemStack(Blocks.SANDSTONE), repair, false)) {
+    if (OreDictionary.itemMatches(new ItemStack(Blocks.SANDSTONE), repair, false)) {
       return true;
     }
     return super.getIsRepairable(toRepair, repair);

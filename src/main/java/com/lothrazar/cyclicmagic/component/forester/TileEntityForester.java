@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -76,7 +77,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       return;
     }
     this.spawnParticlesAbove();
-    if (world instanceof WorldServer && this.updateFuelIsBurning()&& this.updateTimerIsZero()) {
+    if (world instanceof WorldServer && this.updateFuelIsBurning() && this.updateTimerIsZero()) {
       this.timer = TIMER_FULL;//reset timer to fire later
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -84,22 +85,21 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       if (targetPos == null) {
         targetPos = this.getTargetCenter(); //not sure if this is needed
       }
-     
-        this.shiftAllUp(1);
-        this.updatePlantSaplings();
-        this.updateMiningProgress();
-        // this.timer = TIMER_FULL;
-        //shortcut: if its air skip ahead
-        if (world.isAirBlock(this.targetPos)) {
-          this.timer = 0;
-        }
-//      }
-//      else { // we do not have power
-//        if (isCurrentlyMining) {
-//          isCurrentlyMining = false;
-//          resetProgress(targetPos);
-//        }
-//      }
+      this.shiftAllUp(1);
+      this.updatePlantSaplings();
+      this.updateMiningProgress();
+      // this.timer = TIMER_FULL;
+      //shortcut: if its air skip ahead
+      if (world.isAirBlock(this.targetPos)) {
+        this.timer = 0;
+      }
+      //      }
+      //      else { // we do not have power
+      //        if (isCurrentlyMining) {
+      //          isCurrentlyMining = false;
+      //          resetProgress(targetPos);
+      //        }
+      //      }
     }
   }
   private void updatePlantSaplings() {
@@ -165,16 +165,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
   }
   private boolean isSaplingValid(ItemStack sapling) {
-    for (String oreId : validSaplingsOreDict) {
-      if (OreDictionary.doesOreNameExist(oreId)) {
-        for (ItemStack s : OreDictionary.getOres(oreId)) {
-          if (OreDictionary.itemMatches(s, sapling, false)) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
+    return UtilOreDictionary.doesMatchOreDict(sapling, validSaplingsOreDict);
   }
   private boolean isTargetValid() {
     World world = getWorld();
@@ -183,16 +174,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
-    for (String oreId : validTargetsOreDict) {
-      if (OreDictionary.doesOreNameExist(oreId)) {
-        for (ItemStack s : OreDictionary.getOres(oreId)) {
-          if (OreDictionary.itemMatches(s, new ItemStack(target), false)) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
+    return UtilOreDictionary.doesMatchOreDict(new ItemStack(target), validTargetsOreDict);
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal

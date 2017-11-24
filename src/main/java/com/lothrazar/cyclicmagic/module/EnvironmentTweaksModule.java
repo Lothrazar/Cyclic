@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
@@ -43,9 +45,11 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       Block blockdown = entity.getEntityWorld().getBlockState(entityItem.getPosition().down()).getBlock();
       if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
         // plant the sapling, replacing the air and on top of dirt/plantable
-        //BlockSapling.TYPE
-        if (Block.getBlockFromItem(is.getItem()) == Blocks.SAPLING)
-          world.setBlockState(entityItem.getPosition(), UtilItemStack.getStateFromMeta(Blocks.SAPLING, is.getItemDamage()));
+   
+        if (UtilOreDictionary.doesMatchOreDict(is, "treeSapling")){
+          
+          world.setBlockState(entityItem.getPosition(), UtilItemStack.getStateFromMeta(Block.getBlockFromItem(is.getItem()), is.getItemDamage()));
+        }
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
           world.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)
