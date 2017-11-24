@@ -163,6 +163,10 @@ public class Const {
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
   public static final int PAD = 8;
+  /**
+   * defined in vanilla VluidRegistry where Fluid LAVA is registered (tile.lava)
+   */
+  public static final int LAVA_TEMPERATURE = 1300;
   public static class HorseMeta {
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;
