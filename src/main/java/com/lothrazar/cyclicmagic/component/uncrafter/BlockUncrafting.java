@@ -34,6 +34,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     this.setTickRandomly(true);
   }
   @SideOnly(Side.CLIENT)
+  @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity

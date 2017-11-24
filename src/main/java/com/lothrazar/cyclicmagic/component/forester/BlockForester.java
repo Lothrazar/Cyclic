@@ -25,7 +25,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {//, IBlockHasTESR 
+public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {//, IBlockHasTESR 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
   public BlockForester() {
@@ -37,12 +37,13 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityForester();
   }
-  //  @SideOnly(Side.CLIENT)
-  //  public void initModel() {
-  //    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-  //    // Bind our TESR to our tile entity
-  //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForester.class, new MachineTESR(this, 0));
-  //  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void initModel() {
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    // Bind our TESR to our tile entity
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForester.class, new MachineTESR(this, 0));
+  }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
