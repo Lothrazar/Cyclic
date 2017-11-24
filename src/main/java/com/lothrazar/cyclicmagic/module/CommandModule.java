@@ -78,7 +78,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     category = Const.ConfigCategory.commands;
     config.setCategoryComment(category, "Disable any command that was added");
-    syncCommandConfig(config, CommandNbt.name, true, "Read NBT data from your held item");
+    syncCommandConfig(config, CommandNbt.name, false, "Read NBT data from your held item");
     syncCommandConfig(config, CommandEnderChest.name, true, "Opens your ender chest");
     syncCommandConfig(config, CommandGetHome.name, false, "Get where your current spawn is set (by a bed)");
     syncCommandConfig(config, CommandHeal.name, true, "Heal yourself (or a target player) to full");

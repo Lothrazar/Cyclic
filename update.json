@@ -228,13 +228,6 @@
 	,"1.9.11":"Removed some logging spam from Harvester.  Added an extra safeguard to prevent player experience becoming negative from Exp Pylon.   Added spectrite content to default config for Uncrafter blacklists.  Several number-based buttons in some of the machines will now become disabled when they hit their min or max limit.  Structure Builder has new shapes (WARNING: if you have any builders running, simply turn them offbefore the update and verify the current shape is correct after the update).  Structure builder now has coordinate sliders to offset the center of the building location.  "
 	,"1.9.12":"Fixed a Block placer dupe bug on sponge servers (thanks to a PR from github user 'curscascis')"
   	,"1.9.13":"Fix Experience Pylon not filling empty bottles.  Fix a button tooltip not localized in Experience Pylon.  Experience Pylon can now be toggled on and off with redstone, and the spray mode has been brought back by popular demand.  Fix residual exp lingering on the player when deposit All button used.  The Harvester and Automated User now connect to pipes/hoppers on all four sides, not just the bottom.  Automatic Fisher now drains RF instead of durability from tools if compatible (Flux-Infused Fishing Rod).  Optimize block placement in several areas, this should mean less chunk updates and more stability (thanks to github user phit); also this means previously silent tools such as the Exchange Scepters now has working block placement sounds.   Block Randomizer will now work on non-solid blocks such as glass, slabs, and stairs.  The Redstone Clock can now be controlled on and off using redstone input, and has the standard redstone toggle button in upper left.  "
- 
-
-
-
-
-
-
-	,"?":"new command NBT to get item data.  New item: Strong Ender Eye.  Wireless content.  RF battery compatibility. MachinesNeedFuel config removed, but each machine can have its fuel needs set one by one, and zero means fuel not needed"
+	,"1.10.0":"New Block: Foreseter.  New command /nbtprint to get item data.  New item: Strong Ender Eye.  New Wireless Redstone blocks.  Machines that use fuel are now compatible with Forge Energy systems. MachinesNeedFuel config removed, but instead each machine can have its fuel needs set one by one"
  }
 }
