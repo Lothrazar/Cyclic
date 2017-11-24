@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
+import java.lang.ref.WeakReference;
+import java.util.UUID;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import net.minecraft.block.Block;
@@ -10,8 +14,12 @@ import net.minecraft.entity.item.EntityItem;
 //import net.minecraft.entity.monster.ZombieType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,6 +27,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
+  private static WeakReference<FakePlayer> fakePlayer;
   @Override
   public void onInit() {
     updateHardness();
@@ -40,21 +49,27 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       World world = entity.getEntityWorld();
       if (is.isEmpty()) {
         return;
-      } // has not happened in the wild, yet
-      Block blockhere = entity.getEntityWorld().getBlockState(entityItem.getPosition()).getBlock();
-      Block blockdown = entity.getEntityWorld().getBlockState(entityItem.getPosition().down()).getBlock();
-      if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
-        // plant the sapling, replacing the air and on top of dirt/plantable
-   
-        if (UtilOreDictionary.doesMatchOreDict(is, "treeSapling")){
-          
-          world.setBlockState(entityItem.getPosition(), UtilItemStack.getStateFromMeta(Block.getBlockFromItem(is.getItem()), is.getItemDamage()));
-        }
-        else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
-          world.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
-        else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)
-          world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
       }
+      //      WorldServer ws = (WorldServer) world;
+      // plant the sapling, replacing the air and on top of dirt/plantable
+      if (UtilOreDictionary.doesMatchOreDict(is, "treeSapling")) {
+        world.setBlockState(entityItem.getPosition(), UtilItemStack.getStateFromMeta(Block.getBlockFromItem(is.getItem()), is.getItemDamage()));
+        //        if (fakePlayer == null) {
+        //          fakePlayer = UtilFakePlayer.initFakePlayer(ws, UUID.randomUUID());
+        //          if (fakePlayer == null) {
+        //            ModCyclic.logger.error("Fake player failed to init ");
+        //            return;
+        //          }
+        //          fakePlayer.get().rotationYaw = -90;
+        //          fakePlayer.get().rotationPitch = -90;
+        //        }
+        //        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, is);
+        is.getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
+      }
+      else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
+        world.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
+      else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)
+        world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
     }
   }
   @Override
