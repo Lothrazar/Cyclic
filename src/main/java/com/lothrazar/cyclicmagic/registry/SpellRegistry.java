@@ -65,6 +65,7 @@ public class SpellRegistry {
     return null;
   }
   public static List<ISpell> getSpellbook(ItemStack wand) {
+    
     return ((ItemCyclicWand) wand.getItem()).getSpells();
   }
   public static ISpell next(ItemStack wand, ISpell spell) {

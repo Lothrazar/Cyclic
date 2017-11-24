@@ -94,7 +94,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       buffer.pos(T, posY, T).tex(flow.getInterpolatedU(E), flow.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
       tess.draw();
       buffer.setTranslation(0, 0, 0);
-      UtilRender.glowOn(15);
+      UtilRender.glowOff();
     }
     GL11.glPopAttrib();
     GlStateManager.popMatrix();

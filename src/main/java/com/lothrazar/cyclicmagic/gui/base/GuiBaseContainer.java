@@ -84,7 +84,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
     updateToggleButtonStates();
-    if (tile.doesUseFuel()) {
+    if (tile != null && tile.doesUseFuel()) {
       drawFuelText();
     }
   }
@@ -148,7 +148,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.progressBar != null) {
       drawProgressBar();
     }
-    if (this.fieldFuel > -1 && tile.doesUseFuel()) {
+    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
       drawFuelBar();
     }
   }
@@ -266,7 +266,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void tryDrawFuelSlot(int x, int y) {
-    if (this.fieldFuel < 0 || tile.doesUseFuel() == false) {
+    if (this.fieldFuel < 0 || tile == null || tile.doesUseFuel() == false) {
       return;
     }
     int u = 0, v = 0;

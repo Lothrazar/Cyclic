@@ -96,7 +96,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {
-      //TODO: refactor and support more recipes
       BlockRegistry.block_storeempty = new BlockBucketStorage();
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
