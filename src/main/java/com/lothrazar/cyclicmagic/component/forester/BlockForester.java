@@ -59,6 +59,6 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   }
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, "Fuel cost to run machine");
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

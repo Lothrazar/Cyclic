@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.MachineTESR;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.data.Const.ConfigText;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -53,6 +54,6 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   }
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, "Fuel cost to run machine");
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 25, 0, 500000,Const.ConfigText.fuelCost );
   }
 }

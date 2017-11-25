@@ -110,6 +110,10 @@ public class Const {
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
   }
+  public class ConfigText {
+
+    public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
+  }
   public class ToolStrings {
     public static final String pickaxe = "pickaxe";
     public static final String shovel = "shovel";
