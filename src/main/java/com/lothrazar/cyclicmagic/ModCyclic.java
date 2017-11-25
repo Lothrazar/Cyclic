@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.InterModCommsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
@@ -96,6 +97,7 @@ public class ModCyclic {
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
     PermissionRegistry.register();
+    InterModCommsRegistry.register();
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
