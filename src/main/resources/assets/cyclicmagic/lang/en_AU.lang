@@ -839,9 +839,9 @@ wand.liquid.lava=Mode: Lava
 wand.liquid.water=Mode: Water
 wand.result.notargets=No Targets Found
 world.endore.guide=These ores spawn all over the end, the details can be changed in config.  Iron and gold ores drop nuggets.
-world.endore.title=Nether Ore
+world.endore.title=End Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
-world.netherore.title=End Ore
+world.netherore.title=Nether Ore
 
 potion.potency.4=V
 potion.potency.3=IV
