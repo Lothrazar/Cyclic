@@ -843,6 +843,9 @@ world.endore.title=End Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
 world.netherore.title=Nether Ore
 
+tile.hydrator.locked.tooltip=Recipe Locked; minimum stack size 1
+tile.hydrator.unlocked.tooltip=Recipe Unlocked
+
 energy.button.top=Fuel Bar Above
 energy.button.side=Fuel Bar Side
 

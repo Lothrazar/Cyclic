@@ -12,7 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
   private static int id = 0;
-  private ItemStack[] input = new ItemStack[4];
+  private ItemStack[] recipeInput = new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
   /**
@@ -31,7 +31,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     this.isShapeless = shapeless;
     ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
-    this.input = in;
+    this.recipeInput = in;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrate_" + id + out.getUnlocalizedName()));
     id++;
@@ -46,7 +46,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     ItemStack s2 = inv.getStackInSlot(2);
     ItemStack s3 = inv.getStackInSlot(3);
     if (this.isShapeless()) {
-      ItemStack theRecipeStack = input[0];
+      ItemStack theRecipeStack = recipeInput[0];
       return OreDictionary.itemMatches(s0, theRecipeStack, false) ||
           OreDictionary.itemMatches(s1, theRecipeStack, false) ||
           OreDictionary.itemMatches(s2, theRecipeStack, false) ||
@@ -54,35 +54,52 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     else {
       //hacky lame way but easier to read and debug with all these lines
-      return OreDictionary.itemMatches(s0, input[0], false) &&
-          OreDictionary.itemMatches(s1, input[1], false) &&
-          OreDictionary.itemMatches(s2, input[2], false) &&
-          OreDictionary.itemMatches(s3, input[3], false);
+      return OreDictionary.itemMatches(s0, recipeInput[0], false) &&
+          OreDictionary.itemMatches(s1, recipeInput[1], false) &&
+          OreDictionary.itemMatches(s2, recipeInput[2], false) &&
+          OreDictionary.itemMatches(s3, recipeInput[3], false);
     }
   }
-  public void payRecipeCost(IInventory invoSource, FluidTank tank) {
-    tank.drain(this.getFluidCost(), true);
+  public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
+    if(tank.getFluidAmount() < this.getFluidCost()){
+      return false;//not enough fluid, so stop now
+    }
+    //if minimum is 2, then the recipe slots always stay locked with at least 1 in each spot
+    //otherwise its allowed to drain empty
+    int minimum = (keepOneMinimum) ? 2 : 1;
     if (this.isShapeless()) {
-      //find the one that has the thing, and decrement THAT ONE only 
-      for (int i = 0; i < input.length; i++) {
+      //find the one input slot has the thing, and decrement THAT ONE only 
+      int inputStackToPay = -1;
+      for (int i = 0; i < recipeInput.length; i++) {
         //its shapeless so only one thing will have the input
-        if (this.isSlotEmpty(0) == false //shapeless recipe always have the one thing at slot zero
-            && invoSource.getStackInSlot(i).isEmpty() == false) {
-          invoSource.decrStackSize(i, 1);
+        if (invoSource.getStackInSlot(i).getCount() >= minimum) {
+          inputStackToPay = i;
           break;
         }
       }
+      if (inputStackToPay < 0) {
+        return false;
+      }
+      invoSource.decrStackSize(inputStackToPay, 1);
     }
     else {
-      for (int i = 0; i < input.length; i++) {
-        if (this.isSlotEmpty(i) == false) {
-          invoSource.decrStackSize(i, 1);
+      //first test before we try to pay
+      for (int i = 0; i < recipeInput.length; i++) {
+        if (invoSource.getStackInSlot(i).getCount() < minimum) {
+          return false;//at least one of the stacks cannot pay
         }
       }
+      //now actually pay, since they all can
+      for (int i = 0; i < recipeInput.length; i++) {
+        invoSource.decrStackSize(i, 1);
+      }
     }
+    //pay fluid last. same for shaped and shapeless
+    tank.drain(this.getFluidCost(), true);
+    return true;
   }
   public boolean isSlotEmpty(int slot) {
-    ItemStack inv = input[slot];
+    ItemStack inv = recipeInput[slot];
     return inv == null || inv.isEmpty();
   }
   @Override
@@ -98,7 +115,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     return resultItem.copy();
   }
   public ItemStack[] getRecipeInput() {
-    return input.clone();
+    return recipeInput.clone();
   }
   public int getFluidCost() {
     return fluidCost;

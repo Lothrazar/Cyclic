@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -31,11 +30,12 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   private static final int SLOT_INFLUID = 8;
   public final static int TIMER_FULL = 40;
   public static enum Fields {
-    REDSTONE, TIMER, FLUID
+    REDSTONE, TIMER, FLUID, RECIPELOCKED;
   }
   public FluidTank tank = new FluidTank(TANK_FULL);
   private int[] hopperInput = { 0, 1, 2, 3 };
   private int[] hopperOutput = { 4, 5, 6, 7 };
+  private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
@@ -66,6 +66,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   /**
    * try to match a shaped or shapeless recipe
+   * 
    * @return
    */
   private RecipeHydrate findMatchingRecipe() {
@@ -87,19 +88,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public boolean tryProcessRecipe() {
     RecipeHydrate rec = findMatchingRecipe();
     if (rec != null && this.getCurrentFluid() >= rec.getFluidCost()) {
-      this.sendOutputItem(rec.getRecipeOutput());
-      rec.payRecipeCost(this, this.tank);
+      if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+        //only create the output if cost was successfully paid
+        this.sendOutputItem(rec.getRecipeOutput());
+      }
       return true;
     }
     return false;
   }
-//  public void payRecipeCost(RecipeHydrate rec) {
-//    this.tank.drain(FLUID_PER_RECIPE, true);
-//    for (int i = 0; i < RECIPE_SIZE; i++) {
-//      if (rec.isSlotEmpty(i) == false)//recipe could have an empty slot so dont decrement eh
-//        this.decrStackSize(i);
-//    }
-//  }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
@@ -134,12 +130,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    tags.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(tags);
   }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     this.needsRedstone = tags.getInteger(NBT_REDST);
+    this.recipeIsLocked = tags.getInteger("rlock");
     tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
   }
   @Override
@@ -151,8 +149,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
         return this.timer;
       case FLUID:
         return this.getCurrentFluid();
-      default:
-      break;
+      case RECIPELOCKED:
+        return this.recipeIsLocked;
     }
     return -1;
   }
@@ -168,7 +166,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       case FLUID:
         this.setCurrentFluid(value);
       break;
-      default:
+      case RECIPELOCKED:
+        this.recipeIsLocked = value % 2;
       break;
     }
   }

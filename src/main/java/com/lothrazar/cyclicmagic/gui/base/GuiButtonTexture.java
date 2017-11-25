@@ -8,11 +8,14 @@ public class GuiButtonTexture extends GuiButtonTooltip {
   private ResourceLocation icon;
   private int textureIndex = 0;
   private int textureSize = 16;
-  public GuiButtonTexture(int buttonId, int x, int y, String texture) {
-    super(buttonId, x, y, 18, 20, "");
+  public GuiButtonTexture(int buttonId, int x, int y, int w, int h, String texture) {
+    super(buttonId, x, y, w, h, "");
     icon = new ResourceLocation(Const.MODID, texture);
   }
-  protected void setTextureIndex(int i) {
+  public GuiButtonTexture(int buttonId, int x, int y, String texture) {
+    this(buttonId, x, y, 18, 20, texture); 
+  }
+  public void setTextureIndex(int i) {
     textureIndex = i;
   }
   @Override
