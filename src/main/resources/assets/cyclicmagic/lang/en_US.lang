@@ -225,6 +225,15 @@ item.emerald_leggings.name=Emerald Leggings
 item.emerald_pickaxe.name=Emerald Pickaxe
 item.emerald_spade.name=Emerald Shovel
 item.emerald_sword.name=Emerald Sword
+item.emerald_axe.guide=Similar to Diamond but with better enchantability
+item.emerald_boots.guide=Similar to Diamond but with better enchantability
+item.emerald_chestplate.guide=Similar to Diamond but with better enchantability
+item.emerald_helmet.guide=Similar to Diamond but with better enchantability
+item.emerald_hoe.guide=Similar to Diamond but with better enchantability
+item.emerald_leggings.guide=Similar to Diamond but with better enchantability
+item.emerald_pickaxe.guide=Similar to Diamond but with better enchantability
+item.emerald_spade.guide=Similar to Diamond but with better enchantability
+item.emerald_sword.guide=Similar to Diamond but with better enchantability
 item.emeraldgear.guide=All the emerald gear has the same attack and defense power as diamond, but slightly lower durability.  It has the same enchantability as gold (which is higher than diamond), so you are more likely to get higher quality enchantments when compared to diamond.
 item.emeraldgear.title=Emerald Gear
 item.ender_eye_orb.name=Solid Ender Eye
@@ -351,10 +360,17 @@ item.purple_leggings.name=Obsidian Leggings
 item.sack_ender.guide=This portable item opens with the same inventory from your Ender Chest.
 item.sack_ender.name=Ender Sack
 item.sack_ender.tooltip=Portable Ender Chest
+
 item.sandstone_axe.name=Sandstone Axe
 item.sandstone_hoe.name=Sandstone Hoe
 item.sandstone_pickaxe.name=Sandstone Pickaxe
-item.sandstone_spade.name=Sandstone Spade
+item.sandstone_spade.name=Sandstone Shovel
+
+item.sandstone_axe.guide=Worse than stone but better than wood
+item.sandstone_hoe.guide=Worse than stone but better than wood
+item.sandstone_pickaxe.guide=Worse than stone but better than wood
+item.sandstone_spade.guide=Worse than stone but better than wood
+
 item.sandstonegear.guide=The sandstone tools are slightly below stone quality but better than wood.
 item.sandstonegear.title=Sandstone Gear
 item.shift=Press Shift for more info
