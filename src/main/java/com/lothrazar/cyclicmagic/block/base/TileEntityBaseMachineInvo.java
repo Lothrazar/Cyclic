@@ -242,6 +242,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {
+     
     ItemStack stack = getStackInSlot(index);
     if (!stack.isEmpty()) {
       if (stack.getMaxStackSize() <= count) {

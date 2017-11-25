@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
-  public static ArrayList<IRecipe> recipeList = new ArrayList<IRecipe>();
+  public static ArrayList<RecipeHydrate> recipeList = new ArrayList<RecipeHydrate>();
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -54,8 +54,8 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     // RecipeSorter.register(Const.MODID + ":recipe_hydrator", RecipeHydrate.class, Category.SHAPELESS, "");
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
     recipeList.add(new RecipeHydrate(
-        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), ItemStack.EMPTY, ItemStack.EMPTY },
-        new ItemStack(Blocks.GRASS)));
+        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT) },
+        new ItemStack(Blocks.GRASS,2)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
     recipeList.add(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
     recipeList.add(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
@@ -69,7 +69,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
     recipeList.add(new RecipeHydrate(
-        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), ItemStack.EMPTY },
+        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new ItemStack(Blocks.GRASS_PATH)},
         new ItemStack(Blocks.MYCELIUM)));
     recipeList.add(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
@@ -107,10 +107,10 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
     }, new ItemStack(Blocks.WEB, 4)));
     recipeList.add(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), ItemStack.EMPTY
+        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
     }, new ItemStack(Items.PRISMARINE_SHARD)));
     recipeList.add(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), ItemStack.EMPTY, ItemStack.EMPTY
+        new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD),new ItemStack(Items.PRISMARINE_SHARD)
     }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
   }
   @Override

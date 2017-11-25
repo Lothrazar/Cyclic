@@ -28,7 +28,6 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  private static final int FLUID_PER_RECIPE = 100;
   private static final int SLOT_INFLUID = 8;
   public final static int TIMER_FULL = 40;
   public static enum Fields {
@@ -65,11 +64,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
-  private IRecipe findMatchingRecipe() {
+  private RecipeHydrate findMatchingRecipe() {
     for (int i = 0; i < RECIPE_SIZE; i++) {
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
-    for (IRecipe irecipe : BlockHydrator.recipeList) {
+    for (RecipeHydrate irecipe : BlockHydrator.recipeList) {
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }
@@ -77,20 +76,21 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     return null;
   }
   public boolean tryProcessRecipe() {
-    IRecipe rec = findMatchingRecipe();
-    if (rec != null && this.getCurrentFluid() >= FLUID_PER_RECIPE) {
+    RecipeHydrate rec = findMatchingRecipe();
+    if (rec != null && this.getCurrentFluid() >= rec.getFluidCost()) {
       this.sendOutputItem(rec.getRecipeOutput());
-      payRecipeCost(rec);
+      rec.payRecipeCost(this, this.tank);
       return true;
     }
     return false;
   }
-  public void payRecipeCost(IRecipe rec) {
-    this.tank.drain(FLUID_PER_RECIPE, true);
-    for (int i = 0; i < RECIPE_SIZE; i++) {
-      this.decrStackSize(i);
-    }
-  }
+//  public void payRecipeCost(RecipeHydrate rec) {
+//    this.tank.drain(FLUID_PER_RECIPE, true);
+//    for (int i = 0; i < RECIPE_SIZE; i++) {
+//      if (rec.isSlotEmpty(i) == false)//recipe could have an empty slot so dont decrement eh
+//        this.decrStackSize(i);
+//    }
+//  }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
