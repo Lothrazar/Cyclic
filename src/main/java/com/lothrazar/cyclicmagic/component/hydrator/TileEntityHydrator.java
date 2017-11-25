@@ -64,11 +64,20 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+  /**
+   * try to match a shaped or shapeless recipe
+   * @return
+   */
   private RecipeHydrate findMatchingRecipe() {
     for (int i = 0; i < RECIPE_SIZE; i++) {
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
-    for (RecipeHydrate irecipe : BlockHydrator.recipeList) {
+    for (RecipeHydrate irecipe : BlockHydrator.recipesShaped) {
+      if (irecipe.matches(this.crafting, world)) {
+        return irecipe;
+      }
+    }
+    for (RecipeHydrate irecipe : BlockHydrator.recipesShapeless) {
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }

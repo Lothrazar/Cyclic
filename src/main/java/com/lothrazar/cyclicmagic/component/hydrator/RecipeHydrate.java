@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -29,10 +30,14 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
       throw new IllegalArgumentException("Input array must be length 4");
     }
     this.isShapeless = shapeless;
+    ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
     this.input = in;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrate_" + id + out.getUnlocalizedName()));
     id++;
+  }
+  public boolean isShapeless() {
+    return this.isShapeless;
   }
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -40,7 +45,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     ItemStack s1 = inv.getStackInSlot(1);
     ItemStack s2 = inv.getStackInSlot(2);
     ItemStack s3 = inv.getStackInSlot(3);
-    if (this.isShapeless) {
+    if (this.isShapeless()) {
       ItemStack theRecipeStack = input[0];
       return OreDictionary.itemMatches(s0, theRecipeStack, false) ||
           OreDictionary.itemMatches(s1, theRecipeStack, false) ||
@@ -57,11 +62,12 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   }
   public void payRecipeCost(IInventory invoSource, FluidTank tank) {
     tank.drain(this.getFluidCost(), true);
-    if (this.isShapeless) {
+    if (this.isShapeless()) {
       //find the one that has the thing, and decrement THAT ONE only 
       for (int i = 0; i < input.length; i++) {
         //its shapeless so only one thing will have the input
-        if (this.isSlotEmpty(i) == false) {
+        if (this.isSlotEmpty(0) == false //shapeless recipe always have the one thing at slot zero
+            && invoSource.getStackInSlot(i).isEmpty() == false) {
           invoSource.decrStackSize(i, 1);
           break;
         }
