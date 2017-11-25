@@ -34,6 +34,7 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    this.drawDefaultBackground();//dim the background as normal
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(background);
     int i = this.guiLeft;

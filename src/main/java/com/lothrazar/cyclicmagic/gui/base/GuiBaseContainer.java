@@ -136,7 +136,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
+    //      super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
+    this.drawDefaultBackground();//dim the background as normal
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(screenSize.texture());
     int thisX = getMiddleX();

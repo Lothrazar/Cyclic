@@ -65,6 +65,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     super.onGuiClosed();
   }
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
+    this.drawDefaultBackground();//dim the background as normal
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(getBackground());
     this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
