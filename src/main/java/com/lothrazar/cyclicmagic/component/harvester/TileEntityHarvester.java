@@ -28,7 +28,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private static final int[] hopperOUTPUT = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
       18, 19, 20, 21, 22, 23, 24, 25, 26 };// all slots
   public static enum Fields {
-    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE,FUELDISPLAY;
   }
   private int needsRedstone = 1;
   private int renderParticles = 0;
@@ -130,6 +130,8 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         return this.getFuelMax();
       case HARVESTMODE:
         return this.normalModeIfZero;
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -1;
   }
@@ -155,6 +157,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       break;
       case HARVESTMODE:
         this.normalModeIfZero = value % 2;
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

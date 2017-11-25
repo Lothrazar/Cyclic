@@ -43,6 +43,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
+  protected int fuelDisplay = 1;
   private int fuelCost = 0;
   private int fuelSlot = -1;
   protected int speed = 1;
@@ -288,6 +289,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.readInvoFromNBT(compound);
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
+    fuelDisplay = compound.getInteger("fueldisplay");
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
     this.initEnergyStorage();
     if (energyStorage != null && doesUseFuel() && compound.hasKey(NBT_ENERGY)) {
@@ -311,6 +313,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_FUEL, getFuelCurrent());
     compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger("fueldisplay", fuelDisplay);
     this.initEnergyStorage();
     if (energyStorage != null && doesUseFuel()) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
@@ -424,5 +427,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void initEnergyStorage() {
     if (energyStorage == null)
       energyStorage = new EnergyStore();
+  }
+  @Override
+  public void toggleFuelDisplay() {
+    this.fuelDisplay = (this.fuelDisplay + 1) % 2;
+  }
+  @Override
+  public boolean getFuelDisplay() {
+    return this.fuelDisplay == 0;
   }
 }

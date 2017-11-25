@@ -31,7 +31,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   private int[] hopperInput = { 0 };
   private int[] hopperOutput;
   public static enum Fields {
-    TIMER, REDSTONE, FUEL, FUELMAX;
+    TIMER, REDSTONE, FUEL, FUELMAX,FUELDISPLAY;
   }
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 2);
@@ -131,6 +131,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -7;
   }
@@ -150,6 +152,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

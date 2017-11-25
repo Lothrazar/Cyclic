@@ -2,11 +2,14 @@ package com.lothrazar.cyclicmagic.gui.base;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleFuelBar;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -30,6 +33,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
   private int fuelX, fuelY, fuelXE, fuelYE;
+  private GuiButtonToggleFuelBar btnFuelToggle;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -64,6 +68,12 @@ public abstract class GuiBaseContainer extends GuiContainer {
           x,
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
+    }
+    if (this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
+      btnFuelToggle = new GuiButtonToggleFuelBar(3,
+          this.guiLeft + this.xSize - Const.PAD,
+          this.guiTop + 1, this.tile.getPos());
+      this.buttonList.add(btnFuelToggle);
     }
   }
   /**
@@ -154,14 +164,16 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void drawFuelText() {
-    if (this.fieldFuel > -1) {
+    if (this.fieldFuel > -1 && this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
+      ITileFuel tileFuel = (ITileFuel) this.tile;
+      this.btnFuelToggle.setState(tileFuel.getFuelDisplay());
       //      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
       double pct = tile.getPercentFormatted();
       if (pct > 0) {
         GL11.glPushMatrix();
         float fontScale = 0.5F;
         GL11.glScalef(fontScale, fontScale, fontScale);
-        if (GlobalSettings.fuelBarHorizontal) {
+        if (tileFuel.getFuelDisplay()) {
           this.drawString(pct + "%", 176, -38);
         }
         else {
@@ -172,11 +184,15 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   public void drawFuelBar() {
+    if (this.tile instanceof ITileFuel == false) {
+      return;
+    }
+    ITileFuel tileFuel = (ITileFuel) this.tile;
     int u = 0, v = 0;
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;
-    if (GlobalSettings.fuelBarHorizontal) {// vertical
+    if (tileFuel.getFuelDisplay()) {// vertical
       fuelX = this.guiLeft + screenSize.width() - innerLength - 8;
       fuelXE = fuelX + innerLength;
       fuelY = this.guiTop - outerWidth + 5;

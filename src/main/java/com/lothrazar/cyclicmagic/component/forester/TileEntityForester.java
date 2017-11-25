@@ -53,7 +53,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
+    REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX,FUELDISPLAY;
   }
   public TileEntityForester() {
     super(INVENTORY_SIZE);
@@ -271,6 +271,8 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         return this.getFuelMax();
       case TIMER:
         return this.timer;
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return 0;
   }
@@ -290,6 +292,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
       case TIMER:
         this.timer = value;
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }
