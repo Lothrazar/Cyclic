@@ -54,6 +54,6 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   }
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 25, 0, 500000,Const.ConfigText.fuelCost );
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000,Const.ConfigText.fuelCost );
   }
 }
