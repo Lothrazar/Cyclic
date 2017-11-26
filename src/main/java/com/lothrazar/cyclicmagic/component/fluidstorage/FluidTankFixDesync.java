@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.bucketstorage;
+package com.lothrazar.cyclicmagic.component.fluidstorage;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

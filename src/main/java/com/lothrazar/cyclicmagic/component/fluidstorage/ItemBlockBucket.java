@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.bucketstorage;
+package com.lothrazar.cyclicmagic.component.fluidstorage;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.bucketstorage;
+package com.lothrazar.cyclicmagic.component.fluidstorage;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;

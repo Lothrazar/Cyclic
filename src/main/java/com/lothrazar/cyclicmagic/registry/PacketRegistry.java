@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.component.bucketstorage.PacketFluidSync;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
@@ -8,6 +7,7 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketWandGui;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketNewButton;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketWarpButton;
+import com.lothrazar.cyclicmagic.component.fluidstorage.PacketFluidSync;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.component.merchant.PacketVillagerTrade;

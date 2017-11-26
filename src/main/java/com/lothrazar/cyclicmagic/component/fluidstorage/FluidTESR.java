@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.bucketstorage;
+package com.lothrazar.cyclicmagic.component.fluidstorage;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
