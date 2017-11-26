@@ -18,28 +18,16 @@ import net.minecraftforge.items.IItemHandler;
 
 public class TileCable extends TileEntity {
   private BlockPos connectedInventory;
-  private EnumFacing inventoryFace;
-  private NonNullList<ItemStack> upgrades = NonNullList.withSize(4, ItemStack.EMPTY);
-  private boolean mode = true;
-  private int limit = 0;
+  private EnumFacing inventoryFace; 
   public EnumConnectType north, south, east, west, up, down;
-  ItemStack stack = null;
+ 
   public enum CableKind {
     kabel, exKabel, imKabel, storageKabel;
   }
   public TileCable() {
  
   }
-  public int getUpgradesOfType(int num) {
-    int res = 0;
-    for (ItemStack s : upgrades) {
-      if (s != null && !s.isEmpty() && s.getItemDamage() == num) {
-        res += s.getCount();
-        break;
-      }
-    }
-    return res;
-  }
+  
  
   public Map<EnumFacing, EnumConnectType> getConnects() {
     Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
@@ -65,12 +53,7 @@ public class TileCable extends TileEntity {
     super.readFromNBT(compound);
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     inventoryFace = EnumFacing.byName(compound.getString("inventoryFace"));
-    mode = compound.getBoolean("mode");
-    limit = compound.getInteger("limit");
-    if (compound.hasKey("stack", 10))
-      stack = (new ItemStack(compound.getCompoundTag("stack")));
-    else
-      stack = null;
+ 
     if (compound.hasKey("north"))
       north = EnumConnectType.valueOf(compound.getString("north"));
     if (compound.hasKey("south"))
@@ -83,15 +66,7 @@ public class TileCable extends TileEntity {
       up = EnumConnectType.valueOf(compound.getString("up"));
     if (compound.hasKey("down"))
       down = EnumConnectType.valueOf(compound.getString("down"));
-    NBTTagList nbttaglist = compound.getTagList("Items", 10);
-    upgrades = NonNullList.withSize(4, ItemStack.EMPTY);
-    for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-      NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-      int j = nbttagcompound.getByte("Slot") & 255;
-      if (j >= 0 && j < 4) {
-        upgrades.set(j, new ItemStack(nbttagcompound));
-      }
-    }
+  
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -99,10 +74,7 @@ public class TileCable extends TileEntity {
     compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
     if (inventoryFace != null)
       compound.setString("inventoryFace", inventoryFace.toString());
-    compound.setBoolean("mode", mode);
-    compound.setInteger("limit", limit);
-    if (stack != null)
-      compound.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
+    
     if (north != null)
       compound.setString("north", north.toString());
     if (south != null)
@@ -115,16 +87,7 @@ public class TileCable extends TileEntity {
       compound.setString("up", up.toString());
     if (down != null)
       compound.setString("down", down.toString());
-    NBTTagList nbttaglist = new NBTTagList();
-    for (int i = 0; i < upgrades.size(); ++i) {
-      if (upgrades.get(i) != null) {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        nbttagcompound.setByte("Slot", (byte) i);
-        upgrades.get(i).writeToNBT(nbttagcompound);
-        nbttaglist.appendTag(nbttagcompound);
-      }
-    }
-    compound.setTag("Items", nbttaglist);
+    
     return compound;
   }
   @Override
@@ -134,61 +97,19 @@ public class TileCable extends TileEntity {
     return bb;
   }
  
-  public BlockPos getConnectedInventory() {
+  public BlockPos getConnectedPos() {
     return connectedInventory;
   }
-  public void setConnectedInventory(BlockPos connectedInventory) {
+  public void setConnectedPos(BlockPos connectedInventory) {
     this.connectedInventory = connectedInventory;
   }
-  public EnumFacing getInventoryFace() {
+  public EnumFacing getConnectedFace() {
     return inventoryFace;
   }
-  public void setInventoryFace(EnumFacing inventoryFace) {
+  public void setConnectedFace(EnumFacing inventoryFace) {
     this.inventoryFace = inventoryFace;
   }
-  public List<ItemStack> getUpgrades() {
-    return upgrades;
-  }
-  public void setUpgrades(List<ItemStack> upgrades) {
-    upgrades = NonNullList.withSize(4, ItemStack.EMPTY);
-    int i = 0;
-    for (ItemStack s : upgrades) {
-      if (s != null && !s.isEmpty()) {
-        this.upgrades.set(i, s);
-      }
-      i++;
-    }
-  }
-  public boolean isMode() {
-    return mode;
-  }
-  public void setMode(boolean mode) {
-    this.mode = mode;
-  }
-  public int getLimit() {
-    return limit;
-  }
-  public void setLimit(int limit) {
-    this.limit = limit;
-  }
-  public ItemStack getOperationStack() {
-    return stack;
-  }
-  public void setOperationStack(ItemStack stack) {
-    this.stack = stack;
-  }
-//  @Override
-//  public IItemHandler getInventory() {
-//    if (getConnectedInventory() != null)
-//      return UtilInventory.getItemHandler(world.getTileEntity(getConnectedInventory()), inventoryFace.getOpposite());
-//    return null;
-//  }
-//  @Override
-//  public BlockPos getSource() {
-//    return getConnectedInventory();
-//  }
-//  @Override
-//  public boolean isStorage() {
-//    return getKind() == CableKind.storageKabel;
-//  }
+ 
+ 
+ 
 }

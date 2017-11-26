@@ -10,8 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class CableRenderer extends TileEntitySpecialRenderer<TileCable> {
   ModelCable model;
   private final ResourceLocation link = new ResourceLocation(Const.MODID , "textures/tile/link.png");
-//  private final ResourceLocation ex = new ResourceLocation(StorageNetwork.MODID + ":textures/tile/ex.png");
-//  private final ResourceLocation im = new ResourceLocation(StorageNetwork.MODID + ":textures/tile/im.png");
+ 
 //  private final ResourceLocation storage = new ResourceLocation(StorageNetwork.MODID + ":textures/tile/storage.png");
   public CableRenderer() {
     model = new ModelCable();

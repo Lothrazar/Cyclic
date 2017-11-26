@@ -2,9 +2,7 @@ package com.lothrazar.cyclicmagic.component.fluidtransfer;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -12,7 +10,6 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -26,12 +23,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,18 +39,7 @@ public class BlockFluidTransfer extends BlockBaseFacing implements ITileEntityPr
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
-//  @Override
-//  public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    Fluid fluid = this.getCurrentFluid(world, pos);
-//    if (fluid != null && fluid.getTemperature() >= Const.LAVA_TEMPERATURE) {
-//      return this.getLightOpacity(state, world, pos);
-//    }
-//    return super.getLightValue(state, world, pos);
-//  }
-//  @Override
-//  public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    return 0;
-//  }
+ 
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
@@ -88,22 +72,7 @@ public class BlockFluidTransfer extends BlockBaseFacing implements ITileEntityPr
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
-//  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
-//    TileEntity here = world.getTileEntity(pos);
-//    //on initial placement, this might be null
-//    if (here == null || here instanceof TileEntityBucketStorage == false) {
-//      return null;
-//    }
-//    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-//    if (container == null) {
-//      return null;
-//    }
-//    FluidStack fs = container.getCurrentFluidStack();
-//    if (fs == null) {
-//      return null;
-//    }
-//    return fs.getFluid();
-//  }
+ 
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {

@@ -30,8 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityFluidTransfer extends TileEntityBaseMachineInvo implements IFluidHandler, ITickable {
   private static final int TRANSFER_PER_TICK = 50;
   public TileEntityFluidTransfer(int invoSize) {
-    super(invoSize);
-    // TODO Auto-generated constructor stub
+    super(invoSize); 
   }
   public static final String NBT_ID = "buckets";
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME;

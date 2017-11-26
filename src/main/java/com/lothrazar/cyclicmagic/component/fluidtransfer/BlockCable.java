@@ -71,23 +71,11 @@ public class BlockCable extends BlockContainer {
   public EnumBlockRenderType getRenderType(IBlockState state) {
     return EnumBlockRenderType.INVISIBLE;
   }
-  //  @Override
-  //  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-  //    //  ItemStack heldItem = playerIn.getHeldItem(hand);
-  //    if (!(worldIn.getTileEntity(pos) instanceof TileCable))
-  //      return false;
-  //    if (worldIn.isRemote)
-  //      return true;
-  //    TileCable tile = (TileCable) worldIn.getTileEntity(pos);
-  //    if (tile.getKind() == CableKind.exKabel || tile.getKind() == CableKind.imKabel) { //  || tile.getKind() == CableKind.storageKabel
-  //      playerIn.openGui(StorageNetwork.instance, GuiHandler.CABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
-  //      return true;
-  //    }
-  //    return false;
-  //  }
+ 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    setConnections(worldIn, pos, state, false);
+
+    worldIn.markChunkDirty(pos,  worldIn.getTileEntity(pos));
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -110,11 +98,7 @@ public class BlockCable extends BlockContainer {
     }
     boolean storage = false;
     boolean first = false;
-    //    if (stor != null && getConnect(world, pos, pos.offset(stor)) == EnumConnectType.STORAGE) {
-    //      newMap.put(stor, EnumConnectType.STORAGE);
-    //      storage = true;
-    //      first = true;
-    //    }
+ 
     for (EnumFacing f : EnumFacing.values()) {
       if (stor == f && first)
         continue;
@@ -131,8 +115,7 @@ public class BlockCable extends BlockContainer {
         newMap.put(f, neu);
       }
     }
-    //    newMap.put(EnumFacing.NORTH, EnumConnectType.CONNECT);
-    //    newMap.put(EnumFacing.SOUTH, EnumConnectType.STORAGE);
+  
     tile.setConnects(newMap);
     if (tile.north == EnumConnectType.STORAGE) {
       face = EnumFacing.NORTH;
@@ -158,41 +141,11 @@ public class BlockCable extends BlockContainer {
       face = EnumFacing.UP;
       con = pos.up();
     }
-    tile.setInventoryFace(face);
-    tile.setConnectedInventory(con);
+    tile.setConnectedFace(face);
+    tile.setConnectedPos(con);
     return world.getBlockState(pos);
   }
-  public void setConnections(World worldIn, BlockPos pos, IBlockState state, boolean refresh) {
-    TileCable tile = (TileCable) worldIn.getTileEntity(pos);
-    //    if (tile.getMaster() == null) {
-    //    for (EnumFacing side : EnumFacing.values()) {//EnumFacing.values()
-    //      if (this.validInventory(worldIn, pos.offset(side), side)) {
-    //        
-    //      }
-    //    }
-    //    }
-    //    if (tile.getMaster() != null) {
-    //      TileEntity mas = worldIn.getTileEntity(tile.getMaster());
-    //      tile.setMaster(null);
-    //      worldIn.markChunkDirty(((TileEntity) tile).getPos(), ((TileEntity) tile));
-    //      try {
-    //        setAllMastersNull(worldIn, pos);
-    //      }
-    //      catch (Error e) {
-    //        e.printStackTrace();
-    //        if (mas instanceof TileMaster)
-    //          for (BlockPos p : ((TileMaster) mas).connectables)
-    //          if (worldIn.getChunkFromBlockCoords(p).isLoaded() && worldIn.getTileEntity(p) instanceof IConnectable) {
-    //          ((IConnectable) worldIn.getTileEntity(p)).setMaster(null);
-    //          worldIn.markChunkDirty(p, worldIn.getTileEntity(p));
-    //          }
-    //      }
-    //      if (refresh && mas instanceof TileMaster) {
-    //        ((TileMaster) mas).refreshNetwork();
-    //      }
-    //    }
-    worldIn.markChunkDirty(((TileEntity) tile).getPos(), ((TileEntity) tile));
-  }
+  
   @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -289,19 +242,9 @@ public class BlockCable extends BlockContainer {
     if (FluidUtil.getFluidHandler((World) worldIn, offset, side) != null)
       return EnumConnectType.STORAGE;
     return EnumConnectType.NULL;
-    //Block ori = worldIn.getBlockState(orig).getBlock();
-    //    if ( worldIn.getTileEntity(pos) instanceof TileMaster)
-    //      return EnumConnectType.CONNECT;
-    //    if (ori == this)
-    //      return EnumConnectType.NULL;
-    //    EnumFacing face = get(orig, pos);
-    //    if (validInventory(worldIn, pos, face))
-    //      return EnumConnectType.CONNECT;
-    //    return EnumConnectType.STORAGE;
+  
   }
-  //  boolean validInventory(IBlockAccess world, BlockPos pos, EnumFacing side) {
-  //    return FluidUtil.getFluidHandler((World) world, pos, side) != null;
-  //  }
+ 
   public static EnumFacing get(BlockPos a, BlockPos b) {
     if (a.up().equals(b))
       return EnumFacing.DOWN;
@@ -317,50 +260,9 @@ public class BlockCable extends BlockContainer {
       return EnumFacing.NORTH;
     return null;
   }
-  //  @Override
-  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-  //    TileEntity tileentity = worldIn.getTileEntity(pos);
-  //    if (tileentity instanceof TileCable) {
-  //      TileCable tile = (TileCable) tileentity;
-  //      for (int i = 0; i < tile.getUpgrades().size(); i++) {
-  //        UtilTileEntity.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tile.getUpgrades().get(i));
-  //      }
-  //    }
-  //    super.breakBlock(worldIn, pos, state);
-  //  }
+ 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileCable();
-  }
-  public static class ItemCable extends ItemBlock {
-    public ItemCable(Block block) {
-      super(block);
-    }
-    @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-      super.addInformation(stack, playerIn, tooltip, advanced);
-      //      if (stack.getItem() == Item.getItemFromBlock(ModBlocks.exKabel))
-      //        tooltip.add(I18n.format("tooltip.storagenetwork.kabel_E"));
-      //      else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.imKabel))
-      //        tooltip.add(I18n.format("tooltip.storagenetwork.kabel_I"));
-      //      else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.storageKabel))
-      //        tooltip.add(I18n.format("tooltip.storagenetwork.kabel_S"));
-      //      else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.kabel))
-      //        tooltip.add(I18n.format("tooltip.storagenetwork.kabel_L"));
-    }
-  }
-  //  public static class PropertyConnection extends PropertyEnum<EnumConnectType> {
-  //    String name;
-  //    public PropertyConnection(String name2) {
-  //      super(name2, EnumConnectType.class, Lists.newArrayList(EnumConnectType.values()));
-  //      this.name = name2;
-  //    }
-  ////    public static PropertyConnection create(String name) {
-  ////      return new PropertyConnection(name);
-  ////    }
-  //    @Override
-  //    public String getName() {
-  //      return name;
-  //    }
-  //  }
+  } 
 }
