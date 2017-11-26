@@ -48,14 +48,12 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
-        "gbx",
+        "x x",
         "ooo",
-        'o', "obsidian",
-        'g', "gemDiamond",
-        'x', "gemDiamond",
-        's', Blocks.OBSERVER,
-        'r', "blockLapis",
-        'b', Blocks.BED);
+        'o', Blocks.FURNACE,
+        's', Blocks.DAYLIGHT_DETECTOR,
+        'x', "ingotIron",
+        'r', "logWood");
   }
   @Override
   public void syncConfig(Configuration config) {

@@ -13,6 +13,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -98,19 +100,27 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        "i i",
-        "rqr",
-        "i i",
-        'i', "ingotIron",
-        'r', "dustRedstone",
-        'q', "gemQuartz");
+    if (this.type == WirelessType.TRANSMITTER)
+      return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+          "isi",
+          "sqs",
+          "isi",
+          'i', "ingotIron",
+          's', "stone",
+          'q', Items.REPEATER);
+    else
+      return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+          "isi",
+          "sqs",
+          "isi",
+          'i', "ingotIron",
+          's', "stone",
+          'q', Blocks.REDSTONE_TORCH);
   }
   @SubscribeEvent
   public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
     BlockPos pos = event.getPos();
     World world = event.getWorld();
- 
     ItemStack stack = event.getItemStack();//player held item
     if (world.getTileEntity(pos) instanceof TileEntityWirelessRec
         && stack.getItem() == Item.getByNameOrId("cyclicmagic:wireless_transmitter")) {
