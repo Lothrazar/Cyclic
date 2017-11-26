@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonToggleRedstone extends GuiButtonTexture {
   private BlockPos tilePos;
   public GuiButtonToggleRedstone(int buttonId, int x, int y, BlockPos p) {
-    super(buttonId, x, y, "textures/gui/buttons.png");
+    super(buttonId, x, y);
     this.tilePos = p;
   }
   @SideOnly(Side.CLIENT)

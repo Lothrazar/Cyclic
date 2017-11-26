@@ -26,7 +26,7 @@ public class GuiHydrator extends GuiBaseContainer {
         this.guiLeft + 26,
         this.guiTop + Const.PAD/2 , this.tile.getPos(), Fields.RECIPELOCKED.ordinal());
     btnToggle.width = btnToggle.height = 20;
-    //    btnSpeed.displayString = "";
+
     this.addButton(btnToggle);
   }
   @SideOnly(Side.CLIENT)
@@ -34,12 +34,12 @@ public class GuiHydrator extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (tile.getField(Fields.RECIPELOCKED.ordinal()) == 1) {
-      btnToggle.setTextureIndex(4);
+      btnToggle.setTextureIndex(5);
       btnToggle.setTooltip("tile.hydrator.locked.tooltip");
     }
     else {
 
-      btnToggle.setTextureIndex(5);
+      btnToggle.setTextureIndex(6);
       btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
     }
   }

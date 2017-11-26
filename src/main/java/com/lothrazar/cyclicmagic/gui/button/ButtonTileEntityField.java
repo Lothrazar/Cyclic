@@ -32,7 +32,7 @@ public class ButtonTileEntityField extends GuiButtonTexture {
   public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p,
       int fld, int diff,
       int w, int h) {
-    super(buttonId, x, y, w, h, "textures/gui/buttons.png");
+    super(buttonId, x, y, w, h);
     this.pos = p;
     field = fld;
     this.value = diff;
