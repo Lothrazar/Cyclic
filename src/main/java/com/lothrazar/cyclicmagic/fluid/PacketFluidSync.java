@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic.component.fluidstorage;
+package com.lothrazar.cyclicmagic.fluid;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

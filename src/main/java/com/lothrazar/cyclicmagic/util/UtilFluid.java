@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -11,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -99,4 +101,55 @@ public class UtilFluid {
   public static boolean interactWithFluidHandler(@Nonnull EntityPlayer player, @Nonnull World world, @Nonnull BlockPos pos, @Nullable EnumFacing side) {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
+  
+  /**
+   * Look for a fluid handler with gien position and direction
+   * try to extract from that pos and fill the tank
+   * 
+   * 
+   * @param world
+   * @param posSide
+   * @param sideOpp
+   * @param tank
+   * @param amount
+   * @return
+   */
+ public static boolean tryFillTankFromPosition(World world,
+     BlockPos posSide
+     , EnumFacing sideOpp
+     , FluidTank tank
+     ,int amount){
+   
+   
+
+   IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+   if (fluidFrom != null) {
+     //its not my facing dir
+     // SO: pull fluid from that into myself
+     FluidStack wasDrained = fluidFrom.drain(100, false);
+     int filled = tank.fill(wasDrained, false);
+     if (wasDrained != null && wasDrained.amount > 0
+         && filled > 0) {
+       
+
+//       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
+//       ModCyclic.logger.log(" filled  "+  filled);
+       int realAmt = Math.min(filled, wasDrained.amount);
+       wasDrained = fluidFrom.drain(realAmt, true);
+     return  tank.fill(wasDrained, true) > 0;
+       
+       
+       
+     }
+     
+   }
+   
+   
+   return false;
+ }
+ 
+ 
+  
+  
+  
 }

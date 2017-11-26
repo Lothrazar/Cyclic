@@ -15,6 +15,8 @@ import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidTransfer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidTransfer;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -100,6 +102,21 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
+  
+    
+    
+    
+    
+    
+
+      BlockFluidTransfer fluid_xfer = new BlockFluidTransfer();
+      BlockRegistry.registerBlock(fluid_xfer,  "fluid_xfer", null);
+      
+      GameRegistry.registerTileEntity(TileEntityFluidTransfer.class, "fluid_xfer_te");
+      
+    
+    
+    
     }
   }
   @Override

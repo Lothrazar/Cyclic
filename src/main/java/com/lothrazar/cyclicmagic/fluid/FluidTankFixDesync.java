@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic.component.fluidstorage;
+package com.lothrazar.cyclicmagic.fluid;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,8 +13,8 @@ import net.minecraftforge.fluids.FluidTank;
  *
  */
 public class FluidTankFixDesync extends FluidTank {
-  private final TileEntityBucketStorage parent;
-  public FluidTankFixDesync(int capacity, TileEntityBucketStorage parent) {
+  private final TileEntityBaseMachineInvo parent;
+  public FluidTankFixDesync(int capacity, TileEntityBaseMachineInvo parent) {
     super(capacity);
     this.parent = parent;
   }
