@@ -15,7 +15,9 @@ import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidTransfer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidTransfer;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
@@ -115,7 +117,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFluidTransfer.class, "fluid_xfer_te");
       
     
-    
+
+
+      BlockCable k = new BlockCable();
+      BlockRegistry.registerBlock(k,  "kabel", null);
+      GameRegistry.registerTileEntity(TileCable.class, "kabelte");
+      
+      
     
     }
   }

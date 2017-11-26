@@ -1,0 +1,175 @@
+{
+    "forge_marker" : 1, 
+    "defaults" : {
+        "textures" : {
+            "particle" : "cyclicmagic:blocks/kabel", 
+            "all" : "cyclicmagic:blocks/kabel"
+        }
+    }, 
+    "variants" : {
+        "straight" : {
+            "true" : {
+                "textures" : {
+                    "all" : "cyclicmagic:blocks/kabel_clean"
+                }
+            }, 
+            "false" : {
+                "model" : "cyclicmagic:kabel_cube"
+                
+            }
+        }, 
+        "north" : {
+            "connect" : {
+                "submodel" : {
+                    "s1" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s1" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90
+                    }, 
+                    "s1s" : {
+                        "model" : "cyclicmagic:kabel_plate", 
+                        "x" : 90
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }, 
+        "south" : {
+            "connect" : {
+                "submodel" : {
+                    "s2" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 270
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s2" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 270
+                    }, 
+                    "s2s" : {
+                        "model" : "cyclicmagic:kabel_plate", 
+                        "x" : 270
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }, 
+        "west" : {
+            "connect" : {
+                "submodel" : {
+                    "s3" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90, 
+                        "y" : 270
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s3" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90, 
+                        "y" : 270
+                    }, 
+                    "s3s" : {
+                        "model" : "cyclicmagic:kabel_plate", 
+                        "x" : 90, 
+                        "y" : 270
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }, 
+        "east" : {
+            "connect" : {
+                "submodel" : {
+                    "s4" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90, 
+                        "y" : 90
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s4" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 90, 
+                        "y" : 90
+                    }, 
+                    "s4s" : {
+                        "model" : "cyclicmagic:kabel_plate", 
+                        "x" : 90, 
+                        "y" : 90
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }, 
+        "up" : {
+            "connect" : {
+                "submodel" : {
+                    "s5" : {
+                        "model" : "cyclicmagic:kabel_pin"
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s5" : {
+                        "model" : "cyclicmagic:kabel_pin"
+                    }, 
+                    "s5s" : {
+                        "model" : "cyclicmagic:kabel_plate"
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }, 
+        "down" : {
+            "connect" : {
+                "submodel" : {
+                    "s6" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 180
+                    }
+                }
+            }, 
+            "storage" : {
+                "submodel" : {
+                    "s6" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 180
+                    }, 
+                    "s6s" : {
+                        "model" : "cyclicmagic:kabel_pin", 
+                        "x" : 180
+                    }
+                }
+            }, 
+            "null" : {
+                
+            }
+        }
+    }
+}
