@@ -125,7 +125,7 @@ public class TileEntityFluidTransfer extends TileEntityBaseMachineInvo implement
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
-   *TODO: UtilFluid that does a position, a facing, and tries to move fluid across
+   * TODO: UtilFluid that does a position, a facing, and tries to move fluid across
    *
    *
    */
@@ -133,27 +133,17 @@ public class TileEntityFluidTransfer extends TileEntityBaseMachineInvo implement
   public void update() {
     BlockPos posSide;
     EnumFacing facingTo = this.getCurrentFacing();
-    ModCyclic.logger.log("I am facing"+facingTo.name());
+    // ModCyclic.logger.log("I am facing"+facingTo.name());
     for (EnumFacing side : EnumFacing.values()) {
       if (side == facingTo) {
         continue;
       }
       EnumFacing sideOpp = side.getOpposite();
-     ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
-
-   posSide = pos.offset(side);
-     UtilFluid.tryFillTankFromPosition(world, posSide, sideOpp, tank, TRANSFER_PER_TICK);
-     
-     
- 
+      //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
+      posSide = pos.offset(side);
+      UtilFluid.tryFillTankFromPosition(world, posSide, sideOpp, tank, TRANSFER_PER_TICK);
     }
     //looping is over. now try to DEPOSIT fluid next door
-    
-    
-
-    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, pos, facingTo);
-    
-    
-    
+    UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
   }
 }

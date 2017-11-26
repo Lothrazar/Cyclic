@@ -42,8 +42,7 @@ public class UtilFluid {
   /**
    * Drains a filled container and places the fluid.
    * 
-   * RETURN new item stack that has been drained after placing in world if it
-   * works null otherwise
+   * RETURN new item stack that has been drained after placing in world if it works null otherwise
    */
   public static ItemStack dumpContainer(World world, BlockPos pos, ItemStack stackIn) {
     //    BlockSourceImpl blocksourceimpl = new BlockSourceImpl(world, pos);
@@ -101,55 +100,53 @@ public class UtilFluid {
   public static boolean interactWithFluidHandler(@Nonnull EntityPlayer player, @Nonnull World world, @Nonnull BlockPos pos, @Nullable EnumFacing side) {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
-  
   /**
-   * Look for a fluid handler with gien position and direction
-   * try to extract from that pos and fill the tank
+   * Look for a fluid handler with gien position and direction try to extract from that pos and fill the tank
    * 
    * 
    * @param world
    * @param posSide
    * @param sideOpp
-   * @param tank
+   * @param tankTo
    * @param amount
    * @return
    */
- public static boolean tryFillTankFromPosition(World world,
-     BlockPos posSide
-     , EnumFacing sideOpp
-     , FluidTank tank
-     ,int amount){
-   
-   
-
-   IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
-   if (fluidFrom != null) {
-     //its not my facing dir
-     // SO: pull fluid from that into myself
-     FluidStack wasDrained = fluidFrom.drain(100, false);
-     int filled = tank.fill(wasDrained, false);
-     if (wasDrained != null && wasDrained.amount > 0
-         && filled > 0) {
-       
-
-//       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
-//       ModCyclic.logger.log(" filled  "+  filled);
-       int realAmt = Math.min(filled, wasDrained.amount);
-       wasDrained = fluidFrom.drain(realAmt, true);
-     return  tank.fill(wasDrained, true) > 0;
-       
-       
-       
-     }
-     
-   }
-   
-   
-   return false;
- }
- 
- 
-  
-  
-  
+  public static boolean tryFillTankFromPosition(World world,
+      BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, int amount) {
+    IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+    if (fluidFrom != null) {
+      //its not my facing dir
+      // SO: pull fluid from that into myself
+      FluidStack wasDrained = fluidFrom.drain(amount, false);
+      int filled = tankTo.fill(wasDrained, false);
+      if (wasDrained != null && wasDrained.amount > 0
+          && filled > 0) {
+        //       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
+        //       ModCyclic.logger.log(" filled  "+  filled);
+        int realAmt = Math.min(filled, wasDrained.amount);
+        wasDrained = fluidFrom.drain(realAmt, true);
+        return tankTo.fill(wasDrained, true) > 0;
+      }
+    }
+    return false;
+  }
+  public static boolean tryFillPositionFromTank(World world,
+      BlockPos posSide, EnumFacing sideOpp, FluidTank tankFrom, int amount) {
+    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+    if (fluidTo != null) {
+      //its not my facing dir
+      // SO: pull fluid from that into myself
+      FluidStack wasDrained = tankFrom.drain(amount, false);
+      int filled = fluidTo.fill(wasDrained, false);
+      if (wasDrained != null && wasDrained.amount > 0
+          && filled > 0) {
+        // ModCyclic.logger.log(" wasDrained  from tank"+wasDrained.amount);
+        //  ModCyclic.logger.log(" filled into pos  "+sideOpp.name()+"__"+  filled+"))"+posSide);
+        int realAmt = Math.min(filled, wasDrained.amount);
+        wasDrained = tankFrom.drain(realAmt, true);
+        return fluidTo.fill(wasDrained, true) > 0;
+      }
+    }
+    return false;
+  }
 }
