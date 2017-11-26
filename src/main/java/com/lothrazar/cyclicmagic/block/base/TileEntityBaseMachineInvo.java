@@ -24,11 +24,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
   /**
-   * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal
-   * item has 1600 burn time and 1 coal item also gives 80,000 RF (max output
-   * based on survey of mods) so i want to make internal consumption of fuel
-   * more efficient than just getting raw power especially because actual RF
-   * mods will have better power gen anyway
+   * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal item has 1600 burn time and 1 coal item also gives 80,000 RF (max output based on survey of mods) so i want to make
+   * internal consumption of fuel more efficient than just getting raw power especially because actual RF mods will have better power gen anyway
    */
   private static final int FUEL_FACTOR = 50;
   private static final int MAX_SPEED = 10;
@@ -141,9 +138,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return true;
   }
   /**
-   * look for connected energy-compatble blocks and try to drain Basically all
-   * of this function was written by @Ellpeck and then I tweaked it to fit my
-   * needs
+   * look for connected energy-compatble blocks and try to drain
+   * 
+   * Basically all of this function was written by @Ellpeck and then I tweaked it to fit my needs
    * https://github.com/Ellpeck/ActuallyAdditions/blob/9bed6f7ea59e8aa23fa3ba540d92cd61a04dfb2f/src/main/java/de/ellpeck/actuallyadditions/mod/util/WorldUtil.java#L151
    */
   private void updateIncomingEnergy() {
