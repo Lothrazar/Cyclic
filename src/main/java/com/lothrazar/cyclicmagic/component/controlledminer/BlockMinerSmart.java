@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.MachineTESR;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -18,13 +20,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR ,IHasConfig{
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
-  public BlockMinerSmart() {
+  public static int FUEL_COST = 0; public BlockMinerSmart() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_SMARTMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
@@ -51,5 +54,9 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
         's', Blocks.OBSERVER,
         'r', "blockLapis",
         'b', Blocks.MAGMA);
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

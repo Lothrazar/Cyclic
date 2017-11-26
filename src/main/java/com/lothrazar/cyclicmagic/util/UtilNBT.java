@@ -22,7 +22,25 @@ public class UtilNBT {
     }
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
+  public static void setTagBlockPos(NBTTagCompound item, BlockPos pos) {
+    if (pos == null) {
+      return;
+    }
+    item.setInteger("xpos", pos.getX());
+    item.setInteger("ypos", pos.getY());
+    item.setInteger("zpos", pos.getZ());
+  }
+  public static BlockPos getTagBlockPos(NBTTagCompound item) {
+    if (item == null
+        || !item.hasKey("xpos")) {
+      return null;
+    }
+    return new BlockPos(item.getInteger("xpos"), item.getInteger("ypos"), item.getInteger("zpos"));
+  }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
+    if (pos == null) {
+      return;
+    }
     UtilNBT.setItemStackNBTVal(item, "xpos", pos.getX());
     UtilNBT.setItemStackNBTVal(item, "ypos", pos.getY());
     UtilNBT.setItemStackNBTVal(item, "zpos", pos.getZ());
@@ -221,5 +239,9 @@ public class UtilNBT {
   }
   public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
     return entityevokerfangs.getEntityData().getBoolean(string);
+  }
+  public static boolean hasTagCompund(ItemStack held) {
+    return held.hasTagCompound() &&
+        held.getTagCompound().getSize() > 0;
   }
 }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.button;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.base.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Sam
  *
  */
-public class ButtonTileEntityField extends GuiButtonTooltip {
+public class ButtonTileEntityField extends GuiButtonTexture {
   private BlockPos pos;
   private int field;
   private int value;
@@ -31,7 +32,7 @@ public class ButtonTileEntityField extends GuiButtonTooltip {
   public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p,
       int fld, int diff,
       int w, int h) {
-    super(buttonId, x, y, w, h, "");
+    super(buttonId, x, y, w, h);
     this.pos = p;
     field = fld;
     this.value = diff;

@@ -27,7 +27,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_GRID = 3 * 3;//19
   public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
   public static enum Fields {
-    REDSTONE, TIMER, FUEL, FUELMAX;
+    REDSTONE, TIMER, FUEL, FUELMAX,FUELDISPLAY;
   }
   private Container fakeContainer;
   private IRecipe recipe;
@@ -44,7 +44,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.setFuelSlot(this.getSizeInventory() - 1);
+    this.setFuelSlot(this.getSizeInventory() - 1,BlockCrafter.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -186,8 +186,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
-      default:
-      break;
+
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -1;
   }
@@ -203,10 +204,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       case FUEL:
         this.setFuelCurrent(value);
       break;
-      case FUELMAX:
-        this.setFuelMax(value);
+      case FUELMAX: 
       break;
-      default:
+
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

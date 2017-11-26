@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.playerext.crafting;
-import javax.annotation.Nullable;
+import javax.annotation.Nullable; 
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

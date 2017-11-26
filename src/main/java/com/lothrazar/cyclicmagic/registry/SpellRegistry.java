@@ -65,6 +65,10 @@ public class SpellRegistry {
     return null;
   }
   public static List<ISpell> getSpellbook(ItemStack wand) {
+    // extra check https://github.com/PrinceOfAmber/Cyclic/issues/593
+    if (wand.getItem() instanceof ItemCyclicWand == false) {
+      return new ArrayList<ISpell>();
+    }
     return ((ItemCyclicWand) wand.getItem()).getSpells();
   }
   public static ISpell next(ItemStack wand, ISpell spell) {

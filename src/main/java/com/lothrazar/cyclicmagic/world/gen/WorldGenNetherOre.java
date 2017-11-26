@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -40,19 +40,19 @@ public class WorldGenNetherOre implements IWorldGenerator {
   }
   public WorldGenNetherOre() {
     if (Configs.blockCountRedstone > 0)
-      this.genRedstone = new WorldGenMinable(WorldGenModule.nether_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genRedstone = new WorldGenMinable(WorldModule.nether_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountIron > 0)
-      this.genIron = new WorldGenMinable(WorldGenModule.nether_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genIron = new WorldGenMinable(WorldModule.nether_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountGold > 0)
-      this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genGold = new WorldGenMinable(WorldModule.nether_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountCoal > 0)
-      this.genCoal = new WorldGenMinable(WorldGenModule.nether_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genCoal = new WorldGenMinable(WorldModule.nether_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountEmerald > 0)
-      this.genEmerald = new WorldGenMinable(WorldGenModule.nether_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genEmerald = new WorldGenMinable(WorldModule.nether_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountLapis > 0)
-      this.genLapis = new WorldGenMinable(WorldGenModule.nether_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genLapis = new WorldGenMinable(WorldModule.nether_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountDiamond > 0)
-      this.genDiamond = new WorldGenMinable(WorldGenModule.nether_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.NETHERRACK));
+      this.genDiamond = new WorldGenMinable(WorldModule.nether_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.NETHERRACK));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

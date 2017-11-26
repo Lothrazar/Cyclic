@@ -29,10 +29,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
   private int[] hopperInput = { 0 };
-  private int[] hopperInputfUEL = { SLOT_ROWS * SLOT_COLS + 1 };
   private int[] hopperOutput;
   public static enum Fields {
-    TIMER, REDSTONE, FUEL, FUELMAX;
+    TIMER, REDSTONE, FUEL, FUELMAX,FUELDISPLAY;
   }
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 2);
@@ -41,7 +40,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
       hopperOutput[i - 1] = i;
     }
-    this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1);
+    this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1, BlockUncrafting.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -112,9 +111,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP)
       return hopperInput;//input through top side
-    if (side == EnumFacing.DOWN)
-      return hopperOutput;
-    return hopperInputfUEL;
+    return hopperOutput;
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
@@ -134,6 +131,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -7;
   }
@@ -153,7 +152,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

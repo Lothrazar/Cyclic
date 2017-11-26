@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.config.GlobalSettings;
+import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -13,14 +13,21 @@ import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
-  private static final int FUEL_FACTOR = 2;
+  /**
+   * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal item has 1600 burn time and 1 coal item also gives 80,000 RF (max output based on survey of mods) so i want to make
+   * internal consumption of fuel more efficient than just getting raw power especially because actual RF mods will have better power gen anyway
+   */
+  private static final int FUEL_FACTOR = 50;
   private static final int MAX_SPEED = 10;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -31,43 +38,42 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBTPLAYERID = "uuid";
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
-  public static final String NBT_FUELMAX = "maxFuel";
   public static final String NBT_TANK = "tankwater";
+  private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
-  private int currentMaxFuel;
+  protected int fuelDisplay = 0;
+  private int fuelCost = 0;
   private int fuelSlot = -1;
-  private int currentFuel;
   protected int speed = 1;
   protected int timer;
-  private boolean usesFuel = false;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     this.fuelSlot = -1;
   }
-  protected void setFuelSlot(int slot) {
-    if (GlobalSettings.fuelEnabled) {
-      usesFuel = true;
+  protected void setFuelSlot(int slot, int fcost) {
+    if (fcost > 0) {
       this.fuelSlot = slot;
+      this.fuelCost = fcost;
     }
   }
   public int getFuelMax() {
-    return this.currentMaxFuel;
-  }
-  protected void setFuelMax(int f) {
-    this.currentMaxFuel = f;
+    this.initEnergyStorage();
+    return this.energyStorage.getMaxEnergyStored();
   }
   public int getFuelCurrent() {
-    return this.currentFuel;
+    this.initEnergyStorage();
+    return this.energyStorage.getEnergyStored();
   }
   protected void setFuelCurrent(int f) {
-    this.currentFuel = f;
+    this.initEnergyStorage();
+    this.energyStorage.setEnergyStored(f);
   }
   public double getPercentFormatted() {
-    if (this.currentMaxFuel == 0) {
+    if (this.getFuelMax() == 0) {
       return 0;
     }
-    double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
+    double percent = ((float) this.getFuelCurrent() / (float) this.getFuelMax());
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
@@ -76,21 +82,38 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       this.consumeFuel();
     }
   }
+  public boolean doesUseFuel() {
+    return this.fuelCost > 0;
+  }
+  public int getFuelCost() {
+    return this.fuelCost;
+  }
   public void consumeFuel() {
-    if (usesFuel) {// && !this.world.isRemote
-      if (this.currentFuel > 0) {
-        this.currentFuel--;
+    if (doesUseFuel()) {
+      if (this.getFuelCurrent() > 0) {
+        this.energyStorage.extractEnergy(getFuelCost(), false);
       }
-      else {
-        ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-        if (this.isItemFuel(itemstack)) {
-          this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-          this.currentMaxFuel = this.currentFuel;//100% full
-          if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
-            this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
-          }
-          else {
-            itemstack.shrink(1);
+      ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+      //pull in item from fuel slot, if it has fuel burn time
+      int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
+      if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack) {
+        int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
+        this.energyStorage.setEnergyStored(newEnergy);
+        if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
+          this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
+        }
+        else {
+          itemstack.shrink(1);
+        }
+      }
+      //what if item in fuel slot is an RF battery type item? start draining it ya
+      if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+        IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
+        if (storage != null) {
+          int canWithdraw = Math.min(EnergyStore.DEFAULT_FLOW, storage.getEnergyStored());
+          if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
+            storage.extractEnergy(canWithdraw, false);
+            this.setFuelCurrent(this.getFuelCurrent() + canWithdraw);
           }
         }
       }
@@ -99,15 +122,50 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
   }
-  private boolean isItemFuel(ItemStack itemstack) {
-    return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
+  @Override
+  public boolean isRunning() {
+    if (this.doesUseFuel()) {
+      // update from power cables/batteries next door
+      this.updateIncomingEnergy();
+    }
+    return super.isRunning();
   }
   public boolean updateFuelIsBurning() {
-    if (usesFuel) {
+    if (doesUseFuel()) {
       this.consumeFuel();
       return hasFuel();
     }
     return true;
+  }
+  /**
+   * look for connected energy-compatble blocks and try to drain
+   * 
+   * Basically all of this function was written by @Ellpeck and then I tweaked it to fit my needs
+   * https://github.com/Ellpeck/ActuallyAdditions/blob/9bed6f7ea59e8aa23fa3ba540d92cd61a04dfb2f/src/main/java/de/ellpeck/actuallyadditions/mod/util/WorldUtil.java#L151
+   */
+  private void updateIncomingEnergy() {
+    TileEntity teConnected;
+    //check every side to see if I'm connected
+    for (EnumFacing side : EnumFacing.values()) {
+      //it would output energy on the opposite side 
+      EnumFacing sideOpp = side.getOpposite();
+      teConnected = world.getTileEntity(pos.offset(side));
+      if (teConnected != null &&
+          teConnected.hasCapability(CapabilityEnergy.ENERGY, sideOpp)) {
+        //pull energy to myself, from the next one over if it has energy
+        IEnergyStorage handlerTo = this.getCapability(CapabilityEnergy.ENERGY, side);
+        IEnergyStorage handlerFrom = teConnected.getCapability(CapabilityEnergy.ENERGY, sideOpp);
+        if (handlerFrom != null && handlerTo != null) {
+          //true means simulate the extract. then if it worked go for real
+          int drain = handlerFrom.extractEnergy(EnergyStore.DEFAULT_FLOW, true);
+          if (drain > 0) {
+            int filled = handlerTo.receiveEnergy(drain, false);
+            handlerFrom.extractEnergy(filled, false);
+            return;// stop now because only pull from one side at a time
+          }
+        }
+      }
+    }
   }
   @Override
   protected void spawnParticlesAbove() {
@@ -118,10 +176,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public boolean hasFuel() {
-    if (!usesFuel) {
+    if (doesUseFuel() == false) {
       return true;
     }
-    return this.currentFuel > 0;
+    return this.getFuelCurrent() > 0;
   }
   protected boolean updateTimerIsZero() {
     timer -= this.getSpeed();
@@ -267,8 +325,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.readInvoFromNBT(compound);
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
-    this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
+    fuelDisplay = compound.getInteger("fueldisplay");
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
+    this.initEnergyStorage();
+    if (energyStorage != null && doesUseFuel() && compound.hasKey(NBT_ENERGY)) {
+      CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
+    }
     super.readFromNBT(compound);
   }
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
@@ -286,8 +348,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.writeInvoToNBT(compound);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_FUEL, getFuelCurrent());
-    compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
     compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger("fueldisplay", fuelDisplay);
+    this.initEnergyStorage();
+    if (energyStorage != null && doesUseFuel()) {
+      compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
+    }
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {
@@ -337,11 +403,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
   public int getSpeed() {
-    if (this.usesFuel == false) {
+    if (this.doesUseFuel() == false) {
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
-      if (this.currentFuel == 0) {
+      if (this.getFuelCurrent() == 0) {
         return 0; // do not run without fuel
       }
       else {
@@ -365,9 +431,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
   net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
   net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
+  private EnergyStore energyStorage;
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return true;
+    }
+    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
       return true;
     }
     return super.hasCapability(capability, facing);
@@ -375,13 +445,31 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
-    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       if (facing == EnumFacing.DOWN)
         return (T) handlerBottom;
       else if (facing == EnumFacing.UP)
         return (T) handlerTop;
       else
         return (T) handlerSide;
+    }
+    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
+      this.initEnergyStorage();
+      return CapabilityEnergy.ENERGY.cast(energyStorage);
+    }
+    //    
     return super.getCapability(capability, facing);
+  }
+  public void initEnergyStorage() {
+    if (energyStorage == null)
+      energyStorage = new EnergyStore();
+  }
+  @Override
+  public void toggleFuelDisplay() {
+    this.fuelDisplay = (this.fuelDisplay + 1) % 2;
+  }
+  @Override
+  public boolean getFuelDisplay() {
+    return this.fuelDisplay == 0;
   }
 }

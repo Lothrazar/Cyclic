@@ -25,7 +25,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class WorldGenModule extends BaseEventModule implements IHasConfig {
+public class WorldModule extends BaseEventModule implements IHasConfig {
   final static int weightOre = 0;
   final static int weightPlants = 2;
   public static boolean netherOreEnabled;

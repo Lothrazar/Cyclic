@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHarvester extends GuiBaseContainer {
-  private TileEntityHarvester tile;
+ // private TileEntityHarvester tile;
   boolean debugLabels = false;
   private GuiButtonToggleSize btnSize;
   private GuiButtonTooltip btnSpray;
@@ -33,7 +34,7 @@ public class GuiHarvester extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int btnId = 2;
+    int btnId = 20;
     int x = this.guiLeft + Const.PAD + 22;
     int y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(btnId++,
@@ -76,7 +77,7 @@ public class GuiHarvester extends GuiBaseContainer {
           this.guiTop + 2 * Const.SQ + ContainerHarvester.SLOTY - 1,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    super.tryDrawFuelSlot(ContainerUser.SLOTX_FUEL - 1, ContainerUser.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -67,7 +67,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return ore;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (WorldGenModule.oreSpawns == false) {
+    if (WorldModule.oreSpawns == false) {
       return;
     } //config has disabled spawning no matter what
     if (this.spawn != null) {

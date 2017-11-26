@@ -54,7 +54,8 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     this.renderHoveredToolTip(mouseX, mouseY);
   }
   @Override
-  protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    this.drawDefaultBackground();//dim the background as normal
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(background);
     int k = this.guiLeft;

@@ -31,7 +31,7 @@ import com.lothrazar.cyclicmagic.module.RecipeChangerModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
 import com.lothrazar.cyclicmagic.module.TextInfoModule;
 import com.lothrazar.cyclicmagic.module.VillagerCreateModule;
-import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.module.WorldModule;
 
 public class ModuleRegistry {
   public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
@@ -72,7 +72,7 @@ public class ModuleRegistry {
     register(new StackSizeModule());
     register(new ItemToolsModule());
     register(new VillagerCreateModule());
-    register(new WorldGenModule());
+    register(new WorldModule());
     register(new EntityMinecartModule());
     register(new FluidsModule());
   }

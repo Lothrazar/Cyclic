@@ -9,12 +9,14 @@ import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.component.wandtorch.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
+import com.lothrazar.cyclicmagic.item.ItemEnderEyeReuse;
 import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
 import com.lothrazar.cyclicmagic.item.ItemFangs;
@@ -36,6 +38,7 @@ import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
 import com.lothrazar.cyclicmagic.item.bauble.ItemGloveClimb;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -82,6 +85,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableSoulstone;
   private boolean enablePlayerLauncher;
   private boolean evokerFang;
+  private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onPreInit() {
@@ -135,11 +139,15 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ItemFireExtinguish fire_killer = new ItemFireExtinguish();
       ItemRegistry.register(fire_killer, "fire_killer");
     }
+    if (enderEyeReuse) {
+      ItemEnderEyeReuse ender_eye_orb = new ItemEnderEyeReuse();
+      ItemRegistry.register(ender_eye_orb, "ender_eye_orb");
+      EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, "ender_eye_orb", 1029);
+    }
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.register(sack_ender, "sack_ender");
       LootTableRegistry.registerLoot(sack_ender);
-      //  ItemRegistry.registerWithJeiDescription(sack_ender);
     }
     if (enableTorchLauncher) {
       ItemTorchThrower tool_torch_launcher = new ItemTorchThrower();
@@ -148,7 +156,6 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enableStirrups) {
       ItemStirrups tool_mount = new ItemStirrups();
       ItemRegistry.register(tool_mount, "tool_mount");
-      // ItemRegistry.registerWithJeiDescription(tool_mount);
     }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
@@ -288,6 +295,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    this.enderEyeReuse = config.getBoolean("item.ender_eye_orb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     evokerFang = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
