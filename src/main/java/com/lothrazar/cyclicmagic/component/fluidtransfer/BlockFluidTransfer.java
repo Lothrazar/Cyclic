@@ -117,7 +117,7 @@ public class BlockFluidTransfer extends BlockBaseFacing implements ITileEntityPr
       if (world.isRemote == false) { //server side
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
-          String amtStr = fs.amount + " / " + TileEntityFluidTransfer.TANK_FULL + " ";
+          String amtStr = fs.amount + " / " + te.getCapacity() + " ";
           UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
         }
         else {
