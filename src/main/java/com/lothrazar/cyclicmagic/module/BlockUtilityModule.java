@@ -109,12 +109,12 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     
     
     
-    
+    //TODO: new config
 
       BlockFluidTransfer fluid_xfer = new BlockFluidTransfer();
-      BlockRegistry.registerBlock(fluid_xfer,  "fluid_xfer", null);
+      BlockRegistry.registerBlock(fluid_xfer,  "fluid_pump", null);
       
-      GameRegistry.registerTileEntity(TileEntityFluidTransfer.class, "fluid_xfer_te");
+      GameRegistry.registerTileEntity(TileEntityFluidTransfer.class, "fluid_pump_te");
       
     
 

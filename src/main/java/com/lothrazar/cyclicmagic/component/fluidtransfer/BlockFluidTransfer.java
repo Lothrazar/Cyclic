@@ -2,13 +2,12 @@ package com.lothrazar.cyclicmagic.component.fluidtransfer;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -28,15 +26,13 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidTransfer extends BlockBaseFacing implements ITileEntityProvider, IHasRecipe  {
+public class BlockFluidTransfer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe  {
   public BlockFluidTransfer() {
-    super(Material.GLASS);
+    super(Material.WOOD);
     this.setHardness(3F);
     this.setResistance(3F);
-    this.setSoundType(SoundType.GLASS);
+//    this.setSoundType(SoundType.GLASS);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
@@ -73,16 +69,7 @@ public class BlockFluidTransfer extends BlockBaseFacing implements ITileEntityPr
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
- 
-  @SideOnly(Side.CLIENT)
-  @Override
-  public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.TRANSLUCENT; // http://www.minecraftforge.net/forum/index.php?topic=18754.0
-  }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) { // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
-    return false;
-  }
+  
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidTransfer();
