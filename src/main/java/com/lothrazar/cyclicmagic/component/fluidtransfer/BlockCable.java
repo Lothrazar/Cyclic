@@ -144,7 +144,7 @@ public class BlockCable extends BlockContainer {
       face = EnumFacing.UP;
       con = pos.up();
     }
-    tile.setConnectedFace(face);
+  //  tile.setConnectedFace(face);
     tile.setConnectedPos(con);
     return world.getBlockState(pos);
   }

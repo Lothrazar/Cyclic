@@ -6,13 +6,18 @@ import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable.EnumConnectType;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidStack;
 
-public class TileCable extends TileEntityBaseMachineFluid {
+public class TileCable extends TileEntityBaseMachineFluid implements ITickable{
+  private static final int TIMER_FULL = 100;
   private BlockPos connectedInventory;
+  /**
+   * todo: unused??
+   */
   private EnumFacing inventoryFace;
   public EnumConnectType north, south, east, west, up, down;
   public TileCable() {
@@ -87,10 +92,30 @@ public class TileCable extends TileEntityBaseMachineFluid {
   public void setConnectedPos(BlockPos connectedInventory) {
     this.connectedInventory = connectedInventory;
   }
-  public EnumFacing getConnectedFace() {
-    return inventoryFace;
+//  public EnumFacing getConnectedFace() {
+//    return inventoryFace;
+//  }
+//  public void setConnectedFace(EnumFacing inventoryFace) {
+//    this.inventoryFace = inventoryFace;
+//  }
+  private boolean isPushingFluid() {
+    return this.timer > 0;
   }
-  public void setConnectedFace(EnumFacing inventoryFace) {
-    this.inventoryFace = inventoryFace;
+  @Override
+  public void update() {
+    if (this.timer > 0) {
+      this.timer--;
+    }
+  }
+  /**
+   * if i get filled a real amount, set timer uptur
+   */
+  @Override
+  public int fill(FluidStack resource, boolean doFill) {
+    int filled = super.fill(resource, doFill);
+    if (filled > 0 && doFill) {
+      this.timer = TIMER_FULL;
+    }
+    return filled;
   }
 }
