@@ -26,8 +26,8 @@ public class TileEntityFluidTransfer extends TileEntityBaseMachineFluid implemen
   @Override
   public void update() {
     BlockPos posSide;
-    EnumFacing facingTo = this.getCurrentFacing();
-    // ModCyclic.logger.log("I am facing"+facingTo.name());
+    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
+ 
     for (EnumFacing side : EnumFacing.values()) {
       if (side == facingTo) {
         continue;
