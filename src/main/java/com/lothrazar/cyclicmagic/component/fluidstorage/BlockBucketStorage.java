@@ -147,7 +147,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       if (world.isRemote == false) { //server side
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
-          String amtStr = fs.amount + " / " + TileEntityBucketStorage.TANK_FULL + " ";
+          String amtStr = fs.amount + " / " + te.getCapacity() + " ";
           UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
         }
         else {
