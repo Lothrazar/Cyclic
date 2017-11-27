@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/fluid_pump_back",
+        "up": "cyclicmagic:blocks/fluid_pump_front",
+        "north": "cyclicmagic:blocks/observer_up",
+        "east": "cyclicmagic:blocks/observer_left",
+        "south": "cyclicmagic:blocks/observer_up",
+        "west": "cyclicmagic:blocks/observer_right"
+    }
+}
