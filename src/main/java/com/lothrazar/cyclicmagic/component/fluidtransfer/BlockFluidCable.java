@@ -33,7 +33,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCable extends BlockContainer {
+public class BlockFluidCable extends BlockContainer {
   public static enum EnumConnectType implements IStringSerializable {
     CONNECT("connect"), STORAGE("storage"), NULL("null");
     String name;
@@ -45,7 +45,7 @@ public class BlockCable extends BlockContainer {
       return name;
     }
   }
-  public BlockCable() {
+  public BlockFluidCable() {
     super(Material.IRON);
     this.setHardness(1.4F);
   }
@@ -85,9 +85,9 @@ public class BlockCable extends BlockContainer {
     return 0;
   }
   IBlockState getNewState(IBlockAccess world, BlockPos pos) {
-    if (!(world.getTileEntity(pos) instanceof TileCable))
+    if (!(world.getTileEntity(pos) instanceof TileEntityFluidCable))
       return world.getBlockState(pos);
-    TileCable tile = (TileCable) world.getTileEntity(pos);
+    TileEntityFluidCable tile = (TileEntityFluidCable) world.getTileEntity(pos);
     EnumFacing face = null;
     BlockPos con = null;
     Map<EnumFacing, EnumConnectType> oldMap = tile.getConnects();
@@ -163,11 +163,11 @@ public class BlockCable extends BlockContainer {
   }
   @Override
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-    if (!(worldIn.getTileEntity(pos) instanceof TileCable)) {
+    if (!(worldIn.getTileEntity(pos) instanceof TileEntityFluidCable)) {
       return;
     }
     state = state.getActualState(worldIn, pos);
-    TileCable tile = (TileCable) worldIn.getTileEntity(pos);
+    TileEntityFluidCable tile = (TileEntityFluidCable) worldIn.getTileEntity(pos);
     float f = 0.3125F;
     float f1 = 0.6875F;
     float f2 = 0.3125F;
@@ -202,10 +202,10 @@ public class BlockCable extends BlockContainer {
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    if (!(source.getTileEntity(pos) instanceof TileCable))
+    if (!(source.getTileEntity(pos) instanceof TileEntityFluidCable))
       return FULL_BLOCK_AABB;
     state = state.getActualState(source, pos);
-    TileCable tile = (TileCable) source.getTileEntity(pos);
+    TileEntityFluidCable tile = (TileEntityFluidCable) source.getTileEntity(pos);
     float f = 0.3125F;
     float f1 = 0.6875F;
     float f2 = 0.3125F;
@@ -266,7 +266,7 @@ public class BlockCable extends BlockContainer {
  
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileCable();
+    return new TileEntityFluidCable();
   } 
   
   

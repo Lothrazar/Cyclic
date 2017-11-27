@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
  
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -72,7 +72,7 @@ public class ModelCable extends ModelBase {
     this.down.addBox(-2.0F, -2.0F, 0.0F, 4, 4, 8, 0.0F);
     this.setRotateAngle(down, -1.5707963267948966F, 0.0F, 0.0F);
   }
-  private boolean detectConnections(TileCable tile) {
+  private boolean detectConnections(TileEntityFluidCable tile) {
     boolean a = connected(tile.north) && connected(tile.south) && !connected(tile.west) && !connected(tile.east) && !connected(tile.up) && !connected(tile.down);
     boolean b = !connected(tile.north) && !connected(tile.south) && connected(tile.west) && connected(tile.east) && !connected(tile.up) && !connected(tile.down);
     boolean c = !connected(tile.north) && !connected(tile.south) && !connected(tile.west) && !connected(tile.east) && connected(tile.up) && connected(tile.down);
@@ -81,7 +81,7 @@ public class ModelCable extends ModelBase {
   private boolean connected(EnumConnectType c) {
     return c == EnumConnectType.STORAGE || c == EnumConnectType.CONNECT;
   }
-  public void render(TileCable tile) {
+  public void render(TileEntityFluidCable tile) {
     float f5 = 0.0625F;
     if (tile.north == EnumConnectType.CONNECT) {
       this.north.render(f5);

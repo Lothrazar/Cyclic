@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class CableRenderer extends TileEntitySpecialRenderer<TileCable> {
+public class CableRenderer extends TileEntitySpecialRenderer<TileEntityFluidCable> {
   ModelCable model;
   private final ResourceLocation link = new ResourceLocation(Const.MODID , "textures/tile/link.png");
  
@@ -16,7 +16,7 @@ public class CableRenderer extends TileEntitySpecialRenderer<TileCable> {
     model = new ModelCable();
   }
   @Override
-  public void render(TileCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+  public void render(TileEntityFluidCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
     if (te == null ){//|| te.getKind() == null || !(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockCable)) {
       return;
     }

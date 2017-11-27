@@ -4,25 +4,23 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.FluidStack;
+ 
 
-public class TileCable extends TileEntityBaseMachineFluid implements ITickable {
+public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_FULL = 80;
   private static final int TRANSFER_PER_TICK = 5;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
-  /**
-   * todo: unused??
-   */
+
   public EnumConnectType north, south, east, west, up, down;
-  public TileCable() {
+  public TileEntityFluidCable() {
     super(100);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
@@ -118,9 +116,9 @@ public class TileCable extends TileEntityBaseMachineFluid implements ITickable {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
         boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, TRANSFER_PER_TICK);
-        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileCable) {
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
           //TODO: not so compatible with other fluid systems. itl do i guess
-          TileCable cable = (TileCable) world.getTileEntity(posTarget);
+          TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }
       }

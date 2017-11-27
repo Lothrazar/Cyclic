@@ -39,9 +39,9 @@ public class TileEntityFluidTransfer extends TileEntityBaseMachineFluid implemen
     }
     //looping is over. now try to DEPOSIT fluid next door
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
-    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileCable) {
+    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityFluidCable) {
       //TODO: not so compatible with other fluid systems. itl do i guess
-      TileCable cable = (TileCable) world.getTileEntity(pos.offset(facingTo));
+      TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(pos.offset(facingTo));
       cable.updateIncomingFace(facingTo.getOpposite());
     }
   }

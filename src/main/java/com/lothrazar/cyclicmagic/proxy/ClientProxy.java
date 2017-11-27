@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.CableRenderer;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileCable;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -80,7 +80,7 @@ public class ClientProxy extends CommonProxy {
     
     
 
-    ClientRegistry.bindTileEntitySpecialRenderer(TileCable.class, new CableRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer());
   }
   @Override
   public void init() {
