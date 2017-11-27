@@ -16,9 +16,9 @@ import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidTransfer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidTransfer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -111,10 +111,10 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     
     //TODO: new config
 
-      BlockFluidTransfer fluid_xfer = new BlockFluidTransfer();
+      BlockFluidPump fluid_xfer = new BlockFluidPump();
       BlockRegistry.registerBlock(fluid_xfer,  "fluid_pump", null);
       
-      GameRegistry.registerTileEntity(TileEntityFluidTransfer.class, "fluid_pump_te");
+      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       
     
 

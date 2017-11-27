@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
@@ -11,14 +13,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
- 
 
 public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
-  private static final int TIMER_FULL = 80;
-  private static final int TRANSFER_PER_TICK = 5;
+  private static final int TIMER_SIDE_INPUT = 80;
+  private static final int TIMER_TRIGGER = 10;
+  private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
-
   public EnumConnectType north, south, east, west, up, down;
   public TileEntityFluidCable() {
     super(100);
@@ -100,18 +101,30 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
     this.connectedInventory = connectedInventory;
   }
   public void updateIncomingFace(EnumFacing inputFrom) {
-    mapIncoming.put(inputFrom, TIMER_FULL);
+    mapIncoming.put(inputFrom, TIMER_SIDE_INPUT);
   }
   private boolean isFluidIncomingFromFace(EnumFacing face) {
     return mapIncoming.get(face) > 0;
   }
   @Override
   public void update() {
-    //tick down any incoming sides
     tickDownIncomingFaces();
+//    if (this.updateTimerIsZero() == false) {
+//      return;
+//    }
+//    this.timer = TIMER_TRIGGER;
+    //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
     BlockPos posTarget;
-    for (EnumFacing f : EnumFacing.values()) {
+    //Actually shuffle the positions. if we are at a 3 way juncture, spread out where it goes first
+    ArrayList<Integer> shuffledFaces = new ArrayList<>();
+    for (int i = 1; i < EnumFacing.values().length; i++) {
+      shuffledFaces.add(i);
+    }
+    Collections.shuffle(shuffledFaces);
+    for (int i : shuffledFaces) {
+      EnumFacing f = EnumFacing.values()[i];
+      //      for (EnumFacing f : EnumFacing.values()) {
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);

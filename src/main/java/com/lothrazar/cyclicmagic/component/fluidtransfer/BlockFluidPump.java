@@ -27,12 +27,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class BlockFluidTransfer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe  {
-  public BlockFluidTransfer() {
+public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe  {
+  public BlockFluidPump() {
     super(Material.WOOD);
     this.setHardness(3F);
     this.setResistance(3F);
-//    this.setSoundType(SoundType.GLASS);
+ 
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
@@ -45,8 +45,8 @@ public class BlockFluidTransfer extends BlockBaseFacingOmni implements ITileEnti
     Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
     TileEntity ent = world.getTileEntity(pos);
     ItemStack stack = new ItemStack(item);
-    if (ent != null && ent instanceof TileEntityFluidTransfer) {
-      TileEntityFluidTransfer te = (TileEntityFluidTransfer) ent;
+    if (ent != null && ent instanceof TileEntityFluidPump) {
+      TileEntityFluidPump te = (TileEntityFluidPump) ent;
       FluidStack fs = te.getCurrentFluidStack();
       if (fs != null) {
         UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
@@ -63,7 +63,7 @@ public class BlockFluidTransfer extends BlockBaseFacingOmni implements ITileEnti
       NBTTagCompound tags = stack.getTagCompound();
       int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
       String resourceStr = tags.getString(NBT_FLUIDTYPE);
-      TileEntityFluidTransfer container = (TileEntityFluidTransfer) worldIn.getTileEntity(pos);
+      TileEntityFluidPump container = (TileEntityFluidPump) worldIn.getTileEntity(pos);
       Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
       if (fluidObj != null)
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
@@ -72,7 +72,7 @@ public class BlockFluidTransfer extends BlockBaseFacingOmni implements ITileEnti
   
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityFluidTransfer();
+    return new TileEntityFluidPump();
   }
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override

@@ -8,12 +8,12 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityFluidTransfer extends TileEntityBaseMachineFluid implements ITickable {
+public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TRANSFER_PER_TICK = 100;
-  public TileEntityFluidTransfer(int invoSize) {
+  public TileEntityFluidPump(int invoSize) {
     super(invoSize);
   }
-  public TileEntityFluidTransfer() {
+  public TileEntityFluidPump() {
     super(Fluid.BUCKET_VOLUME);
   }
   /**
