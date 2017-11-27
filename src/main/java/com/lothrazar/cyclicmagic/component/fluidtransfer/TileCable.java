@@ -1,34 +1,23 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
-import java.util.List;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable.EnumConnectType;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.IItemHandler;
 
-public class TileCable extends TileEntity {
+public class TileCable extends TileEntityBaseMachineFluid {
   private BlockPos connectedInventory;
-  private EnumFacing inventoryFace; 
+  private EnumFacing inventoryFace;
   public EnumConnectType north, south, east, west, up, down;
- 
-  public enum CableKind {
-    kabel, exKabel, imKabel, storageKabel;
-  }
   public TileCable() {
- 
+    super(100);
   }
-  
- 
   public Map<EnumFacing, EnumConnectType> getConnects() {
     Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
     map.put(EnumFacing.NORTH, north);
@@ -47,13 +36,12 @@ public class TileCable extends TileEntity {
     up = map.get(EnumFacing.UP);
     down = map.get(EnumFacing.DOWN);
   }
- 
+  @SuppressWarnings("serial")
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     inventoryFace = EnumFacing.byName(compound.getString("inventoryFace"));
- 
     if (compound.hasKey("north"))
       north = EnumConnectType.valueOf(compound.getString("north"));
     if (compound.hasKey("south"))
@@ -66,7 +54,6 @@ public class TileCable extends TileEntity {
       up = EnumConnectType.valueOf(compound.getString("up"));
     if (compound.hasKey("down"))
       down = EnumConnectType.valueOf(compound.getString("down"));
-  
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -74,7 +61,6 @@ public class TileCable extends TileEntity {
     compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
     if (inventoryFace != null)
       compound.setString("inventoryFace", inventoryFace.toString());
-    
     if (north != null)
       compound.setString("north", north.toString());
     if (south != null)
@@ -87,7 +73,6 @@ public class TileCable extends TileEntity {
       compound.setString("up", up.toString());
     if (down != null)
       compound.setString("down", down.toString());
-    
     return compound;
   }
   @Override
@@ -96,7 +81,6 @@ public class TileCable extends TileEntity {
     AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - renderExtention, pos.getY() - renderExtention, pos.getZ() - renderExtention, pos.getX() + 1 + renderExtention, pos.getY() + 1 + renderExtention, pos.getZ() + 1 + renderExtention);
     return bb;
   }
- 
   public BlockPos getConnectedPos() {
     return connectedInventory;
   }
@@ -109,7 +93,4 @@ public class TileCable extends TileEntity {
   public void setConnectedFace(EnumFacing inventoryFace) {
     this.inventoryFace = inventoryFace;
   }
- 
- 
- 
 }

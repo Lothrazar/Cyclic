@@ -1,9 +1,8 @@
 package com.lothrazar.cyclicmagic.component.fluidstorage;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidTransfer;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityBucketStorage extends TileEntityFluidTransfer implements IFluidHandler {
+public class TileEntityBucketStorage extends TileEntityBaseMachineFluid {
   public TileEntityBucketStorage() {
     super(Fluid.BUCKET_VOLUME * 64);
   }

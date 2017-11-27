@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -26,6 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -265,4 +268,29 @@ public class BlockCable extends BlockContainer {
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileCable();
   } 
+  
+  
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    // check the TE
+    TileEntityBaseMachineFluid te = (TileEntityBaseMachineFluid) world.getTileEntity(pos);
+    boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
+    if (te != null) {
+      if (world.isRemote == false) { //server side
+        FluidStack fs = te.getCurrentFluidStack();
+        if (fs != null) {
+          String amtStr = fs.amount + " / " + te.getCapacity() + " ";
+          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
+        }
+        else {
+          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.empty"));
+        }
+      }
+    }
+    // otherwise return true if it is a fluid handler to prevent in world placement
+    return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+  }
+ 
+  
+  
 }
