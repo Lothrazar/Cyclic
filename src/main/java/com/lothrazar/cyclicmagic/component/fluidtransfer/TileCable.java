@@ -5,6 +5,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -12,16 +13,20 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 
-public class TileCable extends TileEntityBaseMachineFluid implements ITickable{
-  private static final int TIMER_FULL = 100;
+public class TileCable extends TileEntityBaseMachineFluid implements ITickable {
+  private static final int TIMER_FULL = 80;
+  private static final int TRANSFER_PER_TICK = 5;
+  private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
   /**
    * todo: unused??
    */
-  private EnumFacing inventoryFace;
   public EnumConnectType north, south, east, west, up, down;
   public TileCable() {
     super(100);
+    for (EnumFacing f : EnumFacing.values()) {
+      mapIncoming.put(f, 0);
+    }
   }
   public Map<EnumFacing, EnumConnectType> getConnects() {
     Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
@@ -45,8 +50,11 @@ public class TileCable extends TileEntityBaseMachineFluid implements ITickable{
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
+    for (EnumFacing f : EnumFacing.values()) {
+      mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
+    }
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
-    inventoryFace = EnumFacing.byName(compound.getString("inventoryFace"));
+    //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
     if (compound.hasKey("north"))
       north = EnumConnectType.valueOf(compound.getString("north"));
     if (compound.hasKey("south"))
@@ -63,9 +71,10 @@ public class TileCable extends TileEntityBaseMachineFluid implements ITickable{
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
+    for (EnumFacing f : EnumFacing.values()) {
+      compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
+    }
     compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
-    if (inventoryFace != null)
-      compound.setString("inventoryFace", inventoryFace.toString());
     if (north != null)
       compound.setString("north", north.toString());
     if (south != null)
@@ -92,30 +101,35 @@ public class TileCable extends TileEntityBaseMachineFluid implements ITickable{
   public void setConnectedPos(BlockPos connectedInventory) {
     this.connectedInventory = connectedInventory;
   }
-//  public EnumFacing getConnectedFace() {
-//    return inventoryFace;
-//  }
-//  public void setConnectedFace(EnumFacing inventoryFace) {
-//    this.inventoryFace = inventoryFace;
-//  }
-  private boolean isPushingFluid() {
-    return this.timer > 0;
+  public void updateIncomingFace(EnumFacing inputFrom) {
+    mapIncoming.put(inputFrom, TIMER_FULL);
+  }
+  private boolean isFluidIncomingFromFace(EnumFacing face) {
+    return mapIncoming.get(face) > 0;
   }
   @Override
   public void update() {
-    if (this.timer > 0) {
-      this.timer--;
+    //tick down any incoming sides
+    tickDownIncomingFaces();
+    //now look over any sides that are NOT incoming, try to export
+    BlockPos posTarget;
+    for (EnumFacing f : EnumFacing.values()) {
+      if (this.isFluidIncomingFromFace(f) == false) {
+        //ok, fluid is not incoming from here. so lets output some
+        posTarget = pos.offset(f);
+        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, TRANSFER_PER_TICK);
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileCable) {
+          //TODO: not so compatible with other fluid systems. itl do i guess
+          TileCable cable = (TileCable) world.getTileEntity(posTarget);
+          cable.updateIncomingFace(f.getOpposite());
+        }
+      }
     }
   }
-  /**
-   * if i get filled a real amount, set timer uptur
-   */
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    int filled = super.fill(resource, doFill);
-    if (filled > 0 && doFill) {
-      this.timer = TIMER_FULL;
+  public void tickDownIncomingFaces() {
+    for (EnumFacing f : EnumFacing.values()) {
+      if (mapIncoming.get(f) > 0)
+        mapIncoming.put(f, mapIncoming.get(f) - 1);
     }
-    return filled;
   }
 }

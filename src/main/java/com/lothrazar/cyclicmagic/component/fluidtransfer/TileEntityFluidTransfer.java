@@ -9,11 +9,10 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidTransfer extends TileEntityBaseMachineFluid implements ITickable {
-  private static final int TRANSFER_PER_TICK = 50;
+  private static final int TRANSFER_PER_TICK = 100;
   public TileEntityFluidTransfer(int invoSize) {
     super(invoSize);
   }
- 
   public TileEntityFluidTransfer() {
     super(Fluid.BUCKET_VOLUME);
   }
@@ -39,6 +38,11 @@ public class TileEntityFluidTransfer extends TileEntityBaseMachineFluid implemen
       UtilFluid.tryFillTankFromPosition(world, posSide, sideOpp, tank, TRANSFER_PER_TICK);
     }
     //looping is over. now try to DEPOSIT fluid next door
-    UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
+    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileCable) {
+      //TODO: not so compatible with other fluid systems. itl do i guess
+      TileCable cable = (TileCable) world.getTileEntity(pos.offset(facingTo));
+      cable.updateIncomingFace(facingTo.getOpposite());
+    }
   }
 }
