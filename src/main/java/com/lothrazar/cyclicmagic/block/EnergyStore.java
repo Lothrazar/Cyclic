@@ -3,10 +3,10 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyStore extends EnergyStorage {
   public static final int DEFAULT_CAPACITY = 1000000;
-  public static final int DEFAULT_FLOW = 100;
+  public static final int MAX_INPUT = 5000;
   public EnergyStore() {
     super(DEFAULT_CAPACITY);
-    this.maxReceive = DEFAULT_FLOW;
+    this.maxReceive = MAX_INPUT;
   }
   public void setEnergyStored(int en) {
     if (en < 0) {

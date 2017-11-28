@@ -88,28 +88,30 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       if (this.getFuelCurrent() >= this.getFuelCost()) {
         this.energyStorage.extractEnergy(this.getFuelCost(), false);
       }
-      ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-      //pull in item from fuel slot, if it has fuel burn time
-      int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-      if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack) {
-        int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
-        this.energyStorage.setEnergyStored(newEnergy);
-        if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
-          this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
-        }
-        else {
-          itemstack.shrink(1);
-        }
+    }
+  }
+  protected void importFuel() {
+    ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+    //pull in item from fuel slot, if it has fuel burn time
+    int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
+    if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack) {
+      int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
+      this.energyStorage.setEnergyStored(newEnergy);
+      if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
+        this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
       }
-      //what if item in fuel slot is an RF battery type item? start draining it ya
-      if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-        IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
-        if (storage != null && storage.getEnergyStored() > 0) {
-          int canWithdraw = Math.min(EnergyStore.DEFAULT_FLOW, storage.getEnergyStored());
-          if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
-            storage.extractEnergy(canWithdraw, false);
-            this.setFuelCurrent(this.getFuelCurrent() + canWithdraw);
-          }
+      else {
+        itemstack.shrink(1);
+      }
+    }
+    //what if item in fuel slot is an RF battery type item? start draining it ya
+    if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+      IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
+      if (storage != null && storage.getEnergyStored() > 0) {
+        int canWithdraw = Math.min(EnergyStore.MAX_INPUT, storage.getEnergyStored());
+        if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
+          storage.extractEnergy(canWithdraw, false);
+          this.setFuelCurrent(this.getFuelCurrent() + canWithdraw);
         }
       }
     }
@@ -126,9 +128,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return super.isRunning();
   }
   public boolean updateFuelIsBurning() {
-    if (this.isRunning() && doesUseFuel() && hasEnoughFuel()) {
-      this.consumeFuel();
-      return this.hasEnoughFuel();
+    if (this.doesUseFuel()) {
+      this.importFuel();
+      if (this.hasEnoughFuel()) {
+        this.consumeFuel();
+      }
+      else {
+        // dont run, dont count down, just stop now 
+        return false;
+      }
     }
     return true;
   }
@@ -152,7 +160,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         IEnergyStorage handlerFrom = teConnected.getCapability(CapabilityEnergy.ENERGY, sideOpp);
         if (handlerFrom != null && handlerTo != null) {
           //true means simulate the extract. then if it worked go for real
-          int drain = handlerFrom.extractEnergy(EnergyStore.DEFAULT_FLOW, true);
+          int drain = handlerFrom.extractEnergy(EnergyStore.MAX_INPUT, true);
           if (drain > 0) {
             int filled = handlerTo.receiveEnergy(drain, false);
             handlerFrom.extractEnergy(filled, false);

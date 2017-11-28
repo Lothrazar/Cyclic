@@ -302,7 +302,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return;
     }
     this.shiftAllUp(1);
-    this.updateFuelIsBurning();
+
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;
       this.spawnParticlesAbove();

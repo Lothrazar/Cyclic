@@ -83,6 +83,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
+
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -91,7 +95,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (isRunning()) {
-        if (this.updateFuelIsBurning() && this.updateTimerIsZero()) {
+        if (  this.updateTimerIsZero()) {
           if (updateMiningProgress()) {
             this.timer = TIMER_FULL;
           }
