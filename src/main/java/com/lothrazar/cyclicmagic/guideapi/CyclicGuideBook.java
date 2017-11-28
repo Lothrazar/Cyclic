@@ -155,18 +155,18 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
-    ResourceLocation location = new ResourceLocation(GUIDE_API_MOD_ID, Const.MODID + "_guidebook");
-    IRecipe recipe = new ShapedOreRecipe(location, bookStack,
-        " b ",
-        "coc",
-        " s ",
-        'c', Blocks.COBBLESTONE_WALL,
-        'b', Items.BOOK,
-        'o', Blocks.GRAVEL,
-        's', Items.STICK);
-    //replace with guideapi prefix
-    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
-    RecipeRegistry.add(recipe, location);
+//    ResourceLocation location = new ResourceLocation(GUIDE_API_MOD_ID, Const.MODID + "_guidebook");
+//    IRecipe recipe = new ShapedOreRecipe(location, bookStack,
+//        " b ",
+//        "coc",
+//        " s ",
+//        'c', Blocks.COBBLESTONE_WALL,
+//        'b', Items.BOOK,
+//        'o', Blocks.GRAVEL,
+//        's', Items.STICK);
+//    //replace with guideapi prefix
+//    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
+//    RecipeRegistry.add(recipe, location);
   }
   @Override
   public void handlePost(ItemStack bookStack) {
