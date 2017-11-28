@@ -50,6 +50,11 @@ public class BlockFluidCable extends BlockContainer {
     this.setHardness(1.4F);
   }
   @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+  }
+  @Override
   public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return false;
   }
@@ -74,11 +79,9 @@ public class BlockFluidCable extends BlockContainer {
   public EnumBlockRenderType getRenderType(IBlockState state) {
     return EnumBlockRenderType.INVISIBLE;
   }
- 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-
-    worldIn.markChunkDirty(pos,  worldIn.getTileEntity(pos));
+    worldIn.markChunkDirty(pos, worldIn.getTileEntity(pos));
   }
   @Override
   public int getMetaFromState(IBlockState state) {
@@ -101,7 +104,6 @@ public class BlockFluidCable extends BlockContainer {
     }
     boolean storage = false;
     boolean first = false;
- 
     for (EnumFacing f : EnumFacing.values()) {
       if (stor == f && first)
         continue;
@@ -118,7 +120,6 @@ public class BlockFluidCable extends BlockContainer {
         newMap.put(f, neu);
       }
     }
-  
     tile.setConnects(newMap);
     if (tile.north == EnumConnectType.STORAGE) {
       face = EnumFacing.NORTH;
@@ -144,11 +145,10 @@ public class BlockFluidCable extends BlockContainer {
       face = EnumFacing.UP;
       con = pos.up();
     }
-  //  tile.setConnectedFace(face);
+    //  tile.setConnectedFace(face);
     tile.setConnectedPos(con);
     return world.getBlockState(pos);
   }
-  
   @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -245,9 +245,7 @@ public class BlockFluidCable extends BlockContainer {
     if (FluidUtil.getFluidHandler((World) worldIn, offset, side) != null)
       return EnumConnectType.STORAGE;
     return EnumConnectType.NULL;
-  
   }
- 
   public static EnumFacing get(BlockPos a, BlockPos b) {
     if (a.up().equals(b))
       return EnumFacing.DOWN;
@@ -263,13 +261,10 @@ public class BlockFluidCable extends BlockContainer {
       return EnumFacing.NORTH;
     return null;
   }
- 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidCable();
-  } 
-  
-  
+  }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
@@ -290,7 +285,4 @@ public class BlockFluidCable extends BlockContainer {
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
- 
-  
-  
 }

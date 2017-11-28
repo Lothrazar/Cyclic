@@ -77,11 +77,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
-  public void consumeFuel(int amt) {
-    for (int i = 0; i < amt; i++) {
-      this.consumeFuel();
-    }
-  }
+ 
   public boolean doesUseFuel() {
     return this.fuelCost > 0;
   }
@@ -90,8 +86,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public void consumeFuel() {
     if (doesUseFuel()) {
-      if (this.getFuelCurrent() > 0) {
-        this.energyStorage.extractEnergy(getFuelCost(), false);
+      if (this.getFuelCurrent() >= this.getFuelCost()) {
+        this.energyStorage.extractEnergy(this.getFuelCost(), false);
       }
       ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
       //pull in item from fuel slot, if it has fuel burn time
@@ -109,7 +105,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       //what if item in fuel slot is an RF battery type item? start draining it ya
       if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
         IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
-        if (storage != null) {
+        if (storage != null && storage.getEnergyStored() > 0) {
           int canWithdraw = Math.min(EnergyStore.DEFAULT_FLOW, storage.getEnergyStored());
           if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
             storage.extractEnergy(canWithdraw, false);
@@ -131,9 +127,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return super.isRunning();
   }
   public boolean updateFuelIsBurning() {
-    if (doesUseFuel()) {
+    if (this.isRunning() && doesUseFuel() && hasEnoughFuel()) {
       this.consumeFuel();
-      return hasFuel();
+      return this.hasEnoughFuel();
     }
     return true;
   }
@@ -170,16 +166,16 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   protected void spawnParticlesAbove() {
     //turn off when its off
-    if (this.isRunning() && this.hasFuel()) {
+    if (this.isRunning() ) {//&& this.hasEnoughFuel()
       super.spawnParticlesAbove();
     }
   }
   @Override
-  public boolean hasFuel() {
+  public boolean hasEnoughFuel() {
     if (doesUseFuel() == false) {
       return true;
     }
-    return this.getFuelCurrent() > 0;
+    return this.getFuelCurrent() >= this.getFuelCost();
   }
   protected boolean updateTimerIsZero() {
     timer -= this.getSpeed();

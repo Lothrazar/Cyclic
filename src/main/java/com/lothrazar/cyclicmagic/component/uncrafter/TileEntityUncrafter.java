@@ -67,7 +67,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       return;
     }
     this.spawnParticlesAbove();// its processing
-    this.updateFuelIsBurning();
+    if(this.updateFuelIsBurning() == false){
+      return;
+    }
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
