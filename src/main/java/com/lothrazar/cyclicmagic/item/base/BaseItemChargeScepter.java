@@ -29,8 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * TODO: extend BaseItemProjectile? then make a third intermediate for the
- * single use ones? maybe
+ * TODO: extend BaseItemProjectile? then make a third intermediate for the single use ones? maybe
  * 
  * 
  * @author Sam

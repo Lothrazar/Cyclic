@@ -51,8 +51,7 @@ public abstract class BaseItemMinecart extends BaseItem {
   public static final IBehaviorDispenseItem CYCLICMINECART_DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem() {
     private final BehaviorDefaultDispenseItem behaviourDefaultDispenseItem = new BehaviorDefaultDispenseItem();
     /**
-     * Dispense the specified stack, play the dispense sound and spawn
-     * particles.
+     * Dispense the specified stack, play the dispense sound and spawn particles.
      */
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
       if (stack.getItem() instanceof BaseItemMinecart == false) {

@@ -85,14 +85,9 @@ public class ItemBlockScaffolding extends ItemBlock {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
   /**
-   * This event is fired on both sides whenever the player right clicks while
-   * targeting a block. This event controls which of
-   * {@link net.minecraft.block.Block#onBlockActivated} and/or
-   * {@link net.minecraft.item.Item#onItemUse} will be called after
-   * {@link net.minecraft.item.Item#onItemUseFirst} is called. Canceling the
-   * event will cause none of the above three to be called. There are various
-   * results to this event, see the getters below. Note that handling things
-   * differently on the client vs server may cause desynchronizations!
+   * This event is fired on both sides whenever the player right clicks while targeting a block. This event controls which of {@link net.minecraft.block.Block#onBlockActivated} and/or
+   * {@link net.minecraft.item.Item#onItemUse} will be called after {@link net.minecraft.item.Item#onItemUseFirst} is called. Canceling the event will cause none of the above three to be called. There
+   * are various results to this event, see the getters below. Note that handling things differently on the client vs server may cause desynchronizations!
    */
   @SubscribeEvent
   public void onRightClickBlock(RightClickBlock event) {

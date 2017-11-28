@@ -17,10 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * @author SkySom Not me. From
- *         https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/src/main/java/xyz/brassgoggledcoders/moarcarts/entities/EntityMinecartBase.java
- *         Which is a repo using MIT License
- *         https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/LICENSE
- *         after this I also made my own changes alternate version i also used
+ *         https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/src/main/java/xyz/brassgoggledcoders/moarcarts/entities/EntityMinecartBase.java Which is a repo
+ *         using MIT License https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/LICENSE after this I also made my own changes alternate version i also used
  *         for reference
  *         https://github.com/BrassGoggledCoders/OpenTransport/blob/cc2208684ddf1b3db13863722a484f9f41c255f4/src/main/java/xyz/brassgoggledcoders/opentransport/api/wrappers/world/WorldWrapper.java
  */

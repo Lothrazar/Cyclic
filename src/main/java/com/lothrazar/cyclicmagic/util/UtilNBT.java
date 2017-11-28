@@ -75,8 +75,7 @@ public class UtilNBT {
     return tags.getInteger(prop);
   }
   /**
-   * empty string if null or empty, otherwise the value in string form for
-   * tooltips
+   * empty string if null or empty, otherwise the value in string form for tooltips
    * 
    * @param held
    * @param prop

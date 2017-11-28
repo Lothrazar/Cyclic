@@ -24,9 +24,8 @@ public class GuiHydrator extends GuiBaseContainer {
     int btnId = 3;
     btnToggle = new ButtonTileEntityField(btnId++,
         this.guiLeft + 26,
-        this.guiTop + Const.PAD/2 , this.tile.getPos(), Fields.RECIPELOCKED.ordinal());
+        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.RECIPELOCKED.ordinal());
     btnToggle.width = btnToggle.height = 20;
-
     this.addButton(btnToggle);
   }
   @SideOnly(Side.CLIENT)
@@ -38,7 +37,6 @@ public class GuiHydrator extends GuiBaseContainer {
       btnToggle.setTooltip("tile.hydrator.locked.tooltip");
     }
     else {
-
       btnToggle.setTextureIndex(6);
       btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
     }

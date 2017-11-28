@@ -23,9 +23,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR,IHasConfig {
- 
-  public static int FUEL_COST = 0;  public BlockHarvester() {
+public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+  public static int FUEL_COST = 0;
+  public BlockHarvester() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_HARVESTER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);

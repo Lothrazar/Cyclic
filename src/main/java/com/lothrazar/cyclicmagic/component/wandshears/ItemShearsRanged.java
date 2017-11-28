@@ -48,8 +48,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
     return SoundEvents.ENTITY_EGG_THROW;
   }
   /**
-   * Returns true if the item can be used on the given entity, e.g. shears on
-   * sheep. COPY from vanilla SHEARS
+   * Returns true if the item can be used on the given entity, e.g. shears on sheep. COPY from vanilla SHEARS
    */
   @Override
   public boolean itemInteractionForEntity(ItemStack itemstack, net.minecraft.entity.player.EntityPlayer player, EntityLivingBase entity, net.minecraft.util.EnumHand hand) {

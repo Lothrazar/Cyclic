@@ -28,7 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityForester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
   private static final String[] validTargetsOreDict = new String[] { "logWood" };
@@ -53,7 +52,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX,FUELDISPLAY;
+    REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityForester() {
     super(INVENTORY_SIZE);

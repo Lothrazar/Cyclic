@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,20 +35,20 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    if(targetPos!=null){
+    if (targetPos != null) {
       UtilNBT.setTagBlockPos(compound, targetPos);
     }
     return super.writeToNBT(compound);
   }
   @Override
   public void readFromNBT(NBTTagCompound compound) {
-    targetPos=UtilNBT.getTagBlockPos(compound);
+    targetPos = UtilNBT.getTagBlockPos(compound);
     super.readFromNBT(compound);
   }
   public BlockPos getTargetPos() {
     return this.targetPos;
   }
   public void setTargetPos(BlockPos p) {
-      this.targetPos=p;
+    this.targetPos = p;
   }
 }

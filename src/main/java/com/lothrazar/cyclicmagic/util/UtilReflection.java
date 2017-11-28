@@ -28,10 +28,8 @@ public class UtilReflection {
   /**
    * Return a property of obj that is of type T the first one found
    * 
-   * tried but failed to make this generic. i would like the returning casted
-   * type Block to be generic and/or passed in. then you would call Block crop =
-   * UtilReflection.getFirstOfType<Block >(obj); Item crop =
-   * UtilReflection.getFirstOfType<Item >(obj); and so on. oh well
+   * tried but failed to make this generic. i would like the returning casted type Block to be generic and/or passed in. then you would call Block crop = UtilReflection.getFirstOfType<Block >(obj);
+   * Item crop = UtilReflection.getFirstOfType<Item >(obj); and so on. oh well
    * 
    * @param obj
    * @return T

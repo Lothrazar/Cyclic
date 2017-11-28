@@ -1,24 +1,13 @@
 package com.lothrazar.cyclicmagic.entity;
 import java.lang.reflect.Field;
-import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
-import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityEnderEye;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityEnderEyeUnbreakable extends EntityEnderEye {
   public static class FactoryMissile implements IRenderFactory<EntityEnderEyeUnbreakable> {

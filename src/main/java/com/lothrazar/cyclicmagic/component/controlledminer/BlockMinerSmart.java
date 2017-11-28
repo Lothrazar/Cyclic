@@ -25,9 +25,10 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR ,IHasConfig{
+public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
-  public static int FUEL_COST = 0; public BlockMinerSmart() {
+  public static int FUEL_COST = 0;
+  public BlockMinerSmart() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_SMARTMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);

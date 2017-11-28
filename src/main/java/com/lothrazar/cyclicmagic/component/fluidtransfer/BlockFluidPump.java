@@ -27,16 +27,14 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe  {
+public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
   public BlockFluidPump() {
     super(Material.WOOD);
     this.setHardness(3F);
     this.setResistance(3F);
- 
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
- 
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
@@ -69,7 +67,6 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
-  
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPump();
@@ -116,5 +113,4 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
- 
 }

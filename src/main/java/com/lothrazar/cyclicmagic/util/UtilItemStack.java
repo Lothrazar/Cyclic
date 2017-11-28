@@ -58,9 +58,7 @@ public class UtilItemStack {
     }
   }
   /**
-   * Created becuase getStateFromMeta is deprecated, and its used everywhere so
-   * tons of warnings, and i have no idea how simple/complex the solution will
-   * be
+   * Created becuase getStateFromMeta is deprecated, and its used everywhere so tons of warnings, and i have no idea how simple/complex the solution will be
    * 
    * @param b
    * @param meta

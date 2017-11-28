@@ -23,7 +23,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR,IHasConfig {
+public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
   public static int FUEL_COST = 0;
   public BlockStructureBuilder() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);

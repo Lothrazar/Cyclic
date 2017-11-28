@@ -38,7 +38,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile.FactoryDynSa
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilEntity; 
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -77,9 +77,6 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-    
-    
-
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer());
   }
   @Override
@@ -131,10 +128,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new FactoryBall());
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
-
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
-  
-  
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -244,9 +238,7 @@ public class ClientProxy extends CommonProxy {
   /**
    * INSPIRED by universallp
    * 
-   * This function was is part of VanillaAutomation which is licenced under the
-   * MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/
-   * github.com/UniversalLP/VanillaAutomation
+   * This function was is part of VanillaAutomation which is licenced under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/ github.com/UniversalLP/VanillaAutomation
    */
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
@@ -272,8 +264,7 @@ public class ClientProxy extends CommonProxy {
     }
   }
   /**
-   * From the open source project:/github.com/UniversalLP/VanillaAutomation who
-   * in turn got it from from github.com/vazkii/Botania.
+   * From the open source project:/github.com/UniversalLP/VanillaAutomation who in turn got it from from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {

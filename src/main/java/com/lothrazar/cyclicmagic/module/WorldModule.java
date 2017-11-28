@@ -146,10 +146,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   /*
    * ForgeHooks.class
    * 
-   * Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
-   * Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1);
-   * Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1);
-   * Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
+   * Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1); Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1); Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1); Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
    * Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);
    */
   int coalHarvest = 0;

@@ -53,11 +53,8 @@ public class EventPlayerData {
    * 
    * TODO
    * 
-   * SHOULD BE AttachCapabilitiesEvent<EntityPlayer> ..BUT that NEVER EVER
-   * fires, so data never gets attached to player soo NPEs all over crash the
-   * game SO IM forced to do it this way, fire it on GLOBAL object and check
-   * instanceof at runtime NO IDEA if its a bug in forge or if there is a right
-   * way / wrong way. but of course forge has no docs and nobody to ask
+   * SHOULD BE AttachCapabilitiesEvent<EntityPlayer> ..BUT that NEVER EVER fires, so data never gets attached to player soo NPEs all over crash the game SO IM forced to do it this way, fire it on
+   * GLOBAL object and check instanceof at runtime NO IDEA if its a bug in forge or if there is a right way / wrong way. but of course forge has no docs and nobody to ask
    * 
    * @param event
    */

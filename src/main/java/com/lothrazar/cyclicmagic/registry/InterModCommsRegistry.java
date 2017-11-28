@@ -14,15 +14,14 @@ public class InterModCommsRegistry {
   }
   /**
    * 
-   * https://minecraft.curseforge.com/projects/crafting-tweaks
-   * https://github.com/blay09/CraftingTweaks/blob/1.12/README.md
+   * https://minecraft.curseforge.com/projects/crafting-tweaks https://github.com/blay09/CraftingTweaks/blob/1.12/README.md
    */
   private static void registerCraftingTweaks() {
     //first the players inventory 
     NBTTagCompound tagCompound = new NBTTagCompound();
     tagCompound.setString("ContainerClass", ContainerPlayerExtWorkbench.class.getName());
     tagCompound.setInteger("GridSlotNumber", 6);
-//    tagCompound.setInteger("GridSize", 9);
+    //    tagCompound.setInteger("GridSize", 9);
     FMLInterModComms.sendMessage("craftingtweaks", "RegisterProvider", tagCompound);
     //then the grey workbench 
     tagCompound = new NBTTagCompound();

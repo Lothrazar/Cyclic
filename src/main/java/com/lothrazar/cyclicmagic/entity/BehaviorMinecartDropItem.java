@@ -66,8 +66,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     return stack;
   }
   /**
-   * Get the position where the dispenser at the given Coordinates should
-   * dispense to.
+   * Get the position where the dispenser at the given Coordinates should dispense to.
    */
   public IPosition getDispensePosition(IBlockSource coords) {
     EnumFacing enumfacing = this.getFacing(coords.getBlockState());
@@ -103,8 +102,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     source.getWorld().playEvent(1000, source.getBlockPos(), 0);
   }
   /**
-   * Order clients to display dispense particles from the specified block and
-   * facing.
+   * Order clients to display dispense particles from the specified block and facing.
    */
   protected void spawnDispenseParticles(IBlockSource source, EnumFacing facingIn) {
     source.getWorld().playEvent(2000, source.getBlockPos(), this.getWorldEventDataFrom(facingIn));

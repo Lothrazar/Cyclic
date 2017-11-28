@@ -77,7 +77,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
- 
   public boolean doesUseFuel() {
     return this.fuelCost > 0;
   }
@@ -166,7 +165,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   protected void spawnParticlesAbove() {
     //turn off when its off
-    if (this.isRunning() ) {//&& this.hasEnoughFuel()
+    if (this.isRunning()) {//&& this.hasEnoughFuel()
       super.spawnParticlesAbove();
     }
   }

@@ -218,8 +218,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     return tank.getFluidAmount() / tank.getCapacity();
   }
   /**
-   * For the crafting inventory, since its never in GUI and is just used for
-   * auto processing
+   * For the crafting inventory, since its never in GUI and is just used for auto processing
    * 
    * @author Sam
    */

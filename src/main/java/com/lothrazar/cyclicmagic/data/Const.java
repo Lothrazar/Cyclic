@@ -111,7 +111,6 @@ public class Const {
     public static final String worldGenOceans = worldGen + ".ocean";
   }
   public class ConfigText {
-
     public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
   }
   public class ToolStrings {

@@ -40,8 +40,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     return s >= this.getSizeInventory() ? null : this.inv.get(s);
   }
   /**
-   * When some containers are closed they call this on each slot, then drop
-   * whatever it returns as an EntityItem - like when you close a workbench GUI.
+   * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem - like when you close a workbench GUI.
    */
   @Override
   public ItemStack removeStackFromSlot(int index) {
@@ -50,8 +49,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     return stack;
   }
   /**
-   * Removes from an inventory slot (first arg) up to a specified number (second
-   * arg) of items and returns them in a new stack.
+   * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
@@ -71,8 +69,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     return stack;
   }
   /**
-   * Sets the given item stack to the specified slot in the inventory (can be
-   * crafting or armor sections).
+   * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
- 
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -125,7 +124,7 @@ public class ModelCable extends ModelBase {
       this.down.render(f5);
       this.downC.render(f5);
     }
-    if (!detectConnections(tile) )//|| tile.getKind() != CableKind.kabel
+    if (!detectConnections(tile))//|| tile.getKind() != CableKind.kabel
       this.cube.render(f5);
   }
   // @Override

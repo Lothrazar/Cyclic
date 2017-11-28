@@ -52,8 +52,7 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
     return true;
   }
   /**
-   * Return true if an entity can be spawned inside the block (used to get the
-   * player's bed spawn location)
+   * Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
    */
   public boolean canSpawnInBlock() {
     return true;

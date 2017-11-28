@@ -45,7 +45,6 @@ import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -78,7 +77,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockForester block_forester = new BlockForester();
       BlockRegistry.registerBlock(block_forester, "block_forester", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
-    
     }
     if (wireless) {
       BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);

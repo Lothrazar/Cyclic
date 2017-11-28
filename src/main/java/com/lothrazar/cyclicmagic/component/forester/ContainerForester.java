@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.forester;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerForester extends ContainerBaseMachine {
   public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = 38; 
+  public static final int SLOTY = 38;
   public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
     this.screenSize = ScreenSize.STANDARD;
     this.setTile(te);

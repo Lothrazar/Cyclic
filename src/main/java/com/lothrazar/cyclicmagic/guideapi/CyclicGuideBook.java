@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
@@ -25,13 +24,9 @@ import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
@@ -155,18 +150,18 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
-//    ResourceLocation location = new ResourceLocation(GUIDE_API_MOD_ID, Const.MODID + "_guidebook");
-//    IRecipe recipe = new ShapedOreRecipe(location, bookStack,
-//        " b ",
-//        "coc",
-//        " s ",
-//        'c', Blocks.COBBLESTONE_WALL,
-//        'b', Items.BOOK,
-//        'o', Blocks.GRAVEL,
-//        's', Items.STICK);
-//    //replace with guideapi prefix
-//    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
-//    RecipeRegistry.add(recipe, location);
+    //    ResourceLocation location = new ResourceLocation(GUIDE_API_MOD_ID, Const.MODID + "_guidebook");
+    //    IRecipe recipe = new ShapedOreRecipe(location, bookStack,
+    //        " b ",
+    //        "coc",
+    //        " s ",
+    //        'c', Blocks.COBBLESTONE_WALL,
+    //        'b', Items.BOOK,
+    //        'o', Blocks.GRAVEL,
+    //        's', Items.STICK);
+    //    //replace with guideapi prefix
+    //    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
+    //    RecipeRegistry.add(recipe, location);
   }
   @Override
   public void handlePost(ItemStack bookStack) {

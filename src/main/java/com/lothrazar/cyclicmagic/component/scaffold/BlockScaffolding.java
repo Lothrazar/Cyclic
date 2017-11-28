@@ -22,9 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * imported from https://github.com/PrinceOfAmber/SamsPowerups/blob/
- * 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/
- * samscontent/BlockRegistry.j a v a
+ * imported from https://github.com/PrinceOfAmber/SamsPowerups/blob/ 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/ samscontent/BlockRegistry.j a v a
  * 
  * @author Lothrazar
  *

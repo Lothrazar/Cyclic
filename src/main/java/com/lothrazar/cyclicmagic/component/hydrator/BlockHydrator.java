@@ -152,8 +152,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHydrator.class, new HydratorTESR(0, 4));
   }
   /**
-   * with thanks and gratitude @KnightMiner
-   * https://github.com/KnightMiner/Ceramics/blob/1.11/src/main/java/knightminer/ceramics/blocks/BlockBarrel.java
+   * with thanks and gratitude @KnightMiner https://github.com/KnightMiner/Ceramics/blob/1.11/src/main/java/knightminer/ceramics/blocks/BlockBarrel.java
    * 
    * 
    */

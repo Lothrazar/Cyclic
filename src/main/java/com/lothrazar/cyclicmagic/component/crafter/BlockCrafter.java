@@ -14,8 +14,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe,IHasConfig {
-  public static int FUEL_COST = 0; public BlockCrafter() {
+public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {
+  public static int FUEL_COST = 0;
+  public BlockCrafter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_CRAFTER);
     this.setTranslucent();
   }

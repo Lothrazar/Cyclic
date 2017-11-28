@@ -62,8 +62,8 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   }
   /**
    * <<<< made with some help from Tinkers Construct and Spark's Hammers
-   * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java
-   * and https://github.com/SlimeKnights/TinkersConstruct
+   * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java and
+   * https://github.com/SlimeKnights/TinkersConstruct
    */
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos posHit, EntityPlayer player) {

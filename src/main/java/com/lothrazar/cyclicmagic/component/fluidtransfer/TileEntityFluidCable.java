@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 80;
-//  private static final int TIMER_TRIGGER = 10;
+  //  private static final int TIMER_TRIGGER = 10;
   private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
@@ -109,10 +109,10 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
   @Override
   public void update() {
     tickDownIncomingFaces();
-//    if (this.updateTimerIsZero() == false) {
-//      return;
-//    }
-//    this.timer = TIMER_TRIGGER;
+    //    if (this.updateTimerIsZero() == false) {
+    //      return;
+    //    }
+    //    this.timer = TIMER_TRIGGER;
     //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
     BlockPos posTarget;

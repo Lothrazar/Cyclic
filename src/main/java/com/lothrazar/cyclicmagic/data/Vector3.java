@@ -65,8 +65,7 @@ public class Vector3 {
     return new Vector3(e.posX, e.posY, e.posZ);
   }
   /*
-   * //removed method here only because it is unused by me public static Vector3
-   * fromEntityCenter(Entity e) {
+   * //removed method here only because it is unused by me public static Vector3 fromEntityCenter(Entity e) {
    * 
    * return new Vector3(e.posX, e.posY - e.yOffset + e.height / 2, e.posZ); }
    */
@@ -203,8 +202,7 @@ public class Vector3 {
     return this;
   }
   /*
-   * //removed method here only because it is unused by me public Vec3 toVec3D()
-   * { return Vec3.createVectorHelper(x, y, z); }
+   * //removed method here only because it is unused by me public Vec3 toVec3D() { return Vec3.createVectorHelper(x, y, z); }
    */
   public double angle(Vector3 vec) {
     return Math.acos(copy().normalize().dotProduct(vec.copy().normalize()));
@@ -251,10 +249,7 @@ public class Vector3 {
     return this;
   }
   /*
-   * //removed Vaskii's method here only because it is unused by me public
-   * Vector3 rotate(double angle, Vector3 axis) {
-   * Quat.aroundAxis(axis.copy().normalize(), angle).rotate(this); return this;
-   * }
+   * //removed Vaskii's method here only because it is unused by me public Vector3 rotate(double angle, Vector3 axis) { Quat.aroundAxis(axis.copy().normalize(), angle).rotate(this); return this; }
    */
   @Override
   public boolean equals(Object o) {
@@ -264,9 +259,7 @@ public class Vector3 {
     return x == v.x && y == v.y && z == v.z;
   }
   /**
-   * Same license as top of file!!! Thanks Vaskii you rule reference
-   * https://github
-   * .com/Vazkii/Botania/blob/9cf015ee972bb8568f65128fa7b84c12c4a7cfff
+   * Same license as top of file!!! Thanks Vaskii you rule reference https://github .com/Vazkii/Botania/blob/9cf015ee972bb8568f65128fa7b84c12c4a7cfff
    * /src/main/java/vazkii/botania/common/core/helper/MathHelper.java
    * 
    * @param entity

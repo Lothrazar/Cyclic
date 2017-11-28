@@ -26,9 +26,8 @@ public class SpellRegistry {
   public static void register(ItemCyclicWand wand) {
     hashbook = new HashMap<Integer, ISpell>();
     /*
-     * SPELL REG 0 Inventory SPELL REG 1 Rotation SPELL REG 2 Push Block SPELL
-     * REG 3 Pull Block SPELL REG 4 Build Up SPELL REG 5 Place Block SPELL REG 6
-     * Build Down SPELL REG 7 Build Left SPELL REG 8 Build Right
+     * SPELL REG 0 Inventory SPELL REG 1 Rotation SPELL REG 2 Push Block SPELL REG 3 Pull Block SPELL REG 4 Build Up SPELL REG 5 Place Block SPELL REG 6 Build Down SPELL REG 7 Build Left SPELL REG 8
+     * Build Right
      */
     Spells.inventory = new SpellInventory(0, "inventory");
     registerSpell(Spells.inventory);

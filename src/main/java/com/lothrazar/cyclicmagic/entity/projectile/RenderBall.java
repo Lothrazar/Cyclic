@@ -10,8 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Similar to RenderSnowball, except it uses any texture resource location, does
- * not have to be an item. not depending on the item baked model
+ * Similar to RenderSnowball, except it uses any texture resource location, does not have to be an item. not depending on the item baked model
  * 
  * @author Sam
  *

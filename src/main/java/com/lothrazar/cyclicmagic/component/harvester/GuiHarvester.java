@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHarvester extends GuiBaseContainer {
- // private TileEntityHarvester tile;
+  // private TileEntityHarvester tile;
   boolean debugLabels = false;
   private GuiButtonToggleSize btnSize;
   private GuiButtonTooltip btnSpray;

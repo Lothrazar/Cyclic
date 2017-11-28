@@ -89,7 +89,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         // else at least one is not valid, do not eat the potoin
       }
     }
-    else if (this.world.getTotalWorldTime() % 80L == 0L ) {
+    else if (this.world.getTotalWorldTime() % 80L == 0L) {
       this.updateTimerIsZero();
       this.updateBeacon();
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
@@ -280,8 +280,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
   }
   /**
-   * Returns true if automation can insert the given item in the given slot from
-   * the given side.
+   * Returns true if automation can insert the given item in the given slot from the given side.
    */
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return true;
@@ -338,8 +337,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     return this.needsRedstone == 1;
   }
   /**
-   * Returns true if automation can extract the given item in the given slot
-   * from the given side.
+   * Returns true if automation can extract the given item in the given slot from the given side.
    */
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;

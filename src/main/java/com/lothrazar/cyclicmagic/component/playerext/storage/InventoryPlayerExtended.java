@@ -44,8 +44,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     return name;
   }
   /**
-   * Removes from an inventory slot (first arg) up to a specified number (second
-   * arg) of items and returns them in a new stack.
+   * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
@@ -54,8 +53,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     return r;
   }
   /**
-   * Sets the given item stack to the specified slot in the inventory (can be
-   * crafting or armor sections).
+   * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
    */
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {

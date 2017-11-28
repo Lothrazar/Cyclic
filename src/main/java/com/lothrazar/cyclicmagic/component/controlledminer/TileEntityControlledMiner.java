@@ -60,11 +60,11 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX,FUELDISPLAY;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(FUEL_SLOT,BlockMinerSmart.FUEL_COST);
+    this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -319,7 +319,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return this.getFuelMax();
       case TIMER:
         return this.timer;
-
       case FUELDISPLAY:
         return this.fuelDisplay;
     }

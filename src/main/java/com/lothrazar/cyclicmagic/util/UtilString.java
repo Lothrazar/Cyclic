@@ -6,13 +6,11 @@ import net.minecraft.util.ResourceLocation;
 
 public class UtilString {
   /**
-   * One day i might make this a setting or an input arg for now i have no use
-   * to turn it off
+   * One day i might make this a setting or an input arg for now i have no use to turn it off
    */
   public static final boolean matchWildcard = true;
   /**
-   * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then
-   * match is true
+   * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then match is true
    * 
    * @param list
    * @param toMatch
@@ -41,8 +39,7 @@ public class UtilString {
     return false;
   }
   /**
-   * TODO: make a unit testing module, or install a framework for now these pass
-   * so i removed call to them
+   * TODO: make a unit testing module, or install a framework for now these pass so i removed call to them
    */
   public static void unitTests() {
     NonNullList<String> blacklist = NonNullList.from("",

@@ -61,7 +61,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
   }
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
-    if(tank.getFluidAmount() < this.getFluidCost()){
+    if (tank.getFluidAmount() < this.getFluidCost()) {
       return false;//not enough fluid, so stop now
     }
     //if minimum is 2, then the recipe slots always stay locked with at least 1 in each spot

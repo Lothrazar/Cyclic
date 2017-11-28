@@ -108,8 +108,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     extraVillagersEnabled = c.getBoolean("SageAndDruidVillagers", category, true, "Adds more  villager types (Sage and Druid) with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Spawn naturally and from mob eggs. ");
   }
   /**
-   * replace ListItemForEmeralds, instead of extending it just like
-   * vanilla/forge version BUT we do not ignore stackSize
+   * replace ListItemForEmeralds, instead of extending it just like vanilla/forge version BUT we do not ignore stackSize
    * 
    * @author Sam
    *
@@ -118,8 +117,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     /** The item that is being bought for emeralds */
     public ItemStack itemToBuy;
     /**
-     * The price info for the amount of emeralds to sell for, or if negative,
-     * the amount of the item to buy for an emerald.
+     * The price info for the amount of emeralds to sell for, or if negative, the amount of the item to buy for an emerald.
      */
     public EntityVillager.PriceInfo priceInfo;
     public ListItemForEmeraldsFixed(Item par1Item, EntityVillager.PriceInfo priceInfo) {
@@ -138,8 +136,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       this.priceInfo = priceInfo;
     }
     /**
-     * Affects the given MerchantRecipeList to possibly add or remove
-     * MerchantRecipes.
+     * Affects the given MerchantRecipeList to possibly add or remove MerchantRecipes.
      */
     public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
       int i = 1;

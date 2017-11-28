@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic.gui.base;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
-import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
@@ -99,8 +97,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
   /**
-   * shift the x param over if the length is over 1, to center between the two
-   * digits made for numeric strings up to 99
+   * shift the x param over if the length is over 1, to center between the two digits made for numeric strings up to 99
    * 
    * @param display
    * @param x

@@ -127,8 +127,7 @@ public class UtilPlayer {
         p.openContainer.getSlot(0).inventory != null;
   }
   /**
-   * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
-   * entities but your client GUI's are not updating
+   * call this from SERVER SIDE if you are doing stuff to containers/invos/tile entities but your client GUI's are not updating
    * 
    * @param p
    */

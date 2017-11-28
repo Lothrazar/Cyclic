@@ -43,18 +43,18 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
-//  @Override
-//  public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    Fluid fluid = this.getCurrentFluid(world, pos);
-//    if (fluid != null && fluid.getTemperature() >= Const.LAVA_TEMPERATURE) {
-//      return this.getLightOpacity(state, world, pos);
-//    }
-//    return super.getLightValue(state, world, pos);
-//  }
-//  @Override
-//  public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    return 0;
-//  }
+  //  @Override
+  //  public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+  //    Fluid fluid = this.getCurrentFluid(world, pos);
+  //    if (fluid != null && fluid.getTemperature() >= Const.LAVA_TEMPERATURE) {
+  //      return this.getLightOpacity(state, world, pos);
+  //    }
+  //    return super.getLightValue(state, world, pos);
+  //  }
+  //  @Override
+  //  public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
+  //    return 0;
+  //  }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
@@ -87,22 +87,22 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
-//  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
-//    TileEntity here = world.getTileEntity(pos);
-//    //on initial placement, this might be null
-//    if (here == null || here instanceof TileEntityBucketStorage == false) {
-//      return null;
-//    }
-//    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-//    if (container == null) {
-//      return null;
-//    }
-//    FluidStack fs = container.getCurrentFluidStack();
-//    if (fs == null) {
-//      return null;
-//    }
-//    return fs.getFluid();
-//  }
+  //  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
+  //    TileEntity here = world.getTileEntity(pos);
+  //    //on initial placement, this might be null
+  //    if (here == null || here instanceof TileEntityBucketStorage == false) {
+  //      return null;
+  //    }
+  //    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
+  //    if (container == null) {
+  //      return null;
+  //    }
+  //    FluidStack fs = container.getCurrentFluidStack();
+  //    if (fs == null) {
+  //      return null;
+  //    }
+  //    return fs.getFluid();
+  //  }
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
