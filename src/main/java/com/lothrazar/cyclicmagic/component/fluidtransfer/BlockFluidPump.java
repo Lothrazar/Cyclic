@@ -1,17 +1,15 @@
-package com.lothrazar.cyclicmagic.component.fluidstorage;
+package com.lothrazar.cyclicmagic.component.fluidtransfer;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
-import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,42 +17,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBucketStorage extends BlockBase implements ITileEntityProvider, IHasRecipe, IBlockHasTESR {
-  public BlockBucketStorage() {
-    super(Material.GLASS);
-    this.setHardness(7F);
-    this.setResistance(7F);
-    this.setSoundType(SoundType.GLASS);
+public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe  {
+  public BlockFluidPump() {
+    super(Material.WOOD);
+    this.setHardness(3F);
+    this.setResistance(3F);
+ 
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
-//  @Override
-//  public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    Fluid fluid = this.getCurrentFluid(world, pos);
-//    if (fluid != null && fluid.getTemperature() >= Const.LAVA_TEMPERATURE) {
-//      return this.getLightOpacity(state, world, pos);
-//    }
-//    return super.getLightValue(state, world, pos);
-//  }
-//  @Override
-//  public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-//    return 0;
-//  }
+ 
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
@@ -63,8 +45,8 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
     TileEntity ent = world.getTileEntity(pos);
     ItemStack stack = new ItemStack(item);
-    if (ent != null && ent instanceof TileEntityBucketStorage) {
-      TileEntityBucketStorage te = (TileEntityBucketStorage) ent;
+    if (ent != null && ent instanceof TileEntityFluidPump) {
+      TileEntityFluidPump te = (TileEntityFluidPump) ent;
       FluidStack fs = te.getCurrentFluidStack();
       if (fs != null) {
         UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
@@ -81,40 +63,16 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       NBTTagCompound tags = stack.getTagCompound();
       int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
       String resourceStr = tags.getString(NBT_FLUIDTYPE);
-      TileEntityBucketStorage container = (TileEntityBucketStorage) worldIn.getTileEntity(pos);
+      TileEntityFluidPump container = (TileEntityFluidPump) worldIn.getTileEntity(pos);
       Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
       if (fluidObj != null)
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
-//  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
-//    TileEntity here = world.getTileEntity(pos);
-//    //on initial placement, this might be null
-//    if (here == null || here instanceof TileEntityBucketStorage == false) {
-//      return null;
-//    }
-//    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-//    if (container == null) {
-//      return null;
-//    }
-//    FluidStack fs = container.getCurrentFluidStack();
-//    if (fs == null) {
-//      return null;
-//    }
-//    return fs.getFluid();
-//  }
-  @SideOnly(Side.CLIENT)
-  @Override
-  public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.TRANSLUCENT; // http://www.minecraftforge.net/forum/index.php?topic=18754.0
-  }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) { // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
-    return false;
-  }
+  
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityBucketStorage();
+    return new TileEntityFluidPump();
   }
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
@@ -134,14 +92,14 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "igi",
-        "gog",
+        "go ",
         "igi",
         'o', "obsidian", 'i', "ingotIron", 'g', "blockGlass");
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
-    TileEntityBucketStorage te = (TileEntityBucketStorage) world.getTileEntity(pos);
+    TileEntityBaseMachineFluid te = (TileEntityBaseMachineFluid) world.getTileEntity(pos);
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) { //server side
@@ -158,10 +116,5 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
-  @SideOnly(Side.CLIENT)
-  @Override
-  public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBucketStorage.class, new FluidTESR());
-  }
+ 
 }

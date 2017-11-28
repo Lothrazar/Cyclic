@@ -29,6 +29,9 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return false;//default is no, dont only run if powered, just go
   }
   protected EnumFacing getCurrentFacing() {
+    if (this.getBlockType() instanceof BlockBaseFacingOmni) { 
+      return BlockBaseFacingOmni.getCurrentFacing(world, pos);
+    }
     if (!(this.getBlockType() instanceof BlockBaseFacing)) {
       return EnumFacing.UP;
     }

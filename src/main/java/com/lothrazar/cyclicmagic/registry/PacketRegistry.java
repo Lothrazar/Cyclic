@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketWandGui;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketNewButton;
 import com.lothrazar.cyclicmagic.component.enderbook.PacketWarpButton;
-import com.lothrazar.cyclicmagic.component.fluidstorage.PacketFluidSync;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.component.merchant.PacketVillagerTrade;
@@ -23,6 +22,7 @@ import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketDepositPlayerTo
 import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketQuickStack;
 import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketRestockContainerToPlayer;
 import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
+import com.lothrazar.cyclicmagic.fluid.PacketFluidSync;
 import com.lothrazar.cyclicmagic.net.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
