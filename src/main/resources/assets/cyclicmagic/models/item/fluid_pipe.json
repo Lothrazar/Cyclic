@@ -1,5 +1,5 @@
 {
-    "parent" : "cyclicmagic:block/kabel_n", 
+    "parent" : "cyclicmagic:block/fluid_pipe_n", 
     "display" : {
         "thirdperson_righthand" : {
             "rotation" : [30, -45, 0], 

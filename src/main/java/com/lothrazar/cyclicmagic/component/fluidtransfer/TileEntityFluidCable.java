@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 80;
-  private static final int TIMER_TRIGGER = 10;
+//  private static final int TIMER_TRIGGER = 10;
   private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;

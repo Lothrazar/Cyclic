@@ -45,6 +45,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean autoCrafter;
   private boolean soundproofing;
   private boolean workbench;
+  private boolean enablePumpAndPipes;
   public void onPreInit() {
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
@@ -100,31 +101,21 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {
+      //tank
       BlockRegistry.block_storeempty = new BlockBucketStorage();
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
-  
-    
-    
-    
-    
-    //TODO: new config
-
+    }
+    if (enablePumpAndPipes) {
+      //pump
       BlockFluidPump fluid_xfer = new BlockFluidPump();
-      BlockRegistry.registerBlock(fluid_xfer,  "fluid_pump", null);
-      
+      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
       GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
-      
-    
-
-
+      //pipes
       BlockFluidCable k = new BlockFluidCable();
-      BlockRegistry.registerBlock(k,  "kabel", null);
-      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "kabelte");
-      
-      
-    
+      BlockRegistry.registerBlock(k, "fluid_pipe", null);
+      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
     }
   }
   @Override
@@ -138,6 +129,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }

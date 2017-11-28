@@ -1,26 +1,25 @@
 {
     "elements" : [{
-            "__comment" : "pin", 
-            "from" : [6, 8, 6], 
-            "to" : [10, 16, 10], 
+            "from" : [5, 15, 5], 
+            "to" : [11, 16, 11], 
             "faces" : {
                 "down" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }, 
                 "up" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }, 
                 "north" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }, 
                 "south" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }, 
                 "west" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }, 
                 "east" : {
-                    "texture" : "#all"
+                    "texture" : "#plate"
                 }
             }
         }]

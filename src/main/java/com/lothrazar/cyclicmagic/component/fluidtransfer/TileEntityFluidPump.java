@@ -25,9 +25,11 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
    */
   @Override
   public void update() {
+    if (this.isPowered() == false) {
+      return;
+    }
     BlockPos posSide;
     EnumFacing facingTo = this.getCurrentFacing().getOpposite();
- 
     for (EnumFacing side : EnumFacing.values()) {
       if (side == facingTo) {
         continue;

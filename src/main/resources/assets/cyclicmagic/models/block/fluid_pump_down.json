@@ -4,9 +4,9 @@
         "particle": "blocks/anvil_base",
         "down": "cyclicmagic:blocks/fluid_pump_front",
         "up": "cyclicmagic:blocks/fluid_pump_back",
-        "north": "cyclicmagic:blocks/observer_down",
-        "east": "cyclicmagic:blocks/observer_right",
-        "south": "cyclicmagic:blocks/observer_down",
-        "west": "cyclicmagic:blocks/observer_left"
+        "north": "cyclicmagic:blocks/fluid_pump_down",
+        "east": "cyclicmagic:blocks/fluid_pump_right",
+        "south": "cyclicmagic:blocks/fluid_pump_down",
+        "west": "cyclicmagic:blocks/fluid_pump_left"
     }
 }
