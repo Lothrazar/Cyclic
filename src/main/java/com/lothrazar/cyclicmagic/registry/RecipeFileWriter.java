@@ -13,8 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
- * I am not the author this is from here by williewillus
- * https://gist.github.com/williewillus/a1a899ce5b0f0ba099078d46ae3dae6e
+ * I am not the author this is from here by williewillus https://gist.github.com/williewillus/a1a899ce5b0f0ba099078d46ae3dae6e
  * 
  * 
  */

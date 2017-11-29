@@ -33,6 +33,9 @@ import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.ContainerFisher;
 import com.lothrazar.cyclicmagic.component.fisher.GuiFisher;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.forester.ContainerForester;
+import com.lothrazar.cyclicmagic.component.forester.GuiForester;
+import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
@@ -122,6 +125,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VACUUM = 24;
   public static final int GUI_INDEX_CLOCK = 25;
   public static final int GUI_INDEX_BEACON = 26;
+  public static final int GUI_INDEX_FORESTER = 27;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -263,6 +267,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerBeaconPotion(player.inventory, (TileEntityBeaconPotion) te);
         }
       break;
+      case GUI_INDEX_FORESTER:
+        if (te instanceof TileEntityForester) {
+          return new ContainerForester(player.inventory, (TileEntityForester) te);
+        }
+      break;
     }
     return null;
   }
@@ -395,6 +404,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_BEACON:
           if (te instanceof TileEntityBeaconPotion) {
             return new GuiBeaconPotion(player.inventory, (TileEntityBeaconPotion) te);
+          }
+        break;
+        case GUI_INDEX_FORESTER:
+          if (te instanceof TileEntityForester) {
+            return new GuiForester(player.inventory, (TileEntityForester) te);
           }
         break;
       }

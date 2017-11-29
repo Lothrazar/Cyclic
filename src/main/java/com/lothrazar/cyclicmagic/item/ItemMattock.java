@@ -29,6 +29,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemMattock extends ItemTool implements IHasRecipe {
   final static int RADIUS = 1;//radius 2 is 5x5 area square
@@ -41,7 +42,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     ItemStack mat = new ItemStack(Blocks.OBSIDIAN);
-    if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) {
+    if (!mat.isEmpty() && OreDictionary.itemMatches(mat, repair, false)) {
       return true;
     }
     return super.getIsRepairable(toRepair, repair);
@@ -61,8 +62,8 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   }
   /**
    * <<<< made with some help from Tinkers Construct and Spark's Hammers
-   * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java
-   * and https://github.com/SlimeKnights/TinkersConstruct
+   * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java and
+   * https://github.com/SlimeKnights/TinkersConstruct
    */
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos posHit, EntityPlayer player) {

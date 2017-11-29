@@ -245,11 +245,9 @@ public class UtilWorld {
     return posToPlaceAt;
   }
   /**
-   * Everything in this inner class is From a mod that has MIT license owned by
-   * romelo333 and maintained by McJty
+   * Everything in this inner class is From a mod that has MIT license owned by romelo333 and maintained by McJty
    * 
-   * License is here:
-   * https://github.com/romelo333/notenoughwands1.8.8/blob/master/LICENSE
+   * License is here: https://github.com/romelo333/notenoughwands1.8.8/blob/master/LICENSE
    * 
    * Specific source of code from the GenericWand class:
    * https://github.com/romelo333/notenoughwands1.8.8/blob/20952f50e7c1ab3fd676ed3da302666295e3cac8/src/main/java/romelo333/notenoughwands/Items/GenericWand.java
@@ -320,18 +318,15 @@ public class UtilWorld {
     }
   }
   /**
-   * Functions from this inner class are not authored by me (Sam Bassett aka
-   * Lothrazar) they are from BuildersGuides by
+   * Functions from this inner class are not authored by me (Sam Bassett aka Lothrazar) they are from BuildersGuides by
    * 
    * @author Ipsis
    * 
    *         All credit goes to author for this
    * 
-   *         Source code: https://github.com/Ipsis/BuildersGuides Source License
-   *         https://github.com/Ipsis/BuildersGuides/blob/master/COPYING.LESSER
+   *         Source code: https://github.com/Ipsis/BuildersGuides Source License https://github.com/Ipsis/BuildersGuides/blob/master/COPYING.LESSER
    * 
-   *         I used and modified two functions from this library
-   *         https://github.com/Ipsis/BuildersGuides/blob/master/src/main/java/ipsis/buildersguides/util/RenderUtils.java
+   *         I used and modified two functions from this library https://github.com/Ipsis/BuildersGuides/blob/master/src/main/java/ipsis/buildersguides/util/RenderUtils.java
    * 
    * 
    */

@@ -53,8 +53,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     }
   }
   /**
-   * Called when a player shift-clicks on a slot. You must override this or you
-   * will crash when someone does that.
+   * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {

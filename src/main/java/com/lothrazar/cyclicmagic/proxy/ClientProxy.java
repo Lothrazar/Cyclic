@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.CableRenderer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -17,6 +19,7 @@ import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye.FactoryDungeon;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
@@ -74,6 +77,7 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer());
   }
   @Override
   public void init() {
@@ -124,6 +128,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new FactoryBall());
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
+    RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -233,9 +238,7 @@ public class ClientProxy extends CommonProxy {
   /**
    * INSPIRED by universallp
    * 
-   * This function was is part of VanillaAutomation which is licenced under the
-   * MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/
-   * github.com/UniversalLP/VanillaAutomation
+   * This function was is part of VanillaAutomation which is licenced under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/ github.com/UniversalLP/VanillaAutomation
    */
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
@@ -261,8 +264,7 @@ public class ClientProxy extends CommonProxy {
     }
   }
   /**
-   * From the open source project:/github.com/UniversalLP/VanillaAutomation who
-   * in turn got it from from github.com/vazkii/Botania.
+   * From the open source project:/github.com/UniversalLP/VanillaAutomation who in turn got it from from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {

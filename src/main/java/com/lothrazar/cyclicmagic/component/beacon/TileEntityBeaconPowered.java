@@ -140,8 +140,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     this.customName = name;
   }
   /**
-   * Returns true if automation is allowed to insert the given stack (ignoring
-   * stack size) into the given slot. For guis use Slot.isItemValid
+   * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
    */
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem().isBeaconPayment(stack);
@@ -165,15 +164,13 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     return new int[0];
   }
   /**
-   * Returns true if automation can insert the given item in the given slot from
-   * the given side.
+   * Returns true if automation can insert the given item in the given slot from the given side.
    */
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return false;
   }
   /**
-   * Returns true if automation can extract the given item in the given slot
-   * from the given side.
+   * Returns true if automation can extract the given item in the given slot from the given side.
    */
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;

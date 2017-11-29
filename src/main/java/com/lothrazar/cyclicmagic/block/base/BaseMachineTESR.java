@@ -16,8 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Thanks to this tutorial
- * http://modwiki.temporal-reality.com/mw/index.php/Render_Block_TESR_/_OBJ-1.9
+ * Thanks to this tutorial http://modwiki.temporal-reality.com/mw/index.php/Render_Block_TESR_/_OBJ-1.9
  * 
  * @author Sam
  *
@@ -51,7 +50,7 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    if (te.isRunning() && te.hasFuel()) {
+    if (te.isRunning()) {// && te.hasEnoughFuel()
       this.renderBasic(te);
     }
     GlStateManager.popMatrix();

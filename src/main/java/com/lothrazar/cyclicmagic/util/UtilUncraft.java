@@ -103,8 +103,7 @@ public class UtilUncraft {
       return outsize;
     }
     /**
-     * try to add an entry that is either a stack, or a list of possibilities
-     * from ore dictionary
+     * try to add an entry that is either a stack, or a list of possibilities from ore dictionary
      * 
      * @param maybeOres
      */
@@ -209,8 +208,7 @@ public class UtilUncraft {
       return result;
     }
     /**
-     * could be a list of ItemStacks, or a list of Objects which are ore
-     * dictionary entries
+     * could be a list of ItemStacks, or a list of Objects which are ore dictionary entries
      * 
      * @param next
      * @return

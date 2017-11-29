@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -40,19 +40,19 @@ public class WorldGenEndOre implements IWorldGenerator {
   }
   public WorldGenEndOre() {
     if (Configs.blockCountGold > 0)
-      this.genGold = new WorldGenMinable(WorldGenModule.end_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genGold = new WorldGenMinable(WorldModule.end_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountIron > 0)
-      this.genIron = new WorldGenMinable(WorldGenModule.end_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genIron = new WorldGenMinable(WorldModule.end_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountRedstone > 0)
-      this.genRedstone = new WorldGenMinable(WorldGenModule.end_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genRedstone = new WorldGenMinable(WorldModule.end_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountCoal > 0)
-      this.genCoal = new WorldGenMinable(WorldGenModule.end_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genCoal = new WorldGenMinable(WorldModule.end_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountEmerald > 0)
-      this.genEmerald = new WorldGenMinable(WorldGenModule.end_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genEmerald = new WorldGenMinable(WorldModule.end_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountLapis > 0)
-      this.genLapis = new WorldGenMinable(WorldGenModule.end_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genLapis = new WorldGenMinable(WorldModule.end_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.END_STONE));
     if (Configs.blockCountDiamond > 0)
-      this.genDiamond = new WorldGenMinable(WorldGenModule.end_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.END_STONE));
+      this.genDiamond = new WorldGenMinable(WorldModule.end_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.END_STONE));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

@@ -20,21 +20,22 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+  private static final int FUEL_SLOT = 27;
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public final static int TIMER_FULL = 200;
-  private static final int[] hopperInputFuel = { 27 };// all slots
+  private static final int[] hopperInputFuel = { FUEL_SLOT };// all slots
   private static final int[] hopperOUTPUT = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
       18, 19, 20, 21, 22, 23, 24, 25, 26 };// all slots
   public static enum Fields {
-    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE, FUELDISPLAY;
   }
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
   public TileEntityHarvester() {
     super(1 + 3 * 9);
-    this.setFuelSlot(27);
+    this.setFuelSlot(FUEL_SLOT, BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
   }
   @Override
@@ -62,6 +63,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     if (!isRunning()) {
       return;
     }
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     this.spawnParticlesAbove();
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;//harvest worked!
@@ -74,9 +78,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       else {
         tryHarvestArea();
       }
-    }
-    else {
-      this.updateFuelIsBurning();
     }
   }
   private void tryHarvestArea() {
@@ -129,6 +130,8 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         return this.getFuelMax();
       case HARVESTMODE:
         return this.normalModeIfZero;
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -1;
   }
@@ -151,10 +154,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case HARVESTMODE:
         this.normalModeIfZero = value % 2;
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }
@@ -163,8 +168,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return Fields.values().length;
   }
   /**
-   * facing DOWN means the hopper is facing down, so items are coming in through
-   * the top side
+   * facing DOWN means the hopper is facing down, so items are coming in through the top side
    */
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

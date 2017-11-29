@@ -1,0 +1,20 @@
+{
+    "parent" : "cyclicmagic:block/fluid_pipe_n", 
+    "display" : {
+        "thirdperson_righthand" : {
+            "rotation" : [30, -45, 0], 
+            "translation" : [0, 1.5, -2.75], 
+            "scale" : [0.245, 0.245, 0.245]
+        }, 
+        "gui" : {
+            "rotation" : [30, -45, 0], 
+            "scale" : [0.400, 0.400, 0.400]
+        }, 
+        "firstperson_righthand" : {
+            "scale" : [0.275, 0.275, 0.275]
+        }, 
+        "ground" : {
+            "scale" : [0.175, 0.175, 0.175]
+        }
+    }
+}

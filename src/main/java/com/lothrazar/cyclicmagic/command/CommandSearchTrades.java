@@ -101,8 +101,7 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
           m = disabled + UtilChat.blockPosToString(v_entity.getPosition()) + " " + sell.getCount() + " " + sell.getDisplayName() + " :: " + buy.getCount() + " " + buy.getDisplayName();
           messages.add(m);
           /*
-           * ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)).
-           * getPosition() ,EnumParticleTypes.CRIT_MAGIC.getParticleID());
+           * ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)). getPosition() ,EnumParticleTypes.CRIT_MAGIC.getParticleID());
            */
         }
       }

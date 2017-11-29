@@ -33,19 +33,13 @@ public class PotionEffectRegistry {
   private static void register() {
     //  PotionType t http://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2842885-solved-how-can-i-add-my-own-potion-with-my-own
     /*
-     * Assuming you've created and registered the Potion instances, you then
-     * need to create and register a PotionType for each brewable potion. For
-     * most vanilla Potions there are one to three PotionTypes: regular (e.g.
-     * Regeneration, 0:45) , long (e.g. Regeneration, 1:30) and strong (e.g.
-     * Regeneration II, 0:22).
+     * Assuming you've created and registered the Potion instances, you then need to create and register a PotionType for each brewable potion. For most vanilla Potions there are one to three
+     * PotionTypes: regular (e.g. Regeneration, 0:45) , long (e.g. Regeneration, 1:30) and strong (e.g. Regeneration II, 0:22).
      * 
-     * Both Potion and PotionType are implementations of IForgeRegistryEntry, so
-     * they should be registered during the appropriate registry events.
+     * Both Potion and PotionType are implementations of IForgeRegistryEntry, so they should be registered during the appropriate registry events.
      * 
-     * Once you've created and registered the Potions and PotionTypes, use
-     * PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular
-     * X, Regular X to Long X and Regular X to Strong X). For more advanced
-     * brewing recipes, you can use Forge's BrewingRecipeRegistry.
+     * Once you've created and registered the Potions and PotionTypes, use PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular X, Regular X to Long X and Regular X to Strong X).
+     * For more advanced brewing recipes, you can use Forge's BrewingRecipeRegistry.
      */
     PotionEffectRegistry.registerPotionEffect(MAGNET);
     PotionEffectRegistry.registerPotionEffect(ENDER);

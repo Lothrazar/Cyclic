@@ -5,10 +5,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiWorkbench extends GuiBaseContainer {
-  //  private TileEntityWorkbench tile;
   public GuiWorkbench(InventoryPlayer inventoryPlayer, TileEntityWorkbench tileEntity) {
     super(new ContainerWorkBench(inventoryPlayer, tileEntity), tileEntity);
-    //    tile = tileEntity;
   }
   @Override
   public void initGui() {

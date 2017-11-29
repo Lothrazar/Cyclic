@@ -8,8 +8,6 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 /**
@@ -24,14 +22,16 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   protected TileEntityWorkbench tileEntity;
   private InventoryWorkbench craftMatrix;
-  private IInventory craftResult = new InventoryCraftResult();
+  private InventoryCraftResult craftResult = new InventoryCraftResult();
   private World world;
+  private final EntityPlayer player;
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
+    this.player = inventoryPlayer.player;
     this.setTile(te);
     tileEntity = te;
-    this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 136, 35));
+    this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;
     //inpt on left
     int xPrefix = Const.PAD, yPrefix = 27;
@@ -55,13 +55,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    IRecipe r = CraftingManager.findMatchingRecipe(craftMatrix, this.world);
-    if (r == null) {
-      craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
-    }
-    else {
-      craftResult.setInventorySlotContents(0, r.getRecipeOutput().copy());
-    }
+    this.slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.component.bucketstorage.PacketFluidSync;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
@@ -23,6 +22,7 @@ import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketDepositPlayerTo
 import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketQuickStack;
 import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketRestockContainerToPlayer;
 import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
+import com.lothrazar.cyclicmagic.fluid.PacketFluidSync;
 import com.lothrazar.cyclicmagic.net.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
@@ -39,6 +39,7 @@ import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.net.PacketTileFacingToggle;
+import com.lothrazar.cyclicmagic.net.PacketTileFuelDisplay;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -99,5 +100,6 @@ public class PacketRegistry {
     network.registerMessage(PacketSwapPlayerHotbar.class, PacketSwapPlayerHotbar.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileFacingToggle.class, PacketTileFacingToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSetField.class, PacketTileSetField.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileFuelDisplay.class, PacketTileFuelDisplay.class, packetID++, Side.SERVER);
   }
 }

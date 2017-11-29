@@ -32,9 +32,7 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
     return null;
   }
   /**
-   * 1.8 +: Ensures that the message is being handled on the main thread
-   * https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/
-   * tutorial/network/AbstractMessage.java#L118-L131
+   * 1.8 +: Ensures that the message is being handled on the main thread https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/ tutorial/network/AbstractMessage.java#L118-L131
    * http://www.minecraftforge.net/forum/index.php?topic=31853.0
    */
   private static final void checkThreadAndEnqueue(final PacketSyncPlayerData message, final MessageContext ctx) {

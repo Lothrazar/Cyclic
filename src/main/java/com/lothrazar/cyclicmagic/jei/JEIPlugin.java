@@ -61,7 +61,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     ////////////////// custom recipe hook
     registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(BlockHydrator.recipeList, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     for (Item item : ItemRegistry.itemMap.values()) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried

@@ -5,6 +5,7 @@ public class Const {
   public static class Res {
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+    public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
     public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");
     public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, folder + "inventory_slot_bottle.png");
     public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(Const.MODID, folder + "slot_bucket.png");
@@ -94,6 +95,7 @@ public class Const {
     public static final String mobs = MODCONF + "mobs";
     public static final String mobspawns = MODCONF + "Mob Spawns";
     public static final String blocks = MODCONF + "blocks";
+    public static final String fuelCost = MODCONF + "FuelCost";
     public static final String inventory = MODCONF + "Inventory";
     public static final String items = MODCONF + "items";
     public static final String logging = MODCONF + "logging";
@@ -107,6 +109,9 @@ public class Const {
     public static final String InventoryButtonsModpack = modpackMisc + ".TerrariaButtons";
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
+  }
+  public class ConfigText {
+    public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
   }
   public class ToolStrings {
     public static final String pickaxe = "pickaxe";
@@ -161,6 +166,10 @@ public class Const {
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
   public static final int PAD = 8;
+  /**
+   * defined in vanilla VluidRegistry where Fluid LAVA is registered (tile.lava)
+   */
+  public static final int LAVA_TEMPERATURE = 1300;
   public static class HorseMeta {
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;

@@ -132,8 +132,7 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
   }
   /**
-   * Returns the location of an entity's texture. Doesn't seem to be called
-   * unless you call Render.bindEntityTexture.
+   * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
    */
   protected ResourceLocation getEntityTexture(T entity) {
     return texture;

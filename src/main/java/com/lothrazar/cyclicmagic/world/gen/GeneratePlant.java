@@ -35,9 +35,7 @@ public class GeneratePlant extends WorldGenerator {
       /*
        * Description: Exception initializing level
        * 
-       * java.lang.: Exception initializing level at
-       * net.minecraft.world.gen.ChunkProviderServer.provideChunk(
-       * ChunkProviderServer.java:153) at
+       * java.lang.: Exception initializing level at net.minecraft.world.gen.ChunkProviderServer.provideChunk( ChunkProviderServer.java:153) at
        * net.minecraft.world.World.getChunkFromChunkCoords(World.java:349)
        */
       ModCyclic.logger.error(e.getStackTrace().toString());

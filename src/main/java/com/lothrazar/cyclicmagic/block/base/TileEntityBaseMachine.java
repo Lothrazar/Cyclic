@@ -29,6 +29,9 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return false;//default is no, dont only run if powered, just go
   }
   protected EnumFacing getCurrentFacing() {
+    if (this.getBlockType() instanceof BlockBaseFacingOmni) {
+      return BlockBaseFacingOmni.getCurrentFacing(world, pos);
+    }
     if (!(this.getBlockType() instanceof BlockBaseFacing)) {
       return EnumFacing.UP;
     }
@@ -51,8 +54,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     }
   }
   /**
-   * Block the data being lost when block stat e changes THANKS TO
-   * http://www.minecraftforge.net/forum/index.php?topic=29544.0
+   * Block the data being lost when block stat e changes THANKS TO http://www.minecraftforge.net/forum/index.php?topic=29544.0
    */
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {

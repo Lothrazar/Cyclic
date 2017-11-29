@@ -28,8 +28,7 @@ public class UtilPlaceBlocks {
     return false;
   }
   /*
-   * TODO: SHOULD every call to this be in a scheduled task?
-   * https://github.com/PrinceOfAmber/Cyclic/issues/143
+   * TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143
    */
   public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (world.setBlockToAir(placePos)) {
@@ -45,8 +44,7 @@ public class UtilPlaceBlocks {
     return placeStateSafe(world, player, placePos, placeState, false);
   }
   /**
-   * This will return true only if world.setBlockState(..) returns true or if
-   * the block here is already identical
+   * This will return true only if world.setBlockState(..) returns true or if the block here is already identical
    * 
    * @param world
    * @param player

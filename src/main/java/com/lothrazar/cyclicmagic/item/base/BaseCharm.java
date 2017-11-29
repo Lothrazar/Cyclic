@@ -50,8 +50,7 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     return this.addRecipeAndRepair(new ItemStack(craftItem));
   }
   /**
-   * Called each tick as long the item is on a player inventory. Uses by maps to
-   * check if is on a player hand and update it's contents.
+   * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and update it's contents.
    */
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {

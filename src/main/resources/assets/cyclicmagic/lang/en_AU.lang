@@ -74,6 +74,7 @@ command.gethome.bed=Your home bed was missing or obstructed
 command.gethome.overworld=No home outside the overworld
 command.gethome.yours=Your home bed is at
 command.home.overworld=Can only teleport to your home in the overworld
+command.nbtprint.null=NBT data is empty
 command.recipes.empty=Recipe Empty
 command.recipes.found=Recipe Found
 command.recipes.notfound=Recipe Not Found
@@ -86,6 +87,7 @@ command.villageinfo.none=No Nearby Village
 command.villageinfo.popul=Population: 
 command.villageinfo.reputation=Rep: 
 command.worldhome.dim=Wrong Dimension
+cyclic.fluid.flowing=incoming from 
 cyclic.fluid.amount=Fluid: 
 cyclic.fluid.empty=Empty
 debug.horsejump=Horse Jump: 
@@ -224,8 +226,20 @@ item.emerald_leggings.name=Emerald Leggings
 item.emerald_pickaxe.name=Emerald Pickaxe
 item.emerald_spade.name=Emerald Shovel
 item.emerald_sword.name=Emerald Sword
+item.emerald_axe.guide=Similar to Diamond but with better enchantability
+item.emerald_boots.guide=Similar to Diamond but with better enchantability
+item.emerald_chestplate.guide=Similar to Diamond but with better enchantability
+item.emerald_helmet.guide=Similar to Diamond but with better enchantability
+item.emerald_hoe.guide=Similar to Diamond but with better enchantability
+item.emerald_leggings.guide=Similar to Diamond but with better enchantability
+item.emerald_pickaxe.guide=Similar to Diamond but with better enchantability
+item.emerald_spade.guide=Similar to Diamond but with better enchantability
+item.emerald_sword.guide=Similar to Diamond but with better enchantability
 item.emeraldgear.guide=All the emerald gear has the same attack and defense power as diamond, but slightly lower durability.  It has the same enchantability as gold (which is higher than diamond), so you are more likely to get higher quality enchantments when compared to diamond.
 item.emeraldgear.title=Emerald Gear
+item.ender_eye_orb.name=Solid Ender Eye
+item.ender_eye_orb.tooltip=Reuseable ender eye for finding strongholds
+item.ender_eye_orb.guide=Reuseable ender eye for finding strongholds.  The spawned flying eyes will never drop an item.
 item.ender_blaze.guide=Throwable single use item.  Sets nearby blocks on fire when it lands.
 item.ender_blaze.name=Duskflame Hex
 item.ender_blaze.tooltip=Charge and launch dark fireballs
@@ -348,10 +362,17 @@ item.purple_leggings.name=Obsidian Leggings
 item.sack_ender.guide=This portable item opens with the same inventory from your Ender Chest.
 item.sack_ender.name=Ender Sack
 item.sack_ender.tooltip=Portable Ender Chest
+
 item.sandstone_axe.name=Sandstone Axe
 item.sandstone_hoe.name=Sandstone Hoe
 item.sandstone_pickaxe.name=Sandstone Pickaxe
-item.sandstone_spade.name=Sandstone Spade
+item.sandstone_spade.name=Sandstone Shovel
+
+item.sandstone_axe.guide=Worse than stone but better than wood
+item.sandstone_hoe.guide=Worse than stone but better than wood
+item.sandstone_pickaxe.guide=Worse than stone but better than wood
+item.sandstone_spade.guide=Worse than stone but better than wood
+
 item.sandstonegear.guide=The sandstone tools are slightly below stone quality but better than wood.
 item.sandstonegear.title=Sandstone Gear
 item.shift=Press Shift for more info
@@ -548,6 +569,9 @@ tile.block_fishing.invalidpos=Requires water on at least four sides.
 tile.block_fishing.name=Automatic Fishing Net
 tile.block_fishing.progress=Fishing...
 tile.block_fishing.tooltip=Place in water and give it a fishing rod
+tile.block_forester.name=Forester
+tile.block_forester.tooltip=Plants saplings and harvests logs
+tile.block_forester.guide=Plants saplings on any grass-like block nearby.  Harvests logs from the bottom up.  Uses coal or power.
 tile.block_fragile.guide=Climb this like a ladder, and sneak to build on the opposite side.  Fragile Scaffolding breaks over time all by itself.  Useful for when you are pillaring up, or scaffolding around a building, but you want it to just be temporary.  Now you dont have to go back and take down some dirt pillar later on.
 tile.block_fragile.name=Fragile Scaffolding
 tile.block_fragile.tooltip=Decays over time; Place in mid-air.
@@ -778,6 +802,14 @@ tile.uncrafting.unknown=Unknown Recipe Type
 tile.uncrafting_block.guide=This will lookup and reverse any vanilla 2x2 or 3x3 recipe.  May not work with specialized modded recipes / machine recipes.
 tile.uncrafting_block.name=Uncrafting Grinder
 tile.uncrafting_block.tooltip=Reverses most recipes
+tile.wireless_transmitter.name=Wireless Transmitter
+tile.wireless_transmitter.tooltip=Transmit wireless redstone to a Receiver; hit this on a receiver to pick up coordinates
+tile.wireless_transmitter.guide=Transmit wireless redstone to a Receiver; hit this on a receiver to pick up coordinates.  Only sends to one receiver.
+tile.wireless_receiver.name=Wireless Receiver
+tile.wireless_receiver.tooltip=Receive wireless redstone signals from a Transmitter
+tile.wireless_receiver.guide=Receive wireless redstone signals from a Transmitter.  Place this in the world first, then hit the transmitter on it.
+tile.wireless_transmitter.empty=No target saved
+tile.wireless_transmitter.saved=Saved coordinates: 
 tile.xpjuice.name=Experience
 tool.action.forward=Direction: Forward
 tool.action.off=Off
@@ -811,9 +843,15 @@ wand.liquid.lava=Mode: Lava
 wand.liquid.water=Mode: Water
 wand.result.notargets=No Targets Found
 world.endore.guide=These ores spawn all over the end, the details can be changed in config.  Iron and gold ores drop nuggets.
-world.endore.title=Nether Ore
+world.endore.title=End Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
-world.netherore.title=End Ore
+world.netherore.title=Nether Ore
+
+tile.hydrator.locked.tooltip=Recipe Locked; minimum stack size 1
+tile.hydrator.unlocked.tooltip=Recipe Unlocked
+
+energy.button.top=Fuel Bar Above
+energy.button.side=Fuel Bar Side
 
 potion.potency.4=V
 potion.potency.3=IV
@@ -897,4 +935,17 @@ potion.effect.frostwalker=Potion of Frost Walker
 splash_potion.effect.frostwalker=Splash Potion of Frost Walker
 lingering_potion.effect.frostwalker=Lingering Potion of Frost Walker
 tipped_arrow.effect.frostwalker=Arrow of Frost Walker
+
+
+
+tile.fluid_pump.name=Fluid Pump
+tile.fluid_pump.tooltip=Move fluid between tanks or pipes when redstone powered
+tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes liquids into tanks in front if any.  Push into another tank or Fluid Pipes.
+
+tile.fluid_pipe.name=Fluid Pipe
+tile.fluid_pipe.tooltip=Connect to a Fluid Pump to transfer liquids between tanks
+tile.fluid_pipe.guide=Connect to a Fluid Pump to transfer liquids between tanks.  Each pipe segment holds a small amount of liquid, and it gets pushed through from previous pipe segments or a pump and goes out any direction it can find.
+
+cyclic.redstone.on=Restone: On
+cyclic.redstone.off=Restone: Off
 

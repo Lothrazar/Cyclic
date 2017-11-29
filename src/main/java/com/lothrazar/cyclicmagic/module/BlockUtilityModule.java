@@ -2,9 +2,6 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
-import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.component.bucketstorage.ItemBlockBucket;
-import com.lothrazar.cyclicmagic.component.bucketstorage.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
@@ -15,6 +12,13 @@ import com.lothrazar.cyclicmagic.component.fan.BlockFan;
 import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
+import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -41,6 +45,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean autoCrafter;
   private boolean soundproofing;
   private boolean workbench;
+  private boolean enablePumpAndPipes;
   public void onPreInit() {
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
@@ -96,11 +101,21 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {
-      //TODO: refactor and support more recipes
+      //tank
       BlockRegistry.block_storeempty = new BlockBucketStorage();
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
+    }
+    if (enablePumpAndPipes) {
+      //pump
+      BlockFluidPump fluid_xfer = new BlockFluidPump();
+      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
+      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      //pipes
+      BlockFluidCable k = new BlockFluidCable();
+      BlockRegistry.registerBlock(k, "fluid_pipe", null);
+      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
     }
   }
   @Override
@@ -114,6 +129,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }

@@ -32,11 +32,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITileSizeToggle {
-  private static final int MAX_POTION = 16000;
+  static final int MAX_POTION = 16000;
   private static final int POTION_TICKS = Const.TICKS_PER_SEC * 8;// 8 seconds
   private static final int MAX_RADIUS = 8;
   public static enum Fields {
-    REDSTONE, FUEL, FUELMAX, ENTITYTYPE, RANGE;
+    REDSTONE, TIMER, FUELMAX, ENTITYTYPE, RANGE;
   }
   public static enum EntityType {
     PLAYERS, NONPLAYER, ALL, MONSTER, CREATURE, AMBIENT, WATER; // ambient, monster, creature, water
@@ -57,13 +57,15 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private int radius = MAX_RADIUS - 2;//just a mid tier default 
   public TileEntityBeaconPotion() {
     super(9);
+    this.timer = 0;
   }
   @Override
   public void update() {
     if (!isRunning()) {
       return;
     }
-    if (this.getFuelCurrent() == 0) {
+    this.shiftAllUp(1);
+    if (this.timer == 0) {
       //wipe out the current effects
       this.effects = new ArrayList<PotionEffect>();
       // and try to consume a potion
@@ -78,8 +80,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
             effects.add(new PotionEffect(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
           }
           //then refil progress bar
-          this.setFuelMax(MAX_POTION);
-          this.setFuelCurrent(this.getFuelMax());
+          this.timer = MAX_POTION;
           //then consume the item, unless disabled
           if (doesConsumePotions) {
             this.setInventorySlotContents(0, ItemStack.EMPTY);
@@ -88,11 +89,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         // else at least one is not valid, do not eat the potoin
       }
     }
-    else if (this.getFuelCurrent() > 0 && doesConsumePotions) {
-      this.setFuelCurrent(this.getFuelCurrent() - 1);
-    }
-    this.shiftAllUp(1);
-    if (this.world.getTotalWorldTime() % 80L == 0L && this.updateFuelIsBurning()) {
+    else if (this.world.getTotalWorldTime() % 80L == 0L) {
+      this.updateTimerIsZero();
       this.updateBeacon();
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
@@ -282,8 +280,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
   }
   /**
-   * Returns true if automation can insert the given item in the given slot from
-   * the given side.
+   * Returns true if automation can insert the given item in the given slot from the given side.
    */
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return true;
@@ -297,10 +294,10 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
-      case FUEL:
-        return this.getFuelCurrent();
+      case TIMER:
+        return this.timer;
       case FUELMAX:
-        return this.getFuelMax();
+        return MAX_POTION;
       case ENTITYTYPE:
         return this.entityType.ordinal();
       case RANGE:
@@ -314,11 +311,10 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       case REDSTONE:
         this.needsRedstone = value;
       break;
-      case FUEL:
-        this.setFuelCurrent(value);
+      case TIMER:
+        this.timer = value;
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case ENTITYTYPE:
         if (value >= EntityType.values().length)
@@ -329,8 +325,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       break;
       case RANGE:
         this.radius = Math.min(value, MAX_RADIUS);
-      break;
-      default:
       break;
     }
   }
@@ -343,8 +337,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     return this.needsRedstone == 1;
   }
   /**
-   * Returns true if automation can extract the given item in the given slot
-   * from the given side.
+   * Returns true if automation can extract the given item in the given slot from the given side.
    */
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;

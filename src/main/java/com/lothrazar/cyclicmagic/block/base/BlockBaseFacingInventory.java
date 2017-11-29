@@ -16,4 +16,7 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
   public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
     return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
+  public String getRawName() {
+    return this.getUnlocalizedName().replace("tile.", "");
+  }
 }

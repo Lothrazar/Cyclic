@@ -60,11 +60,11 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(FUEL_SLOT);
+    this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -83,6 +83,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
+
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -91,7 +95,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (isRunning()) {
-        if (this.updateFuelIsBurning() && this.updateTimerIsZero()) {
+        if (  this.updateTimerIsZero()) {
           if (updateMiningProgress()) {
             this.timer = TIMER_FULL;
           }
@@ -319,8 +323,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return this.getFuelMax();
       case TIMER:
         return this.timer;
-      default:
-      break;
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return 0;
   }
@@ -349,10 +353,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case TIMER:
         this.timer = value;
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

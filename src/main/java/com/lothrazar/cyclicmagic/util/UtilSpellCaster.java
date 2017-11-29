@@ -90,17 +90,12 @@ public class UtilSpellCaster {
      * 
      * int MAX = ItemCyclicWand.Energy.getMaximum(wand);
      * 
-     * if(player.capabilities.isCreativeMode){ // always set full
-     * ItemCyclicWand.Energy.setCurrent(wand, MAX); } else
-     * if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) &&
-     * ItemCyclicWand.Energy.getCurrent(wand) + Energy.RECHARGE_MANA_AMT <=
-     * MAX){
+     * if(player.capabilities.isCreativeMode){ // always set full ItemCyclicWand.Energy.setCurrent(wand, MAX); } else if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) &&
+     * ItemCyclicWand.Energy.getCurrent(wand) + Energy.RECHARGE_MANA_AMT <= MAX){
      * 
      * ItemCyclicWand.Energy.rechargeBy(wand, Energy.RECHARGE_MANA_AMT);
      * 
-     * UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST);
-     * UtilSound.playSound(player.worldObj, player.getPosition(),
-     * UtilSound.Own.fill); } else{ UtilSound.playSound(player.worldObj,
+     * UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST); UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.fill); } else{ UtilSound.playSound(player.worldObj,
      * player.getPosition(), UtilSound.Own.buzzp); }
      */
   }

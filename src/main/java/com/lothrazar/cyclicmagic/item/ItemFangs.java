@@ -49,8 +49,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     return EnumActionResult.SUCCESS;
   }
   /**
-   * Summon a ray of fangs in the direction of these coordinates away from the
-   * caster
+   * Summon a ray of fangs in the direction of these coordinates away from the caster
    * 
    * @param caster
    * @param posX
@@ -72,8 +71,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     onCastSuccess(caster);
   }
   /**
-   * cast a single fang from the caster towards the direction of the given
-   * coordinates with delay
+   * cast a single fang from the caster towards the direction of the given coordinates with delay
    * 
    * @param caster
    * @param x

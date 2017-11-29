@@ -15,7 +15,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class UtilScythe {
   private static final int FORTUNE = 5;
@@ -104,17 +103,8 @@ public class UtilScythe {
     }
     else {
       ItemStack bStack = new ItemStack(blockCheck);
-      for (String oreId : type.oreDictWhitelist) {
-        if (OreDictionary.doesOreNameExist(oreId)) {
-          for (ItemStack s : OreDictionary.getOres(oreId)) {
-            if (OreDictionary.itemMatches(s, bStack, false)) {
-              return true;
-            }
-          }
-        }
-      }
+      return UtilOreDictionary.doesMatchOreDict(bStack, type.oreDictWhitelist.toArray(new String[0]));
     }
-    return false;//
   }
   public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
     boolean doBreakAbove = false;

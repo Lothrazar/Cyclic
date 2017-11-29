@@ -11,8 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * generic packet handler for tile entities. assumes they handle cyclic fields
- * that start over
+ * generic packet handler for tile entities. assumes they handle cyclic fields that start over
  * 
  * TODO: see if we can reuse this mroe and remove uneccessary classes
  * 

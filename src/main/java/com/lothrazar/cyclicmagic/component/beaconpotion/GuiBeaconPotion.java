@@ -19,7 +19,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityBeaconPotion.Fields.REDSTONE.ordinal();
     if (TileEntityBeaconPotion.doesConsumePotions) {
-      this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.FUEL.ordinal(), Fields.FUELMAX.ordinal());
+      this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), TileEntityBeaconPotion.MAX_POTION);
     }
   }
   @Override

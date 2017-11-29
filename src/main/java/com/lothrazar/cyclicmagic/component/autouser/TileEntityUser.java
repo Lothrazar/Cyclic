@@ -74,13 +74,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int size;
   public int yOffset = 0;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
   }
   public TileEntityUser() {
     super(10);
     timer = TIMER_FULL;
     speed = SPEED_FUELED;
-    this.setFuelSlot(9);
+    this.setFuelSlot(9, BlockUser.FUEL_COST);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -93,7 +93,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     this.shiftAllUp(7);
     this.spawnParticlesAbove();
-    this.updateFuelIsBurning();
+
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     boolean triggered = this.updateTimerIsZero();
     if (world instanceof WorldServer) {
       verifyUuid(world);
@@ -365,6 +368,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return 0;
   }
@@ -402,12 +407,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.setFuelCurrent(value);
       break;
       case FUELMAX:
-        this.setFuelMax(value);
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
-      default:
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

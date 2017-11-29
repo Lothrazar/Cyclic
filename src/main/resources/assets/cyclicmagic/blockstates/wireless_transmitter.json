@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=true":  { "model": "cyclicmagic:wireless_transmitter_on" },
+        "powered=false": { "model": "cyclicmagic:wireless_transmitter_off" }
+    }
+}
