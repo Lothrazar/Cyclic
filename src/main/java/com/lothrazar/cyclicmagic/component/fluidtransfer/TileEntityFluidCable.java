@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -118,13 +119,12 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
     BlockPos posTarget;
     //Actually shuffle the positions. if we are at a 3 way juncture, spread out where it goes first
     ArrayList<Integer> shuffledFaces = new ArrayList<>();
-    for (int i = 1; i < EnumFacing.values().length; i++) {
+    for (int i = 0; i < EnumFacing.values().length; i++) {
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
     for (int i : shuffledFaces) {
       EnumFacing f = EnumFacing.values()[i];
-      //      for (EnumFacing f : EnumFacing.values()) {
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
