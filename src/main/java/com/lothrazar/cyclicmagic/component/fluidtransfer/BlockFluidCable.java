@@ -207,35 +207,36 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
       return FULL_BLOCK_AABB;
     state = state.getActualState(source, pos);
     TileEntityFluidCable tile = (TileEntityFluidCable) source.getTileEntity(pos);
-    float f = 0.3125F;
-    float f1 = 0.6875F;
-    float f2 = 0.3125F;
-    float f3 = 0.6875F;
-    float f4 = 0.3125F;
-    float f5 = 0.6875F;
+    float m = 0.0125F;
+    float x1 = 0.37F;
+    float x2 = 0.63F;
+    float y1 = 0.37F;
+    float y2 = 0.63F;
+    float z1 = 0.37F;
+    float z2 = 0.63F;
     if (tile == null)
-      return new AxisAlignedBB(f, f4, f2, f1, f5, f3);
+      return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
     //    if (tile != null && tile.getCover() != null && tile.getCover() != Blocks.GLASS) { return FULL_BLOCK_AABB; }
     //AxisAlignedBB res = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
     if (tile.north != EnumConnectType.NULL) {
-      f2 = 0f;
+      y1 = 0f;
     }
     if (tile.south != EnumConnectType.NULL) {
-      f3 = 1f;
+      y2 = 1f;
     }
     if (tile.west != EnumConnectType.NULL) {
-      f = 0f;
+      x1 = 0f;
     }
     if (tile.east != EnumConnectType.NULL) {
-      f1 = 1f;
+      x2 = 1f;
     }
     if (tile.down != EnumConnectType.NULL) {
-      f4 = 0f;
+      z1 = 0f;
     }
     if (tile.up != EnumConnectType.NULL) {
-      f5 = 1f;
+      z2 = 1f;
     }
-    return new AxisAlignedBB(f, f4, f2, f1, f5, f3);
+    return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
   }
   protected EnumConnectType getConnect(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
     BlockPos offset = pos.offset(side);
@@ -275,8 +276,7 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
       if (world.isRemote == false) { //server side
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
-          String amtStr = fs.amount + " / " + te.getCapacity() + " ";
-          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
+          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + fs.getLocalizedName());
         }
         else {
           UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.empty"));
