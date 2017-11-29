@@ -238,6 +238,7 @@ item.emeraldgear.guide=All the emerald gear has the same attack and defense powe
 item.emeraldgear.title=Emerald Gear
 item.ender_eye_orb.name=Solid Ender Eye
 item.ender_eye_orb.tooltip=Reuseable ender eye for finding strongholds
+item.ender_eye_orb.guide=Reuseable ender eye for finding strongholds.  The spawned flying eyes will never drop an item.
 item.ender_blaze.guide=Throwable single use item.  Sets nearby blocks on fire when it lands.
 item.ender_blaze.name=Duskflame Hex
 item.ender_blaze.tooltip=Charge and launch dark fireballs
@@ -802,8 +803,10 @@ tile.uncrafting_block.name=Uncrafting Grinder
 tile.uncrafting_block.tooltip=Reverses most recipes
 tile.wireless_transmitter.name=Wireless Transmitter
 tile.wireless_transmitter.tooltip=Transmit wireless redstone to a Receiver; hit this on a receiver to pick up coordinates
+tile.wireless_transmitter.guide=Transmit wireless redstone to a Receiver; hit this on a receiver to pick up coordinates.  Only sends to one receiver.
 tile.wireless_receiver.name=Wireless Receiver
 tile.wireless_receiver.tooltip=Receive wireless redstone signals from a Transmitter
+tile.wireless_receiver.guide=Receive wireless redstone signals from a Transmitter.  Place this in the world first, then hit the transmitter on it.
 tile.wireless_transmitter.empty=No target saved
 tile.wireless_transmitter.saved=Saved coordinates: 
 tile.xpjuice.name=Experience
@@ -935,7 +938,7 @@ tipped_arrow.effect.frostwalker=Arrow of Frost Walker
 
 
 tile.fluid_pump.name=Fluid Pump
-tile.fluid_pump.tooltip=Drain and pump fluid when redstone powered
+tile.fluid_pump.tooltip=Move fluid between tanks or pipes when redstone powered
 tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes liquids into tanks in front if any.  Push into another tank or Fluid Pipes.
 
 tile.fluid_pipe.name=Fluid Pipe

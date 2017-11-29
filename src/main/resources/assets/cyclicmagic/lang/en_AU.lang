@@ -238,6 +238,7 @@ item.emeraldgear.guide=All the emerald gear has the same attack and defense powe
 item.emeraldgear.title=Emerald Gear
 item.ender_eye_orb.name=Solid Ender Eye
 item.ender_eye_orb.tooltip=Reuseable ender eye for finding strongholds
+item.ender_eye_orb.guide=Reuseable ender eye for finding strongholds.  The spawned flying eyes will never drop an item.
 item.ender_blaze.guide=Throwable single use item.  Sets nearby blocks on fire when it lands.
 item.ender_blaze.name=Duskflame Hex
 item.ender_blaze.tooltip=Charge and launch dark fireballs
