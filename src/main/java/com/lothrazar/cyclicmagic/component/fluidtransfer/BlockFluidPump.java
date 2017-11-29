@@ -12,6 +12,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -88,10 +89,13 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "igi",
-        "go ",
-        "igi",
-        'o', "obsidian", 'i', "ingotIron", 'g', "blockGlass");
+        "i i",
+        "frd",
+        "i i",
+        'r', "dustRedstone", 
+        'i', "ingotIron", 
+        'f', Blocks.FURNACE, 
+        'd', Blocks.DAYLIGHT_DETECTOR);
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {

@@ -63,7 +63,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     if (!isRunning()) {
       return;
     }
-
     if (this.updateFuelIsBurning() == false) {
       return;
     }
@@ -80,9 +79,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         tryHarvestArea();
       }
     }
-//    else {
-//      this.updateFuelIsBurning();
-//    }
   }
   private void tryHarvestArea() {
     List<BlockPos> shape = getShapeFilled();

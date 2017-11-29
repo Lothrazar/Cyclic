@@ -4,7 +4,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -13,7 +15,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -29,7 +33,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidCable extends BlockContainer {
+public class BlockFluidCable extends BlockContainer implements IHasRecipe {
   public static enum EnumConnectType implements IStringSerializable {
     CONNECT("connect"), STORAGE("storage"), NULL("null");
     String name;
@@ -280,5 +284,15 @@ public class BlockFluidCable extends BlockContainer {
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+  }
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 32),
+        "sis",
+        " x ",
+        "sis",
+        's', Blocks.STONE_STAIRS
+        , 'i', "ingotIron"
+        , 'x', "string");
   }
 }
