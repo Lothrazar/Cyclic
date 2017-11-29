@@ -45,23 +45,25 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityXpPylon tile = (TileEntityXpPylon) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      int pylonHas = tile.getField(message.type.ordinal());
-      int pylonSpace = TileEntityXpPylon.TANK_FULL - pylonHas;
+      int fluidPylonHas = tile.getField(message.type.ordinal());
+      int pylonSpace = TileEntityXpPylon.TANK_FULL - fluidPylonHas;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
         int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
-        if (message.value >= 0) {
-          int toDeposit;
+        if (message.value >= 0) { // deposit, not a drain
+          int expToDrain;
           if (message.value == 0) {
             //deposit all
-            toDeposit = Math.min(playerHas, pylonSpace);
+            expToDrain = Math.min(playerHas, pylonSpace);
           }
           else {//try deposit specified amt
-            toDeposit = Math.min(message.value, pylonSpace);
+            expToDrain = Math.min(message.value, pylonSpace);
           }
-          if (pylonHas + toDeposit <= TileEntityXpPylon.TANK_FULL) {//is it full
-            if (UtilExperience.drainExp(player, toDeposit)) {//does player have enough
+          // if I have 5 exp, then we get 5*20 fluid units
+          int fluidToDeposit = expToDrain * TileEntityXpPylon.FLUID_PER_EXP;
+          if (fluidPylonHas + expToDrain <= TileEntityXpPylon.TANK_FULL) {//is it full
+            if (UtilExperience.drainExp(player, expToDrain)) {//does player have enough
               //then deposit that much into it if drain worked
-              tile.setField(message.type.ordinal(), pylonHas + toDeposit);
+              tile.setField(message.type.ordinal(), fluidPylonHas + fluidToDeposit);
             }
             else { //  not enouh
               UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
@@ -73,15 +75,17 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
         }
         else { // so message.value < 0
           // so DRAIN FROM PYLON, add to PLAYER. BUT only if PYLON has enough
-          int toDrain = message.value * -1;
-          if (pylonHas >= toDrain) {
-            tile.setField(message.type.ordinal(), pylonHas - toDrain);
-            UtilExperience.incrementExp(player, toDrain);
+          int expToAdd = message.value * -1;
+          int fluidToDrain = expToAdd * TileEntityXpPylon.FLUID_PER_EXP;
+          if (fluidPylonHas >= fluidToDrain) {
+            //if I have 40 exp, that is 2 fluid units
+            tile.setField(message.type.ordinal(), fluidPylonHas - fluidToDrain);
+            UtilExperience.incrementExp(player, expToAdd);
           }
         }
       }
-      else {//normal field toggle/value will be + or 1 something so increment by that
-        tile.setField(message.type.ordinal(), pylonHas + message.value);
+      else {//NON EXP  field toggle/value will be + or 1 something so increment by that
+        tile.setField(message.type.ordinal(), fluidPylonHas + message.value);
       }
       tile.markDirty();
       if (player.openContainer != null) {
