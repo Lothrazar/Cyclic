@@ -46,8 +46,9 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
     }
   }
   public BlockFluidCable() {
-    super(Material.IRON);
-    this.setHardness(1.4F);
+    super(Material.CLAY);
+    this.setHardness(.5F);
+    this.setResistance(.5F);
   }
   @Override
   @SideOnly(Side.CLIENT)
