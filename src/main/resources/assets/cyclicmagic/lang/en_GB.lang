@@ -87,6 +87,7 @@ command.villageinfo.none=No Nearby Village
 command.villageinfo.popul=Population: 
 command.villageinfo.reputation=Rep: 
 command.worldhome.dim=Wrong Dimension
+cyclic.fluid.flowing=flowing from 
 cyclic.fluid.amount=Fluid: 
 cyclic.fluid.empty=Empty
 debug.horsejump=Horse Jump: 

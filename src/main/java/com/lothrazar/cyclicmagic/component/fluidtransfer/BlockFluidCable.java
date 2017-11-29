@@ -92,7 +92,6 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
     if (!(world.getTileEntity(pos) instanceof TileEntityFluidCable))
       return world.getBlockState(pos);
     TileEntityFluidCable tile = (TileEntityFluidCable) world.getTileEntity(pos);
-    EnumFacing face = null;
     BlockPos con = null;
     Map<EnumFacing, EnumConnectType> oldMap = tile.getConnects();
     Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
@@ -123,27 +122,27 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
     }
     tile.setConnects(newMap);
     if (tile.north == EnumConnectType.STORAGE) {
-      face = EnumFacing.NORTH;
+      // face = EnumFacing.NORTH;
       con = pos.north();
     }
     else if (tile.south == EnumConnectType.STORAGE) {
-      face = EnumFacing.SOUTH;
+      //  face = EnumFacing.SOUTH;
       con = pos.south();
     }
     else if (tile.east == EnumConnectType.STORAGE) {
-      face = EnumFacing.EAST;
+      //  face = EnumFacing.EAST;
       con = pos.east();
     }
     else if (tile.west == EnumConnectType.STORAGE) {
-      face = EnumFacing.WEST;
+      //  face = EnumFacing.WEST;
       con = pos.west();
     }
     else if (tile.down == EnumConnectType.STORAGE) {
-      face = EnumFacing.DOWN;
+      //  face = EnumFacing.DOWN;
       con = pos.down();
     }
     else if (tile.up == EnumConnectType.STORAGE) {
-      face = EnumFacing.UP;
+      //  face = EnumFacing.UP;
       con = pos.up();
     }
     //  tile.setConnectedFace(face);
@@ -169,45 +168,45 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
     }
     state = state.getActualState(worldIn, pos);
     TileEntityFluidCable tile = (TileEntityFluidCable) worldIn.getTileEntity(pos);
-    float f = 0.3125F;
-    float f1 = 0.6875F;
-    float f2 = 0.3125F;
-    float f3 = 0.6875F;
-    float f4 = 0.3125F;
-    float f5 = 0.6875F;
-    addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+    float x1 = 0.3125F;
+    float x2 = 0.6875F;
+    float y1 = 0.3125F;
+    float y2 = 0.6875F;
+    float z1 = 0.3125F;
+    float z2 = 0.6875F;
+    addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     if (tile.north != EnumConnectType.NULL) {
-      f2 = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      y1 = 0f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
     if (tile.south != EnumConnectType.NULL) {
-      f3 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      y2 = 1f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
     if (tile.west != EnumConnectType.NULL) {
-      f = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      x1 = 0f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
     if (tile.east != EnumConnectType.NULL) {
-      f1 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      x2 = 1f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
     if (tile.down != EnumConnectType.NULL) {
-      f4 = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      z1 = 0f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
     if (tile.up != EnumConnectType.NULL) {
-      f5 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(f, f4, f2, f1, f5, f3));
+      z2 = 1f;
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
     }
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    if (!(source.getTileEntity(pos) instanceof TileEntityFluidCable))
+    if (source.getTileEntity(pos) instanceof TileEntityFluidCable == false) {
       return FULL_BLOCK_AABB;
+    }
     state = state.getActualState(source, pos);
     TileEntityFluidCable tile = (TileEntityFluidCable) source.getTileEntity(pos);
-    float m = 0.0125F;
     float x1 = 0.37F;
     float x2 = 0.63F;
     float y1 = 0.37F;
@@ -216,8 +215,6 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
     float z2 = 0.63F;
     if (tile == null)
       return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
-    //    if (tile != null && tile.getCover() != null && tile.getCover() != Blocks.GLASS) { return FULL_BLOCK_AABB; }
-    //AxisAlignedBB res = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
     if (tile.north != EnumConnectType.NULL) {
       y1 = 0f;
     }
@@ -248,21 +245,6 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
       return EnumConnectType.STORAGE;
     return EnumConnectType.NULL;
   }
-  public static EnumFacing get(BlockPos a, BlockPos b) {
-    if (a.up().equals(b))
-      return EnumFacing.DOWN;
-    if (a.down().equals(b))
-      return EnumFacing.UP;
-    if (a.west().equals(b))
-      return EnumFacing.EAST;
-    if (a.east().equals(b))
-      return EnumFacing.WEST;
-    if (a.north().equals(b))
-      return EnumFacing.SOUTH;
-    if (a.south().equals(b))
-      return EnumFacing.NORTH;
-    return null;
-  }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidCable();
@@ -270,17 +252,23 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
-    TileEntityBaseMachineFluid te = (TileEntityBaseMachineFluid) world.getTileEntity(pos);
+    TileEntityFluidCable te = (TileEntityFluidCable) world.getTileEntity(pos);
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) { //server side
         FluidStack fs = te.getCurrentFluidStack();
+        String msg = null;
         if (fs != null) {
-          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + fs.getLocalizedName());
+          // UtilChat.lang("cyclic.fluid.amount") +
+          msg = fs.getLocalizedName();
+          if (te.getIncomingStrings() != "") {
+            msg += " (" + UtilChat.lang("cyclic.fluid.flowing") + te.getIncomingStrings() + ")";
+          }
         }
         else {
-          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.empty"));
+          msg = UtilChat.lang("cyclic.fluid.empty");
         }
+        UtilChat.sendStatusMessage(player, msg);
       }
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
@@ -292,8 +280,6 @@ public class BlockFluidCable extends BlockContainer implements IHasRecipe {
         "sis",
         " x ",
         "sis",
-        's', Blocks.STONE_STAIRS
-        , 'i', "ingotIron"
-        , 'x', "string");
+        's', Blocks.STONE_STAIRS, 'i', "ingotIron", 'x', "string");
   }
 }

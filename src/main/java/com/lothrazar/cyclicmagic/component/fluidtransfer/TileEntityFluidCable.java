@@ -15,7 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
-  private static final int TIMER_SIDE_INPUT = 80;
+  private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
@@ -147,5 +147,13 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
       if (mapIncoming.get(f) > 0)
         mapIncoming.put(f, mapIncoming.get(f) - 1);
     }
+  }
+  public String getIncomingStrings() {
+    String in = "";
+    for (EnumFacing f : EnumFacing.values()) {
+      if (mapIncoming.get(f) > 0)
+        in += f.name().toLowerCase() + " ";
+    }
+    return in.trim();
   }
 }
