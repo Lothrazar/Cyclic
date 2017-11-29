@@ -944,3 +944,7 @@ tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes
 tile.fluid_pipe.name=Fluid Pipe
 tile.fluid_pipe.tooltip=Connect to a Fluid Pump to transfer liquids between tanks
 tile.fluid_pipe.guide=Connect to a Fluid Pump to transfer liquids between tanks.  Each pipe segment holds a small amount of liquid, and it gets pushed through from previous pipe segments or a pump and goes out any direction it can find.
+
+cyclic.redstone.on=Restone: On
+cyclic.redstone.off=Restone: Off
+

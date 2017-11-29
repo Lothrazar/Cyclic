@@ -5,7 +5,6 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -17,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 80;
-  //  private static final int TIMER_TRIGGER = 10;
   private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
@@ -110,10 +108,6 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
   @Override
   public void update() {
     tickDownIncomingFaces();
-    //    if (this.updateTimerIsZero() == false) {
-    //      return;
-    //    }
-    //    this.timer = TIMER_TRIGGER;
     //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
     BlockPos posTarget;
@@ -128,7 +122,11 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
-        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, TRANSFER_PER_TICK);
+        int toFlow = TRANSFER_PER_TICK;
+        if (hasAnyIncomingFaces() && toFlow >= tank.getFluidAmount()) {
+          toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
+        }
+        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
         if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
@@ -136,6 +134,13 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
         }
       }
     }
+  }
+  public boolean hasAnyIncomingFaces() {
+    for (EnumFacing f : EnumFacing.values()) {
+      if (mapIncoming.get(f) > 0)
+        return true;
+    }
+    return false;
   }
   public void tickDownIncomingFaces() {
     for (EnumFacing f : EnumFacing.values()) {

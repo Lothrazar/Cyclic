@@ -92,9 +92,9 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
         "i i",
         "frd",
         "i i",
-        'r', "dustRedstone", 
-        'i', "ingotIron", 
-        'f', Blocks.FURNACE, 
+        'r', "dustRedstone",
+        'i', "ingotIron",
+        'f', Blocks.FURNACE,
         'd', Blocks.DAYLIGHT_DETECTOR);
   }
   @Override
@@ -104,14 +104,17 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) { //server side
+        String message = null;
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + te.getCapacity() + " ";
-          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName());
+          message = UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName();
         }
         else {
-          UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.empty"));
+          message = UtilChat.lang("cyclic.fluid.empty");
         }
+        String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
+        UtilChat.sendStatusMessage(player, message + "; " + UtilChat.lang(powered));
       }
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
