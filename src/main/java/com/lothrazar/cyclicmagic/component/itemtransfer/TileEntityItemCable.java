@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.fluidtransfer;
+package com.lothrazar.cyclicmagic.component.itemtransfer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,14 +15,14 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
+public class TileEntityItemCable extends TileEntityBaseMachineInvo implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
-  private static final int TRANSFER_PER_TICK = 100;
+ 
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
   public EnumConnectType north, south, east, west, up, down;
-  public TileEntityFluidCable() {
-    super(100);
+  public TileEntityItemCable() {
+    super(1);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
@@ -123,16 +123,16 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
-        int toFlow = TRANSFER_PER_TICK;
-        if (hasAnyIncomingFaces() && toFlow >= tank.getFluidAmount()) {
-          toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
-        }
-        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
-          //TODO: not so compatible with other fluid systems. itl do i guess
-          TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
-          cable.updateIncomingFace(f.getOpposite());
-        }
+//        int toFlow = TRANSFER_PER_TICK;
+//        if (hasAnyIncomingFaces() && toFlow >= tank.getFluidAmount()) {
+//          toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
+//        }
+//        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
+//        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
+//          //TODO: not so compatible with other fluid systems. itl do i guess
+//          TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
+//          cable.updateIncomingFace(f.getOpposite());
+//        }
       }
     }
   }

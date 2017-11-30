@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable.EnumConnectType;
+
+import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
