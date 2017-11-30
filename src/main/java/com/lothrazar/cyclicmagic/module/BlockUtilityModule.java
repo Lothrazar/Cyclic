@@ -20,7 +20,9 @@ import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
+import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -122,9 +124,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (enablItemPipes) {
       //pump
-//      BlockFluidPump fluid_xfer = new BlockItdPump();
-//      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
-//      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      BlockItemPump fluid_xfer = new BlockItemPump();
+      BlockRegistry.registerBlock(fluid_xfer, "item_pump", null);
+      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //pipes
       BlockItemCable k = new BlockItemCable();
       BlockRegistry.registerBlock(k, "item_pipe", null);
