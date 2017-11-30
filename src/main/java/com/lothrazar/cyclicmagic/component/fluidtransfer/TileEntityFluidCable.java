@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -15,7 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable {
+public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
@@ -156,5 +157,35 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
         in += f.name().toLowerCase() + " ";
     }
     return in.trim();
+  }
+  @Override
+  public EnumConnectType north() {
+     
+    return north;
+  }
+  @Override
+  public EnumConnectType south() {
+     
+    return south;
+  }
+  @Override
+  public EnumConnectType east() {
+     
+    return east;
+  }
+  @Override
+  public EnumConnectType west() {
+     
+    return west;
+  }
+  @Override
+  public EnumConnectType up() {
+     
+    return up;
+  }
+  @Override
+  public EnumConnectType down() {
+     
+    return down;
   }
 }

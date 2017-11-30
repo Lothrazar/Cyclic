@@ -25,83 +25,9 @@ import net.minecraftforge.fluids.FluidUtil;
 public class BlockFluidCable extends BlockBaseCable implements IHasRecipe {
   public BlockFluidCable() {
     super(Material.CLAY);
-    this.setHardness(.5F);
-    this.setResistance(.5F);
   }
-  public IBlockState getNewState(IBlockAccess world, BlockPos pos) {
-    if (!(world.getTileEntity(pos) instanceof TileEntityFluidCable))
-      return world.getBlockState(pos);
-    TileEntityFluidCable tile = (TileEntityFluidCable) world.getTileEntity(pos);
-    BlockPos con = null;
-    Map<EnumFacing, EnumConnectType> oldMap = tile.getConnects();
-    Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
-    EnumFacing stor = null;
-    for (Entry<EnumFacing, EnumConnectType> e : oldMap.entrySet()) {
-      if (e.getValue() == EnumConnectType.STORAGE) {
-        stor = e.getKey();
-        break;
-      }
-    }
-    boolean storage = false;
-    boolean first = false;
-    for (EnumFacing f : EnumFacing.values()) {
-      if (stor == f && first)
-        continue;
-      EnumConnectType neu = getConnect(world, pos, f);
-      if (neu == EnumConnectType.STORAGE) {
-        if (!storage) {
-          newMap.put(f, neu);
-          storage = true;
-        }
-        else
-          newMap.put(f, EnumConnectType.NULL);
-      }
-      else {
-        newMap.put(f, neu);
-      }
-    }
-    tile.setConnects(newMap);
-    if (tile.north == EnumConnectType.STORAGE) {
-      // face = EnumFacing.NORTH;
-      con = pos.north();
-    }
-    else if (tile.south == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.SOUTH;
-      con = pos.south();
-    }
-    else if (tile.east == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.EAST;
-      con = pos.east();
-    }
-    else if (tile.west == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.WEST;
-      con = pos.west();
-    }
-    else if (tile.down == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.DOWN;
-      con = pos.down();
-    }
-    else if (tile.up == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.UP;
-      con = pos.up();
-    }
-    //  tile.setConnectedFace(face);
-    tile.setConnectedPos(con);
-    return world.getBlockState(pos);
-  }
-  @SuppressWarnings("deprecation")
   @Override
-  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-    try {
-      IBlockState foo = getNewState(worldIn, pos);
-      return foo;
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      return super.getActualState(state, worldIn, pos);
-    }
-  }
-  protected EnumConnectType getConnect(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+  public EnumConnectType getConnectTypeForPos(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
     BlockPos offset = pos.offset(side);
     Block block = worldIn.getBlockState(offset).getBlock();
     if (block == this) {
