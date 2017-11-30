@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelCable extends ModelBase {
+public class ModelFluidCable extends ModelBase {
   public ModelRenderer south;
   public ModelRenderer cube;
   public ModelRenderer north;
@@ -19,7 +19,7 @@ public class ModelCable extends ModelBase {
   public ModelRenderer eastC;
   public ModelRenderer upC;
   public ModelRenderer downC;
-  public ModelCable() {
+  public ModelFluidCable() {
     this.textureWidth = 32;
     this.textureHeight = 32;
     this.upC = new ModelRenderer(this, 16, 0);

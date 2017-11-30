@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -160,32 +159,26 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
   }
   @Override
   public EnumConnectType north() {
-     
     return north;
   }
   @Override
   public EnumConnectType south() {
-     
     return south;
   }
   @Override
   public EnumConnectType east() {
-     
     return east;
   }
   @Override
   public EnumConnectType west() {
-     
     return west;
   }
   @Override
   public EnumConnectType up() {
-     
     return up;
   }
   @Override
   public EnumConnectType down() {
-     
     return down;
   }
 }

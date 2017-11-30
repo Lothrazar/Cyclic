@@ -19,6 +19,8 @@ import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
+import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -46,6 +48,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean soundproofing;
   private boolean workbench;
   private boolean enablePumpAndPipes;
+  private boolean enablItemPipes;
   public void onPreInit() {
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
@@ -117,6 +120,16 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(k, "fluid_pipe", null);
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
     }
+    if (enablItemPipes) {
+      //pump
+//      BlockFluidPump fluid_xfer = new BlockItdPump();
+//      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
+//      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      //pipes
+      BlockItemCable k = new BlockItemCable();
+      BlockRegistry.registerBlock(k, "item_pipe", null);
+      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -132,5 +145,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
   }
 }

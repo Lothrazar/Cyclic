@@ -17,4 +17,7 @@ public interface ITileCable {
   public void setConnects(Map<EnumFacing, EnumConnectType> map) ;
   public void setConnectedPos(BlockPos connectedInventory);
   public Map<EnumFacing, EnumConnectType> getConnects();
+  public boolean hasAnyIncomingFaces();
+  public void tickDownIncomingFaces();
+  public String getIncomingStrings() ;
 }
