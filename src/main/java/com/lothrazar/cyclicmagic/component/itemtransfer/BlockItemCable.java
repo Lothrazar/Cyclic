@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.items.CapabilityItemHandler;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
 
 public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
@@ -22,14 +23,17 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
     super(Material.CLAY);
   }
   @Override
-  public EnumConnectType getConnectTypeForPos(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
     BlockPos offset = pos.offset(side);
-    Block block = worldIn.getBlockState(offset).getBlock();
+    Block block = world.getBlockState(offset).getBlock();
     if (block == this) {
       return EnumConnectType.CONNECT;
     }
-    if (FluidUtil.getFluidHandler((World) worldIn, offset, side) != null)
+    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+    if (tileTarget != null &&
+        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
       return EnumConnectType.STORAGE;
+    }
     return EnumConnectType.NULL;
   }
   @Override
@@ -38,7 +42,7 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    // check the TE
+    // TODO: display text if any
     boolean success = false;
     //    TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
     //    boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
