@@ -22,8 +22,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
-  public static final int TANK_FULL = 20000;
+  public static final int TANK_FULL = 100000;
   private static final int XP_PER_SPEWORB = 50;
+  //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
+  public static final int FLUID_PER_EXP = 20;
   private static final int VRADIUS = 2;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 22;
@@ -68,20 +70,31 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       updateBottle();
     }
   }
+  /**
+   * outgoing: convert fluid to EXP in a bottle
+   */
   private void updateBottle() {
-    if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() > XP_PER_BOTTLE) {
+    //so 11*20 is the fluid per bottle
+    int fluidToDrain = XP_PER_BOTTLE * FLUID_PER_EXP;
+    if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() >= fluidToDrain) {
       //pay the cost first
-      FluidStack actuallyDrained = this.tank.drain(XP_PER_BOTTLE, true);
+      FluidStack actuallyDrained = this.tank.drain(fluidToDrain, true);
       if (actuallyDrained == null || actuallyDrained.amount == 0) {
         return;
       }
-      outputSlotIncrement();
-      inputSlotDecrement();
+      this.outputSlotIncrement();
+      this.inputSlotDecrement();
     }
   }
+  /**
+   * outgoing: convert fluid to EXP
+   */
   private void updateSpray() {
-    int toSpew = Math.min(XP_PER_SPEWORB, this.getCurrentFluid());
-    if (toSpew > 0 && this.getCurrentFluid() >= toSpew) {
+    //for example if we drain 200 fluid units, which gives us 10 xp in the orb
+    int fluidToDrain = XP_PER_SPEWORB * FLUID_PER_EXP;
+    int toSpew = Math.min(fluidToDrain, this.getCurrentFluid());
+    int expToRelease = toSpew / XP_PER_SPEWORB;
+    if (expToRelease > 0 && this.getCurrentFluid() >= toSpew) {
       FluidStack actuallyDrained = this.tank.drain(toSpew, true);
       //was the correct amount drained
       if (actuallyDrained == null || actuallyDrained.amount == 0) {
@@ -90,13 +103,16 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       if (world.isRemote == false) {
         EntityXPOrb orb = new EntityXPOrb(world);
         orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-        orb.xpValue = toSpew;
+        orb.xpValue = expToRelease;
         orb.delayBeforeCanPickup = 0;
         world.spawnEntity(orb);
         orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
       }
     }
   }
+  /**
+   * incoming: convert EXP to fluid
+   */
   private void updateCollection() {
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
     AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1 * RADIUS, -1 * VRADIUS, -1 * RADIUS);//expandXyz
@@ -106,7 +122,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         if (orb.isDead || orb.delayBeforeCanPickup > 0) {
           continue;
         }
-        this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue()), true);
+        this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue() * FLUID_PER_EXP), true);
         //we have no "set exp value" function so this is workaround to set value to zero
         orb.delayBeforeCanPickup = 9999;//set delay because it will be isDead=true for a little while until actually removed. prevent other mods getting dead orbs
         orb.xpValue = 0;
