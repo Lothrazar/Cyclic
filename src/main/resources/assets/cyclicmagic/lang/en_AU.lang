@@ -88,8 +88,10 @@ command.villageinfo.popul=Population:
 command.villageinfo.reputation=Rep: 
 command.worldhome.dim=Wrong Dimension
 cyclic.fluid.flowing=incoming from 
+cyclic.item.flowing=incoming from 
 cyclic.fluid.amount=Fluid: 
 cyclic.fluid.empty=Empty
+cyclic.item.empty=Empty
 debug.horsejump=Horse Jump: 
 debug.horsespeed=Horse Speed: 
 debug.spawn.chunks=Within Spawn Chunk
@@ -936,8 +938,6 @@ splash_potion.effect.frostwalker=Splash Potion of Frost Walker
 lingering_potion.effect.frostwalker=Lingering Potion of Frost Walker
 tipped_arrow.effect.frostwalker=Arrow of Frost Walker
 
-
-
 tile.fluid_pump.name=Fluid Pump
 tile.fluid_pump.tooltip=Move fluid between tanks or pipes when redstone powered
 tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes liquids into tanks in front if any.  Push into another tank or Fluid Pipes.
@@ -948,4 +948,13 @@ tile.fluid_pipe.guide=Connect to a Fluid Pump to transfer liquids between tanks.
 
 cyclic.redstone.on=Restone: On
 cyclic.redstone.off=Restone: Off
+
+tile.item_pump.name=Item Pump
+tile.item_pump.tooltip=A fast omni-direction hopper
+tile.item_pump.guide=Pump items out of anything into any inventory or the Item Pipe
+
+
+tile.item_pipe.name=Item Pipe
+tile.item_pipe.tooltip=Fast Item transport, use with the Item Pump
+tile.item_pipe.guide=Use an Item Pump to pull out of any inventory into these pipes, which will deposit anywhere
 

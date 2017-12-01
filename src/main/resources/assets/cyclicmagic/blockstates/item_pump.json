@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:item_pump_north"},
+        "facing=east":  { "model": "cyclicmagic:item_pump_east"},
+        "facing=south": { "model": "cyclicmagic:item_pump_south"},
+        "facing=up":    { "model": "cyclicmagic:item_pump_up"},
+        "facing=down":  { "model": "cyclicmagic:item_pump_down"},
+        "facing=west":  { "model": "cyclicmagic:item_pump_west" }
+    }
+}

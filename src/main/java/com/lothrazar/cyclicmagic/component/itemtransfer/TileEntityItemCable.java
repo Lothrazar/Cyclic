@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.fluidtransfer;
+package com.lothrazar.cyclicmagic.component.itemtransfer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -6,26 +6,38 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
+public class TileEntityItemCable extends TileEntityBaseMachineInvo implements ITickable, ITileCable {
+  private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
-  private static final int TRANSFER_PER_TICK = 100;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
+  private int labelTimer = 0;
+  private String labelText = "";
   public EnumConnectType north, south, east, west, up, down;
-  public TileEntityFluidCable() {
-    super(100);
+  public TileEntityItemCable() {
+    super(1);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
+  }
+  public String getLabelText(){
+    return labelText;
   }
   public Map<EnumFacing, EnumConnectType> getConnects() {
     Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
@@ -52,6 +64,8 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
     }
+    labelText = compound.getString("label");
+    labelTimer = compound.getInteger("labelt");
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
     if (compound.hasKey("north"))
@@ -73,6 +87,8 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
     }
+    compound.setString("label", labelText);
+    compound.setInteger("labelt", labelTimer);
     compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
     if (north != null)
       compound.setString("north", north.toString());
@@ -108,6 +124,7 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
   }
   @Override
   public void update() {
+    this.tickLabelText();
     tickDownIncomingFaces();
     //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
@@ -118,21 +135,48 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
+    ItemStack stackToExport = this.getStackInSlot(0).copy();
+    if (stackToExport.isEmpty()) {
+      return;
+    }
+    TileEntity tileTarget;
     for (int i : shuffledFaces) {
       EnumFacing f = EnumFacing.values()[i];
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
-        int toFlow = TRANSFER_PER_TICK;
-        if (hasAnyIncomingFaces() && toFlow >= tank.getFluidAmount()) {
-          toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
+        tileTarget = world.getTileEntity(posTarget);
+        if (tileTarget == null) {
+          continue;
         }
-        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
+        boolean outputSuccess = false;
+        ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+        if (pulled.getCount() != stackToExport.getCount()) {
+          this.setInventorySlotContents(0, pulled);
+          //one or more was put in
+          outputSuccess = true;
+        }
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
           //TODO: not so compatible with other fluid systems. itl do i guess
-          TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
+          TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }
+      }
+    }
+  }
+  /**
+   * with normal item movement it moves too fast for user to read
+   * cache the current item for a few ticks so full item pipes
+   * dont show empty or flashing fast text
+   */
+  private void tickLabelText() {
+    this.labelTimer--;
+    if (this.labelTimer <= 0) {
+      this.labelTimer = 0;
+      this.labelText = "";
+      if (this.getStackInSlot(0).isEmpty() == false) {
+        this.labelText = this.getStackInSlot(0).getDisplayName();
+        this.labelTimer = TICKS_TEXT_CACHED;
       }
     }
   }
@@ -180,5 +224,9 @@ public class TileEntityFluidCable extends TileEntityBaseMachineFluid implements 
   @Override
   public EnumConnectType down() {
     return down;
+  }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    return new int[] { 0 };
   }
 }

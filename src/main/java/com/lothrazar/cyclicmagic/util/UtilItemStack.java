@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.List;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,10 +10,38 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class UtilItemStack {
+  public static ItemStack tryDepositToHandler(World world,BlockPos posSide, EnumFacing sideOpp, ItemStack stackToExport) {
+    TileEntity tileTarget = world.getTileEntity(posSide);
+    if (tileTarget == null ||
+        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
+      return stackToExport;
+    }
+     
+    
+    IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
+    
+   // ModCyclic.logger.log("target HAS" +itemHandlerDeposit.getSlots());
+    
+    
+    for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
+      ItemStack pulled = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
+      if (pulled.getCount() != stackToExport.getCount()) {
+//        this.setInventorySlotContents(0, pulled);
+        //one or more was put in
+//        outputSuccess = true;
+        return pulled;
+      }
+    }
+    return stackToExport;
+  }
   /**
    * match item, damage, and NBT
    * 
