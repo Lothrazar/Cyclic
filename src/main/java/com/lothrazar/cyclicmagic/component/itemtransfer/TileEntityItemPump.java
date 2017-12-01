@@ -38,7 +38,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(0).copy();
-    EnumFacing facingTo = this.getCurrentFacing();
+    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
     BlockPos posSide = pos.offset(facingTo);
     EnumFacing sideOpp = facingTo.getOpposite();
     TileEntity tileTarget = world.getTileEntity(posSide);
@@ -46,17 +46,6 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
       return;
     }
-    //    IItemHandler itemHandlerDeposit = world.getTileEntity(posSide).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
-    //    for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
-    //      ItemStack pulled = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
-    //      if (pulled.getCount() != stackToExport.getCount()) {
-    //        this.setInventorySlotContents(0, pulled);
-    //        //one or more was put in
-    //        outputSuccess = true;
-    //        break;
-    //      }
-    //    }
-    //   ModCyclic.logger.log("pump push to "+world.getBlockState(posSide).getBlock().getLocalizedName());
     ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posSide, sideOpp, stackToExport);
     if (pulled.getCount() != stackToExport.getCount()) {
       this.setInventorySlotContents(0, pulled);
@@ -72,7 +61,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     if (this.getStackInSlot(0).isEmpty() == false) {
       return;//im full leave me alone
     }
-    EnumFacing sideOpp = this.getCurrentFacing().getOpposite();
+    EnumFacing sideOpp = this.getCurrentFacing();
     //get the block Behind me
     BlockPos posSide = pos.offset(sideOpp);
     TileEntity tileTarget = world.getTileEntity(posSide);
