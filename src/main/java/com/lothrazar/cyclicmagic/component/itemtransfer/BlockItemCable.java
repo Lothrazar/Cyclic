@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -44,25 +45,23 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // TODO: display text if any
     boolean success = false;
-    //    TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
-    //    boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
-    //    if (te != null) {
-    //      if (world.isRemote == false) { //server side
-    //        FluidStack fs = te.getCurrentFluidStack();
-    //        String msg = null;
-    //        if (fs != null) {
-    //          // UtilChat.lang("cyclic.fluid.amount") +
-    //          msg = fs.getLocalizedName();
-    //          if (te.getIncomingStrings() != "") {
-    //            msg += " (" + UtilChat.lang("cyclic.fluid.flowing") + te.getIncomingStrings() + ")";
-    //          }
-    //        }
-    //        else {
-    //          msg = UtilChat.lang("cyclic.fluid.empty");
-    //        }
-    //        UtilChat.sendStatusMessage(player, msg);
-    //      }
-    //    }
+    TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
+    if (te != null) {
+      ItemStack contains = te.getStackInSlot(0);
+      String msg = null;
+      if (contains != null) {
+        // UtilChat.lang("cyclic.fluid.amount") +
+        msg = contains.getDisplayName();
+        if (te.getIncomingStrings() != "") {
+          msg += " (" + UtilChat.lang("cyclic.item.flowing") + te.getIncomingStrings() + ")";
+        }
+      }
+      else {
+        msg = UtilChat.lang("cyclic.item.empty");
+      }
+      UtilChat.sendStatusMessage(player, msg);
+      success = true;
+    }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }

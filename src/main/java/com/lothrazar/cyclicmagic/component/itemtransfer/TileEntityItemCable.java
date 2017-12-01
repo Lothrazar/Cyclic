@@ -8,13 +8,19 @@ import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityItemCable extends TileEntityBaseMachineInvo implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
@@ -108,6 +114,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
+    //ModCyclic.logger.log("item cable getSizeInventory "+this.getSizeInventory());
     tickDownIncomingFaces();
     //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
@@ -118,21 +125,32 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
+    ItemStack stackToExport = this.getStackInSlot(0).copy();
+    if (stackToExport.isEmpty()) {
+      return;
+    }
+    TileEntity tileTarget;
     for (int i : shuffledFaces) {
       EnumFacing f = EnumFacing.values()[i];
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         posTarget = pos.offset(f);
-        //        int toFlow = TRANSFER_PER_TICK;
-        //        if (hasAnyIncomingFaces() && toFlow >= tank.getFluidAmount()) {
-        //          toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
-        //        }
-        //        boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-        //        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
-        //          //TODO: not so compatible with other fluid systems. itl do i guess
-        //          TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(posTarget);
-        //          cable.updateIncomingFace(f.getOpposite());
-        //        }
+        tileTarget = world.getTileEntity(posTarget);
+        if (tileTarget == null) {
+          continue;
+        }
+        boolean outputSuccess = false;
+        ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+        if (pulled.getCount() != stackToExport.getCount()) {
+          this.setInventorySlotContents(0, pulled);
+          //one or more was put in
+          outputSuccess = true;
+        }
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
+          //TODO: not so compatible with other fluid systems. itl do i guess
+          TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
+          cable.updateIncomingFace(f.getOpposite());
+        }
       }
     }
   }
@@ -180,5 +198,9 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   @Override
   public EnumConnectType down() {
     return down;
+  }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    return new int[] { 0 };
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -25,9 +26,9 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     if (world.isRemote) {
       return;
     }
-    if (this.isPowered() == false) {
-      return;
-    }
+    //    if (this.isPowered() == false) {
+    //      return;
+    //    }
     this.tryExport();
     this.tryImport();
   }
@@ -45,15 +46,22 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
       return;
     }
-    IItemHandler itemHandlerDeposit = world.getTileEntity(posSide).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
-    for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
-      ItemStack pulled = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
-      if (pulled.getCount() != stackToExport.getCount()) {
-        this.setInventorySlotContents(0, pulled);
-        //one or more was put in
-        outputSuccess = true;
-        break;
-      }
+    //    IItemHandler itemHandlerDeposit = world.getTileEntity(posSide).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
+    //    for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
+    //      ItemStack pulled = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
+    //      if (pulled.getCount() != stackToExport.getCount()) {
+    //        this.setInventorySlotContents(0, pulled);
+    //        //one or more was put in
+    //        outputSuccess = true;
+    //        break;
+    //      }
+    //    }
+    //   ModCyclic.logger.log("pump push to "+world.getBlockState(posSide).getBlock().getLocalizedName());
+    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posSide, sideOpp, stackToExport);
+    if (pulled.getCount() != stackToExport.getCount()) {
+      this.setInventorySlotContents(0, pulled);
+      //one or more was put in
+      outputSuccess = true;
     }
     if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityItemCable) {
       TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(pos.offset(facingTo));
