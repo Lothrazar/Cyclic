@@ -7,9 +7,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.CapabilityItemHandler;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 
 public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   public BlockItemCable() {
@@ -40,6 +43,14 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemCable();
+  }
+  @Override
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    TileEntity tileentity = worldIn.getTileEntity(pos);
+    if (tileentity instanceof TileEntityBaseMachineInvo) {
+      InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBaseMachineInvo) tileentity);
+    }
+    super.breakBlock(worldIn, pos, state);
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -69,6 +80,6 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
         "sis",
         " x ",
         "sis",
-        's', Blocks.STONE_STAIRS, 'i', "ingotIron", 'x', "string");
+        's', Blocks.SANDSTONE_STAIRS, 'i', "ingotIron", 'x', "string");
   }
 }

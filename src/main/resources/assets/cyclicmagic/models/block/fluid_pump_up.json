@@ -2,11 +2,11 @@
     "parent": "block/cube_directional",
     "textures": {
         "particle": "blocks/anvil_base",
-        "down": "cyclicmagic:blocks/fluid_pump_back",
-        "up": "cyclicmagic:blocks/fluid_pump_front",
-        "north": "cyclicmagic:blocks/fluid_pump_up",
-        "east": "cyclicmagic:blocks/fluid_pump_left",
-        "south": "cyclicmagic:blocks/fluid_pump_up",
-        "west": "cyclicmagic:blocks/fluid_pump_right"
+        "down": "cyclicmagic:blocks/fluid_pump_front",
+        "up": "cyclicmagic:blocks/fluid_pump_back",
+        "north": "cyclicmagic:blocks/fluid_pump_down",
+        "east": "cyclicmagic:blocks/fluid_pump_right",
+        "south": "cyclicmagic:blocks/fluid_pump_down",
+        "west": "cyclicmagic:blocks/fluid_pump_left"
     }
 }
