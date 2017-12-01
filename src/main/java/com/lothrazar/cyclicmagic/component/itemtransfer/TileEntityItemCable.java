@@ -23,15 +23,21 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityItemCable extends TileEntityBaseMachineInvo implements ITickable, ITileCable {
+  private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private BlockPos connectedInventory;
+  private int labelTimer = 0;
+  private String labelText = "";
   public EnumConnectType north, south, east, west, up, down;
   public TileEntityItemCable() {
     super(1);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
+  }
+  public String getLabelText(){
+    return labelText;
   }
   public Map<EnumFacing, EnumConnectType> getConnects() {
     Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
@@ -58,6 +64,8 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
     }
+    labelText = compound.getString("label");
+    labelTimer = compound.getInteger("labelt");
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
     if (compound.hasKey("north"))
@@ -79,6 +87,8 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
     }
+    compound.setString("label", labelText);
+    compound.setInteger("labelt", labelTimer);
     compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
     if (north != null)
       compound.setString("north", north.toString());
@@ -114,7 +124,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
-    //ModCyclic.logger.log("item cable getSizeInventory "+this.getSizeInventory());
+    this.tickLabelText();
     tickDownIncomingFaces();
     //tick down any incoming sides
     //now look over any sides that are NOT incoming, try to export
@@ -151,6 +161,22 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
           TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }
+      }
+    }
+  }
+  /**
+   * with normal item movement it moves too fast for user to read
+   * cache the current item for a few ticks so full item pipes
+   * dont show empty or flashing fast text
+   */
+  private void tickLabelText() {
+    this.labelTimer--;
+    if (this.labelTimer <= 0) {
+      this.labelTimer = 0;
+      this.labelText = "";
+      if (this.getStackInSlot(0).isEmpty() == false) {
+        this.labelText = this.getStackInSlot(0).getDisplayName();
+        this.labelTimer = TICKS_TEXT_CACHED;
       }
     }
   }

@@ -26,9 +26,9 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     if (world.isRemote) {
       return;
     }
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.isPowered() == false) {
+      return;
+    }
     this.tryExport();
     this.tryImport();
   }

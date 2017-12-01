@@ -46,12 +46,10 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
     // TODO: display text if any
     boolean success = false;
     TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
-    if (te != null) {
-      ItemStack contains = te.getStackInSlot(0);
+    if (te != null && world.isRemote == false) {
       String msg = null;
-      if (contains != null) {
-        // UtilChat.lang("cyclic.fluid.amount") +
-        msg = contains.getDisplayName();
+      if (te.getLabelText() != "") {
+        msg = te.getLabelText();
         if (te.getIncomingStrings() != "") {
           msg += " (" + UtilChat.lang("cyclic.item.flowing") + te.getIncomingStrings() + ")";
         }
