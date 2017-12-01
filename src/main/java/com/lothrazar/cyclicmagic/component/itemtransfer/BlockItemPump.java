@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -17,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidUtil;
 
 public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
   public BlockItemPump() {
@@ -43,7 +41,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     boolean success = true;
     String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
     UtilChat.sendStatusMessage(player, UtilChat.lang(powered));
-    return   super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+    return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public IRecipe addRecipe() {

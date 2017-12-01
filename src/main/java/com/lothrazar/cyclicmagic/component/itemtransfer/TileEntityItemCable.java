@@ -5,12 +5,9 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
-import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,8 +16,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityItemCable extends TileEntityBaseMachineInvo implements ITickable, ITileCable {
   private static final int TICKS_TEXT_CACHED = 7;
@@ -36,7 +31,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
       mapIncoming.put(f, 0);
     }
   }
-  public String getLabelText(){
+  public String getLabelText() {
     return labelText;
   }
   public Map<EnumFacing, EnumConnectType> getConnects() {
@@ -165,9 +160,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
     }
   }
   /**
-   * with normal item movement it moves too fast for user to read
-   * cache the current item for a few ticks so full item pipes
-   * dont show empty or flashing fast text
+   * with normal item movement it moves too fast for user to read cache the current item for a few ticks so full item pipes dont show empty or flashing fast text
    */
   private void tickLabelText() {
     this.labelTimer--;

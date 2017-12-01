@@ -81,7 +81,6 @@ public class ClientProxy extends CommonProxy {
     registerEntities();
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableFluidRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableItemRenderer());
-    
   }
   @Override
   public void init() {

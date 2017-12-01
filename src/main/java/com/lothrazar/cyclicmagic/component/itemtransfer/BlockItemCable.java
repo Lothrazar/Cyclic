@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
@@ -11,7 +13,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -19,8 +20,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.CapabilityItemHandler;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 
 public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   public BlockItemCable() {

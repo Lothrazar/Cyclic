@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+
 /**
  * TODO: shared base class with fluid
  *
@@ -12,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 public class CableItemRenderer extends TileEntitySpecialRenderer<TileEntityItemCable> {
   ModelItemCable model;
   private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/item.png");
-
   public CableItemRenderer() {
     model = new ModelItemCable();
   }
