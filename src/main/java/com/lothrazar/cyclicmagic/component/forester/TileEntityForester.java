@@ -242,10 +242,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (EnumFacing.UP == side) {
-      return new int[] { 0, 1, 2, 3, 4, 5 };
-    }
-    return new int[] { FUEL_SLOT };
+    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
   }
   @Override
   public int getField(int id) {

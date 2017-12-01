@@ -43,7 +43,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     boolean success = true;
     String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
     UtilChat.sendStatusMessage(player, UtilChat.lang(powered));
-    return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+    return   super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public IRecipe addRecipe() {
