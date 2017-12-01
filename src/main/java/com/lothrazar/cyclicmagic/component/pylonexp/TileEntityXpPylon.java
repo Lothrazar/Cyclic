@@ -45,6 +45,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private int timer = 0;
   private int collect = 1;
   private int needsRedstone = 0;
+  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
@@ -57,6 +58,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public void update() {
     if (this.isRunning() == false) {
       return;
+    }
+    if (this.isLegacy) {
+      int current = this.getCurrentFluid();
+      //I used to hold EXP. now I hold fluid that has an exp value with this ratio
+      this.isLegacy = false;//not legacy anymore , 100%
+      this.setCurrentFluid(Math.min(current * FLUID_PER_EXP, TANK_FULL));
     }
     this.timer--;
     if (this.timer <= 0) {
@@ -174,6 +181,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setInteger(NBT_COLLECT, this.collect);
     tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
     tags.setInteger(NBT_REDST, this.needsRedstone);
+    tags.setBoolean("legacy", this.isLegacy);
     return super.writeToNBT(tags);
   }
   @Override
@@ -183,6 +191,11 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     collect = tags.getInteger(NBT_COLLECT);
     tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
     this.needsRedstone = tags.getInteger(NBT_REDST);
+    if (tags.hasKey("legacy") == false) {
+      this.isLegacy = true;//old ones will not have this, so they ARE legacy
+    }
+    else
+      this.isLegacy = tags.getBoolean("legacy");
   }
   @Override
   public int getFieldCount() {
