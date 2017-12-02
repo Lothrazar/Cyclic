@@ -6,12 +6,12 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class CableRenderer extends TileEntitySpecialRenderer<TileEntityFluidCable> {
-  ModelCable model;
-  private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/link.png");
+public class CableFluidRenderer extends TileEntitySpecialRenderer<TileEntityFluidCable> {
+  ModelFluidCable model;
+  private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/fluid.png");
   //  private final ResourceLocation storage = new ResourceLocation(StorageNetwork.MODID + ":textures/tile/storage.png");
-  public CableRenderer() {
-    model = new ModelCable();
+  public CableFluidRenderer() {
+    model = new ModelFluidCable();
   }
   @Override
   public void render(TileEntityFluidCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {

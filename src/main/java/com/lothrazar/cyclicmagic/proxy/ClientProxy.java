@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.CableRenderer;
+import com.lothrazar.cyclicmagic.component.fluidtransfer.CableFluidRenderer;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.itemtransfer.CableItemRenderer;
+import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -77,7 +79,9 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableFluidRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableItemRenderer());
+    
   }
   @Override
   public void init() {

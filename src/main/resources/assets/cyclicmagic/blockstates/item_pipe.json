@@ -1,0 +1,7 @@
+{
+    "variants" : {
+        "normal" : {
+            "model" : "cyclicmagic:item_pipe"
+        }
+    }
+}
