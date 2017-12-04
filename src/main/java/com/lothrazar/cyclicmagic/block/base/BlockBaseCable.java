@@ -4,17 +4,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -42,11 +39,8 @@ public abstract class BlockBaseCable extends BlockContainer {
     super(materialIn);
     this.setHardness(.5F);
     this.setResistance(.5F);
-  
   }
-
   public abstract EnumConnectType getConnectTypeForPos(IBlockAccess worldIn, BlockPos pos, EnumFacing side);
-  
   @Override
   public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return false;

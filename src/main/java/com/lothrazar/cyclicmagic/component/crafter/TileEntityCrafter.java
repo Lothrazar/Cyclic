@@ -58,7 +58,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     this.spawnParticlesAbove();
     setRecipeInput();//make sure the 3x3 inventory is linked o the crater
     findRecipe(); //does it match
-
     if (this.updateFuelIsBurning() == false) {
       return;
     }

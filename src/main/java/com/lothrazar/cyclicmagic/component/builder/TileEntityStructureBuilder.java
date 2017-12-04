@@ -302,7 +302,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return;
     }
     this.shiftAllUp(1);
-
     if (this.updateFuelIsBurning() == false) {
       return;
     }

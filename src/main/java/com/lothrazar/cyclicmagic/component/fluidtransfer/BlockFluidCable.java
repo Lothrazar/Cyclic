@@ -1,7 +1,4 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
-import java.util.Map;
-import java.util.Map.Entry;
-import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

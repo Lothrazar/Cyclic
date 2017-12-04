@@ -93,7 +93,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     this.shiftAllUp(7);
     this.spawnParticlesAbove();
-
     if (this.updateFuelIsBurning() == false) {
       return;
     }

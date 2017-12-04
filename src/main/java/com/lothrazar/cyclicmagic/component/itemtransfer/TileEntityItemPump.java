@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;

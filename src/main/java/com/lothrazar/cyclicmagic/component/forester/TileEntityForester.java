@@ -41,7 +41,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private static final String NBTPLAYERID = "uuid";
   public static final int INVENTORY_SIZE = 17;
   private static final int FUEL_SLOT = INVENTORY_SIZE - 1;
-  public final static int TIMER_FULL = 4;//quite fast
   private static final int HEIGHT = 32;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -76,27 +75,19 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       return;
     }
     this.spawnParticlesAbove();
- 
-
     if (this.updateFuelIsBurning() == false) {
       return;
     }
-    if (world instanceof WorldServer && this.updateTimerIsZero()) {
-      this.timer = TIMER_FULL;//reset timer to fire later
+    if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
       tryEquipItem();
       if (targetPos == null) {
-        targetPos = this.getTargetCenter(); //not sure if this is needed
+        targetPos = this.getTargetCenter(); // start at center for fresh placements
       }
       this.shiftAllUp(1);
       this.updatePlantSaplings();
       this.updateMiningProgress();
-      // this.timer = TIMER_FULL;
-      //shortcut: if its air skip ahead
-      if (world.isAirBlock(this.targetPos)) {
-        this.timer = 0;
-      }
     }
   }
   private void updatePlantSaplings() {
@@ -147,8 +138,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   private void tryEquipItem() {
     if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
-      ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+      ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_AXE, 1);
       unbreakingPickaxe.addEnchantment(Enchantments.LOOTING, 3);
+      unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 5);
       unbreakingPickaxe.setTagCompound(new NBTTagCompound());
       unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
@@ -250,10 +242,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (EnumFacing.UP == side) {
-      return new int[] { 0, 1, 2, 3, 4, 5 };
-    }
-    return new int[] { FUEL_SLOT };
+    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
   }
   @Override
   public int getField(int id) {

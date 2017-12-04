@@ -148,6 +148,5 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
   }
 }

@@ -118,6 +118,6 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
       }
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
-    return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+    return success || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
 }
