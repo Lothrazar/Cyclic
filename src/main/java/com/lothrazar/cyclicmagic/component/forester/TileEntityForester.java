@@ -30,7 +30,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class TileEntityForester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
-  private static final String[] validTargetsOreDict = new String[] { "logWood" };
+  private static final String[] validTargetsOreDict = new String[] { "logWood", "treeLeaves" };
   private static final String[] validSaplingsOreDict = new String[] { "treeSapling" };
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
@@ -116,7 +116,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     else { // no valid target, back out
       isCurrentlyMining = false;
-      updateTargetPos();
+      updateTargetPosRecursive(HEIGHT);
       resetProgress(targetPos);
     }
     //currentlyMining may have changed, and we are still turned on:
@@ -170,6 +170,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     //so the rand range is basically [0,8], then we left shift into [-4,+4]
     return getPos();
   }
+  private void updateTargetPosRecursive(int loopCounter) {
+    this.updateTargetPos();
+    //if its still air, try to keep going
+    if (world.isAirBlock(targetPos) && loopCounter > 0) {
+      updateTargetPosRecursive(loopCounter - 1);
+    }
+  }
   private void updateTargetPos() {
     //spiraling outward from center
     //first are we out of bounds? if so start at center + 1
@@ -198,7 +205,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     //this means we have passed over the threshold of ALL coordinates
     targetPos = new BlockPos(minX, minY, minZ);
-    //    curBlockDamage = 0;
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
