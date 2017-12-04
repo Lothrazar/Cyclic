@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -110,42 +111,60 @@ public class UtilFluid {
    * @param amount
    * @return
    */
-  public static boolean tryFillTankFromPosition(World world,
-      BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, int amount) {
-    IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
-    if (fluidFrom != null) {
-      //its not my facing dir
-      // SO: pull fluid from that into myself
-      FluidStack wasDrained = fluidFrom.drain(amount, false);
-      int filled = tankTo.fill(wasDrained, false);
-      if (wasDrained != null && wasDrained.amount > 0
-          && filled > 0) {
-        //       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
-        //       ModCyclic.logger.log(" filled  "+  filled);
-        int realAmt = Math.min(filled, wasDrained.amount);
-        wasDrained = fluidFrom.drain(realAmt, true);
-        return tankTo.fill(wasDrained, true) > 0;
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, int amount) {
+    try {
+      IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+      if (fluidFrom != null) {
+        //its not my facing dir
+        // SO: pull fluid from that into myself
+        FluidStack wasDrained = fluidFrom.drain(amount, false);
+        int filled = tankTo.fill(wasDrained, false);
+        if (wasDrained != null && wasDrained.amount > 0
+            && filled > 0) {
+          //       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
+          //       ModCyclic.logger.log(" filled  "+  filled);
+          int realAmt = Math.min(filled, wasDrained.amount);
+          wasDrained = fluidFrom.drain(realAmt, true);
+          return tankTo.fill(wasDrained, true) > 0;
+        }
       }
+      return false;
     }
-    return false;
+    catch (Exception e) {
+      ModCyclic.logger.error("Somebody elses fluid tank had an issue when we tried to drain");
+      ModCyclic.logger.error(e.getMessage());
+      //charset crashes here i guess
+      //https://github.com/PrinceOfAmber/Cyclic/issues/605
+      // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6
+      return false;
+    }
   }
-  public static boolean tryFillPositionFromTank(World world,
-      BlockPos posSide, EnumFacing sideOpp, FluidTank tankFrom, int amount) {
-    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
-    if (fluidTo != null) {
-      //its not my facing dir
-      // SO: pull fluid from that into myself
-      FluidStack wasDrained = tankFrom.drain(amount, false);
-      int filled = fluidTo.fill(wasDrained, false);
-      if (wasDrained != null && wasDrained.amount > 0
-          && filled > 0) {
-        // ModCyclic.logger.log(" wasDrained  from tank"+wasDrained.amount);
-        //  ModCyclic.logger.log(" filled into pos  "+sideOpp.name()+"__"+  filled+"))"+posSide);
-        int realAmt = Math.min(filled, wasDrained.amount);
-        wasDrained = tankFrom.drain(realAmt, true);
-        return fluidTo.fill(wasDrained, true) > 0;
+  public static boolean tryFillPositionFromTank(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankFrom, int amount) {
+    try {
+      IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+      if (fluidTo != null) {
+        //its not my facing dir
+        // SO: pull fluid from that into myself
+        FluidStack wasDrained = tankFrom.drain(amount, false);
+        int filled = fluidTo.fill(wasDrained, false);
+        if (wasDrained != null && wasDrained.amount > 0
+            && filled > 0) {
+          // ModCyclic.logger.log(" wasDrained  from tank"+wasDrained.amount);
+          //  ModCyclic.logger.log(" filled into pos  "+sideOpp.name()+"__"+  filled+"))"+posSide);
+          int realAmt = Math.min(filled, wasDrained.amount);
+          wasDrained = tankFrom.drain(realAmt, true);
+          return fluidTo.fill(wasDrained, true) > 0;
+        }
       }
+      return false;
     }
-    return false;
+    catch (Exception e) {
+      ModCyclic.logger.error("Somebody elses fluid tank had an issue when we tried to fill");
+      ModCyclic.logger.error(e.getMessage());
+      //charset crashes here i guess
+      //https://github.com/PrinceOfAmber/Cyclic/issues/605
+      // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6
+      return false;
+    }
   }
 }
