@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemElytra;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -30,10 +31,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EnchantLaunch extends EnchantBase {
   private static final float LAUNCH_POWER = 1.05F;
   private static final int ROTATIONPITCH = 70;
-  private static final int COOLDOWN = 5 * 20;
+  private static final int COOLDOWN = 3 * 20;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
-    super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
+    super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(COOLDOWN + "")));
   }
   @Override
@@ -44,6 +45,7 @@ public class EnchantLaunch extends EnchantBase {
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
     boolean yes = stack.getItem() == Items.BOOK ||
+        stack.getItem() instanceof ItemElytra ||
         (stack.getItem() instanceof ItemArmor)
             && ((ItemArmor) stack.getItem()).armorType == EntityEquipmentSlot.FEET;
     return yes;
@@ -56,15 +58,15 @@ public class EnchantLaunch extends EnchantBase {
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
       EntityPlayer p = (EntityPlayer) event.getEntity();
-      ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-      if (feet.isEmpty()) {
+      ItemStack armorStack = getFirstArmorStackWithEnchant(p);
+      if (armorStack.isEmpty()) {
         return;
       }
       //if you are on the ground (or not airborne, should be same thing
       if ((p.isAirBorne == false || p.onGround) &&
-          UtilNBT.getItemStackNBTVal(feet, NBT_USES) > 0) {
+          UtilNBT.getItemStackNBTVal(armorStack, NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
-        UtilNBT.setItemStackNBTVal(feet, NBT_USES, 0);
+        UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
       }
     }
   }
@@ -72,7 +74,7 @@ public class EnchantLaunch extends EnchantBase {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
-    ItemStack feet = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+    ItemStack feet = getFirstArmorStackWithEnchant(player);
     if (feet == null || feet.isEmpty() || player.isSneaking()) {
       return;
     } //sneak to not double jump

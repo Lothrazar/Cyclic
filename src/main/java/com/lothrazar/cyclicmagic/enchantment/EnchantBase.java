@@ -27,4 +27,16 @@ public abstract class EnchantBase extends Enchantment {
     int level = Math.max(mainLevel, offLevel);
     return level;
   }
+  protected ItemStack getFirstArmorStackWithEnchant(EntityLivingBase player) {
+    if (player == null) {
+      return ItemStack.EMPTY;
+    }
+    for (ItemStack main : player.getArmorInventoryList()) {
+      if ((main.isEmpty() == false) && 
+          EnchantmentHelper.getEnchantments(main).containsKey(this)) {
+        return main;// EnchantmentHelper.getEnchantments(main).get(this);
+      }
+    }
+    return ItemStack.EMPTY;
+  }
 }
