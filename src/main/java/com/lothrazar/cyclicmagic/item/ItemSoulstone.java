@@ -38,8 +38,8 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe {
           p.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
           UtilSound.playSound(p, SoundEvents.BLOCK_GLASS_BREAK);
           p.setHealth(6);// 3 hearts
-          int time = Const.TICKS_PER_SEC * 10;
-          p.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, time));//only few secs here
+          int time = Const.TICKS_PER_SEC * 30;
+          p.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, time));
           time = Const.TICKS_PER_SEC * 60;//a full minute
           p.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, time));
           p.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, time, 4));
