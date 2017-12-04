@@ -29,10 +29,10 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ea",
         "gi",
-        'e',"gemEmerald",
-        'a',Items.APPLE,
-        'g',"nuggetGold",
-        'i',"nuggetIron");
+        'e', "gemEmerald",
+        'a', Items.APPLE,
+        'g', "nuggetGold",
+        'i', "nuggetIron");
   }
   @Override
   @SideOnly(Side.CLIENT)
