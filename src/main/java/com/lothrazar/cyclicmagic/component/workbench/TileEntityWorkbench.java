@@ -9,11 +9,9 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   public static final int SIZE_GRID = 3 * 3;
   public TileEntityWorkbench() {
     super(SIZE_GRID);//left and right side both have a tall rectangle. then 3x3 crafting 
+    this.setSlotsForBoth();
   }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-  }
+  
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);

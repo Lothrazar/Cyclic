@@ -44,7 +44,10 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     super(1 + FISHSLOTS);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
+    this.setSlotsForInsert(Arrays.asList(0));
+    this.setSlotsForExtract(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
   }
+ 
   //new idea: speed depends on number of sides covered in water in the 6 sides
   //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
@@ -208,13 +211,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (equip.getItemDamage() >= equip.getMaxDamage()) {
       this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
     }
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP) {
-      return new int[] { 0 };
-    }
-    return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };//for outputting stuff
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {

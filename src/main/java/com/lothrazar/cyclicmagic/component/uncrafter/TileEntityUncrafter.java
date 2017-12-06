@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -28,19 +31,17 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_COLS = 7;
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
-  private int[] hopperInput = { 0 };
-  private int[] hopperOutput;
+   
   public static enum Fields {
     TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 2);
     timer = TIMER_FULL;
-    hopperOutput = new int[SLOT_ROWS * SLOT_COLS];
-    for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
-      hopperOutput[i - 1] = i;
-    }
+ 
     this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1, BlockUncrafting.FUEL_COST);
+    this.setSlotsForInsert(0);
+    this.setSlotsForExtract(IntStream.rangeClosed(1, this.getSizeInventory() - 2).boxed().collect(Collectors.toList()));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -109,12 +110,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP)
-      return hopperInput;//input through top side
-    return hopperOutput;
-  }
+ 
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);

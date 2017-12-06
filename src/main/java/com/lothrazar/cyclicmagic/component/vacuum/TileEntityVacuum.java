@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.vacuum;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -23,7 +24,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   public final static int ROWS = 4;
   public final static int COLS = 9;
   public final static int FILTERSLOTS = 5 * 2;
-  private final static int[] SLOTS_EXTRACT = IntStream.range(0, ROWS * COLS).toArray();
   public static enum Fields {
     TIMER, RENDERPARTICLES, REDSTONE, SIZE;
   }
@@ -33,6 +33,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private int size = 4;//center plus 4 in each direction = 9x9
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
+    this.setSlotsForExtract(IntStream.rangeClosed(1, ROWS * COLS).boxed().collect(Collectors.toList()));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -112,10 +113,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), size + 1);
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return SLOTS_EXTRACT;
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {

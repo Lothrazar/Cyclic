@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -65,7 +66,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
     this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
+    this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
+ 
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -295,13 +298,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (EnumFacing.UP == side) {
-      return new int[] { TOOLSLOT_INDEX };
-    }
-    return new int[] { FUEL_SLOT };
   }
   @Override
   public int getField(int id) {

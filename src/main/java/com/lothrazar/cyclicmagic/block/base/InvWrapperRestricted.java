@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.base;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import net.minecraft.inventory.ISidedInventory;
@@ -11,8 +12,8 @@ public class InvWrapperRestricted extends InvWrapper {
   private List<Integer> slotsAllowedExtract;
   public InvWrapperRestricted(ISidedInventory inv) {
     super(inv);
-    slotsAllowedInsert = null;
-    slotsAllowedExtract = null;
+    slotsAllowedInsert = new ArrayList<Integer>();
+    slotsAllowedExtract = new ArrayList<Integer>();
   }
   public List<Integer> getSlotsExtract() {
     return slotsAllowedExtract;
@@ -26,19 +27,11 @@ public class InvWrapperRestricted extends InvWrapper {
   public void setSlotsInsert(List<Integer> slotsImport) {
     this.slotsAllowedInsert = slotsImport;
   }
-  private boolean canInsert(int slot) {
-    if (this.getSlotsInsert() == null ||
-        this.getSlotsInsert().contains(slot)) {
-      return true;
-    }
-    return false;
+  public boolean canInsert(int slot) {
+    return this.getSlotsInsert().contains(slot);
   }
-  private boolean canExtract(int slot) {
-    if (this.getSlotsExtract() == null ||
-        this.getSlotsExtract().contains(slot)) {
-      return true;
-    }
-    return false;
+  public boolean canExtract(int slot) {
+    return this.getSlotsExtract().contains(slot);
   }
   @Override
   @Nonnull

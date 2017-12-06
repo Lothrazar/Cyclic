@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -24,9 +26,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public final static int TIMER_FULL = 200;
-  private static final int[] hopperInputFuel = { FUEL_SLOT };// all slots
-  private static final int[] hopperOUTPUT = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-      18, 19, 20, 21, 22, 23, 24, 25, 26 };// all slots
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE, FUELDISPLAY;
   }
@@ -37,6 +36,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     super(1 + 3 * 9);
     this.setFuelSlot(FUEL_SLOT, BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
+    this.setSlotsForExtract(IntStream.rangeClosed(0, FUEL_SLOT - 1).boxed().collect(Collectors.toList()));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -166,15 +166,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getFieldCount() {
     return Fields.values().length;
-  }
-  /**
-   * facing DOWN means the hopper is facing down, so items are coming in through the top side
-   */
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP)
-      return hopperInputFuel;
-    return hopperOUTPUT;
   }
   public void toggleSizeShape() {
     this.size++;

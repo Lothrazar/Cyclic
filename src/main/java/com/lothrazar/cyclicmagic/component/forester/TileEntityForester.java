@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.forester;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -56,7 +57,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   public TileEntityForester() {
     super(INVENTORY_SIZE);
     this.setFuelSlot(FUEL_SLOT, BlockForester.FUEL_COST);
-  }
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ));
+  }  
+ 
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -246,10 +249,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       curBlockDamage = 0;
     }
   }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-  }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {

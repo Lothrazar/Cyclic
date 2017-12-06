@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.disenchanter;
+import java.util.Arrays;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -28,7 +29,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   private int needsRedstone = 1;
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
+    this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -107,25 +111,6 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
         && this.getStackInSlot(SLOT_GLOWSTONE).getItem() == Items.GLOWSTONE_DUST
         && this.getStackInSlot(SLOT_BOTTLE).getItem() == Items.EXPERIENCE_BOTTLE
         && this.getStackInSlot(SLOT_INPUT).isEmpty() == false;
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    switch (side) {
-      case DOWN:
-        return new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13 };//9 slotsfor outputting stuff
-      case UP:
-        return new int[] { SLOT_INPUT };//input enchanted items
-      case EAST:
-        return new int[] { SLOT_BOTTLE };
-      case NORTH:
-        return new int[] { SLOT_REDSTONE };
-      case SOUTH:
-        return new int[] { SLOT_GLOWSTONE };
-      case WEST:
-        return new int[] { SLOT_BOOK };
-      default:
-        return new int[] {};
-    }
   }
   @Override
   public void toggleNeedsRedstone() {
