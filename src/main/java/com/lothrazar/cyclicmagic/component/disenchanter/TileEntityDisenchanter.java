@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -32,7 +33,22 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
     this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
   }
-
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index == SLOT_INPUT) {
+      return stack.isItemEnchanted();
+    }
+    else if (index == SLOT_BOTTLE) {
+      return stack.getItem() == Items.GLASS_BOTTLE;
+    }
+    else if (index == SLOT_REDSTONE) {
+      return UtilOreDictionary.doesMatchOreDict(stack, "dustRedstone");
+    }
+    else if (index == SLOT_GLOWSTONE) {
+      return UtilOreDictionary.doesMatchOreDict(stack, "dustGlowstone");
+    }
+    return false;
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
