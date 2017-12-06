@@ -33,9 +33,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private IRecipe recipe;
   private int needsRedstone = 1;
   private InventoryCrafting crafter;
-  private int[] hopperInput = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-  private int[] hopperInputfUEL = { SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT };
-  private int[] hopperOutput = new int[] { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 };
+
   public TileEntityCrafter() {
     super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
@@ -45,7 +43,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
     this.setFuelSlot(this.getSizeInventory() - 1, BlockCrafter.FUEL_COST);
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ));
+    this.setSlotsForExtract(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -164,17 +165,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       craftSlot = i - gridStart;
       //      ModCyclic.logger.info("Crafter set "+craftSlot+"_"+ this.getStackInSlot(i ));
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
-    }
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    switch (side) {
-      case DOWN:
-        return hopperOutput;
-      case UP:
-        return hopperInput;
-      default://FUELso all others
-        return hopperInputfUEL;
     }
   }
   @Override

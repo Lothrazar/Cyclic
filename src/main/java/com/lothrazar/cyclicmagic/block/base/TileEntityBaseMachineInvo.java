@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.base;
+import java.util.List;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
@@ -20,6 +21,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
@@ -46,10 +48,19 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private int fuelSlot = -1;
   protected int speed = 1;
   protected int timer;
+  //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
+  InvWrapperRestricted handlerTop = new InvWrapperRestricted(this);
+  private EnergyStore energyStorage;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     this.fuelSlot = -1;
+  }
+  protected void setSlotsForExtract(List<Integer> slots) {
+    handlerTop.setSlotsExtract(slots);
+  }
+  protected void setSlotsForInsert(List<Integer> slots) {
+    handlerTop.setSlotsInsert(slots);
   }
   protected void setFuelSlot(int slot, int fcost) {
     if (fcost > 0) {
@@ -313,7 +324,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] {};
+    return IntStream.range(0, this.getSizeInventory()).toArray();
   }
   @Override
   public boolean isEmpty() {
@@ -430,11 +441,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void decrementSpeed() {
     this.setSpeed(this.getSpeed() + 1);
   }
-  //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
-  net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
-  net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
-  net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
-  private EnergyStore energyStorage;
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -448,19 +454,19 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
-    if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (facing == EnumFacing.DOWN)
-        return (T) handlerBottom;
-      else if (facing == EnumFacing.UP)
-        return (T) handlerTop;
-      else
-        return (T) handlerSide;
+    if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      //      if (facing == EnumFacing.DOWN)
+      //        return (T) handlerBottom;
+      //      else if (facing == EnumFacing.UP)
+      //facing != null &&
+      return (T) handlerTop;
+      //      else
+      //        return (T) handlerSide;
     }
     if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
       this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
-    //    
     return super.getCapability(capability, facing);
   }
   public void initEnergyStorage() {
