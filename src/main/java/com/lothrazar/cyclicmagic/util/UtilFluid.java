@@ -128,6 +128,9 @@ public class UtilFluid {
           //       ModCyclic.logger.log(" filled  "+  filled);
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = fluidFrom.drain(realAmt, true);
+          if (wasDrained == null) {
+            return false;
+          }
           return tankTo.fill(wasDrained, true) > 0;
         }
       }
@@ -159,6 +162,9 @@ public class UtilFluid {
           //  ModCyclic.logger.log(" filled into pos  "+sideOpp.name()+"__"+  filled+"))"+posSide);
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = tankFrom.drain(realAmt, true);
+          if (wasDrained == null) {
+            return false;
+          }
           return fluidTo.fill(wasDrained, true) > 0;
         }
       }
