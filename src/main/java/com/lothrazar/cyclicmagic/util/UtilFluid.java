@@ -118,6 +118,9 @@ public class UtilFluid {
         //its not my facing dir
         // SO: pull fluid from that into myself
         FluidStack wasDrained = fluidFrom.drain(amount, false);
+        if (wasDrained == null) {
+          return false;
+        }
         int filled = tankTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
@@ -146,6 +149,9 @@ public class UtilFluid {
         //its not my facing dir
         // SO: pull fluid from that into myself
         FluidStack wasDrained = tankFrom.drain(amount, false);
+        if (wasDrained == null) {
+          return false;
+        }
         int filled = fluidTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
