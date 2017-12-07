@@ -27,6 +27,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   public EnumConnectType north, south, east, west, up, down;
   public TileEntityItemCable() {
     super(1);
+    this.setSlotsForBoth();
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }

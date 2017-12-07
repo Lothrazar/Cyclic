@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -21,8 +22,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
-  private static int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  private int[] hopperInputFuel = { 9 };// all slots for all faces
   private int buildType;
   private int buildSize = 3;
   private int buildHeight = 3;
@@ -80,6 +79,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public TileEntityStructureBuilder() {
     super(10);
     this.setFuelSlot(9, BlockStructureBuilder.FUEL_COST);
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -357,12 +357,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
       shapeIndex = c;
     }
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP || side == EnumFacing.DOWN)
-      return hopperInput;
-    return hopperInputFuel;
   }
   @Override
   public void toggleNeedsRedstone() {

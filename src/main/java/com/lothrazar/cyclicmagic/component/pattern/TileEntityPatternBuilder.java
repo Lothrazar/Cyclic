@@ -40,6 +40,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public TileEntityPatternBuilder() {
     super(18);
+    this.setSlotsForBoth();
   }
   @Override
   public int[] getFieldOrdinals() {
