@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class UtilShape {
   public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, int height) {
@@ -107,10 +108,28 @@ public class UtilShape {
     cube.addAll(line(b4, EnumFacing.UP, sideLen));
     return cube;
   }
-  public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> cubeFrame(final BlockPos posCenter, final int radius, final int height) {
     return rectFrame(posCenter, radius, height, radius);
   }
-  public static List<BlockPos> cubeFilled(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> readAllSolid(World world, final BlockPos posCenter, final int radius, final int height) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> region = cubeFilled(posCenter, radius, height);
+    for (BlockPos p : region) {
+      if (world.isAirBlock(p) == false) {
+        shape.add(p);
+      }
+    }
+    return shape;
+  }
+  public static List<BlockPos> shiftShapeOffset(List<BlockPos> shapeInput,
+      final int offsetSourceX, final int offsetSourceY, final int offsetSourceZ) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    for (BlockPos p : shapeInput) {
+      shape.add(new BlockPos(p).add(offsetSourceX, offsetSourceY, offsetSourceZ));
+    }
+    return shape;
+  }
+  public static List<BlockPos> cubeFilled(final BlockPos posCenter, final int radius, final int height) {
     BlockPos botCenter = posCenter;
     List<BlockPos> cube = squareHorizontalFull(botCenter, radius);
     BlockPos botCurrent;

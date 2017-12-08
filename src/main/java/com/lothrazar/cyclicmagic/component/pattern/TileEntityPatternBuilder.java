@@ -138,8 +138,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     return shapeSrc;
   }
   public List<BlockPos> getTargetShape() {
-    BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+    BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+    List<BlockPos> shapeSrc = UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+    List<BlockPos> shapeTarget = UtilShape.shiftShapeOffset(shapeSrc,
+        offsetTargetX,
+        offsetTargetY,
+        offsetTargetZ);
     return shapeTarget;
   }
   @Override
