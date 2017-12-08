@@ -129,6 +129,16 @@ public class UtilShape {
     }
     return shape;
   }
+  public static List<BlockPos> rotateShape(BlockPos posCenter, List<BlockPos> shapeInput, int rot) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    
+    for (BlockPos p : shapeInput) {
+      shape.add(new BlockPos(p));
+    }
+    
+
+    return shape;
+  }
   public static List<BlockPos> cubeFilled(final BlockPos posCenter, final int radius, final int height) {
     BlockPos botCenter = posCenter;
     List<BlockPos> cube = squareHorizontalFull(botCenter, radius);

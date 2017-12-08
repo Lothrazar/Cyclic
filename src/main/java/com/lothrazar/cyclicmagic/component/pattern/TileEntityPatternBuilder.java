@@ -35,8 +35,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
+  private int rotation = 0;
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION;
   }
   public TileEntityPatternBuilder() {
     super(18);
@@ -132,8 +133,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
     }
   }
+  public BlockPos getSourceCenter() {
+    return this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+  }
+  public BlockPos getTargetCenter() {
+    return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+  }
   public List<BlockPos> getSourceShape() {
-    BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+    BlockPos centerSrc = getSourceCenter();
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     return shapeSrc;
   }
@@ -180,6 +187,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     compound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(compound);
   }
+  public int getHeight(){
+    return height;
+  }
   public int getField(Fields f) {
     switch (f) {
       case OFFTARGX:
@@ -197,7 +207,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case OFFSRCZ:
         return this.offsetSourceZ;
       case HEIGHT:
-        return this.height;
+        return this.getHeight();
       case TIMER:
         return this.timer;
       case REDSTONE:
