@@ -25,13 +25,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private int height = 5;
-  private int offsetTargetX = -4;
+  private int offsetTargetX = -10;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
-  private int offsetSourceX = 4;
+  private int offsetSourceX = 6;
   private int offsetSourceY = 0;
   private int offsetSourceZ = 1;
-  private int sizeRadius = 3;
+  private int sizeRadius = 5;
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
