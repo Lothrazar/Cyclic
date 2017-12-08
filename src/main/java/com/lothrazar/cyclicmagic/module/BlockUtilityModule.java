@@ -123,6 +123,10 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockFluidCable k = new BlockFluidCable();
       BlockRegistry.registerBlock(k, "fluid_pipe", null);
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+      //fluid placer
+      BlockFluidPlacer placer = new BlockFluidPlacer();
+      BlockRegistry.registerBlock(placer, "fluid_placer", null);
+      GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
     if (enablItemPipes) {
       //pump
@@ -134,9 +138,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(k, "item_pipe", null);
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
     }
-    BlockFluidPlacer placer = new BlockFluidPlacer();
-    BlockRegistry.registerBlock(placer, "fluid_placer", null);
-    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
+
     
   }
   @Override
