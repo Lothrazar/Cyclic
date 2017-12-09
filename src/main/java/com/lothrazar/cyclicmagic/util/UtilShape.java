@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -121,19 +122,13 @@ public class UtilShape {
     }
     return shape;
   }
-  public static List<BlockPos> shiftShapeOffset(List<BlockPos> shapeInput,
-      final int offsetSourceX, final int offsetSourceY, final int offsetSourceZ) {
+ 
+  public static List<BlockPos> rotateShape(BlockPos posCenter, List<BlockPos> shapeInput, Rotation rot) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
+    BlockPos pRotated;
     for (BlockPos p : shapeInput) {
-      shape.add(new BlockPos(p).add(offsetSourceX, offsetSourceY, offsetSourceZ));
-    }
-    return shape;
-  }
-  public static List<BlockPos> rotateShape(BlockPos posCenter, List<BlockPos> shapeInput, int rot) {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    
-    for (BlockPos p : shapeInput) {
-      shape.add(new BlockPos(p));
+      pRotated = new BlockPos(p).subtract(posCenter).rotate(rot).add(posCenter);
+      shape.add(pRotated);
     }
     
 

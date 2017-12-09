@@ -24,8 +24,10 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
     if (tile.isPreviewVisible()) {
       UtilWorld.RenderShadow.renderBlockPos(tile.getSourceCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, 0F, 0F, 0.5F);
       UtilWorld.RenderShadow.renderBlockPos(tile.getTargetCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, .5F, 0, 0);
-      UtilWorld.RenderShadow.renderBlockList(tile.getSourceShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
-      UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, 1F, 1F, 1F);
+      UtilWorld.RenderShadow.renderBlockList(tile.getSourceFrameOutline(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+
+      UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
+      UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, .1F, .1F, .1F);
     }
   }
 }

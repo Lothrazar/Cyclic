@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -80,6 +82,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
+    BlockPos centerSrc = this.getCenterSrc();
+    int xOffset = posSrc.getX() - centerSrc.getX();
+    int yOffset = posSrc.getY() - centerSrc.getY();
+    int zOffset = posSrc.getZ() - centerSrc.getZ();
+    BlockPos centerTarget = this.getCenterTarget();
+    return centerTarget.add(xOffset, yOffset, zOffset);
+  }
   @Override
   public void update() {
     if (!isRunning()) { // it works ONLY if its powered
@@ -87,34 +97,31 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     timer -= 1;
     if (timer <= 0) { //try build one block
-      timer = TIMER_FULL;
-      BlockPos centerSrc = this.getCenterSrc();
-      List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
+      timer = 0;
+ 
+      List<BlockPos> shapeSrc = this.getSourceShape();
       if (shapeSrc.size() <= 0) {
         return;
       }
-      World world = this.getWorld();
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      int xOffset, yOffset, zOffset;
-      xOffset = posSrc.getX() - centerSrc.getX();
-      yOffset = posSrc.getY() - centerSrc.getY();
-      zOffset = posSrc.getZ() - centerSrc.getZ();
-      BlockPos centerTarget = this.getCenterTarget();
-      BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
+      BlockPos posTarget = convertPosSrcToTarget(posSrc);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
       }
       IBlockState stateToMatch;
       int slot;
-      if (!world.isAirBlock(posSrc)) {
+      if (world.isAirBlock(posSrc) == false) {
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
         if (slot < 0) {
           return;
         } //EMPTY
         if (world.isAirBlock(posTarget)) { //now we want target to be air
+          
+          timer = TIMER_FULL;//now start over
+          
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);
           SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
@@ -139,18 +146,25 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public BlockPos getTargetCenter() {
     return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
   }
-  public List<BlockPos> getSourceShape() {
+  public List<BlockPos> getSourceFrameOutline() {
     BlockPos centerSrc = getSourceCenter();
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     return shapeSrc;
   }
+  public List<BlockPos> getTargetFrameOutline() {
+    return UtilShape.cubeFrame(getTargetCenter(), this.sizeRadius, this.height);
+  }
+  public List<BlockPos> getSourceShape() {
+    BlockPos centerSrc = this.getSourceCenter();
+   return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+  }
   public List<BlockPos> getTargetShape() {
-    BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
-    List<BlockPos> shapeSrc = UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
-    List<BlockPos> shapeTarget = UtilShape.shiftShapeOffset(shapeSrc,
-        offsetTargetX,
-        offsetTargetY,
-        offsetTargetZ);
+ 
+    List<BlockPos> shapeSrc = getSourceShape();
+    List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
+    for (BlockPos p : shapeSrc) {
+      shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
+    }
     return shapeTarget;
   }
   @Override
@@ -187,7 +201,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     compound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(compound);
   }
-  public int getHeight(){
+  public int getHeight() {
     return height;
   }
   public int getField(Fields f) {
