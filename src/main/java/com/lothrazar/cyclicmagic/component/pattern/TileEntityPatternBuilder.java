@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -19,7 +20,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
   private final static int MAXIMUM = 32;
@@ -30,16 +30,19 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetTargetX = -10;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
-  private int offsetSourceX = 6;
+  private int offsetSourceX = 2;
   private int offsetSourceY = 0;
   private int offsetSourceZ = 1;
   private int sizeRadius = 5;
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
+  private int flipX = 0;
+  private int flipY = 0;
+  private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
   }
   public TileEntityPatternBuilder() {
     super(18);
@@ -161,9 +164,19 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     for (BlockPos p : shapeSrc) {
       shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
     }
+    //rotate 
     shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
-    //totally works!
-    //shapeTarget = UtilShape.flipShape(this.getCenterTarget().up(getHeight() / 2), shapeTarget, EnumFacing.Axis.Y);
+    //flip
+    BlockPos trueCenter = this.getCenterTarget().up(getHeight() / 2);
+    if (getField(Fields.FLIPX) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
+    }
+    if (getField(Fields.FLIPY) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
+    }
+    if (getField(Fields.FLIPZ) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
+    }
     return shapeTarget;
   }
   @Override
@@ -245,6 +258,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return this.renderParticles;
       case ROTATION:
         return this.rotation;
+      case FLIPX:
+        return flipX;
+      case FLIPY:
+        return flipY;
+      case FLIPZ:
+        return flipZ;
+      default:
+      break;
     }
     return 0;
   }
@@ -289,6 +310,15 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       break;
       case ROTATION:
         this.rotation = value % Rotation.values().length;
+      break;
+      case FLIPX:
+        flipX = value % 2;
+      break;
+      case FLIPY:
+        flipY = value % 2;
+      break;
+      case FLIPZ:
+        flipZ = value % 2;
       break;
     }
   }

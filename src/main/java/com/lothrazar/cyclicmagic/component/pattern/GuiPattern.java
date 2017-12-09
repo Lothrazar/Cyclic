@@ -19,6 +19,9 @@ public class GuiPattern extends GuiBaseContainer {
   private int sizeColX;
   private int heightColX;
   private ButtonTileEntityField btnRotation;
+  private ButtonTileEntityField btnFlipZ;
+  private ButtonTileEntityField btnFlipY;
+  private ButtonTileEntityField btnFlipX;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -33,13 +36,33 @@ public class GuiPattern extends GuiBaseContainer {
     super.initGui();
     int id = 2;
     /////redstone button
-    sizeY = 46;//save now as reuse for textbox
-    int vButtonSpacing = 12;
+    //button rotation 
     btnRotation = new ButtonTileEntityField(id++,
-        this.guiLeft + this.width / 4 - 40, this.guiTop + 15, tile.getPos(),
-        Fields.ROTATION.ordinal(),1,40,16);
+        this.guiLeft + 26, this.guiTop + 15, tile.getPos(),
+        Fields.ROTATION.ordinal(), 1, 40, 16);
     btnRotation.setTooltip("tile.builder_pattern.rotation");
     this.addButton(btnRotation);
+    // flips
+    btnFlipX = new ButtonTileEntityField(id++,
+        btnRotation.x + btnRotation.width + 4, this.guiTop + 15, tile.getPos(),
+        Fields.FLIPX.ordinal(), 1, 20, 16);
+    btnFlipX.setTooltip("tile.builder_pattern.flipx");
+    this.addButton(btnFlipX);
+    // y
+    btnFlipY = new ButtonTileEntityField(id++,
+        btnFlipX.x + btnFlipX.width + 4, btnFlipX.y, tile.getPos(),
+        Fields.FLIPY.ordinal(), 1, 20, 16);
+    btnFlipY.setTooltip("tile.builder_pattern.flipy");
+    this.addButton(btnFlipY);
+    // z
+    btnFlipZ = new ButtonTileEntityField(id++,
+        btnFlipY.x + btnFlipY.width + 4, btnFlipY.y, tile.getPos(),
+        Fields.FLIPZ.ordinal(), 1, 20, 16);
+    btnFlipZ.setTooltip("tile.builder_pattern.flipz");
+    this.addButton(btnFlipZ);
+    //all the small buttons
+    int vButtonSpacing = 12;
+    sizeY = 46;
     leftColX = 176 - 148;
     sizeColX = leftColX + 40;
     addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
@@ -91,6 +114,9 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRotation.displayString = this.tile.getRotationName();
+    btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
+    btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
+    btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
     drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
