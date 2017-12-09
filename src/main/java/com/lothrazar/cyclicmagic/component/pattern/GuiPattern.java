@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
+import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -17,6 +18,7 @@ public class GuiPattern extends GuiBaseContainer {
   private int sizeY;
   private int sizeColX;
   private int heightColX;
+  private ButtonTileEntityField btnRotation;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -33,6 +35,11 @@ public class GuiPattern extends GuiBaseContainer {
     /////redstone button
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
+    btnRotation = new ButtonTileEntityField(id++,
+        this.guiLeft + this.width / 4 - 40, this.guiTop + 15, tile.getPos(),
+        Fields.ROTATION.ordinal(),1,40,16);
+    btnRotation.setTooltip("tile.builder_pattern.rotation");
+    this.addButton(btnRotation);
     leftColX = 176 - 148;
     sizeColX = leftColX + 40;
     addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
@@ -83,6 +90,7 @@ public class GuiPattern extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    btnRotation.displayString = this.tile.getRotationName();
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
     drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);

@@ -37,7 +37,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
-  private int rotation = 0;
+  private int rotation = 0;//enum value of Rotation
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION;
   }
@@ -98,7 +98,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     timer -= 1;
     if (timer <= 0) { //try build one block
       timer = 0;
- 
       List<BlockPos> shapeSrc = this.getSourceShape();
       if (shapeSrc.size() <= 0) {
         return;
@@ -119,9 +118,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
           return;
         } //EMPTY
         if (world.isAirBlock(posTarget)) { //now we want target to be air
-          
           timer = TIMER_FULL;//now start over
-          
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);
           SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
@@ -156,16 +153,15 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getSourceCenter();
-   return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+    return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
   }
   public List<BlockPos> getTargetShape() {
- 
     List<BlockPos> shapeSrc = getSourceShape();
     List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
     for (BlockPos p : shapeSrc) {
       shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
     }
-    return shapeTarget;
+    return UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -204,6 +200,22 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public int getHeight() {
     return height;
   }
+  public Rotation getRotation() {
+    return Rotation.values()[this.rotation];
+  }
+  public String getRotationName() {
+    switch (this.getRotation()) {
+      case CLOCKWISE_180:
+        return "180";
+      case CLOCKWISE_90:
+        return "90";
+      case COUNTERCLOCKWISE_90:
+        return "270";
+      case NONE:
+      break;
+    }
+    return "None";
+  }
   public int getField(Fields f) {
     switch (f) {
       case OFFTARGX:
@@ -228,8 +240,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return this.needsRedstone;
       case RENDERPARTICLES:
         return this.renderParticles;
-      default:
-      break;
+      case ROTATION:
+        return this.rotation;
     }
     return 0;
   }
@@ -272,7 +284,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case RENDERPARTICLES:
         this.renderParticles = value;
       break;
-      default:
+      case ROTATION:
+        this.rotation = value % Rotation.values().length;
       break;
     }
   }
