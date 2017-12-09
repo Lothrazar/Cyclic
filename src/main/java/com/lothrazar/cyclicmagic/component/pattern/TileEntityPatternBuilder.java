@@ -161,7 +161,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     for (BlockPos p : shapeSrc) {
       shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
     }
-    return UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
+    shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
+    //totally works!
+    //shapeTarget = UtilShape.flipShape(this.getCenterTarget().up(getHeight() / 2), shapeTarget, EnumFacing.Axis.Y);
+    return shapeTarget;
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -119,6 +120,32 @@ public class UtilShape {
       if (world.isAirBlock(p) == false) {
         shape.add(p);
       }
+    }
+    return shape;
+  }
+  public static List<BlockPos> flipShape(BlockPos posCenter, List<BlockPos> shapeInput, EnumFacing.Axis axis) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    int diff;
+    BlockPos pRotated;
+    for (BlockPos p : shapeInput) {
+      pRotated = new BlockPos(p);
+      switch (axis) {
+        case X:
+          diff = p.getX() - posCenter.getX();
+          pRotated = pRotated.add(-2 * diff, 0, 0);
+        break;
+        case Y:
+          diff = p.getY() - posCenter.getY();
+          pRotated = pRotated.add(0, -2 * diff, 0);
+        break;
+        case Z:
+          diff = p.getZ() - posCenter.getZ();
+          pRotated = pRotated.add(0, 0, -2 * diff);
+        break;
+        default:
+        break;
+      }
+      shape.add(pRotated);
     }
     return shape;
   }
