@@ -131,12 +131,13 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
-    ItemStack stackToExport = this.getStackInSlot(0).copy();
-    if (stackToExport.isEmpty()) {
-      return;
-    }
+
     TileEntity tileTarget;
     for (int i : shuffledFaces) {
+      ItemStack stackToExport = this.getStackInSlot(0).copy();
+      if (stackToExport.isEmpty()) {
+        return;
+      }
       EnumFacing f = EnumFacing.values()[i];
       if (this.isFluidIncomingFromFace(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
@@ -146,9 +147,15 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
           continue;
         }
         boolean outputSuccess = false;
-        ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
-        if (pulled.getCount() != stackToExport.getCount()) {
-          this.setInventorySlotContents(0, pulled);
+        System.out.println(this.pos+" stackToExport  "+stackToExport);
+        
+        ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+        if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+          //then reduce by that many
+//          System.out.println("DECREMENT current by "+leftAfterDeposit.getCount()+" where total was "+    this.getStackInSlot(0).getCount());
+          System.out.println(this.pos+" leftAfterDeposit  "+leftAfterDeposit);
+          this.setInventorySlotContents(0, leftAfterDeposit);
+//          System.out.println("after shrink"+    this.getStackInSlot(0).getCount());
           //one or more was put in
           outputSuccess = true;
         }
