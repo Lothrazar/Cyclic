@@ -20,6 +20,7 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   private static int lightLimit = 7;
   public ItemAutoTorch() {
     super(durability);
+    this.repairedBy = new ItemStack(Blocks.TORCH);
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {

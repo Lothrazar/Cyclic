@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.ArrayList;
 import java.util.List;
- 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -42,8 +41,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, 
-    FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX,FUELDISPLAY;}
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX, FUELDISPLAY;
+  }
   public TileEntityPatternBuilder() {
     super(19);
     this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
@@ -329,7 +328,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         flipZ = value % 2;
       break;
       case FUEL:
-      
         this.setFuelCurrent(value);
       break;
       case FUELDISPLAY:
