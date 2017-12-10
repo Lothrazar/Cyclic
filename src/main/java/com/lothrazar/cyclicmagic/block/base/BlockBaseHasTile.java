@@ -55,4 +55,7 @@ public abstract class BlockBaseHasTile extends BlockBase {
     }
     super.breakBlock(worldIn, pos, state);
   }
+  public String getRawName() {
+    return this.getUnlocalizedName().replace("tile.", "");
+  }
 }

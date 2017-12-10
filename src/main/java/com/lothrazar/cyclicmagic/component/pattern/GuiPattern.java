@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.component.pattern;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
@@ -17,22 +20,53 @@ public class GuiPattern extends GuiBaseContainer {
   private int sizeY;
   private int sizeColX;
   private int heightColX;
+  private ButtonTileEntityField btnRotation;
+  private ButtonTileEntityField btnFlipZ;
+  private ButtonTileEntityField btnFlipY;
+  private ButtonTileEntityField btnFlipX;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
-    this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
-    this.fieldPreviewBtn = TileEntityPatternBuilder.Fields.RENDERPARTICLES.ordinal();
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
+ 
+    this.setFieldFuel(Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
     super.initGui();
     int id = 2;
     /////redstone button
-    sizeY = 46;//save now as reuse for textbox
+    //button rotation 
+    btnRotation = new ButtonTileEntityField(id++,
+        this.guiLeft + 26, this.guiTop + 15, tile.getPos(),
+        Fields.ROTATION.ordinal(), 1, 40, 16);
+    btnRotation.setTooltip("tile.builder_pattern.rotation");
+    this.addButton(btnRotation);
+    // flips
+    btnFlipX = new ButtonTileEntityField(id++,
+        btnRotation.x + btnRotation.width + 4, this.guiTop + 15, tile.getPos(),
+        Fields.FLIPX.ordinal(), 1, 20, 16);
+    btnFlipX.setTooltip("tile.builder_pattern.flipaxis");
+    this.addButton(btnFlipX);
+    // y
+    btnFlipY = new ButtonTileEntityField(id++,
+        btnFlipX.x + btnFlipX.width + 4, btnFlipX.y, tile.getPos(),
+        Fields.FLIPY.ordinal(), 1, 20, 16);
+    btnFlipY.setTooltip("tile.builder_pattern.flipaxis");
+    this.addButton(btnFlipY);
+    // z
+    btnFlipZ = new ButtonTileEntityField(id++,
+        btnFlipY.x + btnFlipY.width + 4, btnFlipY.y, tile.getPos(),
+        Fields.FLIPZ.ordinal(), 1, 20, 16);
+    btnFlipZ.setTooltip("tile.builder_pattern.flipaxis");
+    this.addButton(btnFlipZ);
+    //all the small buttons
     int vButtonSpacing = 12;
+    sizeY = 46;
     leftColX = 176 - 148;
     sizeColX = leftColX + 40;
     addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
@@ -83,6 +117,10 @@ public class GuiPattern extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    btnRotation.displayString = this.tile.getRotationName();
+    btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
+    btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
+    btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
     drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
@@ -101,10 +139,11 @@ public class GuiPattern extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
-    for (int i = 0; i < tile.getSizeInventory(); i++) {
+    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
       row = i / GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GUI_ROWS; // and %3 will go 012 012 012
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 }

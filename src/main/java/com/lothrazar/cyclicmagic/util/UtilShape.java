@@ -3,8 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class UtilShape {
   public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, int height) {
@@ -107,10 +110,58 @@ public class UtilShape {
     cube.addAll(line(b4, EnumFacing.UP, sideLen));
     return cube;
   }
-  public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> cubeFrame(final BlockPos posCenter, final int radius, final int height) {
     return rectFrame(posCenter, radius, height, radius);
   }
-  public static List<BlockPos> cubeFilled(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> readAllSolid(World world, final BlockPos posCenter, final int radius, final int height) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> region = cubeFilled(posCenter, radius, height);
+    for (BlockPos p : region) {
+      if (world.isAirBlock(p) == false) {
+        shape.add(p);
+      }
+    }
+    return shape;
+  }
+  public static List<BlockPos> flipShape(BlockPos posCenter, List<BlockPos> shapeInput, EnumFacing.Axis axis) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    int diff;
+    BlockPos pRotated;
+    for (BlockPos p : shapeInput) {
+      pRotated = new BlockPos(p);
+      switch (axis) {
+        case X:
+          diff = p.getX() - posCenter.getX();
+          pRotated = pRotated.add(-2 * diff, 0, 0);
+        break;
+        case Y:
+          diff = p.getY() - posCenter.getY();
+          pRotated = pRotated.add(0, -2 * diff, 0);
+        break;
+        case Z:
+          diff = p.getZ() - posCenter.getZ();
+          pRotated = pRotated.add(0, 0, -2 * diff);
+        break;
+        default:
+        break;
+      }
+      shape.add(pRotated);
+    }
+    return shape;
+  }
+  public static List<BlockPos> rotateShape(BlockPos posCenter, List<BlockPos> shapeInput, Rotation rot) {
+    if (rot == Rotation.NONE) {
+      return shapeInput;
+    }
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    BlockPos pRotated;
+    for (BlockPos p : shapeInput) {
+      pRotated = new BlockPos(p).subtract(posCenter).rotate(rot).add(posCenter);
+      shape.add(pRotated);
+    }
+    return shape;
+  }
+  public static List<BlockPos> cubeFilled(final BlockPos posCenter, final int radius, final int height) {
     BlockPos botCenter = posCenter;
     List<BlockPos> cube = squareHorizontalFull(botCenter, radius);
     BlockPos botCurrent;
