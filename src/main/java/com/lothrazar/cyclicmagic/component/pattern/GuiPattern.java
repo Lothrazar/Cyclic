@@ -46,19 +46,19 @@ public class GuiPattern extends GuiBaseContainer {
     btnFlipX = new ButtonTileEntityField(id++,
         btnRotation.x + btnRotation.width + 4, this.guiTop + 15, tile.getPos(),
         Fields.FLIPX.ordinal(), 1, 20, 16);
-    btnFlipX.setTooltip("tile.builder_pattern.flipx");
+    btnFlipX.setTooltip("tile.builder_pattern.flipaxis");
     this.addButton(btnFlipX);
     // y
     btnFlipY = new ButtonTileEntityField(id++,
         btnFlipX.x + btnFlipX.width + 4, btnFlipX.y, tile.getPos(),
         Fields.FLIPY.ordinal(), 1, 20, 16);
-    btnFlipY.setTooltip("tile.builder_pattern.flipy");
+    btnFlipY.setTooltip("tile.builder_pattern.flipaxis");
     this.addButton(btnFlipY);
     // z
     btnFlipZ = new ButtonTileEntityField(id++,
         btnFlipY.x + btnFlipY.width + 4, btnFlipY.y, tile.getPos(),
         Fields.FLIPZ.ordinal(), 1, 20, 16);
-    btnFlipZ.setTooltip("tile.builder_pattern.flipz");
+    btnFlipZ.setTooltip("tile.builder_pattern.flipaxis");
     this.addButton(btnFlipZ);
     //all the small buttons
     int vButtonSpacing = 12;

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
