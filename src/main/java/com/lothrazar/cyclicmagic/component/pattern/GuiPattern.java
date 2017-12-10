@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.component.pattern;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
@@ -28,8 +30,10 @@ public class GuiPattern extends GuiBaseContainer {
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
-    this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
-    this.fieldPreviewBtn = TileEntityPatternBuilder.Fields.RENDERPARTICLES.ordinal();
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
+ 
+    this.setFieldFuel(Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
@@ -135,10 +139,11 @@ public class GuiPattern extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
-    for (int i = 0; i < tile.getSizeInventory(); i++) {
+    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
       row = i / GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GUI_ROWS; // and %3 will go 012 012 012
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 }

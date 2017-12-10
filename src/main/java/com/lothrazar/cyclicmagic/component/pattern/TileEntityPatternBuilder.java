@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.ArrayList;
 import java.util.List;
+ 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -26,13 +27,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private int height = 5;
-  private int offsetTargetX = -10;
+  private int offsetTargetX = -5;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
-  private int offsetSourceX = 2;
+  private int offsetSourceX = 5;
   private int offsetSourceY = 0;
   private int offsetSourceZ = 1;
-  private int sizeRadius = 5;
+  private int sizeRadius = 4;
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
@@ -41,10 +42,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
-  }
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, 
+    FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX,FUELDISPLAY;}
   public TileEntityPatternBuilder() {
-    super(18);
+    super(19);
+    this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
   }
   @Override
@@ -94,7 +96,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void update() {
-    if (!isRunning()) { // it works ONLY if its powered
+    if (isRunning() == false) { // it works ONLY if its powered
+      return;
+    }
+    if (this.updateFuelIsBurning() == false) {
       return;
     }
     timer -= 1;
@@ -220,10 +225,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public String getRotationName() {
     switch (this.getRotation()) {
-      case CLOCKWISE_180:
-        return "180";
       case CLOCKWISE_90:
         return "90";
+      case CLOCKWISE_180:
+        return "180";
       case COUNTERCLOCKWISE_90:
         return "270";
       case NONE:
@@ -263,14 +268,18 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return flipY;
       case FLIPZ:
         return flipZ;
-      default:
-      break;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return 0;
   }
   public void setField(Fields f, int value) {
     //max applies to all fields
-    if (value > MAXIMUM) {
+    if (value > MAXIMUM && f.ordinal() < Fields.ROTATION.ordinal()) {
       value = MAXIMUM;
     }
     switch (f) {
@@ -318,6 +327,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       break;
       case FLIPZ:
         flipZ = value % 2;
+      break;
+      case FUEL:
+      
+        this.setFuelCurrent(value);
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -18,11 +20,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IHasConfig {
+  public static int FUEL_COST = 0;
   public BlockPatternBuilder() {
     super(Material.IRON);
     this.setHardness(3F);
@@ -34,7 +38,7 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityPatternBuilder();//"tile.block_fishing.name"
+    return new TileEntityPatternBuilder();
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -61,5 +65,9 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPatternBuilder.class, new PatternBuilderTESR());
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 1, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
