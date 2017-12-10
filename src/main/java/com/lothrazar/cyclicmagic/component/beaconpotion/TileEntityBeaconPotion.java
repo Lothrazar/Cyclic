@@ -58,6 +58,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public TileEntityBeaconPotion() {
     super(9);
     this.timer = 0;
+    this.setSlotsForBoth();
+
   }
   @Override
   public void update() {
@@ -275,9 +277,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     else {
       return super.receiveClientEvent(id, type);
     }
-  }
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
   }
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.

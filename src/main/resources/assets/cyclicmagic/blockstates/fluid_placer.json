@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:fluid_placer_north"},
+        "facing=east":  { "model": "cyclicmagic:fluid_placer_east"},
+        "facing=south": { "model": "cyclicmagic:fluid_placer_south"},
+        "facing=up":    { "model": "cyclicmagic:fluid_placer_up"},
+        "facing=down":  { "model": "cyclicmagic:fluid_placer_down"},
+        "facing=west":  { "model": "cyclicmagic:fluid_placer_west" }
+    }
+}

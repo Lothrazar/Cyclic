@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.10.3",
-    "1.12.2-recommended": "1.10.3"
+    "1.12.2-latest": "1.10.4",
+    "1.12.2-recommended": "1.10.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -232,5 +232,6 @@
 	,"1.10.1":"Add missing recipes and guidebook text.  Fixed fluid pipes and the pump flowing every direction except down.  Pipes will no longer show Empty label when actually flowing.  Reduce block hardness of pipes, and tweak hitbox of pipes to be more accurate.  Pipes tell you which direction they are flowing.  "
 	,"1.10.2":"Added Item Pipe and Item Pump.  Fixed Fluid pump flowing in the wrong direction when facing vertically up or down.  Experience Pylon now values 20mb of fluid as 1 exp, which is consistent with all other mods that use experience fluid so it avoids exploits.  "
 	,"1.10.3":"Fixed the forester not harvesting leaves, and spending too long in empty air space (it now correctly skips air and is much faster).  Soulstone now gives a few seconds of Fire Resistance when it revives you.  Emerald Apple now has a cheaper recipe.  Fixed Emerald Apple not getting consumed when fed to a zombie villager.   Added error handler to fluid pipes and pumps to safely log errors from other mods during fill or drain.   Multi-Jump enchantment now works on any armor-slot equipment; try it out on an Elytra for super-flight (previously it was only for boots).  "
+	,"1.10.4":"Fixed item duplication bug.  Fixed compatibility of some blocks accepting input/output on the sides or top of the machine.  Items piped into the Unchant Pylon are now routed into the correct slot.  Fixed fluid pipes trying to push into external fluid tanks while empty.  Fixed pipe glitches during chunk unloading.  New block: Fluid Placer.  Pattern Replicator: now it outlines the exact shape of what its building; can now rotate the building in different directions from the original; and flip building on any axis; but requires power.   Fixed some errors in anvil repair recipes."
   }
 }

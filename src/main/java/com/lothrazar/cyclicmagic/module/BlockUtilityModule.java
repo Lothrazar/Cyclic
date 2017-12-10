@@ -12,6 +12,8 @@ import com.lothrazar.cyclicmagic.component.fan.BlockFan;
 import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.fluidplacer.BlockFluidPlacer;
+import com.lothrazar.cyclicmagic.component.fluidplacer.TileEntityFluidPlacer;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
@@ -121,6 +123,10 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockFluidCable k = new BlockFluidCable();
       BlockRegistry.registerBlock(k, "fluid_pipe", null);
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+      //fluid placer
+      BlockFluidPlacer placer = new BlockFluidPlacer();
+      BlockRegistry.registerBlock(placer, "fluid_placer", null);
+      GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
     if (enablItemPipes) {
       //pump
@@ -132,6 +138,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(k, "item_pipe", null);
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
     }
+
+    
   }
   @Override
   public void syncConfig(Configuration config) {

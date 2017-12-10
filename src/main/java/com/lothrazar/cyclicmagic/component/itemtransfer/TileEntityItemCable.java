@@ -27,6 +27,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   public EnumConnectType north, south, east, west, up, down;
   public TileEntityItemCable() {
     super(1);
+    this.setSlotsForBoth();
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
@@ -114,7 +115,7 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
   public void updateIncomingFace(EnumFacing inputFrom) {
     mapIncoming.put(inputFrom, TIMER_SIDE_INPUT);
   }
-  private boolean isFluidIncomingFromFace(EnumFacing face) {
+  private boolean isIncomingFromFace(EnumFacing face) {
     return mapIncoming.get(face) > 0;
   }
   @Override
@@ -130,29 +131,28 @@ public class TileEntityItemCable extends TileEntityBaseMachineInvo implements IT
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
-    ItemStack stackToExport = this.getStackInSlot(0).copy();
-    if (stackToExport.isEmpty()) {
-      return;
-    }
     TileEntity tileTarget;
     for (int i : shuffledFaces) {
+      ItemStack stackToExport = this.getStackInSlot(0).copy();
+      if (stackToExport.isEmpty()) {
+        return;
+      }
       EnumFacing f = EnumFacing.values()[i];
-      if (this.isFluidIncomingFromFace(f) == false) {
-        //ok, fluid is not incoming from here. so lets output some
+      if (this.isIncomingFromFace(f) == false) {
+        //ok,  not incoming from here. so lets output some
         posTarget = pos.offset(f);
         tileTarget = world.getTileEntity(posTarget);
         if (tileTarget == null) {
           continue;
         }
         boolean outputSuccess = false;
-        ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
-        if (pulled.getCount() != stackToExport.getCount()) {
-          this.setInventorySlotContents(0, pulled);
-          //one or more was put in
+        ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+        if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+          //then save result
+          this.setInventorySlotContents(0, leftAfterDeposit);
           outputSuccess = true;
         }
         if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
-          //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }

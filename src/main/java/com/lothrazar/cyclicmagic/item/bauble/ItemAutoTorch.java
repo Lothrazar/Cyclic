@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -20,6 +21,7 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   private static int lightLimit = 7;
   public ItemAutoTorch() {
     super(durability);
+    this.repairedBy = new ItemStack(Items.COAL);
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {

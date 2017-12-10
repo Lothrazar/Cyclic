@@ -565,7 +565,7 @@ tile.block_disenchanter.tooltip=Remove enchantments for a price
 tile.block_fishing.guide=Place down surrounded by water.  Fishes faster more sides are covered in water, minimum 4 of 6.  Then give it a fishing rod and it fishes for you.  It uses whatever is in the fishing loot table, so it works with regular fish, treasure, junk, and modded items that were added.  The frequency indicates how often it will attempt to fish.  You can increase this number by surrounding it with more still or flowing water, so you can use pipes and hoppers to automate fishing even further, but the frequency will be slightly lower.
 tile.block_fishing.invalidequip=Requires a fishing rod
 tile.block_fishing.invalidpos.gui1=Needs water
-tile.block_fishing.invalidpos.gui2=on
+tile.block_fishing.invalidpos.gui2=on 
 tile.block_fishing.invalidpos.gui3=sides
 tile.block_fishing.invalidpos=Requires water on at least four sides.
 tile.block_fishing.name=Automatic Fishing Net
@@ -627,6 +627,8 @@ tile.builder_block.name=Structure Builder
 tile.builder_block.tooltip=Automate building simple shapes
 tile.builder_pattern.flip=Flip Regions (purple is source, white is target)
 tile.builder_pattern.guide=This advanced building machine can copy almost anything.  Select two nearby regions of the world of equal size and shape, give it materials, and it will copy the build from one area to the other.
+tile.builder_pattern.rotation=Rotation
+tile.builder_pattern.flipaxis=Toggle flip on axis
 tile.builder_pattern.heightdown=Height Down
 tile.builder_pattern.heightup=Height Up
 tile.builder_pattern.name=Pattern Replicator
@@ -941,6 +943,11 @@ tipped_arrow.effect.frostwalker=Arrow of Frost Walker
 tile.fluid_pump.name=Fluid Pump
 tile.fluid_pump.tooltip=Move fluid between tanks or pipes when redstone powered
 tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes liquids into tanks in front if any.  Push into another tank or Fluid Pipes.
+
+
+tile.fluid_placer.name=Fluid Placer
+tile.fluid_placer.tooltip=Place fluid in the world
+tile.fluid_placer.guide=Fill this with a bucket or fluid pipes.  Places fluid in the world on redstone power.  
 
 tile.fluid_pipe.name=Fluid Pipe
 tile.fluid_pipe.tooltip=Connect to a Fluid Pump to transfer liquids between tanks

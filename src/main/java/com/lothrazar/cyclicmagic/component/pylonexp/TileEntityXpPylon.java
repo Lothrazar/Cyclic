@@ -34,8 +34,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_COLLECT = "collect";
   public final static int RADIUS = 16;
-  private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
-  private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
+ 
   public static enum Fields {
     TIMER, EXP, COLLECT, REDSTONE;//MIGHT remove redstone eh
   }
@@ -49,6 +48,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
+    this.setSlotsForExtract(SLOT_OUTPUT);
+    this.setSlotsForInsert(SLOT_INPUT);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -166,15 +167,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     this.setInventorySlotContents(SLOT_INPUT, fullOnes);
   }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.DOWN) {
-      return SLOTS_EXTRACT;
-    }
-    else {
-      return SLOTS_INSERT;
-    }
-  }
+ 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);

@@ -73,11 +73,7 @@ public class UtilFluid {
     fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
     return fluidHandler.getContainer();
   }
-  //  public static boolean isFullOfFluid(ItemStack returnMe) {
-  //    IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(returnMe);
-  //    fluidHandler.fill(resource, doFill)
-  //    return FluidUtil.getFluidContained(returnMe) == null;
-  //  }
+ 
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
     return FluidUtil.getFluidContained(returnMe) == null;
   }
@@ -118,6 +114,9 @@ public class UtilFluid {
         //its not my facing dir
         // SO: pull fluid from that into myself
         FluidStack wasDrained = fluidFrom.drain(amount, false);
+        if (wasDrained == null) {
+          return false;
+        }
         int filled = tankTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
@@ -125,6 +124,9 @@ public class UtilFluid {
           //       ModCyclic.logger.log(" filled  "+  filled);
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = fluidFrom.drain(realAmt, true);
+          if (wasDrained == null) {
+            return false;
+          }
           return tankTo.fill(wasDrained, true) > 0;
         }
       }
@@ -146,20 +148,25 @@ public class UtilFluid {
         //its not my facing dir
         // SO: pull fluid from that into myself
         FluidStack wasDrained = tankFrom.drain(amount, false);
+        if (wasDrained == null) {
+          return false;
+        }
         int filled = fluidTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
-          // ModCyclic.logger.log(" wasDrained  from tank"+wasDrained.amount);
-          //  ModCyclic.logger.log(" filled into pos  "+sideOpp.name()+"__"+  filled+"))"+posSide);
+ 
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = tankFrom.drain(realAmt, true);
+          if (wasDrained == null) {
+            return false;
+          }
           return fluidTo.fill(wasDrained, true) > 0;
         }
       }
       return false;
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Somebody elses fluid tank had an issue when we tried to fill");
+      ModCyclic.logger.error("A fluid tank had an issue when we tried to fill");
       ModCyclic.logger.error(e.getMessage());
       //charset crashes here i guess
       //https://github.com/PrinceOfAmber/Cyclic/issues/605

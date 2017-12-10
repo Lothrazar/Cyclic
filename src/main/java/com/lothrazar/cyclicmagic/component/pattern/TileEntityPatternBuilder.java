@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -15,9 +16,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
   private final static int MAXIMUM = 32;
@@ -25,21 +26,27 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private int height = 5;
-  private int offsetTargetX = -4;
+  private int offsetTargetX = -5;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
-  private int offsetSourceX = 4;
+  private int offsetSourceX = 5;
   private int offsetSourceY = 0;
   private int offsetSourceZ = 1;
-  private int sizeRadius = 3;
+  private int sizeRadius = 4;
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
+  private int flipX = 0;
+  private int flipY = 0;
+  private int flipZ = 0;
+  private int rotation = 0;//enum value of Rotation
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityPatternBuilder() {
-    super(18);
+    super(19);
+    this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
+    this.setSlotsForBoth();
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -78,41 +85,46 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
+    BlockPos centerSrc = this.getCenterSrc();
+    int xOffset = posSrc.getX() - centerSrc.getX();
+    int yOffset = posSrc.getY() - centerSrc.getY();
+    int zOffset = posSrc.getZ() - centerSrc.getZ();
+    BlockPos centerTarget = this.getCenterTarget();
+    return centerTarget.add(xOffset, yOffset, zOffset);
+  }
   @Override
   public void update() {
-    if (!isRunning()) { // it works ONLY if its powered
+    if (isRunning() == false) { // it works ONLY if its powered
+      return;
+    }
+    if (this.updateFuelIsBurning() == false) {
       return;
     }
     timer -= 1;
     if (timer <= 0) { //try build one block
-      timer = TIMER_FULL;
-      BlockPos centerSrc = this.getCenterSrc();
-      List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
+      timer = 0;
+      List<BlockPos> shapeSrc = this.getSourceShape();
       if (shapeSrc.size() <= 0) {
         return;
       }
-      World world = this.getWorld();
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      int xOffset, yOffset, zOffset;
-      xOffset = posSrc.getX() - centerSrc.getX();
-      yOffset = posSrc.getY() - centerSrc.getY();
-      zOffset = posSrc.getZ() - centerSrc.getZ();
-      BlockPos centerTarget = this.getCenterTarget();
-      BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
+      BlockPos posTarget = convertPosSrcToTarget(posSrc);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
       }
       IBlockState stateToMatch;
       int slot;
-      if (!world.isAirBlock(posSrc)) {
+      if (world.isAirBlock(posSrc) == false) {
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
         if (slot < 0) {
           return;
         } //EMPTY
         if (world.isAirBlock(posTarget)) { //now we want target to be air
+          timer = TIMER_FULL;//now start over
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);
           SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
@@ -131,14 +143,43 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
     }
   }
-  public List<BlockPos> getSourceShape() {
-    BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+  public BlockPos getSourceCenter() {
+    return this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+  }
+  public BlockPos getTargetCenter() {
+    return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+  }
+  public List<BlockPos> getSourceFrameOutline() {
+    BlockPos centerSrc = getSourceCenter();
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     return shapeSrc;
   }
+  public List<BlockPos> getTargetFrameOutline() {
+    return UtilShape.cubeFrame(getTargetCenter(), this.sizeRadius, this.height);
+  }
+  public List<BlockPos> getSourceShape() {
+    BlockPos centerSrc = this.getSourceCenter();
+    return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+  }
   public List<BlockPos> getTargetShape() {
-    BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+    List<BlockPos> shapeSrc = getSourceShape();
+    List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
+    for (BlockPos p : shapeSrc) {
+      shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
+    }
+    //rotate 
+    shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
+    //flip
+    BlockPos trueCenter = this.getCenterTarget().up(getHeight() / 2);
+    if (getField(Fields.FLIPX) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
+    }
+    if (getField(Fields.FLIPY) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
+    }
+    if (getField(Fields.FLIPZ) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
+    }
     return shapeTarget;
   }
   @Override
@@ -175,6 +216,25 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     compound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(compound);
   }
+  public int getHeight() {
+    return height;
+  }
+  public Rotation getRotation() {
+    return Rotation.values()[this.rotation];
+  }
+  public String getRotationName() {
+    switch (this.getRotation()) {
+      case CLOCKWISE_90:
+        return "90";
+      case CLOCKWISE_180:
+        return "180";
+      case COUNTERCLOCKWISE_90:
+        return "270";
+      case NONE:
+      break;
+    }
+    return "None";
+  }
   public int getField(Fields f) {
     switch (f) {
       case OFFTARGX:
@@ -192,21 +252,33 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case OFFSRCZ:
         return this.offsetSourceZ;
       case HEIGHT:
-        return this.height;
+        return this.getHeight();
       case TIMER:
         return this.timer;
       case REDSTONE:
         return this.needsRedstone;
       case RENDERPARTICLES:
         return this.renderParticles;
-      default:
-      break;
+      case ROTATION:
+        return this.rotation;
+      case FLIPX:
+        return flipX;
+      case FLIPY:
+        return flipY;
+      case FLIPZ:
+        return flipZ;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return 0;
   }
   public void setField(Fields f, int value) {
     //max applies to all fields
-    if (value > MAXIMUM) {
+    if (value > MAXIMUM && f.ordinal() < Fields.ROTATION.ordinal()) {
       value = MAXIMUM;
     }
     switch (f) {
@@ -243,7 +315,23 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case RENDERPARTICLES:
         this.renderParticles = value;
       break;
-      default:
+      case ROTATION:
+        this.rotation = value % Rotation.values().length;
+      break;
+      case FLIPX:
+        flipX = value % 2;
+      break;
+      case FLIPY:
+        flipY = value % 2;
+      break;
+      case FLIPZ:
+        flipZ = value % 2;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }

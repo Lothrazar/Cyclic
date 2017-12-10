@@ -26,14 +26,14 @@ public class GuiFisher extends GuiBaseContainer {
       String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
       int x = 13 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
       int y = 42;
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.drawString(s, x, y);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
       s = s + TileEntityFishing.MINIMUM_WET_SIDES + "+";
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.drawString(s, x + 12, y);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
-      this.fontRenderer.drawString(s, x, y, 4210752);
+      this.drawString(s, x + 14, y);
     }
     if (tile.isEquipmentValid() && tile.isValidPosition()) {
       String s = UtilChat.lang("tile.block_fishing.progress");

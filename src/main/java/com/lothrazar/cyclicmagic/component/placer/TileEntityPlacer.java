@@ -24,6 +24,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private int needsRedstone = 1;
   public TileEntityPlacer() {
     super(9);
+    this.setSlotsForBoth();
   }
   @Override
   public int[] getFieldOrdinals() {

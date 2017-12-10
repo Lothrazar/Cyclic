@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import java.util.Arrays;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -33,14 +34,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     REDSTONE, TIMER, FLUID, RECIPELOCKED;
   }
   public FluidTank tank = new FluidTank(TANK_FULL);
-  private int[] hopperInput = { 0, 1, 2, 3 };
-  private int[] hopperOutput = { 4, 5, 6, 7 };
   private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
     timer = TIMER_FULL;
     this.tank.setTileEntity(this);
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
+    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
   }
   private int needsRedstone = 1;
   @Override
@@ -95,12 +96,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       return true;
     }
     return false;
-  }
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP)
-      return hopperInput;
-    return hopperOutput;
   }
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);

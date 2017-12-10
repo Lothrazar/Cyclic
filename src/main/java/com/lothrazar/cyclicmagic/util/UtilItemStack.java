@@ -24,14 +24,11 @@ public class UtilItemStack {
       return stackToExport;
     }
     IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
-    // ModCyclic.logger.log("target HAS" +itemHandlerDeposit.getSlots());
     for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
-      ItemStack pulled = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
-      if (pulled.getCount() != stackToExport.getCount()) {
-        //        this.setInventorySlotContents(0, pulled);
-        //one or more was put in
-        //        outputSuccess = true;
-        return pulled;
+      ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
+      //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
+      if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {
+        return leftBehindAfterInsert;
       }
     }
     return stackToExport;

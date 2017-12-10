@@ -330,7 +330,15 @@ public class UtilWorld {
    * 
    * 
    */
+  @SuppressWarnings("serial")
   public static class RenderShadow {
+    public static void renderBlockPos(BlockPos p, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
+      UtilWorld.RenderShadow.renderBlockList(new ArrayList<BlockPos>() {
+        {
+          add(p);
+        }
+      }, center, relX, relY, relZ, red, green, blue);
+    }
     public static void renderBlockList(List<BlockPos> blockPosList, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
       GlStateManager.pushAttrib();
       GlStateManager.pushMatrix();
