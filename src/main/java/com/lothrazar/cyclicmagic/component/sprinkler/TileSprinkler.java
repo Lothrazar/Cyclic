@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.sprinkler;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
@@ -42,6 +43,9 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
         } //but spawn water, grow or not.different roll for each block
         current = new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
         IBlockState bState = world.getBlockState(current);
+        if (bState == null || bState.getBlock() == null ) {
+          continue;
+        }
         Block block = bState.getBlock();
         if (block instanceof IPlantable || block instanceof IGrowable) {
           if (block instanceof IGrowable &&
@@ -52,7 +56,14 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
           UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, current);
           //no need to literally increase internal growth numbers, just force more  update ticks
           world.scheduleBlockUpdate(current, block, world.rand.nextInt(TICKS) + 20, 1);
-          block.updateTick(world, current, bState, world.rand);
+          try {
+            block.updateTick(world, current, bState, world.rand);
+          }
+          catch (Exception e) {
+            ModCyclic.logger.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block);
+            ModCyclic.logger.error(e.getMessage());
+            e.printStackTrace();
+          }
         }
       }
     }
