@@ -6,11 +6,13 @@ import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +27,7 @@ public class UtilHarvester {
   private static NonNullList<String> blocksGetDrop;
   private static NonNullList<String> blocksSilkTouch;
   private static NonNullList<String> blockIgnore;
+  private static NonNullList<String> blocksGetDropsDeprecated;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -45,6 +48,10 @@ public class UtilHarvester {
         );
     blocksSilkTouch = NonNullList.from(""
         ,"minecraft:melon_block");
+    //there are two versions of the getDrops method in block class
+    blocksGetDropsDeprecated = NonNullList.from(""
+        ,"rustic:tomato_crop"
+        ,"rustic:chili_crop");    
     /* @formatter:on */
   }
   private static boolean isBreakInPlace(ResourceLocation blockId) {
@@ -59,6 +66,9 @@ public class UtilHarvester {
   private static boolean isSimpleSilktouch(ResourceLocation blockId) {
     return UtilString.isInList(blocksSilkTouch, blockId);
   }
+  private static boolean isUsingGetDropsOld(ResourceLocation blockId) {
+    return UtilString.isInList(blocksGetDropsDeprecated, blockId);
+  }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
@@ -70,6 +80,7 @@ public class UtilHarvester {
     if (isIgnored(blockId)) {
       return drops;
     }
+ 
     if (isGetDrops(blockId)) {
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       world.setBlockToAir(posCurrent);
@@ -95,49 +106,50 @@ public class UtilHarvester {
         int currentAge = blockState.getValue(propInt);
         int minAge = Collections.min(propInt.getAllowedValues());
         int maxAge = Collections.max(propInt.getAllowedValues());
-        if (minAge == maxAge) {
+        if (minAge == maxAge || currentAge < maxAge) {
           //degenerate edge case: either this was made wrong OR its not meant to grow
           //like a stem or log or something;
           continue;
         }
-        if (currentAge == maxAge) {
-          //  isDone = true;
-          //dont set a brand new state, we want to keep all properties the same and only reset age
-          //EXAMPLE cocoa beans have a property for facing direction == where they attach to log
-          //so when replanting, keep that facing data
-          world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
-          blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-          if (tryRemoveOneSeed) {
-            Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
-            if (seedItem == null) {
-              seedItem = Item.getItemFromBlock(blockCheck);
-            }
-            try {
-              if (drops.size() > 1 && seedItem != null) {
-                //  if it dropped more than one ( seed and a thing)
-                for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-                  final ItemStack drop = iterator.next();
-                  if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
-                    iterator.remove();
-                    ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
-                    break;
-                  }
+        //first get the drops
+        if (isUsingGetDropsOld(blockId)) {
+          //added for rustic, it uses this version, other one does not work
+          //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
+          drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
+        }
+        else {
+          blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
+        }
+        world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
+         // TODO: if needed we could add a list of which ones do not have seed removed 
+        if (drops.size() > 1 && tryRemoveOneSeed) {
+          Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
+          if (seedItem == null) {
+            seedItem = Item.getItemFromBlock(blockCheck);
+          }
+          try {
+            if (seedItem != null) {
+              //  if it dropped more than one ( seed and a thing)
+              for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+                final ItemStack drop = iterator.next();
+                if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+                  iterator.remove();
+                  // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
+                  break;
                 }
               }
             }
-            catch (Exception e) {
-              ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors");
-              ModCyclic.logger.error(e.getMessage());
-              e.printStackTrace();
-            }
+          }
+          catch (Exception e) {
+            ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
+            ModCyclic.logger.error(e.getMessage());
+            e.printStackTrace();
           }
         }
-        break;
+        // }
+        break;//stop looking at all properties
       }
     }
-    //    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
-    //      ModCyclic.logger.log("HARVEST IGNORED " + blockId);
-    //    }
     return drops;
   }
 }
