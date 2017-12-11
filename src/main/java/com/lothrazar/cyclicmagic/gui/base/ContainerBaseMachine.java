@@ -50,14 +50,11 @@ public class ContainerBaseMachine extends ContainerBase {
           if ((this.tile.getField(fieldId) > Short.MAX_VALUE ||
               this.tile.getField(fieldId) < Short.MIN_VALUE)
               && icontainerlistener instanceof EntityPlayerMP) {
-            ModCyclic.logger.log("TOO BIG ; id=" + fieldId
-                + "  proof " + this.tile.getField(fieldId) );
-          
+            //minecraft truncates int into short
             ModCyclic.network.sendTo(
                 new PacketGuiShortOverride(fieldId, this.tile.getField(fieldId)), ((EntityPlayerMP) icontainerlistener));
           }
           else {
-            
             icontainerlistener.sendWindowProperty(this, fieldId, this.tile.getField(fieldId));
           }
         }

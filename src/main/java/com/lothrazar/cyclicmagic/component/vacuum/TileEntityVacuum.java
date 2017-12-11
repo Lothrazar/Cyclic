@@ -33,7 +33,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private int size = 4;//center plus 4 in each direction = 9x9
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
-    this.setSlotsForExtract(IntStream.rangeClosed(1, ROWS * COLS).boxed().collect(Collectors.toList()));
+    this.setSlotsForExtract(0, ROWS * COLS);
   }
   @Override
   public int[] getFieldOrdinals() {

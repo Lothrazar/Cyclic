@@ -68,6 +68,18 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected void setSlotsForExtract(List<Integer> slots) {
     invHandler.setSlotsExtract(slots);
   }
+  protected void setSlotsForExtract(int startInclusive, int endInclusive) {
+    setSlotsForExtract(
+        IntStream.rangeClosed(
+            startInclusive,
+            endInclusive).boxed().collect(Collectors.toList()));
+  }
+  protected void setSlotsForInsert(int startInclusive, int endInclusive) {
+    setSlotsForInsert(
+        IntStream.rangeClosed(
+            startInclusive,
+            endInclusive).boxed().collect(Collectors.toList()));
+  }
   protected void setSlotsForInsert(List<Integer> slots) {
     invHandler.setSlotsInsert(slots);
   }
@@ -126,8 +138,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void consumeFuel() {
     if (doesUseFuel() && world.isRemote == false) {//only drain on server
       if (this.getFuelCurrent() >= this.getFuelCost()) {
-//        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
-//            + " and total was " + this.getFuelCurrent());
+        //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
+        //            + " and total was " + this.getFuelCurrent());
         this.energyStorage.extractEnergy(this.getFuelCost(), false);
       }
     }

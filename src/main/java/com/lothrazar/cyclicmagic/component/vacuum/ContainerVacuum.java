@@ -26,7 +26,7 @@ public class ContainerVacuum extends ContainerBaseMachine {
         ));
       }
     }
-    //now add the filter slots at the end. TWO slots actually!
+    //now add the filter slots at the end.
     int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
     for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
       addSlotToContainer(new SlotSingleStack(tile, start + k,
