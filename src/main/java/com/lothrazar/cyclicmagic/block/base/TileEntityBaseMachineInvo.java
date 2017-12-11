@@ -75,22 +75,20 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     invHandler.setSlotsInsert(slots);
     invHandler.setSlotsExtract(slots);
   }
-  
   /**
    * no input means all slots
    */
   protected void setSlotsForBoth() {
-    this.setSlotsForBoth(IntStream.rangeClosed(0,this.getSizeInventory()).boxed().collect(Collectors.toList()));
+    this.setSlotsForBoth(IntStream.rangeClosed(0, this.getSizeInventory()).boxed().collect(Collectors.toList()));
   }
-
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-    return this.isItemValidForSlot(index, itemStackIn) 
+    return this.isItemValidForSlot(index, itemStackIn)
         && this.invHandler.canInsert(index);
   }
   @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-    return index != this.fuelCost &&  //override to inv handler: do not extract fuel
+    return index != this.fuelCost && //override to inv handler: do not extract fuel
         this.invHandler.canExtract(index);
   }
   protected void setFuelSlot(int slot, int fcost) {
@@ -126,8 +124,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.fuelCost;
   }
   public void consumeFuel() {
-    if (doesUseFuel()) {
+    if (doesUseFuel() && world.isRemote == false) {//only drain on server
       if (this.getFuelCurrent() >= this.getFuelCost()) {
+//        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
+//            + " and total was " + this.getFuelCurrent());
         this.energyStorage.extractEnergy(this.getFuelCost(), false);
       }
     }
@@ -136,7 +136,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
     //pull in item from fuel slot, if it has fuel burn time
     int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-    if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack) {
+    if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack
+        && world.isRemote == false) {
       int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
       this.energyStorage.setEnergyStored(newEnergy);
       if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {

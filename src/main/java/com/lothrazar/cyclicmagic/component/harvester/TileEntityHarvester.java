@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -60,7 +61,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
-    if (!isRunning()) {
+    if (isRunning()==false) {
       return;
     }
     if (this.updateFuelIsBurning() == false) {

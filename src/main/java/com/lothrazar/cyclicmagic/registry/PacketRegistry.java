@@ -24,6 +24,7 @@ import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketRestockContaine
 import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
 import com.lothrazar.cyclicmagic.fluid.PacketFluidSync;
 import com.lothrazar.cyclicmagic.net.PacketChestSack;
+import com.lothrazar.cyclicmagic.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -101,5 +102,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileFacingToggle.class, PacketTileFacingToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSetField.class, PacketTileSetField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileFuelDisplay.class, PacketTileFuelDisplay.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketGuiShortOverride.class, PacketGuiShortOverride.class, packetID++, Side.CLIENT);
   }
 }
