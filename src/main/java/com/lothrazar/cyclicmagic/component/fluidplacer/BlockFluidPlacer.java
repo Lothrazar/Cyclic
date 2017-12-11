@@ -27,39 +27,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
-  }
-  //  @Override
-  //  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-  //    //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
-  //    //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
-  //    List<ItemStack> ret = new ArrayList<ItemStack>();
-  //    Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
-  //    TileEntity ent = world.getTileEntity(pos);
-  //    ItemStack stack = new ItemStack(item);
-  //    if (ent != null && ent instanceof TileEntityFluidPump) {
-  //      TileEntityFluidPump te = (TileEntityFluidPump) ent;
-  //      FluidStack fs = te.getCurrentFluidStack();
-  //      if (fs != null) {
-  //        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
-  //        String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
-  //        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
-  //      }
-  //    }
-  //    ret.add(stack);
-  //    return ret;
-  //  }
-  //  @Override
-  //  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-  //    if (stack.getTagCompound() != null) {
-  //      NBTTagCompound tags = stack.getTagCompound();
-  //      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
-  //      String resourceStr = tags.getString(NBT_FLUIDTYPE);
-  //      TileEntityFluidPump container = (TileEntityFluidPump) worldIn.getTileEntity(pos);
-  //      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
-  //      if (fluidObj != null)
-  //        container.fill(new FluidStack(fluidObj, fluidAmt), true);
-  //    }
-  //  }
+  } 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPlacer();
