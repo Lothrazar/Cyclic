@@ -34,7 +34,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_COLLECT = "collect";
   public final static int RADIUS = 16;
- 
   public static enum Fields {
     TIMER, EXP, COLLECT, REDSTONE;//MIGHT remove redstone eh
   }
@@ -167,7 +166,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     this.setInventorySlotContents(SLOT_INPUT, fullOnes);
   }
- 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);

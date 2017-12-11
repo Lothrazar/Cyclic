@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.base;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -187,8 +186,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     ITileFuel tileFuel = (ITileFuel) this.tile;
     int u = 0, v = 0;
-//    ModCyclic.logger.log("fuel bar has "+tile.getField(this.fieldFuel)+ " using fieldFuel id "+fieldFuel
-//        +"    max "+tile.getField(this.fieldMaxFuel));
+    //    ModCyclic.logger.log("fuel bar has "+tile.getField(this.fieldFuel)+ " using fieldFuel id "+fieldFuel
+    //        +"    max "+tile.getField(this.fieldMaxFuel));
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;

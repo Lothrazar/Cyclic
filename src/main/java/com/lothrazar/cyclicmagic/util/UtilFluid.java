@@ -73,7 +73,6 @@ public class UtilFluid {
     fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
     return fluidHandler.getContainer();
   }
- 
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
     return FluidUtil.getFluidContained(returnMe) == null;
   }
@@ -154,7 +153,6 @@ public class UtilFluid {
         int filled = fluidTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
- 
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = tankFrom.drain(realAmt, true);
           if (wasDrained == null) {

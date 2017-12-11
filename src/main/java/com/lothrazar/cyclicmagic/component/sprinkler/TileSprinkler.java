@@ -43,7 +43,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
         } //but spawn water, grow or not.different roll for each block
         current = new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
         IBlockState bState = world.getBlockState(current);
-        if (bState == null || bState.getBlock() == null ) {
+        if (bState == null || bState.getBlock() == null) {
           continue;
         }
         Block block = bState.getBlock();

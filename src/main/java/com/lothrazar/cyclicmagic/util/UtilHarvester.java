@@ -8,14 +8,11 @@ import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
-  private static final int FORTUNE = 1;
+  private static final int FORTUNE = 5;
   private static final String AGE = "age";
   static final boolean tryRemoveOneSeed = true;
   //a break config means ignore age and go right for it
@@ -46,7 +43,6 @@ public class UtilHarvester {
     /* @formatter:off */
     blockIgnore = NonNullList.from("",
         blacklist);
-    blockIgnore.add("attaineddrops2:plant");//not in config, always ignore
     breakGetDrops = NonNullList.from("",
         "minecraft:pumpkin"
         , "croparia:block_plant_*"

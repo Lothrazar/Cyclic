@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,14 +30,12 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_COLS = 7;
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
-   
   public static enum Fields {
     TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 2);
     timer = TIMER_FULL;
- 
     this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1, BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(0);
     this.setSlotsForExtract(IntStream.rangeClosed(1, this.getSizeInventory() - 2).boxed().collect(Collectors.toList()));
@@ -110,7 +107,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
- 
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);

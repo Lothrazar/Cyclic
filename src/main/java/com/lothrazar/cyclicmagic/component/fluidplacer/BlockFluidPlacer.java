@@ -1,31 +1,22 @@
 package com.lothrazar.cyclicmagic.component.fluidplacer;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
@@ -37,38 +28,38 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
-//  @Override
-//  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-//    //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
-//    //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
-//    List<ItemStack> ret = new ArrayList<ItemStack>();
-//    Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
-//    TileEntity ent = world.getTileEntity(pos);
-//    ItemStack stack = new ItemStack(item);
-//    if (ent != null && ent instanceof TileEntityFluidPump) {
-//      TileEntityFluidPump te = (TileEntityFluidPump) ent;
-//      FluidStack fs = te.getCurrentFluidStack();
-//      if (fs != null) {
-//        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
-//        String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
-//        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
-//      }
-//    }
-//    ret.add(stack);
-//    return ret;
-//  }
-//  @Override
-//  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-//    if (stack.getTagCompound() != null) {
-//      NBTTagCompound tags = stack.getTagCompound();
-//      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
-//      String resourceStr = tags.getString(NBT_FLUIDTYPE);
-//      TileEntityFluidPump container = (TileEntityFluidPump) worldIn.getTileEntity(pos);
-//      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
-//      if (fluidObj != null)
-//        container.fill(new FluidStack(fluidObj, fluidAmt), true);
-//    }
-//  }
+  //  @Override
+  //  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  //    //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
+  //    //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
+  //    List<ItemStack> ret = new ArrayList<ItemStack>();
+  //    Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
+  //    TileEntity ent = world.getTileEntity(pos);
+  //    ItemStack stack = new ItemStack(item);
+  //    if (ent != null && ent instanceof TileEntityFluidPump) {
+  //      TileEntityFluidPump te = (TileEntityFluidPump) ent;
+  //      FluidStack fs = te.getCurrentFluidStack();
+  //      if (fs != null) {
+  //        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDSIZE, fs.amount);
+  //        String resourceStr = FluidRegistry.getFluidName(fs.getFluid());
+  //        UtilNBT.setItemStackNBTVal(stack, NBT_FLUIDTYPE, resourceStr);
+  //      }
+  //    }
+  //    ret.add(stack);
+  //    return ret;
+  //  }
+  //  @Override
+  //  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+  //    if (stack.getTagCompound() != null) {
+  //      NBTTagCompound tags = stack.getTagCompound();
+  //      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
+  //      String resourceStr = tags.getString(NBT_FLUIDTYPE);
+  //      TileEntityFluidPump container = (TileEntityFluidPump) worldIn.getTileEntity(pos);
+  //      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
+  //      if (fluidObj != null)
+  //        container.fill(new FluidStack(fluidObj, fluidAmt), true);
+  //    }
+  //  }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPlacer();

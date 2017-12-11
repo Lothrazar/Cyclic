@@ -33,7 +33,6 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
       return EnumConnectType.CONNECT;
     }
     TileEntity tileTarget = world.getTileEntity(pos.offset(side));
- 
     if (tileTarget != null &&
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
       return EnumConnectType.STORAGE;

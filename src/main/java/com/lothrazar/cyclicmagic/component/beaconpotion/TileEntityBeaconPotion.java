@@ -59,7 +59,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     super(9);
     this.timer = 0;
     this.setSlotsForBoth();
-
   }
   @Override
   public void update() {

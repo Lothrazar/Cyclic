@@ -21,7 +21,7 @@ public class ContainerPattern extends ContainerBaseMachine {
     this.setTile(te);
     int s = 0;
     int row = 0, col = 0;
-    for (int i = 0; i < tileEntity.getSizeInventory()-1; i++) { //so going from 0-9
+    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) { //so going from 0-9
       row = i / GuiPattern.GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GuiPattern.GUI_ROWS; // and %3 will go 012 012 012
       addSlotToContainer(new Slot(tileEntity, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
@@ -30,7 +30,6 @@ public class ContainerPattern extends ContainerBaseMachine {
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
-
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {

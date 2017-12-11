@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public abstract class BaseCharm extends BaseItem implements IHasClickToggle, baubles.api.IBauble {
   private final static String NBT_STATUS = "onoff";
-  public  ItemStack repairedBy = ItemStack.EMPTY;
+  public ItemStack repairedBy = ItemStack.EMPTY;
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);

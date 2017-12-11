@@ -62,7 +62,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public final static int TIMER_FULL = 120;
   public static final int MAX_SPEED = 20;
   public static int maxHeight = 10;
- 
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -79,8 +78,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     timer = TIMER_FULL;
     speed = SPEED_FUELED;
     this.setFuelSlot(9, BlockUser.FUEL_COST);
-    this.setSlotsForInsert(Arrays.asList( 0, 1, 2));
-    this.setSlotsForExtract(Arrays.asList( 3, 4, 5, 6, 7, 8));
+    this.setSlotsForInsert(Arrays.asList(0, 1, 2));
+    this.setSlotsForExtract(Arrays.asList(3, 4, 5, 6, 7, 8));
   }
   @Override
   public int[] getFieldOrdinals() {

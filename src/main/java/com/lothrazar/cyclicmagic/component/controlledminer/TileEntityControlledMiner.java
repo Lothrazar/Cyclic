@@ -68,7 +68,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
- 
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);

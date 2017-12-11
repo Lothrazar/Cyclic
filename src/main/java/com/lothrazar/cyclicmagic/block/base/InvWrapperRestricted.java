@@ -4,7 +4,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class InvWrapperRestricted extends InvWrapper {
