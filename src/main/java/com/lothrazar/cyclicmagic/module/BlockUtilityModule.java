@@ -138,8 +138,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(k, "item_pipe", null);
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
     }
-
-    
   }
   @Override
   public void syncConfig(Configuration config) {

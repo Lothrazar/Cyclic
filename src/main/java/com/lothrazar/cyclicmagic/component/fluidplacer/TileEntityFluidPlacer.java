@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.fluidplacer;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -21,7 +20,7 @@ public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements
     }
     EnumFacing facingTo = this.getCurrentFacing().getOpposite();
     BlockPos posTarget = pos.offset(facingTo);
-    if (world.isAirBlock(posTarget)==false) {
+    if (world.isAirBlock(posTarget) == false) {
       return;
     }
     FluidStack maybeDrain = tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), false);

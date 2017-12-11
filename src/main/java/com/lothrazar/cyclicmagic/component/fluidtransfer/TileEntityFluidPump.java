@@ -8,7 +8,6 @@ import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TRANSFER_PER_TICK = 100;
- 
   public TileEntityFluidPump() {
     super(Fluid.BUCKET_VOLUME);
   }

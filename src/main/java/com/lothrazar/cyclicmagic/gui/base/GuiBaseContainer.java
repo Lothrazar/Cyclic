@@ -186,6 +186,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     ITileFuel tileFuel = (ITileFuel) this.tile;
     int u = 0, v = 0;
+    //    ModCyclic.logger.log("fuel bar has "+tile.getField(this.fieldFuel)+ " using fieldFuel id "+fieldFuel
+    //        +"    max "+tile.getField(this.fieldMaxFuel));
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;

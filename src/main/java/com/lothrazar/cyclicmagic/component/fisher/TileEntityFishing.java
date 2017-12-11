@@ -17,7 +17,6 @@ import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +46,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     this.setSlotsForInsert(Arrays.asList(0));
     this.setSlotsForExtract(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
   }
- 
   //new idea: speed depends on number of sides covered in water in the 6 sides
   //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water

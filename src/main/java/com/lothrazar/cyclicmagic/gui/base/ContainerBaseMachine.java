@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.gui.base;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.slot.SlotFuel;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
+import com.lothrazar.cyclicmagic.net.PacketGuiShortOverride;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
@@ -44,7 +47,16 @@ public class ContainerBaseMachine extends ContainerBase {
       for (int j = 0; j < tile.getFieldOrdinals().length; j++) {
         fieldId = tile.getFieldOrdinals()[j];
         if (this.tileMap[j] != this.tile.getField(fieldId)) {
-          icontainerlistener.sendWindowProperty(this, fieldId, this.tile.getField(fieldId));
+          if ((this.tile.getField(fieldId) > Short.MAX_VALUE ||
+              this.tile.getField(fieldId) < Short.MIN_VALUE)
+              && icontainerlistener instanceof EntityPlayerMP) {
+            //minecraft truncates int into short
+            ModCyclic.network.sendTo(
+                new PacketGuiShortOverride(fieldId, this.tile.getField(fieldId)), ((EntityPlayerMP) icontainerlistener));
+          }
+          else {
+            icontainerlistener.sendWindowProperty(this, fieldId, this.tile.getField(fieldId));
+          }
         }
       }
     }

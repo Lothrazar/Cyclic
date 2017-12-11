@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.component.vacuum;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -33,7 +31,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private int size = 4;//center plus 4 in each direction = 9x9
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
-    this.setSlotsForExtract(IntStream.rangeClosed(1, ROWS * COLS).boxed().collect(Collectors.toList()));
+    this.setSlotsForExtract(0, ROWS * COLS - 1);
   }
   @Override
   public int[] getFieldOrdinals() {

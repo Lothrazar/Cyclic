@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -18,13 +20,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
-  private static final int FORTUNE = 1;
+  private static final int FORTUNE = 5;
   private static final String AGE = "age";
   static final boolean tryRemoveOneSeed = true;
-  private static NonNullList<String> blocksBreakInPlace;
-  private static NonNullList<String> blocksGetDrop;
-  private static NonNullList<String> blocksSilkTouch;
+  //a break config means ignore age and go right for it
+  //  a harvest config means check AGE
+  private static NonNullList<String> breakGetDrops;
+  private static NonNullList<String> breakSilkTouch;
   private static NonNullList<String> blockIgnore;
+  private static NonNullList<String> harvestGetDropsDeprecated;
+  private static NonNullList<String> breakGetDropsDeprecated;
+  private static NonNullList<String> blocksBreakAboveIfMatching;
+  private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
+  private static Map<String, Integer> harvestCustomMaxAge;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -35,30 +43,62 @@ public class UtilHarvester {
     /* @formatter:off */
     blockIgnore = NonNullList.from("",
         blacklist);
-    blocksGetDrop = NonNullList.from("",
+    breakGetDrops = NonNullList.from("",
         "minecraft:pumpkin"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
         );
-    blocksBreakInPlace = NonNullList.from("",
-        "attaineddrops2:bulb"
+    
+    breakSilkTouch = NonNullList.from(""
+        ,"minecraft:melon_block"
         );
-    blocksSilkTouch = NonNullList.from(""
-        ,"minecraft:melon_block");
+    //there are two versions of the getDrops method in block class
+    //and re check it for harvest vs break
+    harvestGetDropsDeprecated = NonNullList.from(""
+        ,"rustic:tomato_crop"
+        ,"rustic:chili_crop"
+        );    
+   breakGetDropsDeprecated = NonNullList.from(""
+        ,  "attaineddrops2:bulb"
+        );    
+    blocksBreakAboveIfMatching = NonNullList.from(""
+        ,"immersiveengineering:hemp"
+        ,"minecraft:reeds"
+        );  
+    blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
+         ,"simplecorn:corn"
+        );  
+    harvestCustomMaxAge = new HashMap<String, Integer>();
+    //max metadata is 11, but 9 is the lowest level when full grown
+    //its a 3high multiblock
+    harvestCustomMaxAge.put("simplecorn:corn", 9);
     /* @formatter:on */
-  }
-  private static boolean isBreakInPlace(ResourceLocation blockId) {
-    return UtilString.isInList(blocksBreakInPlace, blockId);
   }
   private static boolean isIgnored(ResourceLocation blockId) {
     return UtilString.isInList(blockIgnore, blockId);
   }
-  private static boolean isGetDrops(ResourceLocation blockId) {
-    return UtilString.isInList(blocksGetDrop, blockId);
+  private static boolean isBreakGetDrops(ResourceLocation blockId) {
+    return UtilString.isInList(breakGetDrops, blockId);
+  }
+  private static boolean isBreakGetDropsDeprec(ResourceLocation blockId) {
+    return UtilString.isInList(breakGetDropsDeprecated, blockId);
   }
   private static boolean isSimpleSilktouch(ResourceLocation blockId) {
-    return UtilString.isInList(blocksSilkTouch, blockId);
+    return UtilString.isInList(breakSilkTouch, blockId);
   }
+  private static boolean isHarvestingGetDropsOld(ResourceLocation blockId) {
+    return UtilString.isInList(harvestGetDropsDeprecated, blockId);
+  }
+  private static boolean isBreakAboveIfMatching(ResourceLocation blockId) {
+    return UtilString.isInList(blocksBreakAboveIfMatching, blockId);
+  }
+  private static boolean isBreakAboveIfMatchingAfterHarvest(ResourceLocation blockId) {
+    return UtilString.isInList(blocksBreakAboveIfMatchingAfterHarvest, blockId);
+  }
+  private static boolean doesBlockMatch(World world, Block blockCheck, BlockPos pos) {
+    return world.getBlockState(pos).getBlock().equals(blockCheck);
+  }
+  @SuppressWarnings("deprecation")
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
@@ -70,8 +110,13 @@ public class UtilHarvester {
     if (isIgnored(blockId)) {
       return drops;
     }
-    if (isGetDrops(blockId)) {
+    if (isBreakGetDrops(blockId)) {
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
+      world.setBlockToAir(posCurrent);
+      return drops;
+    }
+    if (isBreakGetDropsDeprec(blockId)) {
+      drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
       world.setBlockToAir(posCurrent);
       return drops;
     }
@@ -80,8 +125,9 @@ public class UtilHarvester {
       world.setBlockToAir(posCurrent);
       return drops;
     }
-    if (isBreakInPlace(blockId)) {
-      world.destroyBlock(posCurrent, true);
+    if (isBreakAboveIfMatching(blockId) && doesBlockMatch(world, blockCheck, posCurrent.up())) {
+      blockCheck.getDrops(drops, world, posCurrent, world.getBlockState(posCurrent.up()), FORTUNE);
+      world.destroyBlock(posCurrent.up(), false);
       return drops;
     }
     //new generic harvest
@@ -95,49 +141,59 @@ public class UtilHarvester {
         int currentAge = blockState.getValue(propInt);
         int minAge = Collections.min(propInt.getAllowedValues());
         int maxAge = Collections.max(propInt.getAllowedValues());
-        if (minAge == maxAge) {
+        if (harvestCustomMaxAge.containsKey(blockId.toString())) {
+          maxAge = harvestCustomMaxAge.get(blockId.toString());
+        }
+        if (minAge == maxAge || currentAge < maxAge) {
           //degenerate edge case: either this was made wrong OR its not meant to grow
           //like a stem or log or something;
           continue;
         }
-        if (currentAge == maxAge) {
-          //  isDone = true;
-          //dont set a brand new state, we want to keep all properties the same and only reset age
-          //EXAMPLE cocoa beans have a property for facing direction == where they attach to log
-          //so when replanting, keep that facing data
-          world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
-          blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-          if (tryRemoveOneSeed) {
-            Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
-            if (seedItem == null) {
-              seedItem = Item.getItemFromBlock(blockCheck);
-            }
-            try {
-              if (drops.size() > 1 && seedItem != null) {
-                //  if it dropped more than one ( seed and a thing)
-                for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-                  final ItemStack drop = iterator.next();
-                  if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
-                    iterator.remove();
-                    ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
-                    break;
-                  }
+        //first get the drops
+        if (isHarvestingGetDropsOld(blockId)) {
+          //added for rustic, it uses this version, other one does not work
+          //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
+          drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
+        }
+        else {
+          blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
+        }
+        world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
+        if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
+          if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
+            //TODO: corn still drops a few from multiblock on ground. not the worst.
+            world.destroyBlock(posCurrent.up(), false);
+          }
+        }
+        // TODO: if needed we could add a list of which ones do not have seed removed 
+        if (drops.size() > 1 && tryRemoveOneSeed) {
+          Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
+          if (seedItem == null) {
+            seedItem = Item.getItemFromBlock(blockCheck);
+          }
+          try {
+            if (seedItem != null) {
+              //  if it dropped more than one ( seed and a thing)
+              for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+                final ItemStack drop = iterator.next();
+                if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+                  iterator.remove();
+                  // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
+                  break;
                 }
               }
             }
-            catch (Exception e) {
-              ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors");
-              ModCyclic.logger.error(e.getMessage());
-              e.printStackTrace();
-            }
+          }
+          catch (Exception e) {
+            ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
+            ModCyclic.logger.error(e.getMessage());
+            e.printStackTrace();
           }
         }
-        break;
+        // }
+        break;//stop looking at all properties
       }
     }
-    //    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
-    //      ModCyclic.logger.log("HARVEST IGNORED " + blockId);
-    //    }
     return drops;
   }
 }
