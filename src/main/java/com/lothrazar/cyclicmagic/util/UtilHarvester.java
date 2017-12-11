@@ -60,6 +60,7 @@ public class UtilHarvester {
         ,"rustic:chili_crop");    
     blocksBreakAboveIfMatching = NonNullList.from(""
         ,"immersiveengineering:hemp"
+        ,"minecraft:reeds"
         );  
     blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
          ,"simplecorn:corn"
@@ -96,6 +97,7 @@ public class UtilHarvester {
     return world.getBlockState(pos).getBlock().equals(blockCheck);
   }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
+ 
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
       return drops;
