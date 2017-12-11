@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -10,6 +12,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -29,6 +32,8 @@ public class UtilHarvester {
   private static NonNullList<String> blockIgnore;
   private static NonNullList<String> blocksGetDropsDeprecated;
   private static NonNullList<String> blocksBreakAboveIfMatching;
+  private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
+  private static Map<String, Integer> blocksCustomMaxAge;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -54,7 +59,16 @@ public class UtilHarvester {
         ,"rustic:tomato_crop"
         ,"rustic:chili_crop");    
     blocksBreakAboveIfMatching = NonNullList.from(""
-        ,"immersiveengineering:hemp");  
+        ,"immersiveengineering:hemp"
+        );  
+    blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
+         ,"simplecorn:corn"
+        );  
+    blocksCustomMaxAge = new HashMap<String, Integer>();
+    //max metadata is 11, but 9 is the lowest level when full grown
+    //its a 3high multiblock
+    blocksCustomMaxAge.put("simplecorn:corn", 9);
+    
     /* @formatter:on */
   }
   private static boolean isBreakInPlace(ResourceLocation blockId) {
@@ -75,6 +89,12 @@ public class UtilHarvester {
   private static boolean isBreakAboveIfMatching(ResourceLocation blockId) {
     return UtilString.isInList(blocksBreakAboveIfMatching, blockId);
   }
+  private static boolean isBreakAboveIfMatchingAfterHarvest(ResourceLocation blockId) {
+    return UtilString.isInList(blocksBreakAboveIfMatchingAfterHarvest, blockId);
+  }
+  private static boolean doesBlockMatch(World world, Block blockCheck, BlockPos pos) {
+    return world.getBlockState(pos).getBlock().equals(blockCheck);
+  }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
@@ -83,10 +103,10 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
+   // ModCyclic.logger.log(blockId.toString());
     if (isIgnored(blockId)) {
       return drops;
     }
- 
     if (isGetDrops(blockId)) {
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       world.setBlockToAir(posCurrent);
@@ -101,11 +121,9 @@ public class UtilHarvester {
       world.destroyBlock(posCurrent, true);
       return drops;
     }
-    if (isBreakAboveIfMatching(blockId) && world.getBlockState(posCurrent.up()).getBlock().equals(blockCheck)) {
-
+    if (isBreakAboveIfMatching(blockId) && doesBlockMatch(world, blockCheck, posCurrent.up())) {
       blockCheck.getDrops(drops, world, posCurrent, world.getBlockState(posCurrent.up()), FORTUNE);
       world.destroyBlock(posCurrent.up(), false);
-   
       return drops;
     }
     //new generic harvest
@@ -119,9 +137,13 @@ public class UtilHarvester {
         int currentAge = blockState.getValue(propInt);
         int minAge = Collections.min(propInt.getAllowedValues());
         int maxAge = Collections.max(propInt.getAllowedValues());
+        if (blocksCustomMaxAge.containsKey(blockId.toString())) {
+          maxAge = blocksCustomMaxAge.get(blockId.toString());
+        }
         if (minAge == maxAge || currentAge < maxAge) {
           //degenerate edge case: either this was made wrong OR its not meant to grow
           //like a stem or log or something;
+         
           continue;
         }
         //first get the drops
@@ -134,7 +156,13 @@ public class UtilHarvester {
           blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
         }
         world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
-         // TODO: if needed we could add a list of which ones do not have seed removed 
+        if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
+          if (doesBlockMatch(world, blockCheck, posCurrent.up(1))) {
+            //TODO: corn still drops a few from multiblock on ground. not the worst.
+            world.destroyBlock(posCurrent.up(), false);
+          }
+        }
+        // TODO: if needed we could add a list of which ones do not have seed removed 
         if (drops.size() > 1 && tryRemoveOneSeed) {
           Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
           if (seedItem == null) {
