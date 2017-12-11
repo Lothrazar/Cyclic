@@ -28,6 +28,7 @@ public class UtilHarvester {
   private static NonNullList<String> blocksSilkTouch;
   private static NonNullList<String> blockIgnore;
   private static NonNullList<String> blocksGetDropsDeprecated;
+  private static NonNullList<String> blocksBreakAboveIfMatching;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -52,6 +53,8 @@ public class UtilHarvester {
     blocksGetDropsDeprecated = NonNullList.from(""
         ,"rustic:tomato_crop"
         ,"rustic:chili_crop");    
+    blocksBreakAboveIfMatching = NonNullList.from(""
+        ,"immersiveengineering:hemp");  
     /* @formatter:on */
   }
   private static boolean isBreakInPlace(ResourceLocation blockId) {
@@ -68,6 +71,9 @@ public class UtilHarvester {
   }
   private static boolean isUsingGetDropsOld(ResourceLocation blockId) {
     return UtilString.isInList(blocksGetDropsDeprecated, blockId);
+  }
+  private static boolean isBreakAboveIfMatching(ResourceLocation blockId) {
+    return UtilString.isInList(blocksBreakAboveIfMatching, blockId);
   }
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
@@ -93,6 +99,13 @@ public class UtilHarvester {
     }
     if (isBreakInPlace(blockId)) {
       world.destroyBlock(posCurrent, true);
+      return drops;
+    }
+    if (isBreakAboveIfMatching(blockId) && world.getBlockState(posCurrent.up()).getBlock().equals(blockCheck)) {
+
+      blockCheck.getDrops(drops, world, posCurrent, world.getBlockState(posCurrent.up()), FORTUNE);
+      world.destroyBlock(posCurrent.up(), false);
+   
       return drops;
     }
     //new generic harvest
