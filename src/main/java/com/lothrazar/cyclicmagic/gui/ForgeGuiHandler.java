@@ -42,6 +42,9 @@ import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.component.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.component.itemsort.ContainerItemSort;
+import com.lothrazar.cyclicmagic.component.itemsort.GuiItemSort;
+import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
@@ -126,6 +129,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_CLOCK = 25;
   public static final int GUI_INDEX_BEACON = 26;
   public static final int GUI_INDEX_FORESTER = 27;
+  public static final int GUI_INDEX_SORT = 28;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -272,6 +276,13 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerForester(player.inventory, (TileEntityForester) te);
         }
       break;
+      case GUI_INDEX_SORT:
+
+
+        if (te instanceof TileEntityItemCableSort) {
+          return new ContainerItemSort(player.inventory, (TileEntityItemCableSort) te);
+        }
+      break;
     }
     return null;
   }
@@ -409,6 +420,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_FORESTER:
           if (te instanceof TileEntityForester) {
             return new GuiForester(player.inventory, (TileEntityForester) te);
+          }
+        break;
+        case GUI_INDEX_SORT:
+          if (te instanceof TileEntityItemCableSort) {
+            return new GuiItemSort(player.inventory, (TileEntityItemCableSort) te);
           }
         break;
       }

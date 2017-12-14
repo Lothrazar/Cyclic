@@ -1,43 +1,36 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITickable, ITileCable {
+public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITickable {
   private static final int FILTER_SIZE = 3;
   private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
+  public static final int INVENTORY_SIZE = 0;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private Map<EnumFacing, NonNullList<ItemStack>> filters = Maps.newHashMap();
   private BlockPos connectedInventory;
   private int labelTimer = 0;
   private String labelText = "";
-  //  private static IInventory filterNorth = new InventoryBasic("[Null]", false, 3);
-  public EnumConnectType north, south, east, west, up, down;
+
   public TileEntityItemCableSort() {
     super(1);
     this.setSlotsForBoth();
@@ -54,24 +47,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   public String getLabelText() {
     return labelText;
   }
-  public Map<EnumFacing, EnumConnectType> getConnects() {
-    Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
-    map.put(EnumFacing.NORTH, north);
-    map.put(EnumFacing.SOUTH, south);
-    map.put(EnumFacing.EAST, east);
-    map.put(EnumFacing.WEST, west);
-    map.put(EnumFacing.UP, up);
-    map.put(EnumFacing.DOWN, down);
-    return map;
-  }
-  public void setConnects(Map<EnumFacing, EnumConnectType> map) {
-    north = map.get(EnumFacing.NORTH);
-    south = map.get(EnumFacing.SOUTH);
-    east = map.get(EnumFacing.EAST);
-    west = map.get(EnumFacing.WEST);
-    up = map.get(EnumFacing.UP);
-    down = map.get(EnumFacing.DOWN);
-  }
+ 
   @SuppressWarnings("serial")
   @Override
   public void readFromNBT(NBTTagCompound compound) {
@@ -83,18 +59,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     labelTimer = compound.getInteger("labelt");
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
-    if (compound.hasKey("north"))
-      north = EnumConnectType.valueOf(compound.getString("north"));
-    if (compound.hasKey("south"))
-      south = EnumConnectType.valueOf(compound.getString("south"));
-    if (compound.hasKey("east"))
-      east = EnumConnectType.valueOf(compound.getString("east"));
-    if (compound.hasKey("west"))
-      west = EnumConnectType.valueOf(compound.getString("west"));
-    if (compound.hasKey("up"))
-      up = EnumConnectType.valueOf(compound.getString("up"));
-    if (compound.hasKey("down"))
-      down = EnumConnectType.valueOf(compound.getString("down"));
+ 
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -104,19 +69,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
-    compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
-    if (north != null)
-      compound.setString("north", north.toString());
-    if (south != null)
-      compound.setString("south", south.toString());
-    if (east != null)
-      compound.setString("east", east.toString());
-    if (west != null)
-      compound.setString("west", west.toString());
-    if (up != null)
-      compound.setString("up", up.toString());
-    if (down != null)
-      compound.setString("down", down.toString());
+ 
     return compound;
   }
   //  @Override
@@ -262,30 +215,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     return in.trim();
   }
-  @Override
-  public EnumConnectType north() {
-    return north;
-  }
-  @Override
-  public EnumConnectType south() {
-    return south;
-  }
-  @Override
-  public EnumConnectType east() {
-    return east;
-  }
-  @Override
-  public EnumConnectType west() {
-    return west;
-  }
-  @Override
-  public EnumConnectType up() {
-    return up;
-  }
-  @Override
-  public EnumConnectType down() {
-    return down;
-  }
+   
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] { 0 };
