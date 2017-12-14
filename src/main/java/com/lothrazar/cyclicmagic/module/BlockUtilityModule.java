@@ -21,6 +21,8 @@ import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.component.itemsort.BlockItemCableSort;
+import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
@@ -138,6 +140,12 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(k, "item_pipe", null);
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
     }
+    
+    BlockItemCableSort k = new BlockItemCableSort();
+    BlockRegistry.registerBlock(k, "item_pipe_sort", null);
+    GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
+ 
+    
   }
   @Override
   public void syncConfig(Configuration config) {
