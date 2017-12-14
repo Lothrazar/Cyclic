@@ -12,16 +12,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerItemSort extends ContainerBaseMachine {
   public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = 38;
+  public static final int SLOTY = 18;
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
-    this.screenSize = ScreenSize.STANDARD;
+    this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
-    for (int i = 0; i < TileEntityItemCableSort.INVENTORY_SIZE - 1; i++) {
+    for (int i = 0; i < te.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tile, i,
-          SLOTX_START + i % 8 * Const.SQ + Const.SQ,
-          SLOTY + ((int) i / 8) * Const.SQ));
+          SLOTX_START + i % 9 * Const.SQ ,
+          SLOTY + ((int) i / 9) * Const.SQ));
     }
-    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
+ 
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

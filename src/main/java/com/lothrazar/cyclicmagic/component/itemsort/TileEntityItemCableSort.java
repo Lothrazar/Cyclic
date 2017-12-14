@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITickable {
-  private static final int FILTER_SIZE = 3;
+  private static final int FILTER_SIZE = 9;
   private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int INVENTORY_SIZE = 0;
@@ -30,24 +30,55 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private BlockPos connectedInventory;
   private int labelTimer = 0;
   private String labelText = "";
-
   public TileEntityItemCableSort() {
-    super(1);
+    super(9 * 6);
     this.setSlotsForBoth();
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
-    for (EnumFacing f : EnumFacing.values()) {
-      filters.put(f, NonNullList.withSize(FILTER_SIZE, ItemStack.EMPTY));
-    }
-    //TESTING
-    filters.get(EnumFacing.NORTH).set(0, new ItemStack(Blocks.STONE));
-    filters.get(EnumFacing.SOUTH).set(0, new ItemStack(Blocks.DIRT));
+ 
+//    for (EnumFacing f : EnumFacing.values()) {
+//      filters.put(f, NonNullList.withSize(FILTER_SIZE, ItemStack.EMPTY));
+//    }
+//    //TESTING
+//    filters.get(EnumFacing.NORTH).set(0, new ItemStack(Blocks.STONE));
+//    filters.get(EnumFacing.SOUTH).set(0, new ItemStack(Blocks.DIRT));
+  }
+  private List<ItemStack> getFilterForSide(EnumFacing f) {
+    //order of colors
+    //black; down
+    //white; up
+    //red; north
+    //blue; south
+    //green: west
+    //yellow; east
+    int row = f.ordinal();
+//    switch (f) {
+//      case DOWN:
+//        row = 0;//black
+//      break;
+//      case UP:
+//        row = 1;
+//      break;
+//      case NORTH:
+//        row = 2;
+//      break;
+//      case SOUTH:
+//        row = 3;
+//      break;
+//      case WEST:
+//        row = 4;
+//      break;
+//      case EAST:
+//        row = 5;
+//      break;
+//    }
+    //so its [0,8], [9, 17], [18, ] 
+    return this.inv.subList(row * FILTER_SIZE, row * (FILTER_SIZE + 1) - 1);
   }
   public String getLabelText() {
     return labelText;
   }
- 
   @SuppressWarnings("serial")
   @Override
   public void readFromNBT(NBTTagCompound compound) {
@@ -59,7 +90,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     labelTimer = compound.getInteger("labelt");
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
- 
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -69,7 +99,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
- 
     return compound;
   }
   //  @Override
@@ -93,8 +122,8 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private List<EnumFacing> getValidSidesForStack(ItemStack stackToExport) {
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
-      NonNullList<ItemStack> inventoryContents = filters.get(f);
-      if (OreDictionary.containsMatch(true, inventoryContents, stackToExport)) {
+      List<ItemStack> inventoryContents = getFilterForSide(f);
+      if (OreDictionary.containsMatch(true, (NonNullList<ItemStack>) inventoryContents, stackToExport)) {
         //        ModCyclic.logger.log(" isValidForStack yes  " + stackToExport.toString() + f.toString());
         faces.add(f);
       }
@@ -106,7 +135,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
       countEmpty = 0;
-      NonNullList<ItemStack> inventoryContents = filters.get(f);
+      List<ItemStack> inventoryContents = getFilterForSide(f);
       for (int i = 0; i < inventoryContents.size(); i++) {
         if (inventoryContents.get(i).isEmpty()) {
           countEmpty++;
@@ -215,7 +244,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     return in.trim();
   }
-   
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] { 0 };
