@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -31,18 +30,11 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private int labelTimer = 0;
   private String labelText = "";
   public TileEntityItemCableSort() {
-    super(9 * 6);
-    this.setSlotsForBoth();
+    super(9 * 6 + 1);
+    this.setSlotsForInsert(0);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
     }
- 
-//    for (EnumFacing f : EnumFacing.values()) {
-//      filters.put(f, NonNullList.withSize(FILTER_SIZE, ItemStack.EMPTY));
-//    }
-//    //TESTING
-//    filters.get(EnumFacing.NORTH).set(0, new ItemStack(Blocks.STONE));
-//    filters.get(EnumFacing.SOUTH).set(0, new ItemStack(Blocks.DIRT));
   }
   private List<ItemStack> getFilterForSide(EnumFacing f) {
     //order of colors
@@ -53,28 +45,9 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     //green: west
     //yellow; east
     int row = f.ordinal();
-//    switch (f) {
-//      case DOWN:
-//        row = 0;//black
-//      break;
-//      case UP:
-//        row = 1;
-//      break;
-//      case NORTH:
-//        row = 2;
-//      break;
-//      case SOUTH:
-//        row = 3;
-//      break;
-//      case WEST:
-//        row = 4;
-//      break;
-//      case EAST:
-//        row = 5;
-//      break;
-//    }
     //so its [0,8], [9, 17], [18, ] 
-    return this.inv.subList(row * FILTER_SIZE, row * (FILTER_SIZE + 1) - 1);
+    //sublist loses the specific type so convert it back
+    return NonNullList.<ItemStack> from(ItemStack.EMPTY, this.inv.subList(row * FILTER_SIZE, (row + 1) * FILTER_SIZE - 1).toArray(new ItemStack[0]));
   }
   public String getLabelText() {
     return labelText;
@@ -89,7 +62,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     labelText = compound.getString("label");
     labelTimer = compound.getInteger("labelt");
     connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
-    //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -101,12 +73,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     compound.setInteger("labelt", labelTimer);
     return compound;
   }
-  //  @Override
-  //  public AxisAlignedBB getRenderBoundingBox() {
-  //    double renderExtention = 1.0d;
-  //    AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - renderExtention, pos.getY() - renderExtention, pos.getZ() - renderExtention, pos.getX() + 1 + renderExtention, pos.getY() + 1 + renderExtention, pos.getZ() + 1 + renderExtention);
-  //    return bb;
-  //  }
   public BlockPos getConnectedPos() {
     return connectedInventory;
   }
@@ -123,8 +89,9 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
       List<ItemStack> inventoryContents = getFilterForSide(f);
-      if (OreDictionary.containsMatch(true, (NonNullList<ItemStack>) inventoryContents, stackToExport)) {
-        //        ModCyclic.logger.log(" isValidForStack yes  " + stackToExport.toString() + f.toString());
+      if (OreDictionary.containsMatch(true,
+          NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
+          stackToExport)) {
         faces.add(f);
       }
     }
@@ -180,10 +147,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       if (stackToExport.isEmpty()) {
         return;
       }
-      //      EnumFacing f = EnumFacing.values()[i];
-      ModCyclic.logger.log("TRY " + f);
-      if (this.isIncomingFromFace(f) == false) {//this.canExportThisInDirection(f, stackToExport)
-        ModCyclic.logger.log("YES we can move this way " + stackToExport.toString() + f);
+      if (this.isIncomingFromFace(f) == false) {
         //ok,  not incoming from here. so lets output some
         posTarget = pos.offset(f);
         tileTarget = world.getTileEntity(posTarget);
