@@ -2,11 +2,9 @@ package com.lothrazar.cyclicmagic.component.itemsort;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,10 +14,11 @@ public class ContainerItemSort extends ContainerBaseMachine {
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
+    int fs = TileEntityItemCableSort.FILTER_SIZE;
     for (int i = 1; i < te.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tile, i,
-          SLOTX_START + (i - 1) % 9 * Const.SQ,
-          SLOTY + ((int) (i - 1) / 9) * Const.SQ));
+          SLOTX_START + i  % fs * Const.SQ + Const.SQ,
+          SLOTY + ((int) (i - 1) / fs) * Const.SQ));
     }
     bindPlayerInventory(inventoryPlayer);
   }

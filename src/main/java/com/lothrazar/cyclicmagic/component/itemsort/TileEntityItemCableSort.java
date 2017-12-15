@@ -8,6 +8,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.forester.TileEntityForester.Fields;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -20,20 +21,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITickable {
-  private static final int FILTER_SIZE = 9;
+  public static final int FILTER_SIZE = 8;
   private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int INVENTORY_SIZE = 0;
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
-  private Map<EnumFacing, NonNullList<ItemStack>> filters = Maps.newHashMap();
+  private Map<EnumFacing, Integer> allowEverything = Maps.newHashMap();
   private BlockPos connectedInventory;
   private int labelTimer = 0;
   private String labelText = "";
+  //  public static enum Fields {
+  //    T_DOWN, T_UP, T_NORTH, T_SOUTH, T_WEST, T_EAST;
+  //  }
   public TileEntityItemCableSort() {
-    super(9 * 6 + 1);
+    super(FILTER_SIZE * 6 + 1);
     this.setSlotsForInsert(0);
+    allowEverything = Maps.newHashMap();
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
+      allowEverything.put(f, 0);
     }
   }
   private List<ItemStack> getFilterForSide(EnumFacing f) {
@@ -58,6 +64,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     super.readFromNBT(compound);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
+      allowEverything.put(f, compound.getInteger(f.getName() + "_toggle"));
     }
     labelText = compound.getString("label");
     labelTimer = compound.getInteger("labelt");
@@ -68,6 +75,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     super.writeToNBT(compound);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
+      compound.setInteger(f.getName() + "_toggle", allowEverything.get(f));
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
@@ -208,8 +216,21 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     return in.trim();
   }
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(EnumFacing.values().length);
+  }
   @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0 };
+  public int getField(int id) {
+    EnumFacing enumID = EnumFacing.values()[id];
+    return allowEverything.get(enumID);
+  }
+  @Override
+  public int getFieldCount() {
+    return EnumFacing.values().length;
+  }
+  @Override
+  public void setField(int id, int value) {
+    EnumFacing enumID = EnumFacing.values()[id];
+    allowEverything.put(enumID, value % 2);
   }
 }

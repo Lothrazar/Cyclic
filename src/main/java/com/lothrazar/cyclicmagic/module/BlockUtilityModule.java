@@ -139,13 +139,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockItemCable k = new BlockItemCable();
       BlockRegistry.registerBlock(k, "item_pipe", null);
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+      //sort
+      BlockItemCableSort item_pipe_sort = new BlockItemCableSort();
+      BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
+      GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
-    
-    BlockItemCableSort k = new BlockItemCableSort();
-    BlockRegistry.registerBlock(k, "item_pipe_sort", null);
-    GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
- 
-    
   }
   @Override
   public void syncConfig(Configuration config) {
