@@ -43,7 +43,8 @@ public class GuiItemSort extends GuiBaseContainer {
       btn = btnMap.get(f);
       if (btn != null) {
         btn.setTooltip(te.getLockType(f).nameLower());
-        btn.displayString = te.getLockType(f).icon();
+//        btn.displayString = te.getLockType(f).icon();
+        btn.setTextureIndex(5 + te.getLockType(f).ordinal());
       }
     }
   }
@@ -55,9 +56,10 @@ public class GuiItemSort extends GuiBaseContainer {
     for (EnumFacing f : EnumFacing.values()) {
       btn = new ButtonTileEntityField(
           id++,
-          this.guiLeft + 4,
+          this.guiLeft + Const.PAD-2,
           this.guiTop + f.ordinal() * Const.SQ + 17,
-          tile.getPos(), f.ordinal(), 1, 22, Const.SQ);
+          tile.getPos(), f.ordinal(), 1, 
+          Const.SQ, Const.SQ);
       this.addButton(btn);
       btnMap.put(f, btn);
     }
