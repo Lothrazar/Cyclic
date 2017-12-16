@@ -33,10 +33,14 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 32),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
         "sis",
-        " x ",
+        "fxf",
         "sis",
-        's', Blocks.BRICK_STAIRS, 'i', "ingotIron", 'x', "string");
+        'i', Blocks.STONE_PRESSURE_PLATE,
+        's', "ingotIron",
+        'x', "dustRedstone",
+        'f', Blocks.DROPPER);
+   
   }
 }

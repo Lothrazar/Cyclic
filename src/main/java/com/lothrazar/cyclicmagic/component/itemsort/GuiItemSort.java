@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;

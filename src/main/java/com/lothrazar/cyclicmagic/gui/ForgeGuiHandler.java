@@ -277,8 +277,6 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_SORT:
-
-
         if (te instanceof TileEntityItemCableSort) {
           return new ContainerItemSort(player.inventory, (TileEntityItemCableSort) te);
         }
