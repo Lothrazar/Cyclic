@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.workbench;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,7 +56,16 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    this.slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
+    //i have to assume the recipe will safely validate itself
+    //cant validate myself unless i restrict to vanilla-like recipes
+    try {
+      this.slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
+    }
+    catch (Exception e) {
+      //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
+      //but from another mod there could be an error bubbling up to here
+      ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
+    }
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {

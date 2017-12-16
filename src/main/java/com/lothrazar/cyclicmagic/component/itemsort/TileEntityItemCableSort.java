@@ -30,16 +30,13 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     public String nameLower() {
       return UtilChat.lang("tile.item_pipe_sort." + this.name().toLowerCase());
     }
-    public String icon() {
-      return this.name().substring(0, 1);
-    }
   }
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private Map<EnumFacing, Integer> allowEverything = Maps.newHashMap();
   private BlockPos connectedInventory;
   private int labelTimer = 0;
   private String labelText = "";
-  public TileEntityItemCableSort() { 
+  public TileEntityItemCableSort() {
     super(FILTER_SIZE * EnumFacing.values().length + 1);// 49
     this.setSlotsForInsert(0);
     allowEverything = Maps.newHashMap();
@@ -60,14 +57,13 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     //green: west
     //yellow; east
     int row = f.ordinal();
-    
     //so its 48 total slots, skip 0 for transfer
     // [1,8], [9, 16], [17, 24] [25, 32] [33, 40] , [41, 48]
     //sublist loses the specific type so convert it back
     int start = row * FILTER_SIZE + 1;
-    int end = (row + 1) * FILTER_SIZE ;
+    int end = (row + 1) * FILTER_SIZE;
     List<ItemStack> validForSide = this.inv.subList(start, end + 1);
-   // this.debugStacks(" items for side (r,s,e) " + row + "," + start + "," + end + "::", f, validForSide);
+    // this.debugStacks(" items for side (r,s,e) " + row + "," + start + "," + end + "::", f, validForSide);
     return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
   }
   public String getLabelText() {
@@ -111,7 +107,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private List<EnumFacing> getValidSidesForStack(ItemStack stackToExport) {
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
-      if(this.isIncomingFromFace(f)){
+      if (this.isIncomingFromFace(f)) {
         continue;
       }
       if (this.getLockType(f) == LockType.FILTER) {
@@ -145,7 +141,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     //now look over any sides that are NOT incoming, try to export
     //Actually shuffle the positions. if we are at a 3 way juncture, spread out where it goes first
     List<EnumFacing> targetFaces = this.getValidSidesForStack(stackToExport);
-   //debug(" filter ", stackToExport, targetFaces);
+    //debug(" filter ", stackToExport, targetFaces);
     if (targetFaces.size() > 0) {
       Collections.shuffle(targetFaces);
       tryExportToTheseFaces(targetFaces);
@@ -153,7 +149,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     else {
       //this stack does not match any of the filters
       targetFaces = this.getEverythingSides(stackToExport);
-   //   debug(" EVERYTHING  ", stackToExport, targetFaces);
+      //   debug(" EVERYTHING  ", stackToExport, targetFaces);
       Collections.shuffle(targetFaces);
       tryExportToTheseFaces(targetFaces);
     }
