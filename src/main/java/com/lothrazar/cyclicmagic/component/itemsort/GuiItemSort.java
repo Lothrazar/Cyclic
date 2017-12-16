@@ -15,10 +15,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemSort extends GuiBaseContainer {
+  private Map<EnumFacing, ButtonTileEntityField> btnMap = Maps.newHashMap();
+  TileEntityItemCableSort te;
   public GuiItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort tileEntity) {
     super(new ContainerItemSort(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
-    
+    te = tileEntity;
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -39,11 +41,12 @@ public class GuiItemSort extends GuiBaseContainer {
     ButtonTileEntityField btn;
     for (EnumFacing f : EnumFacing.values()) {
       btn = btnMap.get(f);
-      if (btn != null)
-        btn.displayString = "" + tile.getField(f.ordinal());
+      if (btn != null) {
+        btn.setTooltip(te.getLockType(f).nameLower());
+        btn.displayString = te.getLockType(f).icon();
+      }
     }
   }
-  private Map<EnumFacing, ButtonTileEntityField> btnMap = Maps.newHashMap();
   @Override
   public void initGui() {
     super.initGui();
