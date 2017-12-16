@@ -965,3 +965,12 @@ tile.item_pipe.name=Item Pipe
 tile.item_pipe.tooltip=Fast Item transport, use with the Item Pump
 tile.item_pipe.guide=Use an Item Pump to pull out of any inventory into these pipes, which will deposit anywhere
 
+
+
+tile.item_pipe_sort.name=Item Sorter
+tile.item_pipe_sort.tooltip=Sorting machine for use with pipes and hoppers
+tile.item_pipe_sort.guide=Connect to item pipes or hoppers to sort anything in any direction.  Each colour has one direction inspired by the Buildcraft diamond pipes.
+
+tile.item_pipe_sort.filter=Output here only if it matches this filter
+tile.item_pipe_sort.everything=Output everything here, ignoring this filter
+tile.item_pipe_sort.nothing=Output nothing here, ignoring this filter
