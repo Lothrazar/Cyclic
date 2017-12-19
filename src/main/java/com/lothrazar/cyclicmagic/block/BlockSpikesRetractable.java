@@ -138,7 +138,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   @Override
   public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
     if (this.canPlaceBlockAt(world, pos) == false) {
-      if (world.setBlockToAir(pos)){
+      if (world.setBlockToAir(pos)) {
         dropBlockAsItem(world, pos, getDefaultState(), 0);
         return;
       }

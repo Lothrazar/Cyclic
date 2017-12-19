@@ -65,7 +65,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       this.isLegacy = false;//not legacy anymore , 100%
       this.setCurrentFluid(Math.min(current * FLUID_PER_EXP, TANK_FULL));
     }
-    if(this.getCurrentFluid() < 0){
+    if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
     }
     this.timer--;
@@ -284,7 +284,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       return 0;
     }
     int result = tank.fill(resource, doFill);
-    
     this.setField(Fields.EXP.ordinal(), result);
     return result;
   }
@@ -293,16 +292,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     if (resource.getFluid() != FluidsRegistry.fluid_exp) {
       return resource;
     }
-    
     FluidStack result = tank.drain(resource, doDrain);
-    
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
- 
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }

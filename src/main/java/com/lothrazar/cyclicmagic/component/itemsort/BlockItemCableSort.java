@@ -41,6 +41,5 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
         's', "ingotIron",
         'x', "dustRedstone",
         'f', Blocks.DROPPER);
-   
   }
 }
