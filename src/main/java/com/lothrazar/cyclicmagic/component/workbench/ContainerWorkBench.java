@@ -71,19 +71,21 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
-    // null checks and checks if the item can be stacked (maxStackSize > 1)
+    //slot 0 is crafting output
+    // [1,9] is the matrix
+    //[10,36] is player
+    //[37,45] hotbar
+    //getSizeInventory is only 9 though, because output stack is not part of the size
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
-      // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot <= 9) {
+        if (!this.mergeItemStack(stackInSlot, 10, 46, true)) {
           return ItemStack.EMPTY;
         }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+      //Move up into crafting grid
+      else if (!this.mergeItemStack(stackInSlot, 1, 10, false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
