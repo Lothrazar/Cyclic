@@ -137,16 +137,19 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
   @Override
   public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    if (canPlaceBlockAt(world, pos) == false) { // if we are attached to somethihg dissapearedy
-      dropBlockAsItem(world, pos, getDefaultState(), 0);
-      world.setBlockToAir(pos);
+    if (this.canPlaceBlockAt(world, pos) == false) {
+      if (world.setBlockToAir(pos)){
+        dropBlockAsItem(world, pos, getDefaultState(), 0);
+        return;
+      }
     }
-    if (!state.getValue(ACTIVATED) && world.isBlockPowered(pos)) {
+    if (state.getValue(ACTIVATED) == false
+        && world.isBlockPowered(pos)) {
       UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, true));
     }
-    else if (state.getValue(ACTIVATED) && !world.isBlockPowered(pos)) {
-      //sound
+    else if (state.getValue(ACTIVATED)
+        && world.isBlockPowered(pos) == false) {
       UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
