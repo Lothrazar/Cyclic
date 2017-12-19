@@ -66,14 +66,12 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
           //should never happen... but just in case
           UtilChat.addChatMessage(player, "tile.bed.noSleep");
         }
-        //as with 1.10.2, we do not set   player.bedLocation = on purpose
-        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
       else {
         UtilChat.addChatMessage(player, "tile.bed.noSleep");
       }
     }
-    return ActionResult.newResult(EnumActionResult.PASS, stack);
+    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
   }
   public void onSleepSuccess(World world, EnumHand hand, ItemStack stack, EntityPlayerMP player, final IPlayerExtendedProperties sleep) {
     sleep.setSleeping(true);
