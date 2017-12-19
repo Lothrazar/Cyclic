@@ -13,9 +13,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   private static final int spotsSkippablePerTrigger = 50;
@@ -80,6 +84,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     super(10);
     this.setFuelSlot(9, BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
   @Override
   public int[] getFieldOrdinals() {

@@ -13,12 +13,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
   private final static int MAXIMUM = 32;
@@ -47,6 +51,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     super(19);
     this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
   @Override
   public int[] getFieldOrdinals() {
