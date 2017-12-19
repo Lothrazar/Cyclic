@@ -10,10 +10,13 @@ import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
   private static final int VRADIUS = 2;
@@ -32,6 +35,11 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
     this.setSlotsForExtract(0, ROWS * COLS - 1);
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
   @Override
   public int[] getFieldOrdinals() {

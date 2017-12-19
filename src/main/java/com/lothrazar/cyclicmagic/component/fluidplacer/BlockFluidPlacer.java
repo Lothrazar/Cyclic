@@ -27,7 +27,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
-  } 
+  }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPlacer();

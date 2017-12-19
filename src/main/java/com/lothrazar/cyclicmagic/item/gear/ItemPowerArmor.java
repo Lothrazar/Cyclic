@@ -19,54 +19,62 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
   }
   @Override
   public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-    //    stack.addEnchantment(Enchantments.UNBREAKING, Enchantments.UNBREAKING.getMaxLevel());
+    // bonus easter egg for anyone who does not shift click. not documented
+    if (this.armorType == EntityEquipmentSlot.CHEST && EnchantModule.reach != null) {
+      stack.addEnchantment(EnchantModule.reach, EnchantModule.reach.getMaxLevel());
+    }
+  }
+  private ItemStack addEnchantment(ItemStack stack) {
     switch (this.armorType) {
       case CHEST:
-        if (EnchantModule.reach != null)
-          stack.addEnchantment(EnchantModule.reach, EnchantModule.reach.getMaxLevel());
+        stack.addEnchantment(Enchantments.PROTECTION, Enchantments.PROTECTION.getMaxLevel());
       break;
       case FEET:
-        stack.addEnchantment(Enchantments.PROTECTION, Enchantments.DEPTH_STRIDER.getMaxLevel());
+        stack.addEnchantment(Enchantments.FEATHER_FALLING, Enchantments.FEATHER_FALLING.getMaxLevel());
+        stack.addEnchantment(Enchantments.DEPTH_STRIDER, Enchantments.DEPTH_STRIDER.getMaxLevel());
       break;
       case HEAD:
         stack.addEnchantment(Enchantments.AQUA_AFFINITY, Enchantments.AQUA_AFFINITY.getMaxLevel());
         stack.addEnchantment(Enchantments.RESPIRATION, Enchantments.RESPIRATION.getMaxLevel());
       break;
       case LEGS:
-        stack.addEnchantment(Enchantments.PROTECTION, Enchantments.PROTECTION.getMaxLevel());
+        stack.addEnchantment(Enchantments.MENDING, Enchantments.MENDING.getMaxLevel());
       break;
     }
+    return stack;
   }
   @Override
   public IRecipe addRecipe() {
     switch (this.armorType) {
       case CHEST:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
             "p p",
-            "o o",
+            "odo",
             "ooo",
             'o', "obsidian",
+            'd', "gemDiamond",
             'p', Items.CHORUS_FRUIT);
       case FEET:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-            "   ",
+        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
             "p p",
-            "ooo",
+            "odo",
             'o', "obsidian",
+            'd', "gemDiamond",
             'p', Items.CHORUS_FRUIT);
       case HEAD:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-            "ooo",
+        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+            "odo",
             "p p",
-            "   ",
             'o', "obsidian",
+            'd', "gemDiamond",
             'p', Items.CHORUS_FRUIT);
       case LEGS:
-        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-            "ooo",
+        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+            "odo",
             "p p",
             "o o",
             'o', "obsidian",
+            'd', "gemDiamond",
             'p', Items.CHORUS_FRUIT);
     }
     return null;

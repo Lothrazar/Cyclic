@@ -17,8 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -125,6 +127,14 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   @SideOnly(Side.CLIENT)
   public double getMaxRenderDistanceSquared() {
     return 65536.0D;
+  }
+  /**
+   * https://shadowfacts.net/tutorials/forge-modding-1112/dynamic-tileentity-rendering/
+   */
+  @Override
+  @SideOnly(Side.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
   @Nullable
   private static Potion isBeaconEffect(int i) {
