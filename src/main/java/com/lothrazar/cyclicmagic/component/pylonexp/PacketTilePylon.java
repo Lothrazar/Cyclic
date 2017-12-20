@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
@@ -45,25 +46,30 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     EntityPlayerMP player = ctx.getServerHandler().player;
     TileEntityXpPylon tile = (TileEntityXpPylon) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      int fluidPylonHas = tile.getField(message.type.ordinal());
-      int pylonSpace = TileEntityXpPylon.TANK_FULL - fluidPylonHas;
+      int fluidPylonHasFluid = tile.getField(message.type.ordinal());
+      int pylonSpaceFluid = TileEntityXpPylon.TANK_FULL - fluidPylonHasFluid;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
-        int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
+        int playerHasExp = (int) Math.floor(UtilExperience.getExpTotal(player));
+        int playerHasFluid = playerHasExp * TileEntityXpPylon.FLUID_PER_EXP;
         if (message.value >= 0) { // deposit, not a drain
-          int expToDrain;
+          int expToDrainFluid=0;
           if (message.value == 0) {
-            //deposit all
-            expToDrain = Math.min(playerHas, pylonSpace);
+            //deposit all FROM player TO tile
+            expToDrainFluid = Math.min(playerHasFluid, pylonSpaceFluid);
+            ModCyclic.logger.log("DEPOSIT ALL" +expToDrainFluid);
+            ModCyclic.logger.log("playerHasFluid" +playerHasFluid);
+            ModCyclic.logger.log("DEPOSIT pylonSpaceFluid" +pylonSpaceFluid);
           }
           else {//try deposit specified amt
-            expToDrain = Math.min(message.value, pylonSpace);
+            expToDrainFluid = Math.min(message.value * TileEntityXpPylon.FLUID_PER_EXP, pylonSpaceFluid);
           }
+          int expToDrain = expToDrainFluid / TileEntityXpPylon.FLUID_PER_EXP;
           // if I have 5 exp, then we get 5*20 fluid units
-          int fluidToDeposit = expToDrain * TileEntityXpPylon.FLUID_PER_EXP;
-          if (fluidPylonHas + expToDrain <= TileEntityXpPylon.TANK_FULL) {//is it full
+          int fluidToDeposit = expToDrainFluid ;
+          if (fluidPylonHasFluid + expToDrainFluid <= TileEntityXpPylon.TANK_FULL) {//is it full
             if (UtilExperience.drainExp(player, expToDrain)) {//does player have enough
               //then deposit that much into it if drain worked
-              tile.setField(message.type.ordinal(), fluidPylonHas + fluidToDeposit);
+              tile.setField(message.type.ordinal(), fluidPylonHasFluid + fluidToDeposit);
             }
             else { //  not enouh
               UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
@@ -77,15 +83,15 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
           // so DRAIN FROM PYLON, add to PLAYER. BUT only if PYLON has enough
           int expToAdd = message.value * -1;
           int fluidToDrain = expToAdd * TileEntityXpPylon.FLUID_PER_EXP;
-          if (fluidPylonHas >= fluidToDrain) {
+          if (fluidPylonHasFluid >= fluidToDrain) {
             //if I have 40 exp, that is 2 fluid units
-            tile.setField(message.type.ordinal(), fluidPylonHas - fluidToDrain);
+            tile.setField(message.type.ordinal(), fluidPylonHasFluid - fluidToDrain);
             UtilExperience.incrementExp(player, expToAdd);
           }
         }
       }
       else {//NON EXP  field toggle/value will be + or 1 something so increment by that
-        tile.setField(message.type.ordinal(), fluidPylonHas + message.value);
+        tile.setField(message.type.ordinal(), fluidPylonHasFluid + message.value);
       }
       tile.markDirty();
       if (player.openContainer != null) {

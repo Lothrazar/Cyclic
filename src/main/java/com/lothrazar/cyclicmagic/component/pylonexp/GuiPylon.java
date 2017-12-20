@@ -139,7 +139,7 @@ public class GuiPylon extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 + 4, 108);
+    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
     int expHas = fluidHas / TileEntityXpPylon.FLUID_PER_EXP;
     int expFull = TileEntityXpPylon.TANK_FULL / TileEntityXpPylon.FLUID_PER_EXP;
     this.drawString("EXP: " + expHas + " / " + expFull, this.xSize / 2 - 20, 118);
