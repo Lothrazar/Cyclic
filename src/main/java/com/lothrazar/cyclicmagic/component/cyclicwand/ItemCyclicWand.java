@@ -106,6 +106,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     public static int getSpellIDCurrent(ItemStack stack) {
       // workaround for default spell being replace. and oncrafting not
       if (UtilNBT.getItemStackNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
+        if (SpellRegistry.getSpellbook(stack).size() == 0) {
+          return 0;
+        }
         // what is default spell for that then?
         return SpellRegistry.getSpellbook(stack).get(0).getID();
       }

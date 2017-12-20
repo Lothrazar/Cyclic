@@ -17,11 +17,15 @@ public class PacketSpellShiftRight implements IMessage, IMessageHandler<PacketSp
   public void toBytes(ByteBuf buf) {}
   @Override
   public IMessage onMessage(PacketSpellShiftRight message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().player;
-    // PlayerPowerups props = PlayerPowerups.get(player);
+    EntityPlayer player = ctx.getServerHandler().player; 
     // www.minecraftforge.net/forum/index.php/topic,20135.0.html
+    try{
     if (SpellRegistry.spellsEnabled(player)) {
       UtilSpellCaster.shiftRight(player);
+    }
+    }
+    catch(Exception e){
+      //some edge case where it the wand dissapeared mid action
     }
     return null;
   }
