@@ -161,6 +161,9 @@ public class EventRender {
     private int xmain;
     @SideOnly(Side.CLIENT)
     public void drawSpellWheel(ItemStack wand) {
+//      if (wand.getItem() instanceof ItemCyclicWand == false) {
+//        return;
+//      }
       int leftOff = 8, rightOff = -26, topOff = 0, bottOff = -38;
       xmain = RenderLoc.locToX(renderLocation, leftOff, rightOff);
       ymain = RenderLoc.locToY(renderLocation, topOff, bottOff);
