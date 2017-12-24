@@ -1,6 +1,6 @@
 {
     "parent": "cyclicmagic:parent/plate_horizontal",
     "textures": {
-        "0": "cyclicmagic:blocks/launch_large"
+        "0": "cyclicmagic:blocks/plate_launch_large"
     }
 }
