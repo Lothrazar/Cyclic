@@ -237,6 +237,6 @@
 	,"1.10.6":"New Block: Item Sorter, for sorting anything from pipes or hoppers.  "
 	,"1.10.7":"Fixed a glitch when breaking blocks around Diamond Spikes.   Fixed an item transfer glitch in the Workbench when shift-clicking and your inventory was full.  Obsidian armor renamed to Crystallized Obsidian; also fixed its pre-defined enchantments not showing up in JEI and not appearing when you craft with shift-click.  Fixed some Tile Entities not rendering effects when out of players view (beacons, preview areas of several machines).  Sleeping Mat will no longer trigger your offhand item when using it (placing blocks etc).  "
 	,"1.10.8":"Fix Item sorter putting items in the first filter slot from certain sides/pipes.  Fixed Cyclic Building Scepter causing a crash when using the mouse wheel shortly before and after equipping it.  Fixed the 'All' button glitch in Experience Pylon, also increased the EXP limit to 50,000.  "
-  	,"1.10.9":"Plate models now take up full block space (Conveyor and launch pads).  Fixed Auto user not using items that are also blocks (for example, putting cobblestone into Advanced Mortars or other machines).  "
+  	,"1.10.9":"Plate models now take up full block space (Conveyor and launch pads).  Fixed Auto user not using items that are also blocks (for example, putting cobblestone into Advanced Mortars or other machines).  Aerial Faith Plate now correctly adds and preserves player horizontal momentum during launches.   "
   }
 }

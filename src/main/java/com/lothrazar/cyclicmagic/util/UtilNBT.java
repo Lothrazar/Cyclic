@@ -236,6 +236,12 @@ public class UtilNBT {
   public static void setEntityBoolean(Entity entityevokerfangs, String string, boolean bIn) {
     entityevokerfangs.getEntityData().setBoolean(string, bIn);
   }
+  public static void setEntityInt(Entity entityevokerfangs, String string, int bIn) {
+    entityevokerfangs.getEntityData().setInteger(string, bIn);
+  }
+  public static int getEntityInt(Entity entityevokerfangs, String string) {
+   return entityevokerfangs.getEntityData().getInteger(string);
+  }
   public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
     return entityevokerfangs.getEntityData().getBoolean(string);
   }

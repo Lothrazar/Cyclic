@@ -17,7 +17,7 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
   public static final int MAX_POWER = 300;///999 is op, maybe upgraes or config later
   public static final int DEFAULT_ANGLE = 45;
   public static final int DEFAULT_YAW = 90;
-  public static final int DEFAULT_POWER = 250;
+  public static final int DEFAULT_POWER = 60;
   public static final String NBT_ANGLE = "vectorAngle";
   public static final String NBT_POWER = "vectorPower";
   public static final String NBT_YAW = "vectorYaw";

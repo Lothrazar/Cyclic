@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.potion;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -69,8 +70,7 @@ public class PotionBounce extends PotionBase {
   public void tick(EntityLivingBase entity) {
     if (entity.onGround == false && entity.isPotionActive(this)) {//preserve momentum, otherwise it will be like regular falling/gravity
       //yes this works if drank potion and not just from launcher but is ok
-      entity.motionX = entity.motionX / VERTICAL_MOMENTUM_FACTOR;
-      entity.motionZ = entity.motionZ / VERTICAL_MOMENTUM_FACTOR;
+      UtilEntity.dragEntityMomentum(entity, VERTICAL_MOMENTUM_FACTOR);
     }
   };
 }

@@ -33,12 +33,16 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
+  private static final int TICKS_MOMENTUM = 15;
+  private static final double VERTICAL_MOMENTUM_FACTOR = 0.917;
+  private static final String NBT_MOMENTUM = "momentum";
   private static final double BHEIGHT = 0.03125D;
   private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
@@ -74,9 +78,16 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       if (rotationPitch > 0) {
         UtilEntity.centerEntityHoriz(entity, pos);
       }
-      //      entity.setPosition(entity.posX,  pos.getY() + 0.5F, entity.posZ);
-      //      entity.onGround = false;
+      UtilNBT.setEntityInt(entity, NBT_MOMENTUM, TICKS_MOMENTUM);
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
+    }
+  }
+  @SubscribeEvent
+  public void onUpdate(LivingUpdateEvent event) {
+    EntityLivingBase entity = event.getEntityLiving();
+    if (UtilNBT.getEntityInt(entity, NBT_MOMENTUM) > 0) {
+      UtilEntity.dragEntityMomentum(entity, VERTICAL_MOMENTUM_FACTOR);
+      UtilNBT.setEntityInt(entity, NBT_MOMENTUM, UtilNBT.getEntityInt(entity, NBT_MOMENTUM) - 1);
     }
   }
   @SubscribeEvent

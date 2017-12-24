@@ -62,6 +62,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
+     
       BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
       GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
