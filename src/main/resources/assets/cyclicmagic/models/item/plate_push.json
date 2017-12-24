@@ -1,5 +1,5 @@
  {
-     "parent": "cyclicmagic:block/plate_push_north",
+     "parent": "cyclicmagic:block/plate_push_med",
      "display": {
          "thirdperson": {
              "rotation": [ 10, -45, 170 ],
