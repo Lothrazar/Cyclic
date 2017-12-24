@@ -69,6 +69,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
+  private int vRange = 2;
   public int yOffset = 0;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
@@ -130,8 +131,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = getTargetCenter();
-    int vRange = 1;
-    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter.getX() + 0.5, entityCenter.getY(), entityCenter.getZ() + 0.5, size, vRange);
+    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
     List<? extends Entity> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
     List<? extends Entity> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
     List<Entity> all = new ArrayList<Entity>(living);
