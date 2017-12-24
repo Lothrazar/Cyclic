@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe {
+public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   private static final int RECIPE_OUTPUT = 8;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -45,7 +46,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   public static boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
   public BlockConveyor(SpeedType t) {
-    super(Material.IRON, MapColor.GRASS);
+    super(Material.IRON);//, MapColor.GRASS
     this.setSoundType(SoundType.SLIME);
     this.setHardness(2.0F).setResistance(2.0F);
     type = t;
@@ -69,7 +70,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
     }
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
-  @Override
+ 
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
@@ -77,20 +78,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
-  @Override
-  protected void playClickOffSound(World worldIn, BlockPos pos) {}
-  @Override
-  protected int computeRedstoneStrength(World worldIn, BlockPos pos) {
-    return 0;
-  }
-  @Override
-  protected int getRedstoneStrength(IBlockState state) {
-    return 0;
-  }
-  @Override
-  protected IBlockState setRedstoneStrength(IBlockState state, int strength) {
-    return null;
-  }
+ 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
@@ -162,11 +150,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
   }
-  @SideOnly(Side.CLIENT)
-  @Override
-  public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.TRANSLUCENT;
-  }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
