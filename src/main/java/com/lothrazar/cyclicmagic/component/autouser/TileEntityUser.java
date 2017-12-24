@@ -177,33 +177,28 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
-    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non block item
-      //dont ever place a block. they want to use it on an entity
-      EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    //dont ever place a block. they want to use it on an entity
+    EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    if (r != EnumActionResult.SUCCESS) {
+      //if its a throwable item, it happens on this line down below, the process right click
+      r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+      //if throw has happened, success is true
       if (r != EnumActionResult.SUCCESS) {
-        //if its a throwable item, it happens on this line down below, the process right click
-        r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
-        //if throw has happened, success is true
-        if (r != EnumActionResult.SUCCESS) {
-          ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
-          if (res == null || res.getType() != EnumActionResult.SUCCESS) {
-            //this item onrightclick would/should/could work for GLASS_BOTTLE...except
-            //it uses player Ray Trace to get target. which is null for fakes
-            //TODO: maybe one solution is to extend FakePlayer to run a rayrace somehow
-            //but how to set/manage current lookpos
-            //so hakcy time
-            if (fakePlayer.get().getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE && world.getBlockState(targetPos).getMaterial() == Material.WATER) {
-              ItemStack itemstack = fakePlayer.get().getHeldItemMainhand();
-              EntityPlayer p = fakePlayer.get();
-              world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-              //  return new ActionResult(EnumActionResult.SUCCESS,
-              itemstack.shrink(1);
-              //UtilItemStack.turnBottleIntoItem(itemstack, p,
-              ItemStack is = new ItemStack(Items.POTIONITEM);
-              PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
-              this.tryDumpStacks(Arrays.asList(is));
-              //);
-            }
+        ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
+        if (res == null || res.getType() != EnumActionResult.SUCCESS) {
+          //this item onrightclick would/should/could work for GLASS_BOTTLE...except
+          //it uses player Ray Trace to get target. which is null for fakes
+          //TODO: maybe one solution is to extend FakePlayer to run a rayrace somehow
+          //but how to set/manage current lookpos
+          //so hakcy time
+          if (fakePlayer.get().getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE && world.getBlockState(targetPos).getMaterial() == Material.WATER) {
+            ItemStack itemstack = fakePlayer.get().getHeldItemMainhand();
+            EntityPlayer p = fakePlayer.get();
+            world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            itemstack.shrink(1);
+            ItemStack is = new ItemStack(Items.POTIONITEM);
+            PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
+            this.tryDumpStacks(Arrays.asList(is));
           }
         }
       }
