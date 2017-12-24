@@ -154,6 +154,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     else { // left click (attack) entities
       ItemStack held = fakePlayer.get().getHeldItemMainhand();
       fakePlayer.get().onGround = true;
+      int countDamaged = 0;
       for (EntityLivingBase ent : living) {// only living, not minecarts
         if (ent == null || ent.isDead) {
           continue;
@@ -168,8 +169,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
         float dmgVal = (float) damage.getAttributeValue();
         float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-        ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
+        if (ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1)) {
+       // count if attack did not fail
+          countDamaged++;
+          if (BlockUser.maxAttackPer > 0 && countDamaged >= BlockUser.maxAttackPer) {
+            // config is enabled, and it say stop
+            break;
+          }
+        }
       }
+     
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
