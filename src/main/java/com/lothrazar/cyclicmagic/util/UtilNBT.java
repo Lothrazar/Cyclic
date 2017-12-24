@@ -240,7 +240,7 @@ public class UtilNBT {
     entityevokerfangs.getEntityData().setInteger(string, bIn);
   }
   public static int getEntityInt(Entity entityevokerfangs, String string) {
-   return entityevokerfangs.getEntityData().getInteger(string);
+    return entityevokerfangs.getEntityData().getInteger(string);
   }
   public static boolean getEntityBoolean(Entity entityevokerfangs, String string) {
     return entityevokerfangs.getEntityData().getBoolean(string);

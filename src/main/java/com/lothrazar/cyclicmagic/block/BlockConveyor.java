@@ -5,9 +5,7 @@ import com.lothrazar.cyclicmagic.block.base.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -19,7 +17,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -70,7 +67,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     }
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
- 
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
@@ -78,7 +74,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
- 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
@@ -150,7 +145,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
   }
-
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {

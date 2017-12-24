@@ -377,6 +377,7 @@ public class UtilEntity {
   }
   /**
    * used by bounce potion and vector plate
+   * 
    * @param entity
    * @param verticalMomentumFactor
    */

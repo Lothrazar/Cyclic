@@ -32,7 +32,7 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   private SoundEvent sound;
   public BlockLaunch(LaunchType t, SoundEvent s) {
     super(Material.IRON);//same as BlockSlime 
-//    this.blockMapColor = MapColor.GRASS;
+    //    this.blockMapColor = MapColor.GRASS;
     this.setSoundType(SoundType.SLIME);
     this.setHardness(2.0F).setResistance(2.0F);
     sound = s;
@@ -51,11 +51,9 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
       break;
     }
   }
- 
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
- 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
