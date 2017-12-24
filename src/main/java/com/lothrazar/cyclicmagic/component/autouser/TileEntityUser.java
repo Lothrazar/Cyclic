@@ -132,8 +132,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = getTargetCenter();
     AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
-    List<? extends Entity> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
-    List<? extends Entity> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
+    List<EntityLivingBase> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
+    List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
     List<Entity> all = new ArrayList<Entity>(living);
     all.addAll(carts);//works since  they share a base class but no overlap
     if (rightClickIfZero == 0) {//right click entities and blocks
@@ -151,18 +151,17 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
-    else { // left click entities and blocks 
+    else { // left click (attack) entities
       ItemStack held = fakePlayer.get().getHeldItemMainhand();
       fakePlayer.get().onGround = true;
-      for (Entity e : living) {// only living, not minecarts
-        EntityLivingBase ent = (EntityLivingBase) e;
-        if (e == null) {
+      for (EntityLivingBase ent : living) {// only living, not minecarts
+        if (ent == null || ent.isDead) {
           continue;
         } //wont happen eh
         fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
         //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
         IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        if (!held.isEmpty()) {
+        if (held.isEmpty() == false) {
           for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
             damage.applyModifier(modifier);
           }
