@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.autouser;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -100,7 +101,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid, "block_user");
         if (fakePlayer == null) {
           ModCyclic.logger.error("Fake player failed to init ");
           return;
@@ -137,6 +138,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     List<Entity> all = new ArrayList<Entity>(living);
     all.addAll(carts);//works since  they share a base class but no overlap
     if (rightClickIfZero == 0) {//right click entities and blocks
+      Collections.shuffle(all);
       this.getWorld().markChunkDirty(targetPos, this);
       for (Entity ent : all) {//both living and minecarts
         // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
@@ -170,7 +172,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         float dmgVal = (float) damage.getAttributeValue();
         float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
         if (ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1)) {
-       // count if attack did not fail
+          // count if attack did not fail
           countDamaged++;
           if (BlockUser.maxAttackPer > 0 && countDamaged >= BlockUser.maxAttackPer) {
             // config is enabled, and it say stop
@@ -178,7 +180,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           }
         }
       }
-     
     }
   }
   private void rightClickBlock(BlockPos targetPos) {

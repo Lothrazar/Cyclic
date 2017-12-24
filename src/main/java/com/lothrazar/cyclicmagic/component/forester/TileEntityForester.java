@@ -74,7 +74,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
-      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid);
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid,"block_forester");
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
       }

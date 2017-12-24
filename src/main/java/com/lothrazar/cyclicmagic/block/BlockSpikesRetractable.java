@@ -87,7 +87,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
             uuid = UUID.randomUUID();
           }
           if (fakePlayer == null) {
-            fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldIn, uuid);
+            fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldIn, uuid, "spikes");
             if (fakePlayer == null) {
               ModCyclic.logger.error("Fake player failed to init ");
               return;

@@ -66,7 +66,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
         //only do the fake player strategy if the normal one fails
         if (success == false && world instanceof WorldServer) {
           if (fakePlayer == null) {
-            fakePlayer = UtilFakePlayer.initFakePlayer(((WorldServer) world), UUID.randomUUID());
+            fakePlayer = UtilFakePlayer.initFakePlayer(((WorldServer) world), UUID.randomUUID(),"sapling_regrowth");
             if (fakePlayer == null) {
               ModCyclic.logger.error("Fake player failed to init ");
               return;
