@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,17 +20,22 @@ public class ContainerItemSort extends ContainerBaseMachine {
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
     int fs = TileEntityItemCableSort.FILTER_SIZE;
-    int slot;
-    for (int i = 1; i < te.getSizeInventory(); i++) {
-      slot = i - 1;
-      addSlotToContainer(new SlotSingleStack(tile, slot,
-          SLOTX_START + slot % fs * Const.SQ + Const.SQ,
-          SLOTY + ((int) slot / fs) * Const.SQ));
+    int slot = 1;
+    int y = SLOTY;
+    for (int col = 0; col <  EnumFacing.values().length; col++) {
+      y = col * Const.SQ;
+      for (int row = 0; row < fs; row++) {
+        addSlotToContainer(new SlotSingleStack(tile, slot,
+            SLOTX_START + row % fs * Const.SQ + Const.SQ,
+            SLOTY + y));
+        slot++;
+      }
     }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    ModCyclic.logger.log("!!" + slot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)

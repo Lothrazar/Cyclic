@@ -65,12 +65,18 @@ public class UtilSpellCaster {
   //	}
   public static void shiftLeft(EntityPlayer player) {
     ItemStack wand = getPlayerWandIfHeld(player);
+    if (wand.isEmpty()) {
+      return;
+    }
     ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
     int left = SpellRegistry.prev(wand, curr).getID();
     ItemCyclicWand.Spells.setSpellCurrent(wand, left);
   }
   public static void shiftRight(EntityPlayer player) {
     ItemStack wand = getPlayerWandIfHeld(player);
+    if (wand.isEmpty()) {
+      return;
+    }
     ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
     int right = SpellRegistry.next(wand, curr).getID();
     ItemCyclicWand.Spells.setSpellCurrent(wand, right);
