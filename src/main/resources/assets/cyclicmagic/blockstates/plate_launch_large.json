@@ -1,5 +1,5 @@
 {
     "variants": {
-      
-  "normal": { "model": "cyclicmagic:plate_launch_large" }
-}}
+		"normal": { "model": "cyclicmagic:plate_launch_large" }
+	}
+}

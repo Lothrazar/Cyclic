@@ -1,3 +1,6 @@
 {
-    "parent": "cyclicmagic:block/plate_launch_med"
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclicmagic:blocks/launch_med"
+    }
 }
