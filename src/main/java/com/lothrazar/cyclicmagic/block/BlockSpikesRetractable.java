@@ -197,6 +197,6 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   @Override
   public void syncConfig(Configuration config) {
     this.damageIron = config.getInt("SpikeIronDamage", Const.ConfigCategory.modpackMisc, 1, 1, 99, "Damage per second of iron spikes");
-    this.damageDiamond = config.getInt("SpikeDiamondDamage", Const.ConfigCategory.modpackMisc, 2, 1, 99, "Damage per second of iron spikes");
+    this.damageDiamond = config.getInt("SpikeDiamondDamage", Const.ConfigCategory.modpackMisc, 5, 1, 99, "Damage per second of iron spikes");
   }
 }
