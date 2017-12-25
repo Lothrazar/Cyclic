@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -156,64 +155,16 @@ public abstract class BlockBaseCable extends BlockContainer {
     return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
   }
   public IBlockState getNewState(IBlockAccess world, BlockPos pos) {
-    if (!(world.getTileEntity(pos) instanceof ITileCable))
+    if (world.getTileEntity(pos) instanceof ITileCable == false) {
       return world.getBlockState(pos);
-    ITileCable tile = (ITileCable) world.getTileEntity(pos);
-    BlockPos con = null;
-    Map<EnumFacing, EnumConnectType> oldMap = tile.getConnects();
-    Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
-    EnumFacing stor = null;
-    for (Entry<EnumFacing, EnumConnectType> e : oldMap.entrySet()) {
-      if (e.getValue() == EnumConnectType.STORAGE) {
-        stor = e.getKey();
-        break;
-      }
     }
-    boolean storage = false;
-    boolean first = false;
+    ITileCable tile = (ITileCable) world.getTileEntity(pos);
+    Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
+    //detect and save connections on each side
     for (EnumFacing f : EnumFacing.values()) {
-      if (stor == f && first)
-        continue;
-      EnumConnectType neu = this.getConnectTypeForPos(world, pos, f);
-      if (neu == EnumConnectType.STORAGE) {
-        if (!storage) {
-          newMap.put(f, neu);
-          storage = true;
-        }
-        else
-          newMap.put(f, EnumConnectType.NULL);
-      }
-      else {
-        newMap.put(f, neu);
-      }
+      newMap.put(f, this.getConnectTypeForPos(world, pos, f));
     }
     tile.setConnects(newMap);
-    if (tile.north() == EnumConnectType.STORAGE) {
-      // face = EnumFacing.NORTH;
-      con = pos.north();
-    }
-    else if (tile.south() == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.SOUTH;
-      con = pos.south();
-    }
-    else if (tile.east() == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.EAST;
-      con = pos.east();
-    }
-    else if (tile.west() == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.WEST;
-      con = pos.west();
-    }
-    else if (tile.down() == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.DOWN;
-      con = pos.down();
-    }
-    else if (tile.up() == EnumConnectType.STORAGE) {
-      //  face = EnumFacing.UP;
-      con = pos.up();
-    }
-    //  tile.setConnectedFace(face);
-    tile.setConnectedPos(con);
     return world.getBlockState(pos);
   }
   @SuppressWarnings("deprecation")

@@ -375,4 +375,14 @@ public class UtilEntity {
         return 90F;
     }
   }
+  /**
+   * used by bounce potion and vector plate
+   * 
+   * @param entity
+   * @param verticalMomentumFactor
+   */
+  public static void dragEntityMomentum(EntityLivingBase entity, double verticalMomentumFactor) {
+    entity.motionX = entity.motionX / verticalMomentumFactor;
+    entity.motionZ = entity.motionZ / verticalMomentumFactor;
+  }
 }

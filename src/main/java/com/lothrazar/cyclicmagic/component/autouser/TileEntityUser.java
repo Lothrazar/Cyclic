@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.autouser;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -16,7 +17,6 @@ import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -29,7 +29,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
@@ -69,6 +68,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
+  private int vRange = 2;
   public int yOffset = 0;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
@@ -99,7 +99,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid, "block_user");
         if (fakePlayer == null) {
           ModCyclic.logger.error("Fake player failed to init ");
           return;
@@ -130,13 +130,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = getTargetCenter();
-    int vRange = 1;
-    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter.getX() + 0.5, entityCenter.getY(), entityCenter.getZ() + 0.5, size, vRange);
-    List<? extends Entity> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
-    List<? extends Entity> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
+    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
+    List<EntityLivingBase> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
+    List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
     List<Entity> all = new ArrayList<Entity>(living);
     all.addAll(carts);//works since  they share a base class but no overlap
     if (rightClickIfZero == 0) {//right click entities and blocks
+      Collections.shuffle(all);
       this.getWorld().markChunkDirty(targetPos, this);
       for (Entity ent : all) {//both living and minecarts
         // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
@@ -151,25 +151,32 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
-    else { // left click entities and blocks 
+    else { // left click (attack) entities
       ItemStack held = fakePlayer.get().getHeldItemMainhand();
       fakePlayer.get().onGround = true;
-      for (Entity e : living) {// only living, not minecarts
-        EntityLivingBase ent = (EntityLivingBase) e;
-        if (e == null) {
+      int countDamaged = 0;
+      for (EntityLivingBase ent : living) {// only living, not minecarts
+        if (ent == null || ent.isDead) {
           continue;
         } //wont happen eh
         fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
         //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
         IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        if (!held.isEmpty()) {
+        if (held.isEmpty() == false) {
           for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
             damage.applyModifier(modifier);
           }
         }
         float dmgVal = (float) damage.getAttributeValue();
         float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-        ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
+        if (ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1)) {
+          // count if attack did not fail
+          countDamaged++;
+          if (BlockUser.maxAttackPer > 0 && countDamaged >= BlockUser.maxAttackPer) {
+            // config is enabled, and it say stop
+            break;
+          }
+        }
       }
     }
   }
@@ -177,33 +184,28 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
-    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) == Blocks.AIR) { //a non block item
-      //dont ever place a block. they want to use it on an entity
-      EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    //dont ever place a block. they want to use it on an entity
+    EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    if (r != EnumActionResult.SUCCESS) {
+      //if its a throwable item, it happens on this line down below, the process right click
+      r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+      //if throw has happened, success is true
       if (r != EnumActionResult.SUCCESS) {
-        //if its a throwable item, it happens on this line down below, the process right click
-        r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
-        //if throw has happened, success is true
-        if (r != EnumActionResult.SUCCESS) {
-          ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
-          if (res == null || res.getType() != EnumActionResult.SUCCESS) {
-            //this item onrightclick would/should/could work for GLASS_BOTTLE...except
-            //it uses player Ray Trace to get target. which is null for fakes
-            //TODO: maybe one solution is to extend FakePlayer to run a rayrace somehow
-            //but how to set/manage current lookpos
-            //so hakcy time
-            if (fakePlayer.get().getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE && world.getBlockState(targetPos).getMaterial() == Material.WATER) {
-              ItemStack itemstack = fakePlayer.get().getHeldItemMainhand();
-              EntityPlayer p = fakePlayer.get();
-              world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-              //  return new ActionResult(EnumActionResult.SUCCESS,
-              itemstack.shrink(1);
-              //UtilItemStack.turnBottleIntoItem(itemstack, p,
-              ItemStack is = new ItemStack(Items.POTIONITEM);
-              PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
-              this.tryDumpStacks(Arrays.asList(is));
-              //);
-            }
+        ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
+        if (res == null || res.getType() != EnumActionResult.SUCCESS) {
+          //this item onrightclick would/should/could work for GLASS_BOTTLE...except
+          //it uses player Ray Trace to get target. which is null for fakes
+          //TODO: maybe one solution is to extend FakePlayer to run a rayrace somehow
+          //but how to set/manage current lookpos
+          //so hakcy time
+          if (fakePlayer.get().getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE && world.getBlockState(targetPos).getMaterial() == Material.WATER) {
+            ItemStack itemstack = fakePlayer.get().getHeldItemMainhand();
+            EntityPlayer p = fakePlayer.get();
+            world.playSound(p, p.posX, p.posY, p.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            itemstack.shrink(1);
+            ItemStack is = new ItemStack(Items.POTIONITEM);
+            PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
+            this.tryDumpStacks(Arrays.asList(is));
           }
         }
       }

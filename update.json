@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.10.7",
-    "1.12.2-recommended": "1.10.7"
+    "1.12.2-latest": "1.10.9",
+    "1.12.2-recommended": "1.10.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -237,5 +237,6 @@
 	,"1.10.6":"New Block: Item Sorter, for sorting anything from pipes or hoppers.  "
 	,"1.10.7":"Fixed a glitch when breaking blocks around Diamond Spikes.   Fixed an item transfer glitch in the Workbench when shift-clicking and your inventory was full.  Obsidian armor renamed to Crystallized Obsidian; also fixed its pre-defined enchantments not showing up in JEI and not appearing when you craft with shift-click.  Fixed some Tile Entities not rendering effects when out of players view (beacons, preview areas of several machines).  Sleeping Mat will no longer trigger your offhand item when using it (placing blocks etc).  "
 	,"1.10.8":"Fix Item sorter putting items in the first filter slot from certain sides/pipes.  Fixed Cyclic Building Scepter causing a crash when using the mouse wheel shortly before and after equipping it.  Fixed the 'All' button glitch in Experience Pylon, also increased the EXP limit to 50,000.  "
+  	,"1.10.9":"Plate models now take up full block space (Slime Conveyors and Jump plates); also conveyors are no longer transparent.  Fixed Auto user not using items that are also blocks (for example, putting cobblestone into Advanced Mortars or other machines).  Auto User will no longer attack dead entities.  Automated User now hits smaller mobs such as baby zombies and silverfish when in Attack mode.  New config entry for Auto User called 'AutoUserMaxAttackPerAction', to limit how many things can get attacked per swing from the machine (default zero is unlimited).  Aerial Faith Plate now correctly adds and preserves player horizontal momentum during launches.   Harvester will no longer put crops into the fuel slot.   Kill and death messages from fake players now indicate which mod and block they come from, instead of a random UUID hash.   Fixed item and fluid pipes appearing to not be connected on one side when their length is only one (purely visual glitch).  "
   }
 }

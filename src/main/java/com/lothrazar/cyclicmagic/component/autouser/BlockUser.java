@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
+  public static int maxAttackPer;
   public BlockUser() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_USER);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -54,5 +55,6 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
   }
 }

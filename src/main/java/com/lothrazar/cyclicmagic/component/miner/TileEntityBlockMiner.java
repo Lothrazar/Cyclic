@@ -92,7 +92,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid, "block_miner");
         if (fakePlayer == null) {
           ModCyclic.logger.error("Fake player failed to init ");
           return;

@@ -22,7 +22,7 @@ public class ContainerItemSort extends ContainerBaseMachine {
     int fs = TileEntityItemCableSort.FILTER_SIZE;
     int slot = 1;
     int y = SLOTY;
-    for (int col = 0; col <  EnumFacing.values().length; col++) {
+    for (int col = 0; col < EnumFacing.values().length; col++) {
       y = col * Const.SQ;
       for (int row = 0; row < fs; row++) {
         addSlotToContainer(new SlotSingleStack(tile, slot,

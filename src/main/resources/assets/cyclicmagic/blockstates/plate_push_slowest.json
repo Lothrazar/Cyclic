@@ -1,5 +1,6 @@
 {
     "variants": {
+        "normal": { "model": "cyclicmagic:plate_push_slowest" },
         "facing=north": { "model": "cyclicmagic:plate_push_slowest" },
         "facing=east":  { "model": "cyclicmagic:plate_push_slowest" ,"y":90},
         "facing=south": { "model": "cyclicmagic:plate_push_slowest" ,"y":180},

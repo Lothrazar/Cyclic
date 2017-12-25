@@ -14,6 +14,7 @@ public class FluidsModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    // xpjuice fluid is added by the Exp Pylon block in /components/ 
     if (enableMilk) {
       FluidsRegistry.registerMilk();
     }

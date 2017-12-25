@@ -1,3 +1,6 @@
 {
-    "parent": "cyclicmagic:block/plate_launch_large"
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclicmagic:blocks/plate_launch_large"
+    }
 }

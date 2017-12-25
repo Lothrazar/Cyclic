@@ -52,20 +52,20 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
         int playerHasExp = (int) Math.floor(UtilExperience.getExpTotal(player));
         int playerHasFluid = playerHasExp * TileEntityXpPylon.FLUID_PER_EXP;
         if (message.value >= 0) { // deposit, not a drain
-          int expToDrainFluid=0;
+          int expToDrainFluid = 0;
           if (message.value == 0) {
             //deposit all FROM player TO tile
             expToDrainFluid = Math.min(playerHasFluid, pylonSpaceFluid);
-            ModCyclic.logger.log("DEPOSIT ALL" +expToDrainFluid);
-            ModCyclic.logger.log("playerHasFluid" +playerHasFluid);
-            ModCyclic.logger.log("DEPOSIT pylonSpaceFluid" +pylonSpaceFluid);
+            ModCyclic.logger.log("DEPOSIT ALL" + expToDrainFluid);
+            ModCyclic.logger.log("playerHasFluid" + playerHasFluid);
+            ModCyclic.logger.log("DEPOSIT pylonSpaceFluid" + pylonSpaceFluid);
           }
           else {//try deposit specified amt
             expToDrainFluid = Math.min(message.value * TileEntityXpPylon.FLUID_PER_EXP, pylonSpaceFluid);
           }
           int expToDrain = expToDrainFluid / TileEntityXpPylon.FLUID_PER_EXP;
           // if I have 5 exp, then we get 5*20 fluid units
-          int fluidToDeposit = expToDrainFluid ;
+          int fluidToDeposit = expToDrainFluid;
           if (fluidPylonHasFluid + expToDrainFluid <= TileEntityXpPylon.TANK_FULL) {//is it full
             if (UtilExperience.drainExp(player, expToDrain)) {//does player have enough
               //then deposit that much into it if drain worked

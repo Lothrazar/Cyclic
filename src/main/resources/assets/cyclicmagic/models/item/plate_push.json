@@ -1,10 +1,6 @@
- {
-     "parent": "cyclicmagic:block/plate_push_north",
-     "display": {
-         "thirdperson": {
-             "rotation": [ 10, -45, 170 ],
-             "translation": [ 0, 1.5, -2.75 ],
-             "scale": [ 0.375, 0.375, 0.375 ]
-        }
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclicmagic:blocks/plate_push_med"
     }
 }

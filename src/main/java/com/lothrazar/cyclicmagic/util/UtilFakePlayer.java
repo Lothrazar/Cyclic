@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -13,8 +14,8 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class UtilFakePlayer {
-  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws, UUID uname) {
-    GameProfile breakerProfile = new GameProfile(uname, uname.toString());
+  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws, UUID uname, String blockName) {
+    GameProfile breakerProfile = new GameProfile(uname, Const.MODID + ".fake_player." + blockName);
     WeakReference<FakePlayer> fakePlayer;
     try {
       fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
