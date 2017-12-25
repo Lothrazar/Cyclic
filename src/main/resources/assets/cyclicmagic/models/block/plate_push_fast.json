@@ -1,7 +1,6 @@
 {
     "parent": "cyclicmagic:parent/plate_horizontal",
     "textures": {
-        "particle": "cyclicmagic:blocks/plate_push_fast",
         "0": "cyclicmagic:blocks/plate_push_fast"
     }
 }
