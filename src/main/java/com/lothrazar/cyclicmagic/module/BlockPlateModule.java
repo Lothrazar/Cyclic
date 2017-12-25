@@ -26,8 +26,6 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean enableInterdict;
   private boolean vectorPlate;
   public void onPreInit() {
-    BlockLaunch plate_launch_med = null;
-    BlockConveyor plate_push_fast = null;
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
@@ -40,9 +38,9 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     }
     if (launchPads) {
       //med
-      plate_launch_med = new BlockLaunch(BlockLaunch.LaunchType.MEDIUM, SoundEvents.BLOCK_SLIME_FALL);
-      BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med", null);
-      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_launch_med);
+      BlockLaunch plate_launch_med = new BlockLaunch(BlockLaunch.LaunchType.MEDIUM, SoundEvents.BLOCK_SLIME_FALL);
+      BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med", GuideCategory.BLOCKPLATE);
+      //small
       BlockLaunch plate_launch_small = new BlockLaunch(BlockLaunch.LaunchType.SMALL, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small", null);
       //large
@@ -51,9 +49,9 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     }
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(SpeedType.MEDIUM);
-      BlockRegistry.registerBlock(plate_push, "plate_push", null);
-      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
-      plate_push_fast = new BlockConveyor(SpeedType.LARGE);
+      BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
+      //other speeds
+      BlockConveyor plate_push_fast = new BlockConveyor(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
