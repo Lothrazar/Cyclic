@@ -30,8 +30,9 @@ public class BlockFluidCable extends BlockBaseCable implements IHasRecipe {
     if (block == this) {
       return EnumConnectType.CONNECT;
     }
-    if (worldIn instanceof World && FluidUtil.getFluidHandler((World) worldIn, offset, side) != null)
+    if (worldIn instanceof World && FluidUtil.getFluidHandler((World) worldIn, offset, side) != null) {
       return EnumConnectType.STORAGE;
+    }
     return EnumConnectType.NULL;
   }
   @Override

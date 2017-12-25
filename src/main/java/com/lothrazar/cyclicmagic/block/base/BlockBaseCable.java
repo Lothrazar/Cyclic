@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -156,35 +155,16 @@ public abstract class BlockBaseCable extends BlockContainer {
     return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
   }
   public IBlockState getNewState(IBlockAccess world, BlockPos pos) {
-    if (!(world.getTileEntity(pos) instanceof ITileCable))
+    if (world.getTileEntity(pos) instanceof ITileCable == false) {
       return world.getBlockState(pos);
+    }
     ITileCable tile = (ITileCable) world.getTileEntity(pos);
-    BlockPos con = null;
     Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
     //detect and save connections on each side
     for (EnumFacing f : EnumFacing.values()) {
       newMap.put(f, this.getConnectTypeForPos(world, pos, f));
     }
     tile.setConnects(newMap);
-    if (tile.north() == EnumConnectType.STORAGE) {
-      con = pos.north();
-    }
-    else if (tile.south() == EnumConnectType.STORAGE) {
-      con = pos.south();
-    }
-    else if (tile.east() == EnumConnectType.STORAGE) {
-      con = pos.east();
-    }
-    else if (tile.west() == EnumConnectType.STORAGE) {
-      con = pos.west();
-    }
-    else if (tile.down() == EnumConnectType.STORAGE) {
-      con = pos.down();
-    }
-    else if (tile.up() == EnumConnectType.STORAGE) {
-      con = pos.up();
-    }
-    tile.setConnectedPos(con);
     return world.getBlockState(pos);
   }
   @SuppressWarnings("deprecation")
