@@ -2,8 +2,12 @@ package com.lothrazar.cyclicmagic.block.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -13,7 +17,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockBaseFlat extends BlockBase {
+public abstract class BlockBaseFlat extends BlockBase { 
+  private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   public BlockBaseFlat(Material materialIn) {
     super(materialIn);
@@ -63,5 +69,37 @@ public abstract class BlockBaseFlat extends BlockBase {
   @Override
   public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
     return BlockFaceShape.UNDEFINED;
+  }
+  //below is all for facing
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    EnumFacing facing = EnumFacing.getHorizontal(meta);
+    return this.getDefaultState().withProperty(PROPERTYFACING, facing);
+  }
+  public EnumFacing getFacingFromState(IBlockState state) {
+    return (EnumFacing) state.getValue(PROPERTYFACING);
+  }
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    EnumFacing facing = (EnumFacing) state.getValue(PROPERTYFACING);
+    int facingbits = facing.getHorizontalIndex();
+    return facingbits;
+  }
+  @Override
+  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+    return state;
+  }
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING });
+  }
+  @Override
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    // find the quadrant the player is facing
+    EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
+    return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
+  }
+  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
   }
 }
