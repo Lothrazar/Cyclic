@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class FluidsModule extends BaseModule implements IHasConfig {
   private boolean enableMilk;
