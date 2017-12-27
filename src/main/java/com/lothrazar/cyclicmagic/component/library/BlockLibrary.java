@@ -21,6 +21,13 @@ public class BlockLibrary extends BlockBase {
   private static final float HALF = 0.5F;
   public static enum Segments {
     TR, TL, BR, BL;
+    /**
+     * using (x,y) in [0,1] determine quadrant of block hit
+     * 
+     * @param hitHoriz
+     * @param hitVertic
+     * @return
+     */
     public static Segments getFor(float hitHoriz, float hitVertic) {
       if (hitHoriz > HALF && hitVertic > HALF) {
         return TL;
@@ -35,32 +42,46 @@ public class BlockLibrary extends BlockBase {
         return BR;
       }
     }
+    /**
+     * based on facing side, convert either hitX or hitZ to hitHorizontal relative to player orientation
+     * 
+     * @param side
+     * @param hitX
+     * @param hitY
+     * @param hitZ
+     * @return
+     */
+    public static Segments getForFace(EnumFacing side, float hitX, float hitY, float hitZ) {
+      Segments segment = null;
+      switch (side) {
+        case EAST:
+          segment = Segments.getFor(hitZ, hitY);
+        break;
+        case NORTH:
+          segment = Segments.getFor(hitX, hitY);
+        break;
+        case SOUTH:
+          segment = Segments.getFor(1 - hitX, hitY);
+        break;
+        case WEST:
+          segment = Segments.getFor(1 - hitZ, hitY);
+        break;
+        case UP:
+        case DOWN:
+        break;
+      }
+      return segment;
+    }
   }
   public BlockLibrary() {
     super(Material.WOOD);
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    ModCyclic.logger.log(side.name() + "  ! ::   " + hitX + ",  " + hitY + ",  " + hitZ);
+   // ModCyclic.logger.log(side.name() + "  ! ::   " + hitX + ",  " + hitY + ",  " + hitZ);
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
-    Segments segment = null;
-    switch (side) {
-      case EAST:
-        segment = Segments.getFor(hitZ, hitY);
-      break;
-      case NORTH:// perfect
-        segment = Segments.getFor(hitX, hitY);
-      break;
-      case SOUTH:
-        segment = Segments.getFor(1 - hitX, hitY);
-      break;
-      case WEST:
-        segment = Segments.getFor(1 - hitZ, hitY);
-      break;
-      case UP:
-      case DOWN:
-        return false;
-    }
+    Segments segment = Segments.getForFace(side, hitX, hitY, hitZ);
+
     ModCyclic.logger.log(segment.name());
     //eventually we are doing a withdraw/deposit of an ench
     // dropEnchantmentInWorld(ench, world, pos);
