@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -56,6 +57,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enablePumpAndPipes;
   private boolean enablItemPipes;
   public void onPreInit() {
+    BlockLibrary library = new BlockLibrary();
+    BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
