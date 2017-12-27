@@ -2,7 +2,8 @@ package com.lothrazar.cyclicmagic.component.library;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,14 +13,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockLibrary extends BlockBase {
+public class BlockLibrary extends BlockBaseHasTile {
   private static final float HALF = 0.5F;
-  public static enum Segments {
+  public static enum Quadrant {
     TR, TL, BR, BL;
     /**
      * using (x,y) in [0,1] determine quadrant of block hit
@@ -28,7 +30,7 @@ public class BlockLibrary extends BlockBase {
      * @param hitVertic
      * @return
      */
-    public static Segments getFor(float hitHoriz, float hitVertic) {
+    public static Quadrant getFor(float hitHoriz, float hitVertic) {
       if (hitHoriz > HALF && hitVertic > HALF) {
         return TL;
       }
@@ -51,20 +53,20 @@ public class BlockLibrary extends BlockBase {
      * @param hitZ
      * @return
      */
-    public static Segments getForFace(EnumFacing side, float hitX, float hitY, float hitZ) {
-      Segments segment = null;
+    public static Quadrant getForFace(EnumFacing side, float hitX, float hitY, float hitZ) {
+      Quadrant segment = null;
       switch (side) {
         case EAST:
-          segment = Segments.getFor(hitZ, hitY);
+          segment = Quadrant.getFor(hitZ, hitY);
         break;
         case NORTH:
-          segment = Segments.getFor(hitX, hitY);
+          segment = Quadrant.getFor(hitX, hitY);
         break;
         case SOUTH:
-          segment = Segments.getFor(1 - hitX, hitY);
+          segment = Quadrant.getFor(1 - hitX, hitY);
         break;
         case WEST:
-          segment = Segments.getFor(1 - hitZ, hitY);
+          segment = Quadrant.getFor(1 - hitZ, hitY);
         break;
         case UP:
         case DOWN:
@@ -77,10 +79,33 @@ public class BlockLibrary extends BlockBase {
     super(Material.WOOD);
   }
   @Override
+  public TileEntity createTileEntity(World worldIn, IBlockState state) {
+    return new TileEntityLibrary();
+  }
+  @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
    // ModCyclic.logger.log(side.name() + "  ! ::   " + hitX + ",  " + hitY + ",  " + hitZ);
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
-    Segments segment = Segments.getForFace(side, hitX, hitY, hitZ);
+    
+    ItemStack playerHeld = player.getHeldItem(hand);
+    if(playerHeld.getItem().equals(Items.ENCHANTED_BOOK)){
+      Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
+      
+    }
+   
+    else if(playerHeld.isEmpty()){
+      //display information about whats inside if sneaking
+      
+      //otherwise withdraw?
+      
+    }
+    
+    Quadrant segment = Quadrant.getForFace(side, hitX, hitY, hitZ);
+    
+    TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
+    
+    library.addEnchantment(segment, Enchantments.AQUA_AFFINITY,0);
+    
 
     ModCyclic.logger.log(segment.name());
     //eventually we are doing a withdraw/deposit of an ench
