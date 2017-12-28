@@ -2,8 +2,7 @@ package com.lothrazar.cyclicmagic.component.library;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary.EnchantStack;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile; 
 import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -22,61 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockLibrary extends BlockBaseHasTile {
-  private static final float HALF = 0.5F;
-  public static enum Quadrant {
-    TR, TL, BR, BL;
-    /**
-     * using (x,y) in [0,1] determine quadrant of block hit
-     * 
-     * @param hitHoriz
-     * @param hitVertic
-     * @return
-     */
-    public static Quadrant getFor(float hitHoriz, float hitVertic) {
-      if (hitHoriz > HALF && hitVertic > HALF) {
-        return TL;
-      }
-      else if (hitHoriz <= HALF && hitVertic > HALF) {
-        return TR;
-      }
-      else if (hitHoriz > HALF && hitVertic < HALF) {
-        return BL;
-      }
-      else {
-        return BR;
-      }
-    }
-    /**
-     * based on facing side, convert either hitX or hitZ to hitHorizontal relative to player orientation
-     * 
-     * @param side
-     * @param hitX
-     * @param hitY
-     * @param hitZ
-     * @return
-     */
-    public static Quadrant getForFace(EnumFacing side, float hitX, float hitY, float hitZ) {
-      Quadrant segment = null;
-      switch (side) {
-        case EAST:
-          segment = Quadrant.getFor(hitZ, hitY);
-        break;
-        case NORTH:
-          segment = Quadrant.getFor(hitX, hitY);
-        break;
-        case SOUTH:
-          segment = Quadrant.getFor(1 - hitX, hitY);
-        break;
-        case WEST:
-          segment = Quadrant.getFor(1 - hitZ, hitY);
-        break;
-        case UP:
-        case DOWN:
-        break;
-      }
-      return segment;
-    }
-  }
+ 
   public BlockLibrary() {
     super(Material.WOOD);
   }
@@ -89,7 +34,7 @@ public class BlockLibrary extends BlockBaseHasTile {
     // ModCyclic.logger.log(side.name() + "  ! ::   " + hitX + ",  " + hitY + ",  " + hitZ);
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
     TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
-    Quadrant segment = Quadrant.getForFace(side, hitX, hitY, hitZ);
+    QuadrantEnum segment = QuadrantEnum.getForFace(side, hitX, hitY, hitZ);
     if (segment == null) {
       return false;//literal edge case
     }
