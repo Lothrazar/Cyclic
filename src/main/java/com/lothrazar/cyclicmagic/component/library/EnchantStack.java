@@ -1,8 +1,5 @@
 package com.lothrazar.cyclicmagic.component.library;
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
-import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,10 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class EnchantStack {
+  private static final String NBT_COUNT = "eCount";
   private static final String NBT_ENCH = "ench";
   private int count = 0;
   private int level = 0;
-  //  private Map<Integer,Integer> levelCount = new HashMap<Integer,Integer>();
   private Enchantment ench = null;
   public EnchantStack() {}
   public EnchantStack(Enchantment e, int lvl) {
@@ -25,16 +22,25 @@ public class EnchantStack {
     level = lvl;
     count = 1;
   }
+  public Enchantment getEnch() {
+    return ench;
+  }
+  public Integer getLevel() {
+    return level;
+  }
+  public int getCount() {
+    return count;
+  }
   public void readFromNBT(NBTTagCompound tags, String key) {
     NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
-    this.count = t.getInteger("eCount");
+    this.count = t.getInteger(NBT_COUNT);
     String enchString = t.getString(NBT_ENCH);
     if (enchString.isEmpty() == false)
       this.ench = Enchantment.getEnchantmentByLocation(enchString);
   }
   public NBTTagCompound writeToNBT() {
     NBTTagCompound t = new NBTTagCompound();
-    t.setInteger("eCount", this.count);
+    t.setInteger(NBT_COUNT, this.count);
     if (ench == null) {
       t.setString(NBT_ENCH, "");
     }
@@ -80,14 +86,5 @@ public class EnchantStack {
       return "--";
     }
     return UtilChat.lang(ench.getName()).substring(0, 5);
-  }
-  public Enchantment getEnch() {
-    return ench;
-  }
-  public Integer getLevel() {
-    return level;
-  }
-  public int getCount() {
-    return count;
   }
 }

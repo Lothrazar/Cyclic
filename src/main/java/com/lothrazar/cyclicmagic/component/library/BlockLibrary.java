@@ -5,10 +5,8 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +15,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -59,52 +56,56 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
       }
       if (enchToRemove != null) {
         // success
-        enchants.remove(enchToRemove);
-        EnchantmentHelper.setEnchantments(enchants, playerHeld);
-        if (enchants.size() == 0) {
+        if (enchants.size() == 1) {
+          //if it only has 1, and we are going to reomve that last thing, well its just a book now
           //TODO: merge shared with TileENtityDisenchanter
           player.setHeldItem(hand, new ItemStack(Items.BOOK));
           player.getCooldownTracker().setCooldown(Items.BOOK, 50);
-          library.markDirty();
-          onSuccess(player);
-          return true;
         }
+        else {
+          //it has more than one, so downshift by 1
+          //cannot edit so just remake the copy with one less
+          enchants.remove(enchToRemove);
+          ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
+          EnchantmentHelper.setEnchantments(enchants, inputCopy);
+          player.setHeldItem(hand, inputCopy);
+        }
+        //        library.markDirty();
+        onSuccess(player);
+        return true;
       }
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
-        Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
-        enchMap.put(es.getEnch(), es.getLevel());
-        this.dropEnchantmentInWorld(es.getEnch(), player, pos);
+        this.dropEnchantmentInWorld(es, player, pos);
         playerHeld.shrink(1);
         library.removeEnchantment(segment);
         onSuccess(player);
         return true;
       }
     }
-    else if (playerHeld.isEmpty()) {
-      //display information about whats inside ??maybe?? if sneaking
+    //display information about whats inside ??maybe?? if sneaking
+    else if (player.isSneaking() == false) {
       EnchantStack es = library.getEnchantStack(segment);
       UtilChat.sendStatusMessage(player, es.toString());
       return true;
     }
-    return false;
+    return false;//so you can still sneak with books or whatever
   }
   private void onSuccess(EntityPlayer player) {
     UtilSound.playSound(player, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
   }
-  private void dropEnchantmentInWorld(Enchantment ench, EntityPlayer player, BlockPos pos) {
+  private void dropEnchantmentInWorld(EnchantStack ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
     Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
-    enchMap.put(ench, 1);
+    enchMap.put(ench.getEnch(), ench.getLevel());
     EnchantmentHelper.setEnchantments(enchMap, stack);
     if (player.addItemStackToInventory(stack) == false) {
       //drop if player is full
       player.dropItem(stack, true);
     }
-    //    UtilItemStack.dropItemStackInWorld(world, pos, stack);
   }
   @Override
   public void initModel() {
@@ -114,7 +115,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
         " r ",
         "sgs",
         " r ",
