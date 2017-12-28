@@ -27,24 +27,21 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     //TODO: refactor so i can say
     //writeText(String, EnumFacing, u, v)
-    for (int j = 0; j < te.storage.length; ++j) {
+ //   for (int j = 0; j < te.storage.length; ++j) {
 
-      GlStateManager.pushMatrix();
-      GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
+      renderOnSouthFace("Hi Twitter" , x,  y,  z, destroyStage);
       
-      
-      renderOnSouthFace("Hi Twitter");
-      
-      GlStateManager.popMatrix();
-      if (destroyStage >= 0) {
-        GlStateManager.matrixMode(5890);
-        GlStateManager.popMatrix();
-        GlStateManager.matrixMode(5888);
-      }
-    }
+  
+   // }
   }
   //TODO: take in the face or render on all faces?
-  private void renderOnSouthFace(String s) {
+  private void renderOnSouthFace(String s, double x, double y, double z, int destroyStage) {
+
+    GlStateManager.pushMatrix();
+    GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
+    
+    
+    
     //initial setup
     float scaleTo = 0.6666667F;
     GlStateManager.enableRescaleNormal();
@@ -69,5 +66,14 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.depthMask(true);
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
  
+    
+    
+    
+    GlStateManager.popMatrix();
+    if (destroyStage >= 0) {
+      GlStateManager.matrixMode(5890);
+      GlStateManager.popMatrix();
+      GlStateManager.matrixMode(5888);
+    }
   }
 }
