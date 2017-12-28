@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
-  final float zTransl = 0.500005F;
+  final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.6F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
   final float vOffset = -0.11F;
@@ -17,10 +17,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
       //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TL), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TR), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TL), x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TR), x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
     }
   }
   private int angleOfFace(EnumFacing side) {
