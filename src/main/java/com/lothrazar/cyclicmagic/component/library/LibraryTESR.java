@@ -16,10 +16,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     float topRow = -0.9F, bottomRow = -1.6125F;
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
       //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
-      renderTextAt(te.getEnchantStack(QuadrantEnum.TL).toString(), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.TR).toString(), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.BL).toString(), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.BR).toString(), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.TL).shortName(), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.TR).shortName(), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.BL).shortName(), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.BR).shortName(), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
     }
   }
   private int angleOfFace(EnumFacing side) {

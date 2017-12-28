@@ -61,10 +61,15 @@ public class EnchantStack {
   @Override
   public String toString() {
     if (this.isEmpty()) {
-      return "--";//UtilChat.lang("enchantment_stack.empty");
+      return UtilChat.lang("enchantment_stack.empty");
     }
-//    return "[" + count + "] " + UtilChat.lang(ench.getName()).substring(0, 3) + " " + EnchantRegistry.getStrForLevel(level);
-    return  UtilChat.lang(ench.getName()).substring(0, 3);
+    return "[" + count + "] " + UtilChat.lang(ench.getName()) + " " + EnchantRegistry.getStrForLevel(level);
+  }
+  public String shortName() {
+    if (this.isEmpty()) {
+      return "--";
+    }
+    return UtilChat.lang(ench.getName()).substring(0, 3);
   }
   public Enchantment getEnch() {
     return ench;
