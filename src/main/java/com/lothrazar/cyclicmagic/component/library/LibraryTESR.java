@@ -14,12 +14,23 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     //writeText(String, EnumFacing, u, v)
  //   for (int j = 0; j < te.storage.length; ++j) {
 
+    //SOUTH FACING SIDE:
+    //top left
       renderOnSouthFace(te.storage[0].toString() , x,  y,  z, destroyStage
           ,1.6F, -0.9F, 0.500005F);
+      
 
+      //top right
       renderOnSouthFace(te.storage[1].toString() , x,  y,  z, destroyStage
+          ,2.2F, -0.9F, 0.500005F);
+
+      
+      //bottom right
+      renderOnSouthFace(te.storage[2].toString() , x,  y,  z, destroyStage
           ,1.6F, -1.6125F, 0.500005F);
-  
+  //bottom left
+      renderOnSouthFace(te.storage[3].toString() , x,  y,  z, destroyStage
+          ,2.2F, -1.6125F, 0.500005F);
    // }
   }
   //TODO: take in the face or render on all faces?
