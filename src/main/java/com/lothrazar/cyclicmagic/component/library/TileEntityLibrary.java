@@ -1,8 +1,11 @@
 package com.lothrazar.cyclicmagic.component.library;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
+import com.lothrazar.cyclicmagic.component.library.BlockLibrary.Quadrant;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityLibrary extends TileEntity {
+public class TileEntityLibrary extends TileEntityBaseMachine {
   private EnchantStack[] storage = new EnchantStack[BlockLibrary.Quadrant.values().length];
   public TileEntityLibrary() {
     super();
@@ -10,23 +13,47 @@ public class TileEntityLibrary extends TileEntity {
       storage[i] = new EnchantStack();
     }
   }
+  public EnchantStack getEnchantStack(BlockLibrary.Quadrant area) {
+    //EnchantStack
+    return storage[area.ordinal()];
+  }
   public boolean addEnchantment(BlockLibrary.Quadrant area, Enchantment ench, int level) {
-    if(ench.getMaxLevel() != level){
-      return false;
-    }
+    //    if (ench.getMaxLevel() != level) {
+    //      return false;
+    //    }
     int index = area.ordinal();
     EnchantStack enchStackCurrent = storage[index];
     if (enchStackCurrent.count == 0) {
       enchStackCurrent = new EnchantStack(ench, level);
+      storage[index] = enchStackCurrent;
       return true;
     }
     else if (enchStackCurrent.doesMatch(ench, level)) {
       enchStackCurrent.add();
+      storage[index] = enchStackCurrent;
       return true;
     }
     else {
       return false;
     }
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    ModCyclic.logger.log("!!!!!!!! Read from " + tags);
+    for (Quadrant q : Quadrant.values()) {
+      EnchantStack s = new EnchantStack();
+      s.readFromNBT(tags, q.name());
+      storage[q.ordinal()] = s;
+    }
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    for (Quadrant q : Quadrant.values()) {
+      tags.setTag(q.name(), getEnchantStack(q).writeToNBT());
+    }
+    ModCyclic.logger.log("!!!! after write to " + tags);
+    return super.writeToNBT(tags);
   }
   /**
    * One enchantment instance is an enchant combined with its level and we have a number of those
@@ -44,6 +71,27 @@ public class TileEntityLibrary extends TileEntity {
       level = lvl;
       count = 1;
     }
+    public void readFromNBT(NBTTagCompound tags, String key) {
+      NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
+      this.count = t.getInteger("eCount");
+      String enchString = t.getString("ench");
+      if (enchString.isEmpty() == false)
+        this.ench = Enchantment.getEnchantmentByLocation(enchString);
+    }
+    public NBTTagCompound writeToNBT() {
+      NBTTagCompound t = new NBTTagCompound();
+      t.setInteger("eCount", this.count);
+      if (ench == null) {
+        t.setString("ench", "");
+      }
+      else {
+        t.setString("ench", ench.getRegistryName().toString());
+      }
+      return t;
+    }
+    public boolean isEmpty() {
+      return ench == null || count == 0;
+    }
     public boolean doesMatch(Enchantment e, int lvl) {
       return ench.equals(e) && level == lvl;
     }
@@ -56,6 +104,16 @@ public class TileEntityLibrary extends TileEntity {
         ench = null;
         level = 0;
       }
+    }
+    @Override
+    public String toString() {
+      if (this.isEmpty()) {
+        return "empty";
+      }
+      return "[" + count + "] " + ench.getName() + " " + level;
+    }
+    public Enchantment getEnch() {
+      return ench;
     }
   }
 }

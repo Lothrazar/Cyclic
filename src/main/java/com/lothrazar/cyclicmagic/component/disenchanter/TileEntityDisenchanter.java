@@ -82,6 +82,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       return;
     } //weird none were found. so anyweay dont pay cost
     enchants.remove(keyMoved);
+    // TODO: merge removeEnchant with blockLibrary
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     dropStack(eBook); // drop the new enchanted book
     //special case if input was book, we dont want an ench book with nothin on it
