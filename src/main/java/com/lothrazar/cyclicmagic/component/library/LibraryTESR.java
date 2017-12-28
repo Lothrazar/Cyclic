@@ -1,23 +1,8 @@
 package com.lothrazar.cyclicmagic.component.library;
-import java.util.List;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public LibraryTESR(Block block) {
@@ -29,7 +14,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     //writeText(String, EnumFacing, u, v)
  //   for (int j = 0; j < te.storage.length; ++j) {
 
-      renderOnSouthFace("Hi Twitter" , x,  y,  z, destroyStage);
+      renderOnSouthFace(te.storage[0].toString() , x,  y,  z, destroyStage);
       
   
    // }
