@@ -15,6 +15,9 @@ public class TileEntityLibrary extends TileEntityBaseMachine {
     //EnchantStack
     return storage[area.ordinal()];
   }
+  public void removeEnchantment(QuadrantEnum area){
+    storage[area.ordinal()].remove();
+  }
   public boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
     //    if (ench.getMaxLevel() != level) {
     //      return false;

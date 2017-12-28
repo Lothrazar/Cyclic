@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.PotionSnow;
 import com.lothrazar.cyclicmagic.potion.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -65,20 +66,6 @@ public class PotionEffectRegistry {
     }
   }
   public static String getStrForLevel(int lvl) {
-    //TODO: probs a better roman numeral way\
-    //not found in    PotionHelper.MixPredicate<T>
-    switch (lvl) {
-      case 0:
-        return "I";
-      case 1:
-        return "II";
-      case 2:
-        return "III";
-      case 3:
-        return "IV";
-      case 4:
-        return "V";
-    }
-    return "";
+    return UtilChat.lang("enchantment.level." + lvl);
   }
 }

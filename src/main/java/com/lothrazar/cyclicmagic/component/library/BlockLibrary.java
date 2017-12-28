@@ -2,10 +2,11 @@ package com.lothrazar.cyclicmagic.component.library;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile; 
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -13,6 +14,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -21,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockLibrary extends BlockBaseHasTile {
- 
   public BlockLibrary() {
     super(Material.WOOD);
   }
@@ -56,31 +57,46 @@ public class BlockLibrary extends BlockBaseHasTile {
         if (enchants.size() == 0) {
           //TODO: merge shared with TileENtityDisenchanter
           player.setHeldItem(hand, new ItemStack(Items.BOOK));
+          player.getCooldownTracker().setCooldown(Items.BOOK, 50);
           library.markDirty();
+          onSuccess(player);
+          return true;
         }
       }
     }
-    else if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
+    else if (playerHeld.getItem().equals(Items.BOOK)
+        && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
-        this.dropEnchantmentInWorld(es.getEnch(), world, pos);
+        Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
+        enchMap.put(es.getEnch(), es.getLevel());
+        this.dropEnchantmentInWorld(es.getEnch(), player, pos);
+        playerHeld.shrink(1);
+        library.removeEnchantment(segment);
+        onSuccess(player);
+        return true;
       }
     }
     else if (playerHeld.isEmpty()) {
       //display information about whats inside if sneaking
       EnchantStack es = library.getEnchantStack(segment);
       UtilChat.sendStatusMessage(player, es.toString());
+      return true;
       //otherwise withdraw?
     }
     //eventually we are doing a withdraw/deposit of an ench
     // dropEnchantmentInWorld(ench, world, pos);
-    return true;
+    return false;
   }
-  private void dropEnchantmentInWorld(Enchantment ench, World world, BlockPos pos) {
+  private void onSuccess(EntityPlayer player) {
+    UtilSound.playSound(player, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+  }
+  private void dropEnchantmentInWorld(Enchantment ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
     Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
     enchMap.put(ench, 1);
     EnchantmentHelper.setEnchantments(enchMap, stack);
-    UtilItemStack.dropItemStackInWorld(world, pos, stack);
+    player.dropItem(stack, true);
+    //    UtilItemStack.dropItemStackInWorld(world, pos, stack);
   }
 }

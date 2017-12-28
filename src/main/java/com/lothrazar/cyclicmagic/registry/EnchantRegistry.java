@@ -22,4 +22,20 @@ public class EnchantRegistry {
       event.getRegistry().register(b);
     }
   }
+  public static String getStrForLevel(int lvl) {
+    //TODO: probs a better roman numeral way\
+    switch (lvl) {
+      case 1:
+        return "I";
+      case 2:
+        return "II";
+      case 3:
+        return "III";
+      case 4:
+        return "IV";
+      case 5:
+        return "V";
+    }
+    return "";
+  }
 }

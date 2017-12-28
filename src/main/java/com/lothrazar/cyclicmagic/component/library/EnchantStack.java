@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.library;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
@@ -44,9 +45,6 @@ public class EnchantStack {
   public boolean doesMatch(Enchantment e, int lvl) {
     return ench.equals(e) && level == lvl;
   }
-  public int getCount(){
-    return count;
-  }
   public void add() {
     count++;
   }
@@ -60,11 +58,17 @@ public class EnchantStack {
   @Override
   public String toString() {
     if (this.isEmpty()) {
-      return "empty";
+      return "enchantment_stack.empty";
     }
-    return "[" + count + "] " + UtilChat.lang(ench.getName()) + " " + PotionEffectRegistry.getStrForLevel(level);
+    return "[" + count + "] " + UtilChat.lang(ench.getName()) + " " + EnchantRegistry.getStrForLevel(level);
   }
   public Enchantment getEnch() {
     return ench;
+  }
+  public Integer getLevel() {
+    return level;
+  }
+  public int getCount() {
+    return count;
   }
 }
