@@ -1,6 +1,12 @@
 {
-    "parent": "block/cube_all",
+    "parent": "block/cube_directional",
     "textures": {
-        "all": "cyclicmagic:blocks/block_library"
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/block_library_base",
+        "up": "cyclicmagic:blocks/block_library_base",
+        "north": "cyclicmagic:blocks/block_library",
+        "east": "cyclicmagic:blocks/block_library",
+        "south": "cyclicmagic:blocks/block_library",
+        "west": "cyclicmagic:blocks/block_library"
     }
 }

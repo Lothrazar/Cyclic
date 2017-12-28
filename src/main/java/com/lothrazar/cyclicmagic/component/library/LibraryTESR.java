@@ -57,11 +57,11 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
     GlStateManager.popMatrix();
     FontRenderer fontrenderer = this.getFontRenderer();
-    float f3 = 0.010416667F;
     GlStateManager.translate(-2.0F, 1.33333334F, 0.046666667F);
     //below sets position
     GlStateManager.translate(xt, yt, zt);
     //sake makes it the right size do not touch
+    float f3 = 0.010416667F;
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
     GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
     GlStateManager.depthMask(false);
