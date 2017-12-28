@@ -11,17 +11,15 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   }
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    //TODO: refactor so i can say
-    //writeText(String, EnumFacing, u, v)
-    float angleSouth = 0, angleEast = 90, angleNorth = 180, angleWest = 270;
+    float zTransl = 0.500005F;
+    float leftColumn = 1.6F, rightColumn = 2.2F;
+    float topRow = -0.9F, bottomRow = -1.6125F;
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
-      renderTextAt(te.storage[0].toString(), x, y, z, destroyStage, 1.6F, -0.9F, 0.500005F, angleOfFace(face));
-      //top right
-      renderTextAt(te.storage[1].toString(), x, y, z, destroyStage, 2.2F, -0.9F, 0.500005F, angleOfFace(face));
-      //bottom right
-      renderTextAt(te.storage[2].toString(), x, y, z, destroyStage, 1.6F, -1.6125F, 0.500005F, angleOfFace(face));
-      //bottom left
-      renderTextAt(te.storage[3].toString(), x, y, z, destroyStage, 2.2F, -1.6125F, 0.500005F, angleOfFace(face));
+      //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
+      renderTextAt(te.getEnchantStack(QuadrantEnum.TL).toString(), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.TR).toString(), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.BL).toString(), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
+      renderTextAt(te.getEnchantStack(QuadrantEnum.BR).toString(), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
     }
   }
   private int angleOfFace(EnumFacing side) {
@@ -38,7 +36,6 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
         return -1;
     }
   }
- 
   private void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
