@@ -93,15 +93,13 @@ public class BlockLibrary extends BlockBaseHasTile {
     if (segment == null) {
       return false;//literal edge case
     }
-    ModCyclic.logger.log(segment.name()+" fromworld "+world.isRemote);
+    ModCyclic.logger.log(segment.name() + " fromworld " + world.isRemote);
     ItemStack playerHeld = player.getHeldItem(hand);
     Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
       Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
       for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
         if (library.addEnchantment(segment, entry.getKey(), entry.getValue())) {
-          ModCyclic.logger.log("added one to world "+world.isRemote+"..." + entry.getKey().getName()
-              + " but if we get same " + library.getEnchantStack(segment));
           enchToRemove = entry.getKey();
           break;
         }
@@ -113,7 +111,6 @@ public class BlockLibrary extends BlockBaseHasTile {
         if (enchants.size() == 0) {
           //TODO: merge shared with TileENtityDisenchanter
           player.setHeldItem(hand, new ItemStack(Items.BOOK));
-          
           library.markDirty();
         }
       }

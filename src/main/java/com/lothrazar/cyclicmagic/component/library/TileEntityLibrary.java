@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.component.library;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary.Quadrant;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -40,7 +42,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine {
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
-    ModCyclic.logger.log("!!!!!!!! Read from " + tags);
+ 
     for (Quadrant q : Quadrant.values()) {
       EnchantStack s = new EnchantStack();
       s.readFromNBT(tags, q.name());
@@ -52,7 +54,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine {
     for (Quadrant q : Quadrant.values()) {
       tags.setTag(q.name(), getEnchantStack(q).writeToNBT());
     }
-    ModCyclic.logger.log("!!!! after write to " + tags);
+ 
     return super.writeToNBT(tags);
   }
   /**
@@ -110,7 +112,8 @@ public class TileEntityLibrary extends TileEntityBaseMachine {
       if (this.isEmpty()) {
         return "empty";
       }
-      return "[" + count + "] " + ench.getName() + " " + level;
+      
+      return "[" + count + "] " + UtilChat.lang(ench.getName()) + " " + PotionEffectRegistry.getStrForLevel(level);
     }
     public Enchantment getEnch() {
       return ench;
