@@ -25,7 +25,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   }
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    Block block = te.getBlockType();
+    //TODO: refactor so i can say
+    //writeText(String, EnumFacing, u, v)
+    
+ 
     GlStateManager.pushMatrix();
     float f = 0.6666667F;
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
@@ -57,7 +60,8 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     //180 so its not upside down
 //    GlStateManager.rotate(180, 1, 0, 0);
     //below sets position
-    GlStateManager.translate(1.5F, -1.3125F, -1.4375F);
+    GlStateManager.translate(1.6F, -1.4125F, 0.500005F);
+    //sake makes it the right size do not touch
           GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
     GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
     GlStateManager.depthMask(false);
