@@ -14,13 +14,17 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     //writeText(String, EnumFacing, u, v)
  //   for (int j = 0; j < te.storage.length; ++j) {
 
-      renderOnSouthFace(te.storage[0].toString() , x,  y,  z, destroyStage);
-      
+      renderOnSouthFace(te.storage[0].toString() , x,  y,  z, destroyStage
+          ,1.6F, -0.9F, 0.500005F);
+
+      renderOnSouthFace(te.storage[1].toString() , x,  y,  z, destroyStage
+          ,1.6F, -1.6125F, 0.500005F);
   
    // }
   }
   //TODO: take in the face or render on all faces?
-  private void renderOnSouthFace(String s, double x, double y, double z, int destroyStage) {
+  private void renderOnSouthFace(String s, double x, double y, double z, int destroyStage
+      , float xt,float yt, float zt) {
 
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
@@ -40,7 +44,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     //180 so its not upside down
     //    GlStateManager.rotate(180, 1, 0, 0);
     //below sets position
-    GlStateManager.translate(1.6F, -1.4125F, 0.500005F);
+    GlStateManager.translate(xt,yt,zt);
     //sake makes it the right size do not touch
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
     GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
