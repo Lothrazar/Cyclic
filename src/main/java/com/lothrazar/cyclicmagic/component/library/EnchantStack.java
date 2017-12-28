@@ -55,6 +55,9 @@ public class EnchantStack {
       level = 0;
     }
   }
+  public boolean equals(EnchantStack e) {
+    return this.doesMatch(e.ench, e.getLevel()) && this.getCount() == e.getCount();
+  }
   @Override
   public String toString() {
     if (this.isEmpty()) {

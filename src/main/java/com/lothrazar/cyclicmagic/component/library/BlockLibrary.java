@@ -3,26 +3,31 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class BlockLibrary extends BlockBaseHasTile {
+public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR{
   public BlockLibrary() {
     super(Material.WOOD);
   }
@@ -39,7 +44,7 @@ public class BlockLibrary extends BlockBaseHasTile {
     if (segment == null) {
       return false;//literal edge case
     }
-    ModCyclic.logger.log(segment.name() + " fromworld " + world.isRemote);
+ 
     ItemStack playerHeld = player.getHeldItem(hand);
     Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
@@ -66,6 +71,7 @@ public class BlockLibrary extends BlockBaseHasTile {
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
+ 
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
         Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
@@ -98,5 +104,11 @@ public class BlockLibrary extends BlockBaseHasTile {
     EnchantmentHelper.setEnchantments(enchMap, stack);
     player.dropItem(stack, true);
     //    UtilItemStack.dropItemStackInWorld(world, pos, stack);
+  }  @Override
+  public void initModel() {
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    // Bind our TESR to our tile entity
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLibrary.class, new LibraryTESR<TileEntityLibrary>(this));
+ 
   }
 }

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.component.library;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine; 
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityLibrary extends TileEntityBaseMachine {
-  private EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
+  EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
   public TileEntityLibrary() {
     super();
     for (int i = 0; i < storage.length; i++) {
@@ -15,13 +15,10 @@ public class TileEntityLibrary extends TileEntityBaseMachine {
     //EnchantStack
     return storage[area.ordinal()];
   }
-  public void removeEnchantment(QuadrantEnum area){
+  public void removeEnchantment(QuadrantEnum area) {
     storage[area.ordinal()].remove();
   }
   public boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
-    //    if (ench.getMaxLevel() != level) {
-    //      return false;
-    //    }
     int index = area.ordinal();
     EnchantStack enchStackCurrent = storage[index];
     if (enchStackCurrent.isEmpty()) {
