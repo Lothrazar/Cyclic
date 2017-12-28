@@ -53,19 +53,20 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.popMatrix();
     FontRenderer fontrenderer = this.getFontRenderer();
     float f3 = 0.010416667F;
-    GlStateManager.translate(-2.0F, 10.33333334F, 0.046666667F);
+    GlStateManager.translate(-2.0F, 1.33333334F, 0.046666667F);
     //180 so its not upside down
-    GlStateManager.rotate(180, 1, 0, 0);
-    GlStateManager.translate(0.0F, -0.3125F, -0.4375F);
-    //      GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
-    GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);
+//    GlStateManager.rotate(180, 1, 0, 0);
+    //below sets position
+    GlStateManager.translate(1.5F, -1.3125F, -1.4375F);
+          GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
+    GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
     GlStateManager.depthMask(false);
     int i = 0;
     //    if (destroyStage < 0) {
     //      for (int j = 0; j < te.storage.length; ++j) {
     String s = "HI TWITTER!";
     //                  fontRenderer.drawString(text, 0, (int) (y * fontRenderer.FONT_HEIGHT), 0xFFFF00FF);
-    fontrenderer.drawString(s, 0, 0, 0);
+    fontrenderer.drawString(s, 0, 0, 0xFF0000);
     //      }
     //    }
     GlStateManager.depthMask(true);
