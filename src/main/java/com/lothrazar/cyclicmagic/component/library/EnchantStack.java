@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.component.library;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -12,9 +14,11 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class EnchantStack {
+  private static final String NBT_ENCH = "ench";
   private int count = 0;
-  private Enchantment ench = null;
   private int level = 0;
+  //  private Map<Integer,Integer> levelCount = new HashMap<Integer,Integer>();
+  private Enchantment ench = null;
   public EnchantStack() {}
   public EnchantStack(Enchantment e, int lvl) {
     ench = e;
@@ -24,7 +28,7 @@ public class EnchantStack {
   public void readFromNBT(NBTTagCompound tags, String key) {
     NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
     this.count = t.getInteger("eCount");
-    String enchString = t.getString("ench");
+    String enchString = t.getString(NBT_ENCH);
     if (enchString.isEmpty() == false)
       this.ench = Enchantment.getEnchantmentByLocation(enchString);
   }
@@ -32,10 +36,10 @@ public class EnchantStack {
     NBTTagCompound t = new NBTTagCompound();
     t.setInteger("eCount", this.count);
     if (ench == null) {
-      t.setString("ench", "");
+      t.setString(NBT_ENCH, "");
     }
     else {
-      t.setString("ench", ench.getRegistryName().toString());
+      t.setString(NBT_ENCH, ench.getRegistryName().toString());
     }
     return t;
   }
@@ -63,13 +67,19 @@ public class EnchantStack {
     if (this.isEmpty()) {
       return UtilChat.lang("enchantment_stack.empty");
     }
-    return "[" + count + "] " + UtilChat.lang(ench.getName()) + " " + EnchantRegistry.getStrForLevel(level);
+    return countName() + " " + UtilChat.lang(ench.getName()) + " " + levelName();
+  }
+  public String countName() {
+    return "[" + count + "]";
+  }
+  public String levelName() {
+    return EnchantRegistry.getStrForLevel(level);
   }
   public String shortName() {
     if (this.isEmpty()) {
       return "--";
     }
-    return UtilChat.lang(ench.getName()).substring(0, 3);
+    return UtilChat.lang(ench.getName()).substring(0, 5);
   }
   public Enchantment getEnch() {
     return ench;

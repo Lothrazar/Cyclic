@@ -6,20 +6,21 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
+  final float zTransl = 0.500005F;
+  final float leftColumn = 1.6F, rightColumn = 2.08F;
+  final float topRow = -0.9F, bottomRow = -1.4125F;
+  final float vOffset = -0.11F;
   public LibraryTESR(Block block) {
     super(block);
   }
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    float zTransl = 0.500005F;
-    float leftColumn = 1.6F, rightColumn = 2.2F;
-    float topRow = -0.9F, bottomRow = -1.6125F;
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
       //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
-      renderTextAt(te.getEnchantStack(QuadrantEnum.TL).shortName(), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.TR).shortName(), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.BL).shortName(), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
-      renderTextAt(te.getEnchantStack(QuadrantEnum.BR).shortName(), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TL), x, y, z, destroyStage, leftColumn, topRow, zTransl, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TR), x, y, z, destroyStage, rightColumn, topRow, zTransl, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, zTransl, angleOfFace(face));
+      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, zTransl, angleOfFace(face));
     }
   }
   private int angleOfFace(EnumFacing side) {
@@ -34,6 +35,13 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
         return 270;
       default:
         return -1;
+    }
+  }
+  private void renderEnchantStack(EnchantStack stack, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
+    renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
+    if (stack.isEmpty() == false) {
+      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
+      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);
     }
   }
   private void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
