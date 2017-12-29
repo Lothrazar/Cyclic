@@ -122,7 +122,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
         "sgs",
         " r ",
         'g', "chestEnder",
-        's', Items.SIGN,
+        's', Blocks.PURPUR_BLOCK,
         'r', Blocks.BOOKSHELF);
   }
 }
