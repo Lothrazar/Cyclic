@@ -40,16 +40,27 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       //      renderStack(te, new ItemStack(Items.ARROW), face,QuadrantEnum.BR, x, y, z);
     }
   }
-  private void renderStack(TileEntityLibrary te, ItemStack s, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
-    float scaleFactor = 0.05F;
+  private void renderStack(TileEntityLibrary te, EnchantStack stack, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
+    float scaleFactor = 0.045F;
+    float borderWidth = 0.038F;
+    ItemStack s = stack.getRenderIcon();
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
+    float width = 0.25F;
+    float bookX = borderWidth, bookY = 0.956F;
     switch (quad) {
       case TL:
-        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+        for (int i = 0; i < stack.getCount(); i++) {
+          bookX += scaleFactor;
+          if (i % 8 == 0) {
+            bookX = 0.089F;
+            bookY -= scaleFactor;
+          }
+          renderItem(te, s, bookX, bookY, 1F, 90, false, scaleFactor);
+        }
       break;
       case TR:
         renderItem(te, s, 0.75F, 0.75F, 1F, 90, false, scaleFactor);
@@ -80,14 +91,14 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   }
   private void renderEnchantStack(TileEntityLibrary te, EnchantStack stack, QuadrantEnum quad, EnumFacing face, double x, double y, double z, int destroyStage, float xt, float yt, float zt) {
     if (stack.isEmpty() == false) {
-      renderStack(te, stack.getRenderIcon(), face, quad, x, y, z);
+      renderStack(te, stack, face, quad, x, y, z);
     }
-    int angle = angleOfFace(face);
-    renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
-    if (stack.isEmpty() == false) {
-      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
-      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);
-    }
+//    int angle = angleOfFace(face);
+//    renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
+//    if (stack.isEmpty() == false) {
+//      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
+//      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);
+//    }
   }
   private void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
     int textColor = 0xFF0055;//TODO: input or per type?

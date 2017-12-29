@@ -47,7 +47,6 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     Enchantment enchToRemove = null;
-    
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
       Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
       for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
@@ -101,10 +100,10 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   private void dropEnchantedBookOnPlayer(EnchantStack ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = ench.makeEnchantedBook();
-//    new ItemStack(Items.ENCHANTED_BOOK);
-//    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
-//    enchMap.put(ench.getEnch(), ench.getLevel());
-//    EnchantmentHelper.setEnchantments(enchMap, stack);
+    //    new ItemStack(Items.ENCHANTED_BOOK);
+    //    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
+    //    enchMap.put(ench.getEnch(), ench.getLevel());
+    //    EnchantmentHelper.setEnchantments(enchMap, stack);
     if (player.addItemStackToInventory(stack) == false) {
       //drop if player is full
       player.dropItem(stack, true);

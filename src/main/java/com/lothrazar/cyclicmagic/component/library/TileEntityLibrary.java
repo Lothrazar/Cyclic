@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLibrary extends TileEntityBaseMachine implements ITickable {
+  public static final int MAX_COUNT = 64;
   private static final int HEADER_TIMER = 10;
   private static final String NBT_CLICKED = "lastClicked";
   EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
@@ -36,6 +37,9 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   public boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
     int index = area.ordinal();
     EnchantStack enchStackCurrent = storage[index];
+    if (enchStackCurrent.getCount() >= MAX_COUNT) {
+      return false;
+    }
     if (enchStackCurrent.isEmpty()) {
       enchStackCurrent = new EnchantStack(ench, level);
       storage[index] = enchStackCurrent;

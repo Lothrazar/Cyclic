@@ -19,6 +19,7 @@ import net.minecraftforge.common.config.Configuration;
  *
  */
 public class EnchantStack {
+  private static final String NBT_LEVEL = "level";
   private static final String NBT_COUNT = "eCount";
   private static final String NBT_ENCH = "ench";
   private int count = 0;
@@ -42,13 +43,15 @@ public class EnchantStack {
   public void readFromNBT(NBTTagCompound tags, String key) {
     NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
     this.count = t.getInteger(NBT_COUNT);
+    this.level = t.getInteger(NBT_LEVEL);
     String enchString = t.getString(NBT_ENCH);
     if (enchString.isEmpty() == false)
       this.ench = Enchantment.getEnchantmentByLocation(enchString);
   }
   public NBTTagCompound writeToNBT() {
     NBTTagCompound t = new NBTTagCompound();
-    t.setInteger(NBT_COUNT, this.count);
+    t.setInteger(NBT_COUNT, count);
+    t.setInteger(NBT_LEVEL, level);
     if (ench == null) {
       t.setString(NBT_ENCH, "");
     }
