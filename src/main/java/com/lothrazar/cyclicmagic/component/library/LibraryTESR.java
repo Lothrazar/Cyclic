@@ -50,56 +50,34 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    float width = 0.25F;
-    float bookX = borderWidth, bookY = 0.956F;
+    //    float bookX = borderWidth, bookY = 0.956F;
+    float startX = 0, startY = 0;
     switch (quad) {
       case TL:
-        //TODO: REFACTOR INTO SHARED METHOD
-        for (int i = 0; i < stack.getCount(); i++) {
-          bookX += scaleFactor;
-          if (i % 8 == 0) {
-            bookX = 0.089F;
-            bookY -= scaleFactor;
-          }
-          renderItem(te, s, bookX, bookY, 1F, angle, false, scaleFactor);
-        }
+        startX = 0.089F;
+        startY = 0.956F;
       break;
       case TR:
-       
-        for (int i = 0; i < stack.getCount(); i++) {
-          bookX += scaleFactor;
-          if (i % 8 == 0) {
-            bookX =  0.6F;
-            bookY -= scaleFactor;
-          }
-          renderItem(te, s, bookX, bookY, 1F, angle, false, scaleFactor);
-        }
-      //  renderItem(te, s, 0.75F, 0.75F, 1F, 90, false, scaleFactor);
+        startX = 0.6F;
+        startY = 0.956F;
       break;
       case BL:
-        bookY = 0.45F;
-        for (int i = 0; i < stack.getCount(); i++) {
-          bookX += scaleFactor;
-          if (i % 8 == 0) {
-            bookX =  0.6F;
-            bookY -= scaleFactor;
-          }
-          renderItem(te, s, bookX, bookY, 1F, angle, false, scaleFactor);
-        }
-        //renderItem(te, s, 0.25F, 0.25F, 1F, 90, false, scaleFactor);
+        startX = 0.089F;
+        startY = 0.45F;
       break;
       case BR:
-        bookY = 0.45F;
-        for (int i = 0; i < stack.getCount(); i++) {
-          bookX += scaleFactor;
-          if (i % 8 == 0) {
-            bookX =  0.089F;
-            bookY -= scaleFactor;
-          }
-          renderItem(te, s, bookX, bookY, 1F, angle, false, scaleFactor);
-        }
-       // renderItem(te, s, 0.75F, 0.25F, 1F, 90, false, scaleFactor);
+        startX = 0.6F;
+        startY = 0.45F;
       break;
+    }
+    float bookY = startY, bookX = startX;
+    for (int i = 0; i < stack.getCount(); i++) {
+      bookX += scaleFactor;
+      if (i % 8 == 0) {
+        bookX = startX;
+        bookY -= scaleFactor;
+      }
+      renderItem(te, s, bookX, bookY, 1F, angle, false, scaleFactor);
     }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
