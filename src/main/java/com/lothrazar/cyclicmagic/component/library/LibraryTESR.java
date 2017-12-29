@@ -24,16 +24,30 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
       renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
       //WIP
-      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), QuadrantEnum.TL, x, y, z);
+      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), face,QuadrantEnum.TL, x, y, z);
     }
   }
-  private void renderStack(TileEntityLibrary te, ItemStack s, QuadrantEnum quad, double x, double y, double z) {
+  private void renderStack(TileEntityLibrary te, ItemStack s,EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
+  float scaleFactor = 0.2F;
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    renderItem(te, s, 0.25F, 0.75F, 1F, 90, false);
+    switch (quad) {
+      case TL:
+        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+      break;
+      case TR:
+        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+      break;
+      case BL:
+        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+      break;
+      case BR:
+        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+      break;
+    }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }

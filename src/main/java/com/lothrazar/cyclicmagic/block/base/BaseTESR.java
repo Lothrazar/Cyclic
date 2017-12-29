@@ -50,9 +50,9 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
   }
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y) {
-    this.renderItem(te, stack, x, itemHeight, y, 0, true);
+    this.renderItem(te, stack, x, itemHeight, y, 0, true, 0.4F);
   }
-  protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning) {
+  protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning, float scaleFactor) {
     if (stack == null || stack.isEmpty()) {
       return;
     }
@@ -71,7 +71,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     }
     //end of rotate
     GlStateManager.translate(x, itemHeight, y);//move to xy center and up to top level
-    float scaleFactor = 0.4f;
     GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);//shrink down
     // Thank you for helping me understand lighting @storagedrawers  https://github.com/jaquadro/StorageDrawers/blob/40737fb2254d68020a30f80977c84fd50a9b0f26/src/com/jaquadro/minecraft/storagedrawers/client/renderer/TileEntityDrawersRenderer.java#L96
     //start of 'fix lighting' 
