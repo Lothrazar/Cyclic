@@ -418,4 +418,14 @@ public class UtilWorld {
         blockId.equals("tconstruct:stone_torch/0") ||
         blockId.equals("actuallyadditions:block_tiny_torch/0"));
   }
+  public static List<BlockPos> getMatchingInRange(World world, BlockPos pos, Block blockToMatch, int maxRange) {
+    List<BlockPos> found = new ArrayList<BlockPos>();
+    List<BlockPos> searchRange = UtilShape.cubeFilled(pos, maxRange, maxRange);
+    for (BlockPos p : searchRange) {
+      if (world.getBlockState(p).getBlock() == blockToMatch) {
+        found.add(p);
+      }
+    }
+    return found;
+  }
 }

@@ -63,6 +63,20 @@ public class EnchantStack {
   public boolean isEmpty() {
     return ench == null || getCount() == 0;
   }
+  public boolean doesMatchNonEmpty(ItemStack stack) {
+    if (this.isEmpty()) {
+      return false;
+    }
+    if (stack.getItem().equals(Items.ENCHANTED_BOOK)) {
+      Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+      for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+        if (this.doesMatch(entry.getKey(), entry.getValue())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   public boolean doesMatch(Enchantment e, int lvl) {
     return ench.equals(e) && level == lvl;
   }

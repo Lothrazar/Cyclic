@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
+import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
 import com.lothrazar.cyclicmagic.component.library.EnchantStack;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
@@ -62,6 +63,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     BlockLibrary library = new BlockLibrary();
     BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
+    BlockLibraryController lc = new BlockLibraryController(library);
+    BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
@@ -151,7 +154,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
   }
- 
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
@@ -167,7 +169,5 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  
- 
   }
 }

@@ -46,32 +46,9 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     }
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
-    Enchantment enchToRemove = null;
+   // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
-      Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
-      for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
-        if (library.addEnchantment(segment, entry.getKey(), entry.getValue())) {
-          enchToRemove = entry.getKey();
-          break;
-        }
-      }
-      if (enchToRemove != null) {
-        // success
-        if (enchants.size() == 1) {
-          //if it only has 1, and we are going to reomve that last thing, well its just a book now
-          //TODO: merge shared with TileENtityDisenchanter
-          player.setHeldItem(hand, new ItemStack(Items.BOOK));
-          player.getCooldownTracker().setCooldown(Items.BOOK, 50);
-        }
-        else {
-          //it has more than one, so downshift by 1
-          //cannot edit so just remake the copy with one less
-          enchants.remove(enchToRemove);
-          ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
-          EnchantmentHelper.setEnchantments(enchants, inputCopy);
-          player.setHeldItem(hand, inputCopy);
-        }
-        //        library.markDirty();
+      if (library.addEnchantmentFromPlayer(player, hand, segment)) {
         onSuccess(player);
         return true;
       }

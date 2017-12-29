@@ -1,8 +1,14 @@
 package com.lothrazar.cyclicmagic.component.library;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLibrary extends TileEntityBaseMachine implements ITickable {
@@ -54,6 +60,38 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       return false;
     }
   }
+  public boolean addEnchantmentFromPlayer(EntityPlayer player, EnumHand hand, QuadrantEnum segment) {
+    Enchantment enchToRemove = null;
+    ItemStack playerHeld = player.getHeldItem(hand);
+    Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
+    for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+      if (this.addEnchantment(segment, entry.getKey(), entry.getValue())) {
+        enchToRemove = entry.getKey();
+        break;
+      }
+    }
+    if (enchToRemove != null) {
+      // success
+      if (enchants.size() == 1) {
+        //if it only has 1, and we are going to reomve that last thing, well its just a book now
+        //TODO: merge shared with TileENtityDisenchanter
+        player.setHeldItem(hand, new ItemStack(Items.BOOK));
+        player.getCooldownTracker().setCooldown(Items.BOOK, 50);
+      }
+      else {
+        //it has more than one, so downshift by 1
+        //cannot edit so just remake the copy with one less
+        enchants.remove(enchToRemove);
+        ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(enchants, inputCopy);
+        player.setHeldItem(hand, inputCopy);
+      }
+      //        library.markDirty();
+      //      onSuccess(player);
+      return true;
+    }
+    return false;
+  }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -83,5 +121,21 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   }
   public QuadrantEnum getLastClicked() {
     return this.lastClicked;
+  }
+  public QuadrantEnum findEmptyQuadrant() {
+    for (int i = 0; i < storage.length; i++) {
+      if (storage[i].isEmpty()) {
+        return QuadrantEnum.values()[i];
+      }
+    }
+    return null;
+  }
+  public QuadrantEnum findMatchingQuadrant(ItemStack enchBookStack) {
+    for (int i = 0; i < storage.length; i++) {
+      if (storage[i].doesMatchNonEmpty(enchBookStack)) {
+        return QuadrantEnum.values()[i];
+      }
+    }
+    return null;
   }
 }
