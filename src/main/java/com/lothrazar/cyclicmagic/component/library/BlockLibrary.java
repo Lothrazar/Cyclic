@@ -1,8 +1,5 @@
 package com.lothrazar.cyclicmagic.component.library;
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -11,8 +8,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -23,8 +18,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.math.BlockPos;import net.minecraft.world.World; 
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -34,7 +28,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityLibrary();
+    return new TileEntityLibrary(); 
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -46,7 +40,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     }
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
-   // Enchantment enchToRemove = null;
+    // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
       if (library.addEnchantmentFromPlayer(player, hand, segment)) {
         onSuccess(player);
@@ -77,10 +71,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   private void dropEnchantedBookOnPlayer(EnchantStack ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = ench.makeEnchantedBook();
-    //    new ItemStack(Items.ENCHANTED_BOOK);
-    //    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
-    //    enchMap.put(ench.getEnch(), ench.getLevel());
-    //    EnchantmentHelper.setEnchantments(enchMap, stack);
+ 
     if (player.addItemStackToInventory(stack) == false) {
       //drop if player is full
       player.dropItem(stack, true);
@@ -101,5 +92,5 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
         'g', "chestEnder",
         's', Blocks.PURPUR_BLOCK,
         'r', Blocks.BOOKSHELF);
-  }
+  } 
 }

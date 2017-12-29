@@ -2,11 +2,13 @@ package com.lothrazar.cyclicmagic.component.library;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -27,6 +29,9 @@ public class BlockLibraryController extends BlockBase {
     TileEntity te;
     TileEntityLibrary lib;
     ItemStack playerHeld = player.getHeldItem(hand);
+    if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)== false) {
+      return false;
+    }
     ModCyclic.logger.log("found lib   " + connectors.size());
     for (BlockPos p : connectors) {
       te = world.getTileEntity(p);
@@ -43,14 +48,12 @@ public class BlockLibraryController extends BlockBase {
           if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
             return true;
           }
-          //          lib.addEnchantment(quad, ench, level)
+       
         }
-        //        if(world.getBlockState(p).getBlock().onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ))
-        //        {
-        //          return true;
-        //        }
+        
       }
     }
+   // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
     return false;
   }
 }

@@ -122,6 +122,14 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   public QuadrantEnum getLastClicked() {
     return this.lastClicked;
   }
+  public boolean isEmpty() {
+    for (int i = 0; i < storage.length; i++) {
+      if (storage[i].isEmpty() == false) {
+        return false;
+      }
+    }
+    return true;
+  }
   public QuadrantEnum findEmptyQuadrant() {
     for (int i = 0; i < storage.length; i++) {
       if (storage[i].isEmpty()) {
