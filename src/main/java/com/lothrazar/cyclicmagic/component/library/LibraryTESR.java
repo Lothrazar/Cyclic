@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
@@ -21,7 +23,19 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te.getEnchantStack(QuadrantEnum.TR), x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter, angleOfFace(face));
       renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
       renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
+      //WIP
+      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), QuadrantEnum.TL, x, y, z);
     }
+  }
+  private void renderStack(TileEntityLibrary te, ItemStack s, QuadrantEnum quad, double x, double y, double z) {
+    GlStateManager.pushAttrib();
+    GlStateManager.pushMatrix();
+    // Translate to the location of our tile entity
+    GlStateManager.translate(x, y, z);
+    GlStateManager.disableRescaleNormal();
+    renderItem(te, s, 1.5F);
+    GlStateManager.popMatrix();
+    GlStateManager.popAttrib();
   }
   private int angleOfFace(EnumFacing side) {
     switch (side) {
@@ -45,6 +59,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     }
   }
   private void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
+    int textColor = 0xFF0055;//TODO: input or per type?
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
     if (angle != 0) {
@@ -65,7 +80,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
     GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
     GlStateManager.depthMask(false);
-    fontrenderer.drawString(s, 0, 0, 0xFF0000);
+    fontrenderer.drawString(s, 0, 0, textColor);
     GlStateManager.depthMask(true);
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     GlStateManager.popMatrix();

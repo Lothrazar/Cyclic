@@ -90,31 +90,4 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();
   }
-  protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float itemHeight) {
-    this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
-  }
-  protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float x, float itemHeight, float y) {
-    if (stack == null || stack.isEmpty()) {
-      return;
-    }
-    GlStateManager.pushMatrix();
-    //start of rotate
-    GlStateManager.translate(.5, 0, .5);
-    long angle = (System.currentTimeMillis() / 10) % 360;
-    GlStateManager.rotate(angle, 0, 1, 0);
-    GlStateManager.translate(-.5, 0, -.5);
-    //end of rotate
-    GlStateManager.translate(x, itemHeight, y);//move to xy center and up to top level
-    float scaleFactor = 0.4f;
-    GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);//shrink down
-    // Thank you for helping me understand lighting @storagedrawers  https://github.com/jaquadro/StorageDrawers/blob/40737fb2254d68020a30f80977c84fd50a9b0f26/src/com/jaquadro/minecraft/storagedrawers/client/renderer/TileEntityDrawersRenderer.java#L96
-    //start of 'fix lighting' 
-    int ambLight = getWorld().getCombinedLight(te.getPos().offset(EnumFacing.UP), 0);
-    int lu = ambLight % 65536;
-    int lv = ambLight / 65536;
-    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) lu / 1.0F, (float) lv / 1.0F);
-    //end of 'fix lighting'
-    Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
-    GlStateManager.popMatrix();
-  }
 }
