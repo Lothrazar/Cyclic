@@ -31,13 +31,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
       if (te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
         //TODO: we could xyz offset in different ways too
+        
         this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
       }
-      //WIP
-      //      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), face,QuadrantEnum.TL, x, y, z);
-      //      renderStack(te, new ItemStack(Items.DIAMOND_SWORD), face,QuadrantEnum.TR, x, y, z);
-      //      renderStack(te, new ItemStack(Items.APPLE), face,QuadrantEnum.BL, x, y, z);
-      //      renderStack(te, new ItemStack(Items.ARROW), face,QuadrantEnum.BR, x, y, z);
+ 
     }
   }
   private void renderStack(TileEntityLibrary te, EnchantStack stack, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
