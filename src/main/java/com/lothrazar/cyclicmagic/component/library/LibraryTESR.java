@@ -33,7 +33,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    renderItem(te, s, 1.5F);
+    renderItem(te, s, 0.25F, 0.75F, 1F, 90, false);
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }

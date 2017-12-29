@@ -46,20 +46,29 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     }
     return bakedModel;
   }
-  
   protected void renderItem(TileEntity te, ItemStack stack, float itemHeight) {
     this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
   }
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y) {
+    this.renderItem(te, stack, x, itemHeight, y, 0, true);
+  }
+  protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning) {
     if (stack == null || stack.isEmpty()) {
       return;
     }
     GlStateManager.pushMatrix();
     //start of rotate
-    GlStateManager.translate(.5, 0, .5);
-    long angle = (System.currentTimeMillis() / 10) % 360;
-    GlStateManager.rotate(angle, 0, 1, 0);
-    GlStateManager.translate(-.5, 0, -.5);
+    if (initialAngle > 0) {
+      GlStateManager.translate(.5, 0, .5);
+      GlStateManager.rotate(initialAngle, 0, 1, 0);
+      GlStateManager.translate(-.5, 0, -.5);
+    }
+    if (isSpinning) {
+      GlStateManager.translate(.5, 0, .5);
+      long angle = (System.currentTimeMillis() / 10) % 360;
+      GlStateManager.rotate(angle, 0, 1, 0);
+      GlStateManager.translate(-.5, 0, -.5);
+    }
     //end of rotate
     GlStateManager.translate(x, itemHeight, y);//move to xy center and up to top level
     float scaleFactor = 0.4f;
@@ -74,6 +83,4 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
     GlStateManager.popMatrix();
   }
-  
-  
 }
