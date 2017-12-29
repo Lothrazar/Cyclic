@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
+import com.lothrazar.cyclicmagic.component.library.EnchantStack;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
@@ -149,6 +150,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
+  }
+  @Override
+  public void onPostInit() {
+    // TODO: where better to put this?
+    EnchantStack.postInitRenderMap();
   }
   @Override
   public void syncConfig(Configuration config) {

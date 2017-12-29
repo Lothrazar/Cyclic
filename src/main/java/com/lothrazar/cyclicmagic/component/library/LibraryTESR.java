@@ -19,16 +19,19 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
       //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TL), x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.TR), x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BL), x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
-      renderEnchantStack(te.getEnchantStack(QuadrantEnum.BR), x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter, angleOfFace(face));
+      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TL), QuadrantEnum.TL, face, x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter);
+      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
+      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
+      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
       //WIP
-      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), face,QuadrantEnum.TL, x, y, z);
+      //      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), face,QuadrantEnum.TL, x, y, z);
+      //      renderStack(te, new ItemStack(Items.DIAMOND_SWORD), face,QuadrantEnum.TR, x, y, z);
+      //      renderStack(te, new ItemStack(Items.APPLE), face,QuadrantEnum.BL, x, y, z);
+      //      renderStack(te, new ItemStack(Items.ARROW), face,QuadrantEnum.BR, x, y, z);
     }
   }
-  private void renderStack(TileEntityLibrary te, ItemStack s,EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
-  float scaleFactor = 0.2F;
+  private void renderStack(TileEntityLibrary te, ItemStack s, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
+    float scaleFactor = 0.2F;
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
@@ -39,13 +42,13 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
         renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
       break;
       case TR:
-        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+        renderItem(te, s, 0.75F, 0.75F, 1F, 90, false, scaleFactor);
       break;
       case BL:
-        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+        renderItem(te, s, 0.25F, 0.25F, 1F, 90, false, scaleFactor);
       break;
       case BR:
-        renderItem(te, s, 0.25F, 0.75F, 1F, 90, false, scaleFactor);
+        renderItem(te, s, 0.75F, 0.25F, 1F, 90, false, scaleFactor);
       break;
     }
     GlStateManager.popMatrix();
@@ -65,7 +68,11 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
         return -1;
     }
   }
-  private void renderEnchantStack(EnchantStack stack, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle) {
+  private void renderEnchantStack(TileEntityLibrary te, EnchantStack stack, QuadrantEnum quad, EnumFacing face, double x, double y, double z, int destroyStage, float xt, float yt, float zt) {
+    if (stack.isEmpty() == false) {
+      renderStack(te, stack.getRenderIcon(), face, quad, x, y, z);
+    }
+    int angle = angleOfFace(face);
     renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
     if (stack.isEmpty() == false) {
       renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);

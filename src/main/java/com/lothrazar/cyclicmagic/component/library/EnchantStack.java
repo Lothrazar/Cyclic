@@ -1,7 +1,12 @@
 package com.lothrazar.cyclicmagic.component.library;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
@@ -11,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class EnchantStack {
+  public static Map<String, ItemStack> renderMap;
   private static final String NBT_COUNT = "eCount";
   private static final String NBT_ENCH = "ench";
   private int count = 0;
@@ -21,6 +27,14 @@ public class EnchantStack {
     ench = e;
     level = lvl;
     count = 1;
+  }
+  public static void postInitRenderMap() {
+    renderMap = new HashMap<String, ItemStack>();
+    renderMap.put("minecraft:sharpness", new ItemStack(Items.DIAMOND_SWORD));
+    renderMap.put("minecraft:protection", new ItemStack(Items.DIAMOND_CHESTPLATE));
+    renderMap.put("minecraft:fire_protection", new ItemStack(Items.BLAZE_POWDER));
+    renderMap.put("minecraft:blast_protection", new ItemStack(Blocks.TNT));
+    //TODO: more. and config etc
   }
   public Enchantment getEnch() {
     return ench;
@@ -86,5 +100,17 @@ public class EnchantStack {
       return "--";
     }
     return UtilChat.lang(ench.getName()).substring(0, 5);
+  }
+  public ItemStack getRenderIcon() {
+    if (this.isEmpty()) {
+      return ItemStack.EMPTY;
+    }
+    String key = this.ench.getRegistryName().toString();
+    if (renderMap.containsKey(key)) {
+      return renderMap.get(key);
+    }
+    else {
+      return new ItemStack(Items.ENCHANTED_BOOK);
+    }
   }
 }
