@@ -53,6 +53,8 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     this.renderItem(te, stack, x, itemHeight, y, 0, true, 0.4F);
   }
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning, float scaleFactor) {
+    
+//    GuiHelper.drawTexturedRect(minecraft, texture, x, y, width, height, zLevel, texPosX, texPosY, texWidth, texHeight);
     if (stack == null || stack.isEmpty()) {
       return;
     }
@@ -79,7 +81,10 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     int lv = ambLight / 65536;
     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) lu / 1.0F, (float) lv / 1.0F);
     //end of 'fix lighting'
+    
+    
     Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
+    
     GlStateManager.popMatrix();
   }
 }

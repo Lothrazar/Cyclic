@@ -151,11 +151,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
   }
-  @Override
-  public void onPostInit() {
-    // TODO: where better to put this?
-    EnchantStack.postInitRenderMap();
-  }
+ 
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
@@ -171,5 +167,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  
+ 
   }
 }

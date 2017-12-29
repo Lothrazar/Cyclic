@@ -44,8 +44,10 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     if (segment == null) {
       return false;//literal edge case
     }
+    library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     Enchantment enchToRemove = null;
+    
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
       Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
       for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
@@ -79,7 +81,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
-        this.dropEnchantmentInWorld(es, player, pos);
+        this.dropEnchantedBookOnPlayer(es, player, pos);
         playerHeld.shrink(1);
         library.removeEnchantment(segment);
         onSuccess(player);
@@ -97,11 +99,12 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   private void onSuccess(EntityPlayer player) {
     UtilSound.playSound(player, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
   }
-  private void dropEnchantmentInWorld(EnchantStack ench, EntityPlayer player, BlockPos pos) {
-    ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
-    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
-    enchMap.put(ench.getEnch(), ench.getLevel());
-    EnchantmentHelper.setEnchantments(enchMap, stack);
+  private void dropEnchantedBookOnPlayer(EnchantStack ench, EntityPlayer player, BlockPos pos) {
+    ItemStack stack = ench.makeEnchantedBook();
+//    new ItemStack(Items.ENCHANTED_BOOK);
+//    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
+//    enchMap.put(ench.getEnch(), ench.getLevel());
+//    EnchantmentHelper.setEnchantments(enchMap, stack);
     if (player.addItemStackToInventory(stack) == false) {
       //drop if player is full
       player.dropItem(stack, true);

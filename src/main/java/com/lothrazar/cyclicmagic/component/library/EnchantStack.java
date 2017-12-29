@@ -1,13 +1,16 @@
 package com.lothrazar.cyclicmagic.component.library;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.config.Configuration;
 
 /**
  * One enchantment instance is an enchant combined with its level and we have a number of those
@@ -16,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class EnchantStack {
-  public static Map<String, ItemStack> renderMap;
   private static final String NBT_COUNT = "eCount";
   private static final String NBT_ENCH = "ench";
   private int count = 0;
@@ -27,32 +29,6 @@ public class EnchantStack {
     ench = e;
     level = lvl;
     count = 1;
-  }
-  public static void postInitRenderMap() {
-    renderMap = new HashMap<String, ItemStack>();
-    renderMap.put("minecraft:protection", new ItemStack(Items.DIAMOND_CHESTPLATE));
-    renderMap.put("minecraft:fire_protection", new ItemStack(Items.BLAZE_POWDER));
-    renderMap.put("minecraft:feather_falling", new ItemStack(Items.FEATHER));
-    renderMap.put("minecraft:blast_protection", new ItemStack(Blocks.TNT));
-    renderMap.put("minecraft:projectile_protection", new ItemStack(Items.ARROW));
-
-    renderMap.put("minecraft:respiration", new ItemStack(Blocks.SPONGE));
-    renderMap.put("minecraft:aqua_affinity", new ItemStack(Blocks.REEDS));
-    renderMap.put("minecraft:thorns", new ItemStack(Blocks.CACTUS));
-    renderMap.put("minecraft:depth_strider", new ItemStack(Items.PRISMARINE_SHARD));
-    renderMap.put("minecraft:frost_walker", new ItemStack(Items.SNOWBALL));
-    renderMap.put("minecraft:binding_curse", new ItemStack(Items.SPIDER_EYE));
-    renderMap.put("minecraft:sharpness", new ItemStack(Items.DIAMOND_SWORD));
-    
-
-    renderMap.put("minecraft:smite", new ItemStack(Items.BONE));
-    renderMap.put("minecraft:bane_of_arthropods", new ItemStack(Items.STRING));
-    renderMap.put("minecraft:knockback", new ItemStack(Blocks.PISTON));
-    renderMap.put("minecraft:fire_aspect", new ItemStack(Items.BLAZE_ROD));
-    renderMap.put("minecraft:looting", new ItemStack(Items.GOLD_NUGGET));
-    renderMap.put("minecraft:sweeping", new ItemStack(Items.SHEARS));
-    
-    //TODO: more. and config etc
   }
   public Enchantment getEnch() {
     return ench;
@@ -120,15 +96,18 @@ public class EnchantStack {
     return UtilChat.lang(ench.getName()).substring(0, 5);
   }
   public ItemStack getRenderIcon() {
+    return makeEnchantedBook();
+    //TODO: this was going to be some crazy config system 
+    //TODO: not now. for the future 
+  }
+  public ItemStack makeEnchantedBook() {
     if (this.isEmpty()) {
       return ItemStack.EMPTY;
     }
-    String key = this.ench.getRegistryName().toString();
-    if (renderMap.containsKey(key)) {
-      return renderMap.get(key);
-    }
-    else {
-      return new ItemStack(Items.ENCHANTED_BOOK);
-    }
+    ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+    Map<Enchantment, Integer> enchMap = new HashMap<Enchantment, Integer>();
+    enchMap.put(this.getEnch(), this.getLevel());
+    EnchantmentHelper.setEnchantments(enchMap, stack);
+    return stack;
   }
 }

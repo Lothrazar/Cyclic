@@ -1,11 +1,17 @@
 package com.lothrazar.cyclicmagic.component.library;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   final float horizDistFromCenter = 0.46F;
@@ -23,6 +29,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
+      if (te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
+        //TODO: we could xyz offset in different ways too
+        this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
+      }
       //WIP
       //      renderStack(te, new ItemStack(Items.ENCHANTED_BOOK), face,QuadrantEnum.TL, x, y, z);
       //      renderStack(te, new ItemStack(Items.DIAMOND_SWORD), face,QuadrantEnum.TR, x, y, z);
@@ -31,7 +41,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     }
   }
   private void renderStack(TileEntityLibrary te, ItemStack s, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
-    float scaleFactor = 0.2F;
+    float scaleFactor = 0.05F;
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity
