@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -53,8 +54,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     this.renderItem(te, stack, x, itemHeight, y, 0, true, 0.4F);
   }
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning, float scaleFactor) {
-    
-//    GuiHelper.drawTexturedRect(minecraft, texture, x, y, width, height, zLevel, texPosX, texPosY, texWidth, texHeight);
+    //    GuiHelper.drawTexturedRect(minecraft, texture, x, y, width, height, zLevel, texPosX, texPosY, texWidth, texHeight);
     if (stack == null || stack.isEmpty()) {
       return;
     }
@@ -81,10 +81,53 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     int lv = ambLight / 65536;
     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) lu / 1.0F, (float) lv / 1.0F);
     //end of 'fix lighting'
-    
-    
     Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
-    
     GlStateManager.popMatrix();
+  }
+  /**
+   * TextColor similar to  int textColor = 0xFF0055;
+   * @param s
+   * @param x
+   * @param y
+   * @param z
+   * @param destroyStage
+   * @param xt
+   * @param yt
+   * @param zt
+   * @param angle
+   * @param textColor
+   */
+  public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle
+      , int textColor) {
+   
+    GlStateManager.pushMatrix();
+    GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
+    if (angle != 0) {
+      GlStateManager.rotate(angle, 0, 1, 0);
+    }
+    //initial setup
+    float scaleTo = 0.6666667F;
+    GlStateManager.enableRescaleNormal();
+    GlStateManager.pushMatrix();
+    GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
+    GlStateManager.popMatrix();
+    FontRenderer fontrenderer = this.getFontRenderer();
+    GlStateManager.translate(-2.0F, 1.33333334F, 0.046666667F);
+    //below sets position
+    GlStateManager.translate(xt, yt, zt);
+    //sake makes it the right size do not touch
+    float f3 = 0.010416667F;
+    GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
+    GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
+    GlStateManager.depthMask(false);
+    fontrenderer.drawString(s, 0, 0, textColor);
+    GlStateManager.depthMask(true);
+    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    GlStateManager.popMatrix();
+    if (destroyStage >= 0) {
+      GlStateManager.matrixMode(5890);
+      GlStateManager.popMatrix();
+      GlStateManager.matrixMode(5888);
+    }
   }
 }
