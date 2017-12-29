@@ -30,10 +30,28 @@ public class EnchantStack {
   }
   public static void postInitRenderMap() {
     renderMap = new HashMap<String, ItemStack>();
-    renderMap.put("minecraft:sharpness", new ItemStack(Items.DIAMOND_SWORD));
     renderMap.put("minecraft:protection", new ItemStack(Items.DIAMOND_CHESTPLATE));
     renderMap.put("minecraft:fire_protection", new ItemStack(Items.BLAZE_POWDER));
+    renderMap.put("minecraft:feather_falling", new ItemStack(Items.FEATHER));
     renderMap.put("minecraft:blast_protection", new ItemStack(Blocks.TNT));
+    renderMap.put("minecraft:projectile_protection", new ItemStack(Items.ARROW));
+
+    renderMap.put("minecraft:respiration", new ItemStack(Blocks.SPONGE));
+    renderMap.put("minecraft:aqua_affinity", new ItemStack(Blocks.REEDS));
+    renderMap.put("minecraft:thorns", new ItemStack(Blocks.CACTUS));
+    renderMap.put("minecraft:depth_strider", new ItemStack(Items.PRISMARINE_SHARD));
+    renderMap.put("minecraft:frost_walker", new ItemStack(Items.SNOWBALL));
+    renderMap.put("minecraft:binding_curse", new ItemStack(Items.SPIDER_EYE));
+    renderMap.put("minecraft:sharpness", new ItemStack(Items.DIAMOND_SWORD));
+    
+
+    renderMap.put("minecraft:smite", new ItemStack(Items.BONE));
+    renderMap.put("minecraft:bane_of_arthropods", new ItemStack(Items.STRING));
+    renderMap.put("minecraft:knockback", new ItemStack(Blocks.PISTON));
+    renderMap.put("minecraft:fire_aspect", new ItemStack(Items.BLAZE_ROD));
+    renderMap.put("minecraft:looting", new ItemStack(Items.GOLD_NUGGET));
+    renderMap.put("minecraft:sweeping", new ItemStack(Items.SHEARS));
+    
     //TODO: more. and config etc
   }
   public Enchantment getEnch() {
