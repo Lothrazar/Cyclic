@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "cyclicmagic:blocks/block_screen_top",
+        "down": "cyclicmagic:blocks/block_screen_top",
+        "up": "cyclicmagic:blocks/block_screen_top",
+        "north": "cyclicmagic:blocks/block_screen_side",
+        "east": "cyclicmagic:blocks/block_screen_side",
+        "south": "cyclicmagic:blocks/block_screen_front",
+        "west": "cyclicmagic:blocks/block_screen_side"
+    }
+}

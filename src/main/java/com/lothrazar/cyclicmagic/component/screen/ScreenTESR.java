@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
-  private static final int MAX_WIDTH = 18;
+  private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.53F, rightColumn = 2.08F;

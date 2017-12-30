@@ -1,10 +1,11 @@
 package com.lothrazar.cyclicmagic.component.screen;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITileTextbox {
-  private String text = "write a book and put it in your pocket and try to split based";
+  private String text = "";
   private int red = 0;
   private int green = 0;
   private int blue = 0;
@@ -47,7 +48,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setString(text, "text");
+    tags.setString("text",text);
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
