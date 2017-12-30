@@ -94,7 +94,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderStack(te, stack, face, quad, x, y, z);
     }
     //    int angle = angleOfFace(face);
-    //    renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
+//        renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
     //    if (stack.isEmpty() == false) {
     //      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
     //      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);
