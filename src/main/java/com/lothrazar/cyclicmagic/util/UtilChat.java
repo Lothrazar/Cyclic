@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.StringTokenizer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -58,6 +59,7 @@ public class UtilChat {
     // return output.toString();
     return output.toString().split("\n");
   }
+  
   public static String getDirectionsString(ICommandSender player, BlockPos pos) {
     //https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchItem.java
     int x = pos.getX();

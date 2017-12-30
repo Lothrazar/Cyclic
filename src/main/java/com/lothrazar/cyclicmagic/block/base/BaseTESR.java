@@ -75,7 +75,11 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     GlStateManager.translate(x, itemHeight, y);//move to xy center and up to top level
     GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);//shrink down
     // Thank you for helping me understand lighting @storagedrawers  https://github.com/jaquadro/StorageDrawers/blob/40737fb2254d68020a30f80977c84fd50a9b0f26/src/com/jaquadro/minecraft/storagedrawers/client/renderer/TileEntityDrawersRenderer.java#L96
-    //start of 'fix lighting' 
+    fixLighting(te);
+    Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
+    GlStateManager.popMatrix();
+  }
+  public void fixLighting(TileEntity te) {
     int ambLight = getWorld().getCombinedLight(te.getPos().offset(EnumFacing.UP), 0);
     if (ambLight == 0) {
       ambLight = 15728656;//if there is a block above blocking light, dont make it dark
@@ -84,8 +88,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     int lv = ambLight / 65536;
     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) lu / 1.0F, (float) lv / 1.0F);
     //end of 'fix lighting'
-    Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
-    GlStateManager.popMatrix();
   }
   /**
    * TextColor similar to int textColor = 0xFF0055;
@@ -102,6 +104,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
    * @param textColor
    */
   public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle, int textColor) {
+
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
     if (angle != 0) {
