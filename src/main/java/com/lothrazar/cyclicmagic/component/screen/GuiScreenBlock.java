@@ -25,7 +25,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 1;
-    // GuiScreenBook b
+   
     int width = 124;
     int xCenter = (xSize / 2 - width / 2);
     int h = 12;
@@ -37,12 +37,12 @@ public class GuiScreenBlock extends GuiBaseContainer {
     id++;
     y += h + 1;
     GuiSliderInteger sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
-    sliderX.setTooltip("screen.green");
+    sliderG.setTooltip("screen.green");
     this.addButton(sliderG);
     id++;
     y += h + 1;
     GuiSliderInteger sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
-    sliderX.setTooltip("screen.blue");
+    sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
     //text box of course
     id++;
