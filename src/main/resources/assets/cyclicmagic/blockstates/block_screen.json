@@ -1,9 +1,9 @@
 {
     "variants": {
 		"normal": { "model": "cyclicmagic:block_screen" },
-        "facing=north": { "model": "cyclicmagic:block_screen" },
-        "facing=east":  { "model": "cyclicmagic:block_screen" ,"y":90},
-        "facing=south": { "model": "cyclicmagic:block_screen" ,"y":180},
-        "facing=west":  { "model": "cyclicmagic:block_screen" ,"y":270}
+        "facing=north": { "model": "cyclicmagic:block_screen" ,"y":180},
+        "facing=east":  { "model": "cyclicmagic:block_screen" ,"y":270},
+        "facing=south": { "model": "cyclicmagic:block_screen" },
+        "facing=west":  { "model": "cyclicmagic:block_screen" ,"y":90}
     }
 }
