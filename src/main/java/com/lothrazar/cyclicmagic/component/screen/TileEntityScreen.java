@@ -1,8 +1,9 @@
 package com.lothrazar.cyclicmagic.component.screen;
+import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityScreen extends TileEntityBaseMachineInvo {
+public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITileTextbox {
   private String text = "write a book and put it in your pocket and try to split based";
   private int red = 0;
   private int green = 0;
@@ -13,15 +14,20 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo {
   public TileEntityScreen() {
     super(0);
   }
+  @Override
   public String getText() {
     return text;
   }
+  @Override
+  public void setText(String s) {
+    text = s;
+  }
   public int getColor() {
     //TODO: fix maybe? IllegalArgumentException: Color parameter outside of expected range
-    return new java.awt.Color(red, green, blue).getRGB();
-//        return (((int) red & 0xFF) << 16) | //red
-//            (((int) green & 0xFF) << 8) | //green
-//            (((int) blue & 0xFF) << 0);
+//    return new java.awt.Color(red, green, blue).getRGB();
+            return (((int) red & 0xFF) << 16) | //red
+                (((int) green & 0xFF) << 8) | //green
+                (((int) blue & 0xFF) << 0);
   }
   @Override
   public int[] getFieldOrdinals() {

@@ -18,7 +18,7 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-    String[] lines = UtilChat.splitIntoLine(te.getText()+"AAA", MAX_WIDTH);
+    String[] lines = UtilChat.splitIntoLine(te.getText() , MAX_WIDTH);
     int ln = 0;
     for (String line : lines) {
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());
