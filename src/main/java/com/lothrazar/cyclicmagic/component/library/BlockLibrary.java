@@ -18,7 +18,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;import net.minecraft.world.World; 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -28,7 +29,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityLibrary(); 
+    return new TileEntityLibrary();
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -71,7 +72,6 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   private void dropEnchantedBookOnPlayer(EnchantStack ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = ench.makeEnchantedBook();
- 
     if (player.addItemStackToInventory(stack) == false) {
       //drop if player is full
       player.dropItem(stack, true);
@@ -85,12 +85,12 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
         " r ",
         "sgs",
         " r ",
-        'g', "chestEnder",
+        'g', Blocks.BOOKSHELF,
         's', Blocks.PURPUR_BLOCK,
-        'r', Blocks.BOOKSHELF);
-  } 
+        'r', "obsidian");
+  }
 }

@@ -1,22 +1,26 @@
 package com.lothrazar.cyclicmagic.component.library;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockLibraryController extends BlockBase {
+public class BlockLibraryController extends BlockBase implements IHasRecipe {
   private static final int RANGE = 4;
   Block libraryInstance;
   public BlockLibraryController(Block lib) {
@@ -29,16 +33,13 @@ public class BlockLibraryController extends BlockBase {
     TileEntity te;
     TileEntityLibrary lib;
     ItemStack playerHeld = player.getHeldItem(hand);
-    if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)== false) {
+    if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
       return false;
     }
-    ModCyclic.logger.log("found lib   " + connectors.size());
     for (BlockPos p : connectors) {
       te = world.getTileEntity(p);
-      ModCyclic.logger.log("found test   " + p);
       if (te instanceof TileEntityLibrary) {
         lib = (TileEntityLibrary) te;
-        ModCyclic.logger.log("found lib at " + p);
         QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
         if (quad == null) {
           quad = lib.findEmptyQuadrant();
@@ -48,12 +49,19 @@ public class BlockLibraryController extends BlockBase {
           if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
             return true;
           }
-       
         }
-        
       }
     }
-   // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
+    // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
     return false;
+  }
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        " r ",
+        "rgr",
+        " r ",
+        'g', "chestEnder",
+        'r', libraryInstance);
   }
 }

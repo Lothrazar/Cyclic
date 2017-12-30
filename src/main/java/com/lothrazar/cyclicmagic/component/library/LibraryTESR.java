@@ -31,15 +31,12 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
       if (te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
         //TODO: we could xyz offset in different ways too
-        
         this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
       }
- 
     }
   }
   private void renderStack(TileEntityLibrary te, EnchantStack stack, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
     float scaleFactor = 0.045F;
-    float borderWidth = 0.038F;
     int angle = angleOfFace(face);
     ItemStack s = stack.getRenderIcon();
     GlStateManager.pushAttrib();
@@ -47,7 +44,6 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    //    float bookX = borderWidth, bookY = 0.956F;
     float startX = 0, startY = 0;
     switch (quad) {
       case TL:
