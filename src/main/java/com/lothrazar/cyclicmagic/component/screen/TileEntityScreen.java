@@ -17,10 +17,11 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo {
     return text;
   }
   public int getColor() {
+    //TODO: fix maybe? IllegalArgumentException: Color parameter outside of expected range
     return new java.awt.Color(red, green, blue).getRGB();
-    //    return (((int) red & 0xFF) << 16) | //red
-    //        (((int) green & 0xFF) << 8) | //green
-    //        (((int) blue & 0xFF) << 0);
+//        return (((int) red & 0xFF) << 16) | //red
+//            (((int) green & 0xFF) << 8) | //green
+//            (((int) blue & 0xFF) << 0);
   }
   @Override
   public int[] getFieldOrdinals() {

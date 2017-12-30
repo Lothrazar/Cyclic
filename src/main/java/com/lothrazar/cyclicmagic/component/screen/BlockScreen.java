@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.screen;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR {
   public BlockScreen() {
     super(Material.WOOD);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
