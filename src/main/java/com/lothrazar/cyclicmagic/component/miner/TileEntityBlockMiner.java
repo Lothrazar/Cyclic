@@ -200,10 +200,10 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       curBlockDamage = 0;
     }
   }
-  @Override
-  protected EnumFacing getCurrentFacing() {
-    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
-  }
+//  @Override
+//  public EnumFacing getCurrentFacing() {
+//    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
+//  }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override

@@ -135,4 +135,18 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
       GlStateManager.matrixMode(5888);
     }
   }
+  public int angleOfFace(EnumFacing side) {
+    switch (side) {
+      case SOUTH:
+        return 0;
+      case EAST:
+        return 90;
+      case NORTH:
+        return 180;
+      case WEST:
+        return 270;
+      default:
+        return -1;
+    }
+  }
 }

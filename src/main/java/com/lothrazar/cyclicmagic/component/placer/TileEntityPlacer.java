@@ -112,10 +112,10 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     }
     this.markDirty();
   }
-  @Override
-  protected EnumFacing getCurrentFacing() {
-    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
-  }
+//  @Override
+//  protected EnumFacing getCurrentFacing() {
+//    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
+//  }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;

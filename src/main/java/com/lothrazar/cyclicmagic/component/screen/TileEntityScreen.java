@@ -1,36 +1,75 @@
 package com.lothrazar.cyclicmagic.component.screen;
-import java.util.Map;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.data.Const;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ITickable;
 
-public class TileEntityScreen extends TileEntityBaseMachine {
- 
-  private int timer = 0;
-  public TileEntityScreen() {
-    super();
-   
+public class TileEntityScreen extends TileEntityBaseMachineInvo {
+  private String text = "write a book and put it in your pocket and try to split based";
+  private int red = 0;
+  private int green = 0;
+  private int blue = 0;
+  public static enum Fields {
+    RED, GREEN, BLUE;
   }
-   
-    
+  public TileEntityScreen() {
+    super(0);
+  }
+  public String getText() {
+    return text;
+  }
+  public int getColor() {
+    return new java.awt.Color(red, green, blue).getRGB();
+    //    return (((int) red & 0xFF) << 16) | //red
+    //        (((int) green & 0xFF) << 8) | //green
+    //        (((int) blue & 0xFF) << 0);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
-    this.timer = tags.getInteger("t");
- 
+    text = tags.getString("text");
+    red = tags.getInteger("red");
+    green = tags.getInteger("green");
+    blue = tags.getInteger("blue");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
- 
-    tags.setInteger("t", timer);
+    tags.setString(text, "text");
+    tags.setInteger("red", red);
+    tags.setInteger("green", green);
+    tags.setInteger("blue", blue);
     return super.writeToNBT(tags);
   }
-  
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case BLUE:
+        return blue;
+      case GREEN:
+        return green;
+      case RED:
+        return red;
+    }
+    return 0;
+  }
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case BLUE:
+        blue = value;
+      break;
+      case GREEN:
+        green = value;
+      break;
+      case RED:
+        red = value;
+      break;
+    }
+  }
 }

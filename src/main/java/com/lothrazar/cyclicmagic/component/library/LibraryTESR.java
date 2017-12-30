@@ -75,20 +75,6 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
-  private int angleOfFace(EnumFacing side) {
-    switch (side) {
-      case SOUTH:
-        return 0;
-      case EAST:
-        return 90;
-      case NORTH:
-        return 180;
-      case WEST:
-        return 270;
-      default:
-        return -1;
-    }
-  }
   private void renderEnchantStack(TileEntityLibrary te, EnchantStack stack, QuadrantEnum quad, EnumFacing face, double x, double y, double z, int destroyStage, float xt, float yt, float zt) {
     if (stack.isEmpty() == false) {
       renderStack(te, stack, face, quad, x, y, z);

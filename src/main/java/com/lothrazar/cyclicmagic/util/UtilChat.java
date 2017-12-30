@@ -55,8 +55,7 @@ public class UtilChat {
       output.append(word + " ");
       lineLen += word.length() + 1;
     }
-    // output.split();
-    // return output.toString();
+ 
     return output.toString().split("\n");
   }
   
