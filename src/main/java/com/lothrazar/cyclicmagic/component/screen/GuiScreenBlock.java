@@ -17,16 +17,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiScreenBlock extends GuiBaseContainer {
   private GuiTextFieldMulti txtInput;
+  TileEntityScreen screen;
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
-    screenSize = ScreenSize.STANDARDPLAIN;
+    screen = tileEntity;
+    screenSize = screenSize.STANDARDPLAIN;
   }
   @Override
   public void initGui() {
     super.initGui();
     int id = 1;
-   
     int width = 124;
     int xCenter = (xSize / 2 - width / 2);
     int h = 12;
@@ -48,11 +48,14 @@ public class GuiScreenBlock extends GuiBaseContainer {
     //text box of course
     id++;
     y += h + 1;
-    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, xCenter, 58, width, h * 4);
-    txtInput.setMaxStringLength(200);
-    txtInput.setText(((TileEntityScreen) tile).getText());
+    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, xCenter, 58, width, h * 6);
+    txtInput.setMaxStringLength(ScreenTESR.MAX_TOTAL);
+    txtInput.setText(screen.getText());
     txtInput.setFocused(true);
   }
+  //  private String getSavedString(){
+  //    
+  //  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -60,6 +63,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     //TODO: RENDER PREVIEW HERE!
     if (txtInput != null) {
       txtInput.drawTextBox();
+      txtInput.setTextColor(screen.getColor());
     }
   }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0

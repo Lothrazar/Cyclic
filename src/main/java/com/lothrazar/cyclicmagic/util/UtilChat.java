@@ -44,6 +44,9 @@ public class UtilChat {
     while (tok.hasMoreTokens()) {
       String word = tok.nextToken();
       while (word.length() > maxCharInLine) {
+        if( maxCharInLine - lineLen < 0 ){
+          break;
+        }
         output.append(word.substring(0, maxCharInLine - lineLen) + "\n");
         word = word.substring(maxCharInLine - lineLen);
         lineLen = 0;

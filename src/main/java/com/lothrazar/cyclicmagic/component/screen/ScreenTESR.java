@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
-  private static final int MAX_TOTAL = 70;
+  public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.53F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
@@ -22,9 +22,13 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-    
- 
-    String[] lines = UtilChat.splitIntoLine(te.getText() , MAX_WIDTH);
+    String[] lines = new String[]{"brokeit"};
+ try{
+   lines = UtilChat.splitIntoLine(te.getText() , MAX_WIDTH);
+ }
+ catch(Exception e){
+   System.out.println("TODO use fontrenderer version ok");
+ }
     int ln = 0;
     for (String line : lines) {
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());
