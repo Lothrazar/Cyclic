@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.GuiTextField;
@@ -53,10 +54,15 @@ public class GuiScreenBlock extends GuiBaseContainer {
     txtInput.setMaxStringLength(ScreenTESR.MAX_TOTAL);
     txtInput.setText(screen.getText());
     txtInput.setFocused(true);
+    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
   }
-  //  private String getSavedString(){
-  //    
-  //  }
+  @Override
+  public void onGuiClosed() {
+    if (txtInput != null) {
+      tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
+      ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
+    }
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

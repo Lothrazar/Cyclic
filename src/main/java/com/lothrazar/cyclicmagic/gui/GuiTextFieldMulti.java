@@ -242,9 +242,11 @@ public class GuiTextFieldMulti extends Gui {
    * Sets the current position of the cursor.
    */
   public void setCursorPosition(int pos) {
+    if (pos < 0) {
+      pos = 0;
+    }
     this.cursorPosition = pos;
-    int i = this.text.length();
-    this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, i);
+    //    this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, this.text.length());
     this.setSelectionPos(this.cursorPosition);
   }
   /**
@@ -380,9 +382,9 @@ public class GuiTextFieldMulti extends Gui {
       this.setFocused(flag);
     }
     if (this.isFocused && flag && mouseButton == 0) {
-      int i = mouseX - this.x;
+      int i = mouseX - this.x - 4;
       //      if (this.enableBackgroundDrawing) {
-      i -= 4;
+      //      i -= 4;
       //      }
       String s = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getWidth());
       this.setCursorPosition(this.fontRenderer.trimStringToWidth(s, i).length() + this.lineScrollOffset);
@@ -396,125 +398,51 @@ public class GuiTextFieldMulti extends Gui {
    * Draws the textbox
    */
   public void drawTextBox() {
-    if (this.getVisible()) {
-      // if (this.getEnableBackgroundDrawing()) {
-      drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, -6250336);
-      drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
-      //  }
-      int colorCurrent = this.isEnabled ? this.enabledColor : this.disabledColor;
-      //  int cursorPosMinusOffset = this.cursorPosition - this.lineScrollOffset;
-      //  int selEndMinusOffset = this.selectionEnd - this.lineScrollOffset;
-      // String textTrimmed = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getWidth());
-      //   boolean isCursorPosWithin = cursorPosMinusOffset >= 0 && cursorPosMinusOffset <= textTrimmed.length();
-      boolean cursorBlinkFlag = this.isFocused && this.cursorCounter / 6 % 2 == 0;//&& isCursorPosWithin;
-      int hPos = this.x + 4;// : this.x - 16;
-      int yPos = this.y - 4;//: this.y;
-      int hPosCurr = hPos;
-      //      if (selEndMinusOffset > textTrimmed.length()) {
-      //        selEndMinusOffset = textTrimmed.length();
-      //      }
-      //      if (!textTrimmed.isEmpty()) {
-      //        String s1 = isCursorPosWithin ? textTrimmed.substring(0, cursorPosMinusOffset) : textTrimmed;
-      //        //hPosCurr = this.fontRenderer.drawStringWithShadow(s1, (float)hPos, (float)yPos, colorCurrent);
-      //      }
-      String textCopy = new String(this.text);
-      int MAX_WIDTH = 16;
-      String[] lines;
-      int hPosCursor = 0;
-      int vPosCursor = -1;
-      int charsWritten = 0;
-      try {
-        lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
-        for (String line : lines) {
-          yPos += 8;
-          this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
-          //so charsWritten steps up line by line, 16, 32, 48 etc
-          charsWritten += line.length();
-          //so if cursorPos is 63, dont do it until the last one we pass
-          if (vPosCursor < 0 && this.getCursorPosition() < charsWritten) {
-            vPosCursor = yPos;
-            //found the row hey
-            // so we have [0,     curP,         strLength]  
-            int cursorPosRelative = cursorPosition % MAX_WIDTH;
-            if (line.length() > 1) {
-              hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
-             }
+    if (this.getVisible() == false) {
+      return;
+    }
+    drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, -6250336);
+    drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
+    int colorCurrent = this.isEnabled ? this.enabledColor : this.disabledColor;
+    boolean cursorBlinkFlag = this.isFocused && this.cursorCounter / 6 % 2 == 0;//&& isCursorPosWithin;
+    int hPos = this.x + 4;// : this.x - 16;
+    int yPos = this.y - 4;//: this.y;
+    int hPosCurr = hPos;
+    String textCopy = new String(this.text);
+    int MAX_WIDTH = 16;
+    String[] lines;
+    int hPosCursor = 0;
+    int vPosCursor = -1;
+    int charsWritten = 0;
+    try {
+      lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
+      for (String line : lines) {
+        yPos += 8;
+        this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
+        //so charsWritten steps up line by line, 16, 32, 48 etc
+        charsWritten += line.length();
+        //so if cursorPos is 63, dont do it until the last one we pass
+        if (vPosCursor < 0 && this.getCursorPosition() < charsWritten) {
+          vPosCursor = yPos;
+          //found the row hey
+          // so we have [0,     curP,         strLength]  
+          int cursorPosRelative = cursorPosition % MAX_WIDTH;
+          if (line.length() > 1) {
+            hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
           }
         }
       }
-      catch (Exception e) {
-        //System.out.println("TODO use fontrenderer version ok");
-      }
-      if (vPosCursor < 0) {
-        hPosCursor = hPos;
-        vPosCursor = yPos;//FIRST TIME
-      }
-      //      drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
-      //textTrimmed = this.fontRenderer.trimStringToWidth(this.text, this.getWidth());
-      //   boolean isCursorWithin = this.cursorPosition < this.text.length() || this.text.length() >= this.getMaxStringLength();
-      //      if (!isCursorPosWithin) {
-      //        leftStart = cursorPosMinusOffset > 0 ? hPos + this.width : hPos;
-      //      }
-      //      else if (isCursorWithin) {
-      //      leftStart = hPosCursor - 1;
-      //      --hPosCursor;
-      //      }
-      //      if (!textTrimmed.isEmpty() && isCursorPosWithin && cursorPosMinusOffset < textTrimmed.length()) {
-      //        //hPosCurr = this.fontRenderer.drawStringWithShadow(textTrimmed.substring(cursorPosMinusOffset), (float)hPosCurr, (float)yPos, colorCurrent);
-      //      }
-      if (cursorBlinkFlag) {
-        //        if (isCursorWithin) {
-        //          leftStart -= this.cursorPosition;
-        //left top right bottom
-        Gui.drawRect(hPosCursor, vPosCursor - 1, hPosCursor + 1, vPosCursor + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
-        //        }
-        //        else {
-        //use vPosCursor not yPos
-     //   this.fontRenderer.drawStringWithShadow("_", (float) hPosCursor + 2, (float) vPosCursor, colorCurrent);
-        //        }
-      }
-      //      if (selEndMinusOffset != cursorPosMinusOffset) {
-      //        //String index out of range: 21 todo fix this
-      //        int l1 = hPos + this.fontRenderer.getStringWidth(text.substring(0, selEndMinusOffset));
-      //        int leftStart = hPosCursor - 6;
-      //        this.drawSelectionBox(leftStart, yPos - 1, l1 - 1, yPos + 1 + this.fontRenderer.FONT_HEIGHT);
-      //      }
     }
-  }
-  /**
-   * Draws the blue selection box.
-   */
-  private void drawSelectionBox(int startX, int startY, int endX, int endY) {
-    if (startX < endX) {
-      int i = startX;
-      startX = endX;
-      endX = i;
+    catch (Exception e) {
+      //System.out.println("TODO use fontrenderer version ok");
     }
-    if (startY < endY) {
-      int j = startY;
-      startY = endY;
-      endY = j;
+    if (vPosCursor < 0) {
+      hPosCursor = hPos;
+      vPosCursor = yPos;//FIRST TIME
     }
-    if (endX > this.x + this.width) {
-      endX = this.x + this.width;
+    if (cursorBlinkFlag) {
+      Gui.drawRect(hPosCursor, vPosCursor - 1, hPosCursor + 1, vPosCursor + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
     }
-    if (startX > this.x + this.width) {
-      startX = this.x + this.width;
-    }
-    Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder bufferbuilder = tessellator.getBuffer();
-    GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
-    GlStateManager.disableTexture2D();
-    GlStateManager.enableColorLogic();
-    GlStateManager.colorLogicOp(GlStateManager.LogicOp.OR_REVERSE);
-    bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
-    bufferbuilder.pos((double) startX, (double) endY, 0.0D).endVertex();
-    bufferbuilder.pos((double) endX, (double) endY, 0.0D).endVertex();
-    bufferbuilder.pos((double) endX, (double) startY, 0.0D).endVertex();
-    bufferbuilder.pos((double) startX, (double) startY, 0.0D).endVertex();
-    tessellator.draw();
-    GlStateManager.disableColorLogic();
-    GlStateManager.enableTexture2D();
   }
   /**
    * Sets the maximum length for the text in this text box. If the current text is longer than this length, the current text will be trimmed.
