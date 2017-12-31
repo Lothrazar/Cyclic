@@ -416,11 +416,8 @@ public class GuiTextFieldMulti extends Gui {
     int charsWritten = 0;
     try {
       lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
-      int lineTest = 0;
-      int charsThisLine = 0;
       for (String line : lines) {
         yPos += 8;
-        charsThisLine = line.length();
         this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
         // so if cursorPosition
         int cursorPosRelative = cursorPosition - charsWritten;
@@ -438,7 +435,6 @@ public class GuiTextFieldMulti extends Gui {
             //            ModCyclic.logger.log(">>>cursorPosRelative"+cursorPosRelative+" gives hposC "+hPosCursor);
           }
         }
-        lineTest++;
       }
     }
     catch (Exception e) {
