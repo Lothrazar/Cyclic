@@ -17,6 +17,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   private final float max;
   private final TileEntityBaseMachineInvo responder;
   private int responderField;
+  public boolean appendPlusSignLabel = true;
   /**
    * mimic of net.minecraft.client.gui.GuiSlider; uses integers instead of float
    * 
@@ -51,7 +52,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   }
   private void updateDisplay() {
     int val = (int) this.getSliderValue();
-    if (val > 0) {
+    if (val > 0 && appendPlusSignLabel) {
       this.displayString = "+" + val;
     }
     else {

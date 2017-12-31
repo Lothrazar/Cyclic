@@ -246,7 +246,7 @@ public class GuiTextFieldMulti extends Gui {
       pos = 0;
     }
     this.cursorPosition = pos;
-        this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, this.text.length());
+    this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, this.text.length());
     this.setSelectionPos(this.cursorPosition);
   }
   /**
@@ -416,28 +416,26 @@ public class GuiTextFieldMulti extends Gui {
     int charsWritten = 0;
     try {
       lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
-      int lineTest=0;
-      int charsThisLine=0;
+      int lineTest = 0;
+      int charsThisLine = 0;
       for (String line : lines) {
         yPos += 8;
-        charsThisLine=line.length();
+        charsThisLine = line.length();
         this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
-
         // so if cursorPosition
-
         int cursorPosRelative = cursorPosition - charsWritten;
         //so charsWritten steps up line by line, 16, 32, 48 etc
         charsWritten += line.length();
         //so if cursorPos is 63, dont do it until the last one we pass
         if (vPosCursor < 0 && this.getCursorPosition() < charsWritten) {
-//          ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
-//          ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: w/ charsThisLine "+charsThisLine);
+          //          ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
+          //          ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: w/ charsThisLine "+charsThisLine);
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  
           if (line.length() > 1) {
             hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
-//            ModCyclic.logger.log(">>>cursorPosRelative"+cursorPosRelative+" gives hposC "+hPosCursor);
+            //            ModCyclic.logger.log(">>>cursorPosRelative"+cursorPosRelative+" gives hposC "+hPosCursor);
           }
         }
         lineTest++;

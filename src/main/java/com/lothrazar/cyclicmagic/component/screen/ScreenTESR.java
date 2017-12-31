@@ -22,13 +22,13 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-    String[] lines = new String[]{"brokeit"};
- try{
-   lines = UtilChat.splitIntoLine(te.getText() , MAX_WIDTH);
- }
- catch(Exception e){
-   System.out.println("TODO use fontrenderer version ok");
- }
+    String[] lines = new String[] { "brokeit" };
+    try {
+      lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
+    }
+    catch (Exception e) {
+      System.out.println("TODO use fontrenderer version ok");
+    }
     int ln = 0;
     for (String line : lines) {
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());

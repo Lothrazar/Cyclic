@@ -27,7 +27,6 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    // TODO: save textbox cursorPosition as data!?!?!?!
     int id = 1;
     int width = 124;
     int xCenter = (xSize / 2 - width / 2);
@@ -36,16 +35,19 @@ public class GuiScreenBlock extends GuiBaseContainer {
     int y = this.guiTop + 15;
     GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderX.setTooltip("screen.red");
+    sliderX.appendPlusSignLabel = false;
     this.addButton(sliderX);
     id++;
     y += h + 1;
     GuiSliderInteger sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
     sliderG.setTooltip("screen.green");
+    sliderG.appendPlusSignLabel = false;
     this.addButton(sliderG);
     id++;
     y += h + 1;
     GuiSliderInteger sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
+    sliderB.appendPlusSignLabel = false;
     this.addButton(sliderB);
     //text box of course
     id++;
