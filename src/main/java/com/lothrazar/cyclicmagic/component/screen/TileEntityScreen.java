@@ -10,8 +10,10 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int green = 100;
   private int blue = 100;
   private int cursorPos = 0;
+  // TODO: save both
+  private int cursorLine = 0;
   public static enum Fields {
-    RED, GREEN, BLUE, CURSORPOS;
+    RED, GREEN, BLUE, CURSORPOS, CURSORLINE;
   }
   public TileEntityScreen() {
     super(0);
