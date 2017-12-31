@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import net.minecraft.client.gui.GuiScreenBook;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiScreenBlock extends GuiBaseContainer {
-  private GuiTextField txtInput;
+  private GuiTextFieldMulti txtInput;
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -47,7 +48,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     //text box of course
     id++;
     y += h + 1;
-    txtInput = new GuiTextField(id, this.fontRenderer, xCenter, 58, width, h * 4);
+    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, xCenter, 58, width, h * 4);
     txtInput.setMaxStringLength(200);
     txtInput.setText(((TileEntityScreen) tile).getText());
     txtInput.setFocused(true);

@@ -14,6 +14,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   }
   public TileEntityScreen() {
     super(0);
+     
   }
   @Override
   public String getText() {

@@ -1,11 +1,15 @@
 package com.lothrazar.cyclicmagic.component.screen;
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.GuiUtilRenderComponents;
+import net.minecraft.util.text.ITextComponent;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
+  private static final int MAX_TOTAL = 70;
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.53F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
@@ -18,6 +22,8 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
+    
+ 
     String[] lines = UtilChat.splitIntoLine(te.getText() , MAX_WIDTH);
     int ln = 0;
     for (String line : lines) {
