@@ -21,11 +21,12 @@ public class GuiScreenBlock extends GuiBaseContainer {
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
     screen = tileEntity;
-    screenSize = screenSize.STANDARDPLAIN;
+    screenSize = ScreenSize.STANDARDPLAIN;
   }
   @Override
   public void initGui() {
     super.initGui();
+    // TODO: save textbox cursorPosition as data!?!?!?!
     int id = 1;
     int width = 124;
     int xCenter = (xSize / 2 - width / 2);

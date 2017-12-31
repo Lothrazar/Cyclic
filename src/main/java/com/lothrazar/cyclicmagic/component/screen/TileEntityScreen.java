@@ -6,9 +6,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITileTextbox {
   private String text = "";
-  private int red = 0;
-  private int green = 0;
-  private int blue = 0;
+  private int red = 100;
+  private int green = 100;
+  private int blue = 100;
   public static enum Fields {
     RED, GREEN, BLUE;
   }
