@@ -113,7 +113,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     //TODO: rotate should work here
     //    GlStateManager.rotate(180, 0, 0, 1);
     //TODO: font scaling should work too?
-    float scaleTo = 0.666666666667F;
+    //float scaleTo = 0.666666666667F;
    //  GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
     //removeing rescaleNormal also makes it brighter
     if (lightsOn == false) {
@@ -123,11 +123,11 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
 //    GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
 //    GlStateManager.popMatrix();
     FontRenderer fontrenderer = this.getFontRenderer();
-    //extra 0.01 on the right coord to fix zindex fighting
+   
     //first two 0.5's move it away from center of block onto the edge, and top left corner
-    GlStateManager.translate(-0.5F,0.5F,0.51F);
+    GlStateManager.translate(-0.5F,0.5F,0.50009F); //extra 0.000X on the right coord to fix zindex fighting
     //below sets position
-    //GlStateManager.translate(xt, yt, zt);
+    GlStateManager.translate(xt, yt, zt);
     //sake makes it the right size do not touch
     float f3 = 0.010416667F;
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.screen;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
@@ -11,38 +12,40 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
   public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
-  final float horizDistFromCenter = 0.46F;
-//  final float leftColumn = 1.53F, rightColumn = 2.08F, rightEdge = 2.53F;
-  final float leftColumn = 0.01F, rightColumn = 1.08F, rightEdge = 1.53F;
-  final float width = rightEdge - leftColumn;
-  final float topRow = -0.9F, bottomRow = -1.4125F;
-  final float vOffset = -0.11F;
+  public static final float rowHeight = -0.11F;// TODO: font size?
   public ScreenTESR(Block block) {
     super(block);
   }
   @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    float padding = 00F / 100F;
+//    ModCyclic.logger.log("padding "+padding);
+    final float leftEdge = 0.0F + padding, rightEdge = 1.05F - padding;
+    final float width = rightEdge - leftEdge;
     //default translations
-    float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
+    float xt = leftEdge, yt = 0, zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
+//    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
+    List<String>lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(),te.getText(), 96);
     //now render
     float lnWidth, lnWidthFull = 96F;
     int ln = 0;
     TileEntityScreen.Justification justif = te.getJustification();
     for (String line : lines) {
+      ModCyclic.logger.log("line  has width "+this.getFontRenderer().getStringWidth(line));
+      //line = line.trim();//trim whitespaces on right side hey.. wait if line ends in space, and its right just, put space on next line?
       lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / lnWidthFull;
       switch (justif) {
         // LEFT has no changes
         case CENTER:
           float spRemainder = width - lnWidth;
-          xt = leftColumn + spRemainder / 2;
+          xt = leftEdge + spRemainder / 2;
         break;
         case RIGHT:
           float spRemainders = width - lnWidth;
-          xt = leftColumn + spRemainders - 0.05F;//padding. why left doesnt need i dont know
+          xt = leftEdge + spRemainders - 0.05F;//padding. why left doesnt need i dont know
         break;
       }
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());
@@ -50,7 +53,7 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
       if (ln >= MAX_LINES) {
         break;
       }
-      y += vOffset;
+      y += rowHeight;
     }
   }
 }

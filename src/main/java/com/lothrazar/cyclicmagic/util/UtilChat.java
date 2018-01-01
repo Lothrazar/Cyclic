@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,6 +38,23 @@ public class UtilChat {
   public static void addChatMessage(World worldObj, String s) {
     addChatMessage(worldObj, new TextComponentTranslation(s));
   }
+  public static  List<String> splitIntoEqualLengths(FontRenderer fr, String input, int lineWidth) {
+    List<String> lines = new ArrayList<String>();
+    String aLine = "";
+    for (char chr : input.toCharArray()) {
+      if (fr.getCharWidth(chr) + fr.getStringWidth(aLine) < lineWidth) {
+        aLine = aLine + chr;
+        //and then keep looking
+      }
+      else {
+        // ok restart this current line: copy into output and clear it
+        lines.add(new String(aLine));
+        ModCyclic.logger.log("lineOf "+lines.size()+" has width "+fr.getStringWidth(aLine));
+        aLine = "";
+      }
+    }
+    return lines;
+  }
   public static String[] splitIntoLine(String input, int maxCharInLine) {
     // https://stackoverflow.com/questions/7528045/large-string-split-into-lines-with-maximum-length-in-java
     // better than spell.getInfo().split("(?<=\\G.{25})")
@@ -44,7 +64,7 @@ public class UtilChat {
     while (tok.hasMoreTokens()) {
       String word = tok.nextToken();
       while (word.length() > maxCharInLine) {
-        if( maxCharInLine - lineLen < 0 ){
+        if (maxCharInLine - lineLen < 0) {
           break;
         }
         output.append(word.substring(0, maxCharInLine - lineLen) + "\n");
@@ -58,10 +78,8 @@ public class UtilChat {
       output.append(word + " ");
       lineLen += word.length() + 1;
     }
- 
     return output.toString().split("\n");
   }
-  
   public static String getDirectionsString(ICommandSender player, BlockPos pos) {
     //https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchItem.java
     int x = pos.getX();

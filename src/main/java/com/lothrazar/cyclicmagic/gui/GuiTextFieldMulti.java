@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -410,12 +411,12 @@ public class GuiTextFieldMulti extends Gui {
     int hPosCurr = hPos;
     String textCopy = new String(this.text);
     int MAX_WIDTH = 16;
-    String[] lines;
+    List<String>lines = UtilChat.splitIntoEqualLengths(this.fontRenderer,textCopy, 96);
     int hPosCursor = 0;
     int vPosCursor = -1;
     int charsWritten = 0;
     try {
-      lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
+//      lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
       for (String line : lines) {
         yPos += 8;
         this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
