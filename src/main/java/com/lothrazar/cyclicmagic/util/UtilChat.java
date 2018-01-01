@@ -38,20 +38,23 @@ public class UtilChat {
   public static void addChatMessage(World worldObj, String s) {
     addChatMessage(worldObj, new TextComponentTranslation(s));
   }
-  public static  List<String> splitIntoEqualLengths(FontRenderer fr, String input, int lineWidth) {
+  public static List<String> splitIntoEqualLengths(FontRenderer fr, String input, int lineWidth) {
     List<String> lines = new ArrayList<String>();
     String aLine = "";
     for (char chr : input.toCharArray()) {
       if (fr.getCharWidth(chr) + fr.getStringWidth(aLine) < lineWidth) {
+        //we have room on this line for this char
         aLine = aLine + chr;
-        //and then keep looking
       }
       else {
-        // ok restart this current line: copy into output and clear it
         lines.add(new String(aLine));
-//        ModCyclic.logger.log("lineOf "+lines.size()+" has width "+fr.getStringWidth(aLine));
-        aLine = "";
+        //then the current character has to be pushed to next line
+        aLine = "" + chr;
       }
+    }
+    if (aLine.isEmpty() == false) {
+      // the last line did not hit max length so add it now
+      lines.add(aLine);
     }
     return lines;
   }

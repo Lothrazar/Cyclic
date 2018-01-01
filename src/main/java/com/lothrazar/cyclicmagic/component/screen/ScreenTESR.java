@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
-  public static final int SCREEN_WIDTH = 100;
+  public static final int SCREEN_WIDTH = 96;
   // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
@@ -20,6 +20,8 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+  
+
     int tePadding = te.getPadding();
     float leftPadding = ((float)tePadding/2) / 100F;
 //    ModCyclic.logger.log("padding "+padding);
@@ -31,6 +33,9 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     fixLighting(te);
 //    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
     List<String>lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(),te.getText(), SCREEN_WIDTH - tePadding);
+    
+
+    //ModCyclic.logger.log("RENDER TEXT" +te.getText()+" line count "+lines.size());
     //now render
     float lnWidth ;
     int ln = 0;

@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class GuiTextFieldMulti extends Gui {
+  private static final int LINE_HEIGHT = 8;
   private final int id;
   private final FontRenderer fontRenderer;
   public int x;
@@ -419,7 +420,7 @@ public class GuiTextFieldMulti extends Gui {
     try {
 //      lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
       for (String line : lines) {
-        yPos += 8;
+        yPos += LINE_HEIGHT;// TODO: font size?
         this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
         // so if cursorPosition
         int cursorPosRelative = cursorPosition - charsWritten;
@@ -427,8 +428,8 @@ public class GuiTextFieldMulti extends Gui {
         charsWritten += line.length();
         //so if cursorPos is 63, dont do it until the last one we pass
         if (vPosCursor < 0 && this.getCursorPosition() < charsWritten) {
-          //          ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
-          //          ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: w/ charsThisLine "+charsThisLine);
+  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
+  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  

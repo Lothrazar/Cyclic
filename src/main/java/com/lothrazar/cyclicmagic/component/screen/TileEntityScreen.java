@@ -9,8 +9,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int green = 100;
   private int blue = 100;
   private int cursorPos = 0;
-  private int padding = 10;
-  // TODO: save both
+  private int padding = 0;
   private Justification justif = Justification.LEFT;
   public static enum Justification {
     LEFT, CENTER, RIGHT;

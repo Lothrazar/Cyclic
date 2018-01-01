@@ -631,6 +631,7 @@ screen.blue=Blue
 screen.red=Red
 screen.green=Green
 screen.padding=Padding
+screen.justification=Text Alignment
 tile.block_library_ctrl.name=Ender Library
 tile.block_library_ctrl.tooltip=Surround this with Ender Bookshelves to deposit
 tile.block_library_ctrl.guide=The controller block for Ender Bookshelves.  Easy deposit into nearby Ender Bookshelves.
