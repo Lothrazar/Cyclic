@@ -12,7 +12,8 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   private static final int MAX_LINES = 8;
   public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
   final float horizDistFromCenter = 0.46F;
-  final float leftColumn = 1.53F, rightColumn = 2.08F, rightEdge = 2.53F;
+//  final float leftColumn = 1.53F, rightColumn = 2.08F, rightEdge = 2.53F;
+  final float leftColumn = 0.01F, rightColumn = 1.08F, rightEdge = 1.53F;
   final float width = rightEdge - leftColumn;
   final float topRow = -0.9F, bottomRow = -1.4125F;
   final float vOffset = -0.11F;

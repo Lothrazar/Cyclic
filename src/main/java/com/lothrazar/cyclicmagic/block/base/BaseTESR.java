@@ -123,9 +123,11 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
 //    GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
 //    GlStateManager.popMatrix();
     FontRenderer fontrenderer = this.getFontRenderer();
-    GlStateManager.translate(-2.0F, 1.33333334F, 0.046666667F);
+    //extra 0.01 on the right coord to fix zindex fighting
+    //first two 0.5's move it away from center of block onto the edge, and top left corner
+    GlStateManager.translate(-0.5F,0.5F,0.51F);
     //below sets position
-    GlStateManager.translate(xt, yt, zt);
+    //GlStateManager.translate(xt, yt, zt);
     //sake makes it the right size do not touch
     float f3 = 0.010416667F;
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
