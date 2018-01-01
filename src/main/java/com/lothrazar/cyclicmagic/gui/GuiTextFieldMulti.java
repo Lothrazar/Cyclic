@@ -427,16 +427,15 @@ public class GuiTextFieldMulti extends Gui {
         //so charsWritten steps up line by line, 16, 32, 48 etc
         charsWritten += line.length();
         //so if cursorPos is 63, dont do it until the last one we pass
-        if (vPosCursor < 0 && this.getCursorPosition() < charsWritten) {
-  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
-  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
+        if (vPosCursor < 0 && this.getCursorPosition() <= charsWritten) {
+//  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
+//  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  
-          if (line.length() > 1) {
-            hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
-            //            ModCyclic.logger.log(">>>cursorPosRelative"+cursorPosRelative+" gives hposC "+hPosCursor);
-          }
+          //if (line.length() > 1) {
+            hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative)); 
+         // }
         }
       }
     }
