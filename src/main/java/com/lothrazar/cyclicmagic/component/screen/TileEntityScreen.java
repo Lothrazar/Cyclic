@@ -9,13 +9,14 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int green = 100;
   private int blue = 100;
   private int cursorPos = 0;
+  private int padding = 10;
   // TODO: save both
   private Justification justif = Justification.LEFT;
   public static enum Justification {
     LEFT, CENTER, RIGHT;
   }
   public static enum Fields {
-    RED, GREEN, BLUE, CURSORPOS, JUSTIFICATION;
+    RED, GREEN, BLUE, CURSORPOS, JUSTIFICATION, PADDING;
   }
   public TileEntityScreen() {
     super(0);
@@ -27,6 +28,9 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   @Override
   public void setText(String s) {
     text = s;
+  }
+  public int getPadding() {
+    return padding;
   }
   public int getColor() {
     //TODO: fix maybe? IllegalArgumentException: Color parameter outside of expected range
@@ -51,6 +55,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
     cursorPos = tags.getInteger("cursorPos");
+    padding = tags.getInteger("padding");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -59,6 +64,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
     tags.setInteger("cursorPos", cursorPos);
+    tags.setInteger("padding", padding);
     return super.writeToNBT(tags);
   }
   @Override
@@ -74,6 +80,8 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
         return cursorPos;
       case JUSTIFICATION:
         return this.justif.ordinal();
+      case PADDING:
+        return this.padding;
     }
     return 0;
   }
@@ -96,9 +104,12 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
         int val = value % Justification.values().length;
         justif = Justification.values()[val];
       break;
+      case PADDING:
+        padding = value;
+      break;
     }
   }
-  public Justification getJustification(){
+  public Justification getJustification() {
     return this.justif;
   }
 }

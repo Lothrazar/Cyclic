@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
+  public static final int SCREEN_WIDTH = 100;
   // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
@@ -19,24 +20,25 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    float padding = 00F / 100F;
+    int tePadding = te.getPadding();
+    float leftPadding = ((float)tePadding/2) / 100F;
 //    ModCyclic.logger.log("padding "+padding);
-    final float leftEdge = 0.0F + padding, rightEdge = 1.05F - padding;
+    final float leftEdge = 0.0F + leftPadding, rightEdge = 1.05F ;
     final float width = rightEdge - leftEdge;
     //default translations
     float xt = leftEdge, yt = 0, zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
 //    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
-    List<String>lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(),te.getText(), 96);
+    List<String>lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(),te.getText(), SCREEN_WIDTH - tePadding);
     //now render
-    float lnWidth, lnWidthFull = 96F;
+    float lnWidth ;
     int ln = 0;
     TileEntityScreen.Justification justif = te.getJustification();
     for (String line : lines) {
-      ModCyclic.logger.log("line  has width "+this.getFontRenderer().getStringWidth(line));
+    //  ModCyclic.logger.log("line  has width "+this.getFontRenderer().getStringWidth(line));
       //line = line.trim();//trim whitespaces on right side hey.. wait if line ends in space, and its right just, put space on next line?
-      lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / lnWidthFull;
+      lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / ((float)SCREEN_WIDTH);
       switch (justif) {
         // LEFT has no changes
         case CENTER:

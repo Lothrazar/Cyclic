@@ -49,7 +49,7 @@ public class UtilChat {
       else {
         // ok restart this current line: copy into output and clear it
         lines.add(new String(aLine));
-        ModCyclic.logger.log("lineOf "+lines.size()+" has width "+fr.getStringWidth(aLine));
+//        ModCyclic.logger.log("lineOf "+lines.size()+" has width "+fr.getStringWidth(aLine));
         aLine = "";
       }
     }

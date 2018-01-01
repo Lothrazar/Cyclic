@@ -3,6 +3,7 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.screen.ScreenTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -410,8 +411,8 @@ public class GuiTextFieldMulti extends Gui {
     int yPos = this.y - 4;//: this.y;
     int hPosCurr = hPos;
     String textCopy = new String(this.text);
-    int MAX_WIDTH = 16;
-    List<String>lines = UtilChat.splitIntoEqualLengths(this.fontRenderer,textCopy, 96);
+ 
+    List<String>lines = UtilChat.splitIntoEqualLengths(this.fontRenderer,textCopy, ScreenTESR.SCREEN_WIDTH);
     int hPosCursor = 0;
     int vPosCursor = -1;
     int charsWritten = 0;
