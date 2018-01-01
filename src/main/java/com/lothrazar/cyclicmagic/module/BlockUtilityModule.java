@@ -27,10 +27,16 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
+import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
+import com.lothrazar.cyclicmagic.component.library.EnchantStack;
+import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.component.scaffold.ItemBlockScaffolding;
+import com.lothrazar.cyclicmagic.component.screen.BlockScreen;
+import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -55,7 +61,22 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean workbench;
   private boolean enablePumpAndPipes;
   private boolean enablItemPipes;
+  private boolean enableLibrary;
+  private boolean screen;
   public void onPreInit() {
+    if (screen) {
+      BlockScreen screen = new BlockScreen();
+      BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+    }
+    if (enableLibrary) {
+      BlockLibrary library = new BlockLibrary();
+      BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
+      BlockLibraryController lc = new BlockLibraryController(library);
+      BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
+      ModCyclic.instance.events.register(library);
+    }
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
       BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
@@ -148,6 +169,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
+    screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);
     workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);
     soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
     autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -21,5 +22,13 @@ public class EnchantRegistry {
     for (Enchantment b : enchants) {
       event.getRegistry().register(b);
     }
+  }
+  public static String getStrForLevel(int lvl) {
+    if(lvl == 0){
+      return "I";
+    }
+    
+    return UtilChat.lang("enchantment.level." + lvl);
+
   }
 }

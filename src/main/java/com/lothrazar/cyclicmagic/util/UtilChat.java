@@ -1,5 +1,9 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +38,26 @@ public class UtilChat {
   public static void addChatMessage(World worldObj, String s) {
     addChatMessage(worldObj, new TextComponentTranslation(s));
   }
+  public static List<String> splitIntoEqualLengths(FontRenderer fr, String input, int lineWidth) {
+    List<String> lines = new ArrayList<String>();
+    String aLine = "";
+    for (char chr : input.toCharArray()) {
+      if (fr.getCharWidth(chr) + fr.getStringWidth(aLine) < lineWidth) {
+        //we have room on this line for this char
+        aLine = aLine + chr;
+      }
+      else {
+        lines.add(new String(aLine));
+        //then the current character has to be pushed to next line
+        aLine = "" + chr;
+      }
+    }
+    if (aLine.isEmpty() == false) {
+      // the last line did not hit max length so add it now
+      lines.add(aLine);
+    }
+    return lines;
+  }
   public static String[] splitIntoLine(String input, int maxCharInLine) {
     // https://stackoverflow.com/questions/7528045/large-string-split-into-lines-with-maximum-length-in-java
     // better than spell.getInfo().split("(?<=\\G.{25})")
@@ -43,6 +67,9 @@ public class UtilChat {
     while (tok.hasMoreTokens()) {
       String word = tok.nextToken();
       while (word.length() > maxCharInLine) {
+        if (maxCharInLine - lineLen < 0) {
+          break;
+        }
         output.append(word.substring(0, maxCharInLine - lineLen) + "\n");
         word = word.substring(maxCharInLine - lineLen);
         lineLen = 0;
@@ -54,8 +81,6 @@ public class UtilChat {
       output.append(word + " ");
       lineLen += word.length() + 1;
     }
-    // output.split();
-    // return output.toString();
     return output.toString().split("\n");
   }
   public static String getDirectionsString(ICommandSender player, BlockPos pos) {

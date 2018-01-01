@@ -69,6 +69,9 @@ import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExte
 import com.lothrazar.cyclicmagic.component.pylonexp.ContainerPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.GuiPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.component.screen.ContainerScreen;
+import com.lothrazar.cyclicmagic.component.screen.GuiScreenBlock;
+import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.component.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.component.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.component.storagesack.InventoryStorage;
@@ -130,6 +133,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_BEACON = 26;
   public static final int GUI_INDEX_FORESTER = 27;
   public static final int GUI_INDEX_SORT = 28;
+  public static final int GUI_INDEX_SCREEN = 29;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -281,6 +285,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerItemSort(player.inventory, (TileEntityItemCableSort) te);
         }
       break;
+      case GUI_INDEX_SCREEN:
+        if (te instanceof TileEntityScreen) {
+          return new ContainerScreen(player.inventory, (TileEntityScreen) te);
+        }
+      break;
     }
     return null;
   }
@@ -423,6 +432,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_SORT:
           if (te instanceof TileEntityItemCableSort) {
             return new GuiItemSort(player.inventory, (TileEntityItemCableSort) te);
+          }
+        break;
+        case GUI_INDEX_SCREEN:
+          if (te instanceof TileEntityScreen) {
+            return new GuiScreenBlock(player.inventory, (TileEntityScreen) te);
           }
         break;
       }

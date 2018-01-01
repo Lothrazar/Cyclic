@@ -47,6 +47,7 @@ public abstract class BlockBaseHasTile extends BlockBase {
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
+  @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
     if (tileentity != null && tileentity instanceof IInventory) {
