@@ -66,7 +66,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
         this.guiLeft + 4,
         this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.JUSTIFICATION.ordinal(), 1);
     btnToggle.setTooltip("screen.justification");
-    btnToggle.width = 20;// btnToggle.height = 20;
+    btnToggle.width = 20;
     this.addButton(btnToggle);
   }
   @Override
@@ -81,14 +81,13 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //TODO: RENDER PREVIEW HERE!
+
     if (txtInput != null) {
       txtInput.drawTextBox();
       txtInput.setTextColor(screen.getColor());
     }
     btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
-//    btnToggle.displayString = "screen." +screen.getJustification().name().toLowerCase();
-    //TODO: btnToggle text/tooltip/textureIndex
+
   }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken

@@ -104,18 +104,24 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
    * @param textColor
    */
   public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle, int textColor) {
-
+    boolean lightsOn = true;//TODO: toggle?
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
     if (angle != 0) {
-      GlStateManager.rotate(angle, 0, 1, 0);
+      GlStateManager.rotate(angle, 0, 1, 0);//rotate on Y axis to change which face it shows up on
     }
-    //initial setup
-    float scaleTo = 0.6666667F;
-    GlStateManager.enableRescaleNormal();
-    GlStateManager.pushMatrix();
-    GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
-    GlStateManager.popMatrix();
+    //TODO: rotate should work here
+    //    GlStateManager.rotate(180, 0, 0, 1);
+    //TODO: font scaling should work too?
+    float scaleTo = 0.666666666667F;
+   //  GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
+    //removeing rescaleNormal also makes it brighter
+    if (lightsOn == false) {
+      GlStateManager.enableRescaleNormal();
+    }
+//    GlStateManager.pushMatrix();
+//    GlStateManager.scale(scaleTo, -1 * scaleTo, -1 * scaleTo);
+//    GlStateManager.popMatrix();
     FontRenderer fontrenderer = this.getFontRenderer();
     GlStateManager.translate(-2.0F, 1.33333334F, 0.046666667F);
     //below sets position
@@ -123,11 +129,14 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     //sake makes it the right size do not touch
     float f3 = 0.010416667F;
     GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
-    GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
+    //if we skip the 3f line, its brighter. leave it in: darker
+    if (lightsOn == false) {
+      GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does
+    }
     GlStateManager.depthMask(false);
     fontrenderer.drawString(s, 0, 0, textColor);
     GlStateManager.depthMask(true);
-    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    // GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     GlStateManager.popMatrix();
     if (destroyStage >= 0) {
       GlStateManager.matrixMode(5890);
