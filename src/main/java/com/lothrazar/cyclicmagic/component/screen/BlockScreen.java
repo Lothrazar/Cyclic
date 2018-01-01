@@ -26,7 +26,6 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
   public BlockScreen() {
     super(Material.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
- 
     this.setLightOpacity(0);
   }
   @Override

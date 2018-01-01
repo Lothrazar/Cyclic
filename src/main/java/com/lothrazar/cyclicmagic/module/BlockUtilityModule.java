@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
 import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
-import com.lothrazar.cyclicmagic.component.library.EnchantStack; 
+import com.lothrazar.cyclicmagic.component.library.EnchantStack;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
@@ -62,10 +62,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enablePumpAndPipes;
   private boolean enablItemPipes;
   private boolean enableLibrary;
+  private boolean screen;
   public void onPreInit() {
-    BlockScreen screen = new BlockScreen();
-    BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+    if (screen) {
+      BlockScreen screen = new BlockScreen();
+      BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+    }
     if (enableLibrary) {
       BlockLibrary library = new BlockLibrary();
       BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
@@ -166,7 +169,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enableLibrary = config.getBoolean("library", category, true, Const.ConfigCategory.contentDefaultText);
+    enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
+    screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);
     workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);
     soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
     autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
