@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.screen;
- 
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,9 +10,12 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int blue = 100;
   private int cursorPos = 0;
   // TODO: save both
-  private int cursorLine = 0;
+  private Justification justif = Justification.LEFT;
+  public static enum Justification {
+    LEFT, CENTER, RIGHT;
+  }
   public static enum Fields {
-    RED, GREEN, BLUE, CURSORPOS, CURSORLINE;
+    RED, GREEN, BLUE, CURSORPOS, JUSTIFICATION;
   }
   public TileEntityScreen() {
     super(0);
@@ -70,6 +72,8 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
         return red;
       case CURSORPOS:
         return cursorPos;
+      case JUSTIFICATION:
+        return this.justif.ordinal();
     }
     return 0;
   }
@@ -88,6 +92,13 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
       case CURSORPOS:
         cursorPos = value;
       break;
+      case JUSTIFICATION:
+        int val = value % Justification.values().length;
+        justif = Justification.values()[val];
+      break;
     }
+  }
+  public Justification getJustification(){
+    return this.justif;
   }
 }

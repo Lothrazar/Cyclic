@@ -4,12 +4,15 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen.Fields;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiScreenBlock extends GuiBaseContainer {
   private GuiTextFieldMulti txtInput;
   TileEntityScreen screen;
+  private ButtonTileEntityField btnToggle;
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
     screen = tileEntity;
@@ -57,6 +61,13 @@ public class GuiScreenBlock extends GuiBaseContainer {
     txtInput.setText(screen.getText());
     txtInput.setFocused(true);
     txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
+    id++;
+    btnToggle = new ButtonTileEntityField(id++,
+        this.guiLeft + 4,
+        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.JUSTIFICATION.ordinal(), 1);
+    btnToggle.setTooltip("screen.justification");
+    btnToggle.width = 70;// btnToggle.height = 20;
+    this.addButton(btnToggle);
   }
   @Override
   public void onGuiClosed() {
@@ -64,6 +75,15 @@ public class GuiScreenBlock extends GuiBaseContainer {
       tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
       ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
     }
+  }
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+//    if (button.id == btnToggle.id) {
+//      int f = Fields.CURSORPOS.ordinal();
+//      //client side update, for some reaosn its not syncing or .. something?
+//      tile.setField(f, tile.getField(f) + 1);
+//    }
+    super.actionPerformed(button);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -74,6 +94,8 @@ public class GuiScreenBlock extends GuiBaseContainer {
       txtInput.drawTextBox();
       txtInput.setTextColor(screen.getColor());
     }
+    btnToggle.displayString = "screen." +screen.getJustification().name().toLowerCase();
+    //TODO: btnToggle text/tooltip/textureIndex
   }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken

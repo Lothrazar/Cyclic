@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
+  // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
   public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
@@ -18,27 +19,30 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   public ScreenTESR(Block block) {
     super(block);
   }
+  @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    //default translations
     float xt = leftColumn, yt = topRow, zt = horizDistFromCenter;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-    String[] lines = new String[] { "brokeit" };
-    try {
-      lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
-    }
-    catch (Exception e) {
-      System.out.println("TODO use fontrenderer version ok");
-    }
-    boolean center = true;//TODO: ENUM justification left right center
-    float lnWidth,  lnWidthFull = 96F;
+    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
+    //now render
+    float lnWidth, lnWidthFull = 96F;
     int ln = 0;
+    TileEntityScreen.Justification justif = te.getJustification();
     for (String line : lines) {
-      lnWidth =((float) this.getFontRenderer().getStringWidth(line))/lnWidthFull;
-      if (center) {
-//        System.out.println("lnWidth:"+line+lnWidth);
-        float spRemainder = width - lnWidth;
-        xt = leftColumn + spRemainder / 2;
+      lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / lnWidthFull;
+      switch (justif) {
+        // LEFT has no changes
+        case CENTER:
+          float spRemainder = width - lnWidth;
+          xt = leftColumn + spRemainder / 2;
+        break;
+        case RIGHT:
+          float spRemainders = width - lnWidth;
+          xt = leftColumn + spRemainders - 0.05F;//padding. why left doesnt need i dont know
+        break;
       }
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());
       ln++;
