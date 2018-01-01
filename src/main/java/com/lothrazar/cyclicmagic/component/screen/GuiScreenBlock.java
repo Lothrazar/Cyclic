@@ -66,7 +66,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
         this.guiLeft + 4,
         this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.JUSTIFICATION.ordinal(), 1);
     btnToggle.setTooltip("screen.justification");
-    btnToggle.width = 70;// btnToggle.height = 20;
+    btnToggle.width = 20;// btnToggle.height = 20;
     this.addButton(btnToggle);
   }
   @Override
@@ -76,15 +76,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
     }
   }
-  @Override
-  protected void actionPerformed(GuiButton button) throws IOException {
-//    if (button.id == btnToggle.id) {
-//      int f = Fields.CURSORPOS.ordinal();
-//      //client side update, for some reaosn its not syncing or .. something?
-//      tile.setField(f, tile.getField(f) + 1);
-//    }
-    super.actionPerformed(button);
-  }
+ 
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -94,7 +86,8 @@ public class GuiScreenBlock extends GuiBaseContainer {
       txtInput.drawTextBox();
       txtInput.setTextColor(screen.getColor());
     }
-    btnToggle.displayString = "screen." +screen.getJustification().name().toLowerCase();
+    btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
+//    btnToggle.displayString = "screen." +screen.getJustification().name().toLowerCase();
     //TODO: btnToggle text/tooltip/textureIndex
   }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
