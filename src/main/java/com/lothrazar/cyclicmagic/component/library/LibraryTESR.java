@@ -14,6 +14,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
+  //TODO: nameplage ugly when block on top. also redundant. revive one day??
+  boolean doNameplate = false;
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.6F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
@@ -29,7 +31,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
-      if (te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
+      if (doNameplate && te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
         //TODO: we could xyz offset in different ways too
         this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
       }

@@ -1,16 +1,13 @@
 package com.lothrazar.cyclicmagic.component.library;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -47,6 +44,7 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
         if (quad != null) {
           //now try insert here 
           if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
+            lib.markDirty();
             return true;
           }
         }

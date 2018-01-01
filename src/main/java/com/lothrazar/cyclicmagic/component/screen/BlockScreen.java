@@ -42,6 +42,7 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
     return new TileEntityScreen();
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityScreen.class, new ScreenTESR<TileEntityScreen>(this));

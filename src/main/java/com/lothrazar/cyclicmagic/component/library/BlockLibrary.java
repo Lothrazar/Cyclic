@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.library;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -22,6 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
   public BlockLibrary() {
@@ -39,12 +42,14 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     if (segment == null) {
       return false;//literal edge case
     }
+    ModCyclic.logger.log("library block on interact "+world.isRemote);//always false//only client//ffffffuk
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
       if (library.addEnchantmentFromPlayer(player, hand, segment)) {
         onSuccess(player);
+        library.markDirty();
         return true;
       }
     }
@@ -52,10 +57,14 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
+        
+        //also let them know what youre withdrawing. without the counter
+        UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
         this.dropEnchantedBookOnPlayer(es, player, pos);
         playerHeld.shrink(1);
         library.removeEnchantment(segment);
         onSuccess(player);
+        library.markDirty();
         return true;
       }
     }
@@ -63,6 +72,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     else if (player.isSneaking() == false) {
       EnchantStack es = library.getEnchantStack(segment);
       UtilChat.sendStatusMessage(player, es.toString());
+      library.markDirty();
       return true;
     }
     return false;//so you can still sneak with books or whatever
@@ -78,6 +88,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     }
   }
   @Override
+  @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
