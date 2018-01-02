@@ -236,6 +236,16 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(stack, x, y);
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }
+  @Override
+  public void closeSpectatorGui() {
+    try{
+    Minecraft.getMinecraft().ingameGUI.getSpectatorGui().onSpectatorMenuClosed(null);
+    }
+    catch(Exception e){
+      ModCyclic.logger.error("Error trying to lock out Spectator GUI: ");
+      ModCyclic.logger.error(e.getMessage());
+    }
+  }
   public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };//was field_78774_b
   public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k" };//was field_78779_k
   /**

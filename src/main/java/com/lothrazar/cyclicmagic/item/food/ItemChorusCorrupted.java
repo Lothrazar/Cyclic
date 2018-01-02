@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -16,6 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.spectator.SpectatorMenu;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
@@ -78,6 +81,7 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
     if (props.getChorusOn()) {
       int playerGhost = props.getChorusTimer();
       if (playerGhost > 0) {
+       ModCyclic.proxy.closeSpectatorGui();
         if (playerGhost % Const.TICKS_PER_SEC == 0) {
           int secs = playerGhost / Const.TICKS_PER_SEC;
 //          UtilChat.addChatMessage(player, "" + secs);
