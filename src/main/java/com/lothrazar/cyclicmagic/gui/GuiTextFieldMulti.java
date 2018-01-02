@@ -427,9 +427,7 @@ public class GuiTextFieldMulti extends Gui {
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  
-          //if (line.length() > 1) {
           hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
-          // }
         }
       }
     }
