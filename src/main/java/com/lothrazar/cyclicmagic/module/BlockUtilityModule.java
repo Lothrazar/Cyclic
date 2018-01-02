@@ -65,10 +65,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enablItemPipes;
   private boolean enableLibrary;
   private boolean screen;
+  private boolean btrash;
   public void onPreInit() {
-    BlockTrash trash = new BlockTrash();
-    BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
+    if (btrash) {
+      BlockTrash trash = new BlockTrash();
+      BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
+    }
     if (screen) {
       BlockScreen screen = new BlockScreen();
       BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);
@@ -174,6 +177,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);
     workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);

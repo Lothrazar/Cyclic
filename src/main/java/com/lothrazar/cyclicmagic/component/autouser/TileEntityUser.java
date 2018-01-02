@@ -184,6 +184,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
+    if(world.isAirBlock(targetPos)){
+      return;
+    }
     //dont ever place a block. they want to use it on an entity
     EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     if (r != EnumActionResult.SUCCESS) {

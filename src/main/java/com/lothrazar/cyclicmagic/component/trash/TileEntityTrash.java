@@ -9,7 +9,6 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITick
   }
   @Override
   public void update() {
- 
     this.removeStackFromSlot(0);
     this.drain(100, true);
   }

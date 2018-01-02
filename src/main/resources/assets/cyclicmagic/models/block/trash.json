@@ -1,5 +1,6 @@
 {
     "textures": {
+		"particle":"blocks/anvil_base",
 		"1":"blocks/anvil_base"
     },
     "elements": [
