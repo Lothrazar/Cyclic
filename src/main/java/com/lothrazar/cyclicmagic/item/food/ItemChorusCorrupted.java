@@ -64,10 +64,7 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
       props.setChorusOn(true);
       props.setChorusStart(player.getPosition());
       props.setChorusDim(player.dimension);
-      //      UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, GHOST_SECONDS * Const.TICKS_PER_SEC);
-      //      player.getEntityData().setBoolean(KEY_BOOLEAN, true);
-      //      player.getEntityData().setString(KEY_EATLOC, UtilNBT.posToStringCSV(player.getPosition()));
-      //      player.getEntityData().setInteger(KEY_EATDIM, player.dimension);
+  
     }
   }
   @SubscribeEvent
@@ -83,14 +80,14 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
       if (playerGhost > 0) {
         if (playerGhost % Const.TICKS_PER_SEC == 0) {
           int secs = playerGhost / Const.TICKS_PER_SEC;
-          UtilChat.addChatMessage(player, "" + secs);
+//          UtilChat.addChatMessage(player, "" + secs);
         }
         props.setChorusTimer(playerGhost - 1);
       }
       else {
         //times up!
         props.setChorusOn(false);
-        //        player.getEntityData().setBoolean(KEY_BOOLEAN, false);
+ 
         if (props.getChorusDim() != player.dimension) {
           // if the player changed dimension while a ghost, thats not
           // allowed. dont tp them back
