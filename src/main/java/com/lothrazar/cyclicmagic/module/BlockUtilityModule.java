@@ -37,6 +37,8 @@ import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.component.scaffold.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.component.screen.BlockScreen;
 import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen;
+import com.lothrazar.cyclicmagic.component.trash.BlockTrash;
+import com.lothrazar.cyclicmagic.component.trash.TileEntityTrash;
 import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -64,6 +66,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableLibrary;
   private boolean screen;
   public void onPreInit() {
+    BlockTrash trash = new BlockTrash();
+    BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
     if (screen) {
       BlockScreen screen = new BlockScreen();
       BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);

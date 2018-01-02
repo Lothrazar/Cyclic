@@ -19,7 +19,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implements IFluidHandler {
   public FluidTank tank;
   public TileEntityBaseMachineFluid(int fluidTankSize) {
-    super(0);
+    this(0, fluidTankSize);
+  }
+  public TileEntityBaseMachineFluid(int inventorySize, int fluidTankSize) {
+    super(inventorySize);
     tank = new FluidTankFixDesync(fluidTankSize, this);
   }
   public static class ContainerDummy extends Container {
@@ -88,7 +91,10 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   }
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+      return true;
+    }
+    return super.hasCapability(capability, facing);
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
