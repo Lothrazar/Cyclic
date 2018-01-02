@@ -412,13 +412,15 @@ public class GuiTextFieldMulti extends Gui {
     int yPos = this.y - 4;//: this.y;
     int hPosCurr = hPos;
     String textCopy = new String(this.text);
- 
-    List<String>lines = UtilChat.splitIntoEqualLengths(this.fontRenderer,textCopy, ScreenTESR.SCREEN_WIDTH);
+    List<String> lines = UtilChat.splitIntoEqualLengths(this.fontRenderer, textCopy, ScreenTESR.SCREEN_WIDTH);
     int hPosCursor = 0;
     int vPosCursor = -1;
     int charsWritten = 0;
     try {
-//      lines = UtilChat.splitIntoLine(textCopy, MAX_WIDTH);
+      if (textCopy.isEmpty()) {
+        vPosCursor = yPos + LINE_HEIGHT;
+        hPosCursor = hPos;
+      }
       for (String line : lines) {
         yPos += LINE_HEIGHT;// TODO: font size?
         this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
@@ -428,14 +430,14 @@ public class GuiTextFieldMulti extends Gui {
         charsWritten += line.length();
         //so if cursorPos is 63, dont do it until the last one we pass
         if (vPosCursor < 0 && this.getCursorPosition() <= charsWritten) {
-//  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
-//  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
+          //  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
+          //  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  
           //if (line.length() > 1) {
-            hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative)); 
-         // }
+          hPosCursor = hPos + this.fontRenderer.getStringWidth(line.substring(0, cursorPosRelative));
+          // }
         }
       }
     }

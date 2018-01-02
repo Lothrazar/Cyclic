@@ -17,8 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.spectator.SpectatorMenu;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
@@ -67,7 +65,6 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
       props.setChorusOn(true);
       props.setChorusStart(player.getPosition());
       props.setChorusDim(player.dimension);
-  
     }
   }
   @SubscribeEvent
@@ -81,17 +78,12 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
     if (props.getChorusOn()) {
       int playerGhost = props.getChorusTimer();
       if (playerGhost > 0) {
-       ModCyclic.proxy.closeSpectatorGui();
-        if (playerGhost % Const.TICKS_PER_SEC == 0) {
-          int secs = playerGhost / Const.TICKS_PER_SEC;
-//          UtilChat.addChatMessage(player, "" + secs);
-        }
+        ModCyclic.proxy.closeSpectatorGui();
         props.setChorusTimer(playerGhost - 1);
       }
       else {
         //times up!
         props.setChorusOn(false);
- 
         if (props.getChorusDim() != player.dimension) {
           // if the player changed dimension while a ghost, thats not
           // allowed. dont tp them back
@@ -99,9 +91,7 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
           player.attackEntityFrom(DamageSource.MAGIC, 50);
         }
         else {
-          // : teleport back to source
-          //          String posCSV = player.getEntityData().getString(KEY_EATLOC);
-          //          String[] p = posCSV.split(",");
+ 
           BlockPos currentPos = player.getPosition();
           BlockPos sourcePos = props.getChorusStart();//new BlockPos(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
           if (world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())) {

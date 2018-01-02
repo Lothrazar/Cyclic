@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.screen;
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
@@ -12,6 +13,7 @@ import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
+ 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.GuiTextField;
@@ -31,6 +33,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 1;
     int width = 124;
     int xCenter = (xSize / 2 - width / 2);
@@ -72,6 +75,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   }
   @Override
   public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
     if (txtInput != null) {
       tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
       ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
