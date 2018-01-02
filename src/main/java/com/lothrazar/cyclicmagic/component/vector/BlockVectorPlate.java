@@ -127,7 +127,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
-  //disable regular drops, make my own drop that saves nbt
+  //START OF ITEMBLOCK DATA disable regular drops, make my own drop that saves nbt
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return null;
@@ -180,6 +180,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       saveStackDataTotile(stack, tile);
     }
   }
+  //END OF ITEMBLOCK DATA
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {

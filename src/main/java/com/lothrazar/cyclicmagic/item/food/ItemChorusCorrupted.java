@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -64,10 +65,6 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
       props.setChorusOn(true);
       props.setChorusStart(player.getPosition());
       props.setChorusDim(player.dimension);
-      //      UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, GHOST_SECONDS * Const.TICKS_PER_SEC);
-      //      player.getEntityData().setBoolean(KEY_BOOLEAN, true);
-      //      player.getEntityData().setString(KEY_EATLOC, UtilNBT.posToStringCSV(player.getPosition()));
-      //      player.getEntityData().setInteger(KEY_EATDIM, player.dimension);
     }
   }
   @SubscribeEvent
@@ -81,16 +78,12 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
     if (props.getChorusOn()) {
       int playerGhost = props.getChorusTimer();
       if (playerGhost > 0) {
-        if (playerGhost % Const.TICKS_PER_SEC == 0) {
-          int secs = playerGhost / Const.TICKS_PER_SEC;
-          UtilChat.addChatMessage(player, "" + secs);
-        }
+        ModCyclic.proxy.closeSpectatorGui();
         props.setChorusTimer(playerGhost - 1);
       }
       else {
         //times up!
         props.setChorusOn(false);
-        //        player.getEntityData().setBoolean(KEY_BOOLEAN, false);
         if (props.getChorusDim() != player.dimension) {
           // if the player changed dimension while a ghost, thats not
           // allowed. dont tp them back
@@ -98,9 +91,6 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
           player.attackEntityFrom(DamageSource.MAGIC, 50);
         }
         else {
-          // : teleport back to source
-          //          String posCSV = player.getEntityData().getString(KEY_EATLOC);
-          //          String[] p = posCSV.split(",");
           BlockPos currentPos = player.getPosition();
           BlockPos sourcePos = props.getChorusStart();//new BlockPos(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
           if (world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())) {
