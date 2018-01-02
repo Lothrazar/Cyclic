@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

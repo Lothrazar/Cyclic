@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.screen;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

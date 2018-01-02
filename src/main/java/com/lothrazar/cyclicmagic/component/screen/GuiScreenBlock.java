@@ -3,7 +3,6 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
-import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -13,10 +12,6 @@ import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
- 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreenBook;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

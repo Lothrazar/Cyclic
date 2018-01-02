@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
-import com.lothrazar.cyclicmagic.component.trash.TileEntityTrash;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -95,7 +94,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
- 
     return this.isItemValidForSlot(index, itemStackIn)
         && this.invHandler.canInsert(index);
   }
@@ -480,7 +478,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
- 
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
         && this.getSizeInventory() > 0) {
       return true;

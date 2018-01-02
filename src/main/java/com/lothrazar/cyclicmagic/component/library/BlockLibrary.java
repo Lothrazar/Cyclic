@@ -42,7 +42,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     if (segment == null) {
       return false;//literal edge case
     }
-    ModCyclic.logger.log("library block on interact "+world.isRemote);//always false//only client//ffffffuk
+    ModCyclic.logger.log("library block on interact " + world.isRemote);//always false//only client//ffffffuk
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
@@ -57,7 +57,6 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
       EnchantStack es = library.getEnchantStack(segment);
       if (es.isEmpty() == false) {
-        
         //also let them know what youre withdrawing. without the counter
         UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
         this.dropEnchantedBookOnPlayer(es, player, pos);

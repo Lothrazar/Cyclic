@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

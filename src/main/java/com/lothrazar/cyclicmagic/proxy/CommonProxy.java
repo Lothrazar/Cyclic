@@ -47,7 +47,5 @@ public class CommonProxy {
       ((EntityPlayerMP) player).interactionManager.setBlockReachDistance(currentReach);
     }
   }
-  public void closeSpectatorGui() {
-   
-  }
+  public void closeSpectatorGui() {}
 }

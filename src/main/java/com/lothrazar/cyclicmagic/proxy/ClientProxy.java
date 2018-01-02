@@ -238,10 +238,10 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public void closeSpectatorGui() {
-    try{
-    Minecraft.getMinecraft().ingameGUI.getSpectatorGui().onSpectatorMenuClosed(null);
+    try {
+      Minecraft.getMinecraft().ingameGUI.getSpectatorGui().onSpectatorMenuClosed(null);
     }
-    catch(Exception e){
+    catch (Exception e) {
       ModCyclic.logger.error("Error trying to lock out Spectator GUI: ");
       ModCyclic.logger.error(e.getMessage());
     }

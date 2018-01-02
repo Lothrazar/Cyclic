@@ -1,16 +1,13 @@
 package com.lothrazar.cyclicmagic.component.library;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.config.Configuration;
 
 /**
  * One enchantment instance is an enchant combined with its level and we have a number of those

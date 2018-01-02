@@ -91,7 +91,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   }
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return true;
     }
     return super.hasCapability(capability, facing);

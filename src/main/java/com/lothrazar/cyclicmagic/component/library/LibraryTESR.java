@@ -1,17 +1,9 @@
 package com.lothrazar.cyclicmagic.component.library;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
-import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   //TODO: nameplage ugly when block on top. also redundant. revive one day??
@@ -82,7 +74,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       renderStack(te, stack, face, quad, x, y, z);
     }
     //    int angle = angleOfFace(face);
-//        renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
+    //        renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
     //    if (stack.isEmpty() == false) {
     //      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
     //      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);

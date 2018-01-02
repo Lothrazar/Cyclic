@@ -91,7 +91,6 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
           player.attackEntityFrom(DamageSource.MAGIC, 50);
         }
         else {
- 
           BlockPos currentPos = player.getPosition();
           BlockPos sourcePos = props.getChorusStart();//new BlockPos(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
           if (world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())) {

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.miner;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
@@ -200,10 +199,10 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       curBlockDamage = 0;
     }
   }
-//  @Override
-//  public EnumFacing getCurrentFacing() {
-//    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
-//  }
+  //  @Override
+  //  public EnumFacing getCurrentFacing() {
+  //    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
+  //  }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override

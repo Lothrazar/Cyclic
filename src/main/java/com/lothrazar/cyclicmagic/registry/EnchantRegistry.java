@@ -24,11 +24,9 @@ public class EnchantRegistry {
     }
   }
   public static String getStrForLevel(int lvl) {
-    if(lvl == 0){
+    if (lvl == 0) {
       return "I";
     }
-    
     return UtilChat.lang("enchantment.level." + lvl);
-
   }
 }

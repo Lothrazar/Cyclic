@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.library;
 import net.minecraft.util.EnumFacing;
 
-public enum  QuadrantEnum {
-  TL,TR,BL,BR;
+public enum QuadrantEnum {
+  TL, TR, BL, BR;
   private static final float HALF = 0.5F;
   /**
    * using (x,y) in [0,1] determine quadrant of block hit

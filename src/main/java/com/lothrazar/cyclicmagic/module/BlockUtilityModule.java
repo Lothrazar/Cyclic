@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
 import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
-import com.lothrazar.cyclicmagic.component.library.EnchantStack;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;

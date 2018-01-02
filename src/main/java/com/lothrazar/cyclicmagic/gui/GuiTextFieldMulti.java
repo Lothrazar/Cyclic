@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui;
 import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.screen.ScreenTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
@@ -10,11 +9,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -430,8 +424,6 @@ public class GuiTextFieldMulti extends Gui {
         charsWritten += line.length();
         //so if cursorPos is 63, dont do it until the last one we pass
         if (vPosCursor < 0 && this.getCursorPosition() <= charsWritten) {
-          //  ModCyclic.logger.log("VTEST"+cursorPosition+" cursorPosition "+cursorPosition+" <? written "+charsWritten);
-          //  ModCyclic.logger.log("cursorPosRelative = "+cursorPosRelative+" inside line: @ line "+line);
           vPosCursor = yPos;
           //found the row hey
           // so we have [0,     curP,         strLength]  

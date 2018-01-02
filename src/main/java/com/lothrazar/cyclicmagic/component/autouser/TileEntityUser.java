@@ -184,7 +184,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (rightClickFluidAttempt(targetPos)) {
       return;
     }
-    if(world.isAirBlock(targetPos)){
+    if (world.isAirBlock(targetPos)) {
       return;
     }
     //dont ever place a block. they want to use it on an entity
