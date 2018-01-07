@@ -89,6 +89,11 @@ public class UtilScythe {
         ,"abyssalcraft:wastelandsthorn"
         ,"abyssalcraft:luminousthistle"
         ,"harvestcraft:garden"
+        ,"minecraft:double_plant"
+        ,"minecraft:red_flower"
+        ,"minecraft:yellow_flower"
+        ,"minecraft:brown_mushroom"
+        ,"minecraft:red_mushroom"
         );
    
     /* @formatter:on */
