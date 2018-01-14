@@ -2,32 +2,30 @@ package com.lothrazar.cyclicmagic.component.enchanter;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerEnchanter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX = 150;
-  public static final int SLOTY = 18;
+  public static final int SLOTX = 50;
+  public static final int SLOTY = 34;
   protected TileEntityEnchanter tileEntity;
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
-    this.screenSize = ScreenSize.LARGE;
+//    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      Item filt = (i == 0) ? Items.GLASS_BOTTLE : Items.EXPERIENCE_BOTTLE;
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX, SLOTY + i * (8 + Const.SQ), filt));
-    }
-    bindPlayerInventory(inventoryPlayer);
+  
+      this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY  ));
+      this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY  ));
+   
+    this.bindPlayerInventory(inventoryPlayer);
   }
+  // places it into the tileEntity is possible since its in the player inventory
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -42,8 +40,6 @@ public class ContainerEnchanter extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
       else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }

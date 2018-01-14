@@ -35,7 +35,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnchanter extends BlockBaseFacingInventory implements IHasRecipe{ // , IBlockHasTESR 
+public class BlockEnchanter extends BlockBaseFacingInventory implements IHasRecipe { // , IBlockHasTESR 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockEnchanter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_ENCHANTER);

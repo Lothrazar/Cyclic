@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.enchanter;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -14,18 +13,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiBaseContainer {
-  public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
-  public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
-  public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
+ 
   private TileEntityEnchanter tile;
-  boolean debugLabels = false;
-//  private ButtonExpPylon btnCollect;
-//  private ButtonExpPylon btnDepositAll;
+ 
+ 
   public GuiEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter tileEntity) {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.setScreenSize(ScreenSize.LARGE);
-    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+//    this.setScreenSize(ScreenSize.LARGE);
+    this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
@@ -103,14 +99,20 @@ public class GuiEnchanter extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-      if (k == 0)
-        this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
-      else
-        this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerEnchanter.SLOTX - 1, this.guiTop + ContainerEnchanter.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+ 
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + 30-1, 
+          this.guiTop + ContainerEnchanter.SLOTY-1, 
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      
+      
+
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + 110-1, 
+          this.guiTop + ContainerEnchanter.SLOTY-1, 
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    
     this.drawFluidBar();
   }
   private void drawFluidBar() {
@@ -119,7 +121,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     int currentFluid = tile.getField(TileEntityEnchanter.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + 120, y = this.guiTop + 40;
+    int x = this.guiLeft + 150, y = this.guiTop + 16;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
@@ -138,10 +140,10 @@ public class GuiEnchanter extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 //    btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
-    int fluidHas = this.tile.getField(TileEntityEnchanter.Fields.EXP.ordinal());
-    this.drawString(fluidHas + " / " + TileEntityEnchanter.TANK_FULL, this.xSize / 2 - 8, 108);
-    int expHas = fluidHas / TileEntityEnchanter.FLUID_PER_EXP;
-    int expFull = TileEntityEnchanter.TANK_FULL / TileEntityEnchanter.FLUID_PER_EXP;
-    this.drawString("EXP: " + expHas + " / " + expFull, this.xSize / 2 - 20, 118);
+//    int fluidHas = this.tile.getField(TileEntityEnchanter.Fields.EXP.ordinal());
+//    this.drawString(fluidHas + " / " + TileEntityEnchanter.TANK_FULL, this.xSize / 2 - 8, 108);
+//    int expHas = fluidHas / TileEntityEnchanter.FLUID_PER_EXP;
+//    int expFull = TileEntityEnchanter.TANK_FULL / TileEntityEnchanter.FLUID_PER_EXP;
+//    this.drawString("EXP: " + expHas + " / " + expFull, this.xSize / 2 - 20, 118);
   }
 }
