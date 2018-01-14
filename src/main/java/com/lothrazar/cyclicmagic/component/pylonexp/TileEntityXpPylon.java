@@ -263,7 +263,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
    ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+      return true;
+    }
+    return super.hasCapability(capability, facing);
+
+  
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {

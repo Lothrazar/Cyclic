@@ -68,8 +68,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
         outputStack.setCount(1);
         //reduce it by 1
         inputStack.shrink(1);
- 
-//(int) (5.0F + diff.getClampedAdditionalDifficulty() * (float) world.rand.nextInt(18));
+  
         outputStack =  EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
         this.setInventorySlotContents(SLOT_BOOK, inputStack);
         this.setInventorySlotContents(SLOT_OUTPUT, outputStack);
@@ -82,7 +81,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
  
     FluidStack contains = this.tank.getFluid();
     return (contains != null && contains.getFluid() == FluidsRegistry.fluid_exp
-        && contains.amount > FLUID_COST);
+        && contains.amount >= FLUID_COST);
   }
  
   @Override
@@ -158,7 +157,8 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
       fluid = new FluidStack(FluidsRegistry.fluid_exp, amt);
     }
     fluid.amount = amt;
-    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
+
+
     this.tank.setFluid(fluid);
   }
   /******************************
@@ -166,7 +166,10 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
    ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+      return true;
+    }
+    return super.hasCapability(capability, facing);
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
@@ -196,13 +199,13 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
       return resource;
     }
     FluidStack result = tank.drain(resource, doDrain);
-    this.setField(Fields.EXP.ordinal(), result.amount);
+ 
     return result;
   }
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    this.setField(Fields.EXP.ordinal(), result.amount);
+ 
     return result;
   }
   @Override
