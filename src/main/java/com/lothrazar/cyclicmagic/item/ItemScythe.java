@@ -2,11 +2,12 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
+import com.lothrazar.cyclicmagic.net.PacketScythe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilScythe;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -32,6 +33,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    //    System.out.println("scytheisRemote" + world.isRemote);
     ItemStack stack = player.getHeldItem(hand);
     BlockPos offset = pos;
     if (side != null) {
@@ -52,15 +54,15 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
       break;
       case LEAVES:
       case WEEDS://NO LONGER DOES SAPLINGS
-        for (BlockPos p : shape) {
-          UtilScythe.harvestSingle(world, p, this.harvestType);
+        if (world.isRemote) {
+          ModCyclic.network.sendToServer(new PacketScythe(pos, this.harvestType, radius));
         }
       break;
     }
     super.onUse(stack, player, world, hand);
     return super.onItemUse(player, world, offset, hand, side, hitX, hitY, hitZ);
   }
-  private List<BlockPos> getShape(BlockPos center, int radius) {
+  public static List<BlockPos> getShape(BlockPos center, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape.addAll(UtilShape.squareHorizontalFull(center.down().down(), radius));
     shape.addAll(UtilShape.squareHorizontalFull(center.down(), radius));
