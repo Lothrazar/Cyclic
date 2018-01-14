@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -24,22 +25,22 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
   public static final int TIMER_FULL = 22;
-  public static final int SLOT_BOOK = 0;
+  public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   private static final int FLUID_COST = FLUID_PER_EXP * 250;//so this many exp points
-  private static final  int MAX_LEVEL = 30;
+  private static final int MAX_LEVEL = 30;
   public static enum Fields {
     TIMER, EXP, REDSTONE;//MIGHT remove redstone eh
   }
- 
   private int timer = 0;
   private int needsRedstone = 0;
   //  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityEnchanter() {
     super(2);
+   
     this.setSlotsForExtract(SLOT_OUTPUT);
-    this.setSlotsForInsert(SLOT_BOOK);
+    this.setSlotsForInsert(SLOT_INPUT);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -50,40 +51,36 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     if (this.isRunning() == false) {
       return;
     }
- 
     if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
     }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      ItemStack inputStack = this.getStackInSlot(SLOT_BOOK);
-       
+      ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
       ItemStack outputStack = ItemStack.EMPTY;
       if ((inputStack.getItem() == Items.BOOK || inputStack.isItemEnchantable()) &&
           this.hasEnoughFluid() &&
           this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
-        
+        //pay item cost and build the enchatned output item
+
+        inputStack.shrink(1);
         outputStack = inputStack.copy();
         outputStack.setCount(1);
-        //reduce it by 1
-        inputStack.shrink(1);
-  
-        outputStack =  EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
-        this.setInventorySlotContents(SLOT_BOOK, inputStack);
+ 
+        outputStack = EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
+        this.setInventorySlotContents(SLOT_INPUT, inputStack);
         this.setInventorySlotContents(SLOT_OUTPUT, outputStack);
         this.drain(FLUID_COST, true);
-        
       }
     }
   }
   private boolean hasEnoughFluid() {
- 
+   
     FluidStack contains = this.tank.getFluid();
-    return (contains != null && contains.getFluid() == FluidsRegistry.fluid_exp
+    return (contains != null && contains.getFluid() == FluidRegistry.getFluid("xpjuice")
         && contains.amount >= FLUID_COST);
   }
- 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
@@ -118,8 +115,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
       return 0;
-      
-      
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
@@ -154,11 +149,9 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
-      fluid = new FluidStack(FluidsRegistry.fluid_exp, amt);
+      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
     }
     fluid.amount = amt;
-
-
     this.tank.setFluid(fluid);
   }
   /******************************
@@ -166,7 +159,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
    ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return true;
     }
     return super.hasCapability(capability, facing);
@@ -176,7 +169,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
- 
     return super.getCapability(capability, facing);
   }
   @Override
@@ -186,7 +178,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
       return 0;
     }
     int result = tank.fill(resource, doFill);
@@ -195,17 +187,15 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
       return resource;
     }
     FluidStack result = tank.drain(resource, doDrain);
- 
     return result;
   }
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
- 
     return result;
   }
   @Override
