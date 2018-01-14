@@ -1,18 +1,11 @@
 package com.lothrazar.cyclicmagic.net;
 import java.util.List;
-import com.lothrazar.cyclicmagic.item.ItemPistonWand;
 import com.lothrazar.cyclicmagic.item.ItemScythe;
-import com.lothrazar.cyclicmagic.util.UtilHarvester;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -69,7 +62,6 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
     }
     return null;
   }
-
   private void handle(PacketScythe message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       EntityPlayer player = ctx.getServerHandler().player;

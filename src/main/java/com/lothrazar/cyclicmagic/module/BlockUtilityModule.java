@@ -65,6 +65,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableLibrary;
   private boolean screen;
   private boolean btrash;
+  private boolean fluidPlacer;
   public void onPreInit() {
     if (btrash) {
       BlockTrash trash = new BlockTrash();
@@ -153,6 +154,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockFluidCable k = new BlockFluidCable();
       BlockRegistry.registerBlock(k, "fluid_pipe", null);
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+    }
+    if (fluidPlacer) {
       //fluid placer
       BlockFluidPlacer placer = new BlockFluidPlacer();
       BlockRegistry.registerBlock(placer, "fluid_placer", null);
@@ -176,6 +179,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);
