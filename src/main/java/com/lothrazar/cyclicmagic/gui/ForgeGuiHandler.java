@@ -23,6 +23,9 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.component.disenchanter.ContainerDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.GuiDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.component.enchanter.ContainerEnchanter;
+import com.lothrazar.cyclicmagic.component.enchanter.GuiEnchanter;
+import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.component.enderbook.GuiEnderBook;
 import com.lothrazar.cyclicmagic.component.entitydetector.ContainerDetector;
 import com.lothrazar.cyclicmagic.component.entitydetector.GuiDetector;
@@ -134,6 +137,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_FORESTER = 27;
   public static final int GUI_INDEX_SORT = 28;
   public static final int GUI_INDEX_SCREEN = 29;
+  public static final int GUI_INDEX_ENCHANTER = 30;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -290,6 +294,12 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerScreen(player.inventory, (TileEntityScreen) te);
         }
       break;
+      case GUI_INDEX_ENCHANTER:
+
+        if (te instanceof TileEntityEnchanter) {
+          return new ContainerEnchanter(player.inventory, (TileEntityEnchanter) te);
+        }
+      break;
     }
     return null;
   }
@@ -437,6 +447,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_SCREEN:
           if (te instanceof TileEntityScreen) {
             return new GuiScreenBlock(player.inventory, (TileEntityScreen) te);
+          }
+        break;
+        case GUI_INDEX_ENCHANTER:
+          if (te instanceof TileEntityEnchanter) {
+            return new GuiEnchanter(player.inventory, (TileEntityEnchanter) te);
           }
         break;
       }

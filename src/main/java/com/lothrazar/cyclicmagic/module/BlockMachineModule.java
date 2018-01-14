@@ -13,6 +13,8 @@ import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
 import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.enchanter.BlockEnchanter;
+import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.component.forester.BlockForester;
 import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
@@ -175,6 +177,11 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_user, "block_user", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
     }
+    
+    BlockEnchanter block_enchanter = new BlockEnchanter();
+    BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
+ 
   }
   @Override
   public void syncConfig(Configuration config) {
