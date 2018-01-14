@@ -29,8 +29,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR { 
-  public static   int FUEL_COST = 0;
+public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
+  public static int FUEL_COST = 0;
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilAuto() {
     super(Material.ROCK);
@@ -56,7 +56,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-   }
+  }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -64,7 +64,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
         " d ",
         "ddd",
         'b', Items.EXPERIENCE_BOTTLE,
-        'd', Items.EMERALD );
+        'd', Items.EMERALD);
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -79,5 +79,5 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
-  } 
+  }
 }
