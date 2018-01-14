@@ -55,17 +55,16 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   }
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
    }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " b ",
-        "eoe",
-        "ooo",
+        "bbb",
+        " d ",
+        "ddd",
         'b', Items.EXPERIENCE_BOTTLE,
-        'e', Items.EMERALD,
-        'o', "obsidian");
+        'd', Items.EMERALD );
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {

@@ -26,7 +26,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public static final int TIMER_FULL = 44;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  private static final int FLUID_COST = 25;//so this many exp points
+  private static final int FLUID_COST = 50;//so this many exp points
   public static enum Fields {
     TIMER, FLUID,  FUEL, FUELMAX, FUELDISPLAY;//MIGHT remove redstone eh
   }
@@ -49,16 +49,16 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.isRunning() == false) {
       return;
     }
+    ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
+    if (inputStack.isEmpty()) {
+      return;
+    }
     this.spawnParticlesAbove();
     if (this.updateFuelIsBurning() == false) {
       return;
     }
     if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
-    }
-    ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
-    if (inputStack.isEmpty()) {
-      return;
     }
     //TODO: POWER COST!!!
     if (inputStack.isItemDamaged() == false) {
