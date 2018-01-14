@@ -24,6 +24,7 @@ public class Const {
     public static final ResourceLocation FLUID = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
     public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
     public static final ResourceLocation FLUID_EXP = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_exp.png");
+    public static final ResourceLocation FLUID_LAVA = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_lava.png");
 
     public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
     public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");

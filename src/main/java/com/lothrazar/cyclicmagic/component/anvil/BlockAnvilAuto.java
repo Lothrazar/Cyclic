@@ -1,7 +1,9 @@
-package com.lothrazar.cyclicmagic.component.enchanter;
+package com.lothrazar.cyclicmagic.component.anvil;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -21,34 +23,40 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR { 
+public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR { 
+  public static   int FUEL_COST = 0;
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
-  public BlockEnchanter() {
+  public BlockAnvilAuto() {
     super(Material.ROCK);
-    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENCHANTER);
+    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.GLASS);
     this.setTranslucent();
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityEnchanter();
+    return new TileEntityAnvilAuto();
   }
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class, new EnchanterTESR(TileEntityEnchanter.SLOT_INPUT));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvilAuto.class, new AnvilAutoTESR(TileEntityAnvilAuto.SLOT_INPUT));
   }
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+   }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -62,11 +70,11 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
-    TileEntityEnchanter te = (TileEntityEnchanter) world.getTileEntity(pos);
+    TileEntityAnvilAuto te = (TileEntityAnvilAuto) world.getTileEntity(pos);
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        int currentFluid = te.getField(TileEntityEnchanter.Fields.EXP.ordinal());
+        int currentFluid = te.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.component.anvil.ContainerAnvilAuto;
+import com.lothrazar.cyclicmagic.component.anvil.GuiAnvilAuto;
+import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.component.autouser.GuiUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
@@ -138,6 +141,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_SORT = 28;
   public static final int GUI_INDEX_SCREEN = 29;
   public static final int GUI_INDEX_ENCHANTER = 30;
+  public static final int GUI_INDEX_ANVIL=31; 
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -300,6 +304,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerEnchanter(player.inventory, (TileEntityEnchanter) te);
         }
       break;
+      case GUI_INDEX_ANVIL:
+        if (te instanceof TileEntityAnvilAuto) {
+          return new ContainerAnvilAuto(player.inventory, (TileEntityAnvilAuto) te);
+        }
+      break;
     }
     return null;
   }
@@ -452,6 +461,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ENCHANTER:
           if (te instanceof TileEntityEnchanter) {
             return new GuiEnchanter(player.inventory, (TileEntityEnchanter) te);
+          }
+        break;
+        case GUI_INDEX_ANVIL:
+          if (te instanceof TileEntityAnvilAuto) {
+            return new GuiAnvilAuto(player.inventory, (TileEntityAnvilAuto) te);
           }
         break;
       }

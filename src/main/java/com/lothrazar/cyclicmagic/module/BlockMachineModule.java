@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
+import com.lothrazar.cyclicmagic.component.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.beacon.BlockBeaconPowered;
@@ -184,6 +186,10 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
     }
+    BlockAnvilAuto block_enchanter = new BlockAnvilAuto();
+    BlockRegistry.registerBlock(block_enchanter, "block_anvil", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
+
   }
   @Override
   public void syncConfig(Configuration config) {
