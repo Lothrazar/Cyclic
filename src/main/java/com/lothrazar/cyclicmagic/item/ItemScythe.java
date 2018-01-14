@@ -3,14 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.ItemRandomizer.ActionType;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.net.PacketRandomize;
 import com.lothrazar.cyclicmagic.net.PacketScythe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilScythe;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -36,14 +33,13 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-//    System.out.println("scytheisRemote" + world.isRemote);
+    //    System.out.println("scytheisRemote" + world.isRemote);
     ItemStack stack = player.getHeldItem(hand);
     BlockPos offset = pos;
     if (side != null) {
       offset = pos.offset(side);
     }
     int radius = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
-  
     List<BlockPos> shape = getShape(offset, radius);
     switch (harvestType) {
       case CROPS:
