@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,6 +18,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -30,14 +30,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
+  protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
   public static int FUEL_COST = 0;
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilAuto() {
-    super(Material.ROCK);
+    super(Material.IRON);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setSoundType(SoundType.GLASS);
     this.setTranslucent();
+  }
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return Z_AXIS_AABB;
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
@@ -50,12 +54,9 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvilAuto.class, new AnvilAutoTESR(TileEntityAnvilAuto.SLOT_INPUT));
   }
   @Override
-  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-    return side == EnumFacing.DOWN;
-  }
-  @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    TileEntityAnvilAuto.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 75, 1, 1000, "Lava cost per damage unit");
   }
   @Override
   public IRecipe addRecipe() {

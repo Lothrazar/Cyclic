@@ -12,7 +12,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-//    this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
+ 
     this.setFieldFuel(TileEntityAnvilAuto.Fields.FUEL.ordinal());
   }
   @Override
@@ -21,7 +21,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 30 - 1,
+        this.guiLeft + 60 - 1,
         this.guiTop + ContainerAnvilAuto.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     Gui.drawModalRectWithCustomSizedTexture(
@@ -31,13 +31,12 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
     this.drawFluidBar();
   }
-  private void drawFluidBar() {
-    //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
+  private void drawFluidBar() { 
     int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+    int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());  
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + Const.PAD, y = this.guiTop + 18;
+    int x = this.guiLeft + Const.PAD, y = this.guiTop + 14;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,

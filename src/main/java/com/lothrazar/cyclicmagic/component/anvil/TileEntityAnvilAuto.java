@@ -22,13 +22,12 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler {
   public static final int TANK_FULL = 10000;
-  //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
-  public static final int TIMER_FULL = 44;
+  public static final int TIMER_FULL = 15;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  private static final int FLUID_COST = 50;//so this many exp points
+  public static int FLUID_COST = 75;
   public static enum Fields {
-    TIMER, FLUID,  FUEL, FUELMAX, FUELDISPLAY;//MIGHT remove redstone eh
+    TIMER, FLUID, FUEL, FUELMAX, FUELDISPLAY;//MIGHT remove redstone eh
   }
   private int timer = 0;
   private int needsRedstone = 0;
@@ -131,7 +130,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       case TIMER:
         return timer;
       case FLUID:
-        return this.getCurrentFluid(); 
+        return this.getCurrentFluid();
       case FUEL:
         return this.getFuelCurrent();
       case FUELMAX:
@@ -150,7 +149,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       case FLUID:
         this.setCurrentFluid(value);
       break;
-    
       case FUEL:
         this.setFuelCurrent(value);
       break;
@@ -217,5 +215,4 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     FluidStack result = tank.drain(maxDrain, doDrain);
     return result;
   }
- 
 }

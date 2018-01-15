@@ -20,7 +20,7 @@ public class AnvilAutoTESR extends BaseMachineTESR<TileEntityAnvilAuto> {
   public void renderBasic(TileEntityBaseMachineInvo te) {
     ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
     if (stack.isEmpty() == false) {
-      renderItem(te, stack, 0.9F);
+      renderItem(te, stack, 1.15F);
     }
   }
 }

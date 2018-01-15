@@ -20,7 +20,7 @@ public class ContainerAnvilAuto extends ContainerBaseMachine {
     tileEntity = te;
     this.setTile(te);
   
-      this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY  ));
+      this.addSlotToContainer(new Slot(tileEntity, 0, 60, SLOTY  ));
       this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY  ));
 
       super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);

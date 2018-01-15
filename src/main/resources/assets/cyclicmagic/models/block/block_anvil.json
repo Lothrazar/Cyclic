@@ -1,8 +1,8 @@
 {
    "textures": {
-        "particle": "blocks/anvil_base",
-        "body": "blocks/anvil_base",
-        "top": "blocks/anvil_top_damaged_1"
+        "particle": "cyclicmagic:blocks/anvil_base",
+        "body": "cyclicmagic:blocks/anvil_base",
+        "top": "cyclicmagic:blocks/anvil_top"
     },
     "elements": [
         {   "__comment": "Anvil base",
@@ -11,10 +11,10 @@
             "faces": {
                 "down":  { "uv": [ 2,  2, 14, 14 ], "texture": "#body", "rotation": 180, "cullface": "down" },
                 "up":    { "uv": [ 2,  2, 14, 14 ], "texture": "#body", "rotation": 180 },
-                "north": { "uv": [ 2, 12, 14, 16 ], "texture": "#body" },
-                "south": { "uv": [ 2, 12, 14, 16 ], "texture": "#body" },
-                "west":  { "uv": [ 0,  2,  4, 14 ], "texture": "#body", "rotation":  90 },
-                "east":  { "uv": [ 4,  2,  0, 14 ], "texture": "#body", "rotation": 270 }
+                "north": { "uv": [ 2, 10, 14, 14 ], "texture": "#body" },
+                "south": { "uv": [ 2, 10, 14, 14 ], "texture": "#body" },
+                "west":  { "uv": [ 2,  2,  6, 14 ], "texture": "#body", "rotation":  90 },
+                "east":  { "uv": [ 6,  2,  2, 14 ], "texture": "#body", "rotation": 270 }
             }
         },
         {   "__comment": "Lower narrow portion",
