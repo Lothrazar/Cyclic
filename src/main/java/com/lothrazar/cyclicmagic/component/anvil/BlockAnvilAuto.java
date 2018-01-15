@@ -11,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -61,11 +62,12 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "bbb",
-        " d ",
         "ddd",
-        'b', Items.EXPERIENCE_BOTTLE,
-        'd', Items.EMERALD);
+        " e ",
+        "iii",
+        'i', "blockIron",
+        'e', Blocks.ENCHANTING_TABLE,
+        'd', "gemDiamond");
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {

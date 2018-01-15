@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -26,8 +28,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR { 
-  //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
+public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.75, 1);
   public BlockEnchanter() {
     super(Material.ROCK);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENCHANTER);
@@ -38,6 +40,10 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityEnchanter();
+  }
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return AABB;
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -55,7 +61,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
         " b ",
         "eoe",
         "ooo",
-        'b', Items.EXPERIENCE_BOTTLE,
+        'b', Blocks.ENCHANTING_TABLE,
         'e', Items.EMERALD,
         'o', "obsidian");
   }
@@ -72,5 +78,5 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
-  } 
+  }
 }
