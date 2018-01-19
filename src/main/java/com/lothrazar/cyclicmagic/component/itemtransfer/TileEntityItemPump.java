@@ -1,15 +1,20 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
+import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int SLOT_TRANSFER = 0;
@@ -18,7 +23,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
   }
   static final int FILTER_SIZE = 9;
   private int needsRedstone = 1;
-  private int filterType;
+  private int filterType = 0;
   public TileEntityItemPump() {
     super(1 + FILTER_SIZE);
     this.setSlotsForBoth();
@@ -48,6 +53,28 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+  private boolean isWhitelist() {
+    //default is zero, and default blacklist makes sense -> it is empty, so everythings allowed
+    return this.filterType == 1;
+  }
+  private boolean isTargetItemValid(ItemStack stackToTest) {
+    List<ItemStack> inventoryContents = getFilter();
+    //edge case: if list is empty ?? should be covered already
+    if (OreDictionary.containsMatch(true,
+        NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
+        stackToTest)) {
+      //the item that I target matches something in my filter
+      //meaning, if i am in whitelist mode, it is valid, it matched the allowed list
+      //if I am in blacklist mode, nope not valid
+      return !this.isWhitelist();
+    }
+    //here is the opposite: i did NOT match the list
+    return  this.isWhitelist();
+  }
+  private List<ItemStack> getFilter() {
+    List<ItemStack> validForSide = this.inv.subList(1, FILTER_SIZE + 1);
+    return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
+  }
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
@@ -57,12 +84,18 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
    */
   @Override
   public void update() {
-    if (world.isRemote) {
+    if (world.isRemote || this.isValid() == false) {
       return;
     }
-    if (this.isPowered() == false) {
-      return;
+    if (this.isPowered() == false && this.onlyRunIfPowered()) {
+      return;//i am not powered, and i require it
     }
+    //    if (isRunning() == false) {
+    //      return;
+    //    }
+    //    if (this.isPowered() == false ) {
+    //      return;
+    //    }
     this.tryExport();
     this.tryImport();
   }
@@ -73,14 +106,14 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     EnumFacing facingTo = this.getCurrentFacing().getOpposite();
-    BlockPos posSide = pos.offset(facingTo);
+    BlockPos posTarget = pos.offset(facingTo);
     EnumFacing sideOpp = facingTo.getOpposite();
-    TileEntity tileTarget = world.getTileEntity(posSide);
+    TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null ||
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
       return;
     }
-    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posSide, sideOpp, stackToExport);
+    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, sideOpp, stackToExport);
     if (pulled.getCount() != stackToExport.getCount()) {
       this.setInventorySlotContents(SLOT_TRANSFER, pulled);
       //one or more was put in
@@ -97,14 +130,22 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     EnumFacing sideOpp = this.getCurrentFacing();
     //get the block Behind me
-    BlockPos posSide = pos.offset(sideOpp);
-    TileEntity tileTarget = world.getTileEntity(posSide);
+    BlockPos posTarget = pos.offset(sideOpp);
+    TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
     }
+    ItemStack itemTarget;
     if (tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.getCurrentFacing())) {
       IItemHandler itemHandlerFrom = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.getCurrentFacing());
       for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
+        itemTarget = itemHandlerFrom.getStackInSlot(i);
+        //check against whitelist/blacklist system
+        if (this.isTargetItemValid(itemTarget)) {
+          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
+          continue;
+        }
+        //passed filter check, so do the transaction
         ItemStack pulled = itemHandlerFrom.extractItem(i, 1, false);
         if (pulled != null && pulled.isEmpty() == false) {
           this.setInventorySlotContents(SLOT_TRANSFER, pulled.copy());
@@ -112,6 +153,18 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         }
       }
     }
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    filterType = compound.getInteger("wbtype");
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_REDST, needsRedstone);
+    compound.setInteger("wbtype", this.filterType);
+    return super.writeToNBT(compound);
   }
   @Override
   public void toggleNeedsRedstone() {
