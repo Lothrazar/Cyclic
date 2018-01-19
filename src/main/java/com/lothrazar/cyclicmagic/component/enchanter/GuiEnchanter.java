@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.component.enchanter;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -13,36 +15,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiBaseContainer {
- 
   private TileEntityEnchanter tile;
- 
- 
   public GuiEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter tileEntity) {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
- 
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
+    this.setFieldFuel(TileEntityEnchanter.Fields.FUEL.ordinal());
   }
- 
- 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
- 
-      Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + 30-1, 
-          this.guiTop + ContainerEnchanter.SLOTY - 1, 
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-      
-      
-
-      Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + 110-1, 
-          this.guiTop + ContainerEnchanter.SLOTY-1, 
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + 30 - 1,
+        this.guiTop + ContainerEnchanter.SLOTY - 1,
+        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + 110 - 1,
+        this.guiTop + ContainerEnchanter.SLOTY - 1,
+        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
     this.drawFluidBar();
   }
   private void drawFluidBar() {
@@ -51,7 +44,8 @@ public class GuiEnchanter extends GuiBaseContainer {
     int currentFluid = tile.getField(TileEntityEnchanter.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + 150, y = this.guiTop + 16;
+    int fuelWidth = 16;
+    int x = this.guiLeft + this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
@@ -63,8 +57,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     Gui.drawModalRectWithCustomSizedTexture(
         x + 1, y + 1 + h - hpct,
         u, v,
-        16, hpct,
-        16, h);
+        fuelWidth, hpct,
+        fuelWidth, h);
   }
- 
 }

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.anvil;
+import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -12,7 +13,8 @@ public class GuiAnvilAuto extends GuiBaseContainer {
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
- 
+
+    this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
     this.setFieldFuel(TileEntityAnvilAuto.Fields.FUEL.ordinal());
   }
   @Override
@@ -36,7 +38,8 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());  
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + Const.PAD, y = this.guiTop + 14;
+    int fuelWidth = 16;
+    int x = this.guiLeft+ this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
@@ -48,7 +51,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     Gui.drawModalRectWithCustomSizedTexture(
         x + 1, y + 1 + h - hpct,
         u, v,
-        16, hpct,
-        16, h);
+        fuelWidth, hpct,
+        fuelWidth, h);
   }
 }

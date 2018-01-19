@@ -22,7 +22,8 @@ public class ContainerEnchanter extends ContainerBaseMachine {
   
       this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY  ));
       this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY  ));
-   
+
+      super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
   // places it into the tileEntity is possible since its in the player inventory

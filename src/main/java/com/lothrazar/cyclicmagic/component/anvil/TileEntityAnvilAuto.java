@@ -48,9 +48,10 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.isRunning() == false) {
       return;
     }
+   
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
     if (inputStack.isEmpty()) {
-      return;
+      return;//no paying cost on empty work
     }
     this.spawnParticlesAbove();
     if (this.updateFuelIsBurning() == false) {
@@ -59,7 +60,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
     }
-    //TODO: POWER COST!!!
     if (inputStack.isItemDamaged() == false) {
       //all done
       this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
@@ -166,7 +166,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
-      fluid = new FluidStack(FluidRegistry.getFluid("lava"), amt);
+      fluid = new FluidStack(FluidRegistry.LAVA, amt);
     }
     fluid.amount = amt;
     this.tank.setFluid(fluid);
@@ -195,7 +195,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.getFluid("lava")) {
+    if (resource.getFluid() != FluidRegistry.LAVA) {
       return 0;
     }
     int result = tank.fill(resource, doFill);
@@ -204,7 +204,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.getFluid("lava")) {
+    if (resource.getFluid() != FluidRegistry.LAVA) {
       return resource;
     }
     FluidStack result = tank.drain(resource, doDrain);

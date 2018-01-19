@@ -2,6 +2,9 @@ package com.lothrazar.cyclicmagic.component.enchanter;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -23,13 +26,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IHasConfig {
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.75, 1);
+  public static int FUEL_COST = 0;
   public BlockEnchanter() {
     super(Material.ROCK);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENCHANTER);
@@ -78,5 +83,10 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
     }
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    TileEntityEnchanter.FLUID_COST = config.getInt(this.getRawName() + "_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
   }
 }

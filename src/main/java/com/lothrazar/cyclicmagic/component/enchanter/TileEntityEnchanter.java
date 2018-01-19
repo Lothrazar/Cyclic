@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.enchanter;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -23,22 +24,21 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
   public static final int TANK_FULL = 10000;
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
-  public static final int FLUID_PER_EXP = 20;
   public static final int TIMER_FULL = 22;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  private static final int FLUID_COST = FLUID_PER_EXP * 250;//so this many exp points
+  public static int FLUID_COST = 300;
   private static final int MAX_LEVEL = 30;
   public static enum Fields {
-    TIMER, EXP, REDSTONE;//MIGHT remove redstone eh
+    TIMER, EXP, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
   private int timer = 0;
   private int needsRedstone = 0;
-  //  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
+  
   public FluidTank tank = new FluidTank(TANK_FULL);
   public TileEntityEnchanter() {
-    super(2);
-   
+    super(3);
+    this.setFuelSlot(2, BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
   }
@@ -51,23 +51,27 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     if (this.isRunning() == false) {
       return;
     }
+    ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
+    if (inputStack.isEmpty()) {
+      return;//no paying cost on empty work
+    }
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
     }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
       ItemStack outputStack = ItemStack.EMPTY;
       if ((inputStack.getItem() == Items.BOOK || inputStack.isItemEnchantable()) &&
           this.hasEnoughFluid() &&
           this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //pay item cost and build the enchatned output item
-
         inputStack.shrink(1);
         outputStack = inputStack.copy();
         outputStack.setCount(1);
- 
         outputStack = EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
         this.setInventorySlotContents(SLOT_INPUT, inputStack);
         this.setInventorySlotContents(SLOT_OUTPUT, outputStack);
@@ -76,7 +80,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
     }
   }
   private boolean hasEnoughFluid() {
-   
     FluidStack contains = this.tank.getFluid();
     return (contains != null && contains.getFluid() == FluidRegistry.getFluid("xpjuice")
         && contains.amount >= FLUID_COST);
@@ -108,6 +111,12 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
         return this.getCurrentFluid();
       case REDSTONE:
         return needsRedstone;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case FUELDISPLAY:
+        return this.fuelDisplay;
     }
     return -1;
   }
@@ -138,7 +147,13 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      default:
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+      break;
+      case FUELDISPLAY:
+        this.fuelDisplay = value % 2;
       break;
     }
   }
