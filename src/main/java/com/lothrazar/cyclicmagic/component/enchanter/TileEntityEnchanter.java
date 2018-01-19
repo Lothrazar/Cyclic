@@ -1,20 +1,17 @@
 package com.lothrazar.cyclicmagic.component.enchanter;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
@@ -35,12 +32,13 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   private int timer = 0;
   private int needsRedstone = 0;
   
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityEnchanter() {
     super(3);
     this.setFuelSlot(2, BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
+    tank.setFluidAllowed( FluidRegistry.getFluid("xpjuice") );
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -81,8 +79,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   private boolean hasEnoughFluid() {
     FluidStack contains = this.tank.getFluid();
-    return (contains != null && contains.getFluid() == FluidRegistry.getFluid("xpjuice")
-        && contains.amount >= FLUID_COST);
+    return ( contains.amount >= FLUID_COST );
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -193,18 +190,14 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
-      return 0;
-    }
+ 
     int result = tank.fill(resource, doFill);
     this.setField(Fields.EXP.ordinal(), result);
     return result;
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
-      return resource;
-    }
+ 
     FluidStack result = tank.drain(resource, doDrain);
     return result;
   }

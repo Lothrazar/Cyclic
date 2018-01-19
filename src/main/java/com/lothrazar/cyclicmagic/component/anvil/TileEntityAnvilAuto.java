@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.anvil;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -32,12 +33,13 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   private int timer = 0;
   private int needsRedstone = 0;
   //  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityAnvilAuto() {
     super(3);
     this.setFuelSlot(2, BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
+    tank.setFluidAllowed(FluidRegistry.LAVA);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -88,8 +90,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   }
   private boolean hasEnoughFluid() {
     FluidStack contains = this.tank.getFluid();
-    return (contains != null && contains.getFluid() == FluidRegistry.getFluid("lava")
-        && contains.amount >= FLUID_COST);
+    return ( contains.amount >= FLUID_COST);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -195,18 +196,18 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.LAVA) {
-      return 0;
-    }
+//    if (resource.getFluid() != FluidRegistry.LAVA) {
+//      return 0;
+//    }
     int result = tank.fill(resource, doFill);
     this.setField(Fields.FLUID.ordinal(), result);
     return result;
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.LAVA) {
-      return resource;
-    }
+//    if (resource.getFluid() != FluidRegistry.LAVA) {
+//      return resource;
+//    }
     FluidStack result = tank.drain(resource, doDrain);
     return result;
   }

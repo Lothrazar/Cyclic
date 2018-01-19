@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -45,11 +46,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private int collect = 1;
   private int needsRedstone = 0;
   private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
+    tank.setFluidAllowed( FluidRegistry.getFluid("xpjuice") );
   }
   @Override
   public int[] getFieldOrdinals() {
