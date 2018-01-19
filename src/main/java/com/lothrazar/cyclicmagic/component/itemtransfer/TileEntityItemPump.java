@@ -13,6 +13,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
   public TileEntityItemPump() {
     super(1);
     this.setSlotsForBoth();
+    
   }
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push

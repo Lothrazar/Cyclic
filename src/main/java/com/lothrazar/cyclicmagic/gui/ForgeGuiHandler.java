@@ -51,6 +51,9 @@ import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.component.itemsort.ContainerItemSort;
 import com.lothrazar.cyclicmagic.component.itemsort.GuiItemSort;
 import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.component.itemtransfer.ContainerItemPump;
+import com.lothrazar.cyclicmagic.component.itemtransfer.GuiItemPump;
+import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
@@ -142,6 +145,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_SCREEN = 29;
   public static final int GUI_INDEX_ENCHANTER = 30;
   public static final int GUI_INDEX_ANVIL=31; 
+  public static final int GUI_INDEX_ITEMPUMP=32; 
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -309,6 +313,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerAnvilAuto(player.inventory, (TileEntityAnvilAuto) te);
         }
       break;
+      case GUI_INDEX_ITEMPUMP:
+        if (te instanceof TileEntityItemPump) {
+          return new ContainerItemPump(player.inventory, (TileEntityItemPump) te);
+        }
+        break;
     }
     return null;
   }
@@ -466,6 +475,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ANVIL:
           if (te instanceof TileEntityAnvilAuto) {
             return new GuiAnvilAuto(player.inventory, (TileEntityAnvilAuto) te);
+          }
+        break;
+        case GUI_INDEX_ITEMPUMP:
+          if (te instanceof TileEntityItemPump) {
+            return new GuiItemPump(player.inventory, (TileEntityItemPump) te);
           }
         break;
       }

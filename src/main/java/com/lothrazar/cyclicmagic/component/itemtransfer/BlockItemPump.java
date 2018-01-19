@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.ITileEntityProvider;
@@ -24,6 +25,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
+    super.setGuiId( ForgeGuiHandler.GUI_INDEX_ITEMPUMP  );
   }
   @Override //Use IBlockState.getBlockFaceShape
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
@@ -37,8 +39,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    // check the TE
-    boolean success = true;
+ 
     String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
     UtilChat.sendStatusMessage(player, UtilChat.lang(powered));
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
