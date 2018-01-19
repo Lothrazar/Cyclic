@@ -57,7 +57,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityAnvilAuto.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 75, 1, 1000, "Lava cost per damage unit");
+    TileEntityAnvilAuto.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 25, 1, 1000, "Lava cost per damage unit");
   }
   @Override
   public IRecipe addRecipe() {

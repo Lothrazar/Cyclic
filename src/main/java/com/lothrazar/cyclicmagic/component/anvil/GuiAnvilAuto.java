@@ -1,5 +1,4 @@
-package com.lothrazar.cyclicmagic.component.anvil;
-import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
+package com.lothrazar.cyclicmagic.component.anvil; 
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -14,7 +13,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
 
-    this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
     this.setFieldFuel(TileEntityAnvilAuto.Fields.FUEL.ordinal());
   }
   @Override

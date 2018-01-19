@@ -24,21 +24,20 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   public static final int TIMER_FULL = 22;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  public static int FLUID_COST = 300;
   private static final int MAX_LEVEL = 30;
+  public static int FLUID_COST = 300;
   public static enum Fields {
     TIMER, EXP, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
   private int timer = 0;
   private int needsRedstone = 0;
-  
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityEnchanter() {
     super(3);
     this.setFuelSlot(2, BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-    tank.setFluidAllowed( FluidRegistry.getFluid("xpjuice") );
+    tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -50,7 +49,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
       return;
     }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
-    if (inputStack.isEmpty()) {
+    if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
     if (this.updateFuelIsBurning() == false) {
@@ -79,7 +78,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   private boolean hasEnoughFluid() {
     FluidStack contains = this.tank.getFluid();
-    return ( contains.amount >= FLUID_COST );
+    return (contains != null && contains.amount >= FLUID_COST);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -99,6 +98,21 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   public int getFieldCount() {
     return Fields.values().length;
   }
+  public int getCurrentFluid() {
+    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return 0;
+    }
+    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+    return (fluid == null) ? 0 : fluid.amount;
+  }
+  public FluidStack getCurrentFluidStack() {
+    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return null;
+    }
+    return fluidHandler.getTankProperties()[0].getContents();
+  }
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -116,21 +130,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
         return this.fuelDisplay;
     }
     return -1;
-  }
-  public int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
   }
   @Override
   public void setField(int id, int value) {
@@ -190,14 +189,12 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
- 
     int result = tank.fill(resource, doFill);
     this.setField(Fields.EXP.ordinal(), result);
     return result;
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
- 
     FluidStack result = tank.drain(resource, doDrain);
     return result;
   }

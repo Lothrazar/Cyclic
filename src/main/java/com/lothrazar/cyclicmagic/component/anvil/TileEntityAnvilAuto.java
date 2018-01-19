@@ -3,36 +3,30 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler {
+public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 15;
+  public static final int TIMER_FULL = 3;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;
   public static enum Fields {
-    TIMER, FLUID, FUEL, FUELMAX, FUELDISPLAY;//MIGHT remove redstone eh
+    TIMER, FLUID, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
   private int timer = 0;
   private int needsRedstone = 0;
-  //  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityAnvilAuto() {
     super(3);
@@ -50,9 +44,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.isRunning() == false) {
       return;
     }
-   
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
-    if (inputStack.isEmpty()) {
+    if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
     this.spawnParticlesAbove();
@@ -65,32 +58,24 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (inputStack.isItemDamaged() == false) {
       //all done
       this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
-      //      this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
+     
       return;
     }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      //ItemStack outputStack = ItemStack.EMPTY;
+       
       if (inputStack.isItemDamaged() &&
           this.hasEnoughFluid()) {
         inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay item cost and build the enchatned output item
-        //
-        //        inputStack.shrink(1);
-        //        outputStack = inputStack.copy();
-        //        outputStack.setCount(1);
-        // 
-        //        outputStack = EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
-        //        this.setInventorySlotContents(SLOT_INPUT, inputStack);
-        //        this.setInventorySlotContents(SLOT_OUTPUT, outputStack);
+        //pay item cost and build  
         this.drain(FLUID_COST, true);
       }
     }
   }
   private boolean hasEnoughFluid() {
     FluidStack contains = this.tank.getFluid();
-    return ( contains.amount >= FLUID_COST);
+    return (contains != null && contains.amount >= FLUID_COST);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -138,6 +123,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
         return this.getFuelMax();
       case FUELDISPLAY:
         return this.fuelDisplay;
+      case REDSTONE:
+        return needsRedstone;
     }
     return -1;
   }
@@ -157,6 +144,9 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       break;
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value % 2;
       break;
     }
   }
@@ -196,18 +186,12 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-//    if (resource.getFluid() != FluidRegistry.LAVA) {
-//      return 0;
-//    }
     int result = tank.fill(resource, doFill);
     this.setField(Fields.FLUID.ordinal(), result);
     return result;
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-//    if (resource.getFluid() != FluidRegistry.LAVA) {
-//      return resource;
-//    }
     FluidStack result = tank.drain(resource, doDrain);
     return result;
   }
@@ -215,5 +199,13 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
     return result;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
+  }
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }
