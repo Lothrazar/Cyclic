@@ -10,8 +10,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITickable {
+  
+  private static final int SLOT_TRANSFER = 0;
+
+  static final int FILTER_SIZE = 9;
   public TileEntityItemPump() {
-    super(1);
+    super(1 + FILTER_SIZE);
     this.setSlotsForBoth();
     
   }
@@ -34,11 +38,11 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     this.tryImport();
   }
   public void tryExport() {
-    if (this.getStackInSlot(0).isEmpty()) {
+    if (this.getStackInSlot(SLOT_TRANSFER).isEmpty()) {
       return;//im empty nothing to give
     }
     boolean outputSuccess = false;
-    ItemStack stackToExport = this.getStackInSlot(0).copy();
+    ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     EnumFacing facingTo = this.getCurrentFacing().getOpposite();
     BlockPos posSide = pos.offset(facingTo);
     EnumFacing sideOpp = facingTo.getOpposite();
@@ -49,7 +53,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posSide, sideOpp, stackToExport);
     if (pulled.getCount() != stackToExport.getCount()) {
-      this.setInventorySlotContents(0, pulled);
+      this.setInventorySlotContents(SLOT_TRANSFER, pulled);
       //one or more was put in
       outputSuccess = true;
     }
@@ -59,7 +63,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
   }
   public void tryImport() {
-    if (this.getStackInSlot(0).isEmpty() == false) {
+    if (this.getStackInSlot(SLOT_TRANSFER).isEmpty() == false) {
       return;//im full leave me alone
     }
     EnumFacing sideOpp = this.getCurrentFacing();
@@ -74,7 +78,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
         ItemStack pulled = itemHandlerFrom.extractItem(i, 1, false);
         if (pulled != null && pulled.isEmpty() == false) {
-          this.setInventorySlotContents(0, pulled.copy());
+          this.setInventorySlotContents(SLOT_TRANSFER, pulled.copy());
           return;
         }
       }

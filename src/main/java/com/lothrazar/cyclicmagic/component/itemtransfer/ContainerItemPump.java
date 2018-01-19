@@ -14,23 +14,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerItemPump extends ContainerBaseMachine {
-  public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = Const.SQ;
+  public static final int SLOTX_START = Const.PAD ;
+  public static final int SLOTY = Const.SQ + Const.PAD * 3;
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
 //    this.screenSize = ScreenSize.STANDARD;
-    this.setTile(te);
-//    int fs = TileEntityItemPump.FILTER_SIZE;
-//    int slot = 1;
-//    int y = SLOTY;
-//    for (int col = 0; col < EnumFacing.values().length; col++) {
-//      y = col * Const.SQ;
-//      for (int row = 0; row < fs; row++) {
-//        addSlotToContainer(new SlotSingleStack(tile, slot,
-//            SLOTX_START + row % fs * Const.SQ + Const.SQ,
-//            SLOTY + y));
-//        slot++;
-//      }
-//    }
+    this.setTile(te); 
+    int slot = 1; 
+    for (int col = 1; col < 10; col++) { 
+        addSlotToContainer(new SlotSingleStack(tile, col,
+            SLOTX_START + (col-1) * Const.SQ ,
+            SLOTY  ));
+        slot++;
+      
+    }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
