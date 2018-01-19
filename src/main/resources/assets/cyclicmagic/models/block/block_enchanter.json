@@ -1,4 +1,5 @@
 {
+   "parent": "block/cube",
     "textures": {
         "particle": "blocks/obsidian",
         "bottom": "blocks/obsidian",
