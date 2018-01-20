@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -12,11 +16,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantExcavation extends EnchantBase {
+public class EnchantExcavation extends EnchantBase implements IHasConfig {
   public EnchantExcavation() {
     super("excavation", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
@@ -50,7 +55,7 @@ public class EnchantExcavation extends EnchantBase {
     this.harvestSurrounding(world, player, pos, block, 1, level);
   }
   private int getHarvestMax(int level) {
-    return level * 12;
+    return levelToMaxBreak[level];
   }
   /**
    * WARNING: RECURSIVE
@@ -82,11 +87,24 @@ public class EnchantExcavation extends EnchantBase {
   }
   private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
     List<BlockPos> list = new ArrayList<BlockPos>();
-    for (EnumFacing fac : EnumFacing.values()) {
+    // TODO: DIAGONAL! 
+    List<EnumFacing> targetFaces = Arrays.asList(EnumFacing.values());
+    Collections.shuffle(targetFaces);
+    for (EnumFacing fac : targetFaces) {
       if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
         list.add(start.offset(fac));
       }
     }
     return list;
+  }
+  int[] levelToMaxBreak;
+  @Override
+  public void syncConfig(Configuration config) {
+    // level starts at 1 so just ignore index 0 of array always, 0 means non enchanted
+    levelToMaxBreak = new int[this.getMaxLevel() + 1];
+    levelToMaxBreak[0] = 0;
+    for (int i = 1; i <= this.getMaxLevel(); i++) {
+      levelToMaxBreak[i] = config.getInt("EnchantExcavationBreak" + i, Const.ConfigCategory.modpackMisc, 10 + i * 12, 1, 128, "Max blocks broken by this enchantment at level " + i);
+    }
   }
 }
