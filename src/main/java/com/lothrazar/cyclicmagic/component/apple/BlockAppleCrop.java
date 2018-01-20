@@ -97,19 +97,16 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
     }
   }
   private Item getCropFullGrown(Random rand) {
-    
-    // TODO: RANDOMLY a golden apple 
-    // or a poison apple (that we need to make item for)
-    //maybe emerald also!?!?!
+    // TODO: maybe make poison apple? But what would it be used for?
     if (rand.nextDouble() < CHANCE_TREASURE) {
       return Items.GOLDEN_APPLE;
     }
-//    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_emerald") != null) {
-//      return Item.getByNameOrId("cyclicmagic:apple_emerald");
-//    }
-//    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_lapis") != null) {
-//      return Item.getByNameOrId("cyclicmagic:apple_lapis");
-//    }
+    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_emerald") != null) {
+      return Item.getByNameOrId("cyclicmagic:apple_emerald");
+    }
+    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_lapis") != null) {
+      return Item.getByNameOrId("cyclicmagic:apple_lapis");
+    }
     return Items.APPLE;
   }
   @Nullable
