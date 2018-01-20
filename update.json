@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.10.12",
-    "1.12.2-recommended": "1.10.12"
+    "1.12.2-latest": "1.11.0",
+    "1.12.2-recommended": "1.11.0"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -241,5 +241,6 @@
 	,"1.10.10":"New Blocks: Ender Bookshelf, Ender Library, Digital Typewriter, Trash Void.  Auto User will no longer place blocks (but will still use blocks as normal, this just fixes the bug when used with Advanced Mortars where it places cobblestone when the mortars durability breaks).  Translation file added: Chinese Traditional (zh_TW).  Corrupted Chorus noclip now displays in upper right instead of flooding chat.  Corrupted Chorus noclip ghost mode will no longer allow players to access the spectator toolbar. "
   	,"1.10.11":"Fixed client/server desync with the Scythe tools.  New config fluid_placer to disable the Fluid Placer block. "
 	,"1.10.12":"Item Pump now has a GUI with a filter for whitelist/blacklist modes, and a redstone toggle button.  Fixed some bugs with some internal fluid tanks.  Updated zh_CN.lang file (by github user Aemande123).  "
+  	,"1.11.0":"New block: Powered Anvil.  New block: Powered Enchanter.  New Block: Apple Sprout.  "
   }
 }
