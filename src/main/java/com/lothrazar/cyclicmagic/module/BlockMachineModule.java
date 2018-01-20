@@ -180,20 +180,20 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_user, "block_user", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
     }
-    if (enchanter) {
-      FluidsRegistry.registerExp();
-      BlockEnchanter block_enchanter = new BlockEnchanter();
-      BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
-    }
-    BlockAnvilAuto block_enchanter = new BlockAnvilAuto();
-    BlockRegistry.registerBlock(block_enchanter, "block_anvil", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
+//    if (enchanter) {
+//      FluidsRegistry.registerExp();
+//      BlockEnchanter block_enchanter = new BlockEnchanter();
+//      BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
+//      GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
+//    }
+//    BlockAnvilAuto block_anvil = new BlockAnvilAuto();
+//    BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
+//    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
 
   }
   @Override
   public void syncConfig(Configuration config) {
-    enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    //enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
