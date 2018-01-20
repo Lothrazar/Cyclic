@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
+import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
 import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
@@ -67,6 +68,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean btrash;
   private boolean fluidPlacer;
   public void onPreInit() {
+    BlockAppleCrop apple = new BlockAppleCrop();
+    BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
+     
     if (btrash) {
       BlockTrash trash = new BlockTrash();
       BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
