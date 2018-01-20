@@ -11,21 +11,20 @@ public abstract class EnchantBase extends Enchantment {
     super(rarityIn, typeIn, slots);
     this.setName(name);
   }
+  protected int getCurrentLevelTool(ItemStack stack) {
+    if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this))
+      return EnchantmentHelper.getEnchantments(stack).get(this);
+    return -1;
+  }
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) {
       return -1;
     }
     ItemStack main = player.getHeldItemMainhand();
     ItemStack off = player.getHeldItemOffhand();
-    int mainLevel = -1, offLevel = -1;
-    if (main != null && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
-      mainLevel = EnchantmentHelper.getEnchantments(main).get(this);
-    }
-    if (off != null && EnchantmentHelper.getEnchantments(off).containsKey(this)) {
-      offLevel = EnchantmentHelper.getEnchantments(off).get(this);
-    }
-    int level = Math.max(mainLevel, offLevel);
-    return level;
+ 
+  return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
+ 
   }
   protected ItemStack getFirstArmorStackWithEnchant(EntityLivingBase player) {
     if (player == null) {
