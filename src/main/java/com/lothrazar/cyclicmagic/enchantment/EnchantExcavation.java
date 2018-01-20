@@ -52,38 +52,46 @@ public class EnchantExcavation extends EnchantBase {
     }
     // if I am using an axe on stone or dirt, doesn't trigger
     for (String type : stackHarvestingWith.getItem().getToolClasses(stackHarvestingWith)) {
-      ModCyclic.logger.error(type);
+     
       if (block.isToolEffective(type, world.getBlockState(pos)) == false) {
         return;
       }
     }
-    //start at 1 because this one is already over
-    int totalBroken = 1;//TODO: MAX!
-    //TODO: recursion or loop
-    totalBroken += this.harvestSurrounding(world, player, pos, block);
-    UtilChat.addChatMessage(player, totalBroken + "!");
+    //starts at 1 for current one
+    this.harvestSurrounding(world, player, pos, block, 1, level);
+     
   }
-  private int harvestSurrounding(World world, EntityPlayer player, BlockPos pos, Block block) {
-    int hereBroken = 0;
-    List<BlockPos> theFuture = this.getMatchingSurrounding(world, pos, block);
+  private int getHarvestMax(int level) {
+    return level * 12;
+  }
+  /**
+   * WARNING: RECURSIVE
+   * 
+   * @param world
+   * @param player
+   * @param posIn
+   * @param block
+   * @return
+   */
+  private void harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
+    if (totalBroken > this.getHarvestMax(level)) {
+      return;
+    }
+    List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+    List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
-      //TODO: 
       IBlockState targetState = world.getBlockState(targetPos);
-      if (player.canHarvestBlock(targetState) == false) {
+      //check canHarvest every time -> permission or any other hooks
+      if (world.isAirBlock(targetPos) ||  player.canHarvestBlock(targetState) == false) {
         continue;
       }
-      //TODO: steal some events or stuff from interaction manager. cant use directly => infinite loop
-      //      if (player.interactionManager.tryHarvestBlock(targetPos)) {
       block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(EnumHand.MAIN_HAND));
       world.destroyBlock(targetPos, false);
-      //        if( ) {
-      //      player.canHarvestBlock(state)
-      //      block.dropBlockAsItem(world, p, world.getBlockState(p), fort);
-      //     block.dropXpOnBlockBreak(world, pos, block.getExpDrop(world.getBlockState(p), world, pos, fort));
-      hereBroken++;
-      //      }
+      wasHarvested.add(targetPos);
+      totalBroken++;
+      this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
-    return hereBroken;
+    //    return wasHarvested;
   }
   private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
     List<BlockPos> list = new ArrayList<BlockPos>();
