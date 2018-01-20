@@ -87,7 +87,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-    if (!isRunning()) {
+    if (isRunning() == false) {
       return;
     }
     this.shiftAllUp(7);

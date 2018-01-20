@@ -10,10 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDisenchanter extends GuiBaseContainer {
-  public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
-  public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
-  public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
-  public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
   private TileEntityDisenchanter tile;
   public GuiDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter tileEntity) {
     super(new ContainerDisenchanter(inventoryPlayer, tileEntity), tileEntity);
@@ -36,22 +32,22 @@ public class GuiDisenchanter extends GuiBaseContainer {
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
-          this.mc.getTextureManager().bindTexture(SLOT_BOOK);
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT_BOOK);
           x = screenSize.width() / 2;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_GLOWSTONE://left mid
-          this.mc.getTextureManager().bindTexture(SLOT_GLOWSTONE);
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GLOWSTONE);
           x = screenSize.width() / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
-          this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT_EBOTTLE);
           x = screenSize.width() / 2;
           y = ystart + 2 * spacing;
         break;
         case TileEntityDisenchanter.SLOT_REDSTONE:// right mid
-          this.mc.getTextureManager().bindTexture(SLOT_REDST);
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT_REDST);
           x = screenSize.width() - screenSize.width() / 4;
           y = ystart + spacing;
         break;

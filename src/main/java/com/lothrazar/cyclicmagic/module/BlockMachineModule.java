@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
+import com.lothrazar.cyclicmagic.component.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.beacon.BlockBeaconPowered;
@@ -13,6 +15,8 @@ import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
 import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.enchanter.BlockEnchanter;
+import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.component.forester.BlockForester;
 import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
@@ -70,6 +74,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean beaconPotion;
   private boolean wireless;
   private boolean forester;
+  private boolean enchanter;
   public void onPreInit() {
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
@@ -175,9 +180,20 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_user, "block_user", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
     }
+//    if (enchanter) {
+//      FluidsRegistry.registerExp();
+//      BlockEnchanter block_enchanter = new BlockEnchanter();
+//      BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
+//      GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
+//    }
+//    BlockAnvilAuto block_anvil = new BlockAnvilAuto();
+//    BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
+//    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
+
   }
   @Override
   public void syncConfig(Configuration config) {
+    //enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

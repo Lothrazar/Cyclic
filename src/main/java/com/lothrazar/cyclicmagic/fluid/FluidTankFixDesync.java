@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.FluidTank;
  * 
  *
  */
-public class FluidTankFixDesync extends FluidTank {
+public class FluidTankFixDesync extends FluidTankBase {
   private final TileEntityBaseMachineInvo parent;
   public FluidTankFixDesync(int capacity, TileEntityBaseMachineInvo parent) {
     super(capacity);

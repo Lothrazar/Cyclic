@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -13,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -44,11 +46,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private int collect = 1;
   private int needsRedstone = 0;
   private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   public TileEntityXpPylon() {
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
+    tank.setFluidAllowed( FluidRegistry.getFluid("xpjuice") );
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -132,7 +135,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         if (orb.isDead || orb.delayBeforeCanPickup > 0) {
           continue;
         }
-        this.tank.fill(new FluidStack(FluidsRegistry.fluid_exp, orb.getXpValue() * FLUID_PER_EXP), true);
+        this.tank.fill(new FluidStack( FluidRegistry.getFluid("xpjuice"), orb.getXpValue() * FLUID_PER_EXP), true);
         //we have no "set exp value" function so this is workaround to set value to zero
         orb.delayBeforeCanPickup = 9999;//set delay because it will be isDead=true for a little while until actually removed. prevent other mods getting dead orbs
         orb.xpValue = 0;
@@ -252,7 +255,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
-      fluid = new FluidStack(FluidsRegistry.fluid_exp, amt);
+      fluid = new FluidStack( FluidRegistry.getFluid("xpjuice"), amt);
     }
     fluid.amount = amt;
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
@@ -263,7 +266,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
    ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+      return true;
+    }
+    return super.hasCapability(capability, facing);
+
+  
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
@@ -280,7 +288,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
       return 0;
     }
     int result = tank.fill(resource, doFill);
@@ -289,7 +297,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidsRegistry.fluid_exp) {
+    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
       return resource;
     }
     FluidStack result = tank.drain(resource, doDrain);
