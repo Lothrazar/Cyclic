@@ -6,6 +6,7 @@ import java.util.Collections;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -58,18 +59,14 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     return levelToMaxBreak[level];
   }
   /**
-   * WARNING: RECURSIVE
-   * 
-   * @param world
-   * @param player
-   * @param posIn
-   * @param block
-   * @return
+   * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    */
   private void harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
-    if (totalBroken > this.getHarvestMax(level)) {
+    if (totalBroken > this.getHarvestMax(level) 
+        ||  player.getHeldItem(player.swingingHand).isEmpty()) {
       return;
     }
+    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
@@ -79,8 +76,12 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
         continue;
       }
       block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(EnumHand.MAIN_HAND));
+      block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState, world, targetPos, fortuneXp));
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
+      //damage but also respect the unbreaking chant
+      player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
+//      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
       this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
