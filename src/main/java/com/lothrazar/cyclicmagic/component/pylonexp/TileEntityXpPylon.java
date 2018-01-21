@@ -51,7 +51,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-    tank.setFluidAllowed( FluidRegistry.getFluid("xpjuice") );
+    tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -135,7 +135,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         if (orb.isDead || orb.delayBeforeCanPickup > 0) {
           continue;
         }
-        this.tank.fill(new FluidStack( FluidRegistry.getFluid("xpjuice"), orb.getXpValue() * FLUID_PER_EXP), true);
+        this.tank.fill(new FluidStack(FluidRegistry.getFluid("xpjuice"), orb.getXpValue() * FLUID_PER_EXP), true);
         //we have no "set exp value" function so this is workaround to set value to zero
         orb.delayBeforeCanPickup = 9999;//set delay because it will be isDead=true for a little while until actually removed. prevent other mods getting dead orbs
         orb.xpValue = 0;
@@ -255,7 +255,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     if (fluid == null) {
-      fluid = new FluidStack( FluidRegistry.getFluid("xpjuice"), amt);
+      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
     }
     fluid.amount = amt;
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
@@ -266,12 +266,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
    ******************************/
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return true;
     }
     return super.hasCapability(capability, facing);
-
-  
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {

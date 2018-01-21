@@ -144,8 +144,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_SORT = 28;
   public static final int GUI_INDEX_SCREEN = 29;
   public static final int GUI_INDEX_ENCHANTER = 30;
-  public static final int GUI_INDEX_ANVIL=31; 
-  public static final int GUI_INDEX_ITEMPUMP=32; 
+  public static final int GUI_INDEX_ANVIL = 31;
+  public static final int GUI_INDEX_ITEMPUMP = 32;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -303,7 +303,6 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_ENCHANTER:
-
         if (te instanceof TileEntityEnchanter) {
           return new ContainerEnchanter(player.inventory, (TileEntityEnchanter) te);
         }
@@ -317,7 +316,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         if (te instanceof TileEntityItemPump) {
           return new ContainerItemPump(player.inventory, (TileEntityItemPump) te);
         }
-        break;
+      break;
     }
     return null;
   }

@@ -96,7 +96,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration c) {
     enableMultishot = c.getBoolean("EnchantMultishot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-     enableExcavate = c.getBoolean("EnchantExcavation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableExcavate = c.getBoolean("EnchantExcavation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterwalk = c.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablereach = c.getBoolean("EnchantReach", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablexpboost = c.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

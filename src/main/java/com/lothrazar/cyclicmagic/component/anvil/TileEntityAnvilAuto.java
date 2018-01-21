@@ -58,13 +58,11 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (inputStack.isItemDamaged() == false) {
       //all done
       this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
-     
       return;
     }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-       
       if (inputStack.isItemDamaged() &&
           this.hasEnoughFluid()) {
         inputStack.setItemDamage(inputStack.getItemDamage() - 1);

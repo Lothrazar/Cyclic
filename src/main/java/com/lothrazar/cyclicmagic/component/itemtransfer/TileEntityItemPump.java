@@ -69,7 +69,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       return !this.isWhitelist();
     }
     //here is the opposite: i did NOT match the list
-    return  this.isWhitelist();
+    return this.isWhitelist();
   }
   private List<ItemStack> getFilter() {
     List<ItemStack> validForSide = this.inv.subList(1, FILTER_SIZE + 1);

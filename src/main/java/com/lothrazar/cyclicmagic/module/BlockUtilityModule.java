@@ -70,7 +70,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     BlockAppleCrop apple = new BlockAppleCrop();
     BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
-     
     if (btrash) {
       BlockTrash trash = new BlockTrash();
       BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);

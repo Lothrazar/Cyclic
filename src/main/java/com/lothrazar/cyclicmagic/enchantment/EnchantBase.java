@@ -22,9 +22,7 @@ public abstract class EnchantBase extends Enchantment {
     }
     ItemStack main = player.getHeldItemMainhand();
     ItemStack off = player.getHeldItemOffhand();
- 
-  return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
- 
+    return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
   }
   protected ItemStack getFirstArmorStackWithEnchant(EntityLivingBase player) {
     if (player == null) {

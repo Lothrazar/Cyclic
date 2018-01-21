@@ -62,8 +62,8 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    */
   private void harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
-    if (totalBroken > this.getHarvestMax(level) 
-        ||  player.getHeldItem(player.swingingHand).isEmpty()) {
+    if (totalBroken > this.getHarvestMax(level)
+        || player.getHeldItem(player.swingingHand).isEmpty()) {
       return;
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
@@ -81,7 +81,7 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       wasHarvested.add(targetPos);
       //damage but also respect the unbreaking chant
       player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
-//      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
+      //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
       this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }

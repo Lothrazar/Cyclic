@@ -16,14 +16,12 @@ public class ContainerEnchanter extends ContainerBaseMachine {
   public static final int SLOTY = 34;
   protected TileEntityEnchanter tileEntity;
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
-//    this.screenSize = ScreenSize.LARGE;
+    //    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
-  
-      this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY  ));
-      this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY  ));
-
-      super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
+    this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY));
+    this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY));
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
   // places it into the tileEntity is possible since its in the player inventory

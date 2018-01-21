@@ -42,20 +42,18 @@ public class GuiItemPump extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btn.displayString = UtilChat.lang("button.itemfilter.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal()));
-
     btn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal())));
   }
   @Override
   public void initGui() {
     super.initGui();
     int id = 2;
- 
     btn = new ButtonTileEntityField(
         id++,
         this.guiLeft + 150,
-        this.guiTop + Const.PAD/2 ,
+        this.guiTop + Const.PAD / 2,
         tile.getPos(), TileEntityItemPump.Fields.FILTERTYPE.ordinal(), 1,
-        20,20 );
+        20, 20);
     this.addButton(btn);
   }
 }
