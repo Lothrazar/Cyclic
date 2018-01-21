@@ -26,7 +26,8 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
   private int filterType = 0;
   public TileEntityItemPump() {
     super(1 + FILTER_SIZE);
-    this.setSlotsForBoth();
+    this.setSlotsForExtract(0);
+    this.setSlotsForInsert(0);
   }
   @Override
   public int[] getFieldOrdinals() {
