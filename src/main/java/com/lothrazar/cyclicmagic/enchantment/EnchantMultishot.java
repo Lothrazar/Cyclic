@@ -24,8 +24,7 @@ public class EnchantMultishot extends EnchantBase {
   }
   @Override
   public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof ItemBow
-        || stack.getItem() == Items.BOOK;
+    return stack.getItem() instanceof ItemBow || stack.getItem() == Items.BOOK;
   }
   @Override
   public int getMaxLevel() {
@@ -40,34 +39,31 @@ public class EnchantMultishot extends EnchantBase {
     if (level <= 0) {
       return;
     }
-    if (!worldIn.isRemote) {
+    if (worldIn.isRemote == false) {
       float charge = ItemBow.getArrowVelocity(stack.getMaxItemUseDuration() - event.getCharge());
-      for (int i = 1; i <= level; i++) {
-        //TODO: how to gethorizontal offsets based on player facing?
-        //use cross product to push arrows out to left and right
-        Vec3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
-        Vec3d left = playerDirection.crossProduct(new Vec3d(0, 1, 0));
-        Vec3d right = playerDirection.crossProduct(new Vec3d(0, -1, 0));
-        spawnArrow(worldIn, player, stack, charge, left.normalize());
-        spawnArrow(worldIn, player, stack, charge, right.normalize());
-      }
+      //use cross product to push arrows out to left and right
+      Vec3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
+      Vec3d left = playerDirection.crossProduct(new Vec3d(0, 1, 0));
+      Vec3d right = playerDirection.crossProduct(new Vec3d(0, -1, 0));
+      spawnArrow(worldIn, player, stack, charge, left.normalize());
+      spawnArrow(worldIn, player, stack, charge, right.normalize());
     }
   }
   public void spawnArrow(World worldIn, EntityPlayer player, ItemStack stackBow, float charge, Vec3d offsetVector) {
-    //this is from vanilla ItemBow.class
-    ItemArrow itemarrow = (ItemArrow) (stackBow.getItem() instanceof ItemArrow ? stackBow.getItem() : Items.ARROW);
+    //TODO: custom ammo one day? The event does not send ammo only the bow
+    ItemArrow itemarrow = (ItemArrow) (Items.ARROW);
     EntityArrow entityarrow = itemarrow.createArrow(worldIn, stackBow, player);
+    entityarrow.pickupStatus = EntityArrow.PickupStatus.DISALLOWED;
+    //off set bow to the side using the vec, and then aim
     entityarrow.posX += offsetVector.x;
     entityarrow.posY += offsetVector.y;
     entityarrow.posZ += offsetVector.z;
-    //    
-    //    entityarrow.posX += offsetX;
-    //    entityarrow.posY += offsetY;
-    //    entityarrow.posZ += offsetZ;
     entityarrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, charge * 3.0F, 1.0F);
+    //from ItemBow vanilla class
     if (charge == 1.0F) {
       entityarrow.setIsCritical(true);
     }
+    //extract enchants from bow
     int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
     if (j > 0) {
       entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
@@ -79,7 +75,7 @@ public class EnchantMultishot extends EnchantBase {
     if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stackBow) > 0) {
       entityarrow.setFire(100);
     }
-    entityarrow.pickupStatus = EntityArrow.PickupStatus.DISALLOWED;
+    //and go
     worldIn.spawnEntity(entityarrow);
   }
 }
