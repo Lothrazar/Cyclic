@@ -32,21 +32,21 @@ public class EnchantMultishot extends EnchantBase {
   }
   @SubscribeEvent
   public void onPlayerUpdate(ArrowLooseEvent event) {
-    EntityPlayer player = event.getEntityPlayer();
-    ItemStack stack = event.getBow();
-    World worldIn = player.world;
-    int level = this.getCurrentLevelTool(stack);
+    ItemStack stackBow = event.getBow();
+    int level = this.getCurrentLevelTool(stackBow);
     if (level <= 0) {
       return;
     }
+    EntityPlayer player = event.getEntityPlayer();
+    World worldIn = player.world;
     if (worldIn.isRemote == false) {
-      float charge = ItemBow.getArrowVelocity(stack.getMaxItemUseDuration() - event.getCharge());
+      float charge = ItemBow.getArrowVelocity(stackBow.getMaxItemUseDuration() - event.getCharge());
       //use cross product to push arrows out to left and right
       Vec3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
       Vec3d left = playerDirection.crossProduct(new Vec3d(0, 1, 0));
       Vec3d right = playerDirection.crossProduct(new Vec3d(0, -1, 0));
-      spawnArrow(worldIn, player, stack, charge, left.normalize());
-      spawnArrow(worldIn, player, stack, charge, right.normalize());
+      spawnArrow(worldIn, player, stackBow, charge, left.normalize());
+      spawnArrow(worldIn, player, stackBow, charge, right.normalize());
     }
   }
   public void spawnArrow(World worldIn, EntityPlayer player, ItemStack stackBow, float charge, Vec3d offsetVector) {
@@ -64,13 +64,13 @@ public class EnchantMultishot extends EnchantBase {
       entityarrow.setIsCritical(true);
     }
     //extract enchants from bow
-    int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
-    if (j > 0) {
-      entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
+    int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
+    if (power > 0) {
+      entityarrow.setDamage(entityarrow.getDamage() + (double) power * 0.5D + 0.5D);
     }
-    int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stackBow);
-    if (k > 0) {
-      entityarrow.setKnockbackStrength(k);
+    int punch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stackBow);
+    if (punch > 0) {
+      entityarrow.setKnockbackStrength(punch);
     }
     if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stackBow) > 0) {
       entityarrow.setFire(100);
