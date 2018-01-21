@@ -4,9 +4,11 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
+import com.lothrazar.cyclicmagic.enchantment.EnchantExcavation;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
+import com.lothrazar.cyclicmagic.enchantment.EnchantMultishot;
 import com.lothrazar.cyclicmagic.enchantment.EnchantQuickdraw;
 import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
@@ -26,6 +28,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantBeheading beheading;
   public static EnchantQuickdraw quickdraw;
   public static EnchantWaterwalking waterwalk;
+  private static EnchantExcavation excavation;
   private boolean enablexpboost;
   private boolean enableLaunch;
   private boolean enableMagnet;
@@ -36,6 +39,9 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enablebeheading;
   private boolean enableQuickdraw;
   private boolean enablewaterwalk;
+  private boolean enableExcavate;
+  private boolean enableMultishot;
+  private EnchantMultishot multishot;
   @Override
   public void onPreInit() {
     if (enablewaterwalk) {
@@ -78,9 +84,19 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       quickdraw = new EnchantQuickdraw();
       EnchantRegistry.register(quickdraw);
     }
+    if (enableExcavate) {
+      excavation = new EnchantExcavation();
+      EnchantRegistry.register(excavation);
+    }
+    if (enableMultishot) {
+      multishot = new EnchantMultishot();
+      EnchantRegistry.register(multishot);
+    }
   }
   @Override
   public void syncConfig(Configuration c) {
+    enableMultishot = c.getBoolean("EnchantMultishot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableExcavate = c.getBoolean("EnchantExcavation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterwalk = c.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablereach = c.getBoolean("EnchantReach", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablexpboost = c.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -25,7 +25,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   public TileEntityBaseMachineFluid(int inventorySize, int fluidTankSize) {
     super(inventorySize);
     tank = new FluidTankFixDesync(fluidTankSize, this);
-   
   }
   public static class ContainerDummy extends Container {
     @Override

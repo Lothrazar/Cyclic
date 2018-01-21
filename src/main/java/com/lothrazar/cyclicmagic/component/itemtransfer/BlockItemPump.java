@@ -25,7 +25,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
-    super.setGuiId( ForgeGuiHandler.GUI_INDEX_ITEMPUMP  );
+    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
   }
   @Override //Use IBlockState.getBlockFaceShape
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
@@ -39,7 +39,6 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
- 
     String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
     UtilChat.sendStatusMessage(player, UtilChat.lang(powered));
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);

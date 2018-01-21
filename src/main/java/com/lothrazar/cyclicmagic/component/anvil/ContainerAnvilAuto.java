@@ -16,14 +16,12 @@ public class ContainerAnvilAuto extends ContainerBaseMachine {
   public static final int SLOTY = 34;
   protected TileEntityAnvilAuto tileEntity;
   public ContainerAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto te) {
-//    this.screenSize = ScreenSize.LARGE;
+    //    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
-  
-      this.addSlotToContainer(new Slot(tileEntity, 0, 60, SLOTY  ));
-      this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY  ));
-
-      super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
+    this.addSlotToContainer(new Slot(tileEntity, 0, 60, SLOTY));
+    this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY));
+    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
   // places it into the tileEntity is possible since its in the player inventory

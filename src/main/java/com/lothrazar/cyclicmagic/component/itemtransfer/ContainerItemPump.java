@@ -14,23 +14,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerItemPump extends ContainerBaseMachine {
-  public static final int SLOTX_START = Const.PAD ;
+  public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = Const.SQ + Const.PAD * 3;
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
-//    this.screenSize = ScreenSize.STANDARD;
-    this.setTile(te); 
-    int slot = 1; 
-    for (int col = 1; col < 10; col++) { 
-        addSlotToContainer(new SlotSingleStack(tile, col,
-            SLOTX_START + (col-1) * Const.SQ ,
-            SLOTY  ));
-        slot++;
-      
+    //    this.screenSize = ScreenSize.STANDARD;
+    this.setTile(te);
+    int slot = 1;
+    for (int col = 1; col < 10; col++) {
+      addSlotToContainer(new SlotSingleStack(tile, col,
+          SLOTX_START + (col - 1) * Const.SQ,
+          SLOTY));
+      slot++;
     }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
-  public ItemStack transferStackInSlot(EntityPlayer player, int slot) { 
+  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)

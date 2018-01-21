@@ -247,7 +247,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
- 
     int result = tank.fill(resource, doFill);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result);
@@ -255,7 +254,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
- 
     FluidStack result = tank.drain(resource, doDrain);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result.amount);

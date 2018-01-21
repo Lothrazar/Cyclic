@@ -1,6 +1,3 @@
 {
-    "parent": "item/handheld",
-    "textures": {
-        "layer0": "cyclicmagic:blocks/plate_push_med"
-    }
+    "parent": "cyclicmagic:blocks/plate_push_med"
 }

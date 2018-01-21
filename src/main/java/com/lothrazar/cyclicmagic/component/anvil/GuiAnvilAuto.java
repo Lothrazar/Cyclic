@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.anvil; 
+package com.lothrazar.cyclicmagic.component.anvil;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -12,7 +12,6 @@ public class GuiAnvilAuto extends GuiBaseContainer {
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
     this.setFieldFuel(TileEntityAnvilAuto.Fields.FUEL.ordinal());
   }
@@ -32,13 +31,13 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
     this.drawFluidBar();
   }
-  private void drawFluidBar() { 
+  private void drawFluidBar() {
     int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());  
+    int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int fuelWidth = 16;
-    int x = this.guiLeft+ this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
+    int x = this.guiLeft + this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y, u, v,
         pngWidth / f, h,
