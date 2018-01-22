@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.hydrator;
 import java.util.Arrays;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +17,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -33,13 +33,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public static enum Fields {
     REDSTONE, TIMER, FLUID, RECIPELOCKED;
   }
-  public FluidTank tank = new FluidTank(TANK_FULL);
+  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
     timer = TIMER_FULL;
-    this.tank.setTileEntity(this);
+    tank.setTileEntity(this);
+    tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
   }
@@ -245,9 +246,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.WATER) {
-      return 0;
-    }
     int result = tank.fill(resource, doFill);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result);
@@ -255,9 +253,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   }
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.WATER) {
-      return resource;
-    }
     FluidStack result = tank.drain(resource, doDrain);
     this.world.markChunkDirty(pos, this);
     this.setField(Fields.FLUID.ordinal(), result.amount);

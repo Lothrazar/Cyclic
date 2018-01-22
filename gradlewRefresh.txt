@@ -1,1 +1,1 @@
-gradlew setupDecompWorkspace eclipse --refresh-dependencies
+bash gradlew setupDecompWorkspace eclipse --refresh-dependencies

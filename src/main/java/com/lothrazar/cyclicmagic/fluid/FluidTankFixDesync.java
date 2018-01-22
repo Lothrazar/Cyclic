@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 
 /**
  * All credit to Tinkers Construct where i learned this strategy source:
@@ -12,7 +11,7 @@ import net.minecraftforge.fluids.FluidTank;
  * 
  *
  */
-public class FluidTankFixDesync extends FluidTank {
+public class FluidTankFixDesync extends FluidTankBase {
   private final TileEntityBaseMachineInvo parent;
   public FluidTankFixDesync(int capacity, TileEntityBaseMachineInvo parent) {
     super(capacity);

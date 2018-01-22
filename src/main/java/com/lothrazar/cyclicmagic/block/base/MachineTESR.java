@@ -14,6 +14,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
+  float itemRenderHeight = 0.99F;
+  float red = 0.7F;
+  float green = 0F;
+  float blue = 1F;
   public MachineTESR(Block block, int slot) {
     super(block, slot);
   }
@@ -26,7 +30,7 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
     if (te instanceof ITilePreviewToggle) {
       ITilePreviewToggle tilePreview = (ITilePreviewToggle) te;
       if (tilePreview.isPreviewVisible()) {
-        UtilWorld.RenderShadow.renderBlockList(tilePreview.getShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+        UtilWorld.RenderShadow.renderBlockList(tilePreview.getShape(), te.getPos(), x, y, z, red, green, blue);
       }
     }
   }
@@ -36,7 +40,7 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
     if (this.itemSlotAbove >= 0) {
       ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
       if (stack.isEmpty() == false) {
-        renderItem(te, stack, 0.99f);
+        renderItem(te, stack, itemRenderHeight);
       }
     }
   }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.base;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.fluid.FluidTankFixDesync;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -7,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implements IFluidHandler {
-  public FluidTank tank;
+  public FluidTankBase tank;
   public TileEntityBaseMachineFluid(int fluidTankSize) {
     this(0, fluidTankSize);
   }

@@ -36,6 +36,9 @@ public class FluidsRegistry {
     FluidRegistry.addBucketForFluid(fluid_milk);
   }
   public static void registerExp() {
+    if (fluid_exp != null) {
+      return;
+    }
     fluid_exp = new FluidExp();
     FluidRegistry.registerFluid(fluid_exp);
     block_exp = new BlockFluidExp();

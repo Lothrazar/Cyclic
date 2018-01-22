@@ -31,7 +31,7 @@ public class EnchantQuickdraw extends EnchantBase {
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
       EntityPlayer player = (EntityPlayer) event.getEntity();
-      if (getCurrentLevelTool(player) < 0) {
+      if (getCurrentLevelTool(player) <= 0) {
         return;
       }
       ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
