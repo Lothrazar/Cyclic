@@ -67,7 +67,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
         "eoe",
         "ooo",
         'b', Blocks.ENCHANTING_TABLE,
-        'e', Items.EMERALD,
+        'e',  "gemEmerald",
         'o', "obsidian");
   }
   @Override
