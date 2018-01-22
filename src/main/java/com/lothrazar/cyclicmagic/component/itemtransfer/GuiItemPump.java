@@ -1,19 +1,10 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
-import java.util.Map;
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
-import com.lothrazar.cyclicmagic.component.uncrafter.ContainerUncrafting;
-import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

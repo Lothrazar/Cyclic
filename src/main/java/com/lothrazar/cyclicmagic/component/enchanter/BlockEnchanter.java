@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.enchanter;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -14,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -67,7 +65,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
         "eoe",
         "ooo",
         'b', Blocks.ENCHANTING_TABLE,
-        'e',  "gemEmerald",
+        'e', "gemEmerald",
         'o', "obsidian");
   }
   @Override

@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic.component.anvil;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
