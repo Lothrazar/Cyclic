@@ -67,7 +67,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-    if (this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
+    if (tile.doesUseFuel() && this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
       btnFuelToggle = new GuiButtonToggleFuelBar(3,
           this.guiLeft + this.xSize - Const.PAD,
           this.guiTop + 1, this.tile.getPos());
