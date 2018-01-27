@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -14,7 +12,6 @@ import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
@@ -37,8 +34,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     super(SLOT_ROWS * SLOT_COLS + 2);
     timer = TIMER_FULL;
     this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1, BlockUncrafting.FUEL_COST);
-    this.setSlotsForInsert(0);
-    this.setSlotsForExtract(IntStream.rangeClosed(1, this.getSizeInventory() - 2).boxed().collect(Collectors.toList()));
+    this.setSlotsForInsert(SLOT_UNCRAFTME);
+    this.setSlotsForExtract(1, this.getSizeInventory() - 1);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -106,10 +103,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
     }
-  }
-  @Override
-  public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-    return this.isItemValidForSlot(index, itemStackIn);
   }
   @Override
   public int getField(int id) {
