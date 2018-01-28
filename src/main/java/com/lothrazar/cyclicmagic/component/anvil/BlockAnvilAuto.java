@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -34,9 +35,10 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   public static int FUEL_COST = 0;
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilAuto() {
-    super(Material.IRON);
+    super(Material.ANVIL);
+    this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);
-    this.setHardness(3.0F).setResistance(5.0F);
+    this.setHardness(3.0F).setResistance(3.0F);
     this.setTranslucent();
   }
   @Override
