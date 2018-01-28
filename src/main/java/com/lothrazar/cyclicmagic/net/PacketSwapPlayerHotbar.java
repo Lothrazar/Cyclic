@@ -49,9 +49,6 @@ public class PacketSwapPlayerHotbar implements IMessage, IMessageHandler<PacketS
         onPlayer = player.inventory.armorInventory.get(armorSlot).copy();
         playerSlot = playerSlots[armorSlot];
         onStorage = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, playerSlot).copy();
-        //        ModCyclic.logger.log("==== ");
-        //        ModCyclic.logger.log("player " + onPlayer.getDisplayName());
-        //        ModCyclic.logger.log("invo " + playerSlot + "__" + onStorage.getDisplayName());
         if (onStorage.getItem().isValidArmor(onStorage, ARMOR[armorSlot], player)) {
           //it can go here! send the copies and overwrite!
           player.inventory.armorInventory.set(armorSlot, onStorage);
