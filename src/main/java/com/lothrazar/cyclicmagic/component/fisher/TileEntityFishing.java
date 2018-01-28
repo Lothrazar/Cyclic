@@ -37,13 +37,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
-  static final int toolSlot = 0;
+  static final int SLOT_TOOL = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
-    this.setSlotsForInsert(Arrays.asList(0));
+    this.setSlotsForInsert(SLOT_TOOL);
     this.setSlotsForExtract(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
   }
   //new idea: speed depends on number of sides covered in water in the 6 sides
@@ -94,23 +94,25 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return cov;
   }
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index == SLOT_TOOL) {
+      return isValidFishingrod(stack);
+    }
+    return super.isItemValidForSlot(index, stack);
+  }
   public boolean isEquipmentValid() {
-    ItemStack equip = this.getStackInSlot(toolSlot);
+    ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (equip.isEmpty()) {
       return false;
     }
+    return isValidFishingrod(equip);
+  }
+  public boolean isValidFishingrod(ItemStack equip) {
     if (equip.getItem() instanceof ItemFishingRod) {
       return true;
     }
-    String itemsClass = equip.getItem().getClass().getName();
-    //TODO: why was i being dum. i should use resourcelocations: "modid:itemid"
-    String aquaBase = "com.teammetallurgy.aquaculture.items.";
-    if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")) {
-      return true;
-    }
+    //TODO: a whitelist of modid:itemid here
     return false;
   }
   @Override
@@ -122,7 +124,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         world instanceof WorldServer && world != null &&
         world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) world);
-      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.getStackInSlot(toolSlot));
+      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.getStackInSlot(SLOT_TOOL));
       lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = world.getLootTableManager();
@@ -140,7 +142,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       for (ItemStack itemstack : table.generateLootForPools(rand, context)) {
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_WAKE, pos.up());
         //damage phase.
-        int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.getStackInSlot(toolSlot));
+        int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.getStackInSlot(SLOT_TOOL));
         if (mending == 0) {
           damageTool();
         }
@@ -159,7 +161,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void sendOutputItem(ItemStack itemstack) {
-    for (int i = toolSlot + 1; i <= FISHSLOTS; i++) {
+    for (int i = SLOT_TOOL + 1; i <= FISHSLOTS; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -178,13 +180,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     return mult * SPEEDFACTOR + randFact;//+ Math.random()/10;
   }
   private void attemptRepairTool() {
-    ItemStack equip = this.getStackInSlot(toolSlot);
+    ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (!equip.isEmpty() && equip.getItemDamage() > 0) {//if it has zero damage, its fully repaired already
       equip.setItemDamage(equip.getItemDamage() - 1);//repair by one point
     }
   }
   private void damageTool() {
-    ItemStack equip = this.getStackInSlot(toolSlot);
+    ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (equip.isEmpty()) {
       return;
     }
@@ -194,7 +196,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         storage.extractEnergy(ENERGY_PER_FISH, false);
         if (storage.getEnergyStored() <= 0) {
           this.sendOutputItem(equip);
-          this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+          this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
         }
         return;
       }
@@ -204,10 +206,10 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     int damageRem = equip.getMaxDamage() - equip.getItemDamage();
     if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
       sendOutputItem(equip);
-      this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
     } //otherwise we also make sure if its fullly damanged
     if (equip.getItemDamage() >= equip.getMaxDamage()) {
-      this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
     }
   }
   @Override

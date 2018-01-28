@@ -51,7 +51,7 @@ public class GuiFisher extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(SLOTFISH);
-    for (int k = 0; k < TileEntityFishing.toolSlot + 1; k++) {
+    for (int k = 0; k < TileEntityFishing.SLOT_TOOL + 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerFisher.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
