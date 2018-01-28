@@ -35,7 +35,7 @@ public class ContainerItemSort extends ContainerBaseMachine {
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    ModCyclic.logger.log("!!" + slot);
+ 
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)

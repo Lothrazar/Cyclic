@@ -56,6 +56,7 @@ button.itemfilter.type1=W
 button.itemfilter.tooltip.type1=Whitelist
 button.itemfilter.tooltip.type0=Blacklist
 button.inventory.hotbarswap=Swap row with hotbar
+button.inventory.armorswap=Swap armor with left column
 button.listtype.up=Whitelist or Blacklist
 button.listtype=Toggle the ignore list type
 button.miner.whitelist.0=Blacklist

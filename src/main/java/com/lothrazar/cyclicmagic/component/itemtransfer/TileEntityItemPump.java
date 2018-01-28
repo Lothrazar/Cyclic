@@ -142,7 +142,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         itemTarget = itemHandlerFrom.getStackInSlot(i);
         //check against whitelist/blacklist system
         if (this.isTargetItemValid(itemTarget)) {
-          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
+//          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
           continue;
         }
         //passed filter check, so do the transaction

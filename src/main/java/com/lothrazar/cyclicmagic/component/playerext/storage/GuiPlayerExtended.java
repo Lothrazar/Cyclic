@@ -40,6 +40,12 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     y += Const.SQ;
     btn = new ButtonToggleHotbar(id, x, y, w, h, row);
     this.buttonList.add(btn);
+    //armor button
+    id++;
+    x = this.guiLeft;
+    y = this.guiTop +  Const.PAD;
+    btn = new ButtonToggleHotbar(id, x, y, w, 4 * Const.SQ);
+    this.buttonList.add(btn);
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -69,7 +75,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     int u = 0, v = 0, w = 28, h = 85;
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft - w,
-        this.guiTop , u, v,
+        this.guiTop, u, v,
         w, h, w, h);
   }
 }
