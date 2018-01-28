@@ -2,12 +2,15 @@ package com.lothrazar.cyclicmagic.component.playerext.storage;
 import com.lothrazar.cyclicmagic.component.playerext.ButtonToggleHotbar;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtended extends InventoryEffectRenderer {
+  //TODO: in const repo
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
+  public static final ResourceLocation armor = new ResourceLocation(Const.MODID, "textures/gui/armor.png");
   public GuiPlayerExtended(ContainerPlayerExtended ctr) {
     super(ctr);
     this.allowUserInput = true;
@@ -61,5 +64,12 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     int k = this.guiLeft;
     int l = this.guiTop;
     this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+    //28x85
+    this.mc.getTextureManager().bindTexture(armor);
+    int u = 0, v = 0, w = 28, h = 85;
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft - w,
+        this.guiTop , u, v,
+        w, h, w, h);
   }
 }
