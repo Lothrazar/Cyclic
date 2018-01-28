@@ -52,6 +52,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
   @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if(index == SLOT_INPUT){
+      return stack.getItem() == Items.GLASS_BOTTLE;
+    }
+    return super.isItemValidForSlot(index, stack);
+  }
+  @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
