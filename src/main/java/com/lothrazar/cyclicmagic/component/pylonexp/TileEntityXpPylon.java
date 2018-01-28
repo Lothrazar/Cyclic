@@ -35,7 +35,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_COLLECT = "collect";
   public final static int RADIUS = 16;
   public static enum Fields {
-    TIMER, EXP, COLLECT, REDSTONE;//MIGHT remove redstone eh
+    TIMER, EXP, COLLECT, REDSTONE;
   }
   public static enum ActionMode {
     SPRAY, COLLECT;

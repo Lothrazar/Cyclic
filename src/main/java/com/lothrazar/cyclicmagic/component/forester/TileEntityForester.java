@@ -101,6 +101,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       this.updateMiningProgress();
     }
   }
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index != FUEL_SLOT) {
+      return isSaplingValid(stack);
+    }
+    return super.isItemValidForSlot(index, stack);
+  }
   private void updatePlantSaplings() {
     ItemStack sapling = this.getStackInSlot(0);
     if (this.isSaplingValid(sapling)
