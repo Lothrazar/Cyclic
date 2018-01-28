@@ -59,7 +59,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     ////////////////// custom recipe hook
-    registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     for (Item item : ItemRegistry.itemMap.values()) {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
@@ -16,7 +17,7 @@ public class GuiHydrator extends GuiBaseContainer {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    // this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
+     this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
   }
   @Override
   public void initGui() {
