@@ -4,13 +4,18 @@ import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
+  private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   final int pad = Const.PAD;
   public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
     inventory = eInvo;
@@ -18,6 +23,27 @@ public class ContainerPlayerExtended extends ContainerBase {
     if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
     }
+    int VROW = 3, VCOL = 9, armorX = -4 - Const.SQ, armorY;
+    for (int k = 0; k < ARMOR.length; k++) {
+      armorY = Const.PAD + k * Const.SQ;
+      final EntityEquipmentSlot slot = ARMOR[k];
+      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), armorX, armorY) {
+        @Override
+        public int getSlotStackLimit() {
+          return 1;
+        }
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+          return stack.getItem().isValidArmor(stack, slot, player);
+        }
+        @Override
+        @SideOnly(Side.CLIENT)
+        public String getSlotTexture() {
+          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
+        }
+      });
+    }
+    //  extended
     int xPos, yPos, sl;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
@@ -27,6 +53,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
     }
+    //  player inventory
     for (int i = 0; i < Const.ROWS_VANILLA; ++i) {
       for (int j = 0; j < Const.COLS_VANILLA; ++j) {
         xPos = pad + j * SQ;
@@ -35,6 +62,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
       }
     }
+    //hotbar
     yPos = 142;
     for (int i = 0; i < Const.HOTBAR_SIZE; ++i) {
       xPos = pad + i * SQ;

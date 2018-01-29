@@ -10,14 +10,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerAnvilAuto extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX = 50;
+  //  public static final int SLOTX = 50;
   public static final int SLOTY = 34;
   protected TileEntityAnvilAuto tileEntity;
   public ContainerAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto te) {
     //    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
-    this.addSlotToContainer(new Slot(tileEntity, 0, 60, SLOTY));
+    this.addSlotToContainer(new Slot(tileEntity, 0, 50, SLOTY));
     this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY));
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);

@@ -35,7 +35,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_COLLECT = "collect";
   public final static int RADIUS = 16;
   public static enum Fields {
-    TIMER, EXP, COLLECT, REDSTONE;//MIGHT remove redstone eh
+    TIMER, EXP, COLLECT, REDSTONE;
   }
   public static enum ActionMode {
     SPRAY, COLLECT;
@@ -50,6 +50,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
+  }
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index == SLOT_INPUT) {
+      return stack.getItem() == Items.GLASS_BOTTLE;
+    }
+    return super.isItemValidForSlot(index, stack);
   }
   @Override
   public int[] getFieldOrdinals() {

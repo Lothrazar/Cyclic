@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.fisher;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -18,7 +19,7 @@ public class ContainerFisher extends ContainerBaseMachine {
     tileEntity = te;
     this.setTile(te);
     //the first slot is the rod
-    addSlotToContainer(new Slot(tileEntity, TileEntityFishing.toolSlot, SLOTX_START, SLOTY));
+    addSlotToContainer(new SlotCheckTileValid(tileEntity, TileEntityFishing.SLOT_TOOL, SLOTX_START, SLOTY));
     int s = 1;
     int row = 0, col = 0;
     for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) { //so going from 0-9

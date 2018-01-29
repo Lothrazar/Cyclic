@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.item.gear;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,9 +27,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPowerSword extends ItemSword implements IHasRecipe {
-  private static final int COOLDOWN = Const.TICKS_PER_SEC * 6;
+  private static final int COOLDOWN = Const.TICKS_PER_SEC;
   public enum SwordType {
     SLOW, WEAK, ENDER;
   }
@@ -36,6 +40,12 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe {
     super(MaterialRegistry.powerToolMaterial);
     this.type = t;
     this.setMaxDamage(1);
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    super.addInformation(stack, player, tooltip, advanced);
   }
   @Override
   public IRecipe addRecipe() {

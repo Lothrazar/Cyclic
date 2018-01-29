@@ -30,6 +30,7 @@ public class EnchantReach extends EnchantBase {
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
     boolean yes = stack.getItem() == Items.BOOK ||
+        stack.getItem() == Items.ELYTRA ||
         (stack.getItem() instanceof ItemArmor)
             && ((ItemArmor) stack.getItem()).armorType == EntityEquipmentSlot.CHEST;
     return yes;

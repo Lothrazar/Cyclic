@@ -27,4 +27,10 @@ public class UtilOreDictionary {
     }
     return false;
   }
+  public static boolean itemMatchesAllowAir(ItemStack toMatch, ItemStack itemStack) {
+    if (toMatch.isEmpty() || itemStack.isEmpty()) {
+      return true;
+    }
+    return OreDictionary.itemMatches(toMatch, itemStack, false);
+  }
 }

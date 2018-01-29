@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -142,7 +141,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         itemTarget = itemHandlerFrom.getStackInSlot(i);
         //check against whitelist/blacklist system
         if (this.isTargetItemValid(itemTarget)) {
-          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
+          //          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
           continue;
         }
         //passed filter check, so do the transaction

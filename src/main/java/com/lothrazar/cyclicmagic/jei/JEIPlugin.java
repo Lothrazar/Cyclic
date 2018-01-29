@@ -55,13 +55,14 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerHydrator.class, RECIPE_CATEGORY_HYDRATOR,
         0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
-        3, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+        4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
         9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     ////////////////// custom recipe hook
-    registry.addRecipeClickArea(GuiHydrator.class, 70, 16, 20, 20, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipes(BlockHydrator.recipesShapeless, RECIPE_CATEGORY_HYDRATOR);
     for (Item item : ItemRegistry.itemMap.values()) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried

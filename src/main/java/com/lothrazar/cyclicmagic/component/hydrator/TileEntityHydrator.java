@@ -72,8 +72,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
    * @return
    */
   private RecipeHydrate findMatchingRecipe() {
+    boolean allAir = true;
     for (int i = 0; i < RECIPE_SIZE; i++) {
+      //if ANY slot is non empty, we will get an && false which makes false
+      allAir = allAir && this.getStackInSlot(i).isEmpty();
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
+    }
+    if (allAir) {
+      return null;
     }
     for (RecipeHydrate irecipe : BlockHydrator.recipesShaped) {
       if (irecipe.matches(this.crafting, world)) {
