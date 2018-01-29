@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +12,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
-  private static int id = 0;
+ 
   private ItemStack[] recipeInput = new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
@@ -44,8 +45,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
     this.resultItem = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrate_" + id + out.getUnlocalizedName()));
-    id++;
+    this.setRegistryName(new ResourceLocation(Const.MODID, "hydr_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+ 
   }
   public boolean isShapeless() {
     return this.isShapeless;
