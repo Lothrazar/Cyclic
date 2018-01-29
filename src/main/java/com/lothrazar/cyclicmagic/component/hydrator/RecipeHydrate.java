@@ -45,7 +45,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
     this.resultItem = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "hydr_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
  
   }
   public boolean isShapeless() {
