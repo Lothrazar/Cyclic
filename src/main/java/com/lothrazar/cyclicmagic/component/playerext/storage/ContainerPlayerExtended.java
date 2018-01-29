@@ -85,7 +85,6 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    System.out.println("?!?!?!?" + iSlot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
     int playerStart = 36, playerEnd = 63, topStart = 0, topEnd = 35, hotbarStart = 63, hotbarEnd = 72;
