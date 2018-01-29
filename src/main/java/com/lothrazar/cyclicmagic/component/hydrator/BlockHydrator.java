@@ -121,6 +121,9 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
     }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
+    }, new ItemStack(Items.LAVA_BUCKET)));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
