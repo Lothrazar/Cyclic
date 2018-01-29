@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -22,16 +23,27 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }, out, true);
   }
+  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
+    this(in, out, false);
+    this.fluidCost = w;
+  }
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
     this(in, out, false);
   }
   public RecipeHydrate(ItemStack[] in, ItemStack out, boolean shapeless) {
-    if (in.length != 4) {
-      throw new IllegalArgumentException("Input array must be length 4");
-    }
     this.isShapeless = shapeless;
+    if (in.length == 1) {
+      //redirect to shapeless
+      this.isShapeless = true;
+      this.recipeInput = new ItemStack[] { in[0], ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY };
+    }
+    else if (in.length != 4) {
+      throw new IllegalArgumentException("Input array must be length 1 or length 4");
+    }
+    else {
+      this.recipeInput = in;
+    }
     ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
-    this.recipeInput = in;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrate_" + id + out.getUnlocalizedName()));
     id++;
@@ -45,14 +57,18 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     ItemStack s1 = inv.getStackInSlot(1);
     ItemStack s2 = inv.getStackInSlot(2);
     ItemStack s3 = inv.getStackInSlot(3);
+     
+    
     if (this.isShapeless()) {
       ItemStack theRecipeStack = recipeInput[0];
+     
       return OreDictionary.itemMatches(s0, theRecipeStack, false) ||
           OreDictionary.itemMatches(s1, theRecipeStack, false) ||
           OreDictionary.itemMatches(s2, theRecipeStack, false) ||
           OreDictionary.itemMatches(s3, theRecipeStack, false);
     }
     else {
+      
       //hacky lame way but easier to read and debug with all these lines
       return OreDictionary.itemMatches(s0, recipeInput[0], false) &&
           OreDictionary.itemMatches(s1, recipeInput[1], false) &&

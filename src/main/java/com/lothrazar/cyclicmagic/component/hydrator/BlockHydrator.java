@@ -51,7 +51,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
-  private void addRecipe(RecipeHydrate rec) {
+  public static void addRecipe(RecipeHydrate rec) {
     if (rec.isShapeless()) {
       recipesShapeless.add(rec);
     }
