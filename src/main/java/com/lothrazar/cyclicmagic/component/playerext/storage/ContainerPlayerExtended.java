@@ -6,19 +6,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
   private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
-  
-  
   final int pad = Const.PAD;
   public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
     inventory = eInvo;
@@ -26,20 +23,18 @@ public class ContainerPlayerExtended extends ContainerBase {
     if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
     }
-    int VROW = 3, VCOL = 9, armorX= -4 - Const.SQ, armorY;
+    int VROW = 3, VCOL = 9, armorX = -4 - Const.SQ, armorY;
     for (int k = 0; k < ARMOR.length; k++) {
       armorY = Const.PAD + k * Const.SQ;
       final EntityEquipmentSlot slot = ARMOR[k];
-      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), armorX,armorY) {
+      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), armorX, armorY) {
         @Override
         public int getSlotStackLimit() {
           return 1;
         }
         @Override
         public boolean isItemValid(ItemStack stack) {
-        
-            return stack.getItem().isValidArmor(stack, slot, player);
-         
+          return stack.getItem().isValidArmor(stack, slot, player);
         }
         @Override
         @SideOnly(Side.CLIENT)
@@ -90,7 +85,7 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    System.out.println("?!?!?!?"+iSlot);
+    System.out.println("?!?!?!?" + iSlot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
     int playerStart = 36, playerEnd = 63, topStart = 0, topEnd = 35, hotbarStart = 63, hotbarEnd = 72;

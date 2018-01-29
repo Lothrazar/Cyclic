@@ -2,10 +2,10 @@ package com.lothrazar.cyclicmagic.component.hydrator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.cyclicmagic.Hydrator")
 @ZenRegister

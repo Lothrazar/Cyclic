@@ -53,7 +53,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    if(index == SLOT_INPUT){
+    if (index == SLOT_INPUT) {
       return stack.getItem() == Items.GLASS_BOTTLE;
     }
     return super.isItemValidForSlot(index, stack);

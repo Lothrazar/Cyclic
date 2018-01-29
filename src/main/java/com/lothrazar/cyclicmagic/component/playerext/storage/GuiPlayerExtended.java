@@ -43,7 +43,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     //armor button
     id++;
     x = this.guiLeft;
-    y = this.guiTop +  Const.PAD;
+    y = this.guiTop + Const.PAD;
     btn = new ButtonToggleHotbar(id, x, y, w, 4 * Const.SQ);
     this.buttonList.add(btn);
   }

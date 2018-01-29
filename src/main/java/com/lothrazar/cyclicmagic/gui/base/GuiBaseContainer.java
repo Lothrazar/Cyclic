@@ -67,7 +67,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-       if (tile.doesUseFuel() && this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
+    if (tile.doesUseFuel() && this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
       btnFuelToggle = new GuiButtonToggleFuelBar(3,
           this.guiLeft + this.xSize - Const.PAD,
           this.guiTop + 1, this.tile.getPos());
@@ -186,7 +186,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     ITileFuel tileFuel = (ITileFuel) this.tile;
     int u = 0, v = 0;
- 
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;

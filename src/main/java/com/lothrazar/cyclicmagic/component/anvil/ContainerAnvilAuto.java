@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerAnvilAuto extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-//  public static final int SLOTX = 50;
+  //  public static final int SLOTX = 50;
   public static final int SLOTY = 34;
   protected TileEntityAnvilAuto tileEntity;
   public ContainerAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto te) {
