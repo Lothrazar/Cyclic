@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.hydrator;
 import crafttweaker.annotations.ZenRegister;
-import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -12,52 +11,48 @@ import net.minecraftforge.fml.common.Optional;
 public class RecipeZen {
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
-  public static void addRecipe(int water, IItemStack output, IItemStack[] inputs) {
-    System.out.println("recipe called with water " + water + " into output "+output.getDisplayName() + " INPUT SIZE " 
-        +toStacks(inputs).length);
- 
- 
- 
-   BlockHydrator.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
+  public static void addRecipe(IItemStack output, IItemStack[] inputs, int water) {
+    BlockHydrator.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
   }
-
-/**
- * TODO: HELPER CLASS
- * https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java
- */
+  /**
+   * THANKS TO  
+   * https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java
+   * @
+   * https://github.com/jaredlll08/MTLib
+   * which is MIT license
+   * https://github.com/jaredlll08/MTLib/blob/1.12/LICENSE.md
+   */
   @Optional.Method(modid = "crafttweaker")
   public static ItemStack toStack(IItemStack iStack) {
-
     if (iStack == null) {
       return ItemStack.EMPTY;
-    } else {
+    }
+    else {
       Object internal = iStack.getInternal();
       if (!(internal instanceof ItemStack)) {
-//        LogHelper.logError("Not a valid item stack: " + iStack);
         return ItemStack.EMPTY;
       }
-
       return (ItemStack) internal;
     }
   }
-  
-  
-
-/**
- * TODO: HELPER CLASS
- * https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java
- */
+  /**
+   * THANKS TO  
+   * https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java
+   * @
+   * https://github.com/jaredlll08/MTLib
+   * which is MIT license
+   * https://github.com/jaredlll08/MTLib/blob/1.12/LICENSE.md
+   */
   @Optional.Method(modid = "crafttweaker")
   public static ItemStack[] toStacks(IItemStack[] iStack) {
-
     if (iStack == null) {
       return null;
-    } else {
+    }
+    else {
       ItemStack[] output = new ItemStack[iStack.length];
       for (int i = 0; i < iStack.length; i++) {
         output[i] = toStack(iStack[i]);
       }
-
       return output;
     }
   }
