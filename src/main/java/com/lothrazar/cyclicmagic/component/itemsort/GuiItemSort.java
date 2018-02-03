@@ -47,11 +47,9 @@ public class GuiItemSort extends GuiBaseContainer {
       }
       btn = btnMapDamageIgnore.get(f);
       if (btn != null) {
-        //   ModCyclic.logger.log("oh what getfield "+(f.ordinal() + EnumFacing.values().length));
         int lockValue = te.getField(f.ordinal() + EnumFacing.values().length);
-        btn.setTooltip("button.filter.ignoredamage" + lockValue);
-        btn.displayString = "" + lockValue;
-        //        btn.setTextureIndex(5 + te.getLockType(f).ordinal());
+        btn.setTooltip("button.filter.ignoredamage" + lockValue + ".tooltip");
+        btn.displayString = (lockValue == 1) ? "I" : "N";
       }
     }
   }
@@ -63,7 +61,7 @@ public class GuiItemSort extends GuiBaseContainer {
     for (EnumFacing f : EnumFacing.values()) {
       btn = new ButtonTileEntityField(
           id++,
-          this.guiLeft + Const.PAD ,
+          this.guiLeft + Const.PAD,
           this.guiTop + f.ordinal() * Const.SQ + 17,
           tile.getPos(), f.ordinal(), 1,
           Const.SQ, Const.SQ);
