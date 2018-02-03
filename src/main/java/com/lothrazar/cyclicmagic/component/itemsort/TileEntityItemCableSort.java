@@ -115,10 +115,22 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       }
       if (this.getLockType(f) == LockType.FILTER) {
         List<ItemStack> inventoryContents = getFilterForSide(f);
-        if (OreDictionary.containsMatch(true,
-            NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
-            stackToExport)) {
-          faces.add(f);
+        if (this.ignoreDamageIfOne.get(f) == 1) {
+          //ignore damage, only check that items are equal
+          for (ItemStack inFilter : inventoryContents) {
+            if (inFilter.getItem().equals(stackToExport.getItem())) {
+              faces.add(f);
+              break;
+            }
+          }
+        }
+        else {
+          //use normal ore-dict matching
+          if (OreDictionary.containsMatch(true,
+              NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
+              stackToExport)) {
+            faces.add(f);
+          }
         }
       }
     }
@@ -157,20 +169,20 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       tryExportToTheseFaces(targetFaces);
     }
   }
-  private void debug(String prefix, ItemStack s, List<EnumFacing> targetFaces) {
-    String debug = s.getDisplayName() + prefix + " VALID FOR  ";
-    for (EnumFacing f : targetFaces) {
-      debug = debug + f.name() + " ";
-    }
-    ModCyclic.logger.log(debug);
-  }
-  private void debugStacks(String prefix, EnumFacing face, List<ItemStack> targetFaces) {
-    String debug = face.name() + prefix;
-    for (ItemStack f : targetFaces) {
-      debug = debug + f.getDisplayName() + " ";
-    }
-    ModCyclic.logger.log(debug);
-  }
+  //  private void debug(String prefix, ItemStack s, List<EnumFacing> targetFaces) {
+  //    String debug = s.getDisplayName() + prefix + " VALID FOR  ";
+  //    for (EnumFacing f : targetFaces) {
+  //      debug = debug + f.name() + " ";
+  //    }
+  //    ModCyclic.logger.log(debug);
+  //  }
+  //  private void debugStacks(String prefix, EnumFacing face, List<ItemStack> targetFaces) {
+  //    String debug = face.name() + prefix;
+  //    for (ItemStack f : targetFaces) {
+  //      debug = debug + f.getDisplayName() + " ";
+  //    }
+  //    ModCyclic.logger.log(debug);
+  //  }
   public void tryExportToTheseFaces(List<EnumFacing> targetFaces) {
     BlockPos posTarget;
     TileEntity tileTarget;
@@ -271,7 +283,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       //lock area
       EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
       ignoreDamageIfOne.put(enumID, value % 2);
-      ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
+     // ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
     }
   }
 }
