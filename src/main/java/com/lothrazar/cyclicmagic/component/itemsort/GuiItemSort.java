@@ -13,7 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemSort extends GuiBaseContainer {
-  private Map<EnumFacing, ButtonTileEntityField> btnMap = Maps.newHashMap();
+  private Map<EnumFacing, ButtonTileEntityField> btnMapLock = Maps.newHashMap();
+  private Map<EnumFacing, ButtonTileEntityField> btnMapDamageIgnore = Maps.newHashMap();
   TileEntityItemCableSort te;
   public GuiItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort tileEntity) {
     super(new ContainerItemSort(inventoryPlayer, tileEntity), tileEntity);
@@ -38,10 +39,15 @@ public class GuiItemSort extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     ButtonTileEntityField btn;
     for (EnumFacing f : EnumFacing.values()) {
-      btn = btnMap.get(f);
+      btn = btnMapLock.get(f);
       if (btn != null) {
         btn.setTooltip(te.getLockType(f).nameLower());
         btn.setTextureIndex(5 + te.getLockType(f).ordinal());
+      }
+      btn = btnMapDamageIgnore.get(f);
+      if (btn != null) {
+        btn.setTooltip("button.filter.ignoredamage" + te.getField(f.ordinal() + EnumFacing.values().length));
+        //        btn.setTextureIndex(5 + te.getLockType(f).ordinal());
       }
     }
   }
@@ -53,12 +59,24 @@ public class GuiItemSort extends GuiBaseContainer {
     for (EnumFacing f : EnumFacing.values()) {
       btn = new ButtonTileEntityField(
           id++,
-          this.guiLeft + Const.PAD - 2,
+          this.guiLeft + Const.PAD - 1,
           this.guiTop + f.ordinal() * Const.SQ + 17,
           tile.getPos(), f.ordinal(), 1,
           Const.SQ, Const.SQ);
       this.addButton(btn);
-      btnMap.put(f, btn);
+      btnMapLock.put(f, btn);
+    }
+    int offset = EnumFacing.values().length;
+    for (EnumFacing f : EnumFacing.values()) {
+      id++;
+      btn = new ButtonTileEntityField(
+          id++,
+          this.guiLeft + 2,
+          this.guiTop + f.ordinal() * Const.SQ + 17,
+          tile.getPos(), f.ordinal() + offset, 1,
+          8, Const.SQ);
+      this.addButton(btn);
+      btnMapDamageIgnore.put(f, btn);
     }
   }
 }

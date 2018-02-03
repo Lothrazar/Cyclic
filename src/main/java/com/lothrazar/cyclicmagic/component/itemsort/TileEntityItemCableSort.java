@@ -33,6 +33,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   }
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
   private Map<EnumFacing, Integer> allowEverything = Maps.newHashMap();
+  private Map<EnumFacing, Integer> ignoreDamageIfOne = Maps.newHashMap();
   private BlockPos connectedInventory;
   private int labelTimer = 0;
   private String labelText = "";
@@ -43,6 +44,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
       allowEverything.put(f, 0);
+      ignoreDamageIfOne.put(f, 0);//default to not ignore
     }
   }
   public LockType getLockType(EnumFacing f) {
@@ -76,6 +78,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
       allowEverything.put(f, compound.getInteger(f.getName() + "_toggle"));
+      ignoreDamageIfOne.put(f, compound.getInteger(f.getName() + "_damage"));
     }
     labelText = compound.getString("label");
     labelTimer = compound.getInteger("labelt");
@@ -87,6 +90,8 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
       compound.setInteger(f.getName() + "_toggle", allowEverything.get(f));
+      compound.setInteger(f.getName() + "_damage", ignoreDamageIfOne.get(f));
+      
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
@@ -243,16 +248,31 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   }
   @Override
   public int getField(int id) {
-    EnumFacing enumID = EnumFacing.values()[id];
-    return allowEverything.get(enumID);
+    if (id < EnumFacing.values().length) {
+      EnumFacing enumID = EnumFacing.values()[id];
+      return allowEverything.get(enumID);
+    }
+    else {
+      EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
+      return ignoreDamageIfOne.get(enumID);
+    }
   }
   @Override
   public int getFieldCount() {
-    return EnumFacing.values().length;
+    return EnumFacing.values().length * 2;
   }
   @Override
   public void setField(int id, int value) {
-    EnumFacing enumID = EnumFacing.values()[id];
-    allowEverything.put(enumID, value % LockType.values().length);
+    if (id < EnumFacing.values().length) {
+      //ignore area
+      EnumFacing enumID = EnumFacing.values()[id];
+      allowEverything.put(enumID, value % LockType.values().length);
+    }
+    else {
+      //lock area
+      EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
+      ignoreDamageIfOne.put(enumID, value % 2);
+      ModCyclic.logger.log("ignoreDamageIfOne" + ignoreDamageIfOne.get(enumID));
+    }
   }
 }
