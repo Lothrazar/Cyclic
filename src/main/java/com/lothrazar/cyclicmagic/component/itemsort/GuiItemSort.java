@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
 import java.util.Map;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -13,7 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemSort extends GuiBaseContainer {
-  private Map<EnumFacing, ButtonTileEntityField> btnMap = Maps.newHashMap();
+  private Map<EnumFacing, ButtonTileEntityField> btnMapLock = Maps.newHashMap();
+  private Map<EnumFacing, ButtonTileEntityField> btnMapDamageIgnore = Maps.newHashMap();
   TileEntityItemCableSort te;
   public GuiItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort tileEntity) {
     super(new ContainerItemSort(inventoryPlayer, tileEntity), tileEntity);
@@ -38,10 +40,16 @@ public class GuiItemSort extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     ButtonTileEntityField btn;
     for (EnumFacing f : EnumFacing.values()) {
-      btn = btnMap.get(f);
+      btn = btnMapLock.get(f);
       if (btn != null) {
         btn.setTooltip(te.getLockType(f).nameLower());
         btn.setTextureIndex(5 + te.getLockType(f).ordinal());
+      }
+      btn = btnMapDamageIgnore.get(f);
+      if (btn != null) {
+        int lockValue = te.getField(f.ordinal() + EnumFacing.values().length);
+        btn.setTooltip("button.filter.ignoredamage" + lockValue + ".tooltip");
+        btn.displayString = (lockValue == 1) ? "I" : "N";
       }
     }
   }
@@ -53,12 +61,24 @@ public class GuiItemSort extends GuiBaseContainer {
     for (EnumFacing f : EnumFacing.values()) {
       btn = new ButtonTileEntityField(
           id++,
-          this.guiLeft + Const.PAD - 2,
+          this.guiLeft + Const.PAD,
           this.guiTop + f.ordinal() * Const.SQ + 17,
           tile.getPos(), f.ordinal(), 1,
           Const.SQ, Const.SQ);
       this.addButton(btn);
-      btnMap.put(f, btn);
+      btnMapLock.put(f, btn);
+    }
+    int offset = EnumFacing.values().length;
+    for (EnumFacing f : EnumFacing.values()) {
+      id++;
+      btn = new ButtonTileEntityField(
+          id++,
+          this.guiLeft + 1,
+          this.guiTop + f.ordinal() * Const.SQ + 17,
+          tile.getPos(), f.ordinal() + offset, 1,
+          8, Const.SQ);
+      this.addButton(btn);
+      btnMapDamageIgnore.put(f, btn);
     }
   }
 }
