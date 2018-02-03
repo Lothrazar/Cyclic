@@ -26,11 +26,9 @@ minecraft {
     runDir = "run"
     makeObfSourceJar = false
     useDepAts = true
-    
     //Makes those replacement changes to the main mod class.
-    replace '@TEST@', project.version
-    replace '@FINGERPRINT@', project.findProperty('signSHA1')
-    replaceIn "ModCyclic.java"
+   // replace '@FINGERPRINT@', project.findProperty('signSHA1')
+   // replaceIn "ModCyclic.java"
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
