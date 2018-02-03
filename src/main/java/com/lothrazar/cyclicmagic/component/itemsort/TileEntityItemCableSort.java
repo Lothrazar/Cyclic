@@ -40,7 +40,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   public TileEntityItemCableSort() {
     super(FILTER_SIZE * EnumFacing.values().length + 1);// 49
     this.setSlotsForInsert(0);
-    allowEverything = Maps.newHashMap();
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
       allowEverything.put(f, 0);
@@ -91,7 +90,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
       compound.setInteger(f.getName() + "_toggle", allowEverything.get(f));
       compound.setInteger(f.getName() + "_damage", ignoreDamageIfOne.get(f));
-      
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
@@ -244,7 +242,11 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     return in.trim();
   }
   public int[] getFieldOrdinals() {
-    return super.getFieldArray(EnumFacing.values().length);
+    return super.getFieldArray(getFieldCount());
+  }
+  @Override
+  public int getFieldCount() {
+    return EnumFacing.values().length * 2;
   }
   @Override
   public int getField(int id) {
@@ -254,12 +256,9 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     else {
       EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
+      // ModCyclic.logger.log(" getFField " + id + " ---- " + ignoreDamageIfOne.get(enumID));
       return ignoreDamageIfOne.get(enumID);
     }
-  }
-  @Override
-  public int getFieldCount() {
-    return EnumFacing.values().length * 2;
   }
   @Override
   public void setField(int id, int value) {
@@ -272,7 +271,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       //lock area
       EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
       ignoreDamageIfOne.put(enumID, value % 2);
-      ModCyclic.logger.log("ignoreDamageIfOne" + ignoreDamageIfOne.get(enumID));
+      ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
     }
   }
 }

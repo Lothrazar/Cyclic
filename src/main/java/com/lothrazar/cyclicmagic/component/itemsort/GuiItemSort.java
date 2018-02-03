@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
 import java.util.Map;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -46,6 +47,7 @@ public class GuiItemSort extends GuiBaseContainer {
       }
       btn = btnMapDamageIgnore.get(f);
       if (btn != null) {
+     //   ModCyclic.logger.log("oh what getfield "+(f.ordinal() + EnumFacing.values().length));
         btn.setTooltip("button.filter.ignoredamage" + te.getField(f.ordinal() + EnumFacing.values().length));
         //        btn.setTextureIndex(5 + te.getLockType(f).ordinal());
       }
