@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
+import com.lothrazar.cyclicmagic.component.cable.ModelCable;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,10 +12,10 @@ import net.minecraft.util.ResourceLocation;
  *
  */
 public class CableItemRenderer extends TileEntitySpecialRenderer<TileEntityItemCable> {
-  ModelItemCable model;
+  ModelCable model;
   private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/item.png");
   public CableItemRenderer() {
-    model = new ModelItemCable();
+    model = new ModelCable();
   }
   @Override
   public void render(TileEntityItemCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {

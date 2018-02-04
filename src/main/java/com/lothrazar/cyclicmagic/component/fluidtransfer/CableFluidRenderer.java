@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.fluidtransfer;
+import com.lothrazar.cyclicmagic.component.cable.ModelCable;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7,11 +8,11 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class CableFluidRenderer extends TileEntitySpecialRenderer<TileEntityFluidCable> {
-  ModelFluidCable model;
+  ModelCable model;
   private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/fluid.png");
   //  private final ResourceLocation storage = new ResourceLocation(StorageNetwork.MODID + ":textures/tile/storage.png");
   public CableFluidRenderer() {
-    model = new ModelFluidCable();
+    model = new ModelCable();
   }
   @Override
   public void render(TileEntityFluidCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {

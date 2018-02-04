@@ -1,10 +1,11 @@
-package com.lothrazar.cyclicmagic.component.fluidtransfer;
+package com.lothrazar.cyclicmagic.component.cable;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelFluidCable extends ModelBase {
+ 
+public class ModelCable extends ModelBase {
   public ModelRenderer south;
   public ModelRenderer cube;
   public ModelRenderer north;
@@ -18,7 +19,7 @@ public class ModelFluidCable extends ModelBase {
   public ModelRenderer eastC;
   public ModelRenderer upC;
   public ModelRenderer downC;
-  public ModelFluidCable() {
+  public ModelCable() {
     this.textureWidth = 32;
     this.textureHeight = 32;
     this.upC = new ModelRenderer(this, 16, 0);
@@ -71,7 +72,7 @@ public class ModelFluidCable extends ModelBase {
     this.down.addBox(-2.0F, -2.0F, 0.0F, 4, 4, 8, 0.0F);
     this.setRotateAngle(down, -1.5707963267948966F, 0.0F, 0.0F);
   }
-  private boolean detectConnections(TileEntityFluidCable tile) {
+  private boolean detectConnections(TileEntityBaseCable tile) {
     boolean a = connected(tile.north) && connected(tile.south) && !connected(tile.west) && !connected(tile.east) && !connected(tile.up) && !connected(tile.down);
     boolean b = !connected(tile.north) && !connected(tile.south) && connected(tile.west) && connected(tile.east) && !connected(tile.up) && !connected(tile.down);
     boolean c = !connected(tile.north) && !connected(tile.south) && !connected(tile.west) && !connected(tile.east) && connected(tile.up) && connected(tile.down);
@@ -80,7 +81,7 @@ public class ModelFluidCable extends ModelBase {
   private boolean connected(EnumConnectType c) {
     return c == EnumConnectType.STORAGE || c == EnumConnectType.CONNECT;
   }
-  public void render(TileEntityFluidCable tile) {
+  public void render(TileEntityBaseCable tile) {
     float f5 = 0.0625F;
     if (tile.north == EnumConnectType.CONNECT) {
       this.north.render(f5);
