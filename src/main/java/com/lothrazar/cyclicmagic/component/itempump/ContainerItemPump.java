@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itemtransfer;
+package com.lothrazar.cyclicmagic.component.itempump;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;

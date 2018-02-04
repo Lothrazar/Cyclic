@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itemtransfer;
+package com.lothrazar.cyclicmagic.component.itempump;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
