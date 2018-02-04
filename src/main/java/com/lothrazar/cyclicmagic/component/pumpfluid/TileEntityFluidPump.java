@@ -1,7 +1,7 @@
-package com.lothrazar.cyclicmagic.component.fluidpump;
+package com.lothrazar.cyclicmagic.component.pumpfluid;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;

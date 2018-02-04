@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itempump;
+package com.lothrazar.cyclicmagic.component.pumpitem;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;

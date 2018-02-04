@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itemtransfer;
+package com.lothrazar.cyclicmagic.component.cableitem;
 import com.lothrazar.cyclicmagic.component.cable.ModelCable;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;

@@ -1,8 +1,8 @@
-package com.lothrazar.cyclicmagic.component.itempump;
+package com.lothrazar.cyclicmagic.component.pumpitem;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
-import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;

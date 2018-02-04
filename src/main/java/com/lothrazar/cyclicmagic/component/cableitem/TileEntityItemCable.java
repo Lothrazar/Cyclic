@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itemtransfer;
+package com.lothrazar.cyclicmagic.component.cableitem;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

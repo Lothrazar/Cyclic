@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.fluidtransfer;
+package com.lothrazar.cyclicmagic.component.cablefluid;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

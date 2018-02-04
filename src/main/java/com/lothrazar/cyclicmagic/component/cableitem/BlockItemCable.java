@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.itemtransfer;
+package com.lothrazar.cyclicmagic.component.cableitem;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;

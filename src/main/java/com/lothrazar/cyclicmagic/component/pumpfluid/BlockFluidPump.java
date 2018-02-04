@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.fluidpump;
+package com.lothrazar.cyclicmagic.component.pumpfluid;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;

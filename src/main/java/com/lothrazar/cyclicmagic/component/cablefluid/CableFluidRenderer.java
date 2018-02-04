@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.fluidtransfer;
+package com.lothrazar.cyclicmagic.component.cablefluid;
 import com.lothrazar.cyclicmagic.component.cable.ModelCable;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
