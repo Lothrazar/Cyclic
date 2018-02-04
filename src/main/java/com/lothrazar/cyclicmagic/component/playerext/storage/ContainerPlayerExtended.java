@@ -85,23 +85,29 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
+//    ModCyclic.logger.error("HEYY " + iSlot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    int playerStart = 36, playerEnd = 63, topStart = 0, topEnd = 35, hotbarStart = 63, hotbarEnd = 72;
+    int playerStart = 40, playerEnd = 66, topStart = 4, topEnd = 39, hotbarStart = 67, hotbarEnd = 75, armorStart = 0, armorEnd = 3;
     if (slot != null && slot.getHasStack()) {
       ItemStack stackInSlot = slot.getStack();
       stack = stackInSlot.copy();
-      if (playerStart <= iSlot && iSlot < playerEnd) {
+      if (armorStart <= iSlot && iSlot <= armorEnd) {
+        if (!this.mergeItemStack(stackInSlot, playerStart, hotbarEnd, false)) {
+          return ItemStack.EMPTY;
+        }
+      }
+      else if (playerStart <= iSlot && iSlot <= playerEnd) {
         if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
-      else if (topStart <= iSlot && iSlot < topEnd) {
+      else if (topStart <= iSlot && iSlot <= topEnd) {
         if (!this.mergeItemStack(stackInSlot, playerStart, playerEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
-      else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
+      else if (hotbarStart <= iSlot && iSlot <= hotbarEnd) {
         if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
           return ItemStack.EMPTY;
         }
