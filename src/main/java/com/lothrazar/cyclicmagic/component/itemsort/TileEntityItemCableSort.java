@@ -8,6 +8,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -210,10 +211,11 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
           TileEntityItemCableSort cable = (TileEntityItemCableSort) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }
-        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityBaseCable) {
           //TODO: holy balls do we need a base class
-          TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
-          cable.updateIncomingFace(f.getOpposite());
+          TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
+          if (cable.isItemPipe())
+            cable.updateIncomingItemFace(f.getOpposite());
         }
       }
     }
@@ -283,7 +285,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       //lock area
       EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
       ignoreDamageIfOne.put(enumID, value % 2);
-     // ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
+      // ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
     }
   }
 }

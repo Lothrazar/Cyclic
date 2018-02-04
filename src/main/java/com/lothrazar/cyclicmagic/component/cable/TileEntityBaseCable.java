@@ -9,8 +9,12 @@ import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -23,9 +27,9 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   private boolean fluidTransport = false;
   private boolean powerTransport = false;
   private Map<EnumFacing, Integer> mapIncomingFluid = Maps.newHashMap();
-  private Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
+  protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingPower = Maps.newHashMap();
-  private BlockPos connectedInventory;
+//  private BlockPos connectedInventory;
   public EnumConnectType north, south, east, west, up, down;
   public TileEntityBaseCable(int invoSize, int fluidTankSize) {
     super(invoSize, fluidTankSize);
@@ -82,7 +86,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incoming"));
     }
-    connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
+//    connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
     //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
     if (compound.hasKey("north"))
       north = EnumConnectType.valueOf(compound.getString("north"));
@@ -103,7 +107,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncomingFluid.get(f));
     }
-    compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
+//    compound.setString("connectedInventory", new Gson().toJson(connectedInventory));
     if (north != null)
       compound.setString("north", north.toString());
     if (south != null)
@@ -118,12 +122,12 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
       compound.setString("down", down.toString());
     return compound;
   }
-  public BlockPos getConnectedPos() {
-    return connectedInventory;
-  }
-  public void setConnectedPos(BlockPos connectedInventory) {
-    this.connectedInventory = connectedInventory;
-  }
+//  public BlockPos getConnectedPos() {
+//    return connectedInventory;
+//  }
+//  public void setConnectedPos(BlockPos connectedInventory) {
+//    this.connectedInventory = connectedInventory;
+//  }
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
     mapIncomingFluid.put(inputFrom, TIMER_SIDE_INPUT);
   }
@@ -150,10 +154,41 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     for (int i = 0; i < EnumFacing.values().length; i++) {
       shuffledFaces.add(i);
     }
+    TileEntity tileTarget;
     Collections.shuffle(shuffledFaces);
     for (int i : shuffledFaces) {
       EnumFacing f = EnumFacing.values()[i];
-      if (this.fluidTransport) {
+      
+      if(this.isItemPipe()){
+        
+        if(this.isItemIncomingFromFace(f)==false){
+          ItemStack stackToExport = this.getStackInSlot(0).copy();
+
+          //ok,  not incoming from here. so lets output some
+          posTarget = pos.offset(f);
+          tileTarget = world.getTileEntity(posTarget);
+          if (tileTarget == null) {
+            continue;
+          }
+          boolean outputSuccess = false;
+          ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+          if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+            //then save result
+            this.setInventorySlotContents(0, leftAfterDeposit);
+            outputSuccess = true;
+          }
+          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
+            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
+            cable.updateIncomingItemFace(f.getOpposite());
+          }
+        }
+        
+        
+      }
+      
+      
+      
+      if (this.isFluidPipe()) {
         if (this.isFluidIncomingFromFace(f) == false) {
           //ok, fluid is not incoming from here. so lets output some
           posTarget = pos.offset(f);

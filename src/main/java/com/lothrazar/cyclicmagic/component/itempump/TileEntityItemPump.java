@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itempump;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -119,9 +120,10 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       //one or more was put in
       outputSuccess = true;
     }
-    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityItemCable) {
-      TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(pos.offset(facingTo));
-      cable.updateIncomingFace(facingTo.getOpposite());
+    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityBaseCable) {
+      TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(pos.offset(facingTo));
+      if (cable.isItemPipe())
+        cable.updateIncomingItemFace(facingTo.getOpposite());
     }
   }
   public void tryImport() {
