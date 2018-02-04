@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import net.minecraft.util.EnumFacing;
 
 public interface ITileCable {

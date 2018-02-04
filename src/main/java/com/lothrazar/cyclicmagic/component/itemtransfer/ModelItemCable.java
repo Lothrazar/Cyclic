@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

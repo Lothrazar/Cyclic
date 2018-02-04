@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.itemtransfer;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
@@ -24,33 +24,27 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   public BlockItemCable() {
     super(Material.CLAY);
+    this.setItemTransport();
   }
-  @Override
-  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
-    BlockPos offset = pos.offset(side);
-    Block block = world.getBlockState(offset).getBlock();
-    if (block == this) {
-      return EnumConnectType.CONNECT;
-    }
-    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
-    if (tileTarget != null &&
-        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-      return EnumConnectType.STORAGE;
-    }
-    return EnumConnectType.NULL;
-  }
+//  @Override
+//  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
+//    BlockPos offset = pos.offset(side);
+//    Block block = world.getBlockState(offset).getBlock();
+//    if (block == this) {
+//      return EnumConnectType.CONNECT;
+//    }
+//    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+//    if (tileTarget != null &&
+//        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+//      return EnumConnectType.STORAGE;
+//    }
+//    return EnumConnectType.NULL;
+//  }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemCable();
   }
-  @Override
-  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    TileEntity tileentity = worldIn.getTileEntity(pos);
-    if (tileentity instanceof TileEntityBaseMachineInvo) {
-      InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBaseMachineInvo) tileentity);
-    }
-    super.breakBlock(worldIn, pos, state);
-  }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // TODO: display text if any

@@ -1,14 +1,19 @@
-package com.lothrazar.cyclicmagic.block.base;
+package com.lothrazar.cyclicmagic.component.cable;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.block.base.ITileCable;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -19,10 +24,15 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class BlockBaseCable extends BlockContainer {
+  private boolean itemTransport = false;
+  private boolean fluidTransport = false;
+  private boolean powerTransport = false;
   public static enum EnumConnectType implements IStringSerializable {
     CONNECT("connect"), STORAGE("storage"), NULL("null");
     String name;
@@ -39,7 +49,51 @@ public abstract class BlockBaseCable extends BlockContainer {
     this.setHardness(.5F);
     this.setResistance(.5F);
   }
-  public abstract EnumConnectType getConnectTypeForPos(IBlockAccess worldIn, BlockPos pos, EnumFacing side);
+  public void setItemTransport() {
+    this.itemTransport = true;
+  }
+  public void setFluidTransport() {
+    this.fluidTransport = true;
+  }
+  public void setPowerTransport() {
+    this.powerTransport = true;
+  }
+  
+  @Override
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    TileEntity tileentity = worldIn.getTileEntity(pos);
+    if (tileentity instanceof TileEntityBaseMachineInvo) {
+      InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBaseMachineInvo) tileentity);
+    }
+    super.breakBlock(worldIn, pos, state);
+  }
+  
+  
+  public  EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side){
+    BlockPos offset = pos.offset(side);
+    Block block = world.getBlockState(offset).getBlock();
+    if(this.itemTransport){
+      if (block == this) {
+        return EnumConnectType.CONNECT;
+      }
+      TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+      if (tileTarget != null &&
+          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+        return EnumConnectType.STORAGE;
+      }
+    }
+    if(this.fluidTransport){
+      if (block == this) {
+        return EnumConnectType.CONNECT;
+      }
+      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
+        return EnumConnectType.STORAGE;
+      }
+    }
+    
+
+    return EnumConnectType.NULL;
+  }
   @Override
   public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return false;
