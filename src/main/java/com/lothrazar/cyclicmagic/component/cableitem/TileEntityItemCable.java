@@ -8,7 +8,7 @@ public class TileEntityItemCable extends TileEntityBaseCable {
   private int labelTimer = 0;
   private String labelText = "";
   public TileEntityItemCable() {
-    super(1, 0);
+    super(1, 0,0);
     this.setItemTransport();
     this.setSlotsForBoth();
   }

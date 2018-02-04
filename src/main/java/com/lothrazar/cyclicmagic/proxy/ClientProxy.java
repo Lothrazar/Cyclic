@@ -7,6 +7,8 @@ import com.lothrazar.cyclicmagic.component.cablefluid.CableFluidRenderer;
 import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.cableitem.CableItemRenderer;
 import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.component.cablepower.CablePowerRenderer;
+import com.lothrazar.cyclicmagic.component.cablepower.TileEntityCablePower;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -85,6 +87,10 @@ public class ClientProxy extends CommonProxy {
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableFluidRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableItemRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableBundleRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CablePowerRenderer());
+
+  
+    
   }
   @Override
   public void init() {

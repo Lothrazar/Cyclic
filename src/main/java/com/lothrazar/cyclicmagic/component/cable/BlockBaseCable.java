@@ -24,6 +24,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -58,7 +59,6 @@ public abstract class BlockBaseCable extends BlockContainer {
   public void setPowerTransport() {
     this.powerTransport = true;
   }
-  
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -67,31 +67,37 @@ public abstract class BlockBaseCable extends BlockContainer {
     }
     super.breakBlock(worldIn, pos, state);
   }
-  
-  
-  public  EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side){
+  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
     BlockPos offset = pos.offset(side);
     Block block = world.getBlockState(offset).getBlock();
-    if(this.itemTransport){
+    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+    if (this.itemTransport) {
       if (block == this) {
         return EnumConnectType.CONNECT;
       }
-      TileEntity tileTarget = world.getTileEntity(pos.offset(side));
       if (tileTarget != null &&
           tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
         return EnumConnectType.STORAGE;
       }
     }
-    if(this.fluidTransport){
+    if (this.fluidTransport) {
       if (block == this) {
         return EnumConnectType.CONNECT;
       }
+      // getFluidHandler uses fluid capability and other things
       if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
         return EnumConnectType.STORAGE;
       }
     }
-    
-
+    if (this.powerTransport) {
+      if (block == this) {
+        return EnumConnectType.CONNECT;
+      }
+      if (tileTarget != null &&
+          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side)) {
+        return EnumConnectType.STORAGE;
+      }
+    }
     return EnumConnectType.NULL;
   }
   @Override
