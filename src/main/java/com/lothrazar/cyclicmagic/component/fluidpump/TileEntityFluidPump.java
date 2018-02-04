@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.fluidpump;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.util.EnumFacing;
@@ -37,10 +38,11 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     }
     //looping is over. now try to DEPOSIT fluid next door
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
-    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityFluidCable) {
+    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityBaseCable) {
       //TODO: not so compatible with other fluid systems. itl do i guess
-      TileEntityFluidCable cable = (TileEntityFluidCable) world.getTileEntity(pos.offset(facingTo));
-      cable.updateIncomingFace(facingTo.getOpposite());
+      TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(pos.offset(facingTo));
+      if (cable.isFluidPipe())
+        cable.updateIncomingFluidFace(facingTo.getOpposite());
     }
   }
 }

@@ -12,7 +12,7 @@ public interface ITileCable {
   public EnumConnectType down();
   public void setConnects(Map<EnumFacing, EnumConnectType> map);
   public Map<EnumFacing, EnumConnectType> getConnects();
-  public boolean hasAnyIncomingFaces();
-  public void tickDownIncomingFaces();
+  public boolean hasAnyIncomingFluidFaces();
+  public void tickDownIncomingFluidFaces();
   public String getIncomingStrings();
 }
