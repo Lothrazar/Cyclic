@@ -28,13 +28,7 @@ public class BlockPowerCable extends BlockBaseCable {
     TileEntityBaseCable te = (TileEntityBaseCable) world.getTileEntity(pos);
     if (te != null && te.isEnergyPipe()) {
       if (world.isRemote == false) { //server side
-        IEnergyStorage handlerHere = te.getCapability(CapabilityEnergy.ENERGY, side);
-        String msg = null;
-     //TODO: cache the amount flowing for display just like item
-        msg = handlerHere.getEnergyStored() + "/" + handlerHere.getMaxEnergyStored();
-        //          if (te.getIncomingStrings() != "") {
-        //            msg += " (" + UtilChat.lang("cyclic.fluid.flowing") + te.getIncomingStrings() + ")";
-        //          }
+        String msg = te.getLabelTextOrEmpty();
         UtilChat.sendStatusMessage(player, msg);
       }
     }

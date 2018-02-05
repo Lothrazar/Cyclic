@@ -22,7 +22,6 @@ public class BlockFluidCable extends BlockBaseCable implements IHasRecipe {
     super(Material.CLAY);
     this.setFluidTransport();
   }
- 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidCable();
@@ -34,18 +33,7 @@ public class BlockFluidCable extends BlockBaseCable implements IHasRecipe {
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (world.isRemote == false) { //server side
-        FluidStack fs = te.getCurrentFluidStack();
-        String msg = null;
-        if (fs != null) {
-    
-          msg = fs.getLocalizedName();
-          if (te.getIncomingStrings() != "") {
-            msg += " (" + UtilChat.lang("cyclic.fluid.flowing") + te.getIncomingStrings() + ")";
-          }
-        }
-        else {
-          msg = UtilChat.lang("cyclic.fluid.empty");
-        }
+        String msg = te.getLabelTextOrEmpty();
         UtilChat.sendStatusMessage(player, msg);
       }
     }

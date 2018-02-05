@@ -5,11 +5,11 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
-import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -22,11 +22,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 
-public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
+public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_FLUID_PER_TICK = 100;
   private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+  private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT;
+  private int labelTimer = 0;
+  private String labelText = "";
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean energyTransport = false;
@@ -90,13 +94,13 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
+    labelText = compound.getString("label");
+    labelTimer = compound.getInteger("labelt");
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingItems.put(f, compound.getInteger(f.getName() + "_incoming"));
-    }
-    for (EnumFacing f : EnumFacing.values()) {
+ 
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
-    }
-    for (EnumFacing f : EnumFacing.values()) {
+ 
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
     }
     if (compound.hasKey("north"))
@@ -115,16 +119,68 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
       CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
     }
   }
+  public String getLabelTextOrEmpty() {
+    return labelText.isEmpty() ? UtilChat.lang("cyclic.item.empty") : this.labelText;
+  }
+  /**
+   * with normal item movement it moves too fast for user to read cache the current item for a few ticks so full item pipes dont show empty or flashing fast text
+   */
+  private void tickLabelText() {
+    this.labelTimer--;
+    if (this.labelTimer <= 0) {
+      this.labelTimer = 0;
+      this.labelText = "";
+      if (this.isItemPipe()) {
+        if (this.getStackInSlot(0).isEmpty() == false) {
+          this.labelText = this.getStackInSlot(0).getDisplayName() + " ";
+        }
+        this.labelText += UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsItem();
+        this.labelTimer = TICKS_TEXT_CACHED;
+      }
+      if (this.isFluidPipe() && this.labelText.isEmpty()) {
+        FluidStack fs = this.getCurrentFluidStack();
+        if (fs != null) {
+          this.labelText = fs.getLocalizedName() + " ";
+        }
+        labelText += UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsFluid();
+        this.labelTimer = TICKS_TEXT_CACHED;
+      }
+      if (this.isEnergyPipe() && this.labelText.isEmpty()) {
+        if (this.cableEnergyStore != null && this.cableEnergyStore.getEnergyStored() > 0) {
+          this.labelText = this.cableEnergyStore.getEnergyStored() + " " +
+              UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsEnergy();
+          this.labelTimer = TICKS_TEXT_CACHED;
+        }
+      }
+    }
+  }
+  private String getIncomingStringsFromMap(Map<EnumFacing, Integer> map) {
+    String in = "";
+    for (EnumFacing f : EnumFacing.values()) {
+      if (map.get(f) > 0)
+        in += f.name().toLowerCase() + " ";
+    }
+    return in.trim();
+  }
+  private String getIncomingStringsFluid() {
+    return getIncomingStringsFromMap(this.mapIncomingFluid);
+  }
+  private String getIncomingStringsItem() {
+    return getIncomingStringsFromMap(this.mapIncomingItems);
+  }
+  private String getIncomingStringsEnergy() {
+    return getIncomingStringsFromMap(this.mapIncomingEnergy);
+  }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
+    compound.setString("label", labelText);
+    compound.setInteger("labelt", labelTimer);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
-    }
-    for (EnumFacing f : EnumFacing.values()) {
+ 
       compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
-    }
-    for (EnumFacing f : EnumFacing.values()) {
+     
       compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
     }
     if (cableEnergyStore != null) {
@@ -164,6 +220,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   }
   @Override
   public void update() {
+    this.tickLabelText();
     if (this.fluidTransport)
       this.tickDownIncomingFluidFaces();
     if (this.itemTransport)
@@ -210,7 +267,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
           posTarget = pos.offset(f);
           int toFlow = TRANSFER_FLUID_PER_TICK;
           if (hasAnyIncomingFluidFaces() && toFlow >= tank.getFluidAmount()) {
-            toFlow = tank.getFluidAmount() - 1;//keep at least 1 unit in the tank if flow is moving
+            toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
           }
           boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
           if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
@@ -244,7 +301,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               if (tileTarget instanceof TileEntityBaseCable) {
                 //TODO: not so compatible with other fluid systems. itl do i guess
                 TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
-                if (cable.isPowered())
+                if (cable.isEnergyPipe())
                   cable.updateIncomingEnergyFace(f.getOpposite());
               }
               //              return;// stop now because only pull from one side at a time
@@ -288,35 +345,21 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
     }
   }
-  public String getIncomingStrings() {
-    String in = "";
-    for (EnumFacing f : EnumFacing.values()) {
-      if (mapIncomingFluid.get(f) > 0)
-        in += f.name().toLowerCase() + " ";
-    }
-    return in.trim();
-  }
-  @Override
   public EnumConnectType north() {
     return north;
   }
-  @Override
   public EnumConnectType south() {
     return south;
   }
-  @Override
   public EnumConnectType east() {
     return east;
   }
-  @Override
   public EnumConnectType west() {
     return west;
   }
-  @Override
   public EnumConnectType up() {
     return up;
   }
-  @Override
   public EnumConnectType down() {
     return down;
   }

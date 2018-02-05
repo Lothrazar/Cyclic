@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.block.base.ITileCable;
+ 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockContainer;
@@ -145,11 +145,11 @@ public abstract class BlockBaseCable extends BlockContainer {
   }
   @Override
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-    if (!(worldIn.getTileEntity(pos) instanceof ITileCable)) {
+    if (!(worldIn.getTileEntity(pos) instanceof TileEntityBaseCable)) {
       return;
     }
     state = state.getActualState(worldIn, pos);
-    ITileCable tile = (ITileCable) worldIn.getTileEntity(pos);
+    TileEntityBaseCable tile = (TileEntityBaseCable) worldIn.getTileEntity(pos);
     float x1 = 0.3125F;
     float x2 = 0.6875F;
     float y1 = 0.3125F;
@@ -184,11 +184,11 @@ public abstract class BlockBaseCable extends BlockContainer {
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    if (source.getTileEntity(pos) instanceof ITileCable == false) {
+    if (source.getTileEntity(pos) instanceof TileEntityBaseCable == false) {
       return FULL_BLOCK_AABB;
     }
     state = state.getActualState(source, pos);
-    ITileCable tile = (ITileCable) source.getTileEntity(pos);
+    TileEntityBaseCable tile = (TileEntityBaseCable) source.getTileEntity(pos);
     float x1 = 0.37F;
     float x2 = 0.63F;
     float y1 = 0.37F;
@@ -218,10 +218,10 @@ public abstract class BlockBaseCable extends BlockContainer {
     return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
   }
   public IBlockState getNewState(IBlockAccess world, BlockPos pos) {
-    if (world.getTileEntity(pos) instanceof ITileCable == false) {
+    if (world.getTileEntity(pos) instanceof TileEntityBaseCable == false) {
       return world.getBlockState(pos);
     }
-    ITileCable tile = (ITileCable) world.getTileEntity(pos);
+    TileEntityBaseCable tile = (TileEntityBaseCable) world.getTileEntity(pos);
     Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
     //detect and save connections on each side
     for (EnumFacing f : EnumFacing.values()) {

@@ -21,28 +21,17 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
     super(Material.CLAY);
     this.setItemTransport();
   }
- 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemCable();
   }
-
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // TODO: display text if any
     boolean success = false;
     TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
     if (te != null && world.isRemote == false) {
-      String msg = null;
-      if (te.getLabelText() != "") {
-        msg = te.getLabelText();
-        if (te.getIncomingStrings() != "") {
-          msg += " (" + UtilChat.lang("cyclic.item.flowing") + te.getIncomingStrings() + ")";
-        }
-      }
-      else {
-        msg = UtilChat.lang("cyclic.item.empty");
-      }
+      String msg = te.getLabelTextOrEmpty();
       UtilChat.sendStatusMessage(player, msg);
       success = true;
     }

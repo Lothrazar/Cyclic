@@ -74,7 +74,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityBaseCable cable = (TileEntityBaseCable) tileInsert;
           //  ModCyclic.logger.error("pump EXPORT  " + filled);
-          if (cable.isPowered()) {
+          if (cable.isEnergyPipe()) {
             // ModCyclic.logger.error("cable receive from   "+ side);
             cable.updateIncomingEnergyFace(side); // .getOpposite()
           }
