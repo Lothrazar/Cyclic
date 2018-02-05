@@ -3,12 +3,9 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-@SuppressWarnings("unused")
+ 
 public abstract class BlockBaseCable extends BlockContainer {
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
@@ -71,7 +68,7 @@ public abstract class BlockBaseCable extends BlockContainer {
   }
   public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
     BlockPos offset = pos.offset(side);
-    Block block = world.getBlockState(offset).getBlock();
+//    Block block = world.getBlockState(offset).getBlock();
     TileEntity tileTarget = world.getTileEntity(pos.offset(side));
     TileEntityBaseCable tileCable = null;
     if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {

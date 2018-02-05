@@ -4,9 +4,6 @@ import java.util.Collections;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
@@ -25,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
@@ -95,10 +91,14 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     for (EnumFacing f : EnumFacing.values()) {
-      mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incoming"));
+      mapIncomingItems.put(f, compound.getInteger(f.getName() + "_incoming"));
     }
-    //    connectedInventory = new Gson().fromJson(compound.getString("connectedInventory"), new TypeToken<BlockPos>() {}.getType());
-    //  incomingFace = EnumFacing.byName(compound.getString("inventoryFace"));
+    for (EnumFacing f : EnumFacing.values()) {
+      mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
+    }
+    for (EnumFacing f : EnumFacing.values()) {
+      mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
+    }
     if (compound.hasKey("north"))
       north = EnumConnectType.valueOf(compound.getString("north"));
     if (compound.hasKey("south"))
@@ -119,7 +119,13 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
     for (EnumFacing f : EnumFacing.values()) {
-      compound.setInteger(f.getName() + "_incoming", mapIncomingFluid.get(f));
+      compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
+    }
+    for (EnumFacing f : EnumFacing.values()) {
+      compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
+    }
+    for (EnumFacing f : EnumFacing.values()) {
+      compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
     }
     if (cableEnergyStore != null) {
       compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));

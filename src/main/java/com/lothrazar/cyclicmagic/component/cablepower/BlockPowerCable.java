@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cablepower;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
-import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,8 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 
 public class BlockPowerCable extends BlockBaseCable {
   public BlockPowerCable() {

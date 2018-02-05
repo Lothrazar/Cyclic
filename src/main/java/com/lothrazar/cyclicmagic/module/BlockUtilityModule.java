@@ -73,6 +73,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean screen;
   private boolean btrash;
   private boolean fluidPlacer;
+  private boolean enablePowerCables;
+  private boolean bundledCable;
   public void onPreInit() {
     BlockAppleCrop apple = new BlockAppleCrop();
     BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
@@ -184,30 +186,26 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
-    
-    BlockCableBundle pipe_bundle = new BlockCableBundle();
-    BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
-    GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
-    
-    
-    
-    
-    
-    BlockEnergyPump energy_pump = new BlockEnergyPump();
-    BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
-    GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "TileEntityFluidPump_te");
-    
-    
-
-    
-    BlockPowerCable power_pipe = new BlockPowerCable();
-    BlockRegistry.registerBlock(power_pipe, "power_pipe", null);
-    GameRegistry.registerTileEntity(TileEntityCablePower.class, "power_pipe_te");
-   
+    if (enablePowerCables) {
+      BlockPowerCable power_pipe = new BlockPowerCable();
+      BlockRegistry.registerBlock(power_pipe, "power_pipe", null);
+      GameRegistry.registerTileEntity(TileEntityCablePower.class, "power_pipe_te");
+      //and matching pump
+      BlockEnergyPump energy_pump = new BlockEnergyPump();
+      BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
+      GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "TileEntityFluidPump_te");
+    }
+    if (bundledCable) {
+      BlockCableBundle pipe_bundle = new BlockCableBundle();
+      BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
+      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    bundledCable = config.getBoolean("pipe_bundle", category, true, Const.ConfigCategory.contentDefaultText);
+    enablePowerCables = config.getBoolean("power_pipe", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
