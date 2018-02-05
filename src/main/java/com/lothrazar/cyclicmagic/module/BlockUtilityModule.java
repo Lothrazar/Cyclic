@@ -31,6 +31,8 @@ import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
 import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
+import com.lothrazar.cyclicmagic.component.pumpenergy.BlockEnergyPump;
+import com.lothrazar.cyclicmagic.component.pumpenergy.TileEntityEnergyPump;
 import com.lothrazar.cyclicmagic.component.pumpfluid.BlockFluidPump;
 import com.lothrazar.cyclicmagic.component.pumpfluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.pumpitem.BlockItemPump;
@@ -186,6 +188,14 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     BlockCableBundle pipe_bundle = new BlockCableBundle();
     BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
     GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
+    
+    
+    
+    
+    
+    BlockEnergyPump energy_pump = new BlockEnergyPump();
+    BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
+    GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "TileEntityFluidPump_te");
     
     
 

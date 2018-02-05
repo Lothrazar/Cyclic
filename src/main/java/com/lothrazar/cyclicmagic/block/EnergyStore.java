@@ -7,6 +7,11 @@ public class EnergyStore extends EnergyStorage {
   public EnergyStore() {
     super(DEFAULT_CAPACITY);
     this.maxReceive = MAX_INPUT;
+    this.maxExtract = MAX_INPUT;
+  }
+  public EnergyStore(int cap) {
+    super(cap);
+    this.maxReceive = MAX_INPUT;
   }
   public void setEnergyStored(int en) {
     if (en < 0) {

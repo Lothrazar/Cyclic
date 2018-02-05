@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.cable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -21,8 +22,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
@@ -42,10 +45,10 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     super(invoSize, fluidTankSize);
     this.powerPerTick = powerPerTick;
     if (this.powerPerTick > 0) {
-      cableEnergyStore = new EnergyStore();
+      cableEnergyStore = new EnergyStore(5000);
       //super fake free power for testing
-      ModCyclic.logger.error("fake free energy in the cable here");
-      this.cableEnergyStore.setEnergyStored(1000);
+//      ModCyclic.logger.error("fake free energy in the cable here");
+//      this.cableEnergyStore.setEnergyStored(1000);
     }
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
@@ -236,9 +239,9 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               //now actually drain that much from here
              
               handlerHere.extractEnergy(filled, false);
-              ModCyclic.logger.log("power transfer " + filled + " into target pos " + tileTarget.getBlockType().getLocalizedName());
-              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
-              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
+//              ModCyclic.logger.log("power transfer " + filled + " into target pos " + tileTarget.getBlockType().getLocalizedName());
+//              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
+//              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
               if (tileTarget instanceof TileEntityBaseCable) {
                 //TODO: not so compatible with other fluid systems. itl do i guess
                 TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
@@ -323,10 +326,18 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     return bb;
   }
   @Override
+  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
+      return true;
+    }
+    return super.hasCapability(capability, facing);
+  }
+  @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.cableEnergyStore);
     }
+ 
     return super.getCapability(capability, facing);
   }
 }
