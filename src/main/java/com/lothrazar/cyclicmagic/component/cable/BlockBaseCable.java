@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileCable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
+@SuppressWarnings("unused")
 public abstract class BlockBaseCable extends BlockContainer {
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
@@ -71,8 +73,21 @@ public abstract class BlockBaseCable extends BlockContainer {
     BlockPos offset = pos.offset(side);
     Block block = world.getBlockState(offset).getBlock();
     TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+    TileEntityBaseCable tileCable = null;
+    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
+      tileCable = (TileEntityBaseCable) tileTarget;
+    }
+    if (this.powerTransport) {
+      if (tileCable != null && tileCable.isEnergyPipe()) {
+        return EnumConnectType.CONNECT;
+      }
+      if (tileTarget != null &&
+          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+        return EnumConnectType.STORAGE;
+      }
+    }
     if (this.itemTransport) {
-      if (block == this) {
+      if (tileCable != null && tileCable.isItemPipe()) {
         return EnumConnectType.CONNECT;
       }
       if (tileTarget != null &&
@@ -81,20 +96,11 @@ public abstract class BlockBaseCable extends BlockContainer {
       }
     }
     if (this.fluidTransport) {
-      if (block == this) {
+      if (tileCable != null && tileCable.isFluidPipe()) {
         return EnumConnectType.CONNECT;
       }
       // getFluidHandler uses fluid capability and other things
       if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    if (this.powerTransport) {
-      if (block == this) {
-        return EnumConnectType.CONNECT;
-      }
-      if (tileTarget != null &&
-          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side)) {
         return EnumConnectType.STORAGE;
       }
     }

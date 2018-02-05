@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_FLUID_PER_TICK = 100;
-  private static final int TRANSFER_ENERGY_PER_TICK = 1000;
+  private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean energyTransport = false;
@@ -38,17 +38,12 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
-  //  private BlockPos connectedInventory;
   public EnumConnectType north, south, east, west, up, down;
-  private int powerPerTick;
   public TileEntityBaseCable(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
-    this.powerPerTick = powerPerTick;
-    if (this.powerPerTick > 0) {
-      cableEnergyStore = new EnergyStore(5000);
-      //super fake free power for testing
-//      ModCyclic.logger.error("fake free energy in the cable here");
-//      this.cableEnergyStore.setEnergyStored(1000);
+    //TODO: fix input awkwardness 
+    if (powerPerTick > 0) {
+      cableEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
     }
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
@@ -222,7 +217,6 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
       if (this.isEnergyPipe()) {
         if (this.isEnergyIncomingFromFace(f) == false) {
           posTarget = pos.offset(f);
- 
           IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, f);
           tileTarget = world.getTileEntity(posTarget);
           if (tileTarget == null) {
@@ -237,11 +231,10 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               //now push it into output, but find out what was ACTUALLY taken
               int filled = handlerOutput.receiveEnergy(drain, false);
               //now actually drain that much from here
-             
               handlerHere.extractEnergy(filled, false);
-   // ModCyclic.logger.log("power transfer " + filled + " into target   " +f);
-//              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
-//              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
+              // ModCyclic.logger.log("power transfer " + filled + " into target   " +f);
+              //              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
+              //              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
               if (tileTarget instanceof TileEntityBaseCable) {
                 //TODO: not so compatible with other fluid systems. itl do i guess
                 TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
@@ -252,8 +245,8 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
             }
           }
         }
-//        else 
-//          ModCyclic.logger.log("power blocked going out to this face " + f);
+        //        else 
+        //          ModCyclic.logger.log("power blocked going out to this face " + f);
       }
     }
   }
@@ -339,7 +332,6 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.cableEnergyStore);
     }
- 
     return super.getCapability(capability, facing);
   }
 }

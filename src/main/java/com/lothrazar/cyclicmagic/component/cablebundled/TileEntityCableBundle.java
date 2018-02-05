@@ -8,6 +8,7 @@ public class TileEntityCableBundle extends TileEntityBaseCable{
     super(1, 100,1000);
     this.setItemTransport();
     this.setFluidTransport();
+    this.setPowerTransport();
     this.setSlotsForBoth();
   }
   

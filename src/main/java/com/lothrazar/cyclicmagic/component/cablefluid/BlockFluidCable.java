@@ -24,18 +24,7 @@ public class BlockFluidCable extends BlockBaseCable implements IHasRecipe {
     super(Material.CLAY);
     this.setFluidTransport();
   }
-//  @Override
-//  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
-//    BlockPos offset = pos.offset(side);
-//    Block block = world.getBlockState(offset).getBlock();
-//    if (block == this) {
-//      return EnumConnectType.CONNECT;
-//    }
-//    if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
-//      return EnumConnectType.STORAGE;
-//    }
-//    return EnumConnectType.NULL;
-//  }
+ 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidCable();

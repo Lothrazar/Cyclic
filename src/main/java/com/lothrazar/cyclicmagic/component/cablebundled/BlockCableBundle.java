@@ -9,6 +9,7 @@ public class BlockCableBundle extends BlockBaseCable {
     super(Material.CLAY);
     this.setItemTransport();
     this.setFluidTransport();
+    this.setPowerTransport();
   }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {

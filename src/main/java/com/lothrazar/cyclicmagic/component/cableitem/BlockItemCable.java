@@ -26,20 +26,7 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
     super(Material.CLAY);
     this.setItemTransport();
   }
-//  @Override
-//  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
-//    BlockPos offset = pos.offset(side);
-//    Block block = world.getBlockState(offset).getBlock();
-//    if (block == this) {
-//      return EnumConnectType.CONNECT;
-//    }
-//    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
-//    if (tileTarget != null &&
-//        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-//      return EnumConnectType.STORAGE;
-//    }
-//    return EnumConnectType.NULL;
-//  }
+ 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemCable();

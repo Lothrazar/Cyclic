@@ -1,28 +1,23 @@
 package com.lothrazar.cyclicmagic.component.pumpenergy;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
-import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITickable {
-  private static final int TRANSFER_ENERGY_PER_TICK = 1000;
+  // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
+  private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private EnergyStore pumpEnergyStore;
   public TileEntityEnergyPump() {
     super();
-    pumpEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK * 5);
+    pumpEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
   }
   @Override
   public void readFromNBT(NBTTagCompound compound) {
@@ -65,7 +60,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         int filled = handlerHere.receiveEnergy(drain, false);
         //now actually drain that much  
         handlerPullFrom.extractEnergy(filled, false);
-       // ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
+        // ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
     if (handlerInsertInto != null && handlerInsertInto.canReceive()) {
@@ -78,7 +73,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         if (tileInsert instanceof TileEntityBaseCable) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityBaseCable cable = (TileEntityBaseCable) tileInsert;
-        //  ModCyclic.logger.error("pump EXPORT  " + filled);
+          //  ModCyclic.logger.error("pump EXPORT  " + filled);
           if (cable.isPowered()) {
             // ModCyclic.logger.error("cable receive from   "+ side);
             cable.updateIncomingEnergyFace(side); // .getOpposite()
