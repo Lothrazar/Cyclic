@@ -239,7 +239,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               //now actually drain that much from here
              
               handlerHere.extractEnergy(filled, false);
-//              ModCyclic.logger.log("power transfer " + filled + " into target pos " + tileTarget.getBlockType().getLocalizedName());
+   // ModCyclic.logger.log("power transfer " + filled + " into target   " +f);
 //              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
 //              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
               if (tileTarget instanceof TileEntityBaseCable) {
@@ -252,6 +252,8 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
             }
           }
         }
+//        else 
+//          ModCyclic.logger.log("power blocked going out to this face " + f);
       }
     }
   }

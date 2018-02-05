@@ -65,7 +65,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         int filled = handlerHere.receiveEnergy(drain, false);
         //now actually drain that much  
         handlerPullFrom.extractEnergy(filled, false);
-        ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
+       // ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
     if (handlerInsertInto != null && handlerInsertInto.canReceive()) {
@@ -78,10 +78,10 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         if (tileInsert instanceof TileEntityBaseCable) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityBaseCable cable = (TileEntityBaseCable) tileInsert;
-          ModCyclic.logger.error("pump EXPORT  " + filled);
+        //  ModCyclic.logger.error("pump EXPORT  " + filled);
           if (cable.isPowered()) {
             // ModCyclic.logger.error("cable receive from   "+ side);
-            cable.updateIncomingEnergyFace(side);
+            cable.updateIncomingEnergyFace(side); // .getOpposite()
           }
         }
       }
