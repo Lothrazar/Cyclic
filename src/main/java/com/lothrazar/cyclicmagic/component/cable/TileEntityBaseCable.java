@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable, ITileCable {
   private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_FLUID_PER_TICK = 100;
-  private static final int TRANSFER_ENERGY_PER_TICK = 25;
+  private static final int TRANSFER_ENERGY_PER_TICK = 1000;
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean energyTransport = false;

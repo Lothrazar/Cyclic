@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -17,11 +18,22 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITickable {
-  private static final int TRANSFER_ENERGY_PER_TICK = 100;
+  private static final int TRANSFER_ENERGY_PER_TICK = 1000;
   private EnergyStore pumpEnergyStore;
   public TileEntityEnergyPump() {
     super();
-    pumpEnergyStore = new EnergyStore(5000);
+    pumpEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK * 5);
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    CapabilityEnergy.ENERGY.readNBT(pumpEnergyStore, null, compound.getTag("powercable"));
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    super.writeToNBT(compound);
+    compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(pumpEnergyStore, null));
+    return compound;
   }
   @Override
   public void update() {
@@ -30,21 +42,20 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
     }
     EnumFacing side = this.getCurrentFacing();
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, side);
-//    BlockPos posInsertInto = pos.offset(side);
-//    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
-//    BlockPos posPullFrom = pos.offset(side.getOpposite());
+    //    BlockPos posInsertInto = pos.offset(side);
+    //    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
+    //    BlockPos posPullFrom = pos.offset(side.getOpposite());
     TileEntity tileInsert = world.getTileEntity(pos.offset(side.getOpposite()));
     IEnergyStorage handlerInsertInto = null;
     if (tileInsert != null) {
       handlerInsertInto = tileInsert.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-
-      ModCyclic.logger.error("tileInsert  "+tileInsert.getBlockType().getLocalizedName());
+      //   ModCyclic.logger.error("tileInsert  "+tileInsert.getBlockType().getLocalizedName());
     }
     TileEntity tilePull = world.getTileEntity(pos.offset(side));
     IEnergyStorage handlerPullFrom = null;
     if (tilePull != null) {
       handlerPullFrom = tilePull.getCapability(CapabilityEnergy.ENERGY, side);
-      ModCyclic.logger.error("tilePull   "+tilePull.getBlockType().getLocalizedName());
+      //ModCyclic.logger.error("tilePull   "+tilePull.getBlockType().getLocalizedName());
     }
     //first pull in power
     if (handlerPullFrom != null && handlerPullFrom.canExtract()) {
@@ -54,6 +65,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         int filled = handlerHere.receiveEnergy(drain, false);
         //now actually drain that much  
         handlerPullFrom.extractEnergy(filled, false);
+        ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
     if (handlerInsertInto != null && handlerInsertInto.canReceive()) {
@@ -63,6 +75,15 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         int filled = handlerInsertInto.receiveEnergy(drain, false);
         //now actually drain that much  
         handlerHere.extractEnergy(filled, false);
+        if (tileInsert instanceof TileEntityBaseCable) {
+          //TODO: not so compatible with other fluid systems. itl do i guess
+          TileEntityBaseCable cable = (TileEntityBaseCable) tileInsert;
+          ModCyclic.logger.error("pump EXPORT  " + filled);
+          if (cable.isPowered()) {
+            // ModCyclic.logger.error("cable receive from   "+ side);
+            cable.updateIncomingEnergyFace(side);
+          }
+        }
       }
     }
   }
