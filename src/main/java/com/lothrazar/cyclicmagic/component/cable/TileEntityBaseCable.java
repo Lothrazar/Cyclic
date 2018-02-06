@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.cable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
@@ -19,6 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -26,9 +28,9 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
-  private static final int TRANSFER_FLUID_PER_TICK = 100;
+  private static final int TRANSFER_FLUID_PER_TICK = 500;
   private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
-  private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT;
+  private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
   private String labelText = "";
   private boolean itemTransport = false;
@@ -98,9 +100,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     labelTimer = compound.getInteger("labelt");
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingItems.put(f, compound.getInteger(f.getName() + "_incoming"));
- 
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
- 
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
     }
     if (compound.hasKey("north"))
@@ -127,31 +127,27 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
    */
   private void tickLabelText() {
     this.labelTimer--;
-    if (this.labelTimer <= 0) {
-      this.labelTimer = 0;
-      this.labelText = "";
-      if (this.isItemPipe()) {
-        if (this.getStackInSlot(0).isEmpty() == false) {
-          this.labelText = this.getStackInSlot(0).getDisplayName() + " ";
-        }
-        this.labelText += UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsItem();
-        this.labelTimer = TICKS_TEXT_CACHED;
-      }
-      if (this.isFluidPipe() && this.labelText.isEmpty()) {
-        FluidStack fs = this.getCurrentFluidStack();
-        if (fs != null) {
-          this.labelText = fs.getLocalizedName() + " ";
-        }
-        labelText += UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsFluid();
-        this.labelTimer = TICKS_TEXT_CACHED;
-      }
-      if (this.isEnergyPipe() && this.labelText.isEmpty()) {
-        if (this.cableEnergyStore != null && this.cableEnergyStore.getEnergyStored() > 0) {
-          this.labelText = this.cableEnergyStore.getEnergyStored() + " " +
-              UtilChat.lang("cyclic.fluid.flowing") + " " + this.getIncomingStringsEnergy();
-          this.labelTimer = TICKS_TEXT_CACHED;
-        }
-      }
+    if (this.labelTimer > 0) {
+      return;
+    }
+    this.labelTimer = 0;
+    this.labelText = "";
+    List<String> validLabels = new ArrayList<String>();
+    if (this.isItemPipe() && this.getStackInSlot(0).isEmpty() == false) {
+      validLabels.add(this.getIncomingStringsItem());
+    }
+    if (this.isFluidPipe() && this.getCurrentFluidStack() != null) {
+      FluidStack fs = this.getCurrentFluidStack();
+      validLabels.add(this.getIncomingStringsFluid());
+    }
+    if (this.isEnergyPipe() &&
+        this.cableEnergyStore != null && this.cableEnergyStore.getEnergyStored() > 0) {
+      validLabels.add(this.getIncomingStringsEnergy());
+    }
+    //if its a multi pipe pick a random one
+    if (validLabels.size() > 0) {
+      this.labelText = validLabels.get(MathHelper.getInt(this.world.rand, 0, validLabels.size() - 1));
+      this.labelTimer = TICKS_TEXT_CACHED;
     }
   }
   private String getIncomingStringsFromMap(Map<EnumFacing, Integer> map) {
@@ -163,13 +159,28 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     return in.trim();
   }
   private String getIncomingStringsFluid() {
-    return getIncomingStringsFromMap(this.mapIncomingFluid);
+    String tmpName = this.getCurrentFluidStack().getLocalizedName();
+    String incoming = getIncomingStringsFromMap(this.mapIncomingFluid);
+    if (incoming.isEmpty() == false) {
+      tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
+    }
+    return tmpName;
   }
   private String getIncomingStringsItem() {
-    return getIncomingStringsFromMap(this.mapIncomingItems);
+    String tmpName = this.getStackInSlot(0).getDisplayName();
+    String incoming = getIncomingStringsFromMap(this.mapIncomingItems);
+    if (incoming.isEmpty() == false) {
+      tmpName += " " + UtilChat.lang("cyclic.item.flowing") + incoming;
+    }
+    return tmpName;
   }
   private String getIncomingStringsEnergy() {
-    return getIncomingStringsFromMap(this.mapIncomingEnergy);
+    String tmpName = this.cableEnergyStore.getEnergyStored() + "";
+    String incoming = getIncomingStringsFromMap(this.mapIncomingEnergy);
+    if (incoming.isEmpty() == false) {
+      tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
+    }
+    return tmpName;
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -178,9 +189,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     compound.setInteger("labelt", labelTimer);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
- 
       compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
-     
       compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
     }
     if (cableEnergyStore != null) {
@@ -295,9 +304,6 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               int filled = handlerOutput.receiveEnergy(drain, false);
               //now actually drain that much from here
               handlerHere.extractEnergy(filled, false);
-              // ModCyclic.logger.log("power transfer " + filled + " into target   " +f);
-              //              ModCyclic.logger.log("result handlerOutput" +handlerOutput.getEnergyStored());
-              //              ModCyclic.logger.log("result handlerHere" +handlerHere.getEnergyStored());
               if (tileTarget instanceof TileEntityBaseCable) {
                 //TODO: not so compatible with other fluid systems. itl do i guess
                 TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;

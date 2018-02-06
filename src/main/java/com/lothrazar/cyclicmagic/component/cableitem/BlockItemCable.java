@@ -26,19 +26,6 @@ public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
     return new TileEntityItemCable();
   }
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    // TODO: display text if any
-    boolean success = false;
-    TileEntityItemCable te = (TileEntityItemCable) world.getTileEntity(pos);
-    if (te != null && world.isRemote == false) {
-      String msg = te.getLabelTextOrEmpty();
-      UtilChat.sendStatusMessage(player, msg);
-      success = true;
-    }
-    // otherwise return true if it is a fluid handler to prevent in world placement
-    return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
-  }
-  @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 32),
         "sis",
