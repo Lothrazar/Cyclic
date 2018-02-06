@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.cablefluid;
+package com.lothrazar.cyclicmagic.component.cable.fluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 
 public class TileEntityFluidCable extends TileEntityBaseCable {

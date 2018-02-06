@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.cable;
-import com.lothrazar.cyclicmagic.component.cablebundled.TileEntityCableBundle;
+import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

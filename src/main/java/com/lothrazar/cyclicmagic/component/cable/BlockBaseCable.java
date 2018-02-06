@@ -4,7 +4,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

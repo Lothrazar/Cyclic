@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.cablepower;
+package com.lothrazar.cyclicmagic.component.cable.energy;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;

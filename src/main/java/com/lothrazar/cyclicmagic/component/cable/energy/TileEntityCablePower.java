@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.cablepower;
+package com.lothrazar.cyclicmagic.component.cable.energy;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 
 public class TileEntityCablePower extends TileEntityBaseCable {

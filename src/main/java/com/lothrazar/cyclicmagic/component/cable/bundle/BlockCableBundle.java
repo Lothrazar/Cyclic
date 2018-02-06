@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.cablebundled;
+package com.lothrazar.cyclicmagic.component.cable.bundle;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;

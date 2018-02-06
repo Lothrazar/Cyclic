@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.cablebundled;
+package com.lothrazar.cyclicmagic.component.cable.bundle;
 
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 

@@ -2,10 +2,10 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cable.CableRenderer;
-import com.lothrazar.cyclicmagic.component.cablebundled.TileEntityCableBundle;
-import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
-import com.lothrazar.cyclicmagic.component.cablepower.TileEntityCablePower;
+import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
+import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
+import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy {
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/fluid.png")));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/item.png")));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/bundle.png")));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/power.png")));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/energy.png")));
   }
   @Override
   public void init() {
