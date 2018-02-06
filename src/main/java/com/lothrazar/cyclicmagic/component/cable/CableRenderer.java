@@ -1,5 +1,5 @@
-package com.lothrazar.cyclicmagic.component.cablebundled;
-import com.lothrazar.cyclicmagic.component.cable.ModelCable;
+package com.lothrazar.cyclicmagic.component.cable;
+import com.lothrazar.cyclicmagic.component.cablebundled.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,14 +11,15 @@ import net.minecraft.util.ResourceLocation;
  * TODO: shared base class with fluid
  *
  */
-public class CableBundleRenderer extends TileEntitySpecialRenderer<TileEntityCableBundle> {
+public class CableRenderer extends TileEntitySpecialRenderer<TileEntityBaseCable> {
   ModelCable model;
-  private final ResourceLocation link = new ResourceLocation(Const.MODID, "textures/tile/bundle.png");
-  public CableBundleRenderer() {
+  private  ResourceLocation link ;
+  public CableRenderer(ResourceLocation texture) {
     model = new ModelCable();
+    link = texture;
   }
   @Override
-  public void render(TileEntityCableBundle te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+  public void render(TileEntityBaseCable te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
     if (te == null) {
       return;
     }

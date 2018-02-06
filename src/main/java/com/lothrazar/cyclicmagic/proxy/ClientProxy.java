@@ -1,13 +1,10 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cablebundled.CableBundleRenderer;
+import com.lothrazar.cyclicmagic.component.cable.CableRenderer;
 import com.lothrazar.cyclicmagic.component.cablebundled.TileEntityCableBundle;
-import com.lothrazar.cyclicmagic.component.cablefluid.CableFluidRenderer;
 import com.lothrazar.cyclicmagic.component.cablefluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.cableitem.CableItemRenderer;
 import com.lothrazar.cyclicmagic.component.cableitem.TileEntityItemCable;
-import com.lothrazar.cyclicmagic.component.cablepower.CablePowerRenderer;
 import com.lothrazar.cyclicmagic.component.cablepower.TileEntityCablePower;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
@@ -25,6 +22,7 @@ import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye.FactoryDungeon;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
@@ -59,6 +57,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameType;
@@ -84,13 +83,10 @@ public class ClientProxy extends CommonProxy {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
     // TODO: refactor cable
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableFluidRenderer());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableItemRenderer());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableBundleRenderer());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CablePowerRenderer());
-
-  
-    
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/fluid.png")));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/item.png")));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/bundle.png")));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/power.png")));
   }
   @Override
   public void init() {
