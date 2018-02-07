@@ -45,12 +45,13 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
-    
+ 
     
     GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
     event.getRegistry().register(new CableBlock()
-            .setRegistryName("cable")
-            .setUnlocalizedName(Const.MODID + ".cable")
+            .setRegistryName( new ResourceLocation(Const.MODID, "cable")  )
+          .setUnlocalizedName(Const.MODID + ".cable")
             .setCreativeTab(CreativeTabs.REDSTONE));
+          
   }
 }

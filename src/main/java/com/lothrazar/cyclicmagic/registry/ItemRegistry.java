@@ -73,12 +73,12 @@ public class ItemRegistry {
       }
     }
     
-    
+ 
     
     event.getRegistry().register(new ItemBlock(SimpleCable.CABLE_BLOCK)
-        .setRegistryName("cable"));
+        .setRegistryName(new ResourceLocation(Const.MODID, "cable") ));
     
-    
+ 
     
   }
   @SideOnly(Side.CLIENT)
