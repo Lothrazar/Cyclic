@@ -18,28 +18,23 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @Mod.EventBusSubscriber(modid =  Const.MODID)
 public final class SimpleCable {
 
-    public static final String ID = Const.MODID;
+  
  
 
-    @GameRegistry.ObjectHolder(ID + ":cable")
+    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
     public static final Block CABLE_BLOCK = Blocks.AIR;
 
-    @GameRegistry.ObjectHolder(ID + ":cable")
+    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
     public static final Item CABLE_ITEM = Items.AIR;
 
-    @SubscribeEvent
-    public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
-        GameRegistry.registerTileEntity(CableTile.class, ID + ":cable_tile");
-        event.getRegistry().register(new CableBlock()
-                .setRegistryName("cable")
-                .setUnlocalizedName(ID + ".cable")
-                .setCreativeTab(CreativeTabs.REDSTONE));
-    }
-
-    @SubscribeEvent
-    public static void onItemRegistry(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemBlock(CABLE_BLOCK)
-                .setRegistryName("cable"));
-    }
+//    @SubscribeEvent
+//    public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
+// 
+//    }
+//
+//    @SubscribeEvent
+//    public static void onItemRegistry(RegistryEvent.Register<Item> event) {
+//    
+//    }
 
 }

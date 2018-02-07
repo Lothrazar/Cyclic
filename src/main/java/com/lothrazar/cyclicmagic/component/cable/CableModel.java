@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.cable;
 
 import com.lothrazar.cyclicmagic.SimpleCable;
+import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
@@ -14,12 +15,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(modid = SimpleCable.ID, value = Side.CLIENT)
+@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public final class CableModel {
 
     @SideOnly(Side.CLIENT)
     private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-            new ResourceLocation(SimpleCable.ID, "cable"), "inventory"
+            new ResourceLocation(Const.MODID, "cable"), "inventory"
     );
 
     @SideOnly(Side.CLIENT)
@@ -34,6 +35,7 @@ public final class CableModel {
 
     @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
+   
         ModelLoader.setCustomModelResourceLocation(SimpleCable.CABLE_ITEM, 0, ITEM_MODEL);
         ModelLoader.setCustomStateMapper(SimpleCable.CABLE_BLOCK, STATE_MAPPER);
     }

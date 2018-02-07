@@ -5,15 +5,19 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.cable.CableBlock;
+import com.lothrazar.cyclicmagic.component.cable.CableTile;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
@@ -41,5 +45,12 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+    
+    
+    GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
+    event.getRegistry().register(new CableBlock()
+            .setRegistryName("cable")
+            .setUnlocalizedName(Const.MODID + ".cable")
+            .setCreativeTab(CreativeTabs.REDSTONE));
   }
 }

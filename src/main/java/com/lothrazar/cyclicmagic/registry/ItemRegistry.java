@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.SimpleCable;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
@@ -71,6 +72,14 @@ public class ItemRegistry {
         }
       }
     }
+    
+    
+    
+    event.getRegistry().register(new ItemBlock(SimpleCable.CABLE_BLOCK)
+        .setRegistryName("cable"));
+    
+    
+    
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
