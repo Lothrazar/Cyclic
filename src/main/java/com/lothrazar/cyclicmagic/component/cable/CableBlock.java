@@ -44,7 +44,7 @@ public  class CableBlock extends Block {
     /**
      * Serialized property to determine creation of a tile entity for handling adjacent inventories
      */
-    public static final PropertyBool INTERFACE = PropertyBool.create("interface");
+  //  public static final PropertyBool INTERFACE = PropertyBool.create("interface");
 
     /**
      * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
@@ -74,7 +74,7 @@ public  class CableBlock extends Block {
 
     public CableBlock() {
         super(Material.CLOTH);
-        setDefaultState(getDefaultState().withProperty(INTERFACE, true));
+        setDefaultState(getDefaultState());//.withProperty(INTERFACE, true));
         setSoundType(SoundType.CLOTH);
         setHardness(0.5F);
         setResistance(2.5F);
@@ -89,7 +89,7 @@ public  class CableBlock extends Block {
     @Deprecated
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(INTERFACE, true);
+        return getDefaultState();//.withProperty(INTERFACE, true);
     }
 
     @Override
@@ -112,7 +112,7 @@ public  class CableBlock extends Block {
               //  }
             } else if (hasInventoryAt(tile, side)) {
                 state = state.withProperty(property, JointType.INVENTORY);
-                state = state.withProperty(INTERFACE, true);
+                //state = state.withProperty(INTERFACE, true);
             }
             pos.move(side.getOpposite());
         }
@@ -209,7 +209,7 @@ public  class CableBlock extends Block {
     @Override
     protected BlockStateContainer createBlockState() {
         BlockStateContainer.Builder builder = new BlockStateContainer.Builder(this);
-        builder.add(INTERFACE);
+       // builder.add(INTERFACE);
         for (PropertyEnum<JointType> property : PROPERTIES.values()) {
             builder.add(property);
         }
@@ -218,7 +218,7 @@ public  class CableBlock extends Block {
 
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return state.getValue(INTERFACE);
+        return true;// state.getValue(INTERFACE);
     }
 
     @Override
