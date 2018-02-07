@@ -74,7 +74,7 @@ public  class CableBlock extends Block {
 
     public CableBlock() {
         super(Material.CLOTH);
-        setDefaultState(getDefaultState().withProperty(INTERFACE, false));
+        setDefaultState(getDefaultState().withProperty(INTERFACE, true));
         setSoundType(SoundType.CLOTH);
         setHardness(0.5F);
         setResistance(2.5F);
@@ -83,18 +83,18 @@ public  class CableBlock extends Block {
 
     private boolean hasInventoryAt(TileEntity tile, EnumFacing side) {
         Capability<IItemHandler> capability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-        return tile.hasCapability(capability, side.getOpposite());
+        return tile != null && tile.hasCapability(capability, side.getOpposite());
     }
 
     @Deprecated
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(INTERFACE, meta > 0);
+        return getDefaultState().withProperty(INTERFACE, true);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(INTERFACE) ? 1 : 0;
+        return 0;// state.getValue(INTERFACE) ? 1 : 0;
     }
 
     @Override
@@ -106,10 +106,10 @@ public  class CableBlock extends Block {
             PropertyEnum<JointType> property = PROPERTIES.get(side);
             state = state.withProperty(property, JointType.NONE);
             TileEntity tile = world.getTileEntity(pos);
-            if (tile == null) {
+          //  if (tile == null) {
                 if (world.getBlockState(pos).getBlock() == this) {
                     state = state.withProperty(property, JointType.CABLE);
-                }
+              //  }
             } else if (hasInventoryAt(tile, side)) {
                 state = state.withProperty(property, JointType.INVENTORY);
                 state = state.withProperty(INTERFACE, true);
