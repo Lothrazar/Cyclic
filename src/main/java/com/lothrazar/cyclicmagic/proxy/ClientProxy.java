@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.SimpleCable;
+import com.lothrazar.cyclicmagic.component.cable.CableBlock;
 import com.lothrazar.cyclicmagic.component.cable.CableRenderer;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
@@ -43,6 +45,8 @@ import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -51,8 +55,14 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -62,14 +72,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+//@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
@@ -78,6 +94,8 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
+  
+
   @Override
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
