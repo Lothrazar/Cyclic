@@ -14,7 +14,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-//@Mod(modid = SimpleCable.ID, name = SimpleCable.NAME, version = SimpleCable.VERSION)
+
+/**
+ * 
+ * @author insomniaKitten
+ *
+ */
 @Mod.EventBusSubscriber(modid =  Const.MODID)
 public final class SimpleCable {
 

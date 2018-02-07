@@ -38,14 +38,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * 
+ * @author insomniaKitten
+ *
+ */
 public  class CableBlock extends Block {
 
 
-    /**
-     * Serialized property to determine creation of a tile entity for handling adjacent inventories
-     */
-  //  public static final PropertyBool INTERFACE = PropertyBool.create("interface");
-
+ 
     /**
      * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
      */
@@ -104,14 +105,14 @@ public  class CableBlock extends Block {
         for (EnumFacing side : EnumFacing.VALUES) {
             pos.move(side);
             PropertyEnum<JointType> property = PROPERTIES.get(side);
-            state = state.withProperty(property, JointType.NONE);
+            state = state.withProperty(property, JointType.NULL);
             TileEntity tile = world.getTileEntity(pos);
           //  if (tile == null) {
                 if (world.getBlockState(pos).getBlock() == this) {
-                    state = state.withProperty(property, JointType.CABLE);
+                    state = state.withProperty(property, JointType.CONNECT);
               //  }
             } else if (hasInventoryAt(tile, side)) {
-                state = state.withProperty(property, JointType.INVENTORY);
+                state = state.withProperty(property, JointType.STORAGE);
                 //state = state.withProperty(INTERFACE, true);
             }
             pos.move(side.getOpposite());
@@ -139,7 +140,7 @@ public  class CableBlock extends Block {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_NONE);
         if (!isActualState) state = state.getActualState(world, pos);
         for (EnumFacing side : EnumFacing.VALUES) {
-            if (state.getValue(PROPERTIES.get(side)) != JointType.NONE) {
+            if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_SIDES.get(side));
             }
         }
@@ -152,7 +153,7 @@ public  class CableBlock extends Block {
         AxisAlignedBB box = AABB_NONE.offset(pos);
         state = state.getActualState(world, pos);
         for (EnumFacing side : EnumFacing.VALUES) {
-            if (state.getValue(PROPERTIES.get(side)) != JointType.NONE) {
+            if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
                 box = box.union(AABB_SIDES.get(side).offset(pos));
             }
         }
@@ -171,7 +172,7 @@ public  class CableBlock extends Block {
         List<AxisAlignedBB> boxes = Lists.newArrayList(AABB_NONE);
         state = state.getActualState(world, pos);
         for (EnumFacing side : EnumFacing.VALUES) {
-            if (state.getValue(PROPERTIES.get(side)) != JointType.NONE) {
+            if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
                 boxes.add(AABB_SIDES.get(side));
             }
         }
@@ -209,7 +210,7 @@ public  class CableBlock extends Block {
     @Override
     protected BlockStateContainer createBlockState() {
         BlockStateContainer.Builder builder = new BlockStateContainer.Builder(this);
-       // builder.add(INTERFACE);
+ 
         for (PropertyEnum<JointType> property : PROPERTIES.values()) {
             builder.add(property);
         }
@@ -218,7 +219,7 @@ public  class CableBlock extends Block {
 
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return true;// state.getValue(INTERFACE);
+        return true; 
     }
 
     @Override
@@ -228,12 +229,16 @@ public  class CableBlock extends Block {
     }
 
     public enum JointType implements IStringSerializable {
-        NONE, CABLE, INVENTORY;
+        NULL("none"), CONNECT("cable"), STORAGE("inventory");
 
-        @Override
-        public String getName() {
-            return name().toLowerCase(Locale.ROOT);
-        }
+      String name;
+      private JointType(String name) {
+        this.name = name;
+      }
+      @Override
+      public String getName() {
+        return name;
+      }
     }
 
 }
