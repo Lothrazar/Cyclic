@@ -11,7 +11,10 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -81,9 +84,30 @@ public class ItemRegistry {
  
     
   }
+
+  @SideOnly(Side.CLIENT)
+  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
+          new ResourceLocation(Const.MODID, "cable"), "inventory"
+  );
+
+  @SideOnly(Side.CLIENT)
+  private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
+      @Override
+      protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+          return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+      }
+  };
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
+    
+    //insomniaKitten
+
+    ModelLoader.setCustomModelResourceLocation(SimpleCable.CABLE_ITEM, 0, ITEM_MODEL);
+    ModelLoader.setCustomStateMapper(SimpleCable.CABLE_BLOCK, STATE_MAPPER);
+    
+    
+    
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java

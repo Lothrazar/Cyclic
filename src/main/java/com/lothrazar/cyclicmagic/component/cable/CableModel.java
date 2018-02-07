@@ -17,27 +17,5 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public final class CableModel {
-
-    @SideOnly(Side.CLIENT)
-    private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-            new ResourceLocation(Const.MODID, "cable"), "inventory"
-    );
-
-    @SideOnly(Side.CLIENT)
-    private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
-        @Override
-        protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
-        }
-    };
-
-    private CableModel() {}
-
-    @SubscribeEvent
-    public static void onModelRegistry(ModelRegistryEvent event) {
-   
-        ModelLoader.setCustomModelResourceLocation(SimpleCable.CABLE_ITEM, 0, ITEM_MODEL);
-        ModelLoader.setCustomStateMapper(SimpleCable.CABLE_BLOCK, STATE_MAPPER);
-    }
-
+ 
 }
