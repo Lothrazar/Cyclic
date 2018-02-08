@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.SimpleCable;
+ 
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
-import com.lothrazar.cyclicmagic.component.cable.CableTileFluid;
-import com.lothrazar.cyclicmagic.component.cable.CableTileItem;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary; 
 import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
@@ -166,9 +164,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
       GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       //pipes
-      BlockFluidCable k = new BlockFluidCable();
-      BlockRegistry.registerBlock(k, "fluid_pipe", null);
-      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+//      BlockFluidCable k = new BlockFluidCable();
+//      BlockRegistry.registerBlock(k, "fluid_pipe", null);
+//      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
     }
     if (fluidPlacer) {
       //fluid placer
@@ -197,7 +195,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       //and matching pump
       BlockEnergyPump energy_pump = new BlockEnergyPump();
       BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
-      GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "TileEntityFluidPump_te");
+      GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
     }
     if (bundledCable) {
 //      BlockCableBundle pipe_bundle = new BlockCableBundle();
@@ -208,8 +206,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 
 //    GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
 //    BlockRegistry.registerBlock(new CableBlock(), "cable", null);
-    GameRegistry.registerTileEntity(CableTileItem.class, "cable_te");
-    GameRegistry.registerTileEntity(CableTileFluid.class, "cable_fluid_te");
+    GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+    GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
 //  
     
   }

@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.SimpleCable;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
@@ -75,50 +74,35 @@ public class ItemRegistry {
         }
       }
     }
-    
- 
-//    
-    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES+"cable"))
-        .setRegistryName(new ResourceLocation(Const.MODID, "cable") ));
-    
-
-//  
-  event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES+"cable_fluid"))
-      .setRegistryName(new ResourceLocation(Const.MODID, "cable_fluid") ));
-    
+    //    
+    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "item_pipe"))
+        .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe")));
+    //  
+    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "fluid_pipe"))
+        .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe")));
   }
-
   @SideOnly(Side.CLIENT)
   private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-          new ResourceLocation(Const.MODID, "cable"), "inventory"
-  );
-
+      new ResourceLocation(Const.MODID, "cable"), "inventory");
   @SideOnly(Side.CLIENT)
   private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
-      @Override
-      protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-          return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
-      }
+    @Override
+    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+      return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+    }
   };
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
-    
     //insomniaKitten
-    
-    Block  CABLE_BLOCK = Block.getBlockFromName(Const.MODRES+"cable");
-    Item  CABLE_ITEM=Item.getItemFromBlock(CABLE_BLOCK); 
-
+    Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
+    Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
     ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, ITEM_MODEL);
     ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
-    
-
-    Block  FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES+"cable_fluid");
-    Item  FCABLE_ITEM=Item.getItemFromBlock(CABLE_BLOCK); 
-
+    Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
+    Item FCABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
     ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, ITEM_MODEL);
     ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-    
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java

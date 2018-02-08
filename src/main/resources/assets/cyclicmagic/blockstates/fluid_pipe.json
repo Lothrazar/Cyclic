@@ -1,7 +1,53 @@
 {
-    "variants" : {
-        "normal" : {
-            "model" : "cyclicmagic:fluid_pipe"
+    "__comment": "Copyright © InsomniaKitten 2017",
+    "multipart": [
+        {
+            "when": { "down": "none" },
+            "apply": { "model": "cyclicmagic:cable_none", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "down": "cable" }, { "down": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "none" },
+            "apply": { "model": "cyclicmagic:cable_none", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "up": "cable" }, { "up": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "none" },
+            "apply": { "model": "cyclicmagic:cable_none" }
+        },
+        {
+            "when": { "OR": [ { "north": "cable" }, { "north": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side" }
+        },
+        {
+            "when": { "south": "none" },
+            "apply": { "model": "cyclicmagic:cable_none", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "south": "cable" }, { "south": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "west": "none" },
+            "apply": { "model": "cyclicmagic:cable_none", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "west": "cable" }, { "west": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "east": "none" },
+            "apply": { "model": "cyclicmagic:cable_none", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side", "y": 90, "uvlock": true }
         }
-    }
+    ]
 }
