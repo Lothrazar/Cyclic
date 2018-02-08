@@ -4,8 +4,9 @@ import com.lothrazar.cyclicmagic.SimpleCable;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
-import com.lothrazar.cyclicmagic.component.cable.CableBlock;
-import com.lothrazar.cyclicmagic.component.cable.CableTile;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.CableTileFluid;
+import com.lothrazar.cyclicmagic.component.cable.CableTileItem;
 import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
@@ -207,7 +208,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 
 //    GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
 //    BlockRegistry.registerBlock(new CableBlock(), "cable", null);
-    GameRegistry.registerTileEntity(CableTile.class, "cable_te");
+    GameRegistry.registerTileEntity(CableTileItem.class, "cable_te");
+    GameRegistry.registerTileEntity(CableTileFluid.class, "cable_fluid_te");
 //  
     
   }

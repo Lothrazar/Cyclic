@@ -5,8 +5,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cable.CableBlock;
-import com.lothrazar.cyclicmagic.component.cable.CableTile;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockFluid;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockItem;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.CableTileItem;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -46,11 +48,16 @@ public class BlockRegistry {
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
  
+    //TOD:O fix this
     
-    event.getRegistry().register(new CableBlock()
+    event.getRegistry().register(new CableBlockItem()
             .setRegistryName( new ResourceLocation(Const.MODID, "cable")  )
-          .setUnlocalizedName(Const.MODID + ".cable")
-//            .setCreativeTab(CreativeTabs.REDSTONE)
+          .setUnlocalizedName(Const.MODID + ".cable") 
+          )    ;
+    
+    event.getRegistry().register(new CableBlockFluid()
+            .setRegistryName( new ResourceLocation(Const.MODID, "cable_fluid")  )
+          .setUnlocalizedName(Const.MODID + ".cable_fluid") 
           )    ;
           
   }

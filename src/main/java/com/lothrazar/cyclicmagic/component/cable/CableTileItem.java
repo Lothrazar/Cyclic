@@ -8,8 +8,8 @@ import net.minecraft.util.ITickable;
  * @author insomniaKitten
  *
  */
-public final class CableTile extends TileEntityBaseCable {
-  public CableTile() {
+public final class CableTileItem extends TileEntityBaseCable {
+  public CableTileItem() {
     super(1, 0, 0);
     this.setItemTransport();
     this.setSlotsForBoth();

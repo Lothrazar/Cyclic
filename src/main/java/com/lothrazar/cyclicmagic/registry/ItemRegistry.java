@@ -81,7 +81,10 @@ public class ItemRegistry {
     event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES+"cable"))
         .setRegistryName(new ResourceLocation(Const.MODID, "cable") ));
     
- 
+
+//  
+  event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES+"cable_fluid"))
+      .setRegistryName(new ResourceLocation(Const.MODID, "cable_fluid") ));
     
   }
 
@@ -109,7 +112,12 @@ public class ItemRegistry {
     ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, ITEM_MODEL);
     ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
     
-    
+
+    Block  FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES+"cable_fluid");
+    Item  FCABLE_ITEM=Item.getItemFromBlock(CABLE_BLOCK); 
+
+    ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, ITEM_MODEL);
+    ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
     
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0

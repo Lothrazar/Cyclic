@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.SimpleCable;
-import com.lothrazar.cyclicmagic.component.cable.CableBlock;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
 //import com.lothrazar.cyclicmagic.component.cable.CableRenderer;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;

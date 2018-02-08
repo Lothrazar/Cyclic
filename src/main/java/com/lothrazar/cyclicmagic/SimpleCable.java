@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
-import com.lothrazar.cyclicmagic.component.cable.CableBlock;
-import com.lothrazar.cyclicmagic.component.cable.CableTile;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.CableTileItem;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;

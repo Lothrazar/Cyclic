@@ -41,7 +41,7 @@ import java.util.Map;
  * @author insomniaKitten
  *
  */
-public class CableBlock extends Block {
+public class CableBlockPrimary extends Block {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -64,7 +64,7 @@ public class CableBlock extends Block {
           .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, 0.375D, 0.375D, 0.375D, 0.625D, 0.625D))
           .put(EnumFacing.EAST, new AxisAlignedBB(0.625D, 0.375D, 0.375D, 1.0D, 0.625D, 0.625D))
           .build());
-  public CableBlock() {
+  public CableBlockPrimary() {
     super(Material.CLOTH);
     setDefaultState(getDefaultState());
     setSoundType(SoundType.CLOTH);
@@ -197,9 +197,8 @@ public class CableBlock extends Block {
     return true;
   }
   @Override
-  @Nullable
   public TileEntity createTileEntity(World world, IBlockState state) {
-    return hasTileEntity(state) ? new CableTile() : null;
+    return null;// new CableTileItem();
   }
   public enum JointType implements IStringSerializable {
     NULL("none"), CONNECT("cable"), STORAGE("inventory");
