@@ -83,6 +83,9 @@ public class ItemRegistry {
     //  
     event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "energy_pipe"))
         .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe")));
+    //  
+    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "bundled_pipe"))
+        .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe")));
     
     
     
@@ -118,6 +121,12 @@ public class ItemRegistry {
     Item ECABLE_ITEM = Item.getItemFromBlock(ECABLE_BLOCK);
     ModelLoader.setCustomModelResourceLocation(ECABLE_ITEM, 0,  new ModelResourceLocation(
         new ResourceLocation(Const.MODID, "energy_pipe"), "inventory"));
+    ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+    //
+    Block BCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "bundled_pipe");
+    Item BCABLE_ITEM = Item.getItemFromBlock(BCABLE_BLOCK);
+    ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0,  new ModelResourceLocation(
+        new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
     ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0

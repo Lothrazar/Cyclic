@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.component.cable.fluid.CableBlockFluid;
 import com.lothrazar.cyclicmagic.component.cable.item.CableBlockItem;
@@ -57,5 +58,8 @@ public class BlockRegistry {
     event.getRegistry().register(new BlockPowerCable()
         .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
         .setUnlocalizedName("energy_pipe"));
+    event.getRegistry().register(new BlockCableBundle()
+        .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe"))
+        .setUnlocalizedName("bundled_pipe"));
   }
 }
