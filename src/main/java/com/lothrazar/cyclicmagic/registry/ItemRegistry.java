@@ -81,9 +81,9 @@ public class ItemRegistry {
     event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "fluid_pipe"))
         .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe")));
   }
-  @SideOnly(Side.CLIENT)
-  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-      new ResourceLocation(Const.MODID, "cable"), "inventory");
+//  @SideOnly(Side.CLIENT)
+//  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
+//      new ResourceLocation(Const.MODID, "cable"), "inventory");
   @SideOnly(Side.CLIENT)
   private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
     @Override
@@ -97,11 +97,14 @@ public class ItemRegistry {
     //insomniaKitten
     Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
     Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, ITEM_MODEL);
+    ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0,  new ModelResourceLocation(
+        new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
     ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
+    //TODO: CABLE REGISTRY OR SOMETHING
     Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
-    Item FCABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, ITEM_MODEL);
+    Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
+    ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0,  new ModelResourceLocation(
+        new ResourceLocation(Const.MODID, "fluid_pipe"), "inventory"));
     ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
