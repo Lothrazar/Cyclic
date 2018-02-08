@@ -168,30 +168,30 @@ public abstract class BlockBaseCable extends BlockContainer {
     float z1 = 0.3125F;
     float z2 = 0.6875F;
     addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    if (tile.north() != EnumConnectType.NULL) {
-      y1 = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
-    if (tile.south() != EnumConnectType.NULL) {
-      y2 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
-    if (tile.west() != EnumConnectType.NULL) {
-      x1 = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
-    if (tile.east() != EnumConnectType.NULL) {
-      x2 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
-    if (tile.down() != EnumConnectType.NULL) {
-      z1 = 0f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
-    if (tile.up() != EnumConnectType.NULL) {
-      z2 = 1f;
-      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
-    }
+//    if (tile.north() != EnumConnectType.NULL) {
+//      y1 = 0f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
+//    if (tile.south() != EnumConnectType.NULL) {
+//      y2 = 1f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
+//    if (tile.west() != EnumConnectType.NULL) {
+//      x1 = 0f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
+//    if (tile.east() != EnumConnectType.NULL) {
+//      x2 = 1f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
+//    if (tile.down() != EnumConnectType.NULL) {
+//      z1 = 0f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
+//    if (tile.up() != EnumConnectType.NULL) {
+//      z2 = 1f;
+//      addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(x1, z1, y1, x2, z2, y2));
+//    }
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -208,24 +208,24 @@ public abstract class BlockBaseCable extends BlockContainer {
     float z2 = 0.63F;
     if (tile == null)
       return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
-    if (tile.north() != EnumConnectType.NULL) {
-      y1 = 0f;
-    }
-    if (tile.south() != EnumConnectType.NULL) {
-      y2 = 1f;
-    }
-    if (tile.west() != EnumConnectType.NULL) {
-      x1 = 0f;
-    }
-    if (tile.east() != EnumConnectType.NULL) {
-      x2 = 1f;
-    }
-    if (tile.down() != EnumConnectType.NULL) {
-      z1 = 0f;
-    }
-    if (tile.up() != EnumConnectType.NULL) {
-      z2 = 1f;
-    }
+//    if (tile.north() != EnumConnectType.NULL) {
+//      y1 = 0f;
+//    }
+//    if (tile.south() != EnumConnectType.NULL) {
+//      y2 = 1f;
+//    }
+//    if (tile.west() != EnumConnectType.NULL) {
+//      x1 = 0f;
+//    }
+//    if (tile.east() != EnumConnectType.NULL) {
+//      x2 = 1f;
+//    }
+//    if (tile.down() != EnumConnectType.NULL) {
+//      z1 = 0f;
+//    }
+//    if (tile.up() != EnumConnectType.NULL) {
+//      z2 = 1f;
+//    }
     return new AxisAlignedBB(x1, z1, y1, x2, z2, y2);
   }
   public IBlockState getNewState(IBlockAccess world, BlockPos pos) {

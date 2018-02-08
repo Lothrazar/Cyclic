@@ -181,27 +181,27 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(fluid_xfer, "item_pump", null);
       GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //pipes
-      BlockItemCable k = new BlockItemCable();
-      BlockRegistry.registerBlock(k, "item_pipe", null);
-      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+//      BlockItemCable k = new BlockItemCable();
+//      BlockRegistry.registerBlock(k, "item_pipe", null);
+//      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
       //sort
       BlockItemCableSort item_pipe_sort = new BlockItemCableSort();
       BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
     }
     if (enablePowerCables) {
-      BlockPowerCable power_pipe = new BlockPowerCable();
-      BlockRegistry.registerBlock(power_pipe, "power_pipe", null);
-      GameRegistry.registerTileEntity(TileEntityCablePower.class, "power_pipe_te");
+//      BlockPowerCable power_pipe = new BlockPowerCable();
+//      BlockRegistry.registerBlock(power_pipe, "power_pipe", null);
+//      GameRegistry.registerTileEntity(TileEntityCablePower.class, "power_pipe_te");
       //and matching pump
       BlockEnergyPump energy_pump = new BlockEnergyPump();
       BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
       GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "TileEntityFluidPump_te");
     }
     if (bundledCable) {
-      BlockCableBundle pipe_bundle = new BlockCableBundle();
-      BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
-      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
+//      BlockCableBundle pipe_bundle = new BlockCableBundle();
+//      BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
+//      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
     }
     
      

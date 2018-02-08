@@ -102,9 +102,12 @@ public class ItemRegistry {
   public static void registerModels(ModelRegistryEvent event) {
     
     //insomniaKitten
+    
+    Block  CABLE_BLOCK = Block.getBlockFromName(Const.MODRES+"cable");
+    Item  CABLE_ITEM=Item.getItemFromBlock(CABLE_BLOCK); 
 
-    ModelLoader.setCustomModelResourceLocation(SimpleCable.CABLE_ITEM, 0, ITEM_MODEL);
-    ModelLoader.setCustomStateMapper(SimpleCable.CABLE_BLOCK, STATE_MAPPER);
+    ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, ITEM_MODEL);
+    ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
     
     
     
