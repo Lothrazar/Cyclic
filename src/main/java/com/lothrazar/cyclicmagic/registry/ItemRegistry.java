@@ -77,8 +77,8 @@ public class ItemRegistry {
     }
     
  
-    
-    event.getRegistry().register(new ItemBlock(SimpleCable.CABLE_BLOCK)
+//    
+    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES+"cable"))
         .setRegistryName(new ResourceLocation(Const.MODID, "cable") ));
     
  

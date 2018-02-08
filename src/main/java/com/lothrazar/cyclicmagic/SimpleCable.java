@@ -26,11 +26,11 @@ public final class SimpleCable {
   
  
 
-    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
-    public static final Block CABLE_BLOCK = Blocks.AIR;
-
-    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
-    public static final Item CABLE_ITEM = Items.AIR;
+//    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
+//    public static final Block CABLE_BLOCK = Blocks.AIR;
+//
+//    @GameRegistry.ObjectHolder(Const.MODID + ":cable")
+//    public static final Item CABLE_ITEM = Items.AIR;
 
 //    @SubscribeEvent
 //    public static void onBlockRegistry(RegistryEvent.Register<Block> event) {

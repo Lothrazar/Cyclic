@@ -204,9 +204,10 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 //      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
     }
     
-     
-//    BlockRegistry.registerBlock(SimpleCable.CABLE_BLOCK, "cable", null);
-//    GameRegistry.registerTileEntity(CableTile.class, "cable_te");
+
+//    GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
+//    BlockRegistry.registerBlock(new CableBlock(), "cable", null);
+    GameRegistry.registerTileEntity(CableTile.class, "cable_te");
 //  
     
   }
