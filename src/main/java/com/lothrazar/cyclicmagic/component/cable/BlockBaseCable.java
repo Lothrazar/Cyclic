@@ -34,17 +34,17 @@ public abstract class BlockBaseCable extends BlockContainer {
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean powerTransport = false;
-  public static enum EnumConnectType implements IStringSerializable {
-    CONNECT("connect"), STORAGE("storage"), NULL("null");
-    String name;
-    private EnumConnectType(String name) {
-      this.name = name;
-    }
-    @Override
-    public String getName() {
-      return name;
-    }
-  }
+//  public static enum EnumConnectType implements IStringSerializable {
+//    CONNECT("connect"), STORAGE("storage"), NULL("null");
+//    String name;
+//    private EnumConnectType(String name) {
+//      this.name = name;
+//    }
+//    @Override
+//    public String getName() {
+//      return name;
+//    }
+//  }
   protected BlockBaseCable(Material materialIn) {
     super(materialIn);
     this.setHardness(.5F);
@@ -77,43 +77,43 @@ public abstract class BlockBaseCable extends BlockContainer {
     }
     super.breakBlock(worldIn, pos, state);
   }
-  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
-    BlockPos offset = pos.offset(side);
-    //    Block block = world.getBlockState(offset).getBlock();
-    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
-    TileEntityBaseCable tileCable = null;
-    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
-      tileCable = (TileEntityBaseCable) tileTarget;
-    }
-    if (this.powerTransport) {
-      if (tileCable != null && tileCable.isEnergyPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      if (tileTarget != null &&
-          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    if (this.itemTransport) {
-      if (tileCable != null && tileCable.isItemPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      if (tileTarget != null &&
-          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    if (this.fluidTransport) {
-      if (tileCable != null && tileCable.isFluidPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      // getFluidHandler uses fluid capability and other things
-      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    return EnumConnectType.NULL;
-  }
+//  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
+//    BlockPos offset = pos.offset(side);
+//    //    Block block = world.getBlockState(offset).getBlock();
+//    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+//    TileEntityBaseCable tileCable = null;
+//    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
+//      tileCable = (TileEntityBaseCable) tileTarget;
+//    }
+//    if (this.powerTransport) {
+//      if (tileCable != null && tileCable.isEnergyPipe()) {
+//        return EnumConnectType.CONNECT;
+//      }
+//      if (tileTarget != null &&
+//          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+//        return EnumConnectType.STORAGE;
+//      }
+//    }
+//    if (this.itemTransport) {
+//      if (tileCable != null && tileCable.isItemPipe()) {
+//        return EnumConnectType.CONNECT;
+//      }
+//      if (tileTarget != null &&
+//          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+//        return EnumConnectType.STORAGE;
+//      }
+//    }
+//    if (this.fluidTransport) {
+//      if (tileCable != null && tileCable.isFluidPipe()) {
+//        return EnumConnectType.CONNECT;
+//      }
+//      // getFluidHandler uses fluid capability and other things
+//      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
+//        return EnumConnectType.STORAGE;
+//      }
+//    }
+//    return EnumConnectType.NULL;
+//  }
   @Override
   public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return false;
@@ -232,13 +232,13 @@ public abstract class BlockBaseCable extends BlockContainer {
     if (world.getTileEntity(pos) instanceof TileEntityBaseCable == false) {
       return world.getBlockState(pos);
     }
-    TileEntityBaseCable tile = (TileEntityBaseCable) world.getTileEntity(pos);
-    Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
-    //detect and save connections on each side
-    for (EnumFacing f : EnumFacing.values()) {
-      newMap.put(f, this.getConnectTypeForPos(world, pos, f));
-    }
-    tile.setConnects(newMap);
+//    TileEntityBaseCable tile = (TileEntityBaseCable) world.getTileEntity(pos);
+//    Map<EnumFacing, EnumConnectType> newMap = Maps.newHashMap();
+//    //detect and save connections on each side
+//    for (EnumFacing f : EnumFacing.values()) {
+//      newMap.put(f, this.getConnectTypeForPos(world, pos, f));
+//    }
+//    tile.setConnects(newMap);
     return world.getBlockState(pos);
   }
   @SuppressWarnings("deprecation")

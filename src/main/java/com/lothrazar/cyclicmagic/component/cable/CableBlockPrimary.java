@@ -25,6 +25,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,14 +47,14 @@ public class CableBlockPrimary extends Block {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
-  public static final Map<EnumFacing, PropertyEnum<JointType>> PROPERTIES = Maps.newEnumMap(
-      new ImmutableMap.Builder<EnumFacing, PropertyEnum<JointType>>()
-          .put(EnumFacing.DOWN, PropertyEnum.create("down", JointType.class))
-          .put(EnumFacing.UP, PropertyEnum.create("up", JointType.class))
-          .put(EnumFacing.NORTH, PropertyEnum.create("north", JointType.class))
-          .put(EnumFacing.SOUTH, PropertyEnum.create("south", JointType.class))
-          .put(EnumFacing.WEST, PropertyEnum.create("west", JointType.class))
-          .put(EnumFacing.EAST, PropertyEnum.create("east", JointType.class))
+  public static final Map<EnumFacing, PropertyEnum<EnumConnectType>> PROPERTIES = Maps.newEnumMap(
+      new ImmutableMap.Builder<EnumFacing, PropertyEnum<EnumConnectType>>()
+          .put(EnumFacing.DOWN, PropertyEnum.create("down", EnumConnectType.class))
+          .put(EnumFacing.UP, PropertyEnum.create("up", EnumConnectType.class))
+          .put(EnumFacing.NORTH, PropertyEnum.create("north", EnumConnectType.class))
+          .put(EnumFacing.SOUTH, PropertyEnum.create("south", EnumConnectType.class))
+          .put(EnumFacing.WEST, PropertyEnum.create("west", EnumConnectType.class))
+          .put(EnumFacing.EAST, PropertyEnum.create("east", EnumConnectType.class))
           .build());
   public static final AxisAlignedBB AABB_NONE = new AxisAlignedBB(0.375D, 0.375D, 0.375D, 0.625D, 0.625D, 0.625D);
   public static final Map<EnumFacing, AxisAlignedBB> AABB_SIDES = Maps.newEnumMap(
@@ -72,10 +74,6 @@ public class CableBlockPrimary extends Block {
     setResistance(2.5F);
     setLightOpacity(0);
   }
-  private boolean hasInventoryAt(TileEntity tile, EnumFacing side) {
-    Capability<IItemHandler> capability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-    return tile != null && tile.hasCapability(capability, side.getOpposite());
-  }
   @Deprecated
   @Override
   public IBlockState getStateFromMeta(int meta) {
@@ -91,19 +89,58 @@ public class CableBlockPrimary extends Block {
     BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(origin);
     for (EnumFacing side : EnumFacing.VALUES) {
       pos.move(side);
-      PropertyEnum<JointType> property = PROPERTIES.get(side);
-      state = state.withProperty(property, JointType.NULL);
-      TileEntity tile = world.getTileEntity(pos);
-      if (world.getBlockState(pos).getBlock() == this) {
-        state = state.withProperty(property, JointType.CONNECT);
+      PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
+      state = state.withProperty(property, EnumConnectType.NULL);
+      TileEntity tileTarget = world.getTileEntity(pos);
+      TileEntityBaseCable tileCable = null;
+      if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
+        tileCable = (TileEntityBaseCable) tileTarget;
       }
-      else if (hasInventoryAt(tile, side)) {
-        state = state.withProperty(property, JointType.STORAGE);
+      if (this.powerTransport) {
+        if (tileCable != null && tileCable.isEnergyPipe()) {
+          state = state.withProperty(property, EnumConnectType.CONNECT);
+        }
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+          state = state.withProperty(property, EnumConnectType.STORAGE);
+        }
       }
+      if (this.itemTransport) {
+        if (tileCable != null && tileCable.isItemPipe()) {
+          state = state.withProperty(property, EnumConnectType.CONNECT);
+        }
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+          state = state.withProperty(property, EnumConnectType.STORAGE);
+        }
+      }
+      if (this.fluidTransport) {
+        if (tileCable != null && tileCable.isFluidPipe()) {
+          state = state.withProperty(property, EnumConnectType.CONNECT);
+        }
+        // getFluidHandler uses fluid capability and other things
+        if (world instanceof World && FluidUtil.getFluidHandler((World) world, pos, side.getOpposite()) != null) {
+          state = state.withProperty(property, EnumConnectType.STORAGE);
+        }
+      }
+      //    
+      //      
+      //      if (world.getBlockState(pos).getBlock() == this) {
+      //        state = state.withProperty(property, EnumConnectType.CONNECT);
+      //      }
+      //      else if (hasInventoryAt(tile, side)) {
+      //        state = state.withProperty(property, EnumConnectType.STORAGE);
+      //      }
+      //      
+      //      
       pos.move(side.getOpposite());
     }
     return super.getActualState(state, world, origin);
   }
+  //  private boolean hasInventoryAt(TileEntity tile, EnumFacing side) {
+  //    Capability<IItemHandler> capability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+  //    return tile != null && tile.hasCapability(capability, side.getOpposite());
+  //  }
   @Override
   @Deprecated
   public boolean isFullCube(IBlockState state) {
@@ -122,7 +159,7 @@ public class CableBlockPrimary extends Block {
     addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_NONE);
     if (!isActualState) state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
+      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NULL) {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_SIDES.get(side));
       }
     }
@@ -134,7 +171,7 @@ public class CableBlockPrimary extends Block {
     AxisAlignedBB box = AABB_NONE.offset(pos);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
+      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NULL) {
         box = box.union(AABB_SIDES.get(side).offset(pos));
       }
     }
@@ -151,7 +188,7 @@ public class CableBlockPrimary extends Block {
     List<AxisAlignedBB> boxes = Lists.newArrayList(AABB_NONE);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != JointType.NULL) {
+      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NULL) {
         boxes.add(AABB_SIDES.get(side));
       }
     }
@@ -187,7 +224,7 @@ public class CableBlockPrimary extends Block {
   @Override
   protected BlockStateContainer createBlockState() {
     BlockStateContainer.Builder builder = new BlockStateContainer.Builder(this);
-    for (PropertyEnum<JointType> property : PROPERTIES.values()) {
+    for (PropertyEnum<EnumConnectType> property : PROPERTIES.values()) {
       builder.add(property);
     }
     return builder.build();
@@ -200,15 +237,64 @@ public class CableBlockPrimary extends Block {
   public TileEntity createTileEntity(World world, IBlockState state) {
     return null;// new CableTileItem();
   }
-  public enum JointType implements IStringSerializable {
+  public enum EnumConnectType implements IStringSerializable {
     NULL("none"), CONNECT("cable"), STORAGE("inventory");
     String name;
-    private JointType(String name) {
+    private EnumConnectType(String name) {
       this.name = name;
     }
     @Override
     public String getName() {
       return name;
     }
+  }
+  private boolean itemTransport = false;
+  private boolean fluidTransport = false;
+  private boolean powerTransport = false;
+  public void setItemTransport() {
+    this.itemTransport = true;
+  }
+  public void setFluidTransport() {
+    this.fluidTransport = true;
+  }
+  public void setPowerTransport() {
+    this.powerTransport = true;
+  }
+  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
+    BlockPos offset = pos.offset(side);
+    //    Block block = world.getBlockState(offset).getBlock();
+    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+    TileEntityBaseCable tileCable = null;
+    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
+      tileCable = (TileEntityBaseCable) tileTarget;
+    }
+    if (this.powerTransport) {
+      if (tileCable != null && tileCable.isEnergyPipe()) {
+        return EnumConnectType.CONNECT;
+      }
+      if (tileTarget != null &&
+          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+        return EnumConnectType.STORAGE;
+      }
+    }
+    if (this.itemTransport) {
+      if (tileCable != null && tileCable.isItemPipe()) {
+        return EnumConnectType.CONNECT;
+      }
+      if (tileTarget != null &&
+          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+        return EnumConnectType.STORAGE;
+      }
+    }
+    if (this.fluidTransport) {
+      if (tileCable != null && tileCable.isFluidPipe()) {
+        return EnumConnectType.CONNECT;
+      }
+      // getFluidHandler uses fluid capability and other things
+      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
+        return EnumConnectType.STORAGE;
+      }
+    }
+    return EnumConnectType.NULL;
   }
 }

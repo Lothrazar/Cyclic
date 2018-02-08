@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.FluidUtil;
 public class BlockItemCable extends BlockBaseCable implements IHasRecipe {
   public BlockItemCable() {
     super(Material.CLAY);
-    this.setItemTransport();
+//    this.setItemTransport();
   }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {

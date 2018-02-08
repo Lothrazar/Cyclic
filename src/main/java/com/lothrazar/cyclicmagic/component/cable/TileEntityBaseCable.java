@@ -6,8 +6,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable.EnumConnectType;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid; 
 import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
 import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -75,24 +74,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   public boolean isEnergyPipe() {
     return this.energyTransport;
   }
-  public Map<EnumFacing, EnumConnectType> getConnects() {
-    Map<EnumFacing, EnumConnectType> map = Maps.newHashMap();
-//    map.put(EnumFacing.NORTH, north);
-//    map.put(EnumFacing.SOUTH, south);
-//    map.put(EnumFacing.EAST, east);
-//    map.put(EnumFacing.WEST, west);
-//    map.put(EnumFacing.UP, up);
-//    map.put(EnumFacing.DOWN, down);
-    return map;
-  }
-  public void setConnects(Map<EnumFacing, EnumConnectType> map) {
-//    north = map.get(EnumFacing.NORTH);
-//    south = map.get(EnumFacing.SOUTH);
-//    east = map.get(EnumFacing.EAST);
-//    west = map.get(EnumFacing.WEST);
-//    up = map.get(EnumFacing.UP);
-//    down = map.get(EnumFacing.DOWN);
-  }
+ 
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -103,18 +85,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
     }
-//    if (compound.hasKey("north"))
-//      north = EnumConnectType.valueOf(compound.getString("north"));
-//    if (compound.hasKey("south"))
-//      south = EnumConnectType.valueOf(compound.getString("south"));
-//    if (compound.hasKey("east"))
-//      east = EnumConnectType.valueOf(compound.getString("east"));
-//    if (compound.hasKey("west"))
-//      west = EnumConnectType.valueOf(compound.getString("west"));
-//    if (compound.hasKey("up"))
-//      up = EnumConnectType.valueOf(compound.getString("up"));
-//    if (compound.hasKey("down"))
-//      down = EnumConnectType.valueOf(compound.getString("down"));
+ 
     if (this.cableEnergyStore != null && compound.hasKey("powercable")) {
       CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
     }
@@ -195,18 +166,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
     if (cableEnergyStore != null) {
       compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
     }
-//    if (north != null)
-//      compound.setString("north", north.toString());
-//    if (south != null)
-//      compound.setString("south", south.toString());
-//    if (east != null)
-//      compound.setString("east", east.toString());
-//    if (west != null)
-//      compound.setString("west", west.toString());
-//    if (up != null)
-//      compound.setString("up", up.toString());
-//    if (down != null)
-//      compound.setString("down", down.toString());
+ 
     return compound;
   }
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
@@ -351,24 +311,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
     }
   }
-//  public EnumConnectType north() {
-//    return north;
-//  }
-//  public EnumConnectType south() {
-//    return south;
-//  }
-//  public EnumConnectType east() {
-//    return east;
-//  }
-//  public EnumConnectType west() {
-//    return west;
-//  }
-//  public EnumConnectType up() {
-//    return up;
-//  }
-//  public EnumConnectType down() {
-//    return down;
-//  }
+ 
   @Override
   public AxisAlignedBB getRenderBoundingBox() {
     double renderExtention = 1.0d;
