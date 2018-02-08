@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -86,9 +87,10 @@ public class CableBlockPrimary extends Block {
   @Override
   @Deprecated
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
-    BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(origin);
+//    BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(origin);
+    BlockPos pos = new BlockPos(origin);
     for (EnumFacing side : EnumFacing.VALUES) {
-      pos.move(side);
+      pos = origin.offset(side);
       PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
       state = state.withProperty(property, EnumConnectType.NULL);
       TileEntity tileTarget = world.getTileEntity(pos);
@@ -102,12 +104,12 @@ public class CableBlockPrimary extends Block {
         }
         if (tileTarget != null &&
             tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
-          state = state.withProperty(property, EnumConnectType.STORAGE);
+          state = state.withProperty(property, EnumConnectType.CONNECT);
         }
       }
       if (this.itemTransport) {
         if (tileCable != null && tileCable.isItemPipe()) {
-          state = state.withProperty(property, EnumConnectType.CONNECT);
+          state = state.withProperty(property, EnumConnectType.STORAGE);
         }
         if (tileTarget != null &&
             tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
@@ -119,21 +121,14 @@ public class CableBlockPrimary extends Block {
           state = state.withProperty(property, EnumConnectType.CONNECT);
         }
         // getFluidHandler uses fluid capability and other things
-        if (world instanceof World && FluidUtil.getFluidHandler((World) world, pos, side.getOpposite()) != null) {
+        // CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
+        //        if (world instanceof World && FluidUtil.getFluidHandler((World) world, pos, side.getOpposite()) != null) {
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())) {
           state = state.withProperty(property, EnumConnectType.STORAGE);
         }
       }
-      //    
-      //      
-      //      if (world.getBlockState(pos).getBlock() == this) {
-      //        state = state.withProperty(property, EnumConnectType.CONNECT);
-      //      }
-      //      else if (hasInventoryAt(tile, side)) {
-      //        state = state.withProperty(property, EnumConnectType.STORAGE);
-      //      }
-      //      
-      //      
-      pos.move(side.getOpposite());
+      //      pos.move(side.getOpposite());
     }
     return super.getActualState(state, world, origin);
   }
@@ -260,41 +255,41 @@ public class CableBlockPrimary extends Block {
   public void setPowerTransport() {
     this.powerTransport = true;
   }
-  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
-    BlockPos offset = pos.offset(side);
-    //    Block block = world.getBlockState(offset).getBlock();
-    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
-    TileEntityBaseCable tileCable = null;
-    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
-      tileCable = (TileEntityBaseCable) tileTarget;
-    }
-    if (this.powerTransport) {
-      if (tileCable != null && tileCable.isEnergyPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      if (tileTarget != null &&
-          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    if (this.itemTransport) {
-      if (tileCable != null && tileCable.isItemPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      if (tileTarget != null &&
-          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    if (this.fluidTransport) {
-      if (tileCable != null && tileCable.isFluidPipe()) {
-        return EnumConnectType.CONNECT;
-      }
-      // getFluidHandler uses fluid capability and other things
-      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
-        return EnumConnectType.STORAGE;
-      }
-    }
-    return EnumConnectType.NULL;
-  }
+  //  public EnumConnectType getConnectTypeForPos(IBlockAccess world, BlockPos pos, EnumFacing side) {
+  //    BlockPos offset = pos.offset(side);
+  //    //    Block block = world.getBlockState(offset).getBlock();
+  //    TileEntity tileTarget = world.getTileEntity(pos.offset(side));
+  //    TileEntityBaseCable tileCable = null;
+  //    if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
+  //      tileCable = (TileEntityBaseCable) tileTarget;
+  //    }
+  //    if (this.powerTransport) {
+  //      if (tileCable != null && tileCable.isEnergyPipe()) {
+  //        return EnumConnectType.CONNECT;
+  //      }
+  //      if (tileTarget != null &&
+  //          tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+  //        return EnumConnectType.STORAGE;
+  //      }
+  //    }
+  //    if (this.itemTransport) {
+  //      if (tileCable != null && tileCable.isItemPipe()) {
+  //        return EnumConnectType.CONNECT;
+  //      }
+  //      if (tileTarget != null &&
+  //          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+  //        return EnumConnectType.STORAGE;
+  //      }
+  //    }
+  //    if (this.fluidTransport) {
+  //      if (tileCable != null && tileCable.isFluidPipe()) {
+  //        return EnumConnectType.CONNECT;
+  //      }
+  //      // getFluidHandler uses fluid capability and other things
+  //      if (world instanceof World && FluidUtil.getFluidHandler((World) world, offset, side) != null) {
+  //        return EnumConnectType.STORAGE;
+  //      }
+  //    }
+  //    return EnumConnectType.NULL;
+  //  }
 }
