@@ -3,7 +3,7 @@
     "parent": "block/block",
     "textures": {
         "particle": "cyclicmagic:blocks/cable_particle",
-        "texture": "cyclicmagic:blocks/cable_fluid"
+        "texture": "cyclicmagic:blocks/cable_energy"
     },
     "elements": [
         {

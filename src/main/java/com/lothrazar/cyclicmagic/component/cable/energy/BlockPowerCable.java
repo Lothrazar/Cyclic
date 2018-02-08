@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cable.energy;
 import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.material.Material;
@@ -13,13 +14,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class BlockPowerCable extends BlockBaseCable {
+public class BlockPowerCable extends CableBlockPrimary {
   public BlockPowerCable() {
-    super(Material.CLAY);
+//    super(Material.CLAY);
     this.setPowerTransport();
   }
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
+  public TileEntity createTileEntity(World world, IBlockState state) {
     return new TileEntityCablePower();
   }
 }

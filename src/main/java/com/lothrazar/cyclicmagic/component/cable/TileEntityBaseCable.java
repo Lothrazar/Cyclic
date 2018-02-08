@@ -224,10 +224,19 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
             this.setInventorySlotContents(0, leftAfterDeposit);
             outputSuccess = true;
           }
-          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
-            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
-            cable.updateIncomingItemFace(f.getOpposite());
+          
+          tileTarget = world.getTileEntity(posTarget);
+          if (tileTarget instanceof TileEntityBaseCable) {
+            //TODO: not so compatible with other fluid systems. itl do i guess
+            TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
+            if (outputSuccess&& cable.isItemPipe())
+              cable.updateIncomingItemFace(f.getOpposite());
           }
+          
+//          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
+//            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
+//            cable.updateIncomingItemFace(f.getOpposite());
+//          }
         }
       }
       if (this.isFluidPipe()) {
@@ -239,11 +248,20 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
             toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
           }
           boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
+
+          tileTarget = world.getTileEntity(posTarget);
+          if (tileTarget instanceof TileEntityBaseCable) {
             //TODO: not so compatible with other fluid systems. itl do i guess
-            TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
-            cable.updateIncomingFluidFace(f.getOpposite());
+            TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
+            if (outputSuccess&& cable.isFluidPipe())
+              cable.updateIncomingFluidFace(f.getOpposite());
           }
+          
+//          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
+//            //TODO: not so compatible with other fluid systems. itl do i guess
+//            TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
+//            cable.updateIncomingFluidFace(f.getOpposite());
+//          }
         }
       }
       if (this.isEnergyPipe()) {

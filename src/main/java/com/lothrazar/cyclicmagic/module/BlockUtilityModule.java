@@ -9,9 +9,7 @@ import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
-import com.lothrazar.cyclicmagic.component.cable.fluid.BlockFluidCable;
 import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.cable.item.BlockItemCable;
 import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
@@ -208,6 +206,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 //    BlockRegistry.registerBlock(new CableBlock(), "cable", null);
     GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
     GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+    GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
 //  
     
   }

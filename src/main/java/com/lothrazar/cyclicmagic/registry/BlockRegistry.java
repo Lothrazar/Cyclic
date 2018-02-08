@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.component.cable.fluid.CableBlockFluid;
 import com.lothrazar.cyclicmagic.component.cable.item.CableBlockItem;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
@@ -46,18 +47,15 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
- 
     //TOD:O fix this
-    
     event.getRegistry().register(new CableBlockItem()
-            .setRegistryName( new ResourceLocation(Const.MODID, "item_pipe")  )
-          .setUnlocalizedName("item_pipe") 
-          )    ;
-    
+        .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe"))
+        .setUnlocalizedName("item_pipe"));
     event.getRegistry().register(new CableBlockFluid()
-            .setRegistryName( new ResourceLocation(Const.MODID, "fluid_pipe")  )
-          .setUnlocalizedName(  "fluid_pipe") 
-          )    ;
-          
+        .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe"))
+        .setUnlocalizedName("fluid_pipe"));
+    event.getRegistry().register(new BlockPowerCable()
+        .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
+        .setUnlocalizedName("energy_pipe"));
   }
 }
