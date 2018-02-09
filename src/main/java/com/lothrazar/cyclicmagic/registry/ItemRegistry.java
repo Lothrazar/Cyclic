@@ -118,7 +118,8 @@ public class ItemRegistry {
       
       item = ItemRegistry.itemMap.get(key);
       if (item instanceof ItemBlock
-          || Block.getBlockFromItem(item) instanceof BlockBaseCable) {
+         // || Block.getBlockFromItem(item) instanceof BlockBaseCable
+          ) {
         continue;
       }
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
