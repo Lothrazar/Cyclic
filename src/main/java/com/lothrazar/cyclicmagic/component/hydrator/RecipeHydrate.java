@@ -85,17 +85,18 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     int inputStackToPay = -1, inputCountToPay = -1;
     if (this.isShapeless()) {
       //find the one input slot has the thing, and decrement THAT ONE only 
+      final ItemStack theRecipe = recipeInput[0];
       for (int i = 0; i < recipeInput.length; i++) {
         //its shapeless so only one thing will have the input
         if (invoSource.getStackInSlot(i).getCount() >= minimum
-            && invoSource.getStackInSlot(i).getCount() >= recipeInput[i].getCount() + (minimum - 1)) {
+            && invoSource.getStackInSlot(i).getCount() >= theRecipe.getCount() + (minimum - 1)) {
           inputStackToPay = i;
           //VALIDATE
-          inputCountToPay = recipeInput[i].getCount();
+          inputCountToPay = theRecipe.getCount();
           break;
         }
       }
-      if (inputStackToPay < 0) {
+      if (inputStackToPay < 0 || inputCountToPay <= 0) {
         return false;
       }
       invoSource.decrStackSize(inputStackToPay, inputCountToPay);
