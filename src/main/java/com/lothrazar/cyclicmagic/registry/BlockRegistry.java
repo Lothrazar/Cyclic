@@ -36,8 +36,14 @@ public class BlockRegistry {
       ib.setRegistryName(b.getRegistryName()); // ok good this should work yes? yes! http://mcforge.readthedocs.io/en/latest/blocks/blocks/#registering-a-block
       ItemRegistry.itemMap.put(name, ib);
     }
+    blocks.add(b);
     if (cat != null) {
-      GuideRegistry.register(cat, ib);
+      if (ib == null) {
+        GuideRegistry.register(cat, b);
+      }
+      else {
+        GuideRegistry.register(cat, ib);
+      }
     }
   }
   private static Block initBlock(Block b, String name) {
@@ -47,24 +53,10 @@ public class BlockRegistry {
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
-    blocks.add(b);
     return b;
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
-    //TODO fix refactor this
-    initCables(event);
-  }
-  //workaround since they break if they hit item registry
-  private static void initCables(RegistryEvent.Register<Block> event) {
-    if (BlockUtilityModule.enablePumpAndPipes) {
-      CableBlockItem item_pipe = new CableBlockItem();
-//      blocks.add(item_pipe);
-      event.getRegistry().register(initBlock(item_pipe, "item_pipe"));
-      event.getRegistry().register(initBlock(new CableBlockFluid(), "fluid_pipe"));
-      event.getRegistry().register(initBlock(new BlockPowerCable(), "energy_pipe"));
-      event.getRegistry().register(initBlock(new BlockCableBundle(), "bundled_pipe"));
-    }
   }
 }
