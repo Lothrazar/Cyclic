@@ -31,7 +31,13 @@ public class BlockRegistry {
     registerBlock(b, new ItemBlock(b), name, cat);
   }
   public static void registerBlock(@Nonnull Block b, @Nonnull ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
-    initBlock(b, name);
+    b.setCreativeTab(ModCyclic.TAB);
+    b.setRegistryName(new ResourceLocation(Const.MODID, name));
+    b.setUnlocalizedName(name);
+    if (b instanceof IHasConfig) {
+      ConfigRegistry.register((IHasConfig) b);
+    }
+ 
     if (ib != null) {
       ib.setRegistryName(b.getRegistryName()); // ok good this should work yes? yes! http://mcforge.readthedocs.io/en/latest/blocks/blocks/#registering-a-block
       ItemRegistry.itemMap.put(name, ib);
@@ -46,15 +52,15 @@ public class BlockRegistry {
       }
     }
   }
-  private static Block initBlock(Block b, String name) {
-    b.setCreativeTab(ModCyclic.TAB);
-    b.setRegistryName(new ResourceLocation(Const.MODID, name));
-    b.setUnlocalizedName(name);
-    if (b instanceof IHasConfig) {
-      ConfigRegistry.register((IHasConfig) b);
-    }
-    return b;
-  }
+//  private static Block initBlock(Block b, String name) {
+//    b.setCreativeTab(ModCyclic.TAB);
+//    b.setRegistryName(new ResourceLocation(Const.MODID, name));
+//    b.setUnlocalizedName(name);
+//    if (b instanceof IHasConfig) {
+//      ConfigRegistry.register((IHasConfig) b);
+//    }
+//    return b;
+//  }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
