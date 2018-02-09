@@ -89,6 +89,7 @@ public class UtilScythe {
         ,"abyssalcraft:wastelandsthorn"
         ,"abyssalcraft:luminousthistle"
         ,"harvestcraft:garden"
+        ,"harvestcraft:windygarden"
         ,"minecraft:double_plant"
         ,"minecraft:red_flower"
         ,"minecraft:yellow_flower"
@@ -195,8 +196,8 @@ public class UtilScythe {
     }
     if (doBreak) {
       //break with false so that we can get the drops our own way
-      world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
-      blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
+      world.destroyBlock(posCurrent, true);//true==drops; false == no drops. literally just for the sound
+      //blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -204,9 +205,9 @@ public class UtilScythe {
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-      for (ItemStack drop : drops) {
-        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-      }
+//      for (ItemStack drop : drops) {
+//        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
+//      }
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
