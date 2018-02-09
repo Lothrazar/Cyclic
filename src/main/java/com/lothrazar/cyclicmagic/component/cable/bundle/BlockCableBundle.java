@@ -1,10 +1,7 @@
 package com.lothrazar.cyclicmagic.component.cable.bundle;
 import com.lothrazar.cyclicmagic.IHasRecipe;
- import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;

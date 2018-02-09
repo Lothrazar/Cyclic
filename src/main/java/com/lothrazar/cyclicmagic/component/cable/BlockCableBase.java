@@ -1,18 +1,25 @@
 package com.lothrazar.cyclicmagic.component.cable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -25,9 +32,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -73,6 +77,24 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     setLightOpacity(0);
   }
   public abstract TileEntity createTileEntity(World world, IBlockState state);
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
+    if (te != null && world.isRemote == false) {
+      String msg = te.getLabelTextOrEmpty();
+      UtilChat.sendStatusMessage(player, msg);
+    }
+    // otherwise return true if it is a fluid handler to prevent in world placement    
+    return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+  }
+  @Override
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    TileEntity tileentity = worldIn.getTileEntity(pos);
+    if (tileentity instanceof TileEntityItemCable) {
+      InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityItemCable) tileentity);
+    }
+    super.breakBlock(worldIn, pos, state);
+  }
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState();
