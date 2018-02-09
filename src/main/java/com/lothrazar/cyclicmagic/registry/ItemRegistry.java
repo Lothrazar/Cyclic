@@ -6,11 +6,16 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -52,6 +57,8 @@ public class ItemRegistry {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
     for (Item item : ItemRegistry.itemMap.values()) {
+      
+      
       event.getRegistry().register(item);
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
@@ -72,6 +79,16 @@ public class ItemRegistry {
       }
     }
   }
+  //  @SideOnly(Side.CLIENT)
+  //  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
+  //      new ResourceLocation(Const.MODID, "cable"), "inventory");
+  @SideOnly(Side.CLIENT)
+  private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
+    @Override
+    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+      return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+    }
+  };
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
@@ -84,8 +101,25 @@ public class ItemRegistry {
     //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     String name;
     Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof ItemBlock
+      // || Block.getBlockFromItem(item) instanceof BlockBaseCable
+      ) {
+        continue;
+      }
+      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+    }
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
+      if (b instanceof BlockCableBase) {
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
+            new ResourceLocation(Const.MODID, b.getUnlocalizedName().replaceAll("tile.", "")), "inventory"));
+        ModelLoader.setCustomStateMapper(b, STATE_MAPPER);
+        //TODO: CABLE REGISTRY OR SOMETHING
+        continue;
+      }
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
@@ -93,13 +127,31 @@ public class ItemRegistry {
         ((IBlockHasTESR) b).initModel();
       }
     }
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof ItemBlock) {
-        continue;
-      }
-      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
-      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+    if (BlockUtilityModule.enablePumpAndPipes) {
+      //insomniaKitten
+      //      Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
+      //      Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
+      //      ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, new ModelResourceLocation(
+      //          new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
+      //      ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
+      //TODO: CABLE REGISTRY OR SOMETHING
+      //      Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
+      //      Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
+      //      ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, new ModelResourceLocation(
+      //          new ResourceLocation(Const.MODID, "fluid_pipe"), "inventory"));
+      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+      //      //TODO: CABLE REGISTRY OR SOMETHING
+      //      Block ECABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "energy_pipe");
+      //      Item ECABLE_ITEM = Item.getItemFromBlock(ECABLE_BLOCK);
+      //      ModelLoader.setCustomModelResourceLocation(ECABLE_ITEM, 0, new ModelResourceLocation(
+      //          new ResourceLocation(Const.MODID, "energy_pipe"), "inventory"));
+      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+      //      //
+      //      Block BCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "bundled_pipe");
+      //      Item BCABLE_ITEM = Item.getItemFromBlock(BCABLE_BLOCK);
+      //      ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0, new ModelResourceLocation(
+      //          new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
+      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
     }
   }
 }

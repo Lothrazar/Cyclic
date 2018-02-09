@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.itemsort;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;

@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "cyclicmagic:blocks/item_pipe_n"
-  }
-}

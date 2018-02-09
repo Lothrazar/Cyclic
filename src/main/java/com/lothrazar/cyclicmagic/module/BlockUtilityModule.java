@@ -3,6 +3,14 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
+import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
+import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
+import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
+import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
+import com.lothrazar.cyclicmagic.component.cable.fluid.BlockCableFluid;
+import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.component.cable.item.BlockCableItem;
+import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
@@ -18,19 +26,17 @@ import com.lothrazar.cyclicmagic.component.fluidplacer.TileEntityFluidPlacer;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidCable;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.BlockFluidPump;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.itemsort.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
-import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemCable;
-import com.lothrazar.cyclicmagic.component.itemtransfer.BlockItemPump;
-import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
-import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
 import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
 import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
+import com.lothrazar.cyclicmagic.component.pumpenergy.BlockEnergyPump;
+import com.lothrazar.cyclicmagic.component.pumpenergy.TileEntityEnergyPump;
+import com.lothrazar.cyclicmagic.component.pumpfluid.BlockFluidPump;
+import com.lothrazar.cyclicmagic.component.pumpfluid.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.component.pumpitem.BlockItemPump;
+import com.lothrazar.cyclicmagic.component.pumpitem.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
@@ -61,12 +67,14 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean autoCrafter;
   private boolean soundproofing;
   private boolean workbench;
-  private boolean enablePumpAndPipes;
-  private boolean enablItemPipes;
+  public static boolean enablePumpAndPipes;
+  // private boolean enablePipes;
   private boolean enableLibrary;
   private boolean screen;
   private boolean btrash;
   private boolean fluidPlacer;
+  // private boolean enablePowerCables;
+  //  private boolean bundledCable;
   public void onPreInit() {
     BlockAppleCrop apple = new BlockAppleCrop();
     BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
@@ -148,35 +156,35 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
     }
-    if (enablePumpAndPipes) {
-      //pump
-      BlockFluidPump fluid_xfer = new BlockFluidPump();
-      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
-      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
-      //pipes
-      BlockFluidCable k = new BlockFluidCable();
-      BlockRegistry.registerBlock(k, "fluid_pipe", null);
-      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
-    }
     if (fluidPlacer) {
       //fluid placer
       BlockFluidPlacer placer = new BlockFluidPlacer();
       BlockRegistry.registerBlock(placer, "fluid_placer", null);
       GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
-    if (enablItemPipes) {
-      //pump
-      BlockItemPump fluid_xfer = new BlockItemPump();
-      BlockRegistry.registerBlock(fluid_xfer, "item_pump", null);
-      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
-      //pipes
-      BlockItemCable k = new BlockItemCable();
-      BlockRegistry.registerBlock(k, "item_pipe", null);
-      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+    if (enablePumpAndPipes) {
       //sort
-      BlockItemCableSort item_pipe_sort = new BlockItemCableSort();
-      BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
+      BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
+      //Item
+      BlockRegistry.registerBlock(new BlockCableItem(), "item_pipe", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockItemPump(), "item_pump", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
+      //ENERGY
+      BlockRegistry.registerBlock(new BlockPowerCable(), "energy_pipe", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
+      GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
+      // FLUID 
+      BlockRegistry.registerBlock(new BlockCableFluid(), "fluid_pipe", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
+      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      //bundled
+      BlockRegistry.registerBlock(new BlockCableBundle(), "bundled_pipe", GuideCategory.BLOCK);
+      //pipes // TODO: fix block registry
+      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
   }
   @Override
@@ -197,6 +205,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }
