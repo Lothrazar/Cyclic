@@ -25,7 +25,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 
-public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements ITickable {
+public class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
   private static final int TRANSFER_FLUID_PER_TICK = 500;
   private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
@@ -40,7 +40,7 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
  // public EnumConnectType north, south, east, west, up, down;
-  public TileEntityBaseCable(int invoSize, int fluidTankSize, int powerPerTick) {
+  public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
     if (powerPerTick > 0) {
@@ -226,9 +226,9 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
           }
           
           tileTarget = world.getTileEntity(posTarget);
-          if (tileTarget instanceof TileEntityBaseCable) {
+          if (tileTarget instanceof TileEntityCableBase) {
             //TODO: not so compatible with other fluid systems. itl do i guess
-            TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
+            TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
             if (outputSuccess&& cable.isItemPipe())
               cable.updateIncomingItemFace(f.getOpposite());
           }
@@ -250,9 +250,9 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
           boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
 
           tileTarget = world.getTileEntity(posTarget);
-          if (tileTarget instanceof TileEntityBaseCable) {
+          if (tileTarget instanceof TileEntityCableBase) {
             //TODO: not so compatible with other fluid systems. itl do i guess
-            TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
+            TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
             if (outputSuccess&& cable.isFluidPipe())
               cable.updateIncomingFluidFace(f.getOpposite());
           }
@@ -282,9 +282,9 @@ public class TileEntityBaseCable extends TileEntityBaseMachineFluid implements I
               int filled = handlerOutput.receiveEnergy(drain, false);
               //now actually drain that much from here
               handlerHere.extractEnergy(filled, false);
-              if (tileTarget instanceof TileEntityBaseCable) {
+              if (tileTarget instanceof TileEntityCableBase) {
                 //TODO: not so compatible with other fluid systems. itl do i guess
-                TileEntityBaseCable cable = (TileEntityBaseCable) tileTarget;
+                TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
                 if (cable.isEnergyPipe())
                   cable.updateIncomingEnergyFace(f.getOpposite());
               }

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.pumpenergy;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -70,9 +70,9 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
         int filled = handlerInsertInto.receiveEnergy(drain, false);
         //now actually drain that much  
         handlerHere.extractEnergy(filled, false);
-        if (tileInsert instanceof TileEntityBaseCable) {
+        if (tileInsert instanceof TileEntityCableBase) {
           //TODO: not so compatible with other fluid systems. itl do i guess
-          TileEntityBaseCable cable = (TileEntityBaseCable) tileInsert;
+          TileEntityCableBase cable = (TileEntityCableBase) tileInsert;
           //  ModCyclic.logger.error("pump EXPORT  " + filled);
           if (cable.isEnergyPipe()) {
             // ModCyclic.logger.error("cable receive from   "+ side);

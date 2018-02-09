@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.component.cable.fluid.BlockCableFluid;

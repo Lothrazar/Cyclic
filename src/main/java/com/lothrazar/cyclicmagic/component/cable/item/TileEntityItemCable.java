@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.cable.item;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityItemCable extends TileEntityBaseCable {
+public class TileEntityItemCable extends TileEntityCableBase {
 
   public TileEntityItemCable() {
     super(1, 0,0);

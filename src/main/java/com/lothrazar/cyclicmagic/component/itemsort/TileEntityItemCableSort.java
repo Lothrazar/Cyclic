@@ -7,7 +7,7 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -209,9 +209,9 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
           TileEntityItemCableSort cable = (TileEntityItemCableSort) world.getTileEntity(posTarget);
           cable.updateIncomingFace(f.getOpposite());
         }
-        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityBaseCable) {
+        if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityCableBase) {
           //TODO: holy balls do we need a base class
-          TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
+          TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(posTarget);
           if (cable.isItemPipe())
             cable.updateIncomingItemFace(f.getOpposite());
         }

@@ -6,7 +6,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
@@ -113,7 +113,7 @@ public class ItemRegistry {
     }
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
-      if (b instanceof BlockBaseCable) {
+      if (b instanceof BlockCableBase) {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
             new ResourceLocation(Const.MODID, b.getUnlocalizedName().replaceAll("tile.", "")), "inventory"));
         ModelLoader.setCustomStateMapper(b, STATE_MAPPER);

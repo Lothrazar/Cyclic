@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.cable.bundle;
 
-import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 
-public class TileEntityCableBundle extends TileEntityBaseCable {
+public class TileEntityCableBundle extends TileEntityCableBase {
   
   public TileEntityCableBundle() {
     super(1, 100,1000);

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cable.fluid;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockCableFluid extends CableBlockPrimary implements IHasRecipe {
+public class BlockCableFluid extends BlockCableBase implements IHasRecipe {
   public BlockCableFluid() {
     this.setFluidTransport();
   }

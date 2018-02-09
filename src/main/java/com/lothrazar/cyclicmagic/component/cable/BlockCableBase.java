@@ -34,7 +34,7 @@ import java.util.Map;
  * @author insomniaKitten
  *
  */
-public abstract class CableBlockPrimary extends BlockBaseHasTile {
+public abstract class BlockCableBase extends BlockBaseHasTile {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -64,7 +64,7 @@ public abstract class CableBlockPrimary extends BlockBaseHasTile {
       return this.name().toLowerCase();
     }
   }
-  public CableBlockPrimary() {
+  public BlockCableBase() {
     super(Material.CLOTH);
     setDefaultState(getDefaultState());
     setSoundType(SoundType.CLOTH);
@@ -89,9 +89,9 @@ public abstract class CableBlockPrimary extends BlockBaseHasTile {
       PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
       state = state.withProperty(property, EnumConnectType.NONE);
       TileEntity tileTarget = world.getTileEntity(pos);
-      TileEntityBaseCable tileCable = null;
-      if (tileTarget != null && tileTarget instanceof TileEntityBaseCable) {
-        tileCable = (TileEntityBaseCable) tileTarget;
+      TileEntityCableBase tileCable = null;
+      if (tileTarget != null && tileTarget instanceof TileEntityCableBase) {
+        tileCable = (TileEntityCableBase) tileTarget;
       }
       if (this.powerTransport) {
         if (tileCable != null && tileCable.isEnergyPipe()) {

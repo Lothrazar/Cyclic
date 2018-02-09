@@ -1,8 +1,7 @@
 package com.lothrazar.cyclicmagic.component.cable.energy;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityBaseCable;
+import com.lothrazar.cyclicmagic.IHasRecipe; 
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.material.Material;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class BlockPowerCable extends CableBlockPrimary implements IHasRecipe {
+public class BlockPowerCable extends BlockCableBase implements IHasRecipe {
   public BlockPowerCable() {
     //    super(Material.CLAY);
     this.setPowerTransport();

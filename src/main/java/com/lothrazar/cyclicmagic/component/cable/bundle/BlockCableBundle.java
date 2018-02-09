@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.cable.bundle;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
+ import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
@@ -13,7 +12,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockCableBundle extends CableBlockPrimary implements IHasRecipe {
+public class BlockCableBundle extends BlockCableBase implements IHasRecipe {
   public BlockCableBundle() {
     //    super(Material.CLAY);
     this.setItemTransport();
