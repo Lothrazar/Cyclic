@@ -31,38 +31,38 @@ public class BlockRegistry {
     registerBlock(b, new ItemBlock(b), name, cat);
   }
   public static void registerBlock(@Nonnull Block b, @Nonnull ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
-    b.setRegistryName(new ResourceLocation(Const.MODID, name));
-    b.setUnlocalizedName(name);
+    initBlock(b, name);
     if (ib != null) {
       ib.setRegistryName(b.getRegistryName()); // ok good this should work yes? yes! http://mcforge.readthedocs.io/en/latest/blocks/blocks/#registering-a-block
       ItemRegistry.itemMap.put(name, ib);
     }
-    b.setCreativeTab(ModCyclic.TAB);
     blocks.add(b);
-    if (b instanceof IHasConfig) {
-      ConfigRegistry.register((IHasConfig) b);
-    }
     if (cat != null) {
       GuideRegistry.register(cat, ib);
     }
+  }
+  private static Block initBlock(Block b, String name) {
+    b.setCreativeTab(ModCyclic.TAB);
+    b.setRegistryName(new ResourceLocation(Const.MODID, name));
+    b.setUnlocalizedName(name);
+    if (b instanceof IHasConfig) {
+      ConfigRegistry.register((IHasConfig) b);
+    }
+    return b;
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     //TODO fix refactor this
+    initCables(event);
+  }
+  //workaround since they break if they hit item registry
+  private static void initCables(RegistryEvent.Register<Block> event) {
     if (BlockUtilityModule.enablePumpAndPipes) {
-      event.getRegistry().register(new CableBlockItem().setCreativeTab(ModCyclic.TAB)
-          .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe"))
-          .setUnlocalizedName("item_pipe"));
-      event.getRegistry().register(new CableBlockFluid().setCreativeTab(ModCyclic.TAB)
-          .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe"))
-          .setUnlocalizedName("fluid_pipe"));
-      event.getRegistry().register(new BlockPowerCable().setCreativeTab(ModCyclic.TAB)
-          .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
-          .setUnlocalizedName("energy_pipe"));
-      event.getRegistry().register(new BlockCableBundle().setCreativeTab(ModCyclic.TAB)
-          .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe"))
-          .setUnlocalizedName("bundled_pipe"));
+      event.getRegistry().register(initBlock(new CableBlockItem(), "item_pipe"));
+      event.getRegistry().register(initBlock(new CableBlockFluid(), "fluid_pipe"));
+      event.getRegistry().register(initBlock(new BlockPowerCable(), "energy_pipe"));
+      event.getRegistry().register(initBlock(new BlockCableBundle(), "bundled_pipe"));
     }
   }
 }
