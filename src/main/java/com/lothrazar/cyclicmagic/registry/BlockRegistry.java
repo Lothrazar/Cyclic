@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.component.cable.item.CableBlockItem;
 import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -48,18 +49,20 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
-    //TOD:O fix this
-    event.getRegistry().register(new CableBlockItem()
-        .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe"))
-        .setUnlocalizedName("item_pipe"));
-    event.getRegistry().register(new CableBlockFluid()
-        .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe"))
-        .setUnlocalizedName("fluid_pipe"));
-    event.getRegistry().register(new BlockPowerCable()
-        .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
-        .setUnlocalizedName("energy_pipe"));
-    event.getRegistry().register(new BlockCableBundle()
-        .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe"))
-        .setUnlocalizedName("bundled_pipe"));
+    //TODO fix refactor this
+    if (BlockUtilityModule.enablePumpAndPipes) {
+      event.getRegistry().register(new CableBlockItem()
+          .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe"))
+          .setUnlocalizedName("item_pipe"));
+      event.getRegistry().register(new CableBlockFluid()
+          .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe"))
+          .setUnlocalizedName("fluid_pipe"));
+      event.getRegistry().register(new BlockPowerCable()
+          .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
+          .setUnlocalizedName("energy_pipe"));
+      event.getRegistry().register(new BlockCableBundle()
+          .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe"))
+          .setUnlocalizedName("bundled_pipe"));
+    }
   }
 }

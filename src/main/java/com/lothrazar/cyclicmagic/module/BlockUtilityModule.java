@@ -1,10 +1,9 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
- 
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
-import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary; 
+import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
 import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
@@ -67,14 +66,14 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean autoCrafter;
   private boolean soundproofing;
   private boolean workbench;
-  private boolean enablePumpAndPipes;
-  private boolean enablItemPipes;
+  public static boolean enablePumpAndPipes;
+  // private boolean enablePipes;
   private boolean enableLibrary;
   private boolean screen;
   private boolean btrash;
   private boolean fluidPlacer;
-  private boolean enablePowerCables;
-  private boolean bundledCable;
+  // private boolean enablePowerCables;
+  //  private boolean bundledCable;
   public void onPreInit() {
     BlockAppleCrop apple = new BlockAppleCrop();
     BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
@@ -156,66 +155,35 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
     }
-    if (enablePumpAndPipes) {
-      //pump
-      BlockFluidPump fluid_xfer = new BlockFluidPump();
-      BlockRegistry.registerBlock(fluid_xfer, "fluid_pump", null);
-      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
-      //pipes
-//      BlockFluidCable k = new BlockFluidCable();
-//      BlockRegistry.registerBlock(k, "fluid_pipe", null);
-//      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
-    }
     if (fluidPlacer) {
       //fluid placer
       BlockFluidPlacer placer = new BlockFluidPlacer();
       BlockRegistry.registerBlock(placer, "fluid_placer", null);
       GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
-    if (enablItemPipes) {
-      //pump
-      BlockItemPump fluid_xfer = new BlockItemPump();
-      BlockRegistry.registerBlock(fluid_xfer, "item_pump", null);
-      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
-      //pipes
-//      BlockItemCable k = new BlockItemCable();
-//      BlockRegistry.registerBlock(k, "item_pipe", null);
-//      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+    if (enablePumpAndPipes) {
       //sort
-      BlockItemCableSort item_pipe_sort = new BlockItemCableSort();
-      BlockRegistry.registerBlock(item_pipe_sort, "item_pipe_sort", null);
+      BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", null);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
-    }
-    if (enablePowerCables) {
-//      BlockPowerCable power_pipe = new BlockPowerCable();
-//      BlockRegistry.registerBlock(power_pipe, "power_pipe", null);
-//      GameRegistry.registerTileEntity(TileEntityCablePower.class, "power_pipe_te");
-      //and matching pump
-      BlockEnergyPump energy_pump = new BlockEnergyPump();
-      BlockRegistry.registerBlock(energy_pump, "energy_pump", null);
+      //Item
+      BlockRegistry.registerBlock(new BlockItemPump(), "item_pump", null);
+      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
+      //ENERGY
+      BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
       GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
+      // FLUID 
+      BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
+      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      //pipes // TODO: fix block registry
+      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
+      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
-    if (bundledCable) {
-//      BlockCableBundle pipe_bundle = new BlockCableBundle();
-//      BlockRegistry.registerBlock(pipe_bundle, "pipe_bundle", null);
-//      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "pipe_bundle_te");
-    }
-    
-
-//    GameRegistry.registerTileEntity(CableTile.class, Const.MODID + ":cable_tile");
-//    BlockRegistry.registerBlock(new CableBlock(), "cable", null);
-    GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
-    GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
-    GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
-    GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
-//  
-    
   }
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    bundledCable = config.getBoolean("pipe_bundle", category, true, Const.ConfigCategory.contentDefaultText);
-    enablePowerCables = config.getBoolean("power_pipe", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
@@ -231,6 +199,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablItemPipes = config.getBoolean("ItemPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

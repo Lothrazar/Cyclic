@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -74,26 +75,24 @@ public class ItemRegistry {
         }
       }
     }
-    //    
-    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "item_pipe"))
-        .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe")));
-    //  
-    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "fluid_pipe"))
-        .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe")));
-    //  
-    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "energy_pipe"))
-        .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe")));
-    //  
-    event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "bundled_pipe"))
-        .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe")));
-    
-    
-    
-    
+    if (BlockUtilityModule.enablePumpAndPipes) {
+      //    
+      event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "item_pipe"))
+          .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe")));
+      //  
+      event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "fluid_pipe"))
+          .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe")));
+      //  
+      event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "energy_pipe"))
+          .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe")));
+      //  
+      event.getRegistry().register(new ItemBlock(Block.getBlockFromName(Const.MODRES + "bundled_pipe"))
+          .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe")));
+    }
   }
-//  @SideOnly(Side.CLIENT)
-//  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-//      new ResourceLocation(Const.MODID, "cable"), "inventory");
+  //  @SideOnly(Side.CLIENT)
+  //  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
+  //      new ResourceLocation(Const.MODID, "cable"), "inventory");
   @SideOnly(Side.CLIENT)
   private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
     @Override
@@ -104,30 +103,32 @@ public class ItemRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
-    //insomniaKitten
-    Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
-    Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0,  new ModelResourceLocation(
-        new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
-    ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
-    //TODO: CABLE REGISTRY OR SOMETHING
-    Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
-    Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0,  new ModelResourceLocation(
-        new ResourceLocation(Const.MODID, "fluid_pipe"), "inventory"));
-    ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-    //TODO: CABLE REGISTRY OR SOMETHING
-    Block ECABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "energy_pipe");
-    Item ECABLE_ITEM = Item.getItemFromBlock(ECABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(ECABLE_ITEM, 0,  new ModelResourceLocation(
-        new ResourceLocation(Const.MODID, "energy_pipe"), "inventory"));
-    ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-    //
-    Block BCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "bundled_pipe");
-    Item BCABLE_ITEM = Item.getItemFromBlock(BCABLE_BLOCK);
-    ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0,  new ModelResourceLocation(
-        new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
-    ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+    if (BlockUtilityModule.enablePumpAndPipes) {
+      //insomniaKitten
+      Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
+      Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
+      ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, new ModelResourceLocation(
+          new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
+      ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
+      //TODO: CABLE REGISTRY OR SOMETHING
+      Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
+      Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
+      ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, new ModelResourceLocation(
+          new ResourceLocation(Const.MODID, "fluid_pipe"), "inventory"));
+      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+      //TODO: CABLE REGISTRY OR SOMETHING
+      Block ECABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "energy_pipe");
+      Item ECABLE_ITEM = Item.getItemFromBlock(ECABLE_BLOCK);
+      ModelLoader.setCustomModelResourceLocation(ECABLE_ITEM, 0, new ModelResourceLocation(
+          new ResourceLocation(Const.MODID, "energy_pipe"), "inventory"));
+      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+      //
+      Block BCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "bundled_pipe");
+      Item BCABLE_ITEM = Item.getItemFromBlock(BCABLE_BLOCK);
+      ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0, new ModelResourceLocation(
+          new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
+      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
+    }
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
