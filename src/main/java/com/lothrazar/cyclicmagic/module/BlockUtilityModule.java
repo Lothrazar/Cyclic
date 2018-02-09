@@ -168,20 +168,20 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
       //Item
-      BlockRegistry.registerBlock(new CableBlockItem(), null,"item_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new CableBlockItem(), "item_pipe",GuideCategory.BLOCK);
       BlockRegistry.registerBlock(new BlockItemPump(), "item_pump",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //ENERGY
-      BlockRegistry.registerBlock(new BlockPowerCable(), null, "energy_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockPowerCable(),  "energy_pipe",GuideCategory.BLOCK);
       BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
       GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
       // FLUID 
-      BlockRegistry.registerBlock(new CableBlockFluid(), null, "fluid_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new CableBlockFluid(),  "fluid_pipe",GuideCategory.BLOCK);
       BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
       GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       //bundled
 
-      BlockRegistry.registerBlock(new BlockCableBundle(),  null,"bundled_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockCableBundle(),  "bundled_pipe",GuideCategory.BLOCK);
       //pipes // TODO: fix block registry
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
