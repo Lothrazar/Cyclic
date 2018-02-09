@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.cable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,7 +34,7 @@ import java.util.Map;
  * @author insomniaKitten
  *
  */
-public abstract class CableBlockPrimary extends Block {
+public abstract class CableBlockPrimary extends BlockBaseHasTile {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
