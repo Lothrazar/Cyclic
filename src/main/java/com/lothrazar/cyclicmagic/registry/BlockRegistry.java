@@ -59,7 +59,9 @@ public class BlockRegistry {
   //workaround since they break if they hit item registry
   private static void initCables(RegistryEvent.Register<Block> event) {
     if (BlockUtilityModule.enablePumpAndPipes) {
-      event.getRegistry().register(initBlock(new CableBlockItem(), "item_pipe"));
+      CableBlockItem item_pipe = new CableBlockItem();
+      blocks.add(item_pipe);
+      event.getRegistry().register(initBlock(item_pipe, "item_pipe"));
       event.getRegistry().register(initBlock(new CableBlockFluid(), "fluid_pipe"));
       event.getRegistry().register(initBlock(new BlockPowerCable(), "energy_pipe"));
       event.getRegistry().register(initBlock(new BlockCableBundle(), "bundled_pipe"));

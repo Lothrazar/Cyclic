@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
+import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
@@ -103,13 +104,55 @@ public class ItemRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
+    // with help from
+    // http://www.minecraftforge.net/forum/index.php?topic=32492.0
+    // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
+    // More info on proxy rendering
+    // http://www.minecraftforge.net/forum/index.php?topic=27684.0
+    // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
+    //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+    String name;
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      
+      
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof ItemBlock
+          || Block.getBlockFromItem(item) instanceof BlockBaseCable) {
+        continue;
+      }
+      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+    }
+    
+    for (Block b : BlockRegistry.blocks) {
+      item = Item.getItemFromBlock(b);
+      if(b instanceof BlockBaseCable){
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
+            new ResourceLocation(Const.MODID, b.getUnlocalizedName().replaceAll("tile.", "")), "inventory"));
+        ModelLoader.setCustomStateMapper(b, STATE_MAPPER);
+        //TODO: CABLE REGISTRY OR SOMETHING
+        
+        
+        continue;
+      }
+      
+      
+      name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
+      if (b instanceof IBlockHasTESR) {
+        ((IBlockHasTESR) b).initModel();
+      }
+    }
+
     if (BlockUtilityModule.enablePumpAndPipes) {
       //insomniaKitten
-      Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
-      Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
-      ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, new ModelResourceLocation(
-          new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
-      ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
+//      Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
+//      Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
+//      ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, new ModelResourceLocation(
+//          new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
+//      ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
       //TODO: CABLE REGISTRY OR SOMETHING
       Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
       Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
@@ -128,32 +171,6 @@ public class ItemRegistry {
       ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0, new ModelResourceLocation(
           new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
       ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-    }
-    // with help from
-    // http://www.minecraftforge.net/forum/index.php?topic=32492.0
-    // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
-    // More info on proxy rendering
-    // http://www.minecraftforge.net/forum/index.php?topic=27684.0
-    // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
-    //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-    String name;
-    Item item;
-    for (Block b : BlockRegistry.blocks) {
-      item = Item.getItemFromBlock(b);
-      name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
-      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
-      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
-      if (b instanceof IBlockHasTESR) {
-        ((IBlockHasTESR) b).initModel();
-      }
-    }
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof ItemBlock) {
-        continue;
-      }
-      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
-      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
     }
   }
 }
