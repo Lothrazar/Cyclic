@@ -997,8 +997,8 @@ tile.fluid_pipe.tooltip=Connect to a Fluid Pump to transfer liquids between tank
 tile.fluid_pipe.guide=Connect to a Fluid Pump to transfer liquids between tanks.  Each cable segment holds a small amount of liquid, and it gets pushed through from previous cable segments or a pump and goes out any direction it can find.
 
 tile.bundled_pipe.name=Bundled Cable
-tile.bundled_pipe.tooltip=Connect to an Energy Pump to transfer power
-tile.bundled_pipe.guide=Connect to a Energy Pump to transfer power.  Each cable segment holds a small amount of liquid, and it gets pushed through from previous cable segments or a pump and goes out any direction it can find.  Compatible with all Forge Energy systems such as RF.  
+tile.bundled_pipe.tooltip=Transfer items, fluids, and power
+tile.bundled_pipe.guide=Just like the other three pipes, you need something to start the flow such as a hopper or a pump.  Then this will cary your items, fluids, and power around the connected network until they find a home.
 
 tile.energy_pipe.name=Energy Cable
 tile.energy_pipe.tooltip=Connect to an Energy Pump to transfer power

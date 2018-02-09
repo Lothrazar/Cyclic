@@ -57,6 +57,8 @@ public class ItemRegistry {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
     for (Item item : ItemRegistry.itemMap.values()) {
+      
+      
       event.getRegistry().register(item);
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {

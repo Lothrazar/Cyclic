@@ -8,9 +8,9 @@ import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
-import com.lothrazar.cyclicmagic.component.cable.fluid.CableBlockFluid;
+import com.lothrazar.cyclicmagic.component.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.cable.item.CableBlockItem;
+import com.lothrazar.cyclicmagic.component.cable.item.BlockCableItem;
 import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
@@ -165,23 +165,22 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (enablePumpAndPipes) {
       //sort
-      BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
       //Item
-      BlockRegistry.registerBlock(new CableBlockItem(), "item_pipe",GuideCategory.BLOCK);
-      BlockRegistry.registerBlock(new BlockItemPump(), "item_pump",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockCableItem(), "item_pipe", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockItemPump(), "item_pump", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //ENERGY
-      BlockRegistry.registerBlock(new BlockPowerCable(),  "energy_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockPowerCable(), "energy_pipe", GuideCategory.BLOCK);
       BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
       GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
       // FLUID 
-      BlockRegistry.registerBlock(new CableBlockFluid(),  "fluid_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockCableFluid(), "fluid_pipe", GuideCategory.BLOCK);
       BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
       GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       //bundled
-
-      BlockRegistry.registerBlock(new BlockCableBundle(),  "bundled_pipe",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockCableBundle(), "bundled_pipe", GuideCategory.BLOCK);
       //pipes // TODO: fix block registry
       GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");

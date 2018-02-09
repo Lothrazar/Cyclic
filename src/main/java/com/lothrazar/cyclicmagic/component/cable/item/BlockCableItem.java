@@ -1,11 +1,7 @@
-package com.lothrazar.cyclicmagic.component.cable.bundle;
+package com.lothrazar.cyclicmagic.component.cable.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.component.cable.BlockBaseCable;
 import com.lothrazar.cyclicmagic.component.cable.CableBlockPrimary;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -13,16 +9,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockCableBundle extends CableBlockPrimary implements IHasRecipe {
-  public BlockCableBundle() {
-    //    super(Material.CLAY);
+public class BlockCableItem extends CableBlockPrimary implements IHasRecipe {
+  public BlockCableItem() {
     this.setItemTransport();
-    this.setFluidTransport();
-    this.setPowerTransport();
   }
   @Override
   public TileEntity createTileEntity(World world, IBlockState state) {
-    return new TileEntityCableBundle();
+    return new TileEntityItemCable();
   }
   @Override
   public IRecipe addRecipe() {
@@ -31,6 +24,6 @@ public class BlockCableBundle extends CableBlockPrimary implements IHasRecipe {
         "i i",
         "sis",
         's', Blocks.BRICK_STAIRS,
-        'i', "obsidian");
+        'i', "nuggetIron" );
   }
 }
