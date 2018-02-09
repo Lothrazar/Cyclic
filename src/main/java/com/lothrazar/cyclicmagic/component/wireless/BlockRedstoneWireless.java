@@ -128,44 +128,4 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       UtilChat.sendStatusMessage(event.getEntityPlayer(), UtilChat.lang("tile.wireless_transmitter.saved") + UtilChat.blockPosToString(pos));
     }
   }
-  /**
-   * item stack data pushed into tile entity
-   */
-  @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    stack.getItem().updateItemStackNBT(stack.getTagCompound());
-    TileEntity tile = worldIn.getTileEntity(pos);
-    BlockPos posTarget = UtilNBT.getItemStackBlockPos(stack);
-    if (tile != null && posTarget != null && tile instanceof TileEntityWirelessTr) {
-      ((TileEntityWirelessTr) tile).setTargetPos(posTarget);
-    }
-  }
-  /**
-   * tile entity data saved to item stack
-   * 
-   * @param event
-   */
-  @SubscribeEvent
-  public static void onBreakEvent(BreakEvent event) {
-    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
-      return;
-    } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
-    World world = event.getWorld();
-    BlockPos pos = event.getPos();
-    IBlockState state = event.getState();
-    TileEntity ent = world.getTileEntity(pos);
-    if (ent != null && ent instanceof TileEntityWirelessTr) {
-      TileEntityWirelessTr t = (TileEntityWirelessTr) ent;
-      ItemStack stack = new ItemStack(state.getBlock());
-      if (t.getTargetPos() != null)
-        UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
-      //      saveTileDataToStack(stack, t);
-      UtilItemStack.dropItemStackInWorld(world, pos, stack);
-    }
-  }
-  //disable regular drops, make my own drop that saves nbt
-  @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return null;
-  }
 }
