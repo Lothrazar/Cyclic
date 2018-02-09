@@ -51,16 +51,16 @@ public class BlockRegistry {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     //TODO fix refactor this
     if (BlockUtilityModule.enablePumpAndPipes) {
-      event.getRegistry().register(new CableBlockItem()
+      event.getRegistry().register(new CableBlockItem().setCreativeTab(ModCyclic.TAB)
           .setRegistryName(new ResourceLocation(Const.MODID, "item_pipe"))
           .setUnlocalizedName("item_pipe"));
-      event.getRegistry().register(new CableBlockFluid()
+      event.getRegistry().register(new CableBlockFluid().setCreativeTab(ModCyclic.TAB)
           .setRegistryName(new ResourceLocation(Const.MODID, "fluid_pipe"))
           .setUnlocalizedName("fluid_pipe"));
-      event.getRegistry().register(new BlockPowerCable()
+      event.getRegistry().register(new BlockPowerCable().setCreativeTab(ModCyclic.TAB)
           .setRegistryName(new ResourceLocation(Const.MODID, "energy_pipe"))
           .setUnlocalizedName("energy_pipe"));
-      event.getRegistry().register(new BlockCableBundle()
+      event.getRegistry().register(new BlockCableBundle().setCreativeTab(ModCyclic.TAB)
           .setRegistryName(new ResourceLocation(Const.MODID, "bundled_pipe"))
           .setUnlocalizedName("bundled_pipe"));
     }
