@@ -22,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
@@ -37,7 +38,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
- // public EnumConnectType north, south, east, west, up, down;
+  // public EnumConnectType north, south, east, west, up, down;
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
@@ -72,7 +73,6 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
   public boolean isEnergyPipe() {
     return this.energyTransport;
   }
- 
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -83,7 +83,6 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
     }
- 
     if (this.cableEnergyStore != null && compound.hasKey("powercable")) {
       CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
     }
@@ -164,7 +163,6 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
     if (cableEnergyStore != null) {
       compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
     }
- 
     return compound;
   }
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
@@ -222,19 +220,17 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
             this.setInventorySlotContents(0, leftAfterDeposit);
             outputSuccess = true;
           }
-          
           tileTarget = world.getTileEntity(posTarget);
           if (tileTarget instanceof TileEntityCableBase) {
             //TODO: not so compatible with other fluid systems. itl do i guess
             TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-            if (outputSuccess&& cable.isItemPipe())
+            if (outputSuccess && cable.isItemPipe())
               cable.updateIncomingItemFace(f.getOpposite());
           }
-          
-//          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
-//            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
-//            cable.updateIncomingItemFace(f.getOpposite());
-//          }
+          //          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
+          //            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
+          //            cable.updateIncomingItemFace(f.getOpposite());
+          //          }
         }
       }
       if (this.isFluidPipe()) {
@@ -246,20 +242,18 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
             toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
           }
           boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-
           tileTarget = world.getTileEntity(posTarget);
           if (tileTarget instanceof TileEntityCableBase) {
             //TODO: not so compatible with other fluid systems. itl do i guess
             TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-            if (outputSuccess&& cable.isFluidPipe())
+            if (outputSuccess && cable.isFluidPipe())
               cable.updateIncomingFluidFace(f.getOpposite());
           }
-          
-//          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
-//            //TODO: not so compatible with other fluid systems. itl do i guess
-//            TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
-//            cable.updateIncomingFluidFace(f.getOpposite());
-//          }
+          //          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
+          //            //TODO: not so compatible with other fluid systems. itl do i guess
+          //            TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
+          //            cable.updateIncomingFluidFace(f.getOpposite());
+          //          }
         }
       }
       if (this.isEnergyPipe()) {
@@ -327,7 +321,6 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
     }
   }
- 
   @Override
   public AxisAlignedBB getRenderBoundingBox() {
     double renderExtention = 1.0d;
@@ -336,8 +329,11 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
   }
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
-      return true;
+    if (capability == CapabilityEnergy.ENERGY) {
+      return this.isEnergyPipe();
+    }
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return this.isFluidPipe();
     }
     return super.hasCapability(capability, facing);
   }
