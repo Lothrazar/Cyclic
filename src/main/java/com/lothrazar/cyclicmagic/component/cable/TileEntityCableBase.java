@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
-  private static final int TRANSFER_FLUID_PER_TICK = 500;
+  public static final int TRANSFER_FLUID_PER_TICK = 500;
   private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;

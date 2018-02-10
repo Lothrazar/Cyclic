@@ -33,7 +33,8 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       UtilRender.glowOn(fluid.getLuminosity());
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
-      double posY = .1 + (.8 * ((float) fluidStack.amount / (float) te.getCapacity()));//so we get range of [0.1,0.9]
+      //so we get range of [0.01,0.99] -> avoids texture layer fighting
+      double posY = 0.01 + (.99 * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
