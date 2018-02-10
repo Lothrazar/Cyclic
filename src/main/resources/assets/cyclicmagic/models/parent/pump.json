@@ -8,16 +8,16 @@
 			"faces": {
 				"north": {
 					"uv": [0, 0, 8, 1],
-					"texture": "#missing"
+					"texture": "#inner"
 				},
-				"east": {"uv": [0, 0, 8, 1], "texture": "#missing"},
+				"east": {"uv": [0, 0, 8, 1], "texture": "#inner"},
 				"south": {
 					"uv": [0, 0, 8, 1],
-					"texture": "#missing"
+					"texture": "#inner"
 				},
-				"west": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"up": {"uv": [3, 3, 11, 11], "texture": "#missing"},
-				"down": {"uv": [0, 0, 8, 8], "texture": "#missing"}
+				"west": {"uv": [0, 0, 8, 1], "texture": "#inner"},
+				"up": {"uv": [3, 3, 11, 11], "texture": "#inner"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#inner"}
 			},
 			"type": "cube"
 		},
@@ -28,24 +28,24 @@
 			"faces": {
 				"north": {
 					"uv": [0, 0, 10, 1],
-					"texture": "#missing"
+					"texture": "#base"
 				},
 				"east": {
 					"uv": [0, 0, 10, 1],
-					"texture": "#missing"
+					"texture": "#base"
 				},
 				"south": {
 					"uv": [0, 0, 10, 1],
-					"texture": "#missing"
+					"texture": "#base"
 				},
 				"west": {
 					"uv": [0, 0, 10, 1],
-					"texture": "#missing"
+					"texture": "#base"
 				},
-				"up": {"uv": [3, 3, 13, 13], "texture": "#missing"},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#base"},
 				"down": {
 					"uv": [0, 0, 10, 10],
-					"texture": "#missing"
+					"texture": "#base"
 				}
 			},
 			"type": "cube"
@@ -57,22 +57,22 @@
 			"faces": {
 				"north": {
 					"uv": [0, 0, 2, 14],
-					"texture": "#missing"
+					"texture": "#pipe"
 				},
 				"east": {
 					"uv": [0, 0, 2, 14],
-					"texture": "#missing"
+					"texture": "#pipe"
 				},
 				"south": {
 					"uv": [0, 0, 2, 14],
-					"texture": "#missing"
+					"texture": "#pipe"
 				},
 				"west": {
 					"uv": [0, 0, 2, 14],
-					"texture": "#missing"
+					"texture": "#pipe"
 				},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#missing"},
-				"down": {"uv": [0, 0, 2, 2], "texture": "#missing"}
+				"up": {"uv": [0, 0, 2, 2], "texture": "#pipe"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#pipe"}
 			},
 			"type": "cube"
 		}

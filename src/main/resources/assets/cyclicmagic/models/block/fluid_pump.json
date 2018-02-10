@@ -1,0 +1,9 @@
+{
+	"parent": "cyclicmagic:parent/pump",
+    "textures": {
+        "inner": "blocks/furnace_top",
+        "base": "blocks/cauldron_inner",
+        "pipe": "blocks/dispenser_front_vertical",
+        "particle": "blocks/iron_block"
+    }
+}
