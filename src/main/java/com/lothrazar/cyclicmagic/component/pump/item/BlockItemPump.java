@@ -28,7 +28,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
     this.placeType = PlacementType.SIDE_BLOCK;
   }
-  @Override //Use IBlockState.getBlockFaceShape
+  @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (side == EnumFacing.UP || side == EnumFacing.DOWN)
       return false;//allows, for example, you to open chest that is directly below
