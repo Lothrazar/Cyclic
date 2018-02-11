@@ -17,47 +17,20 @@ public class BlockEnergyPump extends BlockBaseFacingOmni implements ITileEntityP
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
+    this.placeType = PlacementType.SIDE_BLOCK;
   }
-
- 
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityEnergyPump();
   }
-  
- 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "i i",
-        "frd",
-        "i i",
-        'r', "dustRedstone",
-        'i', "ingotGold",
-        'f', Blocks.FURNACE,
-        'd', Blocks.DAYLIGHT_DETECTOR);
+        " r ",
+        "ibi",
+        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        'i', "dustRedstone",
+        'r', Blocks.DROPPER);
   }
-//  @Override
-//  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-//    // check the TE
-//    TileEntityBaseMachineFluid te = (TileEntityBaseMachineFluid) world.getTileEntity(pos);
-//    boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
-//    if (te != null) {
-//      if (world.isRemote == false) { //server side
-//        String message = null;
-//        FluidStack fs = te.getCurrentFluidStack();
-//        if (fs != null) {
-//          String amtStr = fs.amount + " / " + te.getCapacity() + " ";
-//          message = UtilChat.lang("cyclic.fluid.amount") + amtStr + fs.getLocalizedName();
-//        }
-//        else {
-//          message = UtilChat.lang("cyclic.fluid.empty");
-//        }
-//        String powered = world.isBlockPowered(pos) ? "cyclic.redstone.on" : "cyclic.redstone.off";
-//        UtilChat.sendStatusMessage(player, message + "; " + UtilChat.lang(powered));
-//      }
-//    }
-//    // otherwise return true if it is a fluid handler to prevent in world placement
-//    return success || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
-//  }
 }

@@ -13,6 +13,10 @@ import net.minecraft.world.World;
 
 public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   public static final PropertyDirection PROPERTYFACING = BlockDirectional.FACING;
+  public static enum PlacementType {
+    PLAYER_FACING, SIDE_BLOCK;
+  }
+  public PlacementType placeType = PlacementType.PLAYER_FACING;
   public BlockBaseFacingOmni(Material materialIn) {
     super(materialIn);
   }
@@ -42,12 +46,23 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   }
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-    EnumFacing fac = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+    EnumFacing fac = null;
+    switch (this.placeType) {
+      case SIDE_BLOCK:
+        if (blockFaceClickedOn.getAxis() == EnumFacing.Axis.Y)
+          fac = blockFaceClickedOn;// up or down
+        else
+          fac = blockFaceClickedOn.getOpposite();
+      break;
+      case PLAYER_FACING:
+      default:
+        fac = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+      break;
+    }
     if (fac != EnumFacing.UP && fac != EnumFacing.DOWN) {
       fac = fac.getOpposite();//make consistent with non-omni blocks: faces user
     }
-    return this.getDefaultState().withProperty(PROPERTYFACING,
-        fac);
+    return this.getDefaultState().withProperty(PROPERTYFACING, fac);
   }
   public static EnumFacing getCurrentFacing(World world, BlockPos pos) {
     try {

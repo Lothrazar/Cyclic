@@ -32,7 +32,6 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   private SoundEvent sound;
   public BlockLaunch(LaunchType t, SoundEvent s) {
     super(Material.IRON);//same as BlockSlime 
-    
     this.setSoundType(SoundType.SLIME);
     sound = s;
     type = t;

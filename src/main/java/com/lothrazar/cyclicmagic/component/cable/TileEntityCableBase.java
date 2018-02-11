@@ -104,7 +104,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       validLabels.add(this.getIncomingStringsItem());
     }
     if (this.isFluidPipe() && this.getCurrentFluidStack() != null) {
-     // FluidStack fs = this.getCurrentFluidStack();
+      // FluidStack fs = this.getCurrentFluidStack();
       validLabels.add(this.getIncomingStringsFluid());
     }
     if (this.isEnergyPipe() &&

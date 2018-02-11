@@ -17,8 +17,6 @@ public class BlockCableFluid extends BlockCableBase implements IHasRecipe {
   public TileEntity createTileEntity(World world, IBlockState state) {
     return new TileEntityFluidCable();
   }
-  
-  
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
@@ -26,7 +24,6 @@ public class BlockCableFluid extends BlockCableBase implements IHasRecipe {
         "i i",
         "sis",
         's', Blocks.BRICK_STAIRS,
-        'i', "nuggetGold" );
+        'i', "nuggetGold");
   }
-  
 }

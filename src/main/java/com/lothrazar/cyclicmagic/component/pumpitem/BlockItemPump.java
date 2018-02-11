@@ -26,6 +26,7 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
+    this.placeType = PlacementType.SIDE_BLOCK;
   }
   @Override //Use IBlockState.getBlockFaceShape
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
@@ -47,11 +48,10 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "i i",
-        "frd",
-        "i i",
-        'r', "nuggetIron",
-        'i', "ingotIron",
-        'f', Blocks.DROPPER,
-        'd', Blocks.HOPPER);
+        " r ",
+        "ibi",
+        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        'i', "nuggetIron",
+        'r', Blocks.DROPPER);
   }
 }

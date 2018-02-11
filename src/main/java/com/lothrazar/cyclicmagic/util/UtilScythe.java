@@ -205,9 +205,9 @@ public class UtilScythe {
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-//      for (ItemStack drop : drops) {
-//        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-//      }
+      //      for (ItemStack drop : drops) {
+      //        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
+      //      }
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
