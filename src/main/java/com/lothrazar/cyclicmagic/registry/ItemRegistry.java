@@ -125,31 +125,6 @@ public class ItemRegistry {
         ((IBlockHasTESR) b).initModel();
       }
     }
-    if (BlockUtilityModule.enablePumpAndPipes) {
-      //insomniaKitten
-      //      Block CABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "item_pipe");
-      //      Item CABLE_ITEM = Item.getItemFromBlock(CABLE_BLOCK);
-      //      ModelLoader.setCustomModelResourceLocation(CABLE_ITEM, 0, new ModelResourceLocation(
-      //          new ResourceLocation(Const.MODID, "item_pipe"), "inventory"));
-      //      ModelLoader.setCustomStateMapper(CABLE_BLOCK, STATE_MAPPER);
-      //TODO: CABLE REGISTRY OR SOMETHING
-      //      Block FCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "fluid_pipe");
-      //      Item FCABLE_ITEM = Item.getItemFromBlock(FCABLE_BLOCK);
-      //      ModelLoader.setCustomModelResourceLocation(FCABLE_ITEM, 0, new ModelResourceLocation(
-      //          new ResourceLocation(Const.MODID, "fluid_pipe"), "inventory"));
-      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-      //      //TODO: CABLE REGISTRY OR SOMETHING
-      //      Block ECABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "energy_pipe");
-      //      Item ECABLE_ITEM = Item.getItemFromBlock(ECABLE_BLOCK);
-      //      ModelLoader.setCustomModelResourceLocation(ECABLE_ITEM, 0, new ModelResourceLocation(
-      //          new ResourceLocation(Const.MODID, "energy_pipe"), "inventory"));
-      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-      //      //
-      //      Block BCABLE_BLOCK = Block.getBlockFromName(Const.MODRES + "bundled_pipe");
-      //      Item BCABLE_ITEM = Item.getItemFromBlock(BCABLE_BLOCK);
-      //      ModelLoader.setCustomModelResourceLocation(BCABLE_ITEM, 0, new ModelResourceLocation(
-      //          new ResourceLocation(Const.MODID, "bundled_pipe"), "inventory"));
-      //      ModelLoader.setCustomStateMapper(FCABLE_BLOCK, STATE_MAPPER);
-    }
+
   }
 }
