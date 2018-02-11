@@ -21,7 +21,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
@@ -105,7 +104,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       validLabels.add(this.getIncomingStringsItem());
     }
     if (this.isFluidPipe() && this.getCurrentFluidStack() != null) {
-      FluidStack fs = this.getCurrentFluidStack();
+     // FluidStack fs = this.getCurrentFluidStack();
       validLabels.add(this.getIncomingStringsFluid());
     }
     if (this.isEnergyPipe() &&

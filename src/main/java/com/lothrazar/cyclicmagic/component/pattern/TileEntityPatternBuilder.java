@@ -342,6 +342,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;
       break;
+      case FUELMAX:break;
     }
   }
   @Override

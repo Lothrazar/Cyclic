@@ -13,7 +13,7 @@ public class IngameConfigFactory implements IModGuiFactory {
   //  public Class<? extends GuiScreen> mainConfigGuiClass() {
   //    return IngameConfigGui.class;// the only line we need to add
   //  }
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
   @Override
   public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
     return new HashSet() {

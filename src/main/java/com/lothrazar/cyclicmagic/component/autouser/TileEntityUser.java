@@ -250,7 +250,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             maybeTool.shrink(1 + hack);
           }
           else {//original had fluid in it. so make sure we drain it now hey
-            ItemStack drained = UtilFluid.drainOneBucket(maybeTool.splitStack(1));
+            UtilFluid.drainOneBucket(maybeTool.splitStack(1));
             // drained.setCount(1);
             // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
             maybeTool.shrink(1 + hack);

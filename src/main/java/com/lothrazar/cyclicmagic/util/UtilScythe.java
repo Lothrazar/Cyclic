@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilScythe {
-  private static final int FORTUNE = 5;
+  //private static final int FORTUNE = 5;
   private static NonNullList<String> blacklistAll;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
@@ -151,7 +151,7 @@ public class UtilScythe {
     }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    final NonNullList<ItemStack> drops = NonNullList.create();
+    //final NonNullList<ItemStack> drops = NonNullList.create();
     // (A): garden scythe and harvester use this; 
     //      BUT type LEAVES and WEEDS harvester use DIFFERENT NEW class
     //     then each scythe has config list of what it breaks (maybe just scythe for all the modplants. also maybe hardcoded)
