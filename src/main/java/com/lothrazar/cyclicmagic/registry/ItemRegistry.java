@@ -77,19 +77,15 @@ public class ItemRegistry {
       }
     }
   }
-  //  @SideOnly(Side.CLIENT)
-  //  private static final ModelResourceLocation ITEM_MODEL = new ModelResourceLocation(
-  //      new ResourceLocation(Const.MODID, "cable"), "inventory");
-  @SideOnly(Side.CLIENT)
-  private static final IStateMapper STATE_MAPPER = new StateMapperBase() {
-    @Override
-    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-      return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
-    }
-  };
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
+    final IStateMapper STATE_MAPPER = new StateMapperBase() {
+      @Override
+      protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+        return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+      }
+    };
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
@@ -125,6 +121,5 @@ public class ItemRegistry {
         ((IBlockHasTESR) b).initModel();
       }
     }
-
   }
 }
