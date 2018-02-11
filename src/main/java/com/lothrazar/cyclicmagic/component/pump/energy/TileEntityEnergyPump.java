@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.pumpenergy;
+package com.lothrazar.cyclicmagic.component.pump.energy;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;

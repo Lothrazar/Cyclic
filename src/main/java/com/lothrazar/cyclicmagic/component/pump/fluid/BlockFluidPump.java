@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.pumpfluid;
+package com.lothrazar.cyclicmagic.component.pump.fluid;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.pumpenergy;
+package com.lothrazar.cyclicmagic.component.pump.energy;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.pumpfluid;
+package com.lothrazar.cyclicmagic.component.pump.fluid;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;

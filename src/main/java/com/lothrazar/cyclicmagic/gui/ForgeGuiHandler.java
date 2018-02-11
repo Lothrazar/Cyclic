@@ -72,9 +72,9 @@ import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbe
 import com.lothrazar.cyclicmagic.component.playerext.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.component.pumpitem.ContainerItemPump;
-import com.lothrazar.cyclicmagic.component.pumpitem.GuiItemPump;
-import com.lothrazar.cyclicmagic.component.pumpitem.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.component.pump.item.ContainerItemPump;
+import com.lothrazar.cyclicmagic.component.pump.item.GuiItemPump;
+import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.component.pylonexp.ContainerPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.GuiPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
