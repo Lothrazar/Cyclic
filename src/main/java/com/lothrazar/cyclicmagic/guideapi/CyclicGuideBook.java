@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.Optional;
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
-  private static final String GUIDE_API_MOD_ID = "guideapi";
+  //private static final String GUIDE_API_MOD_ID = "guideapi";
   private static final int MAX_PAGE_LENGTH = 314;
   private static Book book;
   private List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();

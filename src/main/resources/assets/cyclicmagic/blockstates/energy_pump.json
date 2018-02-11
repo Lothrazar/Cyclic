@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:energy_pump_north"},
-        "facing=east":  { "model": "cyclicmagic:energy_pump_east"},
-        "facing=south": { "model": "cyclicmagic:energy_pump_south"},
-        "facing=up":    { "model": "cyclicmagic:energy_pump_up"},
-        "facing=down":  { "model": "cyclicmagic:energy_pump_down"},
-        "facing=west":  { "model": "cyclicmagic:energy_pump_west" }
+        "facing=up":    { "model": "cyclicmagic:energy_pump"},
+        "facing=down":  { "model": "cyclicmagic:energy_pump", "x":180},
+        "facing=north": { "model": "cyclicmagic:energy_pump", "x":90 },
+        "facing=south": { "model": "cyclicmagic:energy_pump", "x":90, "y":180},
+        "facing=east":  { "model": "cyclicmagic:energy_pump", "x":90, "y":90 },
+        "facing=west":  { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
     }
 }

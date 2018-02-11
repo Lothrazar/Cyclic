@@ -12,6 +12,7 @@ import net.minecraft.util.text.translation.I18n;
 //import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class UtilChat {
   public static void addChatMessage(EntityPlayer player, String text) {
     player.sendMessage(new TextComponentTranslation(lang(text)));

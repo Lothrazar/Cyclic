@@ -150,8 +150,8 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       this.motionX *= 0.800000011920929D;
       this.motionY *= 0.0D;
       this.motionZ *= 0.800000011920929D;
-      this.motionX += this.pushX * 1.0D;
-      this.motionZ += this.pushZ * 1.0D;
+      this.motionX += this.pushX * d1;
+      this.motionZ += this.pushZ * d1;
     }
     else {
       this.motionX *= 0.9800000190734863D;

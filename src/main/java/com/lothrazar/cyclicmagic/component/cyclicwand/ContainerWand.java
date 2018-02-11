@@ -35,7 +35,6 @@ public class ContainerWand extends ContainerBase {
       this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, y));
     }
   }
- 
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);

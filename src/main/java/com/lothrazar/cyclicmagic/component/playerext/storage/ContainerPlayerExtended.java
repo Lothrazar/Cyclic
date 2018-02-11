@@ -85,7 +85,7 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-//    ModCyclic.logger.error("HEYY " + iSlot);
+    //    ModCyclic.logger.error("HEYY " + iSlot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
     int playerStart = 40, playerEnd = 66, topStart = 4, topEnd = 39, hotbarStart = 67, hotbarEnd = 75, armorStart = 0, armorEnd = 3;

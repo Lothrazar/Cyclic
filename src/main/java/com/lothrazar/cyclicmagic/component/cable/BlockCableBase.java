@@ -38,6 +38,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
  * @author insomniaKitten
  *
  */
+@SuppressWarnings("deprecation")
 public abstract class BlockCableBase extends BlockBaseHasTile {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories

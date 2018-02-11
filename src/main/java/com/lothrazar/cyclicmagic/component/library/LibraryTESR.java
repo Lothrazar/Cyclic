@@ -15,6 +15,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public LibraryTESR(Block block) {
     super(block);
   }
+  @SuppressWarnings("unchecked")
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     for (EnumFacing face : EnumFacing.HORIZONTALS) {
