@@ -984,7 +984,7 @@ splash_potion.effect.frostwalker=Splash Potion of Frost Walker
 lingering_potion.effect.frostwalker=Lingering Potion of Frost Walker
 tipped_arrow.effect.frostwalker=Arrow of Frost Walker
 
-tile.fluid_pump.name=Fluid Pump
+tile.fluid_pump.name=Fluid Extraction Cable
 tile.fluid_pump.tooltip=Extract liquid into cables or machines
 tile.fluid_pump.guide=Drains from all sides except the facing direction.  Pushes liquids into tanks in front if any.  Push into another tank or Fluid Cable.
 
@@ -993,32 +993,32 @@ tile.fluid_placer.tooltip=Place fluid in the world
 tile.fluid_placer.guide=Fill this with a bucket or fluid cables.  Places fluid in the world on redstone power.  
 
 tile.fluid_pipe.name=Fluid Cable
-tile.fluid_pipe.tooltip=Connect to a Fluid Pump to transfer liquids between tanks
-tile.fluid_pipe.guide=Connect to a Fluid Pump to transfer liquids between tanks.  Each cable segment holds a small amount of liquid, and it gets pushed through from previous cable segments or a pump and goes out any direction it can find.
+tile.fluid_pipe.tooltip=Use an Extraction cable to transfer liquids
+tile.fluid_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow
 
 tile.bundled_pipe.name=Bundled Cable
 tile.bundled_pipe.tooltip=Transfer items, fluids, and energy
 tile.bundled_pipe.guide=Just like the other three cables, you need something to start the flow such as a hopper or a pump.  Then this will cary your items, fluids, and power around the connected network until they find a home.
 
-tile.energy_pump.name=Energy Pump
+tile.energy_pump.name=Energy Extraction Cable
 tile.energy_pump.tooltip=Extract power into cables or machines
 tile.energy_pump.guide=Transfer energy out of machines.  Can be used with cables and machines.  Compatible with all Forge Energy systems such as RF.  
 
 tile.energy_pipe.name=Energy Cable
-tile.energy_pipe.tooltip=Connect to an Energy Pump to transfer power
-tile.energy_pipe.guide=Connect to a Energy Pump to transfer power.  Each cable segment holds a small amount of liquid, and it gets pushed through from previous cable segments or a pump and goes out any direction it can find.  Compatible with all Forge Energy systems such as RF.  
+tile.energy_pipe.tooltip=Connect to an Extraction Cable to transfer power
+tile.energy_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.  
 
 cyclic.redstone.on=Restone: On
 cyclic.redstone.off=Restone: Off
 
-tile.item_pump.name=Item Pump
+tile.item_pump.name=Item Extraction Cable
 tile.item_pump.tooltip=Extracts items into Item Cables
 tile.item_pump.guide=Pump items out of anything into any inventory or the Item Cable
 
 
 tile.item_pipe.name=Item Cable
-tile.item_pipe.tooltip=Connect to an Item Pump to move items
-tile.item_pipe.guide=Use an Item Pump to pull out of any inventory into these cables, which will deposit anywhere
+tile.item_pipe.tooltip=Use an Extraction cable to transfer items
+tile.item_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow
 
 tile.item_pipe_sort.name=Item Sorter
 tile.item_pipe_sort.tooltip=Sorting machine for use with cables and hoppers
