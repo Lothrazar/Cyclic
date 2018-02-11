@@ -4,14 +4,12 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -127,45 +124,5 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       UtilNBT.setItemStackBlockPos(stack, pos);
       UtilChat.sendStatusMessage(event.getEntityPlayer(), UtilChat.lang("tile.wireless_transmitter.saved") + UtilChat.blockPosToString(pos));
     }
-  }
-  /**
-   * item stack data pushed into tile entity
-   */
-  @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    stack.getItem().updateItemStackNBT(stack.getTagCompound());
-    TileEntity tile = worldIn.getTileEntity(pos);
-    BlockPos posTarget = UtilNBT.getItemStackBlockPos(stack);
-    if (tile != null && posTarget != null && tile instanceof TileEntityWirelessTr) {
-      ((TileEntityWirelessTr) tile).setTargetPos(posTarget);
-    }
-  }
-  /**
-   * tile entity data saved to item stack
-   * 
-   * @param event
-   */
-  @SubscribeEvent
-  public static void onBreakEvent(BreakEvent event) {
-    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
-      return;
-    } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
-    World world = event.getWorld();
-    BlockPos pos = event.getPos();
-    IBlockState state = event.getState();
-    TileEntity ent = world.getTileEntity(pos);
-    if (ent != null && ent instanceof TileEntityWirelessTr) {
-      TileEntityWirelessTr t = (TileEntityWirelessTr) ent;
-      ItemStack stack = new ItemStack(state.getBlock());
-      if (t.getTargetPos() != null)
-        UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
-      //      saveTileDataToStack(stack, t);
-      UtilItemStack.dropItemStackInWorld(world, pos, stack);
-    }
-  }
-  //disable regular drops, make my own drop that saves nbt
-  @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return null;
   }
 }

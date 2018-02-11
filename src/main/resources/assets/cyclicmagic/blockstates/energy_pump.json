@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=up":    { "model": "cyclicmagic:energy_pump"},
+        "facing=down":  { "model": "cyclicmagic:energy_pump", "x":180},
+        "facing=north": { "model": "cyclicmagic:energy_pump", "x":90 },
+        "facing=south": { "model": "cyclicmagic:energy_pump", "x":90, "y":180},
+        "facing=east":  { "model": "cyclicmagic:energy_pump", "x":90, "y":90 },
+        "facing=west":  { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
+    }
+}

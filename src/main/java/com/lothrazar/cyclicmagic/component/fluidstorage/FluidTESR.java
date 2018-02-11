@@ -33,7 +33,8 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       UtilRender.glowOn(fluid.getLuminosity());
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
-      double posY = .1 + (.8 * ((float) fluidStack.amount / (float) te.getCapacity()));//so we get range of [0.1,0.9]
+      //so we get range smaller THAN [0,1] -> avoids texture layer fighting
+      double posY = 0.02 + (.95 * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
@@ -42,8 +43,8 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       float alph = 1.0F;
       // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
       // T/B for top and bottom
-      float T = 14F / 16F;
-      float B = 2F / 16F;
+      float T = 15.5F / 16F;
+      float B = 0.5F / 16F;
       int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);

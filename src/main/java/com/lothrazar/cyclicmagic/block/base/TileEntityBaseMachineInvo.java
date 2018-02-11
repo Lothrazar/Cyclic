@@ -491,13 +491,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      //      if (facing == EnumFacing.DOWN)
-      //        return (T) handlerBottom;
-      //      else if (facing == EnumFacing.UP)
-      //facing != null &&
       return (T) invHandler;
-      //      else
-      //        return (T) handlerSide;
     }
     if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
       this.initEnergyStorage();

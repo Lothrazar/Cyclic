@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilScythe {
-  private static final int FORTUNE = 5;
+  //private static final int FORTUNE = 5;
   private static NonNullList<String> blacklistAll;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
@@ -89,6 +89,7 @@ public class UtilScythe {
         ,"abyssalcraft:wastelandsthorn"
         ,"abyssalcraft:luminousthistle"
         ,"harvestcraft:garden"
+        ,"harvestcraft:windygarden"
         ,"minecraft:double_plant"
         ,"minecraft:red_flower"
         ,"minecraft:yellow_flower"
@@ -150,7 +151,7 @@ public class UtilScythe {
     }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    final NonNullList<ItemStack> drops = NonNullList.create();
+    //final NonNullList<ItemStack> drops = NonNullList.create();
     // (A): garden scythe and harvester use this; 
     //      BUT type LEAVES and WEEDS harvester use DIFFERENT NEW class
     //     then each scythe has config list of what it breaks (maybe just scythe for all the modplants. also maybe hardcoded)
@@ -195,8 +196,8 @@ public class UtilScythe {
     }
     if (doBreak) {
       //break with false so that we can get the drops our own way
-      world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
-      blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
+      world.destroyBlock(posCurrent, true);//true==drops; false == no drops. literally just for the sound
+      //blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -204,9 +205,9 @@ public class UtilScythe {
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-      for (ItemStack drop : drops) {
-        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-      }
+      //      for (ItemStack drop : drops) {
+      //        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
+      //      }
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {

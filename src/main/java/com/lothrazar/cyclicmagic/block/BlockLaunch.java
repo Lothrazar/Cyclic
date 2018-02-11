@@ -7,14 +7,12 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +21,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
-  private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 90;
   private final static int RECIPE_OUT = 6;
   public static enum LaunchType {
@@ -35,7 +32,6 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   private SoundEvent sound;
   public BlockLaunch(LaunchType t, SoundEvent s) {
     super(Material.IRON);//same as BlockSlime 
-    //    this.blockMapColor = MapColor.GRASS;
     this.setSoundType(SoundType.SLIME);
     sound = s;
     type = t;

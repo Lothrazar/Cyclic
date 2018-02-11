@@ -55,10 +55,10 @@ public class ModCyclic {
   static {
     FluidRegistry.enableUniversalBucket();//https://github.com/BluSunrize/ImmersiveEngineering/blob/c76e51998756a54c22dd40ac1877313bf95e8520/src/main/java/blusunrize/immersiveengineering/ImmersiveEngineering.java
   }
-  public static String test= "@TEST@";
+  public static String test = "@TEST@";
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
-    System.out.println("!!!!!!"+test);
+    System.out.println("!!!!!!" + test);
     logger = new ModLogger(event.getModLog());
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     ConfigRegistry.register(logger);
@@ -118,16 +118,16 @@ public class ModCyclic {
       module.onServerStarting(event);
     }
   }
-//  @EventHandler
-//  public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-//    // https://tutorials.darkhax.net/tutorials/jar_signing/
-//    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
-//    String msg = "Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
-//    if (logger == null) {
-//      System.out.println(msg);
-//    }
-//    else {
-//      ModCyclic.logger.error(msg);
-//    }
-//  }
+  //  @EventHandler
+  //  public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+  //    // https://tutorials.darkhax.net/tutorials/jar_signing/
+  //    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
+  //    String msg = "Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
+  //    if (logger == null) {
+  //      System.out.println(msg);
+  //    }
+  //    else {
+  //      ModCyclic.logger.error(msg);
+  //    }
+  //  }
 }

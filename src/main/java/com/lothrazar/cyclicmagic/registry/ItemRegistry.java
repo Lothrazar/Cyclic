@@ -6,11 +6,15 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
+import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -75,6 +79,12 @@ public class ItemRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
+    final IStateMapper STATE_MAPPER = new StateMapperBase() {
+      @Override
+      protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+        return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+      }
+    };
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
@@ -84,22 +94,31 @@ public class ItemRegistry {
     //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     String name;
     Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof ItemBlock
+      // || Block.getBlockFromItem(item) instanceof BlockBaseCable
+      ) {
+        continue;
+      }
+      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
+      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
+    }
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
+      if (b instanceof BlockCableBase) {
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
+            new ResourceLocation(Const.MODID, b.getUnlocalizedName().replaceAll("tile.", "")), "inventory"));
+        ModelLoader.setCustomStateMapper(b, STATE_MAPPER);
+        //TODO: CABLE REGISTRY OR SOMETHING
+        continue;
+      }
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
       if (b instanceof IBlockHasTESR) {
         ((IBlockHasTESR) b).initModel();
       }
-    }
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof ItemBlock) {
-        continue;
-      }
-      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
-      ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
     }
   }
 }

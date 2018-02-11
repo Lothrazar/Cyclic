@@ -62,6 +62,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   public static EnumFacing getFacing(int meta) {
     return EnumFacing.getFront(meta & 7);
   }
+  public static EnumFacing getFacing(IBlockState state) {
+    return state.getValue(FACING);
+  }
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
@@ -137,7 +140,9 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
   @Override
   public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    if (this.canPlaceBlockAt(world, pos) == false) {
+    EnumFacing facState = getFacing(state);
+    if (this.canPlaceBlockAt(world, pos) == false
+        || world.isSideSolid(pos.offset(facState.getOpposite()), facState, true) == false) {
       if (world.setBlockToAir(pos)) {
         dropBlockAsItem(world, pos, getDefaultState(), 0);
         return;

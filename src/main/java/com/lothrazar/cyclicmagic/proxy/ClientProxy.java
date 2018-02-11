@@ -1,10 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.CableFluidRenderer;
-import com.lothrazar.cyclicmagic.component.fluidtransfer.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.itemtransfer.CableItemRenderer;
-import com.lothrazar.cyclicmagic.component.itemtransfer.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
 import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
@@ -67,6 +63,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+//@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
@@ -79,8 +76,11 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableFluidRenderer());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableItemRenderer());
+    // TODO: refactor cable
+    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/fluid.png")));
+    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/item.png")));
+    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/bundle.png")));
+    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/energy.png")));
   }
   @Override
   public void init() {
