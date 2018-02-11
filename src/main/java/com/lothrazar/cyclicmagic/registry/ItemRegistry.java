@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
