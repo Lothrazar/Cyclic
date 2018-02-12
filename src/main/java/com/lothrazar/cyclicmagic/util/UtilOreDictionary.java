@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -15,6 +16,9 @@ public class UtilOreDictionary {
       }
     }
     return false;
+  }
+  public static boolean doesMatchOreDict(final ItemStack stackIn, final List<String> oreIds) {
+   return doesMatchOreDict(stackIn,oreIds.toArray(new String[0])) ;
   }
   public static boolean doesMatchOreDict(final ItemStack stackIn, final String[] oreIds) {
     return doesMatchOreDict(stackIn, oreIds, false);

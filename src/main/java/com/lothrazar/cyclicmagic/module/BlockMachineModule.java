@@ -30,6 +30,9 @@ import com.lothrazar.cyclicmagic.component.password.BlockPassword;
 import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.component.pattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
+import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
+import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
@@ -50,6 +53,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -193,6 +197,11 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
+    //peat
+    ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
+    ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
+    ItemRegistry.register(new ItemPeatFuel(), "peat_biomass", GuideCategory.ITEM);
+    ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
   }
   @Override
   public void syncConfig(Configuration config) {
