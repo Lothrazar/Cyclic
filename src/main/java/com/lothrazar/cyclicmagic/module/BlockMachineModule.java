@@ -201,7 +201,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     //peat
     ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
     ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
-    ItemRegistry.register(new ItemPeatFuel(), "peat_biomass", GuideCategory.ITEM);
+    ItemRegistry.register(new ItemPeatFuel(), "peat_fuel", GuideCategory.ITEM);
      BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
      BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
     
