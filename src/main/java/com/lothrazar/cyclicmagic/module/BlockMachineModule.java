@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.component.password.BlockPassword;
 import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.component.pattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
 import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
@@ -201,7 +202,12 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
     ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
     ItemRegistry.register(new ItemPeatFuel(), "peat_biomass", GuideCategory.ITEM);
+     BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+     BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+    
+    
     ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
+    
   }
   @Override
   public void syncConfig(Configuration config) {

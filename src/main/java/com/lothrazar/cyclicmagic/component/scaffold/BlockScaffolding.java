@@ -64,6 +64,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
       worldObj.destroyBlock(pos, dropBlock);
     }
   }
+  @Override
   public int tickRate(World worldIn) {
     return 200;
   }
