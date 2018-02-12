@@ -67,10 +67,6 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
   }
-  @SideOnly(Side.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
-    return true;
-  }
   @Override
   public SoundEvent getSound() {
     return SoundRegistry.dungeonfinder;

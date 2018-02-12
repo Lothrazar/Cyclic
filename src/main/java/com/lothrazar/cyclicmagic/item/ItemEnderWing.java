@@ -33,10 +33,6 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     super(durability);
     warpType = type;
   }
-  @SideOnly(Side.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
-    return true;
-  }
   @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     tryActivate(player, held);
