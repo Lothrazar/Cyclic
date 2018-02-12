@@ -76,6 +76,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   // private boolean enablePowerCables;
   //  private boolean bundledCable;
   public void onPreInit() {
+    super.onPreInit();
     BlockAppleCrop apple = new BlockAppleCrop();
     BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
     if (btrash) {

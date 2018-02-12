@@ -24,7 +24,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
-public class GearModule extends BaseEventModule implements IHasConfig {
+public class GearModule extends BaseModule implements IHasConfig {
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
   // only because theyre private, with no getters

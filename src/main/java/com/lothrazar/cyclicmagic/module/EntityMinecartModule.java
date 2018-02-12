@@ -18,7 +18,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraftforge.common.config.Configuration;
 
-public class EntityMinecartModule extends BaseEventModule implements IHasConfig {
+public class EntityMinecartModule extends BaseModule implements IHasConfig {
   private boolean goldMinecart;
   private boolean stoneMinecart;
   private boolean chestMinecart;
@@ -27,6 +27,7 @@ public class EntityMinecartModule extends BaseEventModule implements IHasConfig 
   private boolean turretMinecart;
   @Override
   public void onPreInit() {
+    super.onPreInit();
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);

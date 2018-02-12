@@ -67,9 +67,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return ore;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (WorldModule.oreSpawns == false) {
-      return;
-    } //config has disabled spawning no matter what
+
     if (this.spawn != null) {
       int rand = world.rand.nextInt(100);
       if (rand < this.spawnChance) {

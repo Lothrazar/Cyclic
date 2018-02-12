@@ -26,6 +26,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean enableInterdict;
   private boolean vectorPlate;
   public void onPreInit() {
+    super.onPreInit();
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
