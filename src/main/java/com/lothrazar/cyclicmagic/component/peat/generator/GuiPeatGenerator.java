@@ -1,9 +1,14 @@
 package com.lothrazar.cyclicmagic.component.peat.generator;
+import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.component.pump.item.ContainerItemPump;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class GuiPeatGenerator extends GuiBaseContainer {
   public GuiPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
@@ -25,5 +30,31 @@ public class GuiPeatGenerator extends GuiBaseContainer {
     //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     
     //DRAW ENERGY BAR
+//    ITileFuel tileFuel = (ITileFuel) this.tile;
+//    int u = 0, v = 0;
+     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+     
+     
+    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
+    int outerLength = 78, outerWidth = 16;
+    int innerLength = 76, innerWidth = 14;
+     
+ int  fuelX = this.guiLeft + screenSize.width() -25;
+ int  fuelXE = fuelX + innerWidth;
+ int  fuelY = this.guiTop + Const.PAD;
+ int  fuelYE = fuelY + innerLength;
+    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + screenSize.width() -26,
+        this.guiTop+4, u, v,
+        outerWidth, outerLength,
+        outerWidth, outerLength);
+    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
+    Gui.drawModalRectWithCustomSizedTexture(
+        fuelX,
+        fuelY-3, u, v,
+        innerWidth, (int) (innerLength * percent),
+        innerWidth, innerLength);
+      
   }
 }
