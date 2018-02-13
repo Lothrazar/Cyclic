@@ -34,6 +34,8 @@ import com.lothrazar.cyclicmagic.component.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
 import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.component.peat.generator.BlockPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
@@ -199,15 +201,14 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
     //peat
-    ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-    ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
-    ItemRegistry.register(new ItemPeatFuel(), "peat_fuel", GuideCategory.ITEM);
-     BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
-     BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
-    
-    
     ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
-    
+    ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
+    ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
+    ItemRegistry.register(new ItemPeatFuel(), "peat_fuel", GuideCategory.ITEM);
+    BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(new BlockPeatGenerator(), "peat_generator", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
   }
   @Override
   public void syncConfig(Configuration config) {
