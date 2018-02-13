@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.component.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
 import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.component.peat.farm.BlockPeatFarm;
 import com.lothrazar.cyclicmagic.component.peat.generator.BlockPeatGenerator;
 import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
@@ -208,6 +209,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
     BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
     BlockRegistry.registerBlock(new BlockPeatGenerator(), "peat_generator", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(new BlockPeatFarm(), "peat_farm", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
   }
   @Override
