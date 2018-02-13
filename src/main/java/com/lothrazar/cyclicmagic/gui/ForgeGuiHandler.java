@@ -64,6 +64,9 @@ import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.component.pattern.ContainerPattern;
 import com.lothrazar.cyclicmagic.component.pattern.GuiPattern;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.peat.generator.ContainerPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.GuiPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.component.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.component.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
@@ -146,6 +149,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ENCHANTER = 30;
   public static final int GUI_INDEX_ANVIL = 31;
   public static final int GUI_INDEX_ITEMPUMP = 32;
+  public static final int GUI_INDEX_PEATGEN = 33;
   //skip ahead: vanilla starts here
   public static final int VANILLA_SIGN = 100;
   @Override
@@ -317,6 +321,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerItemPump(player.inventory, (TileEntityItemPump) te);
         }
       break;
+      case GUI_INDEX_PEATGEN:
+        if (te instanceof TileEntityPeatGenerator) {
+          return new ContainerPeatGenerator(player.inventory, (TileEntityPeatGenerator) te);
+        }
+      break;
     }
     return null;
   }
@@ -479,6 +488,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ITEMPUMP:
           if (te instanceof TileEntityItemPump) {
             return new GuiItemPump(player.inventory, (TileEntityItemPump) te);
+          }
+        break;
+        case GUI_INDEX_PEATGEN:
+          if (te instanceof TileEntityPeatGenerator) {
+            return new GuiPeatGenerator(player.inventory, (TileEntityPeatGenerator) te);
           }
         break;
       }
