@@ -3,6 +3,9 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -22,10 +25,11 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     super(1);
     this.setSlotsForExtract(SLOT_INPUT);
     cableEnergyStore = new EnergyStore(CAPACITY);
+    timer = 0;
   }
   @Override
   public void update() {
-    if (isRunning() == false  ) {
+    if (isRunning() == false) {
       return;
     }
     this.spawnParticlesAbove();
@@ -33,18 +37,22 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     if (timer > 0) {
       ModCyclic.logger.error("generate energy");
       this.cableEnergyStore.receiveEnergy(PER_TICK, false);
+      timer--;
     }
-    if (this.updateTimerIsZero()) {
-      
+    if (timer == 0) {
       //timer is zero. ok so it STAYS zero unless we can eat another peat brick
-      
-      timer = TIMER_FULL;
       // update fuel stuffs 
       ModCyclic.logger.error("decrStackSize");
-      this.decrStackSize(SLOT_INPUT);
+      ItemStack peat = this.getStackInSlot(SLOT_INPUT);
+      if (this.isValidFuel(peat)) {
+        this.decrStackSize(SLOT_INPUT);
+        timer = TIMER_FULL;
+      }
     }
   }
- 
+  private boolean isValidFuel(ItemStack peat) {
+    return peat.getItem().equals(Item.getByNameOrId(Const.MODRES + "peat_fuel"));
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
