@@ -15,8 +15,9 @@ import net.minecraftforge.energy.CapabilityEnergy;
 public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implements ITickable {
   public final static int TIMER_FULL = 200;
   public final static int SLOT_INPUT = 0;
-  private static final int CAPACITY = 64 * 1000;
-  private static final int PER_TICK = 1000;
+  private static final int PER_TICK = 64;
+  //total energy made per item is PER_TICK * TIMER_FULL
+  private static final int CAPACITY = PER_TICK * 100;
   public static enum Fields {
     TIMER;
   }
@@ -35,16 +36,18 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     this.spawnParticlesAbove();
     // only if burning peat 
     if (timer > 0) {
-      ModCyclic.logger.error("generate energy");
-      this.cableEnergyStore.receiveEnergy(PER_TICK, false);
-      timer--;
+      int actuallyGained = this.cableEnergyStore.receiveEnergy(PER_TICK, true);
+      if (actuallyGained == PER_TICK) {
+        // either we have room to eat everything that generated, or we didnt.
+        //if we did, burn some fuel. if not, wait for more room in battery
+        this.cableEnergyStore.receiveEnergy(PER_TICK, false);
+        timer--;
+      }
     }
     if (timer == 0) {
       //timer is zero. ok so it STAYS zero unless we can eat another peat brick
-      // update fuel stuffs 
-      ModCyclic.logger.error("decrStackSize");
-      ItemStack peat = this.getStackInSlot(SLOT_INPUT);
-      if (this.isValidFuel(peat)) {
+      // update fuel stuffs  
+      if (this.isValidFuel(this.getStackInSlot(SLOT_INPUT))) {
         this.decrStackSize(SLOT_INPUT);
         timer = TIMER_FULL;
       }

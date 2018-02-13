@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.peat.generator;
-import com.lothrazar.cyclicmagic.block.EnergyStore;
-import com.lothrazar.cyclicmagic.component.pump.item.ContainerItemPump;
+import com.lothrazar.cyclicmagic.block.EnergyStore; 
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,6 +13,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class GuiPeatGenerator extends GuiBaseContainer {
   public GuiPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
     super(new ContainerPeatGenerator(inventoryPlayer, te), te);
+    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
+    
   }
   @Override
   public void initGui() {
@@ -36,8 +38,8 @@ public class GuiPeatGenerator extends GuiBaseContainer {
      
      
     float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    int outerLength = 78, outerWidth = 16;
-    int innerLength = 76, innerWidth = 14;
+    int outerLength = 66, outerWidth = 16;
+    int innerLength = 64, innerWidth = 14;
      
  int  fuelX = this.guiLeft + screenSize.width() -25;
  int  fuelXE = fuelX + innerWidth;
