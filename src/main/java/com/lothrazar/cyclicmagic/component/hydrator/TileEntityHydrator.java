@@ -50,6 +50,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     return super.getFieldArray(Fields.values().length);
   }
   @Override
+  public int getFieldCount() {
+    return getFieldOrdinals().length;
+  }
+  @Override
   public void update() {
     tryFillTankFromItems();
     if (!isRunning()) {
@@ -129,18 +133,18 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setInteger(NBT_REDST, this.needsRedstone);
-    tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
-    tags.setInteger("rlock", recipeIsLocked);
-    return super.writeToNBT(tags);
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+    compound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    compound.setInteger("rlock", recipeIsLocked);
+    return super.writeToNBT(compound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound tags) {
-    super.readFromNBT(tags);
-    this.needsRedstone = tags.getInteger(NBT_REDST);
-    this.recipeIsLocked = tags.getInteger("rlock");
-    tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.needsRedstone = compound.getInteger(NBT_REDST);
+    this.recipeIsLocked = compound.getInteger("rlock");
+    tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
   }
   @Override
   public int getField(int id) {
@@ -173,7 +177,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
-  public int getCurrentFluid() {
+
+  private int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
       return 0;
@@ -200,10 +205,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     fluid.amount = amt;
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
-  }
-  @Override
-  public int getFieldCount() {
-    return Fields.values().length;
   }
   @Override
   public void toggleNeedsRedstone() {

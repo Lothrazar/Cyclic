@@ -32,15 +32,15 @@ public class BlockPeat extends BlockBase {
     return super.getItemDropped(state, rand, fortune);
   }
   @Override
-  public int quantityDropped(Random random) {
+  public int quantityDropped(Random rand) {
     if (this.isBaked) {
-      return 4;
+      return 1 + rand.nextInt(2);
     }
     return 1;
   }
   @Override
   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-    // ModCyclic.logger.log("updateTick");
+    
     if (this.isBaked) {
       return;
     }

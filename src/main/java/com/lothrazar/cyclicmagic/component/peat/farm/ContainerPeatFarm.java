@@ -1,17 +1,35 @@
-package com.lothrazar.cyclicmagic.component.peat.generator;
+package com.lothrazar.cyclicmagic.component.peat.farm;
+import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerPeatGenerator extends ContainerBaseMachine {
-  public ContainerPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
+public class ContainerPeatFarm extends ContainerBaseMachine {
+  static final int SLOTY_FLUID = 39;
+  static final int SLOTX_START = 8;
+  static final int MID_SPACING = 133;
+  public static final int SLOTY = 30;
+  public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     this.setTile(te);
-    addSlotToContainer(new SlotItemRestricted(te, 0, 30, 30, Item.getByNameOrId(Const.MODRES + "peat_fuel")));
+    int slotNum = 0;
+    for (int i = 0; i < 2; i++) {
+      addSlotToContainer(new Slot(tile, slotNum,
+          SLOTX_START + i / 2 * Const.SQ,
+          SLOTY + i % 2 * Const.SQ));
+      slotNum++;
+    }
+    for (int i = 0; i < 2; i++) {
+      addSlotToContainer(new Slot(tile, slotNum,
+          MID_SPACING + 1 + i / 2 * Const.SQ,
+          SLOTY + i % 2 * Const.SQ));
+      slotNum++;
+    }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
