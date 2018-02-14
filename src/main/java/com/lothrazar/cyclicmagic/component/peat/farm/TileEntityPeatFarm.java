@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.peat.farm;
 import java.util.Arrays;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -8,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -19,15 +21,20 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
   public static final int TANK_FULL = 10000;
   public static final int TIMER_FULL = 200;
+  private static final int PER_TICK = 64;
+  private static final int CAPACITY = PER_TICK * 1000;
   public static enum Fields {
     REDSTONE, TIMER, FLUID;
   }
   private int needsRedstone = 1;
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
+  private EnergyStore energy;
   public TileEntityPeatFarm() {
     super(8);//inventory, water
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
+    energy = new EnergyStore(CAPACITY);
+    timer = 0;
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
   }
@@ -49,11 +56,13 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
+    CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
     compound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
     return super.writeToNBT(compound);
   }
   @Override
@@ -111,22 +120,24 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       fluid = new FluidStack(FluidRegistry.WATER, amt);
     }
     fluid.amount = amt;
-    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
-    this.tank.setFluid(fluid);
+     this.tank.setFluid(fluid);
   }
-  /******************************
-   * fluid properties here
-   ******************************/
+ 
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    if (capability == CapabilityEnergy.ENERGY || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return true;
+    }
+    return super.hasCapability(capability, facing);
   }
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
-    this.world.markChunkDirty(pos, this);
+    if (capability == CapabilityEnergy.ENERGY) {
+      return CapabilityEnergy.ENERGY.cast(this.energy);
+    }
     return super.getCapability(capability, facing);
   }
   @Override

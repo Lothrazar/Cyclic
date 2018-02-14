@@ -13,18 +13,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerPeatFarm extends ContainerBaseMachine {
   static final int SLOTY_FLUID = 39;
   static final int SLOTX_START = 8;
-  static final int MID_SPACING = 133;
+  static final int MID_SPACING = 52;
   public static final int SLOTY = 30;
   public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     this.setTile(te);
     int slotNum = 0;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
           SLOTX_START + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
           MID_SPACING + 1 + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));

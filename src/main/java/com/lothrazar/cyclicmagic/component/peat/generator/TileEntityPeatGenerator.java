@@ -21,11 +21,11 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   public static enum Fields {
     TIMER;
   }
-  private EnergyStore cableEnergyStore;
+  private EnergyStore energy;
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForExtract(SLOT_INPUT);
-    cableEnergyStore = new EnergyStore(CAPACITY);
+    energy = new EnergyStore(CAPACITY);
     timer = 0;
   }
   @Override
@@ -36,11 +36,11 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     this.spawnParticlesAbove();
     // only if burning peat 
     if (timer > 0) {
-      int actuallyGained = this.cableEnergyStore.receiveEnergy(PER_TICK, true);
+      int actuallyGained = this.energy.receiveEnergy(PER_TICK, true);
       if (actuallyGained == PER_TICK) {
         // either we have room to eat everything that generated, or we didnt.
         //if we did, burn some fuel. if not, wait for more room in battery
-        this.cableEnergyStore.receiveEnergy(PER_TICK, false);
+        this.energy.receiveEnergy(PER_TICK, false);
         timer--;
       }
     }
@@ -82,14 +82,14 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    if (this.cableEnergyStore != null && compound.hasKey("powercable")) {
-      CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
+    if (this.energy != null && compound.hasKey("powercable")) {
+      CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
     }
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    if (cableEnergyStore != null) {
-      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
+    if (energy != null) {
+      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
     }
     return super.writeToNBT(compound);
   }
@@ -103,7 +103,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {
-      return CapabilityEnergy.ENERGY.cast(this.cableEnergyStore);
+      return CapabilityEnergy.ENERGY.cast(this.energy);
     }
     return super.getCapability(capability, facing);
   }
