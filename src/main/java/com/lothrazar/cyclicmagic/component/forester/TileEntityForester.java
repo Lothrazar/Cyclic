@@ -127,7 +127,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
    */
   private boolean updateMiningProgress() {
     if (this.isPreviewVisible()) {
-      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos);
+      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, this.targetPos, this.getDimension());
     }
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
       isCurrentlyMining = true;

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -8,6 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -44,6 +47,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int flipY = 0;
   private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
+  private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX, FUELDISPLAY;
   }
@@ -51,6 +55,20 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     super(19);
     this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
+    syncBlockItemMap();
+  }
+  private void syncBlockItemMap() {
+    //maybe in config one day!?!??! good enough for now
+    blockToItemOverrides.put("minecraft:redstone_wire", "minecraft:redstone");
+    blockToItemOverrides.put("minecraft:powered_repeater", "minecraft:repeater");
+    blockToItemOverrides.put("minecraft:unpowered_repeater", "minecraft:repeater");
+    blockToItemOverrides.put("minecraft:powered_comparator", "minecraft:comparator");
+    blockToItemOverrides.put("minecraft:unpowered_comparator", "minecraft:comparator");
+    blockToItemOverrides.put("minecraft:lit_redstone_ore", "minecraft:redstone_ore");
+    blockToItemOverrides.put("minecraft:tripwire", "minecraft:string");
+    blockToItemOverrides.put("minecraft:wall_sign", "minecraft:sign");
+    blockToItemOverrides.put("minecraft:standing_sign", "minecraft:sign");
+    blockToItemOverrides.put("minecraft:lit_furnace", "minecraft:furnace");
   }
   @Override
   @SideOnly(Side.CLIENT)
@@ -76,6 +94,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     if (stateToMatch == null || stateToMatch.getBlock() == null) {
       return slot;
     }
+    String blockKey, itemKey, itemInSlot;
     ItemStack is;
     Item itemFromState;
     for (int i = 0; i < this.getSizeInventory(); i++) {
@@ -85,22 +104,28 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
       itemFromState = Item.getItemFromBlock(stateToMatch.getBlock());
       if (itemFromState == is.getItem()) {
+        //        ModCyclic.logger.log("normal match without map "+stateToMatch.getBlock().getLocalizedName());
         slot = i;//yep it matches
         break;
+      }
+      //TODO: util class for registry checking
+      blockKey = Block.REGISTRY.getNameForObject(stateToMatch.getBlock()).toString();
+      //   ModCyclic.logger.log("blockKey   " + blockKey);
+      if (blockToItemOverrides.containsKey(blockKey)) {
+        itemKey = blockToItemOverrides.get(blockKey);
+        itemInSlot = Item.REGISTRY.getNameForObject(is.getItem()).toString();
+        //  ModCyclic.logger.log("!stateToMatch. KEY?" + blockKey + " VS " + itemInSlot);
+        if (itemKey.equalsIgnoreCase(itemInSlot)) {
+          slot = i;
+          //   ModCyclic.logger.log(blockKey + "->stateToMatch mapped to an item ->" + itemKey);
+          break;
+        }
       }
     }
     return slot;
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
-    BlockPos centerSrc = this.getCenterSrc();
-    int xOffset = posSrc.getX() - centerSrc.getX();
-    int yOffset = posSrc.getY() - centerSrc.getY();
-    int zOffset = posSrc.getZ() - centerSrc.getZ();
-    BlockPos centerTarget = this.getCenterTarget();
-    return centerTarget.add(xOffset, yOffset, zOffset);
   }
   @Override
   public void update() {
@@ -114,37 +139,33 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     if (timer <= 0) { //try build one block
       timer = 0;
       List<BlockPos> shapeSrc = this.getSourceShape();
+      List<BlockPos> shapeTarget = this.getTargetShape();
       if (shapeSrc.size() <= 0) {
         return;
       }
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = convertPosSrcToTarget(posSrc);
+      BlockPos posTarget = shapeTarget.get(pTarget);//convertPosSrcToTarget(posSrc);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
       }
       IBlockState stateToMatch;
       int slot;
-      if (world.isAirBlock(posSrc) == false) {
+      if (world.isAirBlock(posSrc) == false && world.isAirBlock(posTarget)) {
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
         if (slot < 0) {
           return;
         } //EMPTY
-        if (world.isAirBlock(posTarget)) { //now we want target to be air
-          timer = TIMER_FULL;//now start over
-          world.setBlockState(posTarget, stateToMatch);
-          this.decrStackSize(slot, 1);
-          SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
-          if (type != null && type.getPlaceSound() != null) {
-            int dim = this.getDimension();
-            int range = 18;
-            UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, posTarget, dim, range);
-          }
-        }
-        else { //does NOT MATCH, so skip ahead
-          timer = TIMER_SKIP;
+        timer = TIMER_FULL;//now start over
+        world.setBlockState(posTarget, stateToMatch);
+        this.decrStackSize(slot, 1);
+        SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
+        if (type != null && type.getPlaceSound() != null) {
+          int dim = this.getDimension();
+          int range = 18;
+          UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, posTarget, dim, range);
         }
       }
       else { //src IS air, so skip ahead
@@ -165,6 +186,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public List<BlockPos> getTargetFrameOutline() {
     return UtilShape.cubeFrame(getTargetCenter(), this.sizeRadius, this.height);
+  }
+  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
+    BlockPos centerSrc = this.getCenterSrc();
+    int xOffset = posSrc.getX() - centerSrc.getX();
+    int yOffset = posSrc.getY() - centerSrc.getY();
+    int zOffset = posSrc.getZ() - centerSrc.getZ();
+    BlockPos centerTarget = this.getCenterTarget();
+    return centerTarget.add(xOffset, yOffset, zOffset);
   }
   public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getSourceCenter();

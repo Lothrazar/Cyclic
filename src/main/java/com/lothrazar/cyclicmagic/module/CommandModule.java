@@ -26,7 +26,6 @@ public class CommandModule extends BaseModule implements IHasConfig {
   private static String category;
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
-    
     if (configToggle.get(CommandNbt.name)) {
       event.registerServerCommand(new CommandNbt(commandNeedsOp.get(CommandNbt.name)));
     }

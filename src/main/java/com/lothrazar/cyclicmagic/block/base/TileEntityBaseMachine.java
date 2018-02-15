@@ -49,7 +49,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   protected void spawnParticlesAbove() {
     if (this.getWorld().rand.nextDouble() < 0.05) {//was 0.1
       if (this.getWorld().isRemote == false) {
-        UtilParticle.spawnParticlePacket(EnumParticleTypes.SMOKE_NORMAL, this.getPos());
+        UtilParticle.spawnParticlePacket(EnumParticleTypes.SMOKE_NORMAL, this.getPos(), this.getDimension());
       }
     }
   }

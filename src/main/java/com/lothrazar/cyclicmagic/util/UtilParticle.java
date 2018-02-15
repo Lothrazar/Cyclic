@@ -5,11 +5,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class UtilParticle {
   private static final int count = 12;//if you just spawn one, its basically invisible. unless its over time like potions
   private static final double RANDOM_HORIZ = 0.8;
   private static final double RANDOM_VERT = 1.5;
+  /**
+   * for particles from server: how far away to players see it
+   */
+  private static final double RANGE = 32;
   public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos, int c) {
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ(), c);
   }
@@ -24,19 +29,14 @@ public class UtilParticle {
     }
   }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
-    if (world.isRemote) {
-      // client side
-      // http://www.minecraftforge.net/forum/index.php?topic=9744.0
-      for (int countparticles = 0; countparticles <= count; ++countparticles) {
-        world.spawnParticle(sparkle,
-            x + getHorizRandom(world, RANDOM_HORIZ),
-            y + getVertRandom(world, RANDOM_VERT),
-            z + getHorizRandom(world, RANDOM_HORIZ),
-            0.0D, 0.0D, 0.0D);
-      }
-    }
-    else {
-      spawnParticlePacket(sparkle, new BlockPos(x, y, z));
+    // client side
+    // http://www.minecraftforge.net/forum/index.php?topic=9744.0
+    for (int countparticles = 0; countparticles <= count; ++countparticles) {
+      world.spawnParticle(sparkle,
+          x + getHorizRandom(world, RANDOM_HORIZ),
+          y + getVertRandom(world, RANDOM_VERT),
+          z + getHorizRandom(world, RANDOM_HORIZ),
+          0.0D, 0.0D, 0.0D);
     }
   }
   private static double getVertRandom(World world, double rando) {
@@ -72,9 +72,13 @@ public class UtilParticle {
       UtilParticle.spawnParticle(world, sparkle, x, y, z, count);
     }
   }
-  public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position) {
-    // this. fires only on server side. so send packet for client to spawn
-    // particles and so on
-    ModCyclic.network.sendToAll(new PacketParticleAtPosition(position, particle.getParticleID(), count));
+  public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos pos, int dimension) {
+    //dont use sendToAll: lag inducing. EX: 3 players in nether, none in overworld. overworled is chunk loaded.
+    //particles are a waste in this case.
+    //  ModCyclic.network.sendToAll(new PacketParticleAtPosition(pos, particle.getParticleID(), count));
+    spawnParticlePacket(particle, dimension, pos.getX(), pos.getY(), pos.getZ());
+  }
+  public static void spawnParticlePacket(EnumParticleTypes particle, int dimension, double x, double y, double z) {
+    ModCyclic.network.sendToAllAround(new PacketParticleAtPosition(new BlockPos(x, y, z), particle.getParticleID(), count), new TargetPoint(dimension, x, y, z, RANGE));
   }
 }
