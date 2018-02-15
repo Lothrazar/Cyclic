@@ -20,8 +20,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
   private static final int COOLDOWN = 10;
@@ -66,10 +64,6 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     }
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
-  }
-  @SideOnly(Side.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
-    return true;
   }
   @Override
   public SoundEvent getSound() {

@@ -66,9 +66,9 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
           this.hasEnoughFluid() &&
           this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //pay item cost and build the enchatned output item
-        inputStack.shrink(1);
         outputStack = inputStack.copy();
         outputStack.setCount(1);
+        inputStack.shrink(1);
         outputStack = EnchantmentHelper.addRandomEnchantment(world.rand, outputStack, MAX_LEVEL, true);
         this.setInventorySlotContents(SLOT_INPUT, inputStack);
         this.setInventorySlotContents(SLOT_OUTPUT, outputStack);

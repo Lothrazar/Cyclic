@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -7,16 +8,20 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -31,6 +36,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
   public static boolean oreSpawns = true;
+  public static boolean pigmenEnrage = true;
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
@@ -61,6 +67,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     endOreEnabled = prop.getBoolean();
     prop = config.get(category, "Infested Ores", true, "These dimension ores (nether and end) have a chance to spawn endermites or silverfish");
     oreSpawns = prop.getBoolean();
+    prop = config.get(category, "PigmenEnrage", false, "If true, mining Nether ore has a 20% chance of enraging a nearby PigZombie within 16 blocks");
+    pigmenEnrage = prop.getBoolean();
     prop = config.get(category, "Emerald Ore Boost", true, "Vanilla emerald ore now can spawn at any height, not only below the ground [still only in the Extreme Hills biomes as normal]");
     prop.setRequiresMcRestart(true);
     emeraldHeight = prop.getBoolean();
@@ -105,6 +113,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    super.onPreInit();
     if (netherOreEnabled || endOreEnabled) {
       registerDimensionOres();
     }
@@ -134,12 +143,25 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent
   public void onHarvestDropsEvent(HarvestDropsEvent event) {
     if (event.getState() != null && event.getState().getBlock() instanceof BlockDimensionOre) {
-      //then try spawning mob
-      //EntityPlayer player = event.getPlayer();
       BlockPos pos = event.getPos();
       World world = event.getWorld();
-      BlockDimensionOre block = (BlockDimensionOre) event.getState().getBlock();
-      block.trySpawnTriggeredEntity(world, pos);
+      if (oreSpawns) {
+        //then try spawning mob- silverfish etc
+        BlockDimensionOre block = (BlockDimensionOre) event.getState().getBlock();
+        block.trySpawnTriggeredEntity(world, pos);
+      }
+      if (pigmenEnrage && world.rand.nextDouble() < 0.2) {
+        //then look for one 
+        AxisAlignedBB range = UtilEntity.makeBoundingBox(pos.getX(), pos.getY(), pos.getZ(), 3, 16);
+        List<EntityPigZombie> found = world.getEntitiesWithinAABB(EntityPigZombie.class, range);
+        for (EntityPigZombie pz : found) {
+          if (pz.isAngry() == false) {
+            pz.attackEntityFrom(DamageSource.causePlayerDamage(event.getHarvester()), 0);
+            // one enraged, is enough
+            break;
+          }
+        }
+      }
     }
   }
   //nether ores

@@ -204,6 +204,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         //its a whitelist, so if its found in the list, its good to go right away
         if (itemStack.getItem() == Item.getItemFromBlock(target)
             || Block.getBlockFromItem(itemStack.getItem()) == target
+            //TODO: util class for registry checking
             || Item.REGISTRY.getNameForObject(itemStack.getItem()).toString().equals(Block.REGISTRY.getNameForObject(target).toString())) {
           //also compare registry names (for SPECIAL itemblocks like reeds)
           //so for reeds, the getBlockFromItem is returning Blocks.AIR

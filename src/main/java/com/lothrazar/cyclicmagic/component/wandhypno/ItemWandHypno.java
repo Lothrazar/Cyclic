@@ -66,7 +66,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
           cur.setRevengeTarget(curTarget);
           cur.setLastAttackedEntity(curTarget);
           net.minecraftforge.common.ForgeHooks.onLivingSetAttackTarget(cur, curTarget);
-          UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, cur.getPosition());
+          UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, cur.getPosition(), player.dimension);
           targeted++;
         }
       }

@@ -77,6 +77,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enchanter;
   private boolean anvil;
   public void onPreInit() {
+    super.onPreInit();
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (forester) {

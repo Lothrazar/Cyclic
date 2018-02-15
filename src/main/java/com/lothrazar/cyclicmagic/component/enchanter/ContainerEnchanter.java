@@ -11,13 +11,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerEnchanter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX = 50;
-  public static final int SLOTY = 34;
+  public static final int SLOTY = 38;
   protected TileEntityEnchanter tileEntity;
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
     //    this.screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
-    this.addSlotToContainer(new Slot(tileEntity, 0, 30, SLOTY));
+    this.addSlotToContainer(new Slot(tileEntity, 0, 50, SLOTY));
     this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY));
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);

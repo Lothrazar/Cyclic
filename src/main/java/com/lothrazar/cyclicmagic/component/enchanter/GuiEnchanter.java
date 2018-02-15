@@ -22,7 +22,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 30 - 1,
+        this.guiLeft + 50 - 1,
         this.guiTop + ContainerEnchanter.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     Gui.drawModalRectWithCustomSizedTexture(

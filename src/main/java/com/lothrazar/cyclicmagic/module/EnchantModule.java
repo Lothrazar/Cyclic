@@ -44,6 +44,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private EnchantMultishot multishot;
   @Override
   public void onPreInit() {
+    super.onPreInit();
     if (enablewaterwalk) {
       waterwalk = new EnchantWaterwalking();
       EnchantRegistry.register(waterwalk);
