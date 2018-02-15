@@ -94,14 +94,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
-  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
-    BlockPos centerSrc = this.getCenterSrc();
-    int xOffset = posSrc.getX() - centerSrc.getX();
-    int yOffset = posSrc.getY() - centerSrc.getY();
-    int zOffset = posSrc.getZ() - centerSrc.getZ();
-    BlockPos centerTarget = this.getCenterTarget();
-    return centerTarget.add(xOffset, yOffset, zOffset);
-  }
   @Override
   public void update() {
     if (isRunning() == false) { // it works ONLY if its powered
@@ -114,12 +106,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     if (timer <= 0) { //try build one block
       timer = 0;
       List<BlockPos> shapeSrc = this.getSourceShape();
+      List<BlockPos> shapeTarget = this.getTargetShape();
       if (shapeSrc.size() <= 0) {
         return;
       }
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = convertPosSrcToTarget(posSrc);
+      BlockPos posTarget = shapeTarget.get(pTarget);//convertPosSrcToTarget(posSrc);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
@@ -165,6 +158,15 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public List<BlockPos> getTargetFrameOutline() {
     return UtilShape.cubeFrame(getTargetCenter(), this.sizeRadius, this.height);
+  }
+
+  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
+    BlockPos centerSrc = this.getCenterSrc();
+    int xOffset = posSrc.getX() - centerSrc.getX();
+    int yOffset = posSrc.getY() - centerSrc.getY();
+    int zOffset = posSrc.getZ() - centerSrc.getZ();
+    BlockPos centerTarget = this.getCenterTarget();
+    return centerTarget.add(xOffset, yOffset, zOffset);
   }
   public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getSourceCenter();
