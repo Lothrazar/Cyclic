@@ -60,6 +60,8 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -206,11 +208,13 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
     ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
     ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-    ItemRegistry.register(new ItemPeatFuel(), "peat_fuel", GuideCategory.ITEM);
+    Item peat_fuel = new ItemPeatFuel();
+    ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
     BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
     BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
-    BlockRegistry.registerBlock(new BlockPeatGenerator(), "peat_generator", GuideCategory.BLOCKMACHINE);
-    BlockRegistry.registerBlock(new BlockPeatFarm(), "peat_farm", GuideCategory.BLOCKMACHINE);
+    Block peat_generator = new BlockPeatGenerator(peat_fuel);
+    BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
     GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
   }

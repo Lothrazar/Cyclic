@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.component.peat;
 import java.util.List;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -10,12 +12,15 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockPeat extends BlockBase {
+public class BlockPeat extends BlockBase implements IHasRecipe {
   private static final double CHANCE_BAKE_PCT = 0.05;
   private boolean isBaked;
   public BlockPeat(boolean baked) {
@@ -64,6 +69,18 @@ public class BlockPeat extends BlockBase {
   }
   @Override
   public int tickRate(World worldIn) {
-    return 900;
+    return 1100;
+  }
+  @Override
+  public IRecipe addRecipe() {
+    if (isBaked) {
+      return null;// on recipe for this 
+    }
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+        "pcp",
+        "ccc",
+        "pcp",
+        'c', "dirt",
+        'p', new ItemStack(Item.getByNameOrId(Const.MODRES + "peat_biomass")));
   }
 }
