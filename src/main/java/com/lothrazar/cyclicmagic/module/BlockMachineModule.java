@@ -62,6 +62,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -208,8 +209,11 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
     ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
     ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-    Item peat_fuel = new ItemPeatFuel();
+    Item peat_wet = new ItemPeatFuel(false);
+    ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
+    Item peat_fuel = new ItemPeatFuel(true);
     ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
+    GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
     BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
     BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
     Block peat_generator = new BlockPeatGenerator(peat_fuel);

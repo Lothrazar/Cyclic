@@ -35,7 +35,7 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
     TileEntityPeatFarm te = (TileEntityPeatFarm) world.getTileEntity(pos);
-    //    FluidStack bucket = FluidUtil.getFluidContained(player.getHeldItem(hand));
+ 
     boolean success = false;
     success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {

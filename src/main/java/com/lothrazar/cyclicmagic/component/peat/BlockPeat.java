@@ -33,7 +33,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     if (this.isBaked) {
-      return Item.getByNameOrId(Const.MODRES + "peat_fuel");
+      return Item.getByNameOrId(Const.MODRES + "peat_wet");
     }
     return super.getItemDropped(state, rand, fortune);
   }
@@ -76,7 +76,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     if (isBaked) {
       return null;// on recipe for this 
     }
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
         "pcp",
         "ccc",
         "pcp",

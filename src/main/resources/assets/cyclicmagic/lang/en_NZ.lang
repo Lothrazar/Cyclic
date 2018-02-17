@@ -1028,6 +1028,9 @@ tile.item_pipe_sort.filter=Output here only if it matches this filter
 tile.item_pipe_sort.everything=Output everything here, ignoring this filter
 tile.item_pipe_sort.nothing=Output nothing here, ignoring this filter
 
+peat.plantmatter.dry=Use on a water source with plants floating in it to make biomass
+peat.plantmatter.more=Needs four unique plant types, detected: 
+
 item.peat_carbon.name=Carbon Catalyst
 item.peat_carbon.tooltip=Used to create Biomass
 item.peat_carbon.guide=Put four plant types into water and then stir with this to create Biomass
@@ -1035,6 +1038,10 @@ item.peat_carbon.guide=Put four plant types into water and then stir with this t
 item.peat_biomass.name=Biomass
 item.peat_biomass.tooltip=Used to create Peat Bog
 item.peat_biomass.guide=Put four plant types into water and then stir with a Carbon Catalyst to create this
+
+item.peat_wet.name=Soaked Peat
+item.peat_wet.tooltip=Fresh peat can be dried into fuel
+item.peat_wet.guide=Cook this to turn it into Peat Fuel for energy
 
 item.peat_fuel.name=Peat Fuel
 item.peat_fuel.tooltip=Create energy in a Peat Generator

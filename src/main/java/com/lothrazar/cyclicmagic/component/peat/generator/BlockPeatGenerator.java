@@ -22,7 +22,7 @@ public class BlockPeatGenerator extends BlockBaseHasTile implements IHasRecipe {
   public BlockPeatGenerator(Item peat_fuel) {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PEATGEN);
-    this.peat_fuel=peat_fuel;
+    this.peat_fuel = peat_fuel;
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
@@ -34,7 +34,7 @@ public class BlockPeatGenerator extends BlockBaseHasTile implements IHasRecipe {
         "pip",
         "cbc",
         "pip",
-        'p', peat_fuel,//Item.getByNameOrId(Const.MODRES + "peat_fuel"),
+        'p', peat_fuel, //Item.getByNameOrId(Const.MODRES + "peat_fuel"),
         'i', new ItemStack(Blocks.PISTON),
         'b', "blockIron",
         'c', "blockCoal");

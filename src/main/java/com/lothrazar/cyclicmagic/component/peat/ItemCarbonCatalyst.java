@@ -48,7 +48,7 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
     if (peat_biomass == null) {
       peat_biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
     }
-    if (peat_biomass == null) {
+    if (peat_carbon == null) {
       peat_carbon = Item.getByNameOrId(Const.MODRES + "peat_carbon");
     }
     World world = event.getWorld();
@@ -80,7 +80,7 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
         }
       }
       if (validPlants.size() < 4) {
-        UtilChat.sendStatusMessage(event.getEntityPlayer(), "peat.plantmatter" + validPlants.size());
+        UtilChat.sendStatusMessage(event.getEntityPlayer(), UtilChat.lang("peat.plantmatter.more") + validPlants.size());
         return;
       }
       // done so convert all of them
@@ -94,17 +94,21 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
         UtilItemStack.dropItemStackInWorld(world, posSpace, toSpawn);
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, posSpace);
         //one damage per stack that drops
-        UtilItemStack.damageItem(event.getEntityPlayer(), stack);
+        UtilItemStack.damageItem(event.getEntityPlayer(), stack, toSpawn.getCount());
       }
       //      player.swingArm(hand);
+    }
+    else {
+      UtilChat.sendStatusMessage(event.getEntityPlayer(), "peat.plantmatter.dry");
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     //TODO: actual config as well as hardcoded
-    OreDictionary.registerOre("flower", Blocks.YELLOW_FLOWER);
-    OreDictionary.registerOre("flower", Blocks.RED_FLOWER);
-    OreDictionary.registerOre("flower", Blocks.DOUBLE_PLANT);
+    OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
+    OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
+ 
+    OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, OreDictionary.WILDCARD_VALUE));
     OreDictionary.registerOre("lilypad", Blocks.WATERLILY);
     OreDictionary.registerOre("mushroom", Blocks.BROWN_MUSHROOM);
     OreDictionary.registerOre("mushroom", Blocks.RED_MUSHROOM);
