@@ -51,15 +51,12 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
   }
   Block baked = null;
   Block unbaked = null;
-  // Item plantMatter = null;
   List<BlockPos> outer = null;
   private void init() {
     if (baked == null)
       baked = Block.getBlockFromName(Const.MODRES + "peat_baked");
     if (unbaked == null)
       unbaked = Block.getBlockFromName(Const.MODRES + "peat_unbaked");
-    //    if (plantMatter == null)
-    //      plantMatter = Item.getByNameOrId(Const.MODRES + "peat_biomass");
     if (outer == null) {
       outer = getShape();
       List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.pos, 6);
@@ -74,6 +71,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
   public void update() {
     this.init();
     if (isRunning() == false) {
+      blockPointer = 0;//start over when turned off
       return;
     }
     energy.extractEnergy(PER_TICK, false);
@@ -88,7 +86,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     //now loop for build/harvest 
     if (blockPointer < outer.size()) {
       BlockPos target = outer.get(blockPointer);
-    //  ModCyclic.logger.error("?"+blockPointer+"  "+target);
+      //  ModCyclic.logger.error("?"+blockPointer+"  "+target);
       boolean placeWater = (target.getX() - pos.getX()) % 3 == 0
           && (target.getZ() - pos.getZ()) % 3 == 0;
       //based on pattern, try to place either water or the block

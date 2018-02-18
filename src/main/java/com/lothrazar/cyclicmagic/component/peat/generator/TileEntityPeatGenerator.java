@@ -34,11 +34,11 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     if (isRunning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
     // only if burning peat 
     if (timer > 0) {
       int actuallyGained = this.energy.receiveEnergy(PER_TICK, true);
       if (actuallyGained == PER_TICK) {
+        this.spawnParticlesAbove();
         // either we have room to eat everything that generated, or we didnt.
         //if we did, burn some fuel. if not, wait for more room in battery
         this.energy.receiveEnergy(PER_TICK, false);
