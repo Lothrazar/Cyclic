@@ -1005,7 +1005,7 @@ tile.energy_pump.tooltip=Extract power into cables or machines
 tile.energy_pump.guide=Transfer energy out of machines.  Can be used with cables and machines.  Compatible with all Forge Energy systems such as RF.  
 
 tile.energy_pipe.name=Energy Cable
-tile.energy_pipe.tooltip=Connect to an Energy Pump to transfer power
+tile.energy_pipe.tooltip=Connect to an Extraction Cable to transfer power
 tile.energy_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.  
 
 cyclic.redstone.on=Restone: On
@@ -1027,3 +1027,38 @@ tile.item_pipe_sort.guide=Connect to item cables or hoppers to sort anything in 
 tile.item_pipe_sort.filter=Output here only if it matches this filter
 tile.item_pipe_sort.everything=Output everything here, ignoring this filter
 tile.item_pipe_sort.nothing=Output nothing here, ignoring this filter
+
+peat.plantmatter.dry=Use on a water source with plants floating in it to make biomass
+peat.plantmatter.more=Needs four unique plant types, detected: 
+
+item.peat_carbon.name=Carbon Catalyst
+item.peat_carbon.tooltip=Used to create Biomass
+item.peat_carbon.guide=Put four plant types into water and then stir with this to create Biomass
+
+item.peat_biomass.name=Biomass
+item.peat_biomass.tooltip=Used to create Peat Bog
+item.peat_biomass.guide=Put four plant types into water and then stir with a Carbon Catalyst to create this
+
+item.peat_wet.name=Soaked Peat
+item.peat_wet.tooltip=Fresh peat can be dried into fuel
+item.peat_wet.guide=Cook this to turn it into Peat Fuel for energy
+
+item.peat_fuel.name=Peat Fuel
+item.peat_fuel.tooltip=Create energy in a Peat-fired Generator
+item.peat_fuel.guide=Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks, producing 128/tick for a total of 25600 generated per item.
+
+tile.peat_unbaked.name=Peat Bog
+tile.peat_unbaked.tooltip=Slowly turns into a Peat Deposit when sitting in water
+tile.peat_unbaked.guide=Let sit in water to turn into Solid Peat.  Then harvest the Peat Deposit to obtain Peat Fuel
+
+tile.peat_baked.name=Peat Deposit
+tile.peat_baked.tooltip=Peat ready to be harvested
+tile.peat_baked.guide=After the Peat Bog soaks in water, it turns into a Peat Deposit and can be harvested to get Peat Fuel
+
+tile.peat_generator.name=Peat-fired Generator
+tile.peat_generator.tooltip=Create 128 energy per tick using Peat Fuel
+tile.peat_generator.guide=Burn peat to create Energy.  Create Peat Fuel using Biomass, Peat Bog, and Carbon Catalyst.
+
+tile.peat_farm.name=Peat Farmer
+tile.peat_farm.tooltip=Places and harvests a Peat Bog
+tile.peat_farm.guide=Places and harvests a Peat Bog.  Requires energy and water.
