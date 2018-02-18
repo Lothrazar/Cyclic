@@ -1,8 +1,5 @@
 package com.lothrazar.cyclicmagic.component.peat.farm;
-import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,6 +10,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class GuiPeatFarm extends GuiBaseContainer {
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
+    this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
@@ -24,10 +22,19 @@ public class GuiPeatFarm extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    //    Gui.drawModalRectWithCustomSizedTexture(
-    //        this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1,
-    //        this.guiTop + ContainerItemPump.SLOTY - 1,
-    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    int rowSize = 5;
+    for (int i = 0; i < rowSize; i++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerPeatFarm.SLOTX_START + i * Const.SQ - 1,
+          this.guiTop + ContainerPeatFarm.SLOTY - 1,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    for (int i = rowSize; i < 2 * rowSize; i++) {
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + ContainerPeatFarm.SLOTX_START + (i - rowSize) * Const.SQ - 1,
+          this.guiTop + ContainerPeatFarm.SLOTY - 1 + Const.SQ,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
     //DRAW ENERGY BAR
     this.drawEnergyBar();
     this.drawFluidBar();

@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,6 +53,10 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
         timer = TIMER_FULL;
       }
     }
+  }
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    return isValidFuel(stack);
   }
   private boolean isValidFuel(ItemStack peat) {
     return peat.getItem().equals(Item.getByNameOrId(Const.MODRES + "peat_fuel"));

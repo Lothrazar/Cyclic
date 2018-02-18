@@ -26,10 +26,10 @@ public class GuiPeatGenerator extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    //    Gui.drawModalRectWithCustomSizedTexture(
-    //        this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1,
-    //        this.guiTop + ContainerItemPump.SLOTY - 1,
-    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+        Gui.drawModalRectWithCustomSizedTexture(
+            this.width/2-9,
+            this.guiTop + 34-1,
+            u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     
     //DRAW ENERGY BAR
 //    ITileFuel tileFuel = (ITileFuel) this.tile;

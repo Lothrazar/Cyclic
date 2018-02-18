@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.peat.farm;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -18,16 +19,17 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
   public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     this.setTile(te);
     int slotNum = 0;
-    for (int i = 0; i < 4; i++) {
-      addSlotToContainer(new Slot(tile, slotNum,
-          SLOTX_START + i / 2 * Const.SQ,
-          SLOTY + i % 2 * Const.SQ));
+    int rowSize = 5;
+    for (int i = 0; i < rowSize; i++) {
+      addSlotToContainer(new SlotCheckTileValid(tile, slotNum,
+          SLOTX_START + i  * Const.SQ,
+          SLOTY  ));
       slotNum++;
     }
-    for (int i = 0; i < 4; i++) {
-      addSlotToContainer(new Slot(tile, slotNum,
-          MID_SPACING + 1 + i / 2 * Const.SQ,
-          SLOTY + i % 2 * Const.SQ));
+    for (int i = rowSize; i < 2 * rowSize; i++) {
+      addSlotToContainer(new SlotCheckTileValid(tile, slotNum,
+          SLOTX_START + (i - rowSize) * Const.SQ,
+          SLOTY +   Const.SQ));
       slotNum++;
     }
     bindPlayerInventory(inventoryPlayer);

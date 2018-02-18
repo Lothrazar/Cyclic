@@ -41,7 +41,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
   private EnergyStore energy;
   private int blockPointer = 0;
   public TileEntityPeatFarm() {
-    super(8);//inventory, water
+    super(10);
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
     energy = new EnergyStore(CAPACITY);
@@ -65,6 +65,10 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.pos, 6);
       outer.addAll(waterShape);
     }
+  }
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    return Block.getBlockFromItem(stack.getItem()) == unbaked;
   }
   @Override
   public void update() {
