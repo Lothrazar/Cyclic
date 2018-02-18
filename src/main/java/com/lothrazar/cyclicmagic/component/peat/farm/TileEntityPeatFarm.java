@@ -2,16 +2,15 @@ package com.lothrazar.cyclicmagic.component.peat.farm;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -19,6 +18,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -28,11 +28,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
-  private static final int DRAIN_COST = 1000;
-  public static final int TANK_FULL = DRAIN_COST * 10;
+  public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
-  private static final int PER_TICK = 5;
-  private static final int CAPACITY = 60 * 1000;
+  private static final int PER_TICK = TileEntityPeatGenerator.PER_TICK / 2;
+  private static final int CAPACITY = 60 * Fluid.BUCKET_VOLUME;
   public static enum Fields {
     REDSTONE, TIMER, FLUID;
   }
@@ -106,10 +105,14 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
   }
   private void tryPlacePeat(BlockPos target) {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < this.getSizeInventory(); i++) {
       if (this.getStackInSlot(i).isItemEqual(new ItemStack(unbaked))) {
         tryHarvest(target);
-        if (world.getBlockState(target).getBlock().isReplaceable(world, target)) {
+        
+        if (world.getBlockState(target).getBlock().isReplaceable(world, target)
+//            || world.getBlockState(target).getBlock()==Blocks.WATER 
+//            || world.getBlockState(target).getBlock()==Blocks.FLOWING_WATER
+            ) {
           world.setBlockState(target, unbaked.getDefaultState());
           this.decrStackSize(i);
           return;
@@ -119,8 +122,10 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     //  ModCyclic.logger.error("not enough blocks");
   }
   private void tryPlaceWater(BlockPos target) {
-    if (world.isAirBlock(target) && tank.getFluidAmount() > DRAIN_COST) {
-      tank.drain(DRAIN_COST, false);
+    if (world.getBlockState(target).getBlock().isReplaceable(world, target)
+        && tank.getFluidAmount() >= Fluid.BUCKET_VOLUME
+        && tank.drain(Fluid.BUCKET_VOLUME, true) != null) {
+      tank.drain(Fluid.BUCKET_VOLUME, false);
       world.setBlockState(target, Blocks.FLOWING_WATER.getDefaultState());
     }
   }

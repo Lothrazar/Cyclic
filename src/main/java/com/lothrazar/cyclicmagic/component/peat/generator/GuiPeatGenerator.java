@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.component.peat.generator;
-import com.lothrazar.cyclicmagic.block.EnergyStore; 
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;

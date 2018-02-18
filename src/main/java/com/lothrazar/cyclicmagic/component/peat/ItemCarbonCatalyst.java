@@ -4,21 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessRec;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -104,11 +99,12 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
   }
   @Override
   public void syncConfig(Configuration config) {
-    //TODO: actual config as well as hardcoded
+    //TODO: this is not the config file, rename method
     OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
     OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
- 
     OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, OreDictionary.WILDCARD_VALUE));
+    OreDictionary.registerOre("tallgrass", new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE));
+    OreDictionary.registerOre("tallgrass", new ItemStack(Blocks.DEADBUSH, 1, OreDictionary.WILDCARD_VALUE));
     OreDictionary.registerOre("lilypad", Blocks.WATERLILY);
     OreDictionary.registerOre("mushroom", Blocks.BROWN_MUSHROOM);
     OreDictionary.registerOre("mushroom", Blocks.RED_MUSHROOM);
@@ -119,6 +115,7 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
     plants.add("blockCactus");
     plants.add("flower");
     plants.add("lilypad");
+    plants.add("tallgrass");
   }
   @Override
   public IRecipe addRecipe() {

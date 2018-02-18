@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.component.peat.generator;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,9 +12,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implements ITickable {
+ 
   public final static int TIMER_FULL = 200;
   public final static int SLOT_INPUT = 0;
-  private static final int PER_TICK = 64;
+  //FOR REFERENCERF tools coal gen is 64 per tick
+  //Thermal magmatic dynamo makes 40 per tick from lava
+  //forestry engine 20/tick
+  public static final int PER_TICK = 128;
   //total energy made per item is PER_TICK * TIMER_FULL
   private static final int CAPACITY = PER_TICK * 100;
   public static enum Fields {

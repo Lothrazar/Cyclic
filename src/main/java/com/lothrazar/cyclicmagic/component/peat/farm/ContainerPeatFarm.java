@@ -1,14 +1,11 @@
 package com.lothrazar.cyclicmagic.component.peat.farm;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
-import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

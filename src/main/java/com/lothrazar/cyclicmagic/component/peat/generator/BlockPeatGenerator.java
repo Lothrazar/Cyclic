@@ -1,16 +1,11 @@
 package com.lothrazar.cyclicmagic.component.peat.generator;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
