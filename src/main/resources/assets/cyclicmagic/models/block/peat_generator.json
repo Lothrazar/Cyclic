@@ -1,6 +1,11 @@
 {
-    "parent": "block/cube_all",
+ 	"parent": "cyclicmagic:parent/machine_peat",
     "textures": {
-        "all": "cyclicmagic:blocks/peat_generator"
+        "0": "blocks/furnace_top",
+        "1": "blocks/cauldron_inner",
+        "2": "blocks/furnace_top",
+        "3": "cyclicmagic:blocks/peat_unbaked",
+        "4": "cyclicmagic:blocks/peat_unbaked",
+        "particle": "cyclicmagic:blocks/peat_unbaked"
     }
 }
