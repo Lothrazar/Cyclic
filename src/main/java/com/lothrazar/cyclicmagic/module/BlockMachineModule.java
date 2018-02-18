@@ -88,6 +88,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean forester;
   private boolean enchanter;
   private boolean anvil;
+  private boolean enablePeat;
   public void onPreInit() {
     super.onPreInit();
     BlockFireSafe fire = new BlockFireSafe();
@@ -205,25 +206,28 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
-    //peat
-    ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
-    ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
-    ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-    Item peat_wet = new ItemPeatFuel(false);
-    ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
-    Item peat_fuel = new ItemPeatFuel(true);
-    ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
-    GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
-    BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
-    BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
-    Block peat_generator = new BlockPeatGenerator(peat_fuel);
-    BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
-    BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
-    GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+    if (enablePeat) {
+      //peat
+      ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
+      ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
+      ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
+      Item peat_wet = new ItemPeatFuel(false);
+      ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
+      Item peat_fuel = new ItemPeatFuel(true);
+      ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
+      GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
+      BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+      Block peat_generator = new BlockPeatGenerator(peat_fuel);
+      BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
+      GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
