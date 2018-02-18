@@ -17,11 +17,11 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
   static final int SLOTY_FLUID = 39;
   static final int SLOTX_START = 8;
   static final int MID_SPACING = 52;
-  public static final int SLOTY = 30;
+  public static final int SLOTY = 36;
   public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     this.setTile(te);
     int slotNum = 0;
-    int rowSize = 5;
+    int rowSize = 6;
     for (int i = 0; i < rowSize; i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, slotNum,
           SLOTX_START + i  * Const.SQ,

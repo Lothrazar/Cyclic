@@ -41,7 +41,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
   private EnergyStore energy;
   private int blockPointer = 0;
   public TileEntityPeatFarm() {
-    super(10);
+    super(12);
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
     energy = new EnergyStore(CAPACITY);

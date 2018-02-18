@@ -22,7 +22,7 @@ public class GuiPeatFarm extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    int rowSize = 5;
+    int rowSize = 6;
     for (int i = 0; i < rowSize; i++) {
       Gui.drawModalRectWithCustomSizedTexture(
           this.guiLeft + ContainerPeatFarm.SLOTX_START + i * Const.SQ - 1,
