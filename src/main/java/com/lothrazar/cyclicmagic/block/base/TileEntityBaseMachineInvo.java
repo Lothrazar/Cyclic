@@ -511,4 +511,26 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public boolean getFuelDisplay() {
     return this.fuelDisplay == 0;
   }
+  /**
+   * returns true only if one or more inventory slots is empty
+   * 
+   * ignores fuelSlot
+   * 
+   * @return boolean
+   */
+  protected boolean isInventoryFull() {
+    for (int i = 0; i < this.inv.size(); i++) {
+      if (i == this.fuelSlot) {
+        continue;
+      }
+      //if its empty or it is below max count, then it has room -> not full
+      if (this.inv.get(i).isEmpty()
+          || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()
+          ) {
+        return false;
+      }
+    }
+    //no empty stacks found
+    return true;
+  }
 }

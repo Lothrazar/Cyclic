@@ -68,7 +68,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   @Override
   public void update() {
-    if (isRunning() == false) {
+    if (this.isRunning() == false) {
+      return;
+    }
+    if (this.isInventoryFull()) {
       return;
     }
     if (this.updateFuelIsBurning() == false) {
