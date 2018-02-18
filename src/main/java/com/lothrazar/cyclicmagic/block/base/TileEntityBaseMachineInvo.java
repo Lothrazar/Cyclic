@@ -525,8 +525,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
       //if its empty or it is below max count, then it has room -> not full
       if (this.inv.get(i).isEmpty()
-          || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()
-          ) {
+          || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()) {
         return false;
       }
     }
