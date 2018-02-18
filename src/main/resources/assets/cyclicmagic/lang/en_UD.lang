@@ -230,6 +230,7 @@ item.dynamite_mining.tooltip=˙ᵷuᴉʌᴉꞁ ᵷuᴉɥʇʎuɐ ʇɹnɥ ʇou sǝ
 item.dynamite_safe.guide=˙sǝɹnʇɐǝɹɔ ʇɹnɥ ɹo sʞɔoꞁq ʎoɹʇsǝp ʇou sǝop ʇɐɥʇ uoᴉsoꞁdxǝ ꞁnɟɹǝʍod ɐ sǝʇɐǝɹɔ sᴉɥ⟘
 item.dynamite_safe.name=ǝʇᴉɯɐuʎᗡ ʇɐqɯoƆ
 item.dynamite_safe.tooltip=sɹǝʎɐꞁd ʇɹnɥ ɹo sʞɔoꞁq ʞɐǝɹq ʇou sǝoᗡ
+
 item.emerald_axe.name=ǝxⱯ pꞁɐɹǝɯƎ
 item.emerald_boots.name=sʇooᗺ pꞁɐɹǝɯƎ
 item.emerald_chestplate.name=ǝʇɐꞁdʇsǝɥƆ pꞁɐɹǝɯƎ
@@ -363,6 +364,7 @@ item.password_remote.invalid=punoɟ ʇou ɹǝʌǝꞀ 'uoᴉʇᴉsod pᴉꞁɐʌu
 item.password_remote.name=ɹǝʌǝꞀ ǝʇoɯǝᴚ
 item.password_remote.saved=pǝʌɐS uoᴉʇᴉsoԀ
 item.password_remote.tooltip=ʎꞁǝʇoɯǝɹ ʇᴉ ǝʇɐʌᴉʇɔɐ oʇ (ʞɔᴉꞁɔ ʇɟᴉɥs) pꞁɹoʍ ǝɥʇ uᴉ ɹǝʌǝꞁ ɐ oʇ sᴉɥʇ puᴉᗺ
+
 item.purple_boots.guide= ˙ɹǝpᴉɹʇS ɥʇdǝᗡ puɐ ᵷuᴉꞁꞁɐℲ ɹǝɥʇɐǝℲ ɥʇᴉʍ pǝʇuɐɥɔuǝ-ǝɹd sǝɯoɔ 'puoɯɐᴉp uɐɥʇ ɹǝᵷuoɹʇS
 item.purple_boots.name=sʇooᗺ uɐᴉpᴉsqO pǝzᴉꞁꞁɐʇsʎɹƆ
 item.purple_chestplate.guide=  ˙uoᴉʇɔǝʇoɹԀ ɥʇᴉʍ pǝʇuɐɥɔuǝ-ǝɹd sǝɯoɔ 'puoɯɐᴉp uɐɥʇ ɹǝᵷuoɹʇS
@@ -374,14 +376,17 @@ item.purple_leggings.name=sᵷuᴉᵷᵷǝꞀ uɐᴉpᴉsqO pǝzᴉꞁꞁɐʇsʎ
 item.sack_ender.guide=˙ʇsǝɥƆ ɹǝpuƎ ɹnoʎ ɯoɹɟ ʎɹoʇuǝʌuᴉ ǝɯɐs ǝɥʇ ɥʇᴉʍ suǝdo ɯǝʇᴉ ǝꞁqɐʇɹod sᴉɥ⟘
 item.sack_ender.name=ʞɔɐS ɹǝpuƎ
 item.sack_ender.tooltip=ʇsǝɥƆ ɹǝpuƎ ǝꞁqɐʇɹoԀ
+
 item.sandstone_axe.name=ǝxⱯ ǝuoʇspuɐS
 item.sandstone_hoe.name=ǝoH ǝuoʇspuɐS
 item.sandstone_pickaxe.name=ǝxɐʞɔᴉԀ ǝuoʇspuɐS
 item.sandstone_spade.name=ꞁǝʌoɥS ǝuoʇspuɐS
+
 item.sandstone_axe.guide=pooʍ uɐɥʇ ɹǝʇʇǝq ʇnq ǝuoʇs uɐɥʇ ǝsɹoM
 item.sandstone_hoe.guide=pooʍ uɐɥʇ ɹǝʇʇǝq ʇnq ǝuoʇs uɐɥʇ ǝsɹoM
 item.sandstone_pickaxe.guide=pooʍ uɐɥʇ ɹǝʇʇǝq ʇnq ǝuoʇs uɐɥʇ ǝsɹoM
 item.sandstone_spade.guide=pooʍ uɐɥʇ ɹǝʇʇǝq ʇnq ǝuoʇs uɐɥʇ ǝsɹoM
+
 item.sandstonegear.guide=˙pooʍ uɐɥʇ ɹǝʇʇǝq ʇnq ʎʇᴉꞁɐnb ǝuoʇs ʍoꞁǝq ʎꞁʇɥᵷᴉꞁs ǝɹɐ sꞁooʇ ǝuoʇspuɐs ǝɥ⟘
 item.sandstonegear.title=ɹɐǝ⅁ ǝuoʇspuɐS
 item.shift=oɟuᴉ ǝɹoɯ ɹoɟ ʇɟᴉɥS ssǝɹԀ
@@ -889,37 +894,47 @@ world.endore.guide=˙sʇǝᵷᵷnu doɹp sǝɹo pꞁoᵷ puɐ uoɹI  ˙ᵷᴉɟu
 world.endore.title=ǝɹO puƎ
 world.netherore.guide=˙sʇǝᵷᵷnu doɹp sǝɹo pꞁoᵷ puɐ uoɹI  ˙ᵷᴉɟuoɔ uᴉ pǝᵷuɐɥɔ ǝq uɐɔ sꞁᴉɐʇǝp ǝɥʇ 'ɹǝɥʇǝu ǝɥʇ ɹǝʌo ꞁꞁɐ uʍɐds sǝɹo ǝsǝɥ⟘
 world.netherore.title=ǝɹO ɹǝɥʇǝN
+
 tile.hydrator.locked.tooltip=⥝ ǝzᴉs ʞɔɐʇs ɯnɯᴉuᴉɯ ؛pǝʞɔoꞀ ǝdᴉɔǝᴚ
 tile.hydrator.unlocked.tooltip=pǝʞɔoꞁu∩ ǝdᴉɔǝᴚ
+
 energy.button.top=ǝʌoqⱯ ɹɐᗺ ꞁǝnℲ
 energy.button.side=ǝpᴉS ɹɐᗺ ꞁǝnℲ
+
 potion.potency.4=ᴧ
 potion.potency.3=ᴧI
 potion.potency.2=III
+
 potion.effect.slowfall=ꞁꞁɐɟʍoꞁS ɟo uoᴉʇoԀ
 splash_potion.effect.slowfall=ꞁꞁɐɟʍoꞁS ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.slowfall=ꞁꞁɐɟʍoꞁS ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.slowfall=ꞁꞁɐɟʍoꞁS ɟo ʍoɹɹⱯ
+
 potion.effect.waterwalk=ʞꞁɐʍɹǝʇɐM ɟo uoᴉʇoԀ
 splash_potion.effect.waterwalk=ʞꞁɐʍɹǝʇɐM ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.waterwalk=ʞꞁɐʍɹǝʇɐM ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.waterwalk=ʞꞁɐʍɹǝʇɐM ɟo ʍoɹɹⱯ
+
 potion.effect.snow=ʍouS ɟo uoᴉʇoԀ
 splash_potion.effect.snow=ʍouS ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.snow=ʍouS ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.snow=ʍouS ɟo ʍoɹɹⱯ
+
 potion.effect.swim=pǝǝdS ɯᴉʍS ɟo uoᴉʇoԀ
 splash_potion.effect.swim=pǝǝdS ɯᴉʍS ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.swim=pǝǝdS ɯᴉʍS ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.swim=pǝǝdS ɯᴉʍS ɟo ʍoɹɹⱯ
+
 potion.effect.bounce=ǝɔunoᗺ ɟo uoᴉʇoԀ
 splash_potion.effect.bounce=ǝɔunoᗺ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.bounce=ǝɔunoᗺ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.bounce=ǝɔunoᗺ ɟo ʍoɹɹⱯ
+
 potion.effect.magnet=ʇǝuᵷɐW ɟo uoᴉʇoԀ
 splash_potion.effect.magnet=ʇǝuᵷɐW ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.magnet=ʇǝuᵷɐW ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.magnet=ʇǝuᵷɐW ɟo ʍoɹɹⱯ
+
 potion.effect.haste=ǝʇsɐH ɟo uoᴉʇoԀ
 splash_potion.effect.haste=ǝʇsɐH ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.haste=ǝʇsɐH ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
@@ -928,6 +943,7 @@ potion.effect.haste2=ǝʇsɐH ɟo uoᴉʇoԀ
 splash_potion.effect.haste2=ǝʇsɐH ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.haste2=ǝʇsɐH ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.haste2=ǝʇsɐH ɟo ʍoɹɹⱯ
+
 potion.effect.resistance=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ
 splash_potion.effect.resistance=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.resistance=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
@@ -936,60 +952,78 @@ potion.effect.resistance2=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ
 splash_potion.effect.resistance2=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.resistance2=ǝɔuɐʇsᴉsǝᴚ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.resistance2=ǝɔuɐʇsᴉsǝᴚ ɟo ʍoɹɹⱯ
+
 potion.effect.healthboost=ʇsooᗺ ɥʇꞁɐǝH ɟo uoᴉʇoԀ
 splash_potion.effect.healthboost=ʇsooᗺ ɥʇꞁɐǝH ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.healthboost=ʇsooᗺ ɥʇꞁɐǝH ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.healthboost=ʇsooᗺ ɥʇꞁɐǝH ɟo ʍoɹɹⱯ
+
 potion.effect.ender=ɹǝpuƎ ɟo uoᴉʇoԀ
 splash_potion.effect.ender=ɹǝpuƎ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.ender=ɹǝpuƎ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.ender=ɹǝpuƎ ɟo ʍoɹɹⱯ
+
 potion.effect.wither=ɹǝɥʇᴉM ɟo uoᴉʇoԀ
 splash_potion.effect.wither=ɹǝɥʇᴉM ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.wither=ɹǝɥʇᴉM ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.wither=ɹǝɥʇᴉM ɟo ʍoɹɹⱯ
+
 potion.effect.blindness=ssǝupuᴉꞁᗺ ɟo uoᴉʇoԀ
 splash_potion.effect.blindness=ssǝupuᴉꞁᗺ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.blindness=ssǝupuᴉꞁᗺ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.blindness=ssǝupuᴉꞁᗺ ɟo ʍoɹɹⱯ
+
 potion.effect.saturation=uoᴉʇɐɹnʇɐS ɟo uoᴉʇoԀ
 splash_potion.effect.saturation=uoᴉʇɐɹnʇɐS ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.saturation=uoᴉʇɐɹnʇɐS ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.saturation=uoᴉʇɐɹnʇɐS ɟo ʍoɹɹⱯ
+
 potion.frostwalker=ɹǝʞꞁɐM ʇsoɹℲ
 potion.effect.frostwalker=ɹǝʞꞁɐM ʇsoɹℲ ɟo uoᴉʇoԀ
 splash_potion.effect.frostwalker=ɹǝʞꞁɐM ʇsoɹℲ ɟo uoᴉʇoԀ ɥsɐꞁdS
 lingering_potion.effect.frostwalker=ɹǝʞꞁɐM ʇsoɹℲ ɟo uoᴉʇoԀ ᵷuᴉɹǝᵷuᴉꞀ
 tipped_arrow.effect.frostwalker=ɹǝʞꞁɐM ʇsoɹℲ ɟo ʍoɹɹⱯ
+
 tile.fluid_pump.name=ǝꞁqɐƆ uoᴉʇɔɐɹʇxƎ pᴉnꞁℲ
 tile.fluid_pump.tooltip=sǝuᴉɥɔɐɯ ɹo sǝꞁqɐɔ oʇuᴉ pᴉnbᴉꞁ ʇɔɐɹʇxƎ
 tile.fluid_pump.guide=˙ǝꞁqɐƆ pᴉnꞁℲ ɹo ʞuɐʇ ɹǝɥʇouɐ oʇuᴉ ɥsnԀ  ˙ʎuɐ ɟᴉ ʇuoɹɟ uᴉ sʞuɐʇ oʇuᴉ spᴉnbᴉꞁ sǝɥsnԀ  ˙uoᴉʇɔǝɹᴉp ᵷuᴉɔɐɟ ǝɥʇ ʇdǝɔxǝ sǝpᴉs ꞁꞁɐ ɯoɹɟ suᴉɐɹᗡ
+
 tile.fluid_placer.name=ɹǝɔɐꞁԀ pᴉnꞁℲ
 tile.fluid_placer.tooltip=pꞁɹoʍ ǝɥʇ uᴉ pᴉnꞁɟ ǝɔɐꞁԀ
 tile.fluid_placer.guide=  ˙ɹǝʍod ǝuoʇspǝɹ uo pꞁɹoʍ ǝɥʇ uᴉ pᴉnꞁɟ sǝɔɐꞁԀ  ˙sǝꞁqɐɔ pᴉnꞁɟ ɹo ʇǝʞɔnq ɐ ɥʇᴉʍ sᴉɥʇ ꞁꞁᴉℲ
+
 tile.fluid_pipe.name=ǝꞁqɐƆ pᴉnꞁℲ
 tile.fluid_pipe.tooltip=spᴉnbᴉꞁ ɹǝɟsuɐɹʇ oʇ ǝꞁqɐɔ uoᴉʇɔɐɹʇxƎ uɐ ǝs∩
 tile.fluid_pipe.guide=ʍoꞁɟ ǝɥʇ ʇɹɐʇs oʇ ǝꞁqɐɔ uoᴉʇɔɐɹʇxƎ uɐ pǝǝu no⅄  ˙puᴉɟ uɐɔ ʇᴉ uoᴉʇɔǝɹᴉp ʎuɐ ʇno sǝoᵷ puɐ 'sʇuǝɯᵷǝs ǝꞁqɐɔ snoᴉʌǝɹd ɯoɹɟ ɥᵷnoɹɥʇ pǝɥsnd sʇǝᵷ ʇᴉ puɐ 'ʇunoɯɐ ꞁꞁɐɯs ɐ spꞁoɥ ʇuǝɯᵷǝs ǝꞁqɐɔ ɥɔɐƎ
+
 tile.bundled_pipe.name=ǝꞁqɐƆ pǝꞁpunᗺ
 tile.bundled_pipe.tooltip=ʎᵷɹǝuǝ puɐ 'spᴉnꞁɟ 'sɯǝʇᴉ ɹǝɟsuɐɹ⟘
 tile.bundled_pipe.guide=˙ǝɯoɥ ɐ puᴉɟ ʎǝɥʇ ꞁᴉʇun ʞɹoʍʇǝu pǝʇɔǝuuoɔ ǝɥʇ punoɹɐ ɹǝʍod puɐ 'spᴉnꞁɟ 'sɯǝʇᴉ ɹnoʎ ʎɹɐɔ ꞁꞁᴉʍ sᴉɥʇ uǝɥ⟘  ˙dɯnd ɐ ɹo ɹǝddoɥ ɐ sɐ ɥɔns ʍoꞁɟ ǝɥʇ ʇɹɐʇs oʇ ᵷuᴉɥʇǝɯos pǝǝu noʎ 'sǝꞁqɐɔ ǝǝɹɥʇ ɹǝɥʇo ǝɥʇ ǝʞᴉꞁ ʇsnՐ
+
 tile.energy_pump.name=ǝꞁqɐƆ uoᴉʇɔɐɹʇxƎ ʎᵷɹǝuƎ
 tile.energy_pump.tooltip=sǝuᴉɥɔɐɯ ɹo sǝꞁqɐɔ oʇuᴉ ɹǝʍod ʇɔɐɹʇxƎ
 tile.energy_pump.guide=  ˙Ⅎᴚ sɐ ɥɔns sɯǝʇsʎs ʎᵷɹǝuƎ ǝᵷɹoℲ ꞁꞁɐ ɥʇᴉʍ ǝꞁqᴉʇɐdɯoƆ  ˙sǝuᴉɥɔɐɯ puɐ sǝꞁqɐɔ ɥʇᴉʍ pǝsn ǝq uɐƆ  ˙sǝuᴉɥɔɐɯ ɟo ʇno ʎᵷɹǝuǝ ɹǝɟsuɐɹ⟘
+
 tile.energy_pipe.name=ǝꞁqɐƆ ʎᵷɹǝuƎ
 tile.energy_pipe.tooltip=ɹǝʍod ɹǝɟsuɐɹʇ oʇ dɯnԀ ʎᵷɹǝuƎ uɐ oʇ ʇɔǝuuoƆ
 tile.energy_pipe.guide=  ˙Ⅎᴚ sɐ ɥɔns sɯǝʇsʎs ʎᵷɹǝuƎ ǝᵷɹoℲ ꞁꞁɐ ɥʇᴉʍ ǝꞁqᴉʇɐdɯoƆ  ˙ʍoꞁɟ ǝɥʇ ʇɹɐʇs oʇ ǝꞁqɐɔ uoᴉʇɔɐɹʇxƎ uɐ pǝǝu no⅄  ˙puᴉɟ uɐɔ ʇᴉ uoᴉʇɔǝɹᴉp ʎuɐ ʇno sǝoᵷ puɐ 'sʇuǝɯᵷǝs ǝꞁqɐɔ snoᴉʌǝɹd ɯoɹɟ ɥᵷnoɹɥʇ pǝɥsnd sʇǝᵷ ʇᴉ puɐ 'ʇunoɯɐ ꞁꞁɐɯs ɐ spꞁoɥ ʇuǝɯᵷǝs ǝꞁqɐɔ ɥɔɐƎ
+
 cyclic.redstone.on=uO :ǝuoʇsǝᴚ
 cyclic.redstone.off=ɟɟO :ǝuoʇsǝᴚ
+
 tile.item_pump.name=ǝꞁqɐƆ uoᴉʇɔɐɹʇxƎ ɯǝʇI
 tile.item_pump.tooltip=sǝꞁqɐƆ ɯǝʇI oʇuᴉ sɯǝʇᴉ sʇɔɐɹʇxƎ
 tile.item_pump.guide=ǝꞁqɐƆ ɯǝʇI ǝɥʇ ɹo ʎɹoʇuǝʌuᴉ ʎuɐ oʇuᴉ ᵷuᴉɥʇʎuɐ ɟo ʇno sɯǝʇᴉ dɯnԀ
+
+
 tile.item_pipe.name=ǝꞁqɐƆ ɯǝʇI
 tile.item_pipe.tooltip=sɯǝʇᴉ ɹǝɟsuɐɹʇ oʇ ǝꞁqɐɔ uoᴉʇɔɐɹʇxƎ uɐ ǝs∩
 tile.item_pipe.guide=ʍoꞁɟ ǝɥʇ ʇɹɐʇs oʇ ǝꞁqɐɔ uoᴉʇɔɐɹʇxƎ uɐ pǝǝu no⅄  ˙puᴉɟ uɐɔ ʇᴉ uoᴉʇɔǝɹᴉp ʎuɐ ʇno sǝoᵷ puɐ 'sʇuǝɯᵷǝs ǝꞁqɐɔ snoᴉʌǝɹd ɯoɹɟ ɥᵷnoɹɥʇ pǝɥsnd sʇǝᵷ ʇᴉ puɐ 'ʇunoɯɐ ꞁꞁɐɯs ɐ spꞁoɥ ʇuǝɯᵷǝs ǝꞁqɐɔ ɥɔɐƎ
+
 tile.item_pipe_sort.name=ɹǝʇɹoS ɯǝʇI
 tile.item_pipe_sort.tooltip=sɹǝddoɥ puɐ sǝꞁqɐɔ ɥʇᴉʍ ǝsn ɹoɟ ǝuᴉɥɔɐɯ ᵷuᴉʇɹoS
 tile.item_pipe_sort.guide=˙sǝꞁqɐɔ puoɯɐᴉp ʇɟɐɹɔpꞁᴉnᗺ ǝɥʇ ʎq pǝɹᴉdsuᴉ uoᴉʇɔǝɹᴉp ǝuo sɐɥ ɹnoꞁoɔ ɥɔɐƎ  ˙uoᴉʇɔǝɹᴉp ʎuɐ uᴉ ᵷuᴉɥʇʎuɐ ʇɹos oʇ sɹǝddoɥ ɹo sǝꞁqɐɔ ɯǝʇᴉ oʇ ʇɔǝuuoƆ
+
 tile.item_pipe_sort.filter=ɹǝʇꞁᴉɟ sᴉɥʇ sǝɥɔʇɐɯ ʇᴉ ɟᴉ ʎꞁuo ǝɹǝɥ ʇndʇnO
 tile.item_pipe_sort.everything=ɹǝʇꞁᴉɟ sᴉɥʇ ᵷuᴉɹouᵷᴉ 'ǝɹǝɥ ᵷuᴉɥʇʎɹǝʌǝ ʇndʇnO
 tile.item_pipe_sort.nothing=ɹǝʇꞁᴉɟ sᴉɥʇ ᵷuᴉɹouᵷᴉ 'ǝɹǝɥ ᵷuᴉɥʇou ʇndʇnO
