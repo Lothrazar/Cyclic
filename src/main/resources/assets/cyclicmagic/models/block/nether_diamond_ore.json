@@ -1,6 +1,9 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "cyclicmagic:blocks/nether_diamond_ore"
-    }
+  "parent": "cyclicmagic:parent/ore",
+  "textures":
+  {
+    "face": "blocks/netherrack",
+    "overlay": "cyclicmagic:blocks/ores/diamond",
+    "particle": "blocks/netherrack"
+  }
 }

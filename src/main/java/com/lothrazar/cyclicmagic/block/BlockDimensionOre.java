@@ -11,9 +11,12 @@ import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private Item dropped;
@@ -114,5 +117,9 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   @Override
   public String toString() {
     return this.getLocalizedName();
+  }
+  @SideOnly(Side.CLIENT)
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.CUTOUT;
   }
 }
