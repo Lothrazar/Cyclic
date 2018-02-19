@@ -127,6 +127,7 @@ public class UtilItemStack {
     if (worldObj.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
       entityItem.setVelocity(0, 0, 0);
+//    eItem.hoverStart = 0;
       entityItem.motionX = entityItem.motionY=entityItem.motionZ=0;
       worldObj.spawnEntity(entityItem);
     } 

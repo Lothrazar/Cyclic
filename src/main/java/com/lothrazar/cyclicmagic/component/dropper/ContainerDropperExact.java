@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.dropper;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;

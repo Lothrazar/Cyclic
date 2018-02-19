@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.dropper;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -28,15 +27,13 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
       if (dropMe.isEmpty() == false) {
         timer = timerFull;
-        //    if (world.isRemote == false) {
+ 
         int amtDrop = Math.min(this.dropCount, dropMe.getCount());
         dropMe.setCount(amtDrop);
          UtilItemStack.dropItemStackMotionless(world, this.getCurrentFacingPos(), dropMe);
-//        eItem.setVelocity(0, 0, 0);
-//        eItem.motionX = eItem.motionY=eItem.motionZ=0;
-//        eItem.hoverStart = 0;
+ 
         this.decrStackSize(slotCurrent, amtDrop);
-        //  }
+ 
       }
     }
   }

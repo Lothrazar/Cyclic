@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/dropper_exact_front",
+        "up": "cyclicmagic:blocks/dropper_exact_back",
+        "north": "cyclicmagic:blocks/dropper_exact_down",
+        "east": "cyclicmagic:blocks/dropper_exact_right",
+        "south": "cyclicmagic:blocks/dropper_exact_down",
+        "west": "cyclicmagic:blocks/dropper_exact_left"
+    }
+}
