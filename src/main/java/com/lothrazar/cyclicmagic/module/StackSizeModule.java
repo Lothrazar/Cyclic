@@ -31,7 +31,6 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     stackMap.put(Items.TNT_MINECART, boat);
     stackMap.put(Items.SNOWBALL, MAX);
     stackMap.put(Items.BANNER, MAX);
-    stackMap.put(Items.SNOWBALL, MAX);
     stackMap.put(Items.ARMOR_STAND, MAX);
     stackMap.put(Items.SIGN, MAX);
     stackMap.put(Items.BED, MAX);
