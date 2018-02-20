@@ -27,6 +27,6 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IHasRecipe
         "gdg",
         "ggg",
         'g', "ingotGold",
-        's', Blocks.DROPPER);
+        'd', Blocks.DROPPER);
   }
 }
