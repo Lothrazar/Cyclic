@@ -12,7 +12,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implements ITickable {
- 
   public final static int TIMER_FULL = 200;
   public final static int SLOT_INPUT = 0;
   //FOR REFERENCERF tools coal gen is 64 per tick

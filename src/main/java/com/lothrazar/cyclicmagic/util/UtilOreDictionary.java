@@ -18,7 +18,7 @@ public class UtilOreDictionary {
     return false;
   }
   public static boolean doesMatchOreDict(final ItemStack stackIn, final List<String> oreIds) {
-   return doesMatchOreDict(stackIn,oreIds.toArray(new String[0])) ;
+    return doesMatchOreDict(stackIn, oreIds.toArray(new String[0]));
   }
   public static boolean doesMatchOreDict(final ItemStack stackIn, final String[] oreIds) {
     return doesMatchOreDict(stackIn, oreIds, false);

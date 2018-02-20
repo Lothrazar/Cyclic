@@ -189,10 +189,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
-    BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK); 
+    BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
-    
-    
   }
   @Override
   public void syncConfig(Configuration config) {

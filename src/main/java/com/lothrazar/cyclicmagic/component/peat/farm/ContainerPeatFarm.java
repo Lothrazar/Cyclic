@@ -21,14 +21,14 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
     int rowSize = 6;
     for (int i = 0; i < rowSize; i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, slotNum,
-          SLOTX_START + i  * Const.SQ,
-          SLOTY  ));
+          SLOTX_START + i * Const.SQ,
+          SLOTY));
       slotNum++;
     }
     for (int i = rowSize; i < 2 * rowSize; i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, slotNum,
           SLOTX_START + (i - rowSize) * Const.SQ,
-          SLOTY +   Const.SQ));
+          SLOTY + Const.SQ));
       slotNum++;
     }
     bindPlayerInventory(inventoryPlayer);
@@ -43,7 +43,6 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
-
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

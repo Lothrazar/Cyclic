@@ -13,7 +13,7 @@ public class ContainerPeatGenerator extends ContainerBaseMachine {
   public ContainerPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
     this.setTile(te);
     addSlotToContainer(new SlotCheckTileValid(te, 0,
-        this.screenSize.width() / 2 - 8, 34 ));
+        this.screenSize.width() / 2 - 8, 34));
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
@@ -26,7 +26,6 @@ public class ContainerPeatGenerator extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
-
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

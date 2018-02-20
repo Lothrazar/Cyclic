@@ -108,11 +108,10 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     for (int i = 0; i < this.getSizeInventory(); i++) {
       if (this.getStackInSlot(i).isItemEqual(new ItemStack(unbaked))) {
         tryHarvest(target);
-        
         if (world.getBlockState(target).getBlock().isReplaceable(world, target)
-//            || world.getBlockState(target).getBlock()==Blocks.WATER 
-//            || world.getBlockState(target).getBlock()==Blocks.FLOWING_WATER
-            ) {
+        //            || world.getBlockState(target).getBlock()==Blocks.WATER 
+        //            || world.getBlockState(target).getBlock()==Blocks.FLOWING_WATER
+        ) {
           world.setBlockState(target, unbaked.getDefaultState());
           this.decrStackSize(i);
           return;

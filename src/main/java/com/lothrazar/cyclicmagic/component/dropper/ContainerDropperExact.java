@@ -9,12 +9,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerDropperExact extends ContainerBaseMachine {
   public static final int SLOTX_START = 104;
-  public static final int SLOTY =  20;
+  public static final int SLOTY = 20;
   public ContainerDropperExact(InventoryPlayer inventoryPlayer, TileEntityDropperExact tileEntity) {
     super(tileEntity);
-    
-    int rows = 3, cols = 3,slot = 0;
- 
+    int rows = 3, cols = 3, slot = 0;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new Slot(tile, slot,
@@ -23,7 +21,6 @@ public class ContainerDropperExact extends ContainerBaseMachine {
         slot++;
       }
     }
- 
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

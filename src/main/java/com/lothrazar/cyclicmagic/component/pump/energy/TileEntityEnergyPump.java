@@ -37,7 +37,6 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
     }
     EnumFacing side = this.getCurrentFacing();
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, side);
- 
     TileEntity tileInsert = world.getTileEntity(pos.offset(side.getOpposite()));
     IEnergyStorage handlerInsertInto = null;
     if (tileInsert != null) {
@@ -89,7 +88,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachine implements ITick
   }
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityEnergy.ENERGY && 
+    if (capability == CapabilityEnergy.ENERGY &&
         (facing == this.getCurrentFacing() || facing == this.getCurrentFacing().getOpposite())) {
       return true;
     }

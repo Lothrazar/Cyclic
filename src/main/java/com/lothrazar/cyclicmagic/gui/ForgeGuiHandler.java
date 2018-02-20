@@ -158,7 +158,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ITEMPUMP = 32;
   public static final int GUI_INDEX_PEATGEN = 33;
   public static final int GUI_INDEX_PEATFARM = 34;
-  public static final int GUI_INDEX_DROPPER = 35; 
+  public static final int GUI_INDEX_DROPPER = 35;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -337,13 +337,12 @@ public class ForgeGuiHandler implements IGuiHandler {
         if (te instanceof TileEntityPeatFarm) {
           return new ContainerPeatFarm(player.inventory, (TileEntityPeatFarm) te);
         }
-        break;
-      case GUI_INDEX_DROPPER: 
+      break;
+      case GUI_INDEX_DROPPER:
         if (te instanceof TileEntityDropperExact) {
           return new ContainerDropperExact(player.inventory, (TileEntityDropperExact) te);
         }
-       
-        break;
+      break;
     }
     return null;
   }
@@ -517,13 +516,12 @@ public class ForgeGuiHandler implements IGuiHandler {
           if (te instanceof TileEntityPeatFarm) {
             return new GuiPeatFarm(player.inventory, (TileEntityPeatFarm) te);
           }
-          break;
-        case GUI_INDEX_DROPPER: 
+        break;
+        case GUI_INDEX_DROPPER:
           if (te instanceof TileEntityDropperExact) {
             return new GuiDropperExact(player.inventory, (TileEntityDropperExact) te);
           }
-         
-          break;
+        break;
       }
     }
     return null;
