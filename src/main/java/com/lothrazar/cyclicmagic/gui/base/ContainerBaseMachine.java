@@ -20,6 +20,9 @@ public class ContainerBaseMachine extends ContainerBase {
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   public ContainerBaseMachine() {}
+  public ContainerBaseMachine(TileEntityBaseMachineInvo t) {
+    this.setTile(t);
+  }
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 9; j++) {

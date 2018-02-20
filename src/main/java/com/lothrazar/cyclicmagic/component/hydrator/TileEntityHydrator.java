@@ -177,7 +177,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
-
   private int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {

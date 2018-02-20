@@ -24,9 +24,8 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
   public BlockPeatFarm(Block peat_generator) {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PEATFARM);
-    this.peat_generator=peat_generator;
+    this.peat_generator = peat_generator;
   }
-  
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPeatFarm();
@@ -35,7 +34,6 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
     TileEntityPeatFarm te = (TileEntityPeatFarm) world.getTileEntity(pos);
- 
     boolean success = false;
     success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
@@ -60,6 +58,6 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
         'i', "ingotGold",
         'p', placer_block,
         'o', Blocks.OBSERVER,
-        'f',   this.peat_generator);
+        'f', this.peat_generator);
   }
 }

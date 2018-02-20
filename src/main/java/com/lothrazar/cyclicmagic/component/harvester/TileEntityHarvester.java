@@ -47,10 +47,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return TileEntity.INFINITE_EXTENT_AABB;
   }
   @Override
-  public int[] getFieldOrdinals() {
-    return super.getFieldArray(Fields.values().length);
-  }
-  @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     this.size = tags.getInteger(NBT_SIZE);
@@ -125,6 +121,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(getFieldCount());
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
+  @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
       case TIMER:
@@ -173,10 +177,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.fuelDisplay = value % 2;
       break;
     }
-  }
-  @Override
-  public int getFieldCount() {
-    return Fields.values().length;
   }
   public void toggleSizeShape() {
     this.size++;

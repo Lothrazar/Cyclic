@@ -1064,3 +1064,12 @@ tile.peat_generator.guide=Burn peat to create Energy.  Create Peat Fuel using Bi
 tile.peat_farm.name=Peat Farmer
 tile.peat_farm.tooltip=Places and harvests a Peat Bog
 tile.peat_farm.guide=Places and harvests a Peat Bog.  Requires energy and water.
+
+
+tile.dropper_exact.name=Precise Dropper
+tile.dropper_exact.tooltip=Drop with no randomness and more control
+tile.dropper_exact.guide=Control location and speed of drops
+
+dropper.delay=Delay
+dropper.offset=Offset
+dropper.count=Count
