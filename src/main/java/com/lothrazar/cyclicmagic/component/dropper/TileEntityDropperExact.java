@@ -5,18 +5,20 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 
 public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   private int needsRedstone = 1;
   private int slotCurrent = 0;
   private int dropCount = 1;
-  private int timerFull = 10;
+  private int delay = 10;
+  private int hOffset = 0;
   public static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
   }
   public TileEntityDropperExact() {
     super(9);
-    timer = timerFull;
+    timer = delay;
   }
   @Override
   public void update() {
@@ -26,14 +28,12 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.updateTimerIsZero()) {
       ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
       if (dropMe.isEmpty() == false) {
-        timer = timerFull;
- 
+        timer = delay;
+        BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
         int amtDrop = Math.min(this.dropCount, dropMe.getCount());
         dropMe.setCount(amtDrop);
-         UtilItemStack.dropItemStackMotionless(world, this.getCurrentFacingPos(), dropMe);
- 
+        UtilItemStack.dropItemStackMotionless(world, target, dropMe);
         this.decrStackSize(slotCurrent, amtDrop);
- 
       }
     }
   }
@@ -42,11 +42,17 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     this.timer = tagCompound.getInteger(NBT_TIMER);
+    this.delay = tagCompound.getInteger("delay");
+    this.dropCount = tagCompound.getInteger("dropCount");
+    this.hOffset = tagCompound.getInteger("hOffset");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger("delay", this.delay);
+    tagCompound.setInteger("dropCount", this.dropCount);
+    tagCompound.setInteger("hOffset", this.hOffset);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -65,6 +71,12 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
         return timer;
       case REDSTONE:
         return this.needsRedstone;
+      case DELAY:
+        return this.delay;
+      case DROPCOUNT:
+        return this.dropCount;
+      case OFFSET:
+        return this.hOffset;
     }
     return -1;
   }
@@ -76,6 +88,15 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       break;
       case REDSTONE:
         this.needsRedstone = value;
+      break;
+      case DELAY:
+        delay = Math.max(0, value);
+      break;
+      case DROPCOUNT:
+        dropCount = Math.max(1, value);
+      break;
+      case OFFSET:
+        hOffset = Math.max(0, value);
       break;
     }
   }
