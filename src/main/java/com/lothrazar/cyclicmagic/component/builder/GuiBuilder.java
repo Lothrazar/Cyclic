@@ -51,12 +51,12 @@ public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
     id++;
     y += h + 1;
     GuiSliderInteger sliderY = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OY.ordinal(), true);
-    sliderX.setTooltip("Y");
+    sliderY.setTooltip("Y");
     this.addButton(sliderY);
     id++;
     y += h + 1;
     GuiSliderInteger sliderZ = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OZ.ordinal(), true);
-    sliderX.setTooltip("Z");
+    sliderZ.setTooltip("Z");
     this.addButton(sliderZ);
     id++;
     x = this.guiLeft + Const.PAD + h;
