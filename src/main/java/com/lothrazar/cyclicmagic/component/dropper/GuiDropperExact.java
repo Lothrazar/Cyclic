@@ -21,7 +21,7 @@ public class GuiDropperExact extends GuiBaseContainer {
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id, x, y, width, h, 0, 64,
-        TileEntityDropperExact.Fields.OFFSET.ordinal(), true);
+        TileEntityDropperExact.Fields.DELAY.ordinal(), true);
     sliderDelay.setTooltip("dropper.delay");
     this.addButton(sliderDelay);
     id++;
