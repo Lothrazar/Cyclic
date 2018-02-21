@@ -26,6 +26,9 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.component.disenchanter.ContainerDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.GuiDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.component.dropper.ContainerDropperExact;
+import com.lothrazar.cyclicmagic.component.dropper.GuiDropperExact;
+import com.lothrazar.cyclicmagic.component.dropper.TileEntityDropperExact;
 import com.lothrazar.cyclicmagic.component.enchanter.ContainerEnchanter;
 import com.lothrazar.cyclicmagic.component.enchanter.GuiEnchanter;
 import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
@@ -64,6 +67,12 @@ import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.component.pattern.ContainerPattern;
 import com.lothrazar.cyclicmagic.component.pattern.GuiPattern;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.peat.farm.ContainerPeatFarm;
+import com.lothrazar.cyclicmagic.component.peat.farm.GuiPeatFarm;
+import com.lothrazar.cyclicmagic.component.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.component.peat.generator.ContainerPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.GuiPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.component.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.component.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
@@ -113,6 +122,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class ForgeGuiHandler implements IGuiHandler {
+  public static final int VANILLA_SIGN = 100;
   public static final int GUI_INDEX_UNCRAFTING = 0;
   public static final int GUI_INDEX_WAND = 1;
   public static final int GUI_INDEX_EXTENDED = 2;
@@ -146,8 +156,9 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ENCHANTER = 30;
   public static final int GUI_INDEX_ANVIL = 31;
   public static final int GUI_INDEX_ITEMPUMP = 32;
-  //skip ahead: vanilla starts here
-  public static final int VANILLA_SIGN = 100;
+  public static final int GUI_INDEX_PEATGEN = 33;
+  public static final int GUI_INDEX_PEATFARM = 34;
+  public static final int GUI_INDEX_DROPPER = 35;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -317,6 +328,21 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerItemPump(player.inventory, (TileEntityItemPump) te);
         }
       break;
+      case GUI_INDEX_PEATGEN:
+        if (te instanceof TileEntityPeatGenerator) {
+          return new ContainerPeatGenerator(player.inventory, (TileEntityPeatGenerator) te);
+        }
+      break;
+      case GUI_INDEX_PEATFARM:
+        if (te instanceof TileEntityPeatFarm) {
+          return new ContainerPeatFarm(player.inventory, (TileEntityPeatFarm) te);
+        }
+      break;
+      case GUI_INDEX_DROPPER:
+        if (te instanceof TileEntityDropperExact) {
+          return new ContainerDropperExact(player.inventory, (TileEntityDropperExact) te);
+        }
+      break;
     }
     return null;
   }
@@ -479,6 +505,21 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ITEMPUMP:
           if (te instanceof TileEntityItemPump) {
             return new GuiItemPump(player.inventory, (TileEntityItemPump) te);
+          }
+        break;
+        case GUI_INDEX_PEATGEN:
+          if (te instanceof TileEntityPeatGenerator) {
+            return new GuiPeatGenerator(player.inventory, (TileEntityPeatGenerator) te);
+          }
+        break;
+        case GUI_INDEX_PEATFARM:
+          if (te instanceof TileEntityPeatFarm) {
+            return new GuiPeatFarm(player.inventory, (TileEntityPeatFarm) te);
+          }
+        break;
+        case GUI_INDEX_DROPPER:
+          if (te instanceof TileEntityDropperExact) {
+            return new GuiDropperExact(player.inventory, (TileEntityDropperExact) te);
           }
         break;
       }

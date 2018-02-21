@@ -17,7 +17,7 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
+    this.setTickRandomly(true);//TODO: remove this
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PLACER);
   }
   @Override

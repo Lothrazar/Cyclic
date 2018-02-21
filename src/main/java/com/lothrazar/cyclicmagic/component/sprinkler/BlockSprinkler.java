@@ -49,6 +49,10 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
     if (te.isRunning() == false) { //inform player water is needed
       UtilChat.sendStatusMessage(player, UtilChat.lang(this.getUnlocalizedName() + ".empty"));
     }
+    if (player.isSneaking()) {
+      te.toggleSpawnParticles();
+      UtilChat.sendStatusMessage(player, UtilChat.lang(this.getUnlocalizedName() + ".particles." + te.isSpawningParticles()));
+    }
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
   @Override

@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.12.1",
-    "1.12.2-recommended": "1.12.1"
+    "1.12.2-latest": "1.13.0",
+    "1.12.2-recommended": "1.13.0"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -246,5 +246,6 @@
   	,"1.11.2":"Fixed items moving wrongly when shift-clicking them in the extended player inventory upgrade screen.  Item Sorter now has a new option where you can tell it to ignore item damage in a row when comparing incoming items to the filter (defaults to normal mode).  Fixed a game crash when certain items containing GUI screens were opened.  Minimum forge version is now 14.23.1.2594."
 	,"1.12.0":"Pipes have been renamed to Cables, have an updated block model (huge thanks to InsomniaKitten), and no longer use TESR animations (huge optimization).  Pumps have been renamed to Extraction Cables and have new block model and texture.  Added Energy Cable to transmit power (RF and others), along with Energy Extraction Cable.  Added Bundled Cable, which can transfer fluids, items, and power all in one blockspace.  Fixed item drops of Wireless blocks.  Fixed Crafting bug with shapeless recipes in the Hydrator.  Spikes will now pop off the block if pushed by a piston out over empty space.  Controlled Miner will no longer drain power when turned off.  Brush Scythe now correctly breaks Gardens from Harvestcraft with their drops.  Fluid Storage Tank has new model/graphics.  Fluid Storage Tank now auto-drains downwards if another one of itself is below.  "
 	,"1.12.1":"Enchanter will no longer eat non-book items.  Updated Russian translation (ru_RU.lang) thanks to TimeConqueror and ollegsey.  New JSON models for the endgame swords (by Arcaniax on blockmodels.com, links in curseforge description).  Added mild animations to several item textures.  Fixed 'Infested Ores' feature not always reading from config correctly.  Added a new PigmenEnrage config, defaults to false: 'If true, mining Nether ore has a 20% chance of enraging a nearby PigZombie within 16 blocks'.  Fixed the rotation feature of Pattern Replicator.  Pattern replicator now correctly places: redstone, repeaters, comparators, tripwire, signs.  The feature 'Plant Despawning Saplings' no longer uses a fake-player to work which fixes an issue with chunk loaders.  Certain machines will no longer cause lag by spawning particles when no players are nearby.  "
+	,"1.13.0":"New block: Precise Dropper.  Added an extensive Peat farming system to generate energy, content includes:  Carbon Catalyst, Biomass, Soaked Peat, Peat Fuel, Peat Bog, Peat Deposit, Peat-fired Generator, Peat Farmer.  Nether and End ores now blend in with any resource pack, instead of forcing vanilla netherrack and endstone textures (huge shoutout to vadis365 on discord).  Harvester will now stop working when the inventory is completely full.  You can now disable the particle splash effect on the Sprinkler using shift-right-click (empty handed works best).  Added en_UD.lang (thanks to The-Fireplace).  Fixed a visual glitch with Extraction Cables.  Fixed a tooltip in the Structure Builder.  "
   }
 }

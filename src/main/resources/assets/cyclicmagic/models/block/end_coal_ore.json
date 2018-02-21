@@ -1,6 +1,9 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "cyclicmagic:blocks/end_coal_ore"
-    }
+  "parent": "cyclicmagic:parent/ore",
+  "textures":
+  {
+    "face": "blocks/end_stone",
+    "overlay": "cyclicmagic:blocks/ores/coal",
+    "particle": "blocks/end_stone"
+  }
 }

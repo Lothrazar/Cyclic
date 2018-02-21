@@ -30,6 +30,14 @@ import com.lothrazar.cyclicmagic.component.password.BlockPassword;
 import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.component.pattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.peat.BlockPeat;
+import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
+import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
+import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.component.peat.farm.BlockPeatFarm;
+import com.lothrazar.cyclicmagic.component.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.component.peat.generator.BlockPeatGenerator;
+import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
@@ -51,6 +59,10 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -76,6 +88,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean forester;
   private boolean enchanter;
   private boolean anvil;
+  private boolean enablePeat;
   public void onPreInit() {
     super.onPreInit();
     BlockFireSafe fire = new BlockFireSafe();
@@ -193,9 +206,28 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
+    if (enablePeat) {
+      //peat
+      ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
+      ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
+      ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
+      Item peat_wet = new ItemPeatFuel(false);
+      ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
+      Item peat_fuel = new ItemPeatFuel(true);
+      ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
+      GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
+      BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+      Block peat_generator = new BlockPeatGenerator(peat_fuel);
+      BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
+      GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.harvester;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -22,13 +21,13 @@ public class ContainerHarvester extends ContainerBaseMachine {
     this.setTile(te);
     this.screenSize = ScreenSize.LARGE;
     for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
+      addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     for (int i = 9; i < 18; i++) {
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 9) * Const.SQ, SLOTY + Const.SQ));
+      addSlotToContainer(new Slot(tile, i, SLOTX_START + (i - 9) * Const.SQ, SLOTY + Const.SQ));
     }
     for (int i = 18; i < 27; i++) {
-      addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
+      addSlotToContainer(new Slot(tile, i, SLOTX_START + (i - 18) * Const.SQ, SLOTY + 2 * Const.SQ));
     }
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);

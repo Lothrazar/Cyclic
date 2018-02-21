@@ -15,6 +15,8 @@ import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.component.dropper.BlockDropperExact;
+import com.lothrazar.cyclicmagic.component.dropper.TileEntityDropperExact;
 import com.lothrazar.cyclicmagic.component.entitydetector.BlockDetector;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
 import com.lothrazar.cyclicmagic.component.fan.BlockFan;
@@ -187,6 +189,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
+    BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
   }
   @Override
   public void syncConfig(Configuration config) {
