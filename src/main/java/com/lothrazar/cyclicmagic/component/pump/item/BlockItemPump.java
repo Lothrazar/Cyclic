@@ -35,7 +35,6 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemPump();
   }
-
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

@@ -98,7 +98,6 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
- 
     this.tryExport();
     this.tryImport();
   }
@@ -110,10 +109,9 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     EnumFacing importFromSide = this.getCurrentFacing();
     EnumFacing exportToSide = importFromSide.getOpposite();
-   
     BlockPos posTarget = pos.offset(exportToSide);
     TileEntity tileTarget = world.getTileEntity(posTarget);
- //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
+    //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
     if (tileTarget == null ||
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide.getOpposite()) == false) {
       return;
@@ -135,24 +133,22 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       return;//im full leave me alone
     }
     EnumFacing importFromSide = this.getCurrentFacing();
- 
     BlockPos posTarget = pos.offset(importFromSide);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
     }
- //   ModCyclic.logger.log("IMPORT FROM " + tileTarget.getClass() + " at side " + importFromSide);
+    //   ModCyclic.logger.log("IMPORT FROM " + tileTarget.getClass() + " at side " + importFromSide);
     ItemStack itemTarget;
     if (tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite())) {
       IItemHandler itemHandlerFrom = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite());
       for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
         itemTarget = itemHandlerFrom.getStackInSlot(i);
-        if(itemTarget.isEmpty()){
+        if (itemTarget.isEmpty()) {
           continue;
         }
-        
         //check against whitelist/blacklist system
-        if (this.isStackInvalid(itemTarget) ) {
+        if (this.isStackInvalid(itemTarget)) {
           //          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
           continue;
         }

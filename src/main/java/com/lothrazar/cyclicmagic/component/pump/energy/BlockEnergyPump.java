@@ -25,7 +25,6 @@ public class BlockEnergyPump extends BlockBaseFacingOmni implements ITileEntityP
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityEnergyPump();
   }
-
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

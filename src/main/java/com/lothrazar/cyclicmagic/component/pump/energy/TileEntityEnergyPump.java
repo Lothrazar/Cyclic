@@ -53,25 +53,20 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     if (this.isRunning() == false) {
       return;
     }
-    
     IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
-    
-    
     EnumFacing importFromSide = this.getCurrentFacing();
-    
     TileEntity importFromTile = world.getTileEntity(pos.offset(importFromSide));
     IEnergyStorage exportHandler = null;
     IEnergyStorage importHandlr = null;
     if (importFromTile != null) {
       importHandlr = importFromTile.getCapability(CapabilityEnergy.ENERGY, importFromSide.getOpposite());
-     // ModCyclic.logger.error("importFromTile  "+importFromTile.getBlockType().getLocalizedName());
+      // ModCyclic.logger.error("importFromTile  "+importFromTile.getBlockType().getLocalizedName());
     }
-
     EnumFacing exportToSide = importFromSide.getOpposite();
     TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
     if (exportToTile != null) {
       exportHandler = exportToTile.getCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite());
-   //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
+      //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
     }
     //first pull in power
     if (importHandlr != null && importHandlr.canExtract()) {
@@ -81,7 +76,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
         int filled = myEnergy.receiveEnergy(drain, false);
         //now actually drain that much  
         importHandlr.extractEnergy(filled, false);
-     //    ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
+        //    ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
     if (exportHandler != null && exportHandler.canReceive()) {

@@ -45,7 +45,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     tank.setFluidAllowed(FluidRegistry.WATER);
     energy = new EnergyStore(CAPACITY);
     timer = TIMER_FULL;
-    this.setSlotsForInsert(0,this.getSizeInventory());
+    this.setSlotsForInsert(0, this.getSizeInventory());
   }
   Block baked = null;
   Block unbaked = null;

@@ -40,15 +40,13 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     if (this.isPowered() == false && this.onlyRunIfPowered()) {
       return;//i am not powered, and i require it
     }
-//    BlockPos posSide;
+    //    BlockPos posSide;
     EnumFacing importFromSide = this.getCurrentFacing();
     EnumFacing exportToSide = importFromSide.getOpposite();
     // IMPORT
- 
-      //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
-//      posSide = pos.offset(importFromSide);
-      UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, TRANSFER_PER_TICK);
- 
+    //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
+    //      posSide = pos.offset(importFromSide);
+    UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, TRANSFER_PER_TICK);
     //eXPORT: now try to DEPOSIT fluid next door
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
     if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
