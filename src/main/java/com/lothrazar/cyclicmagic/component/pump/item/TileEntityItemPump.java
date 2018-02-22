@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pump.item;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -57,7 +58,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     //default is zero, and default blacklist makes sense -> it is empty, so everythings allowed
     return this.filterType == 1;
   }
-  private boolean isTargetItemValid(ItemStack stackToTest) {
+  private boolean isStackInvalid(ItemStack stackToTest) {
     List<ItemStack> inventoryContents = getFilter();
     //edge case: if list is empty ?? should be covered already
     if (OreDictionary.containsMatch(true,
@@ -75,6 +76,16 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     List<ItemStack> validForSide = this.inv.subList(1, FILTER_SIZE + 1);
     return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
   }
+  @Override
+  public EnumFacing getCurrentFacing() {
+    // weird hack IDK when its needed
+    //but it makes sure this always returns where the white connectory connector exists
+    EnumFacing facingTo = super.getCurrentFacing();
+    if (facingTo.getAxis().isVertical()) {
+      facingTo = facingTo.getOpposite();
+    }
+    return facingTo;
+  }
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
@@ -87,7 +98,6 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
-
  
     this.tryExport();
     this.tryImport();
@@ -98,44 +108,51 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
-    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
-    BlockPos posTarget = pos.offset(facingTo);
-    EnumFacing sideOpp = facingTo.getOpposite();
+    EnumFacing importFromSide = this.getCurrentFacing();
+    EnumFacing exportToSide = importFromSide.getOpposite();
+   
+    BlockPos posTarget = pos.offset(exportToSide);
     TileEntity tileTarget = world.getTileEntity(posTarget);
+ //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
     if (tileTarget == null ||
-        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
+        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide.getOpposite()) == false) {
       return;
     }
-    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, sideOpp, stackToExport);
+    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, exportToSide.getOpposite(), stackToExport);
     if (pulled.getCount() != stackToExport.getCount()) {
       this.setInventorySlotContents(SLOT_TRANSFER, pulled);
       //one or more was put in
       outputSuccess = true;
     }
-    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityCableBase) {
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(facingTo));
+    if (outputSuccess && world.getTileEntity(pos.offset(importFromSide)) instanceof TileEntityCableBase) {
+      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(importFromSide));
       if (cable.isItemPipe())
-        cable.updateIncomingItemFace(facingTo.getOpposite());
+        cable.updateIncomingItemFace(importFromSide.getOpposite());
     }
   }
   public void tryImport() {
     if (this.getStackInSlot(SLOT_TRANSFER).isEmpty() == false) {
       return;//im full leave me alone
     }
-    EnumFacing sideOpp = this.getCurrentFacing();
-    //get the block Behind me
-    BlockPos posTarget = pos.offset(sideOpp);
+    EnumFacing importFromSide = this.getCurrentFacing();
+ 
+    BlockPos posTarget = pos.offset(importFromSide);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
     }
+ //   ModCyclic.logger.log("IMPORT FROM " + tileTarget.getClass() + " at side " + importFromSide);
     ItemStack itemTarget;
-    if (tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.getCurrentFacing())) {
-      IItemHandler itemHandlerFrom = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.getCurrentFacing());
+    if (tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite())) {
+      IItemHandler itemHandlerFrom = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite());
       for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
         itemTarget = itemHandlerFrom.getStackInSlot(i);
+        if(itemTarget.isEmpty()){
+          continue;
+        }
+        
         //check against whitelist/blacklist system
-        if (this.isTargetItemValid(itemTarget)) {
+        if (this.isStackInvalid(itemTarget) ) {
           //          ModCyclic.logger.log("not valid " + itemTarget.getDisplayName());
           continue;
         }

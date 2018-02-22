@@ -19,6 +19,15 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
   public TileEntityFluidPump() {
     super(Fluid.BUCKET_VOLUME);
   }
+  @Override
+  public EnumFacing getCurrentFacing() {
+    //TODO: same as item pump so pump base class!?!?
+    EnumFacing facingTo = super.getCurrentFacing();
+    if (facingTo.getAxis().isVertical()) {
+      facingTo = facingTo.getOpposite();
+    }
+    return facingTo;
+  }
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
@@ -31,24 +40,22 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     if (this.isPowered() == false && this.onlyRunIfPowered()) {
       return;//i am not powered, and i require it
     }
-    BlockPos posSide;
-    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
-    for (EnumFacing side : EnumFacing.values()) {
-      if (side == facingTo) {
-        continue;
-      }
-      EnumFacing sideOpp = side.getOpposite();
+//    BlockPos posSide;
+    EnumFacing importFromSide = this.getCurrentFacing();
+    EnumFacing exportToSide = importFromSide.getOpposite();
+    // IMPORT
+ 
       //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
-      posSide = pos.offset(side);
-      UtilFluid.tryFillTankFromPosition(world, posSide, sideOpp, tank, TRANSFER_PER_TICK);
-    }
-    //looping is over. now try to DEPOSIT fluid next door
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(facingTo), facingTo.getOpposite(), tank, TRANSFER_PER_TICK);
-    if (outputSuccess && world.getTileEntity(pos.offset(facingTo)) instanceof TileEntityCableBase) {
+//      posSide = pos.offset(importFromSide);
+      UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, TRANSFER_PER_TICK);
+ 
+    //eXPORT: now try to DEPOSIT fluid next door
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
+    if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(facingTo));
+      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
       if (cable.isFluidPipe())
-        cable.updateIncomingFluidFace(facingTo.getOpposite());
+        cable.updateIncomingFluidFace(exportToSide.getOpposite());
     }
   }
   @Override

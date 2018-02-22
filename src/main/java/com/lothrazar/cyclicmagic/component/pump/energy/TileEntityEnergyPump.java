@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pump.energy;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
@@ -39,49 +40,64 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     return compound;
   }
   @Override
+  public EnumFacing getCurrentFacing() {
+    //TODO: same as item pump so pump base class!?!?
+    EnumFacing facingTo = super.getCurrentFacing();
+    if (facingTo.getAxis().isVertical()) {
+      facingTo = facingTo.getOpposite();
+    }
+    return facingTo;
+  }
+  @Override
   public void update() {
     if (this.isRunning() == false) {
       return;
     }
-    EnumFacing side = this.getCurrentFacing();
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, side);
-    TileEntity tileInsert = world.getTileEntity(pos.offset(side.getOpposite()));
-    IEnergyStorage handlerInsertInto = null;
-    if (tileInsert != null) {
-      handlerInsertInto = tileInsert.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-      //   ModCyclic.logger.error("tileInsert  "+tileInsert.getBlockType().getLocalizedName());
+    
+    IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
+    
+    
+    EnumFacing importFromSide = this.getCurrentFacing();
+    
+    TileEntity importFromTile = world.getTileEntity(pos.offset(importFromSide));
+    IEnergyStorage exportHandler = null;
+    IEnergyStorage importHandlr = null;
+    if (importFromTile != null) {
+      importHandlr = importFromTile.getCapability(CapabilityEnergy.ENERGY, importFromSide.getOpposite());
+     // ModCyclic.logger.error("importFromTile  "+importFromTile.getBlockType().getLocalizedName());
     }
-    TileEntity tilePull = world.getTileEntity(pos.offset(side));
-    IEnergyStorage handlerPullFrom = null;
-    if (tilePull != null) {
-      handlerPullFrom = tilePull.getCapability(CapabilityEnergy.ENERGY, side);
-      //ModCyclic.logger.error("tilePull   "+tilePull.getBlockType().getLocalizedName());
+
+    EnumFacing exportToSide = importFromSide.getOpposite();
+    TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
+    if (exportToTile != null) {
+      exportHandler = exportToTile.getCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite());
+   //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
     }
     //first pull in power
-    if (handlerPullFrom != null && handlerPullFrom.canExtract()) {
-      int drain = handlerPullFrom.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+    if (importHandlr != null && importHandlr.canExtract()) {
+      int drain = importHandlr.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
-        int filled = handlerHere.receiveEnergy(drain, false);
+        int filled = myEnergy.receiveEnergy(drain, false);
         //now actually drain that much  
-        handlerPullFrom.extractEnergy(filled, false);
-        // ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
+        importHandlr.extractEnergy(filled, false);
+     //    ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
-    if (handlerInsertInto != null && handlerInsertInto.canReceive()) {
-      int drain = handlerHere.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+    if (exportHandler != null && exportHandler.canReceive()) {
+      int drain = myEnergy.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
-        int filled = handlerInsertInto.receiveEnergy(drain, false);
+        int filled = exportHandler.receiveEnergy(drain, false);
         //now actually drain that much  
-        handlerHere.extractEnergy(filled, false);
-        if (tileInsert instanceof TileEntityCableBase) {
+        myEnergy.extractEnergy(filled, false);
+        if (importFromTile instanceof TileEntityCableBase) {
           //TODO: not so compatible with other fluid systems. itl do i guess
-          TileEntityCableBase cable = (TileEntityCableBase) tileInsert;
+          TileEntityCableBase cable = (TileEntityCableBase) importFromTile;
           //  ModCyclic.logger.error("pump EXPORT  " + filled);
           if (cable.isEnergyPipe()) {
             // ModCyclic.logger.error("cable receive from   "+ side);
-            cable.updateIncomingEnergyFace(side); // .getOpposite()
+            cable.updateIncomingEnergyFace(importFromSide); // .getOpposite()
           }
         }
       }
