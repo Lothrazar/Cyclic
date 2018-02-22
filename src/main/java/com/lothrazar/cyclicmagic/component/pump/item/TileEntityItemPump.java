@@ -21,7 +21,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     REDSTONE, FILTERTYPE;
   }
   static final int FILTER_SIZE = 9;
-  private int needsRedstone = 1;
+  private int needsRedstone = 0;
   private int filterType = 0;
   public TileEntityItemPump() {
     super(1 + FILTER_SIZE);
@@ -84,18 +84,11 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
    */
   @Override
   public void update() {
-    if (world.isRemote || this.isValid() == false) {
+    if (this.isRunning() == false) {
       return;
     }
-    if (this.isPowered() == false && this.onlyRunIfPowered()) {
-      return;//i am not powered, and i require it
-    }
-    //    if (isRunning() == false) {
-    //      return;
-    //    }
-    //    if (this.isPowered() == false ) {
-    //      return;
-    //    }
+
+ 
     this.tryExport();
     this.tryImport();
   }
