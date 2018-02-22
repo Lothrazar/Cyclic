@@ -81,6 +81,12 @@ import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbe
 import com.lothrazar.cyclicmagic.component.playerext.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.component.pump.energy.ContainerEnergyPump;
+import com.lothrazar.cyclicmagic.component.pump.energy.GuiEnergyPump;
+import com.lothrazar.cyclicmagic.component.pump.energy.TileEntityEnergyPump;
+import com.lothrazar.cyclicmagic.component.pump.fluid.ContainerFluidPump;
+import com.lothrazar.cyclicmagic.component.pump.fluid.GuiFluidPump;
+import com.lothrazar.cyclicmagic.component.pump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.component.pump.item.ContainerItemPump;
 import com.lothrazar.cyclicmagic.component.pump.item.GuiItemPump;
 import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump;
@@ -159,6 +165,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PEATGEN = 33;
   public static final int GUI_INDEX_PEATFARM = 34;
   public static final int GUI_INDEX_DROPPER = 35;
+  public static final int GUI_INDEX_FLUIDPUMP = 36;
+  public static final int GUI_INDEX_ENERGYPUMP = 37;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -343,6 +351,16 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerDropperExact(player.inventory, (TileEntityDropperExact) te);
         }
       break;
+      case GUI_INDEX_FLUIDPUMP:
+        if (te instanceof TileEntityFluidPump) {
+          return new ContainerFluidPump(player.inventory, (TileEntityFluidPump) te);
+        }
+      break;
+      case GUI_INDEX_ENERGYPUMP:
+        if (te instanceof TileEntityEnergyPump) {
+          return new ContainerEnergyPump(player.inventory, (TileEntityEnergyPump) te);
+        }
+      break;
     }
     return null;
   }
@@ -520,6 +538,16 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_DROPPER:
           if (te instanceof TileEntityDropperExact) {
             return new GuiDropperExact(player.inventory, (TileEntityDropperExact) te);
+          }
+        break;
+        case GUI_INDEX_FLUIDPUMP:
+          if (te instanceof TileEntityFluidPump) {
+            return new GuiFluidPump(player.inventory, (TileEntityFluidPump) te);
+          }
+        break;
+        case GUI_INDEX_ENERGYPUMP:
+          if (te instanceof TileEntityEnergyPump) {
+            return new GuiEnergyPump(player.inventory, (TileEntityEnergyPump) te);
           }
         break;
       }
