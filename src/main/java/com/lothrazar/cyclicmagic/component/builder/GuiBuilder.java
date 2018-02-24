@@ -33,12 +33,11 @@ import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
+public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
   private ButtonTileEntityField btnSizeUp;
   private ButtonTileEntityField btnSizeDown;
@@ -228,12 +227,4 @@ public class GuiBuilder extends GuiBaseContainer implements GuiResponder {
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
   }
-  @Override
-  public void setEntryValue(int id, boolean value) {}
-  @Override
-  public void setEntryValue(int id, float value) {
-    System.out.println("Set Slider Valuue" + id + "   " + value);
-  }
-  @Override
-  public void setEntryValue(int id, String value) {}
 }
