@@ -194,12 +194,14 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableMagnet;
   private boolean enableInterdict;
   private boolean vectorPlate;
+  private boolean enableApple;
   @Override
   public void onPreInit() {
     super.onPreInit();
-    BlockAppleCrop apple = new BlockAppleCrop();
-    BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
-
+    if (enableApple) {
+      BlockAppleCrop apple = new BlockAppleCrop();
+      BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
+    }
     BlockFireSafe fire = new BlockFireSafe();
     BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableInterdict) {
@@ -486,6 +488,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
