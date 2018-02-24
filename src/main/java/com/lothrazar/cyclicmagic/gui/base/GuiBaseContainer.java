@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.gui.base;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -13,6 +15,7 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
@@ -26,7 +29,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
   protected int fieldFuel = -1;
-  protected int fieldMaxFuel = -1;
+  protected int fieldMaxFuel = -1; 
+  protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
+  public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
+
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
@@ -94,6 +100,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
     updateToggleButtonStates();
     if (tile != null && tile.doesUseFuel()) {
       drawFuelText();
+    }
+    for (GuiTextField txt : txtBoxes) {
+      if (txt != null) {
+        txt.drawTextBox();
+      }
     }
   }
   /**
@@ -316,8 +327,19 @@ public abstract class GuiBaseContainer extends GuiContainer {
       btnWrap.btn.enabled = !isDisabled;
     }
   }
-  public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
-  public static class ButtonTriggerWrapper {
+  @Override
+  protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
+    super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
+    for (GuiTextField txt : txtBoxes) {
+      txt.mouseClicked(mouseX, mouseY, btn);
+      if (btn == 0) {//basically left click
+        boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
+            && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
+        txt.setFocused(flag);
+      }
+    }
+  }
+   public static class ButtonTriggerWrapper {
     public static enum ButtonTriggerType {
       GREATER, LESS, EQUAL, NOTEQUAL;
     }

@@ -52,4 +52,10 @@ public class ButtonTileEntityField extends GuiButtonTexture {
     }
     return pressed;
   }
+  public int getFieldId() {
+    return field;
+  }
+  public int getValue() {
+    return value;
+  }
 }

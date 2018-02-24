@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.component.vector;
+package com.lothrazar.cyclicmagic.gui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
 
@@ -26,5 +26,13 @@ public class GuiTextFieldInteger extends GuiTextField {
   }
   public void setTileFieldId(int tileFieldId) {
     this.tileFieldId = tileFieldId;
+  }
+  public int getCurrent() {
+    try {
+      return Integer.parseInt(this.getText());
+    }
+    catch (Exception e) {
+      return 0;
+    }
   }
 }

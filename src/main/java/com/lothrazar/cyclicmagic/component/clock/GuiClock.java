@@ -1,12 +1,21 @@
 package com.lothrazar.cyclicmagic.component.clock;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock.Fields;
+import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
+import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonToggleFacing;
+import com.lothrazar.cyclicmagic.net.PacketTileSetField;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,10 +28,10 @@ public class GuiClock extends GuiBaseContainer {
   int w = 18, h = 15;
   int rowOffset = Const.PAD / 2;
   int colOffset = Const.PAD / 4;
-  int xCol1 = (this.width + this.xSize) / 2 - 78;
+  int xCol1 = 4;
   int xCol2 = xCol1 + w + colOffset;
-  int xColText = xCol2 + 24;
-  int xCol3 = xColText + 18;
+  int xColText = xCol2 + 34;
+  int xCol3 = xColText + 24;
   int xCol4 = xCol3 + w + colOffset;
   int yRow1 = Const.PAD * 3 + rowOffset;
   int yRow2 = yRow1 + h + colOffset;
@@ -37,12 +46,32 @@ public class GuiClock extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    int id = 30;
+    int xColTextbox = xCol2 + 22;
     addButton(xCol1, yRow1, Fields.TON.ordinal(), -5, "duration");
     addButton(xCol2, yRow1, Fields.TON.ordinal(), -1, "duration");
+    // here
+    GuiTextFieldInteger txtPower = addTextbox(id++, xColTextbox, yRow1, tile.getField(Fields.TON.ordinal()) + "", 4);
+    txtPower.setMaxVal(9999);
+    txtPower.setMinVal(1);
+    txtPower.height = 16;
+    txtPower.width=32;
+    txtPower.setTileFieldId(TileEntityClock.Fields.TON.ordinal());
+    //
     addButton(xCol3, yRow1, Fields.TON.ordinal(), 1, "duration");
     addButton(xCol4, yRow1, Fields.TON.ordinal(), 5, "duration");
     addButton(xCol1, yRow2, Fields.TOFF.ordinal(), -5, "delay");
     addButton(xCol2, yRow2, Fields.TOFF.ordinal(), -1, "delay");
+    //
+    GuiTextFieldInteger txtTOFF = addTextbox(id++, xColTextbox, yRow2, tile.getField(Fields.TOFF.ordinal()) + "", 4);
+    txtTOFF.setMaxVal(9999);
+    txtTOFF.setMinVal(1);
+    txtTOFF.height = 16;
+    txtTOFF.width=32;
+    txtTOFF.setTileFieldId(TileEntityClock.Fields.TOFF.ordinal());
+    //
+    
+    
     addButton(xCol3, yRow2, Fields.TOFF.ordinal(), 1, "delay");
     addButton(xCol4, yRow2, Fields.TOFF.ordinal(), 5, "delay");
     addButton(xCol2, yRow3, Fields.POWER.ordinal(), -1, "power");
@@ -50,6 +79,14 @@ public class GuiClock extends GuiBaseContainer {
     for (EnumFacing f : EnumFacing.values()) {
       addButtonFacing(f);
     }
+  }
+  private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
+    int width = 10 * maxLen, height = 20;
+    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
+    txt.setMaxStringLength(maxLen);
+    txt.setText(text);
+    txtBoxes.add(txt);
+    return txt;
   }
   private void addButtonFacing(EnumFacing side) {
     int x = 0, y = 0;
@@ -89,6 +126,20 @@ public class GuiClock extends GuiBaseContainer {
     this.buttonList.add(btn);
     poweredButtons.put(side, btn);
   }
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    super.actionPerformed(button);
+    if (button instanceof ButtonTileEntityField) {
+      ButtonTileEntityField btn = (ButtonTileEntityField) button;
+      for (GuiTextField t : txtBoxes) { //push value to the matching textbox
+        GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
+        if (txt.getTileFieldId() == btn.getFieldId()) {
+          int val = btn.getValue() + txt.getCurrent();
+          txt.setText(val + "");
+        }
+      }
+    }
+  }
   private void addButton(int x, int y, int field, int value, String tooltip) {
     ButtonTileEntityField btn = new ButtonTileEntityField(btnId++,
         this.guiLeft + x,
@@ -113,8 +164,41 @@ public class GuiClock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
-    this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
+    for (GuiTextField txt : txtBoxes) {
+      if (txt != null) {
+        txt.drawTextBox();
+      }
+    }
+   // this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
+  //  this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
+  }
+  //  @Override
+  //  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
+  //    super.updateScreen();
+  //  }
+  @Override
+  protected void keyTyped(char pchar, int keyCode) throws IOException {
+    super.keyTyped(pchar, keyCode);
+    for (GuiTextField t : txtBoxes) {
+      GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
+      String oldval = txt.getText();
+      txt.textboxKeyTyped(pchar, keyCode);
+      String newval = txt.getText();
+      boolean yes = false;
+      try {
+        int val = Integer.parseInt(newval);
+        if (val <= txt.getMaxVal() && val >= txt.getMinVal()) {
+          yes = true;
+          //also set it clientisde to hopefully prevent desycn
+          tile.setField(txt.getTileFieldId(), val);
+          ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), txt.getTileFieldId(), val));
+        }
+      }
+      catch (NumberFormatException e) {}
+      if (!yes && !newval.isEmpty()) {//allow empty string in case user is in middle of deleting all and retyping
+        txt.setText(oldval);//rollback to the last valid value. ex if they type 'abc' revert to valid 
+      }
+    }
   }
 }
