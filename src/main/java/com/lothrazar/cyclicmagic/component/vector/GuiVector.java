@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
@@ -26,7 +25,7 @@ public class GuiVector extends GuiBaseContainer {
   private int yPower = 98;
   private int xYaw = 116;
   private int yYaw = 60;
-private ButtonVector soundBtn;
+  private ButtonVector soundBtn;
   private GuiTextFieldInteger txtYaw;
   private GuiTextFieldInteger txtAngle;
   public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
@@ -99,7 +98,7 @@ private ButtonVector soundBtn;
       }
       else {
         for (GuiTextField t : txtBoxes) { //push value to the matching textbox
-          GuiTextFieldInteger txt = (GuiTextFieldInteger)t;
+          GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
           if (txt.getTileFieldId() == btn.getFieldId()) {
             txt.setText(btn.getValue() + "");
           }
@@ -118,7 +117,6 @@ private ButtonVector soundBtn;
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
- 
     for (GuiButton btn : this.buttonList) {
       if (btn instanceof ButtonVector) {
         ButtonVector btnv = (ButtonVector) btn;
@@ -153,7 +151,7 @@ private ButtonVector soundBtn;
   protected void keyTyped(char pchar, int keyCode) throws IOException {
     super.keyTyped(pchar, keyCode);
     for (GuiTextField t : txtBoxes) {
-      GuiTextFieldInteger txt = (GuiTextFieldInteger)t;
+      GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
       String oldval = txt.getText();
       txt.textboxKeyTyped(pchar, keyCode);
       String newval = txt.getText();

@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -29,10 +28,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
   protected int fieldFuel = -1;
-  protected int fieldMaxFuel = -1; 
+  protected int fieldMaxFuel = -1;
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
-
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
@@ -339,7 +337,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
-   public static class ButtonTriggerWrapper {
+  public static class ButtonTriggerWrapper {
     public static enum ButtonTriggerType {
       GREATER, LESS, EQUAL, NOTEQUAL;
     }

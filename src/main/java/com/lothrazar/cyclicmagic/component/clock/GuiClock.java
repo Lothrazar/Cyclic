@@ -1,12 +1,9 @@
 package com.lothrazar.cyclicmagic.component.clock;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.clock.TileEntityClock.Fields;
-import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
-import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -55,7 +52,7 @@ public class GuiClock extends GuiBaseContainer {
     txtPower.setMaxVal(9999);
     txtPower.setMinVal(1);
     txtPower.height = 16;
-    txtPower.width=32;
+    txtPower.width = 32;
     txtPower.setTileFieldId(TileEntityClock.Fields.TON.ordinal());
     //
     addButton(xCol3, yRow1, Fields.TON.ordinal(), 1, "duration");
@@ -67,11 +64,9 @@ public class GuiClock extends GuiBaseContainer {
     txtTOFF.setMaxVal(9999);
     txtTOFF.setMinVal(1);
     txtTOFF.height = 16;
-    txtTOFF.width=32;
+    txtTOFF.width = 32;
     txtTOFF.setTileFieldId(TileEntityClock.Fields.TOFF.ordinal());
     //
-    
-    
     addButton(xCol3, yRow2, Fields.TOFF.ordinal(), 1, "delay");
     addButton(xCol4, yRow2, Fields.TOFF.ordinal(), 5, "delay");
     addButton(xCol2, yRow3, Fields.POWER.ordinal(), -1, "power");
@@ -169,8 +164,8 @@ public class GuiClock extends GuiBaseContainer {
         txt.drawTextBox();
       }
     }
-   // this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
-  //  this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
+    // this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
+    //  this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
   }
   //  @Override

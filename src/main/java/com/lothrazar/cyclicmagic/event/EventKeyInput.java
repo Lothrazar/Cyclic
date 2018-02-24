@@ -141,7 +141,6 @@ public class EventKeyInput {
       return;
     }
     GuiContainer gui = (GuiContainer) event.getGui();
- 
     boolean rightClickDown = false;
     try {
       rightClickDown = Mouse.isButtonDown(1);

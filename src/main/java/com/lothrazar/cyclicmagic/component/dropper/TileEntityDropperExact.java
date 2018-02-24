@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.dropper;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -7,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 
 public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   private int needsRedstone = 1;
@@ -32,7 +30,6 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.updateTimerIsZero()) {
       this.updateCurrentSlot();
       if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {
-         
         ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
         timer = delay;
         BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
@@ -40,7 +37,6 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
         dropMe.setCount(amtDrop);
         UtilItemStack.dropItemStackMotionless(world, target, dropMe);
         this.decrStackSize(slotCurrent, amtDrop);
-        
       }
     }
   }
@@ -50,10 +46,10 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     for (int k = 0; k < this.inv.size(); ++k) {
       if (!((ItemStack) this.inv.get(k)).isEmpty() && world.rand.nextInt(j++) == 0) {
         slotCurrent = k;
-       return;
+        return;
       }
     }
-    slotCurrent= -1;
+    slotCurrent = -1;
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {

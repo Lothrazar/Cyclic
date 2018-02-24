@@ -536,6 +536,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    * Returns true only if every slot is empty
    * 
    * ignores fuelSlot
+   * 
    * @return boolean
    */
   protected boolean isInventoryEmpty() {

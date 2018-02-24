@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pump.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;

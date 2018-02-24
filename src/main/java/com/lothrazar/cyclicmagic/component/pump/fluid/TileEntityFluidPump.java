@@ -1,13 +1,11 @@
 package com.lothrazar.cyclicmagic.component.pump.fluid;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump.Fields;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {

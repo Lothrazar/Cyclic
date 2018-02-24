@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.component.pump.energy;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump.Fields;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

@@ -35,20 +35,14 @@ public class ContainerDropperExact extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
-  
-  
-  
-
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = (Slot) inventorySlots.get(slot);
-  
     //getSizeInventory is only 9 though, because output stack is not part of the size
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
- 
       if (slot < 9) {
         if (!this.mergeItemStack(stackInSlot, 9, 45, true)) {
           return ItemStack.EMPTY;
@@ -71,8 +65,4 @@ public class ContainerDropperExact extends ContainerBaseMachine {
     }
     return stack;
   }
-  
-  
-  
-  
 }
