@@ -307,7 +307,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public void update() {
-    if (!isRunning()) {
+    if (this.isRunning() == false || this.isInventoryEmpty()) {
       return;
     }
     this.shiftAllUp(1);

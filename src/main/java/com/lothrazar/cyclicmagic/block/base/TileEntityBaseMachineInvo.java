@@ -532,4 +532,23 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     //no empty stacks found
     return true;
   }
+  /**
+   * Returns true only if every slot is empty
+   * 
+   * ignores fuelSlot
+   * @return boolean
+   */
+  protected boolean isInventoryEmpty() {
+    for (int i = 0; i < this.inv.size(); i++) {
+      if (i == this.fuelSlot) {
+        continue;
+      }
+      // something is non-empty: false right away
+      if (this.inv.get(i).isEmpty() == false) {
+        return false;
+      }
+    }
+    //every stack we tested was empty
+    return true;
+  }
 }
