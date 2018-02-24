@@ -35,7 +35,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     timer = TIMER_FULL;
     this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1, BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(SLOT_UNCRAFTME);
-    this.setSlotsForExtract(1, this.getSizeInventory() - 1);
+    this.setSlotsForExtract(1, this.getSizeInventory() - 2);//-2, one for fuel one for input
   }
   @Override
   public int[] getFieldOrdinals() {

@@ -141,7 +141,7 @@ public class EventKeyInput {
       return;
     }
     GuiContainer gui = (GuiContainer) event.getGui();
-    //    EntityPlayerSP player = Minecraft.getMinecraft().player;
+ 
     boolean rightClickDown = false;
     try {
       rightClickDown = Mouse.isButtonDown(1);
