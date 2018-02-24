@@ -1,3 +1,26 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +58,9 @@ public class ItemRegistry {
     item.setUnlocalizedName(key);
     item.setRegistryName(new ResourceLocation(Const.MODID, key));
     itemMap.put(key, item);
+
     item = ItemRegistry.itemMap.get(key);
+
     item.setCreativeTab(ModCyclic.TAB);
     if (item instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) item);
@@ -48,14 +73,12 @@ public class ItemRegistry {
       GuideRegistry.register(cat, item, recipe, null);
     }
   }
+
   public static void register(Item item, String key) {
     register(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
   }
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
-    
-    
-    
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
     for (Item item : ItemRegistry.itemMap.values()) {
