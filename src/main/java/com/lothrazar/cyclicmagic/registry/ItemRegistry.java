@@ -22,8 +22,8 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
@@ -53,14 +53,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemRegistry {
-  public static Map<String, Item> itemMap = new HashMap<String, Item>();
+  public static List<Item> itemList = new ArrayList<Item>();
   public static void register(Item item, String key, GuideCategory cat) {
     item.setUnlocalizedName(key);
     item.setRegistryName(new ResourceLocation(Const.MODID, key));
-    itemMap.put(key, item);
-
-    item = ItemRegistry.itemMap.get(key);
-
+    itemList.add(item);
     item.setCreativeTab(ModCyclic.TAB);
     if (item instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) item);
@@ -73,7 +70,6 @@ public class ItemRegistry {
       GuideRegistry.register(cat, item, recipe, null);
     }
   }
-
   public static void register(Item item, String key) {
     register(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
   }
@@ -81,7 +77,8 @@ public class ItemRegistry {
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
-    for (Item item : ItemRegistry.itemMap.values()) {
+    for (Item item : ItemRegistry.itemList) {
+      ModCyclic.logger.info("itemregistry map : " + item.getUnlocalizedName());
       event.getRegistry().register(item);
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
@@ -119,17 +116,15 @@ public class ItemRegistry {
     // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
     //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     String name;
-    Item item;
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof ItemBlock
-      // || Block.getBlockFromItem(item) instanceof BlockBaseCable
-      ) {
+    // 
+    for (Item item : ItemRegistry.itemList) {
+      if (item instanceof ItemBlock) {
         continue;
       }
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
     }
+    Item item;
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
       if (b instanceof BlockCableBase) {

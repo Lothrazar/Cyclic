@@ -86,7 +86,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShapeless, RECIPE_CATEGORY_HYDRATOR);
-    for (Item item : ItemRegistry.itemMap.values()) {
+    for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview

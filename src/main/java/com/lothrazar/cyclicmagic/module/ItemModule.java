@@ -200,6 +200,11 @@ public class ItemModule extends BaseModule implements IHasConfig {
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onPreInit() {
+    if (enableCGlove) {
+      ItemGloveClimb glove_climb = new ItemGloveClimb();
+      ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
+      LootTableRegistry.registerLoot(glove_climb);
+    }
     if (evokerFang) {
       ItemFangs evoker_fangs = new ItemFangs();
       ItemRegistry.register(evoker_fangs, "evoker_fang", GuideCategory.ITEM);
@@ -228,11 +233,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemWarpSurface tool_elevate = new ItemWarpSurface();
       ItemRegistry.register(tool_elevate, "tool_elevate", GuideCategory.TRANSPORT);
       LootTableRegistry.registerLoot(tool_elevate);
-    }
-    if (enableCGlove) {
-      ItemGloveClimb glove_climb = new ItemGloveClimb();
-      ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
-      LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {
       ItemRotateBlock tool_rotate = new ItemRotateBlock();
