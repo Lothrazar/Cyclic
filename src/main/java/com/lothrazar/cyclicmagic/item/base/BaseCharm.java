@@ -60,7 +60,7 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
   }
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
     this.repairedBy = craftItem.copy();
-    RecipeRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
         "iir",
@@ -68,7 +68,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
         'd', "gemDiamond",
         'r', "cropNetherWart",
         'i', "ingotIron");
-    return null;
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack ingredient) {
