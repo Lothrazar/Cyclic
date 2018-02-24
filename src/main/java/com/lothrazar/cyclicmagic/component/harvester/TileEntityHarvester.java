@@ -73,10 +73,8 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     if (this.updateFuelIsBurning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;//harvest worked!
-      this.spawnParticlesAbove();
       if (this.normalModeIfZero == 0) {
         if (tryHarvestSingle(getTargetPos()) == false) {
           timer = 1;//harvest didnt work, try again really quick
@@ -97,7 +95,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     NonNullList<ItemStack> drops = UtilHarvester.harvestSingle(getWorld(), harvestPos);
     if (drops.size() > 0) {
       this.updateFuelIsBurning();
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvestPos);
+      if (isPreviewVisible()) {
+        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvestPos);
+      }
       setOutputItems(drops);
       return true;
     }

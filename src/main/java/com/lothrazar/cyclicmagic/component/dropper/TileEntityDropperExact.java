@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.dropper;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -6,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   private int needsRedstone = 1;
@@ -25,17 +27,33 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.isRunning() == false) {
       return;
     }
+    //TODO: not like this. find list of slots that are NONEMPTY and then pick one
+    //
     if (this.updateTimerIsZero()) {
-      ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
-      if (dropMe.isEmpty() == false) {
+      this.updateCurrentSlot();
+      if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {
+         
+        ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
         timer = delay;
         BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
         int amtDrop = Math.min(this.dropCount, dropMe.getCount());
         dropMe.setCount(amtDrop);
         UtilItemStack.dropItemStackMotionless(world, target, dropMe);
         this.decrStackSize(slotCurrent, amtDrop);
+        
       }
     }
+  }
+  //same logic as dispenser
+  private void updateCurrentSlot() {
+    int j = 1;
+    for (int k = 0; k < this.inv.size(); ++k) {
+      if (!((ItemStack) this.inv.get(k)).isEmpty() && world.rand.nextInt(j++) == 0) {
+        slotCurrent = k;
+       return;
+      }
+    }
+    slotCurrent= -1;
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
