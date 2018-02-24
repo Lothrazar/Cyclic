@@ -1,3 +1,26 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
 import java.util.Arrays;
 import java.util.List;
@@ -530,6 +553,26 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
     //no empty stacks found
+    return true;
+  }
+  /**
+   * Returns true only if every slot is empty
+   * 
+   * ignores fuelSlot
+   * 
+   * @return boolean
+   */
+  protected boolean isInventoryEmpty() {
+    for (int i = 0; i < this.inv.size(); i++) {
+      if (i == this.fuelSlot) {
+        continue;
+      }
+      // something is non-empty: false right away
+      if (this.inv.get(i).isEmpty() == false) {
+        return false;
+      }
+    }
+    //every stack we tested was empty
     return true;
   }
 }

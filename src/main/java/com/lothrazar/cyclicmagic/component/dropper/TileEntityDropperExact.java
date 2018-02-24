@@ -1,3 +1,26 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.dropper;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -25,9 +48,12 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.isRunning() == false) {
       return;
     }
+    //TODO: not like this. find list of slots that are NONEMPTY and then pick one
+    //
     if (this.updateTimerIsZero()) {
-      ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
-      if (dropMe.isEmpty() == false) {
+      this.updateCurrentSlot();
+      if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {
+        ItemStack dropMe = this.getStackInSlot(slotCurrent).copy();
         timer = delay;
         BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
         int amtDrop = Math.min(this.dropCount, dropMe.getCount());
@@ -36,6 +62,17 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
         this.decrStackSize(slotCurrent, amtDrop);
       }
     }
+  }
+  //same logic as dispenser
+  private void updateCurrentSlot() {
+    int j = 1;
+    for (int k = 0; k < this.inv.size(); ++k) {
+      if (!((ItemStack) this.inv.get(k)).isEmpty() && world.rand.nextInt(j++) == 0) {
+        slotCurrent = k;
+        return;
+      }
+    }
+    slotCurrent = -1;
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {

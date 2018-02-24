@@ -1,6 +1,29 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
@@ -30,12 +53,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemRegistry {
-  public static Map<String, Item> itemMap = new HashMap<String, Item>();
+  public static List<Item> itemList = new ArrayList<Item>();
   public static void register(Item item, String key, GuideCategory cat) {
     item.setUnlocalizedName(key);
     item.setRegistryName(new ResourceLocation(Const.MODID, key));
-    itemMap.put(key, item);
-    item = ItemRegistry.itemMap.get(key);
+    itemList.add(item);
     item.setCreativeTab(ModCyclic.TAB);
     if (item instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) item);
@@ -55,7 +77,8 @@ public class ItemRegistry {
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
-    for (Item item : ItemRegistry.itemMap.values()) {
+    for (Item item : ItemRegistry.itemList) {
+      ModCyclic.logger.info("itemregistry map : " + item.getUnlocalizedName());
       event.getRegistry().register(item);
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
@@ -93,17 +116,15 @@ public class ItemRegistry {
     // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
     //    ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     String name;
-    Item item;
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof ItemBlock
-      // || Block.getBlockFromItem(item) instanceof BlockBaseCable
-      ) {
+    // 
+    for (Item item : ItemRegistry.itemList) {
+      if (item instanceof ItemBlock) {
         continue;
       }
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
     }
+    Item item;
     for (Block b : BlockRegistry.blocks) {
       item = Item.getItemFromBlock(b);
       if (b instanceof BlockCableBase) {

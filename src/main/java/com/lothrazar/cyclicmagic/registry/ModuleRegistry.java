@@ -1,10 +1,31 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.module.BlockMachineModule;
-import com.lothrazar.cyclicmagic.module.BlockPlateModule;
-import com.lothrazar.cyclicmagic.module.BlockUtilityModule;
+import com.lothrazar.cyclicmagic.module.BlockModule;
 import com.lothrazar.cyclicmagic.module.CommandModule;
 import com.lothrazar.cyclicmagic.module.DispenserBehaviorModule;
 import com.lothrazar.cyclicmagic.module.EnchantModule;
@@ -16,11 +37,8 @@ import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
 import com.lothrazar.cyclicmagic.module.GearModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.ItemCharmModule;
-import com.lothrazar.cyclicmagic.module.ItemConsumeablesModule;
+import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
-import com.lothrazar.cyclicmagic.module.ItemProjectileModule;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
@@ -45,13 +63,9 @@ public class ModuleRegistry {
     }
   }
   public static void registerAll() {
-    // :) http://alphabetizer.flap.tv/
-    register(new BlockMachineModule());
-    register(new BlockPlateModule());
-    register(new BlockUtilityModule());
+    register(new BlockModule());
     register(new CommandModule());
-    register(new ItemConsumeablesModule());
-    register(new ItemCharmModule());
+    register(new ItemModule());
     register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
     register(new GearModule());
@@ -66,11 +80,9 @@ public class ModuleRegistry {
     register(new PlantsModule());
     register(new MobDropChangesModule());
     register(new MountedTweaksModule());
-    register(new ItemProjectileModule());
     register(new RecipeChangerModule());
     register(new EnvironmentTweaksModule());
     register(new StackSizeModule());
-    register(new ItemToolsModule());
     register(new VillagerCreateModule());
     register(new WorldModule());
     register(new EntityMinecartModule());

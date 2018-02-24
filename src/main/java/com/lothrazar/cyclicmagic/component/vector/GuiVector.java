@@ -1,10 +1,33 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
@@ -25,7 +48,6 @@ public class GuiVector extends GuiBaseContainer {
   private int yPower = 98;
   private int xYaw = 116;
   private int yYaw = 60;
-  private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   private ButtonVector soundBtn;
   private GuiTextFieldInteger txtYaw;
   private GuiTextFieldInteger txtAngle;
@@ -98,7 +120,8 @@ public class GuiVector extends GuiBaseContainer {
         ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), newVal, Fields.SOUND.ordinal()));
       }
       else {
-        for (GuiTextFieldInteger txt : txtBoxes) { //push value to the matching textbox
+        for (GuiTextField t : txtBoxes) { //push value to the matching textbox
+          GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
           if (txt.getTileFieldId() == btn.getFieldId()) {
             txt.setText(btn.getValue() + "");
           }
@@ -117,11 +140,6 @@ public class GuiVector extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    for (GuiTextField txt : txtBoxes) {
-      if (txt != null) {
-        txt.drawTextBox();
-      }
-    }
     for (GuiButton btn : this.buttonList) {
       if (btn instanceof ButtonVector) {
         ButtonVector btnv = (ButtonVector) btn;
@@ -155,7 +173,8 @@ public class GuiVector extends GuiBaseContainer {
   @Override
   protected void keyTyped(char pchar, int keyCode) throws IOException {
     super.keyTyped(pchar, keyCode);
-    for (GuiTextFieldInteger txt : txtBoxes) {
+    for (GuiTextField t : txtBoxes) {
+      GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
       String oldval = txt.getText();
       txt.textboxKeyTyped(pchar, keyCode);
       String newval = txt.getText();
@@ -172,18 +191,6 @@ public class GuiVector extends GuiBaseContainer {
       catch (NumberFormatException e) {}
       if (!yes && !newval.isEmpty()) {//allow empty string in case user is in middle of deleting all and retyping
         txt.setText(oldval);//rollback to the last valid value. ex if they type 'abc' revert to valid 
-      }
-    }
-  }
-  @Override
-  protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
-    super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
-    for (GuiTextField txt : txtBoxes) {
-      txt.mouseClicked(mouseX, mouseY, btn);
-      if (btn == 0) {//basically left click
-        boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
-            && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
-        txt.setFocused(flag);
       }
     }
   }

@@ -1,3 +1,26 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,6 +87,7 @@ public class UtilHarvester {
     blocksBreakAboveIfMatching = NonNullList.from(""
         ,"immersiveengineering:hemp"
         ,"minecraft:reeds"
+        ,"minecraft:cactus"
         );  
     blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
          ,"simplecorn:corn"
@@ -100,6 +124,7 @@ public class UtilHarvester {
   }
   @SuppressWarnings("deprecation")
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
+
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
       return drops;
@@ -127,6 +152,10 @@ public class UtilHarvester {
     }
     if (isBreakAboveIfMatching(blockId) && doesBlockMatch(world, blockCheck, posCurrent.up())) {
       blockCheck.getDrops(drops, world, posCurrent, world.getBlockState(posCurrent.up()), FORTUNE);
+      if (doesBlockMatch(world, blockCheck, posCurrent.up(2))) {
+        blockCheck.getDrops(drops, world, posCurrent, world.getBlockState(posCurrent.up(2)), FORTUNE);
+        world.destroyBlock(posCurrent.up(2), false);//also break this one too - thanks darkosto
+      }
       world.destroyBlock(posCurrent.up(), false);
       return drops;
     }

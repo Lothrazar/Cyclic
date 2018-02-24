@@ -1,4 +1,28 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.base;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -13,6 +37,7 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
@@ -27,6 +52,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected int fieldPreviewBtn = -1;
   protected int fieldFuel = -1;
   protected int fieldMaxFuel = -1;
+  protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
+  public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
@@ -94,6 +121,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
     updateToggleButtonStates();
     if (tile != null && tile.doesUseFuel()) {
       drawFuelText();
+    }
+    for (GuiTextField txt : txtBoxes) {
+      if (txt != null) {
+        txt.drawTextBox();
+      }
     }
   }
   /**
@@ -316,7 +348,18 @@ public abstract class GuiBaseContainer extends GuiContainer {
       btnWrap.btn.enabled = !isDisabled;
     }
   }
-  public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
+  @Override
+  protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
+    super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
+    for (GuiTextField txt : txtBoxes) {
+      txt.mouseClicked(mouseX, mouseY, btn);
+      if (btn == 0) {//basically left click
+        boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
+            && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
+        txt.setFocused(flag);
+      }
+    }
+  }
   public static class ButtonTriggerWrapper {
     public static enum ButtonTriggerType {
       GREATER, LESS, EQUAL, NOTEQUAL;
