@@ -37,11 +37,8 @@ import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
 import com.lothrazar.cyclicmagic.module.GearModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.ItemCharmModule;
-import com.lothrazar.cyclicmagic.module.ItemConsumeablesModule;
+import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
-import com.lothrazar.cyclicmagic.module.ItemProjectileModule;
-import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
@@ -68,8 +65,7 @@ public class ModuleRegistry {
   public static void registerAll() {
     register(new BlockModule());
     register(new CommandModule());
-    register(new ItemConsumeablesModule());
-    register(new ItemCharmModule());
+    register(new ItemModule());
     register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
     register(new GearModule());
@@ -84,11 +80,9 @@ public class ModuleRegistry {
     register(new PlantsModule());
     register(new MobDropChangesModule());
     register(new MountedTweaksModule());
-    register(new ItemProjectileModule());
     register(new RecipeChangerModule());
     register(new EnvironmentTweaksModule());
     register(new StackSizeModule());
-    register(new ItemToolsModule());
     register(new VillagerCreateModule());
     register(new WorldModule());
     register(new EntityMinecartModule());
