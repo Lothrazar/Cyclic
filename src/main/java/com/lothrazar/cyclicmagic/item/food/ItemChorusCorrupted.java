@@ -51,8 +51,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasConfig {
   //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
-  public static int GHOST_SECONDS = 5;
-  public static int POTION_SECONDS = 20;
+  public static int GHOST_SECONDS;
+  public static int POTION_SECONDS;
   private static final int numFood = 2;
   public ItemChorusCorrupted() {
     super(numFood, false);
