@@ -244,7 +244,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     for (ItemStack s : toDrop) {
       if (!s.isEmpty()) {//&& !s.equals(fakePlayer.get().getHeldItemMainhand())
         EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
-        if (entityItem != null) {
+        if (entityItem != null && world.isRemote) {
           entityItem.setVelocity(0, 0, 0);
         }
         s.setCount(0);
@@ -455,6 +455,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
