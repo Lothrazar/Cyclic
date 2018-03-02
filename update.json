@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.13.2",
-    "1.12.2-recommended": "1.13.2"
+    "1.12.2-latest": "1.13.3",
+    "1.12.2-recommended": "1.13.3"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -249,5 +249,6 @@
 	,"1.13.0":"New block: Precise Dropper.  Added an extensive Peat farming system to generate energy, content includes:  Carbon Catalyst, Biomass, Soaked Peat, Peat Fuel, Peat Bog, Peat Deposit, Peat-fired Generator, Peat Farmer.  Nether and End ores now blend in with any resource pack, instead of forcing vanilla netherrack and endstone textures (huge shoutout to vadis365 on discord).  Harvester will now stop working when the inventory is completely full.  You can now disable the particle splash effect on the Sprinkler using shift-right-click (empty handed works best).  Added en_UD.lang (thanks to The-Fireplace).  Fixed a visual glitch with Extraction Cables.  Fixed a tooltip in the Structure Builder.  "
   	,"1.13.1":"Fluid and Energy Extraction Cables now have a new GUI button to toggle the redstone requirement; default value is Always On.   Fixed extractors not working vertically.  Fixed automation insert issues with the Peat machines.  "
   	,"1.13.2":"Fix shift-click in Precice Dropper GUI.  Fixed Precise Dropper only using the first slot, it now uses all slots.  Harvester will only spawn the purple harvest particles when preview is enabled.  Uncrafter no longer allows hoppers & pipes to extract items from fuel slot.  Structure builder now stops working if its empty.  Reduced the scale of the sword models when on the ground in world.  Added two textboxes to the Redstone Clock GUI to set the ticks more easily.   Added missing config option to disable Apple Sprout.  Fixed sort/registry order of how content shows up in JEI.  Fixed harvester correctly gathering and breaking cactus.  "
+  	,"1.13.3":"Auto crafter will no longer consume energy while idling, only when crafting; also increased the default config energy cost from 25 up to 150.  "
   }
 }

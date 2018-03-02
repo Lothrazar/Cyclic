@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerCrafter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 40;
+  public static final int SLOTY = 33;
   protected TileEntityCrafter tileEntity;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
@@ -47,7 +47,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     screenSize = ScreenSize.LARGE;
     int slot = 0;
     //inpt on left
-    int xPrefix = Const.PAD, yPrefix = 27;
+    int xPrefix = Const.PAD, yPrefix = SLOTY;
     int rows = TileEntityCrafter.ROWS;
     int cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
@@ -61,7 +61,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     //crafting in the middle
     rows = cols = 3;
     xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);
-    yPrefix = 40;
+    yPrefix = SLOTY + Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new SlotSingleStack(tileEntity, slot,
@@ -72,7 +72,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     }
     //output on right
     xPrefix = 134;
-    yPrefix = 27;
+    yPrefix = SLOTY;
     rows = TileEntityCrafter.ROWS;
     cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
@@ -90,7 +90,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
