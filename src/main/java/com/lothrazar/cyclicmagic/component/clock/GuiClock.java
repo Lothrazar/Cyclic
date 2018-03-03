@@ -32,7 +32,7 @@ import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.button.ButtonToggleFacing;
+import com.lothrazar.cyclicmagic.gui.button.ButtonCheckboxTileField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -42,7 +42,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClock extends GuiBaseContainer {
-  private Map<EnumFacing, ButtonToggleFacing> poweredButtons = new HashMap<EnumFacing, ButtonToggleFacing>();
+  private Map<EnumFacing, ButtonCheckboxTileField> poweredButtons = new HashMap<EnumFacing, ButtonCheckboxTileField>();
   boolean debugLabels = false;
   private int btnId = 0;
   int w = 18, h = 15;
@@ -110,35 +110,42 @@ public class GuiClock extends GuiBaseContainer {
     int x = 0, y = 0;
     int xCenter = 140, yCenter = Const.PAD * 4;
     int spacing = 14;
+    int field = 0;
     switch (side) {
       case EAST:
         x = xCenter + spacing;
         y = yCenter;
+        field = Fields.E.ordinal();
       break;
       case NORTH:
         x = xCenter;
         y = yCenter - spacing;
+        field = Fields.N.ordinal();
       break;
       case SOUTH:
         x = xCenter;
         y = yCenter + spacing;
+        field = Fields.S.ordinal();
       break;
       case WEST:
         x = xCenter - spacing;
         y = yCenter;
+        field = Fields.W.ordinal();
       break;
       case UP:
         x = xCenter + spacing;
         y = Const.PAD * 8;
+        field = Fields.U.ordinal();
       break;
       case DOWN:
         x = xCenter - spacing;
         y = Const.PAD * 8;
+        field = Fields.D.ordinal();
       break;
     }
-    ButtonToggleFacing btn = new ButtonToggleFacing(btnId++,
+    ButtonCheckboxTileField btn = new ButtonCheckboxTileField(btnId++,
         this.guiLeft + x,
-        this.guiTop + y, this.tile.getPos(), side, w, h);
+        this.guiTop + y, this.tile.getPos(), field, w, h);
     btn.setIsChecked(tileClock.getSideHasPower(side));
     btn.setTooltip("tile.clock.facing." + side.name().toLowerCase());
     this.buttonList.add(btn);

@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.component.clock;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileFacingToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,9 +33,9 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileFacingToggle, ITileRedstoneToggle {
+public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   public static enum Fields {
-    TIMER, TOFF, TON, POWER, REDSTONE;
+    TIMER, TOFF, TON, POWER, REDSTONE, N, E, S, W, U, D;
   }
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
@@ -55,6 +54,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     return this.power;
   }
   public int getPowerForSide(EnumFacing side) {
+
     if (this.getSideHasPower(side))
       return this.power;
     else
@@ -63,10 +63,13 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   public boolean getSideHasPower(EnumFacing side) {
     return this.poweredSides.get(side);
   }
-  @Override
-  public void toggleSide(EnumFacing side) {
-    this.poweredSides.put(side, !this.poweredSides.get(side));
+  public int getSideField(EnumFacing side) {
+    return this.getSideHasPower(side) ? 1 : 0;
   }
+  public void setSideField(EnumFacing side, int pow) {
+    this.poweredSides.put(side, (pow == 1));
+  }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -83,6 +86,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     if (this.power == 0) {
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, false));
+
       return;
     }
     this.timer++;
@@ -101,6 +105,9 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     if (prevPowered != powered) {
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
+      //super weird hotfix for down state not updating
+      //all other directions read update, but not down apparently!
+      world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
     }
   }
   @Override
@@ -116,8 +123,18 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
         return timeOn;
       case REDSTONE:
         return this.needsRedstone;
-      default:
-      break;
+      case D:
+        return this.getSideField(EnumFacing.DOWN);
+      case E:
+        return this.getSideField(EnumFacing.EAST);
+      case N:
+        return this.getSideField(EnumFacing.NORTH);
+      case S:
+        return this.getSideField(EnumFacing.SOUTH);
+      case U:
+        return this.getSideField(EnumFacing.UP);
+      case W:
+        return this.getSideField(EnumFacing.WEST);
     }
     return 0;
   }
@@ -144,7 +161,23 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      default:
+      case D:
+        this.setSideField(EnumFacing.DOWN, value % 2);
+      break;
+      case E:
+        this.setSideField(EnumFacing.EAST, value % 2);
+      break;
+      case N:
+        this.setSideField(EnumFacing.NORTH, value % 2);
+      break;
+      case S:
+        this.setSideField(EnumFacing.SOUTH, value % 2);
+      break;
+      case U:
+        this.setSideField(EnumFacing.UP, value % 2);
+      break;
+      case W:
+        this.setSideField(EnumFacing.WEST, value % 2);
       break;
     }
   }

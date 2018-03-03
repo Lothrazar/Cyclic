@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.component.clock;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -70,6 +71,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityClock();
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
     if (stateIn.getValue(POWERED)) {
@@ -78,7 +80,13 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   }
   private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (world.getTileEntity(pos) instanceof TileEntityClock) {
-      return ((TileEntityClock) world.getTileEntity(pos)).getPowerForSide(side);
+      TileEntityClock clock = ((TileEntityClock) world.getTileEntity(pos));
+      if (-pos.getX() == 1024)
+      if (side == EnumFacing.UP || side == EnumFacing.DOWN) {
+        ModCyclic.logger.info("POWER " + side + clock.getPowerForSide(side));
+      }
+
+      return clock.getPowerForSide(side);
     }
     return 0;
   }
