@@ -73,7 +73,7 @@ public class SoundRegistry {
     dcoin = registerSound("dcoin");//tool toggles: auto torch, piston, randomize, exchange scepters
     fill = registerSound("fill");//heart food success
     pew = registerSound("pew");//magic net on catch (previously was base spell thrown)
-    pow = registerSound("pow");//UNUSED
+    // pow = registerSound("pow");//UNUSED
     thunk = registerSound("thunk");//ChestSack 
     warp = registerSound("warp");//Ender Wings & Book 
     spikes_out = registerSound("spikes_out");//spikes
@@ -85,20 +85,20 @@ public class SoundRegistry {
     laserbeanpew = registerSound("laserbeanpew");// wandlightning
     powerupscales = registerSound("powerupscales");//wandhypno
     magic_missile = registerSound("magic_missile");//wand missile
-    metal_pitch = registerSound("metal_pitch");
+    //metal_pitch = registerSound("metal_pitch");//UNUSED
     pschew_fire = registerSound("pschew_fire");//waterremoval
-    bass_echo = registerSound("bass_echo");
-    coin = registerSound("coin");
-    crack = registerSound("crack");
-    guitar = registerSound("guitar");
-    hovering = registerSound("hovering");
-    pew_long = registerSound("pew_long");
-    spikemaybe = registerSound("spikemaybe");
+    bass_echo = registerSound("bass_echo");//UNUSED
+    // coin = registerSound("coin");//UNUSED
+    crack = registerSound("crack");//Uncrafter
+    //guitar = registerSound("guitar");//UNUSED
+    //  hovering = registerSound("hovering");//UNUSED
+    //pew_long = registerSound("pew_long");//UNUSED
+    // spikemaybe = registerSound("spikemaybe");//UNUSED
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3
     // and http://www.minecraftforge.net/forum/index.php?topic=38076.0
-    final ResourceLocation res = new ResourceLocation(Const.MODID, name);//new ResourceLocation(Const.MODID, "sounds/" + UtilSound.Own.crackle+".ogg");
+    final ResourceLocation res = new ResourceLocation(Const.MODID, name);
     SoundEvent sound = new SoundEvent(res);
     sound.setRegistryName(res);
     sounds.add(sound);
