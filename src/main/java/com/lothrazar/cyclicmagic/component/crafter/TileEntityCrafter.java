@@ -42,7 +42,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-  public static final int TIMER_FULL = 80;
+  public static final int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -58,6 +58,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public TileEntityCrafter() {
     super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
+      @Override
       public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
         return false;
       }
@@ -73,16 +74,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
   @Override
   public void update() {
-    if (!isRunning()) {
+    if (this.isRunning() == false) {
       return;
     }
     this.spawnParticlesAbove();
-    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
-    findRecipe(); //does it match
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateTimerIsZero() == false) {
       return;
     }
-    if (this.updateTimerIsZero()) {
+    //so now we do not burn fuel if timer is stuck at zero with no craft action
+    if (this.getFuelCurrent() >= this.getFuelCost()) {
       findRecipe();
       if (recipe != null && tryPayCost()) {
         // pay the cost  
@@ -90,6 +90,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         //confirmed this test does actually et the outut: 4x planks 
         sendOutput(craftingResult);
         timer = TIMER_FULL;
+        this.updateFuelIsBurning();
       }
     }
   }
@@ -160,6 +161,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
   }
   private void findRecipe() {
+    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
     if (this.recipe != null && recipe.matches(crafter, world)) {
       //recipe exists and it matches whats currently in the gui so stop now
       return;

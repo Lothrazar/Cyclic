@@ -44,7 +44,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
-  public static final int FLY_SECONDS = 5 * 60;//five minutes each
+  public static final int FLY_SECONDS = 2 * 60;
   public ItemChorusGlowing() {
     super(4, false);
     this.setAlwaysEdible();

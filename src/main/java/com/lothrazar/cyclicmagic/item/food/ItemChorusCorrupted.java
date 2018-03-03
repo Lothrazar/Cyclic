@@ -51,8 +51,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasConfig {
   //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
-  public static int GHOST_SECONDS = 5;
-  public static int POTION_SECONDS = 20;
+  public static int GHOST_SECONDS;
+  public static int POTION_SECONDS;
   private static final int numFood = 2;
   public ItemChorusCorrupted() {
     super(numFood, false);
@@ -77,18 +77,18 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-    GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 5, 1, 60, "How long you can noclip after eating corrupted chorus");
+    GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 10, 1, 60, "How long you can noclip after eating corrupted chorus");
     POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
   }
   private void setPlayerGhostMode(EntityPlayer player, World par2World) {
     if (par2World.isRemote == false) {
       player.setGameType(GameType.SPECTATOR);
+    }
       IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
       props.setChorusTimer(GHOST_SECONDS * Const.TICKS_PER_SEC);
       props.setChorusOn(true);
       props.setChorusStart(player.getPosition());
       props.setChorusDim(player.dimension);
-    }
   }
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {

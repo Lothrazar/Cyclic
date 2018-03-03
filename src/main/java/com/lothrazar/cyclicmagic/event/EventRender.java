@@ -123,6 +123,7 @@ public class EventRender {
     }
     int noclipTicks = props.getChorusTimer();
     if (noclipTicks > 0) {
+
       int secs = noclipTicks / Const.TICKS_PER_SEC;
       String time = UtilChat.formatSecondsToMinutes(secs);
       event.getRight().add(UtilChat.lang("screentext.noclip.seconds") + time);
