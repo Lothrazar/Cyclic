@@ -145,10 +145,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           ModCyclic.logger.error(e.getLocalizedMessage());
           e.printStackTrace();
         }
-      } //timer == 0 block
-      //      else {
-      //        timer = 1;//allows it to run on a pulse
-      //      }
+      }
     }
   }
   private void interactEntities(BlockPos targetPos) {
@@ -242,7 +239,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     ///only drop now that its full
     BlockPos dropHere = getTargetPos();
     for (ItemStack s : toDrop) {
-      if (!s.isEmpty()) {//&& !s.equals(fakePlayer.get().getHeldItemMainhand())
+      if (!s.isEmpty()) {
         EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, dropHere, s.copy());
         if (entityItem != null && world.isRemote) {
           entityItem.setVelocity(0, 0, 0);
@@ -253,9 +250,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private void tryDumpFakePlayerInvo() {
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
+
+    for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
+      ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
       if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
-        toDrop.add(s);
+        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName());//leaving in release
+        toDrop.add(s.copy());
+        fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
     }
     tryDumpStacks(toDrop);
