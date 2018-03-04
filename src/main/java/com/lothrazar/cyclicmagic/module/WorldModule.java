@@ -64,12 +64,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
-  //  public static BlockDimensionOre nether_gold_ore;
-  //  public static BlockDimensionOre nether_coal_ore;
-  //  public static BlockDimensionOre nether_lapis_ore;
-  //  public static BlockDimensionOre nether_emerald_ore;
-  //  public static BlockDimensionOre nether_diamond_ore;
-  //  public static BlockDimensionOre nether_iron_ore;
+
   public static BlockDimensionOre end_redstone_ore;
   public static BlockDimensionOre end_coal_ore;
   public static BlockDimensionOre end_lapis_ore;
@@ -77,9 +72,9 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   public static BlockDimensionOre end_emerald_ore;
   public static BlockDimensionOre end_diamond_ore;
   public static BlockDimensionOre end_gold_ore;
-  //  public static BlockDimensionOre nether_redstone_ore;
+
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
-  //  public static List<OreConfig> oreConfigs = new ArrayList<OreConfig>();
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
@@ -129,11 +124,11 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     WorldGenEndOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 15, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceIron = config.getInt("spawnChanceIron", category, 12, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 12, 0, 100, spawnChanceDesc);
-    System.out.println("!! worldGenModule SyncConfig");
+
   }
   @Override
   public void onPreInit() {
-    System.out.println("!! worldGenModule onPREinit");
+
     super.onPreInit();
     if (netherOreEnabled || endOreEnabled) {
       registerDimensionOres();
@@ -142,7 +137,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   @Override
   public void onInit() {
     //syncConfig comes AFTER pre init then init. which is why the configs require a restart 
-    System.out.println("!! worldGenModule oninit");
+
     if (netherOreEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weightOre);
     }
@@ -194,13 +189,13 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
    * Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1); Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1); Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1); Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
    * Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);
    */
-  int coalHarvest = 0;
-  int ironHarvest = 1;
-  int lapisHarvest = ironHarvest;
-  int emeraldHarvest = 2;
-  int diamondHarvest = emeraldHarvest;
-  int goldHarvest = emeraldHarvest;
-  int redstoneHarvest = emeraldHarvest;
+  final int coalHarvest = 0;
+  final int ironHarvest = 1;
+  final int lapisHarvest = ironHarvest;
+  final int emeraldHarvest = 2;
+  final int diamondHarvest = emeraldHarvest;
+  final int goldHarvest = emeraldHarvest;
+  final int redstoneHarvest = emeraldHarvest;
   private void registerDimensionOres() {
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore.setPickaxeHarvestLevel(ironHarvest)
