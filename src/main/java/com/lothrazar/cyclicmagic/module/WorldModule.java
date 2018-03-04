@@ -203,7 +203,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setSpawnChanceConfig("spawnChance")
         .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
         .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(70).setBlockId("nether_copper_ore");
+        .setSpawnChanceDefault(70).setBlockId("copper_nether_ore");
     addOre(nether_copper_ore);
     BlockDimensionOre end_copper_ore = new BlockDimensionOre();
     end_copper_ore.registerOreDict("oreCopper");
@@ -214,7 +214,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setSpawnChanceConfig("spawnChance")
         .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
         .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(70).setBlockId("end_copper_ore");
+        .setSpawnChanceDefault(70).setBlockId("copper_end_ore");
     addOre(end_copper_ore);
 
     
