@@ -179,6 +179,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
    * Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);
    */
   private void registerDimensionOres() {
+    String cateogry;
     final int coalHarvest = 0;
     final int ironHarvest = 1;
     final int lapisHarvest = ironHarvest;
@@ -190,32 +191,58 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     
     boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
     // mod ores
-
-    //COPPER TIME oh yeah
-    String cateogry = Const.ConfigCategory.worldGen + ".ore.copper";
-    
-    BlockDimensionOre nether_copper_ore = new BlockDimensionOre();
-    nether_copper_ore.registerOreDict("oreCopper");
-    nether_copper_ore.config.setDimension(Const.Dimension.end)
+    //bauxite
+    cateogry = Const.ConfigCategory.worldGen + ".ore.bauxite";
+    BlockDimensionOre bauxite_nether_ore = new BlockDimensionOre();
+    bauxite_nether_ore.registerOreDict("oreBauxite");
+    bauxite_nether_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(cateogry + ".nether")
         .setBlockCountConfig("blockCount")
         .setSpawnChanceConfig("spawnChance")
         .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
         .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(70).setBlockId("copper_nether_ore");
-    addOre(nether_copper_ore);
-    BlockDimensionOre end_copper_ore = new BlockDimensionOre();
-    end_copper_ore.registerOreDict("oreCopper");
-    end_copper_ore.config.setDimension(Const.Dimension.end)
+        .setSpawnChanceDefault(5).setBlockId("bauxite_nether_ore");
+    addOre(bauxite_nether_ore);
+
+    BlockDimensionOre bauxite_end_ore = new BlockDimensionOre();
+    bauxite_end_ore.registerOreDict("oreBauxite");
+    bauxite_end_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(cateogry + ".end")
         .setBlockCountConfig("blockCount")
         .setSpawnChanceConfig("spawnChance")
         .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
         .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(70).setBlockId("copper_end_ore");
-    addOre(end_copper_ore);
+        .setSpawnChanceDefault(5).setBlockId("bauxite_end_ore");
+    addOre(bauxite_end_ore);
+
+    //COPPER TIME oh yeah
+    cateogry = Const.ConfigCategory.worldGen + ".ore.copper";
+    
+    BlockDimensionOre copper_nether_ore = new BlockDimensionOre();
+    copper_nether_ore.registerOreDict("oreCopper");
+    copper_nether_ore.config.setDimension(Const.Dimension.nether)
+        .setBlockToReplace("minecraft:netherrack")
+        .setConfigCategory(cateogry + ".nether")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(5).setBlockId("copper_nether_ore");
+    addOre(copper_nether_ore);
+
+    BlockDimensionOre copper_end_ore = new BlockDimensionOre();
+    copper_end_ore.registerOreDict("oreCopper");
+    copper_end_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(cateogry + ".end")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(5).setBlockId("copper_end_ore");
+    addOre(copper_end_ore);
 
     
     
