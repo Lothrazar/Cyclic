@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -39,30 +38,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenNetherOre implements IWorldGenerator {
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
-  private WorldGenMinable genGold;
-  private WorldGenMinable genCoal;
-  private WorldGenMinable genEmerald;
-  private WorldGenMinable genLapis;
-  private WorldGenMinable genDiamond;
-  private WorldGenMinable genIron;
-  //  private WorldGenMinable genRedstone;
-  //  private List<WorldGenMinable> worldGenOres = new ArrayList<WorldGenMinable>();
-  public static class Configs {
-    public static int blockCountCoal = 8;
-    public static int blockCountDiamond = 8;
-    public static int blockCountEmerald = 8;
-    public static int blockCountLapis = 8;
-    public static int blockCountGold = 8;
-    public static int blockCountIron = 12;
-    public static int spawnChanceCoal = 25;
-    public static int spawnChanceDiamond = 6;
-    public static int spawnChanceEmerald = 5;
-    public static int spawnChanceGold = 45;
-    public static int spawnChanceLapis = 10;
-    public static int spawnChanceIron = 10;
-    //    public static int spawnChanceRedstone = 20;
-    //    public static int blockCountRedstone = 8;
-  }
+
   public WorldGenNetherOre() {
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.getBlockCount() > 0) {
@@ -72,20 +48,6 @@ public class WorldGenNetherOre implements IWorldGenerator {
             BlockMatcher.forBlock(ore.config.getBlockToReplaceObject())));
       }
     }
-    //    if (Configs.blockCountRedstone > 0)
-    //      this.genRedstone = new WorldGenMinable(WorldModule.nether_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountIron > 0)
-      this.genIron = new WorldGenMinable(WorldModule.nether_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountGold > 0)
-      this.genGold = new WorldGenMinable(WorldModule.nether_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountCoal > 0)
-      this.genCoal = new WorldGenMinable(WorldModule.nether_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountEmerald > 0)
-      this.genEmerald = new WorldGenMinable(WorldModule.nether_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountLapis > 0)
-      this.genLapis = new WorldGenMinable(WorldModule.nether_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    if (Configs.blockCountDiamond > 0)
-      this.genDiamond = new WorldGenMinable(WorldModule.nether_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.NETHERRACK));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
@@ -97,23 +59,6 @@ public class WorldGenNetherOre implements IWorldGenerator {
         this.run(ore.config.getGen(), world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE,
             ore.config.getSpawnChance(), MIN_HEIGHT, MAX_HEIGHT);
       }
-    }
-
-    if (world.provider.getDimension() == Const.Dimension.nether) {
-      //      if (this.genRedstone != null && Configs.spawnChanceRedstone > 0)
-      //        this.run(this.genRedstone, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceRedstone, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genGold != null && Configs.spawnChanceGold > 0)
-        this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceGold, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genCoal != null && Configs.spawnChanceCoal > 0)
-        this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceCoal, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genEmerald != null && Configs.spawnChanceEmerald > 0)
-        this.run(this.genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceEmerald, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genLapis != null && Configs.spawnChanceLapis > 0)
-        this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceLapis, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genDiamond != null && Configs.spawnChanceDiamond > 0)
-        this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceDiamond, MIN_HEIGHT, MAX_HEIGHT);
-      if (this.genIron != null && Configs.spawnChanceIron > 0)
-        this.run(this.genIron, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceIron, MIN_HEIGHT, MAX_HEIGHT);
     }
   }
   private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight) {
