@@ -12,11 +12,42 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class BlockOreRegistry {
+  static boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
   private static void addOre(BlockDimensionOre ore) {
     WorldModule.ores.add(ore);
   }
+  private static BlockDimensionOre createOre(int dimension, String oreDict, String name, int harvestLevel) {
+
+    String block = null, dimName = null;
+    if (dimension == Const.Dimension.nether) {
+      dimName = "nether";
+ 
+      block = "minecraft:netherrack";
+    }
+    else if (dimension == Const.Dimension.end) {
+      dimName = "end";
+      block = "minecraft:end_stone";
+    } 
+    else if (dimension == Const.Dimension.overworld) {
+      dimName = "world";
+      block = "minecraft:stone";
+    }
+    String cateogry = Const.ConfigCategory.worldGen + ".ore." + name  + "."+ dimName;
+    BlockDimensionOre ore = new BlockDimensionOre();
+    ore.registerOreDict(oreDict);
+    ore.config.setDimension(dimension)
+        .setBlockToReplace(block)
+        .setConfigCategory(cateogry)
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(harvestLevel)
+        .setSpawnChanceDefault(5).setBlockId(name + "_" + dimName + "_ore");
+    addOre(ore);
+    return ore;
+  }
   public static void register() {
-    String cateogry;
+    String oreDict, name;
     final int coalHarvest = 0;
     final int ironHarvest = 1;
     final int lapisHarvest = ironHarvest;
@@ -24,106 +55,38 @@ public class BlockOreRegistry {
     final int diamondHarvest = emeraldHarvest;
     final int goldHarvest = emeraldHarvest;
     final int redstoneHarvest = emeraldHarvest;
-    boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
     // mod ores
-    //BORON
-    cateogry = Const.ConfigCategory.worldGen + ".ore.boron";
-    BlockDimensionOre boron_nether_ore = new BlockDimensionOre();
-    boron_nether_ore.registerOreDict("oreBoron");
-    boron_nether_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
-        .setConfigCategory(cateogry + ".nether")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("boron_nether_ore");
-    addOre(boron_nether_ore);
-    BlockDimensionOre boron_end_ore = new BlockDimensionOre();
-    boron_end_ore.registerOreDict("oreBoron");
-    boron_end_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
-        .setConfigCategory(cateogry + ".end")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("boron_end_ore");
-    addOre(boron_end_ore);
-    //aqua
-    cateogry = Const.ConfigCategory.worldGen + ".ore.aquamarine";
-    BlockDimensionOre aquamarine_nether_ore = new BlockDimensionOre();
-    aquamarine_nether_ore.registerOreDict("oreAquamarine");
-    aquamarine_nether_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
-        .setConfigCategory(cateogry + ".nether")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("aquamarine_nether_ore");
-    addOre(aquamarine_nether_ore);
-    BlockDimensionOre aquamarine_end_ore = new BlockDimensionOre();
-    aquamarine_end_ore.registerOreDict("oreAquamarine");
-    aquamarine_end_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
-        .setConfigCategory(cateogry + ".end")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("aquamarine_end_ore");
-    addOre(aquamarine_end_ore);
-    //bauxite
-    cateogry = Const.ConfigCategory.worldGen + ".ore.bauxite";
-    BlockDimensionOre bauxite_nether_ore = new BlockDimensionOre();
-    bauxite_nether_ore.registerOreDict("oreBauxite");
-    bauxite_nether_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
-        .setConfigCategory(cateogry + ".nether")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("bauxite_nether_ore");
-    addOre(bauxite_nether_ore);
-    BlockDimensionOre bauxite_end_ore = new BlockDimensionOre();
-    bauxite_end_ore.registerOreDict("oreBauxite");
-    bauxite_end_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
-        .setConfigCategory(cateogry + ".end")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("bauxite_end_ore");
-    addOre(bauxite_end_ore);
-    //COPPER TIME oh yeah
-    cateogry = Const.ConfigCategory.worldGen + ".ore.copper";
-    BlockDimensionOre copper_nether_ore = new BlockDimensionOre();
-    copper_nether_ore.registerOreDict("oreCopper");
-    copper_nether_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
-        .setConfigCategory(cateogry + ".nether")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("copper_nether_ore");
-    addOre(copper_nether_ore);
-    BlockDimensionOre copper_end_ore = new BlockDimensionOre();
-    copper_end_ore.registerOreDict("oreCopper");
-    copper_end_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
-        .setConfigCategory(cateogry + ".end")
-        .setBlockCountConfig("blockCount")
-        .setSpawnChanceConfig("spawnChance")
-        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
-        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
-        .setSpawnChanceDefault(5).setBlockId("copper_end_ore");
-    addOre(copper_end_ore);
+    oreDict = "oreAquamarine";
+    name = "aquamarine";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreBauxite";
+    name = "bauxite";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreBoron";
+    name = "boron";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreCopper";
+    name = "copper";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreRuby";
+    name = "ruby";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreSilver";
+    name = "silver";
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    oreDict = "oreTin";
+    name = "tin";
+    createOre(Const.Dimension.nether, oreDict,name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+
     //vanilla ores
-    //
+
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore
         .setSpawnType(SpawnType.SILVERFISH, 2)
