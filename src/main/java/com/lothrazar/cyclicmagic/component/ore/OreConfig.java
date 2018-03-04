@@ -13,7 +13,10 @@ public class OreConfig {
   private String configCategory;
   private String blockId;
   private boolean isRegistered = true;
+  private boolean isRegisteredDefault = true;
   private int dimension;
+  private int harvestLevel;
+  private int harvestLevelDefault;
   private WorldGenMinable gen = null;
 
   private String blockToReplace;
@@ -103,6 +106,26 @@ public class OreConfig {
   }
   public OreConfig setSpawnChanceDefault(int spawnChanceDefault) {
     this.spawnChanceDefault = spawnChanceDefault;
+    return this;
+  }
+  public boolean isRegisteredDefault() {
+    return isRegisteredDefault;
+  }
+  public OreConfig setRegisteredDefault(boolean isRegisteredDefault) {
+    this.isRegisteredDefault = isRegisteredDefault;
+    return this;
+  }
+  public int getHarvestLevel() {
+    return harvestLevel;
+  }
+  public void setHarvestLevel(int harvestLevel) {
+    this.harvestLevel = harvestLevel;
+  }
+  public int getHarvestLevelDefault() {
+    return harvestLevelDefault;
+  }
+  public OreConfig setHarvestLevelDefault(int harvestLevelDefault) {
+    this.harvestLevelDefault = harvestLevelDefault;
     return this;
   }
 }
