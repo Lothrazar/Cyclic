@@ -26,9 +26,34 @@ public class BlockOreRegistry {
     final int redstoneHarvest = emeraldHarvest;
     boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
     // mod ores
+    //BORON
+    cateogry = Const.ConfigCategory.worldGen + ".ore.boron";
+    BlockDimensionOre boron_nether_ore = new BlockDimensionOre();
+    boron_nether_ore.registerOreDict("oreBoron");
+    boron_nether_ore.config.setDimension(Const.Dimension.nether)
+        .setBlockToReplace("minecraft:netherrack")
+        .setConfigCategory(cateogry + ".nether")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(5).setBlockId("boron_nether_ore");
+    addOre(boron_nether_ore);
+    BlockDimensionOre boron_end_ore = new BlockDimensionOre();
+    boron_end_ore.registerOreDict("oreBoron");
+    boron_end_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(cateogry + ".end")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(5).setBlockId("boron_end_ore");
+    addOre(boron_end_ore);
+    //aqua
     cateogry = Const.ConfigCategory.worldGen + ".ore.aquamarine";
     BlockDimensionOre aquamarine_nether_ore = new BlockDimensionOre();
-    aquamarine_nether_ore.registerOreDict("oreAqua");
+    aquamarine_nether_ore.registerOreDict("oreAquamarine");
     aquamarine_nether_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(cateogry + ".nether")
@@ -39,7 +64,7 @@ public class BlockOreRegistry {
         .setSpawnChanceDefault(5).setBlockId("aquamarine_nether_ore");
     addOre(aquamarine_nether_ore);
     BlockDimensionOre aquamarine_end_ore = new BlockDimensionOre();
-    aquamarine_end_ore.registerOreDict("oreAqua");
+    aquamarine_end_ore.registerOreDict("oreAquamarine");
     aquamarine_end_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(cateogry + ".end")
