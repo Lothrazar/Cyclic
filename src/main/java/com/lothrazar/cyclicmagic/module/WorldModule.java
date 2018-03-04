@@ -186,6 +186,43 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     final int diamondHarvest = emeraldHarvest;
     final int goldHarvest = emeraldHarvest;
     final int redstoneHarvest = emeraldHarvest;
+    
+    
+    boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
+    // mod ores
+
+    //COPPER TIME oh yeah
+    String cateogry = Const.ConfigCategory.worldGen + ".ore.copper";
+    
+    BlockDimensionOre nether_copper_ore = new BlockDimensionOre();
+    nether_copper_ore.registerOreDict("oreCopper");
+    nether_copper_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:netherrack")
+        .setConfigCategory(cateogry + ".nether")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(70).setBlockId("nether_copper_ore");
+    addOre(nether_copper_ore);
+    BlockDimensionOre end_copper_ore = new BlockDimensionOre();
+    end_copper_ore.registerOreDict("oreCopper");
+    end_copper_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(cateogry + ".end")
+        .setBlockCountConfig("blockCount")
+        .setSpawnChanceConfig("spawnChance")
+        .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
+        .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
+        .setSpawnChanceDefault(70).setBlockId("end_copper_ore");
+    addOre(end_copper_ore);
+
+    
+    
+    
+    
+    
+    //vanilla ores
     //
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore
@@ -364,7 +401,6 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     end_iron_ore.setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
         .registerOreDict("oreIron");
-
     end_iron_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -373,7 +409,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setBlockCountDefault(8).setHarvestLevelDefault(ironHarvest)
         .setSpawnChanceDefault(4).setBlockId("end_iron_ore");
     addOre(end_iron_ore);
-
+    
     GuideItem page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(nether_gold_ore), "world.netherore.title");
     page.addTextPage("world.netherore.guide");
     page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(end_redstone_ore), "world.endore.title");
