@@ -61,6 +61,9 @@ public class ModLogger implements IHasConfig {
   public void error(String string) {
     logger.error(string);
   }
+  public void error(String string, Object... params) {
+    logger.error(string, params);
+  }
   /**
    * always check this before running a unit test
    * 

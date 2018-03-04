@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 import javax.annotation.Nullable;
 import com.google.common.base.Function;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -51,6 +52,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     if (block != null)
       resource = "tesr/" + block.getUnlocalizedName().replace("tile.", "").replace(".name", "");
   }
+  @Nullable
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
     if (bakedModel == null && resource != null) {
@@ -58,7 +60,10 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
         model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
       }
       catch (Exception e) {
-        throw new RuntimeException(e);
+        //should always exist, resources baked into mod
+        //possibly unloaded chunk error? I have no idea?
+        ModCyclic.logger.error("Error trying to obtain baked model", e);
+        return null;
       }
       bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
           new Function<ResourceLocation, TextureAtlasSprite>() {
@@ -109,7 +114,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     }
     int lu = ambLight % 65536;
     int lv = ambLight / 65536;
-    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) lu / 1.0F, (float) lv / 1.0F);
+    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lu / 1.0F, lv / 1.0F);
     //end of 'fix lighting'
   }
   /**

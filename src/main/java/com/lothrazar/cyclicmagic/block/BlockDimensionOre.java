@@ -37,6 +37,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -88,11 +89,12 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public void registerOre(String out) {
     ore = out;
   }
+  @Override
   public String getOre() {
     return ore;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (this.spawn != null) {
+    if (this.spawn != null && world.getDifficulty() != EnumDifficulty.PEACEFUL) {
       int rand = world.rand.nextInt(100);
       if (rand < this.spawnChance) {
         Entity e = null;
@@ -111,6 +113,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
       }
     }
   }
+  @Override
   public int damageDropped(IBlockState state) {
     return droppedMeta;
   }
@@ -122,6 +125,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return dropped;
   }
+  @Override
   public int quantityDropped(Random random) {
     if (randomMax == 1) {
       return 1;
@@ -141,6 +145,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public String toString() {
     return this.getLocalizedName();
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
