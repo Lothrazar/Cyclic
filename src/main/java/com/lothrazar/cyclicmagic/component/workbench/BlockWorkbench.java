@@ -53,7 +53,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
         's', "cobblestone");
   }
   @Override
-  public String getOre() {
+  public String getOreDict() {
     return "workbench";
   }
 }

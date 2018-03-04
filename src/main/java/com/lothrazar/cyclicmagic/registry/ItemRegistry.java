@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.component.cable.BlockCableBase;
+import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -83,14 +83,16 @@ public class ItemRegistry {
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
         if (blockItem instanceof IHasOreDict) {
-          String oreName = ((IHasOreDict) blockItem).getOre();
+          String oreName = ((IHasOreDict) blockItem).getOreDict();
           OreDictionary.registerOre(oreName, blockItem);
           ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
         }
         //hacky-ish way to register smelting.. we do not have ability do to this inside block class anymore
         if (blockItem instanceof BlockDimensionOre) {
           BlockDimensionOre ore = (BlockDimensionOre) blockItem;
-          GameRegistry.addSmelting(item, ore.getSmeltingOutput(), 1);
+          if (ore.getSmeltingOutput() != null) {
+            GameRegistry.addSmelting(item, ore.getSmeltingOutput(), 1);
+          }
         }
         if (blockItem instanceof IHasRecipe) {
           //ModCyclic.logger.info("item to block recipe?? " + blockItem);
