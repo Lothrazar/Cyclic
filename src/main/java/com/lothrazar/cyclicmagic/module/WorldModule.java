@@ -34,7 +34,6 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
@@ -64,14 +63,6 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
-
-  public static BlockDimensionOre end_redstone_ore;
-  public static BlockDimensionOre end_coal_ore;
-  public static BlockDimensionOre end_lapis_ore;
-  public static BlockDimensionOre end_iron_ore;
-  public static BlockDimensionOre end_emerald_ore;
-  public static BlockDimensionOre end_diamond_ore;
-  public static BlockDimensionOre end_gold_ore;
 
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
 
@@ -110,20 +101,6 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
           config.getInt(ore.config.getSpawnChanceConfig(), ore.config.getConfigCategory(), 8, 0, 32, spawnChanceDesc));
     }
     category = Const.ConfigCategory.worldGen + ".endorecustom";
-    WorldGenEndOre.Configs.blockCountCoal = config.getInt("blockCountCoal", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountDiamond = config.getInt("blockCountDiamond", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountEmerald = config.getInt("blockCountEmerald", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountRedstone = config.getInt("blockCountRedstone", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountLapis = config.getInt("blockCountLapis", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountIron = config.getInt("blockCountIron", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.blockCountGold = config.getInt("blockCountGold", category, 8, 0, 32, blockCountDesc);
-    WorldGenEndOre.Configs.spawnChanceCoal = config.getInt("spawnChanceCoal", category, 20, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 1, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceEmerald = config.getInt("spawnChanceEmerald", category, 1, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceRedstone = config.getInt("spawnChanceRedstone", category, 18, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 15, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceIron = config.getInt("spawnChanceIron", category, 12, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 12, 0, 100, spawnChanceDesc);
 
   }
   @Override
@@ -141,9 +118,9 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     if (netherOreEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weightOre);
     }
-    if (endOreEnabled) {
-      GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weightOre);
-    }
+    //    if (endOreEnabled) {
+    //      GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weightOre);
+    //    }
     if (emeraldHeight) {
       GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weightOre);
     }
@@ -297,48 +274,103 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     ores.add(nether_diamond_ore);
 
     //end ores
-    end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
+    BlockDimensionOre end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     end_redstone_ore.setPickaxeHarvestLevel(redstoneHarvest).setSpawnType(SpawnType.ENDERMITE, 3)
         .registerSmeltingOutput(Items.REDSTONE)
         .registerOreDict("oreRedstone");
     BlockRegistry.registerBlock(end_redstone_ore, "end_redstone_ore", null);
+    end_redstone_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountRedstone")
+        .setSpawnChanceConfig("spawnChanceRedstone")
+        .setBlockCount(8)
+        .setSpawnChance(15);
+    ores.add(end_redstone_ore);
 
-    end_coal_ore = new BlockDimensionOre(Items.COAL);
+    BlockDimensionOre end_coal_ore = new BlockDimensionOre(Items.COAL);
     end_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.ENDERMITE, 1)
         .registerSmeltingOutput(Items.COAL)
         .registerOreDict("oreCoal");
     BlockRegistry.registerBlock(end_coal_ore, "end_coal_ore", null);
+    end_coal_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountRedstone")
+        .setSpawnChanceConfig("spawnChanceRedstone")
+        .setBlockCount(8)
+        .setSpawnChance(10);
+    ores.add(end_coal_ore);
 
-    end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
+    BlockDimensionOre end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     end_lapis_ore.setPickaxeHarvestLevel(lapisHarvest).setSpawnType(SpawnType.ENDERMITE, 5)
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
         .registerOreDict("oreLapis");
     BlockRegistry.registerBlock(end_lapis_ore, "end_lapis_ore", null);
+    end_lapis_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountLapis")
+        .setSpawnChanceConfig("spawnChanceLapis")
+        .setBlockCount(8)
+        .setSpawnChance(12);
+    ores.add(end_lapis_ore);
 
-    end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
+    BlockDimensionOre end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     end_emerald_ore.setPickaxeHarvestLevel(emeraldHarvest).setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.EMERALD)
         .registerOreDict("oreEmerald");
     BlockRegistry.registerBlock(end_emerald_ore, "end_emerald_ore", null);
+    end_emerald_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountEmerald")
+        .setSpawnChanceConfig("spawnChanceEmerald")
+        .setBlockCount(8)
+        .setSpawnChance(1);
+    ores.add(end_emerald_ore);
 
-    end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+    BlockDimensionOre end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.DIAMOND)
         .registerOreDict("oreDiamond");
     BlockRegistry.registerBlock(end_diamond_ore, "end_diamond_ore", null);
+    end_diamond_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountDiamond")
+        .setSpawnChanceConfig("spawnChanceDiamond")
+        .setBlockCount(8)
+        .setSpawnChance(1);
+    ores.add(end_diamond_ore);
 
-    end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
+    BlockDimensionOre end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
     end_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.GOLD_INGOT)
         .registerOreDict("oreGold");
     BlockRegistry.registerBlock(end_gold_ore, "end_gold_ore", null);
+    end_gold_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountGold")
+        .setSpawnChanceConfig("spawnChanceGold")
+        .setBlockCount(8)
+        .setSpawnChance(4);
+    ores.add(end_gold_ore);
 
-    end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
-
+    BlockDimensionOre end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
     end_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
         .registerOreDict("oreIron");
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore", null);
+    end_iron_ore.config.setDimension(Const.Dimension.end)
+        .setBlockToReplace("minecraft:end_stone")
+        .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
+        .setBlockCountConfig("blockCountIron")
+        .setSpawnChanceConfig("spawnChanceIron")
+        .setBlockCount(8)
+        .setSpawnChance(4);
+    ores.add(end_iron_ore);
 
     GuideItem page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(nether_gold_ore), "world.netherore.title");
     page.addTextPage("world.netherore.guide");
