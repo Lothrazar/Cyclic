@@ -100,7 +100,7 @@ public class BlockOreRegistry {
     name = "magnesium";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreMithril ";
+    oreDict = "oreMithril";
     name = "mithril";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
@@ -108,7 +108,7 @@ public class BlockOreRegistry {
     name = "nickel";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreSaltpeter ";
+    oreDict = "oreSaltpeter";
     name = "nitre";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
@@ -132,7 +132,7 @@ public class BlockOreRegistry {
     name = "quartz_certus_charged";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreRutile";
+    oreDict = "oreTitanium";
     name = "rutile";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
