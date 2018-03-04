@@ -9,7 +9,8 @@ public class OreConfig {
   private String blockCountConfig;
   private String spawnChanceConfig;
   private String configCategory;
-  private boolean isRegistered = false;
+  private String blockId;
+  private boolean isRegistered = true;
   private int dimension;
   private WorldGenMinable gen = null;
 
@@ -81,5 +82,11 @@ public class OreConfig {
   }
   public void setGen(WorldGenMinable gen) {
     this.gen = gen;
+  }
+  public String getBlockId() {
+    return blockId;
+  }
+  public void setBlockId(String blockId) {
+    this.blockId = blockId;
   }
 }

@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.world.gen;
+package com.lothrazar.cyclicmagic.component.ore;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -35,11 +34,11 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-public class WorldGenNetherOre implements IWorldGenerator {
+public class WorldGenNewOre implements IWorldGenerator {
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
 
-  public WorldGenNetherOre() {
+  public WorldGenNewOre() {
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.getBlockCount() > 0) {
         ore.config.setGen(new WorldGenMinable(
