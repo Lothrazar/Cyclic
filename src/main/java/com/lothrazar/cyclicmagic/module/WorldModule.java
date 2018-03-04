@@ -63,7 +63,9 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
-
+  public WorldModule() {
+    registerDimensionOres();
+  }
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
 
   @Override
@@ -96,18 +98,23 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     for (BlockDimensionOre ore : WorldModule.ores) {
       category = ore.config.getConfigCategory();
       ore.config.setBlockCount(
-          config.getInt(ore.config.getBlockCountConfig(), category, ore.config.getBlockCount(), 0, 32, "Approximate ore vein size.  Zero means no spawns."));
+          config.getInt(ore.config.getBlockCountConfig(), category, ore.config.getBlockCountDefault(), 0, 32, "Approximate ore vein size.  Zero means no spawns."));
       ore.config.setSpawnChance(
-          config.getInt(ore.config.getSpawnChanceConfig(), category, ore.config.getSpawnChance(), 0, 100, "Chance of a vein to spawn.  Zero means no spawns."));
+          config.getInt(ore.config.getSpawnChanceConfig(), category, ore.config.getSpawnChanceDefault(), 0, 100, "Chance of a vein to spawn.  Zero means no spawns."));
       ore.config.setRegistered(
-          config.getBoolean(ore.config.getBlockId(), category, ore.config.isRegistered(), "Ore exists"));
+          config.getBoolean(ore.config.getBlockId(), category, true, "Ore exists"));
     }
   }
   @Override
   public void onPreInit() {
 
     super.onPreInit();
-    registerDimensionOres();
+
+    for (BlockDimensionOre ore : WorldModule.ores) {
+      if (ore.config.isRegistered()) {
+        BlockRegistry.registerBlock(ore, ore.config.getBlockId(), null);
+      }
+    }
   }
   @Override
   public void onInit() {
@@ -186,8 +193,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
-        .setBlockCount(8)
-        .setSpawnChance(8)
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(8)
         .setBlockId("nether_redstone_ore");
     addOre(nether_redstone_ore);
 
@@ -200,8 +207,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountIron")
         .setSpawnChanceConfig("spawnChanceIron")
-        .setBlockCount(12)
-        .setSpawnChance(10)
+        .setBlockCountDefault(12)
+        .setSpawnChanceDefault(10)
         .setBlockId("nether_iron_ore");
     addOre(nether_iron_ore);
 
@@ -214,8 +221,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountGold")
         .setSpawnChanceConfig("spawnChanceGold")
-        .setBlockCount(8)
-        .setSpawnChance(40).setBlockId("nether_gold_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(40).setBlockId("nether_gold_ore");
     addOre(nether_gold_ore);
 
     BlockDimensionOre nether_coal_ore = new BlockDimensionOre(Items.COAL);
@@ -227,8 +234,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountCoal")
         .setSpawnChanceConfig("spawnChanceCoal")
-        .setBlockCount(8)
-        .setSpawnChance(20).setBlockId("nether_coal_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(20).setBlockId("nether_coal_ore");
     addOre(nether_coal_ore);
 
     BlockDimensionOre nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
@@ -240,8 +247,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountLapis")
         .setSpawnChanceConfig("spawnChanceLapis")
-        .setBlockCount(8)
-        .setSpawnChance(10).setBlockId("nether_lapis_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(10).setBlockId("nether_lapis_ore");
     addOre(nether_lapis_ore);
 
     BlockDimensionOre nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
@@ -253,8 +260,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountEmerald")
         .setSpawnChanceConfig("spawnChanceEmerald")
-        .setBlockCount(8)
-        .setSpawnChance(1).setBlockId("nether_emerald_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(1).setBlockId("nether_emerald_ore");
     addOre(nether_emerald_ore);
 
     BlockDimensionOre nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
@@ -266,8 +273,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountDiamond")
         .setSpawnChanceConfig("spawnChanceDiamond")
-        .setBlockCount(8)
-        .setSpawnChance(1).setBlockId("nether_diamond_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(1).setBlockId("nether_diamond_ore");
     addOre(nether_diamond_ore);
     //end ores
     BlockDimensionOre end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
@@ -279,8 +286,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
-        .setBlockCount(8)
-        .setSpawnChance(15).setBlockId("end_redstone_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(15).setBlockId("end_redstone_ore");
     addOre(end_redstone_ore);
 
     BlockDimensionOre end_coal_ore = new BlockDimensionOre(Items.COAL);
@@ -292,8 +299,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
-        .setBlockCount(8)
-        .setSpawnChance(10).setBlockId("end_coal_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(10).setBlockId("end_coal_ore");
     addOre(end_coal_ore);
 
     BlockDimensionOre end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
@@ -305,8 +312,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountLapis")
         .setSpawnChanceConfig("spawnChanceLapis")
-        .setBlockCount(8)
-        .setSpawnChance(12).setBlockId("end_lapis_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(12).setBlockId("end_lapis_ore");
     addOre(end_lapis_ore);
 
     BlockDimensionOre end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
@@ -318,8 +325,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountEmerald")
         .setSpawnChanceConfig("spawnChanceEmerald")
-        .setBlockCount(8)
-        .setSpawnChance(1).setBlockId("end_emerald_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(1).setBlockId("end_emerald_ore");
     addOre(end_emerald_ore);
 
     BlockDimensionOre end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
@@ -331,8 +338,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountDiamond")
         .setSpawnChanceConfig("spawnChanceDiamond")
-        .setBlockCount(8)
-        .setSpawnChance(1).setBlockId("end_diamond_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(1).setBlockId("end_diamond_ore");
     addOre(end_diamond_ore);
     BlockDimensionOre end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
 
@@ -345,8 +352,8 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountGold")
         .setSpawnChanceConfig("spawnChanceGold")
-        .setBlockCount(8)
-        .setSpawnChance(4).setBlockId("end_gold_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(4).setBlockId("end_gold_ore");
     addOre(end_gold_ore);
 
     BlockDimensionOre end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
@@ -359,19 +366,17 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountIron")
         .setSpawnChanceConfig("spawnChanceIron")
-        .setBlockCount(8)
-        .setSpawnChance(4).setBlockId("end_iron_ore");
+        .setBlockCountDefault(8)
+        .setSpawnChanceDefault(4).setBlockId("end_iron_ore");
     addOre(end_iron_ore);
 
     GuideItem page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(nether_gold_ore), "world.netherore.title");
     page.addTextPage("world.netherore.guide");
     page = GuideRegistry.register(GuideCategory.WORLD, Item.getItemFromBlock(end_redstone_ore), "world.endore.title");
     page.addTextPage("world.endore.guide");
+
   }
   private void addOre(BlockDimensionOre ore) {
     ores.add(ore);
-    if (ore.config.isRegistered()) {
-      BlockRegistry.registerBlock(ore, ore.config.getBlockId(), null);
-    }
   }
 }

@@ -4,8 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 
 public class OreConfig {
-  private int blockCount = 8;
-  private int spawnChance = 10;
+  private int blockCount;
+  private int spawnChance;
+  private int blockCountDefault;
+  private int spawnChanceDefault;
   private String blockCountConfig;
   private String spawnChanceConfig;
   private String configCategory;
@@ -88,5 +90,19 @@ public class OreConfig {
   }
   public void setBlockId(String blockId) {
     this.blockId = blockId;
+  }
+  public int getBlockCountDefault() {
+    return blockCountDefault;
+  }
+  public OreConfig setBlockCountDefault(int blockCountDefault) {
+    this.blockCountDefault = blockCountDefault;
+    return this;
+  }
+  public int getSpawnChanceDefault() {
+    return spawnChanceDefault;
+  }
+  public OreConfig setSpawnChanceDefault(int spawnChanceDefault) {
+    this.spawnChanceDefault = spawnChanceDefault;
+    return this;
   }
 }

@@ -40,7 +40,7 @@ public class WorldGenNewOre implements IWorldGenerator {
 
   public WorldGenNewOre() {
     for (BlockDimensionOre ore : WorldModule.ores) {
-      if (ore.config.getBlockCount() > 0) {
+      if (ore.config.getBlockCount() > 0 && ore.config.isRegistered()) {
         ore.config.setGen(new WorldGenMinable(
             ore.getDefaultState(),
             ore.config.getBlockCount(),
