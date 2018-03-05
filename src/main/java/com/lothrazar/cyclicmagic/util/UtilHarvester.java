@@ -56,6 +56,7 @@ public class UtilHarvester {
   private static NonNullList<String> blocksBreakAboveIfMatching;
   private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
   private static Map<String, Integer> harvestCustomMaxAge;
+  private static Map<String, String> stupidModsThatDontUseAge = new HashMap<String, String>();
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -80,6 +81,42 @@ public class UtilHarvester {
     harvestGetDropsDeprecated = NonNullList.from(""
         ,"rustic:tomato_crop"
         ,"rustic:chili_crop"
+        ,"harvestcraft:pamapple"
+        ,"harvestcraft:pamalmond"
+        ,"harvestcraft:pamapricot"
+        ,"harvestcraft:pamavocado"
+        ,"harvestcraft:pamcashew"
+        ,"harvestcraft:pamcherry"
+        ,"harvestcraft:pamchestnut"
+        ,"harvestcraft:pamcoconut"
+        ,"harvestcraft:pamdate"
+        ,"harvestcraft:pamdragonfruit"
+        ,"harvestcraft:pamdurian"
+        ,"harvestcraft:pamfig"
+        ,"harvestcraft:pamgooseberry"
+        ,"harvestcraft:pamlemon"
+        ,"harvestcraft:pamlime"
+        ,"harvestcraft:pammango"
+        ,"harvestcraft:pamnutmeg"
+        ,"harvestcraft:pamolive"
+        ,"harvestcraft:pamorange"
+        ,"harvestcraft:pampapaya"
+        ,"harvestcraft:pampeach"
+        ,"harvestcraft:pampear"
+        ,"harvestcraft:pampecan"
+        ,"harvestcraft:pampeppercorn"
+        ,"harvestcraft:pampersimmon"
+        ,"harvestcraft:pampistachio"
+        ,"harvestcraft:pamplum"
+        ,"harvestcraft:pampomegranate"
+        ,"harvestcraft:pamstarfruit"
+        ,"harvestcraft:pamvanillabean"
+        ,"harvestcraft:pamwalnut"
+        ,"harvestcraft:pamspiderweb"
+        ,"harvestcraft:pamcinnamon"
+        ,"harvestcraft:pammaple"
+        ,"harvestcraft:pampaperbark"
+
         );    
    breakGetDropsDeprecated = NonNullList.from(""
         ,  "attaineddrops2:bulb"
@@ -92,6 +129,7 @@ public class UtilHarvester {
     blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
          ,"simplecorn:corn"
         );  
+    stupidModsThatDontUseAge.put("rustic:leaves_apple", "apple_age");
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
@@ -122,9 +160,30 @@ public class UtilHarvester {
   private static boolean doesBlockMatch(World world, Block blockCheck, BlockPos pos) {
     return world.getBlockState(pos).getBlock().equals(blockCheck);
   }
+  private static PropertyInteger getAgeProperty(IBlockState blockState, ResourceLocation blockId) {
+
+    UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
+    while (unmodifiableiterator.hasNext()) {
+      Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
+      IProperty<?> iproperty = entry.getKey();
+      if (iproperty.getName() == null) {
+        continue;
+      }
+      if (blockId.getResourceDomain().equals("rustic") && iproperty.getName().equals("apple_age")) {
+        //  ModCyclic.logger.error("PROP " + blockId.toString() + "->" + iproperty);
+      }
+      if (iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
+        return (PropertyInteger) iproperty;
+      }
+      else if (stupidModsThatDontUseAge.containsKey(blockId.toString()) &&
+          iproperty.getName().equals(stupidModsThatDontUseAge.get(blockId.toString())) && iproperty instanceof PropertyInteger) {
+        return (PropertyInteger) iproperty;
+      }
+    }
+    return null;
+  }
   @SuppressWarnings("deprecation")
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
-
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
       return drops;
@@ -132,6 +191,8 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
+
+    //  ModCyclic.logger.error(blockId.toString());
     if (isIgnored(blockId)) {
       return drops;
     }
@@ -160,14 +221,10 @@ public class UtilHarvester {
       return drops;
     }
     //new generic harvest
-    UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
-    while (unmodifiableiterator.hasNext()) {
-      Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
-      IProperty<?> iproperty = entry.getKey();
-      if (iproperty.getName() != null &&
-          iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
-        PropertyInteger propInt = (PropertyInteger) iproperty;
-        int currentAge = blockState.getValue(propInt);
+    PropertyInteger propInt = getAgeProperty(blockState, blockId);
+
+    if (propInt != null) {
+      int currentAge = blockState.getValue(propInt);
         int minAge = Collections.min(propInt.getAllowedValues());
         int maxAge = Collections.max(propInt.getAllowedValues());
         if (harvestCustomMaxAge.containsKey(blockId.toString())) {
@@ -176,7 +233,7 @@ public class UtilHarvester {
         if (minAge == maxAge || currentAge < maxAge) {
           //degenerate edge case: either this was made wrong OR its not meant to grow
           //like a stem or log or something;
-          continue;
+        return drops;
         }
         //first get the drops
         if (isHarvestingGetDropsOld(blockId)) {
@@ -220,8 +277,8 @@ public class UtilHarvester {
           }
         }
         // }
-        break;//stop looking at all properties
-      }
+      //        break;//stop looking at all properties
+      //      }
     }
     return drops;
   }
