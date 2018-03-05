@@ -57,9 +57,9 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   public int getColor() {
     //TODO: fix maybe? IllegalArgumentException: Color parameter outside of expected range
     //    return new java.awt.Color(red, green, blue).getRGB();
-    return (((int) red & 0xFF) << 16) | //red
-        (((int) green & 0xFF) << 8) | //green
-        (((int) blue & 0xFF) << 0);
+    return ((red & 0xFF) << 16) | //red
+        ((green & 0xFF) << 8) | //green
+        ((blue & 0xFF) << 0);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -78,6 +78,10 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     blue = tags.getInteger("blue");
     cursorPos = tags.getInteger("cursorPos");
     padding = tags.getInteger("padding");
+    int just = tags.getInteger("justif");
+    if (just < Justification.values().length) {
+      this.justif = Justification.values()[just];
+    }
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
@@ -87,6 +91,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     tags.setInteger("blue", blue);
     tags.setInteger("cursorPos", cursorPos);
     tags.setInteger("padding", padding);
+    tags.setInteger("justif", justif.ordinal());
     return super.writeToNBT(tags);
   }
   @Override
