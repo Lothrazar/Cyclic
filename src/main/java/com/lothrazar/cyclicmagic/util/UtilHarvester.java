@@ -161,16 +161,12 @@ public class UtilHarvester {
     return world.getBlockState(pos).getBlock().equals(blockCheck);
   }
   private static PropertyInteger getAgeProperty(IBlockState blockState, ResourceLocation blockId) {
-
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
     while (unmodifiableiterator.hasNext()) {
       Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
       IProperty<?> iproperty = entry.getKey();
       if (iproperty.getName() == null) {
         continue;
-      }
-      if (blockId.getResourceDomain().equals("rustic") && iproperty.getName().equals("apple_age")) {
-        //  ModCyclic.logger.error("PROP " + blockId.toString() + "->" + iproperty);
       }
       if (iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
         return (PropertyInteger) iproperty;
@@ -191,8 +187,6 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
-
-    //  ModCyclic.logger.error(blockId.toString());
     if (isIgnored(blockId)) {
       return drops;
     }
@@ -222,63 +216,59 @@ public class UtilHarvester {
     }
     //new generic harvest
     PropertyInteger propInt = getAgeProperty(blockState, blockId);
-
     if (propInt != null) {
       int currentAge = blockState.getValue(propInt);
-        int minAge = Collections.min(propInt.getAllowedValues());
-        int maxAge = Collections.max(propInt.getAllowedValues());
-        if (harvestCustomMaxAge.containsKey(blockId.toString())) {
-          maxAge = harvestCustomMaxAge.get(blockId.toString());
-        }
-        if (minAge == maxAge || currentAge < maxAge) {
-          //degenerate edge case: either this was made wrong OR its not meant to grow
-          //like a stem or log or something;
+      int minAge = Collections.min(propInt.getAllowedValues());
+      int maxAge = Collections.max(propInt.getAllowedValues());
+      if (harvestCustomMaxAge.containsKey(blockId.toString())) {
+        maxAge = harvestCustomMaxAge.get(blockId.toString());
+      }
+      if (minAge == maxAge || currentAge < maxAge) {
+        //degenerate edge case: either this was made wrong OR its not meant to grow
+        //like a stem or log or something;
         return drops;
+      }
+      //first get the drops
+      if (isHarvestingGetDropsOld(blockId)) {
+        //added for rustic, it uses this version, other one does not work
+        //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
+        drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
+      }
+      else {
+        blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
+      }
+      world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
+      if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
+        if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
+          //TODO: corn still drops a few from multiblock on ground. not the worst.
+          world.destroyBlock(posCurrent.up(), false);
         }
-        //first get the drops
-        if (isHarvestingGetDropsOld(blockId)) {
-          //added for rustic, it uses this version, other one does not work
-          //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
-          drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
+      }
+      // TODO: if needed we could add a list of which ones do not have seed removed 
+      if (drops.size() > 1 && tryRemoveOneSeed) {
+        Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
+        if (seedItem == null) {
+          seedItem = Item.getItemFromBlock(blockCheck);
         }
-        else {
-          blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
-        }
-        world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
-        if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
-          if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
-            //TODO: corn still drops a few from multiblock on ground. not the worst.
-            world.destroyBlock(posCurrent.up(), false);
-          }
-        }
-        // TODO: if needed we could add a list of which ones do not have seed removed 
-        if (drops.size() > 1 && tryRemoveOneSeed) {
-          Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
-          if (seedItem == null) {
-            seedItem = Item.getItemFromBlock(blockCheck);
-          }
-          try {
-            if (seedItem != null) {
-              //  if it dropped more than one ( seed and a thing)
-              for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-                final ItemStack drop = iterator.next();
-                if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
-                  iterator.remove();
-                  // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
-                  break;
-                }
+        try {
+          if (seedItem != null) {
+            //  if it dropped more than one ( seed and a thing)
+            for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+              final ItemStack drop = iterator.next();
+              if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+                iterator.remove();
+                // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
+                break;
               }
             }
           }
-          catch (Exception e) {
-            ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
-            ModCyclic.logger.error(e.getMessage());
-            e.printStackTrace();
-          }
         }
-        // }
-      //        break;//stop looking at all properties
-      //      }
+        catch (Exception e) {
+          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
+          ModCyclic.logger.error(e.getMessage());
+          e.printStackTrace();
+        }
+      }
     }
     return drops;
   }
