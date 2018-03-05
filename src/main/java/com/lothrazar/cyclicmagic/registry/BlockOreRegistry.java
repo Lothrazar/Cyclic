@@ -56,6 +56,10 @@ public class BlockOreRegistry {
     final int goldHarvest = emeraldHarvest;
     final int redstoneHarvest = emeraldHarvest;
     // mod ores
+    oreDict = "oreTitanium";
+    name = "titanium";// RUTLIE ORE
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
+    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
     oreDict = "oreAquamarine";
     name = "aquamarine";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
@@ -130,10 +134,6 @@ public class BlockOreRegistry {
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
     oreDict = "oreChargedCertusQuartz";
     name = "quartz_certus_charged";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreTitanium";
-    name = "rutile";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
     oreDict = "oreSapphire";
