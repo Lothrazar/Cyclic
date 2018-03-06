@@ -82,7 +82,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public final static int TIMER_FULL = 120;
-  public static final int MAX_SPEED = 20;
+  public static final int MAX_SPEED = 200;
   public static int maxHeight = 10;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
