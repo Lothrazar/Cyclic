@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -35,6 +36,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -59,6 +61,7 @@ import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -176,7 +179,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
   }
   @Override
   public void syncConfig(Configuration config) {
-    doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
+    doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, false, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
     // doesSetSpawn = config.getBoolean("SleepingMatSetsSpawn", Const.ConfigCategory.items, false, "True means using this at night will set your spawn point, just like a bed.");
   }
@@ -187,16 +190,30 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
         "leather");
   } //stupid private functions in entity player
   public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing fac) {
-    mp.renderOffsetX = -1.8F * (float) fac.getFrontOffsetX();
-    mp.renderOffsetZ = -1.8F * (float) fac.getFrontOffsetZ();
+    mp.renderOffsetX = -1.8F * fac.getFrontOffsetX();
+    mp.renderOffsetZ = -1.8F * fac.getFrontOffsetZ();
+    //    UtilReflection.callPrivateMethod(Entity.class, mp, "setSize", "func_70105_a", new Object[] { 0.2F, 0.2F });
+    try {
+      Method m = ReflectionHelper.findMethod(Entity.class, "setSize", "func_70105_a", float.class, float.class);
+      if (m != null) {
+        m.invoke(mp, 0.2F, 0.2F);
+      }
+      else {
+        ModCyclic.logger.error("Private function not found on " + Entity.class.getName() + " : setSize");
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
     //maybe one day.. meh
-    //UtilReflection.callPrivateMethod(Entity.class, mp, "setSize", "setSize", new Object[]{0.2F,0.2F});
   }
+  @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
+  @Override
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     if (tags.hasKey(NBT_STATUS) == false) {
@@ -211,6 +228,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.sleeping_mat.tooltip.info") + UtilChat.lang("item.sleeping_mat.tooltip." + onoff));
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return this.isOn(stack);
