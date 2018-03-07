@@ -181,19 +181,18 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
   public void syncConfig(Configuration config) {
     doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, false, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
-    // doesSetSpawn = config.getBoolean("SleepingMatSetsSpawn", Const.ConfigCategory.items, false, "True means using this at night will set your spawn point, just like a bed.");
   }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         "leather");
-  } //stupid private functions in entity player
+  }
   public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing fac) {
     mp.renderOffsetX = -1.8F * fac.getFrontOffsetX();
     mp.renderOffsetZ = -1.8F * fac.getFrontOffsetZ();
-    //    UtilReflection.callPrivateMethod(Entity.class, mp, "setSize", "func_70105_a", new Object[] { 0.2F, 0.2F });
     try {
+      //stupid private functions in entity player
       Method m = ReflectionHelper.findMethod(Entity.class, "setSize", "func_70105_a", float.class, float.class);
       if (m != null) {
         m.invoke(mp, 0.2F, 0.2F);
@@ -205,7 +204,6 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     catch (Exception e) {
       e.printStackTrace();
     }
-    //maybe one day.. meh
   }
   @Override
   public void toggle(EntityPlayer player, ItemStack held) {

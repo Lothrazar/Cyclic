@@ -49,6 +49,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   public ItemProjectileMagicNet() {
     super();
   }
+  @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
     return new EntityTorchBolt(world, x, y, z);
   }
@@ -95,7 +96,6 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   }
   @Override
   public SoundEvent getSound() {
-    // TODO Auto-generated method stub
     return SoundEvents.ENTITY_EGG_THROW;
   }
 }

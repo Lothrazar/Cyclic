@@ -250,7 +250,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private void tryDumpFakePlayerInvo() {
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-
     for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
       if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
