@@ -41,7 +41,7 @@ import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
-import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
+import com.lothrazar.cyclicmagic.module.MobChangesModule;
 import com.lothrazar.cyclicmagic.module.MountedTweaksModule;
 import com.lothrazar.cyclicmagic.module.PlantsModule;
 import com.lothrazar.cyclicmagic.module.PlayerAbilitiesModule;
@@ -78,7 +78,7 @@ public class ModuleRegistry {
     register(new KeyInventoryShiftModule());
     register(new LootTableModule());
     register(new PlantsModule());
-    register(new MobDropChangesModule());
+    register(new MobChangesModule());
     register(new MountedTweaksModule());
     register(new RecipeChangerModule());
     register(new EnvironmentTweaksModule());

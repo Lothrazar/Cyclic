@@ -82,10 +82,9 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
     if (world.getTileEntity(pos) instanceof TileEntityClock) {
       TileEntityClock clock = ((TileEntityClock) world.getTileEntity(pos));
       if (-pos.getX() == 1024)
-      if (side == EnumFacing.UP || side == EnumFacing.DOWN) {
+        if (side == EnumFacing.UP || side == EnumFacing.DOWN) {
         ModCyclic.logger.info("POWER " + side + clock.getPowerForSide(side));
-      }
-
+        }
       return clock.getPowerForSide(side);
     }
     return 0;

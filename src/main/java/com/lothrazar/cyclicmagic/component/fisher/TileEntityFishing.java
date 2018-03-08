@@ -138,17 +138,34 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     //TODO: a whitelist of modid:itemid here
     return false;
   }
+  private boolean isFishCaught() {
+    if (world == null) {
+      return false;//why was this check here i forget
+    }
+    boolean doDaylightCycle = world.getGameRules().getBoolean("doDaylightCycle");
+    boolean perChance;
+    if (doDaylightCycle) {
+      // normal time passing
+      perChance = world.getWorldTime() % Const.TICKS_PER_SEC == 0;
+    }
+    else {
+      //rule is off, time is frozen
+      // if getWorldTime is frozen, add another 1/20 chance shot. simulate the %20 for once per second
+      perChance = world.rand.nextInt(20) == 0;
+    }
+    return world.rand.nextDouble() < this.getFishSpeed() &&
+        isValidPosition() &&
+        isEquipmentValid() &&
+        perChance;
+  }
   @Override
   public void update() {
     World world = this.getWorld();
     Random rand = world.rand;
-    if (rand.nextDouble() < this.getFishSpeed() &&
-        isValidPosition() && isEquipmentValid() &&
-        world instanceof WorldServer && world != null &&
-        world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
+    if (this.isFishCaught() && world instanceof WorldServer) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) world);
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.getStackInSlot(SLOT_TOOL));
-      lootcontext$builder.withLuck((float) luck);
+      lootcontext$builder.withLuck(luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = world.getLootTableManager();
       if (loot == null) {
@@ -240,7 +257,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     super.readFromNBT(tagCompound);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      NBTTagCompound tag = tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.size()) {
         inv.set(i, UtilNBT.itemFromNBT(tag));

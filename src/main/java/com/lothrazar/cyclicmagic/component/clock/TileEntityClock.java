@@ -54,7 +54,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     return this.power;
   }
   public int getPowerForSide(EnumFacing side) {
-
     if (this.getSideHasPower(side))
       return this.power;
     else
@@ -69,7 +68,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   public void setSideField(EnumFacing side, int pow) {
     this.poweredSides.put(side, (pow == 1));
   }
-
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -86,7 +84,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     if (this.power == 0) {
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, false));
-
       return;
     }
     this.timer++;
