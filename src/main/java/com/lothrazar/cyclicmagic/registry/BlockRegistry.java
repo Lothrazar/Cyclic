@@ -66,7 +66,6 @@ public class BlockRegistry {
       }
     }
   }
-
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));

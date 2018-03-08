@@ -84,11 +84,11 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
     if (par2World.isRemote == false) {
       player.setGameType(GameType.SPECTATOR);
     }
-      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
-      props.setChorusTimer(GHOST_SECONDS * Const.TICKS_PER_SEC);
-      props.setChorusOn(true);
-      props.setChorusStart(player.getPosition());
-      props.setChorusDim(player.dimension);
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+    props.setChorusTimer(GHOST_SECONDS * Const.TICKS_PER_SEC);
+    props.setChorusOn(true);
+    props.setChorusStart(player.getPosition());
+    props.setChorusDim(player.dimension);
   }
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {

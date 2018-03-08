@@ -22,10 +22,12 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -35,8 +37,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MobDropChangesModule extends BaseEventModule implements IHasConfig {
+public class MobChangesModule extends BaseEventModule implements IHasConfig {
   private boolean endermanDrop;
+  private boolean endermanPickupBlocks;
   private boolean nameTagDeath;
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {
@@ -53,7 +56,7 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
     }
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
-      IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
+      IBlockState bs = mob.getHeldBlockState();
       if (bs != null && bs.getBlock() != null && world.isRemote == false) {
         UtilItemStack.dropItemStackInWorld(world, mob.getPosition(), bs.getBlock());
       }
@@ -67,5 +70,24 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
         "When an entity dies that is named with a tag, it drops the nametag");
     endermanDrop = config.getBoolean("Enderman Block", category, true,
         "Enderman will always drop block they are carrying 100%");
+    endermanPickupBlocks = config.getBoolean("Enderman Pickup Blocker", category, true,
+        "False is the same as vanilla behavior.  True means that this mod will block enderman from picking up all registered blocks (does not listen to mob actions, this scans registry only once on startup and sets properties).  ");
+  }
+  @Override
+  public void onPostInit() {
+    if (endermanPickupBlocks) {
+      for (Block registeredBlock : Block.REGISTRY) {
+        if (registeredBlock == null) {
+          continue;
+        }
+        try {
+          EntityEnderman.setCarriable(registeredBlock, false);
+        }
+        catch (Exception e) {
+          ModCyclic.logger.error("MobChangesModule: error trying to disable enderman pickup ability on ", registeredBlock.getUnlocalizedName());
+          e.printStackTrace();
+        }
+      }
+    }
   }
 }

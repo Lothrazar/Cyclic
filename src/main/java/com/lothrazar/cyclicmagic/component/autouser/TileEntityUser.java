@@ -82,7 +82,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public final static int TIMER_FULL = 120;
-  public static final int MAX_SPEED = 20;
+  public static final int MAX_SPEED = 200;
   public static int maxHeight = 10;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
@@ -250,7 +250,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   private void tryDumpFakePlayerInvo() {
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-
     for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
       if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
