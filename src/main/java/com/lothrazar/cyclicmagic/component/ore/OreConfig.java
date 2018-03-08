@@ -18,7 +18,7 @@ public class OreConfig {
   private int harvestLevel;
   private int harvestLevelDefault;
   private WorldGenMinable gen = null;
-
+  private boolean isVanilla = false;
   private String blockToReplace;
 
   public int getBlockCount() {
@@ -126,6 +126,14 @@ public class OreConfig {
   }
   public OreConfig setHarvestLevelDefault(int harvestLevelDefault) {
     this.harvestLevelDefault = harvestLevelDefault;
+    return this;
+  }
+  public boolean isVanilla() {
+    return isVanilla;
+  }
+  public OreConfig setVanilla() {
+    this.isVanilla = true;
+    this.isRegisteredDefault = true;
     return this;
   }
 }

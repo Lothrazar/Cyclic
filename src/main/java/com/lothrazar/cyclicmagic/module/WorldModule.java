@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockOreRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
@@ -61,6 +62,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   }
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
 
+  private static boolean enableModCompatOres;
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
@@ -88,18 +90,26 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
 
     //NEW ORES start here
 
+    Configuration oreConf;
+    ConfigRegistry.oreConfig.load();
+
+    enableModCompatOres = ConfigRegistry.oreConfig.getBoolean("globalOverride", "_global_", false, "False means all are disabled no matter what.  True means each ore uses its own true/false to exist.  ");
     for (BlockDimensionOre ore : WorldModule.ores) {
+      //TODO: ore config is kind of janked right now but this gets the job done
+
+      oreConf = (ore.config.isVanilla()) ? config : ConfigRegistry.oreConfig;
       category = ore.config.getConfigCategory();
       ore.config.setBlockCount(
-          config.getInt(ore.config.getBlockCountConfig(), category, ore.config.getBlockCountDefault(), 0, 32, "Approximate ore vein size.  Zero means no spawns."));
+          oreConf.getInt(ore.config.getBlockCountConfig(), category, ore.config.getBlockCountDefault(), 0, 32, "Approximate ore vein size.  Zero means no spawns."));
       ore.config.setSpawnChance(
-          config.getInt(ore.config.getSpawnChanceConfig(), category, ore.config.getSpawnChanceDefault(), 0, 100, "Chance of a vein to spawn.  Zero means no spawns."));
+          oreConf.getInt(ore.config.getSpawnChanceConfig(), category, ore.config.getSpawnChanceDefault(), 0, 100, "Chance of a vein to spawn.  Zero means no spawns."));
       ore.config.setRegistered(
-          config.getBoolean(ore.config.getBlockId(), category, ore.config.isRegisteredDefault(), "Ore exists"));
+          oreConf.getBoolean(ore.config.getBlockId(), category, ore.config.isRegisteredDefault(), "Ore exists"));
       ore.config.setHarvestLevel(
-          config.getInt(ore.config.getBlockId() + "_harvest_level", category,
+          oreConf.getInt(ore.config.getBlockId() + "_harvest_level", category,
               ore.config.getHarvestLevelDefault(), 0, 3, "Tool Harvest Level"));
     }
+    ConfigRegistry.oreConfig.save();
   }
   @Override
   public void onPreInit() {
@@ -107,6 +117,20 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     super.onPreInit();
 
     for (BlockDimensionOre ore : WorldModule.ores) {
+      if (ore.config.isVanilla() == false
+          && WorldModule.enableModCompatOres == false) {
+        continue;//global override blockade
+      }
+      if (ore.config.isVanilla()
+          && ore.config.getDimension() == Const.Dimension.end
+          && endOreEnabled == false) {
+        continue;//global override blockade
+      }
+      if (ore.config.isVanilla()
+          && ore.config.getDimension() == Const.Dimension.nether
+          && netherOreEnabled == false) {
+        continue;//global override blockade
+      }
       if (ore.config.isRegistered()) {
         BlockRegistry.registerBlock(ore, ore.config.getBlockId(), null);
         ore.setPickaxeHarvestLevel(ore.config.getHarvestLevel());

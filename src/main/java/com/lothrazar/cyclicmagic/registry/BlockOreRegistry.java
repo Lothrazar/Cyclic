@@ -32,7 +32,7 @@ public class BlockOreRegistry {
       dimName = "world";
       block = "minecraft:stone";
     }
-    String cateogry = Const.ConfigCategory.worldGen + ".ore." + name  + "."+ dimName;
+    String cateogry = name + "." + dimName;
     BlockDimensionOre ore = new BlockDimensionOre();
     ore.registerOreDict(oreDict);
     ore.config.setDimension(dimension)
@@ -181,7 +181,7 @@ public class BlockOreRegistry {
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
-        .setBlockCountDefault(8)
+        .setBlockCountDefault(8).setVanilla()
         .setSpawnChanceDefault(8).setHarvestLevelDefault(ironHarvest)
         .setBlockId("nether_redstone_ore");
     addOre(nether_redstone_ore);
@@ -190,7 +190,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.IRON_INGOT)
         .registerOreDict("oreIron");
     nether_iron_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
+        .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountIron")
         .setSpawnChanceConfig("spawnChanceIron")
@@ -205,7 +205,7 @@ public class BlockOreRegistry {
     nether_gold_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
-        .setBlockCountConfig("blockCountGold")
+        .setBlockCountConfig("blockCountGold").setVanilla()
         .setSpawnChanceConfig("spawnChanceGold")
         .setBlockCountDefault(8).setHarvestLevelDefault(goldHarvest)
         .setSpawnChanceDefault(40).setBlockId("nether_gold_ore");
@@ -215,7 +215,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.COAL)
         .registerOreDict("oreCoal");
     nether_coal_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
+        .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountCoal")
         .setSpawnChanceConfig("spawnChanceCoal")
@@ -227,7 +227,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
         .registerOreDict("oreLapis");
     nether_lapis_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
+        .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountLapis")
         .setSpawnChanceConfig("spawnChanceLapis")
@@ -239,7 +239,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.EMERALD)
         .registerOreDict("oreEmerald");
     nether_emerald_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
+        .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountEmerald")
         .setSpawnChanceConfig("spawnChanceEmerald")
@@ -251,7 +251,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.DIAMOND)
         .registerOreDict("oreDiamond");
     nether_diamond_ore.config.setDimension(Const.Dimension.nether)
-        .setBlockToReplace("minecraft:netherrack")
+        .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
         .setBlockCountConfig("blockCountDiamond")
         .setSpawnChanceConfig("spawnChanceDiamond")
@@ -264,7 +264,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.REDSTONE)
         .registerOreDict("oreRedstone");
     end_redstone_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
@@ -276,7 +276,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.COAL)
         .registerOreDict("oreCoal");
     end_coal_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountRedstone")
         .setSpawnChanceConfig("spawnChanceRedstone")
@@ -288,7 +288,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
         .registerOreDict("oreLapis");
     end_lapis_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountLapis")
         .setSpawnChanceConfig("spawnChanceLapis")
@@ -302,7 +302,7 @@ public class BlockOreRegistry {
     end_emerald_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
-        .setBlockCountConfig("blockCountEmerald")
+        .setBlockCountConfig("blockCountEmerald").setVanilla()
         .setSpawnChanceConfig("spawnChanceEmerald")
         .setBlockCountDefault(8).setHarvestLevelDefault(emeraldHarvest)
         .setSpawnChanceDefault(1).setBlockId("end_emerald_ore");
@@ -312,7 +312,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.DIAMOND)
         .registerOreDict("oreDiamond");
     end_diamond_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountDiamond")
         .setSpawnChanceConfig("spawnChanceDiamond")
@@ -324,7 +324,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.GOLD_INGOT)
         .registerOreDict("oreGold");
     end_gold_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountGold")
         .setSpawnChanceConfig("spawnChanceGold")
@@ -336,7 +336,7 @@ public class BlockOreRegistry {
         .registerSmeltingOutput(Items.IRON_INGOT)
         .registerOreDict("oreIron");
     end_iron_ore.config.setDimension(Const.Dimension.end)
-        .setBlockToReplace("minecraft:end_stone")
+        .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
         .setBlockCountConfig("blockCountIron")
         .setSpawnChanceConfig("spawnChanceIron")
