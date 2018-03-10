@@ -86,8 +86,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
     // @formatter:off
     String[] deflist = new String[] {
-        "minecraft:diamond_pickaxe"
-        , "galacticraftcore:battery" 
+        "galacticraftcore:battery" 
         , "galacticraftcore:oxygen_tank_heavy_full" 
         , "galacticraftcore:oxygen_tank_med_full" 
         , "galacticraftcore:oil_canister_partial" 
