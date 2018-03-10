@@ -25,6 +25,8 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
@@ -38,13 +40,15 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRecipe {
+public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasConfig, IHasRecipe {
   public static final String NBT_ENTITYID = "id";
   public ItemProjectileMagicNet() {
     super();
@@ -97,5 +101,19 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   @Override
   public SoundEvent getSound() {
     return SoundEvents.ENTITY_EGG_THROW;
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.modpackMisc + ".magic_net";
+    // @formatter:off
+    String[] deflist = new String[] {
+        "minecraft:wither"
+        , "minecraft:ender_dragon"
+        ,"minecraft:ender_crystal"
+    };
+    // @formatter:on
+    String[] blacklist = config.getStringList("CaptureBlacklist",
+        category, deflist, "Entities that cannot be captured.  (even without this, players and non-living entities do not work)");
+    EntityMagicNetEmpty.blacklistIds = NonNullList.from("", blacklist);
   }
 }

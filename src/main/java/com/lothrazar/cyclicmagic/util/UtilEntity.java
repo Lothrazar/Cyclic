@@ -38,6 +38,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -46,6 +47,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class UtilEntity {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
@@ -178,9 +181,9 @@ public class UtilEntity {
     entity.motionX = 0;
     entity.motionY = 0;
     entity.motionZ = 0;
-    double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+    double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velY = -MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
     if (velY < 0) {
       velY *= -1;// make it always up never down
     }
@@ -198,9 +201,9 @@ public class UtilEntity {
   }
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power + 0.5);
-    double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+    double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velY = -MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
     // launch the player up and forward at minimum angle
     // regardless of look vector
     if (velY < 0) {
@@ -407,5 +410,13 @@ public class UtilEntity {
   public static void dragEntityMomentum(EntityLivingBase entity, double verticalMomentumFactor) {
     entity.motionX = entity.motionX / verticalMomentumFactor;
     entity.motionZ = entity.motionZ / verticalMomentumFactor;
+  }
+  public static ResourceLocation getResourceLocation(Entity entityHit) {
+    try {
+    return ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(entityHit.getClass()));
+    }
+    catch (Exception e) {
+      return null;
+    }
   }
 }
