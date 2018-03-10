@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:copper_end_ore" }
+    }
+}

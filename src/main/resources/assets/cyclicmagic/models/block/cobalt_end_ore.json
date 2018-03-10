@@ -1,0 +1,9 @@
+{
+  "parent": "cyclicmagic:parent/ore",
+  "textures":
+  {
+    "face": "blocks/end_stone",
+    "overlay": "cyclicmagic:blocks/ores/cobalt",
+    "particle": "blocks/end_stone"
+  }
+}
