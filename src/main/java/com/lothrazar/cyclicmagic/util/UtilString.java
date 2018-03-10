@@ -40,6 +40,9 @@ public class UtilString {
    * @return
    */
   public static boolean isInList(final List<String> list, ResourceLocation toMatch) {
+    if (toMatch == null) {
+      return false;
+    }
     String id = toMatch.getResourceDomain().toString();
     for (String strFromList : list) {
       if (strFromList.equals(id)) {

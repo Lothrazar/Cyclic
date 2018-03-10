@@ -1,9 +1,8 @@
 {
    "parent": "block/cube",
    "textures": {
-        "particle": "cyclicmagic:blocks/anvil_base",
-        "body": "cyclicmagic:blocks/anvil_base",
-        "top": "cyclicmagic:blocks/anvil_top"
+        "particle": "blocks/diamond_block",
+        "body": "blocks/diamond_block"
     },
     "elements": [
         {   "__comment": "Anvil base",
@@ -47,7 +46,7 @@
             "to": [ 13, 16, 16 ],
             "faces": {
                 "down":  { "uv": [  3, 0, 13, 16 ], "texture": "#body", "rotation": 180 },
-                "up":    { "uv": [  3, 0, 13, 16 ], "texture": "#top",   "rotation": 180 },
+                "up":    { "uv": [  1, 0, 11, 16 ], "texture": "#body",   "rotation": 180 },
                 "north": { "uv": [  3, 0, 13,  6 ], "texture": "#body" },
                 "south": { "uv": [  3, 0, 13,  6 ], "texture": "#body" },
                 "west":  { "uv": [ 10, 0, 16, 16 ], "texture": "#body", "rotation":  90 },

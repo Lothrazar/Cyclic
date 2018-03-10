@@ -1,0 +1,9 @@
+{
+  "parent": "cyclicmagic:parent/ore",
+  "textures":
+  {
+    "face": "blocks/netherrack",
+    "overlay": "cyclicmagic:blocks/ores/nitre",
+    "particle": "blocks/netherrack"
+  }
+}

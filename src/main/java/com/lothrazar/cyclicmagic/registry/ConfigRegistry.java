@@ -32,6 +32,7 @@ import net.minecraftforge.common.config.Configuration;
 public class ConfigRegistry {
   public static ArrayList<IHasConfig> configHandlers;
   private static Configuration config;
+  public static Configuration oreConfig;
   public static Configuration getConfig() {
     return config;
   }
@@ -52,5 +53,6 @@ public class ConfigRegistry {
     UtilScythe.syncConfig(config);
     UtilHarvester.syncConfig(config);
     config.save();
+
   }
 }

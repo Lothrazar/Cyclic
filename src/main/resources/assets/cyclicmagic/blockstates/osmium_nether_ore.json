@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:osmium_nether_ore" }
+    }
+}

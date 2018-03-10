@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.component.ore;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -43,15 +43,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDimensionOre extends BlockOre implements IHasOreDict {
+  public OreConfig config = new OreConfig();
   private Item dropped;
   private int droppedMeta;
   private int randomMax;
   private int spawnChance = 0;
   private SpawnType spawn = null;
-  ItemStack smeltOut;
-  String ore;
+  private ItemStack smeltOut;
+  private String oreDict;
   public static enum SpawnType {
     ENDERMITE, SILVERFISH
+  }
+  public BlockDimensionOre() {
+    this(null, 0);
   }
   public BlockDimensionOre(Item drop) {
     this(drop, 0);
@@ -61,6 +65,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   }
   public BlockDimensionOre(Item drop, int dmg, int max) {
     super();
+    config = new OreConfig();
     dropped = drop;
     droppedMeta = dmg;
     randomMax = max;
@@ -73,25 +78,28 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     this.setHarvestLevel(Const.ToolStrings.pickaxe, h);
     return this;
   }
-  public void setSpawnType(SpawnType t, int chance) {
+  public BlockDimensionOre setSpawnType(SpawnType t, int chance) {
     this.spawn = t;
     this.spawnChance = chance;
+    return this;
   }
-  public void registerSmeltingOutput(Item out) {
+  public BlockDimensionOre registerSmeltingOutput(Item out) {
     smeltOut = new ItemStack(out);
+    return this;
   }
-  public void registerSmeltingOutput(ItemStack out) {
+  public BlockDimensionOre registerSmeltingOutput(ItemStack out) {
     smeltOut = out;
+    return this;
   }
   public ItemStack getSmeltingOutput() {
     return smeltOut;
   }
-  public void registerOre(String out) {
-    ore = out;
+  public void registerOreDict(String out) {
+    oreDict = out;
   }
   @Override
-  public String getOre() {
-    return ore;
+  public String getOreDict() {
+    return oreDict;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
     if (this.spawn != null && world.getDifficulty() != EnumDifficulty.PEACEFUL) {
@@ -123,6 +131,9 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   }
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    if (dropped == null) {
+      return Item.getItemFromBlock(this);
+    }
     return dropped;
   }
   @Override
@@ -150,4 +161,5 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
   }
+
 }

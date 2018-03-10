@@ -26,10 +26,12 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -45,6 +47,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;
+  static NonNullList<String> blacklistBlockIds;
   public static enum Fields {
     TIMER, FLUID, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
@@ -58,6 +61,9 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.LAVA);
   }
+  private boolean isBlockAllowed(ItemStack thing) {
+    return UtilString.isInList(blacklistBlockIds, thing.getItem().getRegistryName()) == false;
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -68,28 +74,33 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       return;
     }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
+    //validate item
+    if (inputStack.isItemDamaged() == false ||
+        isBlockAllowed(inputStack) == false) {
+      //all done
+      if (this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
+        //delete bug fix
+        this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
+      }
+      return;
+    }
     if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
     this.spawnParticlesAbove();
+    //pay energy each tick
     if (this.updateFuelIsBurning() == false) {
       return;
     }
     if (this.getCurrentFluid() < 0) {
       this.setCurrentFluid(0);
     }
-    if (inputStack.isItemDamaged() == false) {
-      //all done
-      this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
-      return;
-    }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      if (inputStack.isItemDamaged() &&
-          this.hasEnoughFluid()) {
+      if (inputStack.isItemDamaged() && this.hasEnoughFluid()) {
         inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay item cost and build  
+        //pay fluid each repair update
         this.drain(FLUID_COST, true);
       }
     }

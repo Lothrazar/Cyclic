@@ -22,24 +22,31 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetEmpty extends EntityThrowableDispensable {
   public static Item renderSnowball;
+  public static NonNullList<String> blacklistIds;
   public static class FactoryBallEmpty implements IRenderFactory<EntityMagicNetEmpty> {
     @Override
     public Render<? super EntityMagicNetEmpty> createRenderFor(RenderManager rm) {
@@ -55,9 +62,17 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
   public EntityMagicNetEmpty(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+  private boolean isInBlacklist(Entity thing) {
+    ResourceLocation test = UtilEntity.getResourceLocation(thing);
+    ModCyclic.logger.info("cannot capture entity in config blacklist " + test);
+    return UtilString.isInList(blacklistIds, test);
+  }
   @Override
   protected void processImpact(RayTraceResult mop) {
-    if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase && (mop.entityHit instanceof EntityPlayer) == false) {
+    if (mop.entityHit != null
+        && mop.entityHit instanceof EntityLivingBase
+        && (mop.entityHit instanceof EntityPlayer) == false
+        && isInBlacklist(mop.entityHit) == false) {
       ItemStack captured = new ItemStack(renderSnowball);
       NBTTagCompound entity = new NBTTagCompound();
       mop.entityHit.writeToNBT(entity);

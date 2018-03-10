@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic;
+import java.io.File;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -82,6 +83,7 @@ public class ModCyclic {
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
+    ConfigRegistry.oreConfig = new Configuration(new File(event.getModConfigurationDirectory(), "cyclic_ores.cfg"));
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     ConfigRegistry.register(logger);
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);

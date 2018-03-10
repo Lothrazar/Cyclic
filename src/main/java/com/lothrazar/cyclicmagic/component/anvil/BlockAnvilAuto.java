@@ -42,6 +42,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -82,6 +83,20 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
     TileEntityAnvilAuto.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 25, 1, 1000, "Lava cost per damage unit");
+    String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
+    // @formatter:off
+    String[] deflist = new String[] {
+        "galacticraftcore:battery" 
+        , "galacticraftcore:oxygen_tank_heavy_full" 
+        , "galacticraftcore:oxygen_tank_med_full" 
+        , "galacticraftcore:oil_canister_partial" 
+        , "galacticraftcore:oxygen_tank_light_full"
+        ,"pneumaticcraft:*"
+    };
+    // @formatter:on
+    String[] blacklist = config.getStringList("RepairBlacklist",
+        category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles");
+    TileEntityAnvilAuto.blacklistBlockIds = NonNullList.from("", blacklist);
   }
   @Override
   public IRecipe addRecipe() {
