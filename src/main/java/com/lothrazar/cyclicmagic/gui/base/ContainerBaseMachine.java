@@ -35,6 +35,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBaseMachine extends ContainerBase {
   public static final int SLOTX_FUEL = 8 * Const.SQ + Const.PAD;
@@ -42,9 +44,13 @@ public class ContainerBaseMachine extends ContainerBase {
   private int[] tileMap;
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
-  public ContainerBaseMachine() {}
+  private boolean hasTile;
+  public ContainerBaseMachine() {
+    this.hasTile = false;
+  }
   public ContainerBaseMachine(TileEntityBaseMachineInvo t) {
     this.setTile(t);
+
   }
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
@@ -57,7 +63,8 @@ public class ContainerBaseMachine extends ContainerBase {
     }
     bindPlayerHotbar(inventoryPlayer);
   }
-  protected void setTile(TileEntityBaseMachineInvo tile) {
+  private void setTile(TileEntityBaseMachineInvo tile) {
+    this.hasTile = true;
     this.tile = tile;
     this.tileMap = new int[tile.getFieldOrdinals().length];
   }
@@ -112,5 +119,23 @@ public class ContainerBaseMachine extends ContainerBase {
       fuel = new SlotOutputOnly(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel + 9999);//LITERALLY OFF SCREEN
     }
     addSlotToContainer(fuel);
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    tile.setField(id, data);
+  }
+  @Override
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, tile);
+  }
+  @Override
+  public boolean canInteractWith(EntityPlayer player) {
+    if (this.hasTile == false) {
+      return super.canInteractWith(player);
+    }
+    return player.getDistanceSq(this.tile.getPos().getX(), this.tile.getPos().getY(), this.tile.getPos().getZ()) <= 32
+        && this.tile.isValid() && this.tile.getWorld().getTileEntity(this.tile.getPos()) == tile;
   }
 }

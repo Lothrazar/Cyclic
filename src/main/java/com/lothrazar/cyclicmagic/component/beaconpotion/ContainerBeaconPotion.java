@@ -37,7 +37,7 @@ public class ContainerBeaconPotion extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 52;
   public ContainerBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion te) {
-    this.setTile(te);
+    super(te);
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new SlotPotion(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
@@ -56,7 +56,7 @@ public class ContainerBeaconPotion extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

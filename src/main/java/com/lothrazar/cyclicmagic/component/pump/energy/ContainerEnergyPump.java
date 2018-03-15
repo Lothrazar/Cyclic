@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerEnergyPump extends ContainerBaseMachine {
   public ContainerEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
-    this.setTile(tileEntity);
+    super(tileEntity);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

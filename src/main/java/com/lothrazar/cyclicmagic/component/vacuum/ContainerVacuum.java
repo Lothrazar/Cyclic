@@ -39,7 +39,7 @@ public class ContainerVacuum extends ContainerBaseMachine {
   public static final int SLOTX = 150;
   public static final int SLOTY = 18;
   public ContainerVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum te) {
-    this.setTile(te);
+    super(te);
     this.screenSize = ScreenSize.LARGE;
     for (int i = 0; i < TileEntityVacuum.ROWS; i++) {
       for (int j = 0; j < TileEntityVacuum.COLS; j++) {
@@ -68,7 +68,7 @@ public class ContainerVacuum extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

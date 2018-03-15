@@ -32,7 +32,7 @@ public class ContainerFan extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public ContainerFan(InventoryPlayer inventoryPlayer, TileEntityFan te) {
-    this.setTile(te);
+    super(te);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

@@ -41,7 +41,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
   public static final int SLOTY = 58;
   public static final int SQ = 18;
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
-    this.setTile(te);
+    super(te);
     this.screenSize = ScreenSize.LARGE;
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
@@ -68,7 +68,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

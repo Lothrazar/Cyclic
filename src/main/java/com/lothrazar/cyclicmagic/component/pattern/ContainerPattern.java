@@ -37,17 +37,16 @@ public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY_START = 90;
-  protected TileEntityPatternBuilder tileEntity;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
+    super(te);
     screenSize = ScreenSize.LARGE;
-    tileEntity = te;
-    this.setTile(te);
+
     int s = 0;
     int row = 0, col = 0;
-    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) { //so going from 0-9
+    for (int i = 0; i < tile.getSizeInventory() - 1; i++) { //so going from 0-9
       row = i / GuiPattern.GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GuiPattern.GUI_ROWS; // and %3 will go 012 012 012
-      addSlotToContainer(new Slot(tileEntity, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
+      addSlotToContainer(new Slot(tile, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
       s++;
     }
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
@@ -57,19 +56,19 @@ public class ContainerPattern extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
       // places it into the tileEntity is possible since its in the player inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
@@ -88,11 +87,11 @@ public class ContainerPattern extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

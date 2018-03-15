@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerFluidPump extends ContainerBaseMachine {
   public ContainerFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
-    this.setTile(tileEntity);
+    super(tileEntity);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
