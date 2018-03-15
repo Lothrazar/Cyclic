@@ -61,13 +61,16 @@ public class PotionBounce extends PotionBase {
         UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_SLIME_FALL, SoundCategory.PLAYERS, UtilSound.VOLUME / event.getDistance());
         UtilParticle.spawnParticle(player.world, EnumParticleTypes.SLIME, player.getPosition());
         event.setDistance(0);// fall distance
-        player.motionY *= -PERCENT_HEIGHT_BOUNCED;
-        player.isAirBorne = true;
-        player.onGround = false;
-        //postpone until one tick later. otherwise there is vanilla code internally that says "ok you finished falldamage so motionY=0;"
-        player.posY += 0.01;
+        if (player.isElytraFlying() == false) {
+          player.motionY *= -PERCENT_HEIGHT_BOUNCED;
+          player.isAirBorne = true;
+          player.onGround = false;
+          //postpone until one tick later. otherwise there is vanilla code internally that says "ok you finished falldamage so motionY=0;"
+          player.posY += 0.01;
         player.getEntityData().setInteger(NBT_TICK, player.ticksExisted + 1);
+
         player.getEntityData().setInteger(NBT_MOTIONY, (int) (player.motionY * 100f));
+        }
       }
     }
     else if (!entity.getEntityWorld().isRemote && entity.isSneaking()) {
@@ -77,21 +80,23 @@ public class PotionBounce extends PotionBase {
   @SubscribeEvent
   public void rebounceTick(TickEvent.PlayerTickEvent event) {
     //catch a rebounce that was postponed from last tick
-    if (event.player.isPotionActive(this)) {
+    if (event.player.isPotionActive(this) && event.player.isElytraFlying() == false) {
       EntityPlayer player = event.player;
       if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) {
         return;
       }
-      float motionY = ((float) player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
+      float motionY = (player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
       if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
         player.getEntityData().setInteger(NBT_TICK, -1);
         player.motionY = motionY;
+
       }
     }
   }
   @Override
   public void tick(EntityLivingBase entity) {
-    if (entity.onGround == false && entity.isPotionActive(this)) {//preserve momentum, otherwise it will be like regular falling/gravity
+    if (entity.onGround == false && entity.isPotionActive(this)
+        && entity.isElytraFlying() == false) {//preserve momentum, otherwise it will be like regular falling/gravity
       //yes this works if drank potion and not just from launcher but is ok
       UtilEntity.dragEntityMomentum(entity, VERTICAL_MOMENTUM_FACTOR);
     }
