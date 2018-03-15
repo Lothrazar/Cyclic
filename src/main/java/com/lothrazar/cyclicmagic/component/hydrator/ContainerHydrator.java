@@ -42,7 +42,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
   public static final int SLOTY = 30;
   static final int SQ = 18;
   public ContainerHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator te) {
-    this.setTile(te);
+    super(te);
     int slotNum = 0;
     for (int i = 0; i < TileEntityHydrator.RECIPE_SIZE; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
@@ -64,7 +64,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

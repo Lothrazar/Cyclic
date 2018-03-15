@@ -44,8 +44,8 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   public static final int SLOTX_INPUT = 8;
   public static final int SLOTY_INPUT = 68;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
+    super(te);
     this.screenSize = ScreenSize.LARGE;
-    this.setTile(te);
     addSlotToContainer(new Slot(tile, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_INPUT, SLOTY_INPUT));
     int slot = 1;
     int xPrefix = 2 * Const.SQ + Const.PAD;
@@ -64,7 +64,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

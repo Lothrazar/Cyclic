@@ -44,17 +44,17 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
-  protected TileEntityWorkbench tileEntity;
   private InventoryWorkbench craftMatrix;
   private InventoryCraftResult craftResult = new InventoryCraftResult();
   private World world;
   private final EntityPlayer player;
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
+    super(te);
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
     this.player = inventoryPlayer.player;
-    this.setTile(te);
-    tileEntity = te;
+
+
     this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;
     //inpt on left
@@ -93,7 +93,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     //slot 0 is crafting output
     // [1,9] is the matrix
     //[10,36] is player

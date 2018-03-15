@@ -39,7 +39,7 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
   static final int MID_SPACING = 52;
   public static final int SLOTY = 36;
   public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
-    this.setTile(te);
+    super(te);
     int slotNum = 0;
     int rowSize = 6;
     for (int i = 0; i < rowSize; i++) {
@@ -69,7 +69,7 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

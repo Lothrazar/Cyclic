@@ -35,13 +35,10 @@ public class ContainerEnchanter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX = 50;
   public static final int SLOTY = 38;
-  protected TileEntityEnchanter tileEntity;
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
-    //    this.screenSize = ScreenSize.LARGE;
-    tileEntity = te;
-    this.setTile(te);
-    this.addSlotToContainer(new Slot(tileEntity, 0, 50, SLOTY));
-    this.addSlotToContainer(new Slot(tileEntity, 1, 110, SLOTY));
+    super(te);
+    this.addSlotToContainer(new Slot(tile, 0, 50, SLOTY));
+    this.addSlotToContainer(new Slot(tile, 1, 110, SLOTY));
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
@@ -49,18 +46,18 @@ public class ContainerEnchanter extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
@@ -79,11 +76,11 @@ public class ContainerEnchanter extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

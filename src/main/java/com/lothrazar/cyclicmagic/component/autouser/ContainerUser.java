@@ -40,8 +40,8 @@ public class ContainerUser extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 94;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
+    super(te);
     this.screenSize = ScreenSize.LARGE;
-    this.setTile(te);
     for (int i = 0; i < 3; i++) {//0 1 2 
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
@@ -57,7 +57,7 @@ public class ContainerUser extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

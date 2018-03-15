@@ -49,14 +49,12 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public static final int SLOTY_REDSTONE = 2;
   public static final int SLOTY_GLOWSTONE = 3;
   public static final int SLOTY_BOOK = 4;
-  protected TileEntityDisenchanter tileEntity;
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
-    tileEntity = te;
-    this.setTile(te);
+    super(te);
     this.screenSize = ScreenSize.LARGE;
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+    for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
           itemFiltered = Items.BOOK;
@@ -90,13 +88,13 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
         break;
       }
       if (itemFiltered == null) {
-        addSlotToContainer(new Slot(tileEntity, i, x, y));
+        addSlotToContainer(new Slot(te, i, x, y));
       }
       else if (itemFiltered == Items.ENCHANTED_BOOK) {
-        addSlotToContainer(new SlotOnlyEnchanted(tileEntity, i, x, y));
+        addSlotToContainer(new SlotOnlyEnchanted(tile, i, x, y));
       }
       else {
-        addSlotToContainer(new SlotItemRestricted(tileEntity, i, x, y, itemFiltered));
+        addSlotToContainer(new SlotItemRestricted(tile, i, x, y, itemFiltered));
       }
     }
     // commonly used vanilla code that adds the player's inventory
@@ -105,20 +103,20 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
@@ -137,11 +135,11 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

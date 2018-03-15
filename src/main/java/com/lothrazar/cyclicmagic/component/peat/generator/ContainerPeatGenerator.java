@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPeatGenerator extends ContainerBaseMachine {
   public ContainerPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
-    this.setTile(te);
+    super(te);
     addSlotToContainer(new SlotCheckTileValid(te, 0,
         this.screenSize.width() / 2 - 8, 34));
     bindPlayerInventory(inventoryPlayer);
@@ -52,7 +52,7 @@ public class ContainerPeatGenerator extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerScreen extends ContainerBaseMachine {
   public ContainerScreen(InventoryPlayer inventoryPlayer, TileEntityScreen te) {
-    this.setTile(te);
+    super(te);
     bindPlayerHotbar(inventoryPlayer);
   }
   //TODO: why are these not working from baseclass IDK

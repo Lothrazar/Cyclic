@@ -29,20 +29,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerVector extends ContainerBaseMachine {
-  protected TileEntityVector tileEntity;
+
   public ContainerVector(InventoryPlayer inventoryPlayer, TileEntityVector te) {
-    tileEntity = te;
-    this.setTile(te);
+    super(te);
     bindPlayerHotbar(inventoryPlayer);
   }
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, tile);
   }
 }

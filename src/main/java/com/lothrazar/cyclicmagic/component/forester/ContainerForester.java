@@ -38,12 +38,12 @@ public class ContainerForester extends ContainerBaseMachine {
   public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = 38;
   public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
+    super(te);
     this.screenSize = ScreenSize.STANDARD;
-    this.setTile(te);
     for (int i = 0; i < TileEntityForester.INVENTORY_SIZE - 1; i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, i,
           SLOTX_START + i % 8 * Const.SQ + Const.SQ,
-          SLOTY + ((int) i / 8) * Const.SQ));
+          SLOTY + (i / 8) * Const.SQ));
     }
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
@@ -51,7 +51,7 @@ public class ContainerForester extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

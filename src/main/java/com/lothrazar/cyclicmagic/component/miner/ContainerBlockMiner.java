@@ -34,7 +34,7 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
-    this.setTile(te);
+    super(te);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

@@ -39,8 +39,8 @@ public class ContainerItemSort extends ContainerBaseMachine {
   public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = Const.SQ;
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
+    super(te);
     this.screenSize = ScreenSize.LARGE;
-    this.setTile(te);
     int fs = TileEntityItemCableSort.FILTER_SIZE;
     int slot = 1;
     int y = SLOTY;
@@ -58,7 +58,7 @@ public class ContainerItemSort extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

@@ -40,10 +40,8 @@ public class ContainerCrafter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 33;
-  protected TileEntityCrafter tileEntity;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
-    tileEntity = te;
-    this.setTile(te);
+    super(te);
     screenSize = ScreenSize.LARGE;
     int slot = 0;
     //inpt on left
@@ -52,7 +50,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     int cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new Slot(tileEntity, slot,
+        addSlotToContainer(new Slot(tile, slot,
             xPrefix + j * Const.SQ,
             yPrefix + i * Const.SQ));
         slot++;
@@ -64,7 +62,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     yPrefix = SLOTY + Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new SlotSingleStack(tileEntity, slot,
+        addSlotToContainer(new SlotSingleStack(tile, slot,
             xPrefix + j * Const.SQ,
             yPrefix + i * Const.SQ));
         slot++;
@@ -77,7 +75,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new SlotOutputOnly(tileEntity, slot,
+        addSlotToContainer(new SlotOutputOnly(tile, slot,
             xPrefix + j * Const.SQ,
             yPrefix + i * Const.SQ));
         slot++;
@@ -96,8 +94,8 @@ public class ContainerCrafter extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
@@ -108,7 +106,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
         }
         //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), true)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
@@ -127,11 +125,11 @@ public class ContainerCrafter extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

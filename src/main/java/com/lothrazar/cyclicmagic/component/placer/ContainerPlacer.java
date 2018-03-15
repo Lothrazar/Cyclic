@@ -37,32 +37,31 @@ public class ContainerPlacer extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
-  protected TileEntityPlacer tileEntity;
+
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
-    tileEntity = te;
-    this.setTile(te);
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+    super(te);
+    for (int i = 0; i < tile.getSizeInventory(); i++) {
+      addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * SQ, SLOTY));
     }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {
@@ -81,11 +80,11 @@ public class ContainerPlacer extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }
