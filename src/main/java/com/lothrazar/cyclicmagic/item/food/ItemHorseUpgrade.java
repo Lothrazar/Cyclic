@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+import java.lang.reflect.Field;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -32,15 +33,16 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntitySkeletonHorse;
 import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.ContainerHorseChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -73,6 +75,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     Item carrot = stack.getItem();
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
+  @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
@@ -117,23 +120,40 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       case TYPE:
         //they are not subtypes (data properties) in 1.11 they are different classes horse.setType(HorseType.ZOMBIE);
         //import net.minecraft.entity.passive.HorseType; was removed
-        AbstractHorse toSpawn = null;
+        AbstractHorse toSpawn;
         if (ahorse instanceof EntityHorse) {
+          EntityHorse horse = (EntityHorse) ahorse;
           toSpawn = new EntityZombieHorse(world);
-        }
-        else if (ahorse instanceof EntityZombieHorse) {
-          toSpawn = new EntitySkeletonHorse(world);
-        }
-        else if (ahorse instanceof EntitySkeletonHorse) {
-          toSpawn = new EntityHorse(world);
-        } //and EntityDonkey/EntityMule/EntityLlama is ignored
-        if (toSpawn != null) {
+          toSpawn.setPosition(ahorse.posX, ahorse.posY, ahorse.posZ);
+          toSpawn.forceSpawn = true;//ignore natural rules/limits/etc
+          //copy the owner to the new horse
+          if (ahorse.isTame() && ahorse.getOwnerUniqueId() != null) {
+            toSpawn.setHorseTamed(true);
+            toSpawn.setOwnerUniqueId(ahorse.getOwnerUniqueId());
+          }
           if (world.isRemote == false) {
-            toSpawn.setPosition(ahorse.posX, ahorse.posY, ahorse.posZ);
-            toSpawn.forceSpawn = true;//ignore natural rules/limits/etc
+            if (ahorse.isHorseSaddled()) {
+              Field f = UtilReflection.getPrivateField("horseChest", "field_110296_bGs", AbstractHorse.class);
+              try {
+                ContainerHorseChest horseChest = (ContainerHorseChest) f.get(ahorse);
+                ItemStack oldSaddle = horseChest.getStackInSlot(0).copy();
+                horseChest.setInventorySlotContents(0, ItemStack.EMPTY);
+                horse.setHorseSaddled(false);
+                ContainerHorseChest toSpawn_horseChest = (ContainerHorseChest) f.get(toSpawn);
+                toSpawn_horseChest.setInventorySlotContents(0, oldSaddle);
+                toSpawn.setHorseSaddled(true);
+              }
+              catch (Exception e) {
+                ModCyclic.logger.error("Failed fix horse saddle, reflection failed on horseChest");
+                e.printStackTrace();
+              }
+            }
             world.spawnEntity(toSpawn);
           }
           ahorse.attackEntityFrom(DamageSource.MAGIC, 5000);
+          //remove entity DOES WORK but we lose armor and saddle
+          world.removeEntity(ahorse);
+          success = true;
         }
       break;
       case VARIANT:

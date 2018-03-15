@@ -27,7 +27,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -102,11 +101,11 @@ public class UtilReflection {
     }
     return null;
   }
-  public static void callPrivateMethod(Class theClass, EntityPlayer player, String name, String obsName, Object[] args) {
+  public static void callPrivateMethod(Class theClass, Object obj, String name, String obsName) {
     try {
       Method m = ReflectionHelper.findMethod(theClass, name, obsName);
       if (m != null) {
-        m.invoke(player, args);
+        m.invoke(obj);
       }
       else {
         ModCyclic.logger.error("Private function not found on " + theClass.getName() + " : " + name);

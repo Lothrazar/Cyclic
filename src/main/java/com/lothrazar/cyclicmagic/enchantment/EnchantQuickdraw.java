@@ -67,6 +67,6 @@ public class EnchantQuickdraw extends EnchantBase {
   }
   private void tickHeldBow(EntityPlayer player) {
     //     player.updateActiveHand();//BUT its protected bahhhh
-    UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "func_184608_ct", new Object[0]);
+    UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "func_184608_ct");
   }
 }
