@@ -56,7 +56,7 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
   private static final int MAX_AGE = 7;
   private static final PropertyInteger AGE = BlockCarrot.AGE;
   private static final AxisAlignedBB[] GROWING_AABB = { new AxisAlignedBB(0.25D, 0.9D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.8D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.7D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.5D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.4D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.3D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.2D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.2D, 0.25D, 0.75D, 1.0D, 0.75D) };
-  private static final double CHANCE_TREASURE = 0.05;
+
   public BlockAppleCrop() {
     super(Material.PLANTS);
     setHardness(0.5F);
@@ -119,28 +119,16 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
       }
     }
   }
-  private Item getCropFullGrown(Random rand) {
-    // TODO: maybe make poison apple? But what would it be used for?
-    if (rand.nextDouble() < CHANCE_TREASURE) {
-      return Items.GOLDEN_APPLE;
-    }
-    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_emerald") != null) {
-      return Item.getByNameOrId("cyclicmagic:apple_emerald");
-    }
-    if (rand.nextDouble() < CHANCE_TREASURE && Item.getByNameOrId("cyclicmagic:apple_lapis") != null) {
-      return Item.getByNameOrId("cyclicmagic:apple_lapis");
-    }
-    return Items.APPLE;
-  }
+  @Override
   @Nullable
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return isMaxAge(state) ? getCropFullGrown(rand) : Item.getItemFromBlock(this);
+    return isMaxAge(state) ? Items.APPLE : Item.getItemFromBlock(this);
   }
   private IBlockState getStateForAge(int age) {
     return getDefaultState().withProperty(AGE, age);
   }
   public boolean isMaxAge(IBlockState state) {
-    return ((Integer) state.getValue(AGE)).intValue() >= MAX_AGE;
+    return state.getValue(AGE).intValue() >= MAX_AGE;
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
@@ -177,7 +165,7 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
   //bounding box growth
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return GROWING_AABB[((Integer) state.getValue(AGE)).intValue()];
+    return GROWING_AABB[state.getValue(AGE).intValue()];
   }
   @Override
   public IRecipe addRecipe() {
