@@ -43,6 +43,9 @@ public class BlockOreRegistry {
         .setRegisteredDefault(DEFAULT_MODORES_ENABLED)
         .setBlockCountDefault(8).setHarvestLevelDefault(harvestLevel)
         .setSpawnChanceDefault(5).setBlockId(name + "_" + dimName + "_ore");
+    String temp = Character.toString(dimName.charAt(0)).toUpperCase() + dimName.substring(1);
+    temp += " " + Character.toString(name.charAt(0)).toUpperCase() + name.substring(1);
+    System.out.println("tile." + name + "_" + dimName + "_ore" + ".name=" + temp + " " + " Ore");
     addOre(ore);
     return ore;
   }

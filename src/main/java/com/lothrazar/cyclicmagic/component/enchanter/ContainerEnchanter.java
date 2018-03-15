@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerEnchanter extends ContainerBaseMachine {
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
+  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIss
   public static final int SLOTX = 50;
   public static final int SLOTY = 38;
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
