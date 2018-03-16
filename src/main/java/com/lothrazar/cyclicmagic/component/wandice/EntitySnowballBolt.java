@@ -90,12 +90,12 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       this.setDead();
     }
   }
-  public void onHitPlayer(RayTraceResult mop, EntityPlayer entityHit) {
+  private void onHitPlayer(RayTraceResult mop, EntityPlayer entityHit) {
     //not slowness only snow
     entityHit.extinguish();
     entityHit.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * POTIONSECONDS));
   }
-  public void onHitEntity(RayTraceResult mop) {
+  private void onHitEntity(RayTraceResult mop) {
     EntityLivingBase e = (EntityLivingBase) mop.entityHit;
     if (e.isBurning()) {
       e.extinguish();
@@ -105,7 +105,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
     // do the snowball damage, which should be none. put out the fire
     mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
   }
-  public void onHitGround(RayTraceResult mop) {
+  private void onHitGround(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
     if (pos == null) {
       return;

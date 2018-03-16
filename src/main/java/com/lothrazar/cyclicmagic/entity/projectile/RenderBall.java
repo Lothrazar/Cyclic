@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -44,9 +45,11 @@ public class RenderBall<T extends Entity> extends Render<T> {
   public RenderBall(RenderManager renderManager, String texture) {
     super(renderManager);
     resource = new ResourceLocation(Const.MODID, "textures/entity/projectile/" + texture + ".png");
+    ModCyclic.logger.info("RenderBall init " + resource);
   }
   @Override
   public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    ModCyclic.logger.info("RenderBall dorender");
     GlStateManager.pushMatrix();
     this.bindEntityTexture(entity);
     GlStateManager.translate((float) x, (float) y, (float) z);
@@ -55,7 +58,7 @@ public class RenderBall<T extends Entity> extends Render<T> {
     Tessellator tessellator = Tessellator.getInstance();
     BufferBuilder bufferbuilder = tessellator.getBuffer();
     GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-    GlStateManager.rotate((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+    GlStateManager.rotate((this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
     if (this.renderOutlines) {
       GlStateManager.enableColorMaterial();
       GlStateManager.enableOutlineMode(this.getTeamColor(entity));

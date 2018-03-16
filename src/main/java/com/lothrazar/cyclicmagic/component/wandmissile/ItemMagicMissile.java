@@ -40,7 +40,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -80,15 +79,15 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
           UtilChat.sendStatusMessage(player, "wand.result.notargets");
         }
         else {
-          EntityHomingProjectile projectile = new EntityHomingProjectile(world);
+          EntityHomingProjectile projectile = new EntityHomingProjectile(world, player);
           projectile.setPosition(x, y, z);
           projectile.motionX = 0;
           projectile.motionY = 0;
           projectile.motionZ = 0;
           projectile.rotationPitch = 0;
           projectile.rotationYaw = 0;
-          projectile.onInitialSpawn(world.getDifficultyForLocation(projectile.getPosition()), null);
-          projectile.initSpecial(trimmedTargets.get(world.rand.nextInt(trimmedTargets.size())), 6.0f, new Vec3d(76, 230, 0));
+          //          projectile.onInitialSpawn(world.getDifficultyForLocation(projectile.getPosition()), null);
+          projectile.setTarget(trimmedTargets.get(world.rand.nextInt(trimmedTargets.size())));//, new Vec3d(76, 230, 0)
           world.spawnEntity(projectile);
         }
       }
@@ -108,6 +107,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
         'r', "ingotGold",
         'b', "ingotIron");
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
