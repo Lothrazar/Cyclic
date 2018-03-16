@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.ore;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -63,7 +62,7 @@ public class WorldGenNewOre implements IWorldGenerator {
           ore.config.getSpawnChance() > 0 &&
           ore.config.getDimension() == world.provider.getDimension()) {
         //now go!
-        ModCyclic.logger.error("run worldgen " + ore.getUnlocalizedName());
+        //        ModCyclic.logger.error("run worldgen " + ore.getUnlocalizedName());
         this.run(ore.config.getGen(), world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE,
             ore.config.getSpawnChance(), MIN_HEIGHT, MAX_HEIGHT);
       }
