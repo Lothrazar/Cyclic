@@ -38,7 +38,7 @@ public class EntityStoneMinecart extends EntityMinecartFurnace {
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   public EntityStoneMinecart(World worldIn) {
     super(worldIn);
-    this.setCartBlock(Blocks.COBBLESTONE.getDefaultState());
+    this.setCartBlock(Blocks.AIR.getDefaultState());
   }
   public EntityStoneMinecart(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
