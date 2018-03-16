@@ -62,7 +62,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   }
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
 
-  private static boolean enableModCompatOres;
+  public static boolean enableModCompatOres;
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;

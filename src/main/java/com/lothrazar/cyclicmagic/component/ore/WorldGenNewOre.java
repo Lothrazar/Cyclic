@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.ore;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -39,8 +40,13 @@ public class WorldGenNewOre implements IWorldGenerator {
   private static final int MAX_HEIGHT = 128;
 
   public WorldGenNewOre() {
+
     for (BlockDimensionOre ore : WorldModule.ores) {
-      if (ore.config.getBlockCount() > 0 && ore.config.isRegistered()) {
+      if (ore.config.isVanilla() == false && WorldModule.enableModCompatOres == false) {
+        continue;//quick patch
+      }
+      if (ore.config.getBlockCount() > 0
+          && ore.config.isRegistered()) {
         ore.config.setGen(new WorldGenMinable(
             ore.getDefaultState(),
             ore.config.getBlockCount(),
@@ -50,11 +56,14 @@ public class WorldGenNewOre implements IWorldGenerator {
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.getGen() != null &&
+          ore.config.isRegistered() &&
           ore.config.getSpawnChance() > 0 &&
           ore.config.getDimension() == world.provider.getDimension()) {
         //now go!
+        ModCyclic.logger.error("run worldgen " + ore.getUnlocalizedName());
         this.run(ore.config.getGen(), world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE,
             ore.config.getSpawnChance(), MIN_HEIGHT, MAX_HEIGHT);
       }
