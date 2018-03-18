@@ -43,9 +43,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
   protected static final int SPEED_FUELED = 8;
@@ -75,6 +78,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
   private EnergyStore energyStorage;
+  private boolean setRenderGlobally;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
@@ -135,6 +139,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.initEnergyStorage();
     return this.energyStorage.getMaxEnergyStored();
   }
+  @Override
   public int getFuelCurrent() {
     this.initEnergyStorage();
     return this.energyStorage.getEnergyStored();
@@ -408,7 +413,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      NBTTagCompound tag = tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.size()) {
         inv.set(slot, UtilNBT.itemFromNBT(tag));
@@ -474,6 +479,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public int[] getFieldOrdinals() {
     return new int[0];
   }
+  @Override
   public int getSpeed() {
     if (this.doesUseFuel() == false) {
       return this.speed;// does not use fuel. use NBT saved speed value
@@ -493,9 +499,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     speed = Math.min(value, MAX_SPEED);
   }
+  @Override
   public void incrementSpeed() {
     this.setSpeed(this.getSpeed() - 1);
   }
+  @Override
   public void decrementSpeed() {
     this.setSpeed(this.getSpeed() + 1);
   }
@@ -574,5 +582,30 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     //every stack we tested was empty
     return true;
+  }
+  public boolean isSetRenderGlobally() {
+    return setRenderGlobally;
+  }
+  public void setSetRenderGlobally(boolean setRenderGlobally) {
+    this.setRenderGlobally = setRenderGlobally;
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public double getMaxRenderDistanceSquared() {
+    if (this.isSetRenderGlobally())
+      return 65536.0D;
+    else
+      return super.getMaxRenderDistanceSquared();
+  }
+  /**
+   * https://shadowfacts.net/tutorials/forge-modding-1112/dynamic-tileentity-rendering/
+   */
+  @Override
+  @SideOnly(Side.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    if (this.isSetRenderGlobally())
+      return TileEntity.INFINITE_EXTENT_AABB;
+    else
+      return super.getRenderBoundingBox();
   }
 }

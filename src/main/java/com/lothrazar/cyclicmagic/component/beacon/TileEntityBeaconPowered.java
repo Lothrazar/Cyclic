@@ -40,10 +40,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -57,6 +55,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   private String customName;
   public TileEntityBeaconPowered() {
     super(0);
+    this.setSetRenderGlobally(true);
   }
   @Override
   public void update() {
@@ -84,7 +83,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
       IBlockState iblockstate = this.world.getBlockState(blockpos$mutableblockpos.setPos(i, i1, k));
       float[] afloat;
       if (iblockstate.getBlock() == Blocks.STAINED_GLASS) {
-        afloat = ((EnumDyeColor) iblockstate.getValue(BlockStainedGlass.COLOR)).getColorComponentValues();
+        afloat = iblockstate.getValue(BlockStainedGlass.COLOR).getColorComponentValues();
       }
       else {
         if (iblockstate.getBlock() != Blocks.STAINED_GLASS_PANE) {
@@ -101,7 +100,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
           }
         }
         else
-          afloat = ((EnumDyeColor) iblockstate.getValue(BlockStainedGlassPane.COLOR)).getColorComponentValues();
+          afloat = iblockstate.getValue(BlockStainedGlassPane.COLOR).getColorComponentValues();
       }
       if (!flag) {
         afloat = new float[] { (tileentitybeacon$beamsegment.getColors()[0] + afloat[0]) / 2.0F, (tileentitybeacon$beamsegment.getColors()[1] + afloat[1]) / 2.0F, (tileentitybeacon$beamsegment.getColors()[2] + afloat[2]) / 2.0F };
@@ -129,7 +128,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
     this.beamRenderCounter = this.world.getTotalWorldTime();
     if (i > 1) {
-      this.beamRenderScale -= (float) i / 40.0F;
+      this.beamRenderScale -= i / 40.0F;
       if (this.beamRenderScale < 0.0F) {
         this.beamRenderScale = 0.0F;
       }
@@ -140,25 +139,16 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     }
     return this.beamRenderScale;
   }
+  @Override
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
   }
+  @Override
   public NBTTagCompound getUpdateTag() {
     return this.writeToNBT(new NBTTagCompound());
   }
-  @SideOnly(Side.CLIENT)
-  public double getMaxRenderDistanceSquared() {
-    return 65536.0D;
-  }
-  /**
-   * https://shadowfacts.net/tutorials/forge-modding-1112/dynamic-tileentity-rendering/
-   */
-  @Override
-  @SideOnly(Side.CLIENT)
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
-  }
+
   @Nullable
   private static Potion isBeaconEffect(int i) {
     return Potion.getPotionById(i);
@@ -166,6 +156,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   /**
    * Returns true if this thing is named
    */
+  @Override
   public boolean hasCustomName() {
     return this.customName != null && !this.customName.isEmpty();
   }
@@ -175,6 +166,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   /**
    * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
    */
+  @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem().isBeaconPayment(stack);
   }
@@ -184,6 +176,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
     return new ContainerBeacon(playerInventory, this);
   }
+  @Override
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
       this.updateBeacon();
@@ -193,18 +186,21 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
       return super.receiveClientEvent(id, type);
     }
   }
+  @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[0];
   }
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.
    */
+  @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return false;
   }
   /**
    * Returns true if automation can extract the given item in the given slot from the given side.
    */
+  @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
   }
