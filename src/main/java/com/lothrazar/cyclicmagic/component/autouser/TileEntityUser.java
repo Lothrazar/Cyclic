@@ -165,7 +165,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             && fakePlayer != null && fakePlayer.get() != null) {
           validateTool(); //recheck this at every step so we dont go negative
           if (EnumActionResult.FAIL != fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND)) {
-            this.tryDumpFakePlayerInvo();
+            this.tryDumpFakePlayerInvo(false);
             break;//dont do every entity in teh whole batch
           }
         }
@@ -235,6 +235,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
             this.tryDumpStacks(Arrays.asList(is));
           }
+          else {
+            //last chance. EX: Pixelmon trees
+            // https://github.com/PrinceOfAmber/Cyclic/issues/736
+            fakePlayer.get().interactionManager.onBlockClicked(targetPos, EnumFacing.UP);
+            //true to make sure that it does allow a main hand item export
+            this.tryDumpFakePlayerInvo(true);
+          }
         }
       }
     }
@@ -253,11 +260,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
   }
-  private void tryDumpFakePlayerInvo() {
+  private void tryDumpFakePlayerInvo(boolean includeMainHand) {
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+      if (includeMainHand == false &&
+          fakePlayer.get().inventory.currentItem == i) {
+        //example: dont push over tools or weapons in certain cases
+        continue;
+      }
+      if (s.isEmpty() == false) {
         ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName());//leaving in release
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
@@ -283,7 +295,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
             maybeTool.shrink(1 + hack);
           }
-          this.tryDumpFakePlayerInvo();
+          this.tryDumpFakePlayerInvo(false);
         }
       }
       else {//no tank, just open world
