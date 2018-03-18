@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.14.2",
-    "1.12.2-recommended": "1.14.2"
+    "1.12.2-latest": "1.14.3",
+    "1.12.2-recommended": "1.14.3"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -256,6 +256,7 @@
 	,"1.14.0":"New feature: ore blocks in the nether and end for 28 ore types, 2 blocks per ore for endstone and netherrack versions.  These are all disabled by default as you can see in the new 'cyclic_ores.cfg' file and can be enabled in a batch or one by one.  These have no existing use at all in this mod alone, but they are all compatible with the ore dictionary and are meant for use in machines and recipes from OTHER mods.  Existing vanilla nether and end ores are unchanged, and are affected by the same configs as before.  "
   	,"1.14.1":"Fixed Powered Anvil bug where output item is overwritten and lost when a new item is fully repaired and moves over.  Added block_anvil.RepairBlacklist config to the Powered Anvil to disable any item from being repaired.  Added magic_net.CaptureBlacklist config to define entities that cannot be captured.   Powered Anvil now references the default diamond block texture (resource pack compatibility).  "
   	,"1.14.2":"Apple Sprouts no longer drop treasure apples.  GUI Screens will now auto-close when their block is destroyed.  Fixed item model and localization issue in the 'cyclic_ores.cfg' blocks.  Emerald Carrot fixes: Fixed spawn tooltip, fixed spawn exploit, and it now remembers the taming owner when converted to a Zombie Horse.  Fixed a player movement conflict with the Bounce Potion effect while flying with Elytra.  "
+  	,"1.14.3":"Fixed visibility and homing vector of Spirit Seeker missiles.  Fixed errored ores sometimes generating in nether, it now correctly respects config file.  Fixed stone minecart starting non-empty.  "
   }
 }
 

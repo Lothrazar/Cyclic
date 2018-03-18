@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -40,7 +41,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -53,46 +53,47 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class ItemMagicMissile extends BaseTool implements IHasRecipe {
   private static final double RANGE = 16.0;
-  private static final int SHOTSPERUSE = 5;
   private static final int durability = 500;
-  private static final int COOLDOWN = 20;
+  private static final int COOLDOWN = 8;
   public ItemMagicMissile() {
     super(durability);
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
-    UtilSound.playSound(player, SoundRegistry.magic_missile);//laserbeanpew);
+    UtilSound.playSound(player, SoundRegistry.magic_missile);
     int x = player.getPosition().getX();
     int y = player.getPosition().getY();
     int z = player.getPosition().getZ();
-    if (!world.isRemote) {
-      for (int k = 0; k < SHOTSPERUSE; k++) {
-        List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
-        ArrayList<EntityLivingBase> trimmedTargets = new ArrayList<EntityLivingBase>();
-        for (int i = 0; i < targets.size(); i++) {
-          if (targets.get(i).getUniqueID().compareTo(player.getUniqueID()) != 0
-              && targets.get(i).isCreatureType(EnumCreatureType.MONSTER, false)) {
-            trimmedTargets.add(targets.get(i));
-          }
-        }
-        if (trimmedTargets.size() == 0) {
-          UtilChat.sendStatusMessage(player, "wand.result.notargets");
-        }
-        else {
-          EntityHomingProjectile projectile = new EntityHomingProjectile(world);
-          projectile.setPosition(x, y, z);
-          projectile.motionX = 0;
-          projectile.motionY = 0;
-          projectile.motionZ = 0;
-          projectile.rotationPitch = 0;
-          projectile.rotationYaw = 0;
-          projectile.onInitialSpawn(world.getDifficultyForLocation(projectile.getPosition()), null);
-          projectile.initSpecial(trimmedTargets.get(world.rand.nextInt(trimmedTargets.size())), 6.0f, new Vec3d(76, 230, 0));
-          world.spawnEntity(projectile);
-        }
+
+    List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
+    List<EntityLivingBase> trimmedTargets = new ArrayList<>();
+    for (EntityLivingBase potential : targets) {
+      if (potential.isDead == false
+          && potential.getUniqueID().compareTo(player.getUniqueID()) != 0
+          && potential.isCreatureType(EnumCreatureType.MONSTER, false)) {
+        trimmedTargets.add(potential);
       }
     }
+    if (trimmedTargets.size() == 0) {
+      UtilChat.sendStatusMessage(player, "wand.result.notargets");
+    }
+    else {
+      //closest actual monster
+      EntityLivingBase target = UtilEntity.getClosestEntity(world, player, trimmedTargets);
+      EntityHomingProjectile projectile = new EntityHomingProjectile(world, player);
+      //      projectile.setPosition(x, y, z);
+      projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
+      //      projectile.motionX = 0;
+      //      projectile.motionY = 0;
+      //      projectile.motionZ = 0;
+      //      projectile.rotationPitch = 0;
+      //      projectile.rotationYaw = 0;
+      projectile.setTarget(target);
+
+      world.spawnEntity(projectile);
+    }
+
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
@@ -108,6 +109,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
         'r', "ingotGold",
         'b', "ingotIron");
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
