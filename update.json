@@ -257,7 +257,7 @@
   	,"1.14.1":"Fixed Powered Anvil bug where output item is overwritten and lost when a new item is fully repaired and moves over.  Added block_anvil.RepairBlacklist config to the Powered Anvil to disable any item from being repaired.  Added magic_net.CaptureBlacklist config to define entities that cannot be captured.   Powered Anvil now references the default diamond block texture (resource pack compatibility).  "
   	,"1.14.2":"Apple Sprouts no longer drop treasure apples.  GUI Screens will now auto-close when their block is destroyed.  Fixed item model and localization issue in the 'cyclic_ores.cfg' blocks.  Emerald Carrot fixes: Fixed spawn tooltip, fixed spawn exploit, and it now remembers the taming owner when converted to a Zombie Horse.  Fixed a player movement conflict with the Bounce Potion effect while flying with Elytra.  "
   	,"1.14.3":"Fixed visibility and homing vector of Spirit Seeker missiles.  Fixed errored ores sometimes generating in nether, it now correctly respects config file.  Fixed stone minecart starting non-empty.  "
-  	,"1.14.4":"Updated zh_CN.lang (thanks to sandtechnology on github).  Added some error handling to Energy Cables.  Peat Generator now auto-outputs power similar to other generators (slower than extractor)  "
+  	,"1.14.4":"Updated zh_CN.lang (thanks to sandtechnology and Aemande123 on github).  Added some error handling to Energy Cables.  Peat Generator now auto-outputs power similar to other generators (slower than extractor)  "
   }
 }
 
