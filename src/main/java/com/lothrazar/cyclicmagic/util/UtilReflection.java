@@ -26,7 +26,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import net.minecraft.block.Block;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -51,35 +50,36 @@ public class UtilReflection {
    * Return a property of obj that is of type T the first one found
    * 
    * tried but failed to make this generic. i would like the returning casted type Block to be generic and/or passed in. then you would call Block crop = UtilReflection.getFirstOfType<Block >(obj);
-   * Item crop = UtilReflection.getFirstOfType<Item >(obj); and so on. oh well
+   * Item crop = UtilReflection.getFirstOfType<Item >(obj); and so on.
+   * 
+   * also recursively checks parent classes with getSuperclass()
    * 
    * @param obj
    * @return T
    */
-  public static Block getFirstPrivateBlock(Object obj) {
-    // tried with public static <T extends Object> T didnt work
-    // also tried using a
-    // if(f.get(obj).getClass() == t.getClass()){
-    // return (t.getClass())f.get(obj);
-    for (Field f : obj.getClass().getDeclaredFields()) {
+  public static Object getFirstPrivate(Object obj, Class c) {
+
+    Class<?> classLevel = obj.getClass();
+    while (classLevel != null) {
+      for (Field f : classLevel.getDeclaredFields()) {
       f.setAccessible(true);
       try {
-        if (f.get(obj) instanceof Block) {
-          return (Block) f.get(obj);
+        if (c.isInstance(f.get(obj))) {
+        //if (f.get(obj) instanceof Block) {
+          return f.get(obj);
         }
       }
-      catch (ClassCastException e) {
-        continue;
-      }
-      catch (IllegalArgumentException e) {
-        continue;
-      }
-      catch (IllegalAccessException e) {
+        catch (Exception e) {
         continue;
       }
     }
+      //not found? try parent class 
+      classLevel = classLevel.getSuperclass();
+    }
+
     return null;
   }
+
   @SuppressWarnings("unchecked")
   public static List<LootPool> getLoot(Object obj) {
     for (Field f : obj.getClass().getDeclaredFields()) {
