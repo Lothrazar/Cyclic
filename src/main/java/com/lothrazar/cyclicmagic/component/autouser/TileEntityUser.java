@@ -212,6 +212,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (r != EnumActionResult.SUCCESS) {
       //if its a throwable item, it happens on this line down below, the process right click
       r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+      if (fakePlayer.get().getHeldItemMainhand().getCount() == 0) {
+        //some items from some mods dont handle stack size zero and trigger it to empty, so handle that edge case
+        inv.set(toolSlot, ItemStack.EMPTY);
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+      }
       //if throw has happened, success is true
       if (r != EnumActionResult.SUCCESS) {
         ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
