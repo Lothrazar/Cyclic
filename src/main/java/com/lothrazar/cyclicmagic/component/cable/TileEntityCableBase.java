@@ -31,6 +31,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -43,25 +44,29 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
+public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
   private static final int TIMER_SIDE_INPUT = 15;
-  public static final int TRANSFER_FLUID_PER_TICK = 500;
-  private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+  private static int TRANSFER_FLUID_PER_TICK = 500; //config
+  //config
+  //TODO: timer to slow down item rate
+  private static int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
   private String labelText = "";
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean energyTransport = false;
+
   private Map<EnumFacing, Integer> mapIncomingFluid = Maps.newHashMap();
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
-  // public EnumConnectType north, south, east, west, up, down;
+
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
@@ -78,6 +83,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       mapIncomingEnergy.put(f, 0);
     }
   }
+
   public void setItemTransport() {
     this.itemTransport = true;
   }
@@ -109,6 +115,21 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
     if (this.cableEnergyStore != null && compound.hasKey("powercable")) {
       CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
     }
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    super.writeToNBT(compound);
+    compound.setString("label", labelText);
+    compound.setInteger("labelt", labelTimer);
+    for (EnumFacing f : EnumFacing.values()) {
+      compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
+      compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
+      compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
+    }
+    if (cableEnergyStore != null) {
+      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
+    }
+    return compound;
   }
   public String getLabelTextOrEmpty() {
     return labelText.isEmpty() ? UtilChat.lang("cyclic.item.empty") : this.labelText;
@@ -173,21 +194,6 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
     }
     return tmpName;
   }
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    super.writeToNBT(compound);
-    compound.setString("label", labelText);
-    compound.setInteger("labelt", labelTimer);
-    for (EnumFacing f : EnumFacing.values()) {
-      compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
-      compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
-      compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
-    }
-    if (cableEnergyStore != null) {
-      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
-    }
-    return compound;
-  }
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
     mapIncomingFluid.put(inputFrom, TIMER_SIDE_INPUT);
   }
@@ -238,6 +244,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
     }
     Collections.shuffle(shuffledFaces);
     EnumFacing f;
+
     for (int i : shuffledFaces) {
       f = EnumFacing.values()[i];
       if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false) {
@@ -253,6 +260,9 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
     }
   }
   private void moveItems(EnumFacing f) {
+
+
+    //TICK COUNTDOWN
     ItemStack stackToExport = this.getStackInSlot(0).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(f);
@@ -274,10 +284,7 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       if (outputSuccess && cable.isItemPipe())
         cable.updateIncomingItemFace(f.getOpposite());
     }
-    //          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityItemCable) {
-    //            TileEntityItemCable cable = (TileEntityItemCable) world.getTileEntity(posTarget);
-    //            cable.updateIncomingItemFace(f.getOpposite());
-    //          }
+
   }
   private void moveFluid(EnumFacing f) {
     BlockPos posTarget = pos.offset(f);
@@ -385,5 +392,11 @@ public class TileEntityCableBase extends TileEntityBaseMachineFluid implements I
       return CapabilityEnergy.ENERGY.cast(this.cableEnergyStore);
     }
     return super.getCapability(capability, facing);
+  }
+  public static void syncConfig(Configuration config) {
+
+    TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
+    TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
+
   }
 }

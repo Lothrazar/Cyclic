@@ -126,6 +126,7 @@ public class Const {
     public static final String mobs = MODCONF + "mobs";
     public static final String mobspawns = MODCONF + "Mob Spawns";
     public static final String blocks = MODCONF + "blocks";
+    public static final String cables = blocks + ".cables";
     public static final String fuelCost = MODCONF + "FuelCost";
     public static final String inventory = MODCONF + "Inventory";
     public static final String items = MODCONF + "items";

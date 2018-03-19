@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.component.beaconpotion.BlockBeaconPotion;
 import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion;
 import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
 import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
@@ -459,6 +460,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
     if (enablePumpAndPipes) {
+
+
       //sort
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
@@ -539,5 +542,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
+    TileEntityCableBase.syncConfig(config);
+    TileEntityItemPump.syncConfig(config);
   }
 }
