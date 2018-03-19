@@ -424,7 +424,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
       LootTableRegistry.registerLoot(ender_dungeon);
     }
-
     if (enderWool) {
       ItemShearsRanged ender_wool = new ItemShearsRanged();
       ItemRegistry.register(ender_wool, "ender_wool", GuideCategory.ITEMTHROW);

@@ -50,7 +50,6 @@ public class ContainerBaseMachine extends ContainerBase {
   }
   public ContainerBaseMachine(TileEntityBaseMachineInvo t) {
     this.setTile(t);
-
   }
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {

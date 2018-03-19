@@ -63,7 +63,6 @@ public class RenderBall<T extends Entity> extends Render<T> {
     //    GlStateManager.color(0.4F, 0.6F, 0.2F);// color DOES WORK! good to know //TODO also could rotate colors
     Tessellator tessellator = Tessellator.getInstance();
     BufferBuilder bufferbuilder = tessellator.getBuffer();
-
     GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
     GlStateManager.rotate((this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
     if (this.renderOutlines) {
@@ -88,7 +87,6 @@ public class RenderBall<T extends Entity> extends Render<T> {
       GlStateManager.disableOutlineMode();
       GlStateManager.disableColorMaterial();
     }
-
     GlStateManager.disableRescaleNormal();
     GlStateManager.popMatrix();
     super.doRender(entity, x, y, z, entityYaw, partialTicks);

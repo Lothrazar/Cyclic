@@ -65,7 +65,6 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
     int x = player.getPosition().getX();
     int y = player.getPosition().getY();
     int z = player.getPosition().getZ();
-
     List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
     List<EntityLivingBase> trimmedTargets = new ArrayList<>();
     for (EntityLivingBase potential : targets) {
@@ -90,10 +89,8 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
       //      projectile.rotationPitch = 0;
       //      projectile.rotationYaw = 0;
       projectile.setTarget(target);
-
       world.spawnEntity(projectile);
     }
-
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);

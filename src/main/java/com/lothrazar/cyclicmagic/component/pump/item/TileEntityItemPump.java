@@ -144,7 +144,6 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     this.tryImport();
   }
   public void tryExport() {
-
     if (this.getStackInSlot(SLOT_TRANSFER).isEmpty()) {
       return;//im empty nothing to give
     }

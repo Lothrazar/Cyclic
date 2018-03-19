@@ -148,7 +148,6 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public NBTTagCompound getUpdateTag() {
     return this.writeToNBT(new NBTTagCompound());
   }
-
   @Nullable
   private static Potion isBeaconEffect(int i) {
     return Potion.getPotionById(i);

@@ -67,9 +67,8 @@ public class PotionBounce extends PotionBase {
           player.onGround = false;
           //postpone until one tick later. otherwise there is vanilla code internally that says "ok you finished falldamage so motionY=0;"
           player.posY += 0.01;
-        player.getEntityData().setInteger(NBT_TICK, player.ticksExisted + 1);
-
-        player.getEntityData().setInteger(NBT_MOTIONY, (int) (player.motionY * 100f));
+          player.getEntityData().setInteger(NBT_TICK, player.ticksExisted + 1);
+          player.getEntityData().setInteger(NBT_MOTIONY, (int) (player.motionY * 100f));
         }
       }
     }
@@ -89,7 +88,6 @@ public class PotionBounce extends PotionBase {
       if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
         player.getEntityData().setInteger(NBT_TICK, -1);
         player.motionY = motionY;
-
       }
     }
   }

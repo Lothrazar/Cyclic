@@ -61,12 +61,10 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean energyTransport = false;
-
   private Map<EnumFacing, Integer> mapIncomingFluid = Maps.newHashMap();
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
-
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
@@ -83,7 +81,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       mapIncomingEnergy.put(f, 0);
     }
   }
-
   public void setItemTransport() {
     this.itemTransport = true;
   }
@@ -244,7 +241,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     Collections.shuffle(shuffledFaces);
     EnumFacing f;
-
     for (int i : shuffledFaces) {
       f = EnumFacing.values()[i];
       if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false) {
@@ -260,8 +256,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
   }
   private void moveItems(EnumFacing f) {
-
-
     //TICK COUNTDOWN
     ItemStack stackToExport = this.getStackInSlot(0).copy();
     //ok,  not incoming from here. so lets output some
@@ -284,7 +278,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       if (outputSuccess && cable.isItemPipe())
         cable.updateIncomingItemFace(f.getOpposite());
     }
-
   }
   private void moveFluid(EnumFacing f) {
     BlockPos posTarget = pos.offset(f);
@@ -394,9 +387,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     return super.getCapability(capability, facing);
   }
   public static void syncConfig(Configuration config) {
-
     TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
     TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
-
   }
 }

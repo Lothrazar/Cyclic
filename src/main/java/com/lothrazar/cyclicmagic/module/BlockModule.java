@@ -460,8 +460,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
     }
     if (enablePumpAndPipes) {
-
-
       //sort
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");

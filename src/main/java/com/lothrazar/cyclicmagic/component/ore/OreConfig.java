@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.ore;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 
@@ -20,7 +19,6 @@ public class OreConfig {
   private WorldGenMinable gen = null;
   private boolean isVanilla = false;
   private String blockToReplace;
-
   public int getBlockCount() {
     return blockCount;
   }
@@ -42,8 +40,6 @@ public class OreConfig {
     this.isRegistered = isRegistered;
     return this;
   }
-
-
   public int getDimension() {
     return dimension;
   }

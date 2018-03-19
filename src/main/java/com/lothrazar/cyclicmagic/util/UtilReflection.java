@@ -58,28 +58,25 @@ public class UtilReflection {
    * @return T
    */
   public static Object getFirstPrivate(Object obj, Class c) {
-
     Class<?> classLevel = obj.getClass();
     while (classLevel != null) {
       for (Field f : classLevel.getDeclaredFields()) {
-      f.setAccessible(true);
-      try {
-        if (c.isInstance(f.get(obj))) {
-        //if (f.get(obj) instanceof Block) {
-          return f.get(obj);
+        f.setAccessible(true);
+        try {
+          if (c.isInstance(f.get(obj))) {
+            //if (f.get(obj) instanceof Block) {
+            return f.get(obj);
+          }
+        }
+        catch (Exception e) {
+          continue;
         }
       }
-        catch (Exception e) {
-        continue;
-      }
-    }
       //not found? try parent class 
       classLevel = classLevel.getSuperclass();
     }
-
     return null;
   }
-
   @SuppressWarnings("unchecked")
   public static List<LootPool> getLoot(Object obj) {
     for (Field f : obj.getClass().getDeclaredFields()) {

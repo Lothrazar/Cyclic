@@ -37,9 +37,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenNewOre implements IWorldGenerator {
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
-
   public WorldGenNewOre() {
-
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.isVanilla() == false && WorldModule.enableModCompatOres == false) {
         continue;//quick patch
@@ -55,7 +53,6 @@ public class WorldGenNewOre implements IWorldGenerator {
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.getGen() != null &&
           ore.config.isRegistered() &&

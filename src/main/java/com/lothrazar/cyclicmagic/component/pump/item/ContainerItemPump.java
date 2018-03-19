@@ -42,7 +42,6 @@ public class ContainerItemPump extends ContainerBaseMachine {
       addSlotToContainer(new SlotSingleStack(tile, col,
           SLOTX_START + (col - 1) * Const.SQ,
           SLOTY));
-
     }
     bindPlayerInventory(inventoryPlayer);
   }

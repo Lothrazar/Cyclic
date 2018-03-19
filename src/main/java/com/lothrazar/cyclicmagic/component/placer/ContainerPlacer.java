@@ -37,7 +37,6 @@ public class ContainerPlacer extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
-
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
     super(te);
     for (int i = 0; i < tile.getSizeInventory(); i++) {

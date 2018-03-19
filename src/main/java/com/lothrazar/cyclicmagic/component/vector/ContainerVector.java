@@ -29,7 +29,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerVector extends ContainerBaseMachine {
-
   public ContainerVector(InventoryPlayer inventoryPlayer, TileEntityVector te) {
     super(te);
     bindPlayerHotbar(inventoryPlayer);

@@ -49,7 +49,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class WorldModule extends BaseEventModule implements IHasConfig {
   final static int weightOre = 0;
-
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
   public static boolean oreSpawns = true;
@@ -61,7 +60,6 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     BlockOreRegistry.register();
   }
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
-
   public static boolean enableModCompatOres;
   @Override
   public void syncConfig(Configuration config) {
@@ -87,16 +85,12 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     prop = config.get(category, "Ore Singletons", true, "Vanilla ores of all kinds can rarely spawn at all world heights, but only in veins of size one.  Great for amplified terrain.");
     prop.setRequiresMcRestart(true);
     oreSingletons = prop.getBoolean();
-
     //NEW ORES start here
-
     Configuration oreConf;
     ConfigRegistry.oreConfig.load();
-
     enableModCompatOres = ConfigRegistry.oreConfig.getBoolean("globalOverride", "_global_", false, "False means all are disabled no matter what.  True means each ore uses its own true/false to exist.  ");
     for (BlockDimensionOre ore : WorldModule.ores) {
       //TODO: ore config is kind of janked right now but this gets the job done
-
       oreConf = (ore.config.isVanilla()) ? config : ConfigRegistry.oreConfig;
       category = ore.config.getConfigCategory();
       ore.config.setBlockCount(
@@ -113,9 +107,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
-
     super.onPreInit();
-
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.isVanilla() == false
           && WorldModule.enableModCompatOres == false) {
@@ -140,9 +132,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   @Override
   public void onInit() {
     //syncConfig comes AFTER pre init then init. which is why the configs require a restart 
-
     GameRegistry.registerWorldGenerator(new WorldGenNewOre(), weightOre);
-
     if (emeraldHeight) {
       GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weightOre);
     }
@@ -188,5 +178,4 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
-
 }
