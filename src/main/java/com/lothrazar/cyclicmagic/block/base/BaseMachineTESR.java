@@ -22,7 +22,9 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -76,7 +78,14 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
-  protected void renderAnimation(TileEntityBaseMachineInvo te) {
+  protected void renderAnimation(@Nonnull TileEntityBaseMachineInvo te) {
+    if (Minecraft.getMinecraft() == null
+        || Minecraft.getMinecraft().getBlockRendererDispatcher() == null
+        || Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer() == null
+        || getBakedModel() == null) {
+      ModCyclic.logger.info("TESR render animation caught by null check");
+      return;
+    }
     GlStateManager.pushMatrix();
     EnumFacing facing = te.getCurrentFacing();
     if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
@@ -100,13 +109,20 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
     Tessellator tessellator = Tessellator.getInstance();
     tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-    Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-        world,
-        getBakedModel(),
-        world.getBlockState(te.getPos()),
-        te.getPos(),
-        Tessellator.getInstance().getBuffer(), false);
-    tessellator.draw();
+    //crash on line below, NPE, not sure why. very rare I guess?
+    try {
+      Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
+          world,
+          getBakedModel(),
+          world.getBlockState(te.getPos()),
+          te.getPos(),
+          Tessellator.getInstance().getBuffer(), false);
+      tessellator.draw();
+    }
+    catch (Exception e) {
+      ModCyclic.logger.info("TESR render baked model exception");
+      e.printStackTrace();
+    }
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();
   }
