@@ -157,7 +157,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     else { // no valid target, back out
       isCurrentlyMining = false;
-      updateTargetPosRecursive(HEIGHT);
+      updateTargetPos();
       resetProgress(targetPos);
     }
     //currentlyMining may have changed, and we are still turned on:
@@ -210,13 +210,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     //move center over that much, not including exact horizontal
     //so the rand range is basically [0,8], then we left shift into [-4,+4]
     return getPos();
-  }
-  private void updateTargetPosRecursive(int loopCounter) {
-    this.updateTargetPos();
-    //if its still air, try to keep going
-    if (world.isAirBlock(targetPos) && loopCounter > 0) {
-      updateTargetPosRecursive(loopCounter - 1);
-    }
   }
   private void updateTargetPos() {
     //spiraling outward from center
@@ -356,6 +349,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

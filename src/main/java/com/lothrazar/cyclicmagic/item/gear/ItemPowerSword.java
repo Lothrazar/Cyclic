@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
@@ -50,15 +51,17 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPowerSword extends ItemSword implements IHasRecipe {
+public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig {
   private static final int COOLDOWN = Const.TICKS_PER_SEC;
   public enum SwordType {
     SLOW, WEAK, ENDER;
   }
   private SwordType type;
+  private boolean enableShooting;
   public ItemPowerSword(SwordType t) {
     super(MaterialRegistry.powerToolMaterial);
     this.type = t;
@@ -67,7 +70,9 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    if (this.enableShooting) {
+      tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    }
     super.addInformation(stack, player, tooltip, advanced);
   }
   @Override
@@ -95,41 +100,49 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe {
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    switch (type) {
-      case WEAK:
-        spawnLingeringPotion(player, PotionTypes.WEAKNESS);
-      break;
-      case SLOW:
-        spawnLingeringPotion(player, PotionTypes.SLOWNESS);
-      break;
-      case ENDER:
-        player.addPotionEffect(new PotionEffect(PotionEffectRegistry.ENDER, 200, 0));
-        if (!world.isRemote) {
-          EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, player);
-          entityenderpearl.setHeadingFromThrower(player, player.rotationPitch - 20, player.rotationYaw, 0.0F, 1.6F, 1.0F);
-          world.spawnEntity(entityenderpearl);
-        }
+    if (enableShooting) {
+      switch (type) {
+        case WEAK:
+          spawnLingeringPotion(player, PotionTypes.WEAKNESS);
+        break;
+        case SLOW:
+          spawnLingeringPotion(player, PotionTypes.SLOWNESS);
+        break;
+        case ENDER:
+          player.addPotionEffect(new PotionEffect(PotionEffectRegistry.ENDER, 200, 0));
+          if (!world.isRemote) {
+            EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, player);
+            // - 20
+            entityenderpearl.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.6F, 1.0F);
+            world.spawnEntity(entityenderpearl);
+          }
+      }
+      UtilSound.playSound(player, SoundEvents.ENTITY_ENDERPEARL_THROW);
+      player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
-    UtilSound.playSound(player, SoundEvents.ENTITY_ENDERPEARL_THROW);
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }
   private void spawnLingeringPotion(EntityPlayer player, PotionType ptype) {
     World world = player.getEntityWorld();
     ItemStack potion = PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), ptype);
     EntityPotion entitypotion = new EntityPotion(world, player, potion);
-    entitypotion.setHeadingFromThrower(player, player.rotationPitch - 20, player.rotationYaw, 0, 1.6F, 0.5F);
+    //- 20
+    entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.6F, 0.5F);
     if (world.isRemote == false) {
       world.spawnEntity(entitypotion);
     }
   }
-  //overrides to disable item damage
   @Override
   public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    //overrides to disable item damage
     return true;
   }
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
     return true;
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    this.enableShooting = config.getBoolean(this.getUnlocalizedName().replace("item.", "") + "_projectiles", Const.ConfigCategory.modpackMisc, true, "Disable the projectile (splash potion / ender pearl) from this endgame sword");
   }
 }

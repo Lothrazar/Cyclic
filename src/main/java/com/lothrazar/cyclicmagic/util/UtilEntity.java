@@ -413,7 +413,7 @@ public class UtilEntity {
   }
   public static ResourceLocation getResourceLocation(Entity entityHit) {
     try {
-    return ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(entityHit.getClass()));
+      return ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(entityHit.getClass()));
     }
     catch (Exception e) {
       return null;

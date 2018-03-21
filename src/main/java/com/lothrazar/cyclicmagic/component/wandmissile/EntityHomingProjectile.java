@@ -103,7 +103,6 @@ public class EntityHomingProjectile extends EntityThrowable {
     super.setDead();
     this.setInvisible(true);
   }
-
   @Override
   public void onUpdate() {
     super.onUpdate();

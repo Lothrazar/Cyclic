@@ -53,6 +53,5 @@ public class ConfigRegistry {
     UtilScythe.syncConfig(config);
     UtilHarvester.syncConfig(config);
     config.save();
-
   }
 }

@@ -80,6 +80,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private int radius = MAX_RADIUS - 2;//just a mid tier default 
   public TileEntityBeaconPotion() {
     super(9);
+    this.setSetRenderGlobally(true);
     this.timer = 0;
     this.setSlotsForBoth();
   }
@@ -151,7 +152,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     int y = this.pos.getY();
     int z = this.pos.getZ();
     int theRadius = ((int) Math.pow(2, this.radius));
-    AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))).grow(theRadius).expand(0.0D, (double) this.world.getHeight(), 0.0D);
+    AxisAlignedBB axisalignedbb = (new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1)).grow(theRadius).expand(0.0D, this.world.getHeight(), 0.0D);
     //get players, or non players, or both. but players extend living base too.
     boolean skipPlayers = (this.entityType == EntityType.NONPLAYER);
     boolean showParticles = (this.entityType == EntityType.PLAYERS);
@@ -209,7 +210,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       IBlockState iblockstate = this.world.getBlockState(blockpos$mutableblockpos.setPos(i, i1, k));
       float[] afloat;
       if (iblockstate.getBlock() == Blocks.STAINED_GLASS) {
-        afloat = ((EnumDyeColor) iblockstate.getValue(BlockStainedGlass.COLOR)).getColorComponentValues();
+        afloat = iblockstate.getValue(BlockStainedGlass.COLOR).getColorComponentValues();
       }
       else {
         if (iblockstate.getBlock() != Blocks.STAINED_GLASS_PANE) {
@@ -226,7 +227,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
           }
         }
         else
-          afloat = ((EnumDyeColor) iblockstate.getValue(BlockStainedGlassPane.COLOR)).getColorComponentValues();
+          afloat = iblockstate.getValue(BlockStainedGlassPane.COLOR).getColorComponentValues();
       }
       if (!flag) {
         afloat = new float[] { (tileentitybeacon$beamsegment.getColors()[0] + afloat[0]) / 2.0F, (tileentitybeacon$beamsegment.getColors()[1] + afloat[1]) / 2.0F, (tileentitybeacon$beamsegment.getColors()[2] + afloat[2]) / 2.0F };
@@ -253,7 +254,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
     this.beamRenderCounter = this.world.getTotalWorldTime();
     if (i > 1) {
-      this.beamRenderScale -= (float) i / 40.0F;
+      this.beamRenderScale -= i / 40.0F;
       if (this.beamRenderScale < 0.0F) {
         this.beamRenderScale = 0.0F;
       }
@@ -264,16 +265,14 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     return this.beamRenderScale;
   }
+  @Override
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
   }
+  @Override
   public NBTTagCompound getUpdateTag() {
     return this.writeToNBT(new NBTTagCompound());
-  }
-  @SideOnly(Side.CLIENT)
-  public double getMaxRenderDistanceSquared() {
-    return 65536.0D;
   }
   @Nullable
   private static Potion isBeaconEffect(int i) {
@@ -282,15 +281,18 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   /**
    * Returns true if this thing is named
    */
+  @Override
   public boolean hasCustomName() {
     return this.customName != null && !this.customName.isEmpty();
   }
   public void setName(String name) {
     this.customName = name;
   }
+  @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem() instanceof ItemPotion;
   }
+  @Override
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
       this.updateBeacon();
@@ -303,6 +305,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.
    */
+  @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return true;
   }
@@ -360,6 +363,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   /**
    * Returns true if automation can extract the given item in the given slot from the given side.
    */
+  @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
   }
@@ -372,7 +376,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     NBTTagList tagList = tagCompound.getTagList("potion_list", 10);
     this.effects = new ArrayList<PotionEffect>();
     for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      NBTTagCompound tag = tagList.getCompoundTagAt(i);
       String potion = tag.getString("potion_effect");
       int strength = tag.getInteger("potion_strength");
       Potion p = Potion.getPotionFromResourceLocation(potion);

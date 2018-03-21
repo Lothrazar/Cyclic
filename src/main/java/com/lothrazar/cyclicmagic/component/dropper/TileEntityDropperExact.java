@@ -41,6 +41,8 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   }
   public TileEntityDropperExact() {
     super(9);
+    this.setSlotsForExtract(0, 8);
+    this.setSlotsForInsert(0, 8);
     timer = delay;
   }
   @Override
@@ -67,7 +69,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   private void updateCurrentSlot() {
     int j = 1;
     for (int k = 0; k < this.inv.size(); ++k) {
-      if (!((ItemStack) this.inv.get(k)).isEmpty() && world.rand.nextInt(j++) == 0) {
+      if (!this.inv.get(k).isEmpty() && world.rand.nextInt(j++) == 0) {
         slotCurrent = k;
         return;
       }

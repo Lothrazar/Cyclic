@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.registry;
-
 import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -17,17 +16,15 @@ public class BlockOreRegistry {
     WorldModule.ores.add(ore);
   }
   private static BlockDimensionOre createOre(int dimension, String oreDict, String name, int harvestLevel) {
-
     String block = null, dimName = null;
     if (dimension == Const.Dimension.nether) {
       dimName = "nether";
- 
       block = "minecraft:netherrack";
     }
     else if (dimension == Const.Dimension.end) {
       dimName = "end";
       block = "minecraft:end_stone";
-    } 
+    }
     else if (dimension == Const.Dimension.overworld) {
       dimName = "world";
       block = "minecraft:stone";
@@ -161,7 +158,7 @@ public class BlockOreRegistry {
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
     oreDict = "oreTin";
     name = "tin";
-    createOre(Const.Dimension.nether, oreDict,name, ironHarvest);
+    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
     oreDict = "oreUranium";
     name = "uranium";
@@ -171,9 +168,7 @@ public class BlockOreRegistry {
     name = "yellorite";
     createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
     createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-
     //vanilla ores
-
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore
         .setSpawnType(SpawnType.SILVERFISH, 2)

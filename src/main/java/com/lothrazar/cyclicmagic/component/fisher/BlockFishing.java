@@ -65,7 +65,6 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFishing.class, new FishingTESR(0));
   }
-
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),

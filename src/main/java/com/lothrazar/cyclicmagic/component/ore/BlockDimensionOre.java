@@ -161,5 +161,4 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
   }
-
 }

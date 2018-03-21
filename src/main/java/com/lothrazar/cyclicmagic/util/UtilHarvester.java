@@ -51,6 +51,7 @@ public class UtilHarvester {
   private static NonNullList<String> breakGetDrops;
   private static NonNullList<String> breakSilkTouch;
   private static NonNullList<String> blockIgnore;
+  private static NonNullList<String> harvestReflectionRegrow;
   private static NonNullList<String> harvestGetDropsDeprecated;
   private static NonNullList<String> breakGetDropsDeprecated;
   private static NonNullList<String> blocksBreakAboveIfMatching;
@@ -115,8 +116,19 @@ public class UtilHarvester {
         ,"harvestcraft:pamspiderweb"
         ,"harvestcraft:pamcinnamon"
         ,"harvestcraft:pammaple"
-        ,"harvestcraft:pampaperbark"
-
+        ,"harvestcraft:pampaperbark" 
+        );    
+    harvestReflectionRegrow =  NonNullList.from(""
+//        ,"natura:*"
+        ,"natura:overworld_berrybush_*"
+        ,"natura:overworld_berrybush_blackberry"
+        ,"natura:overworld_berrybush_raspberry"
+        ,"natura:overworld_berrybush_maloberry"
+        ,"natura:nether_berrybush_duskberry"
+        ,"natura:nether_berrybush_stingberry"
+        ,"natura:nether_berrybush_skyberry"
+        ,"natura:nether_berrybush_blightberry"
+        ,"natura:nether_berrybush_duskberry"
         );    
    breakGetDropsDeprecated = NonNullList.from(""
         ,  "attaineddrops2:bulb"
@@ -135,6 +147,9 @@ public class UtilHarvester {
     //its a 3high multiblock
     harvestCustomMaxAge.put("simplecorn:corn", 9);
     /* @formatter:on */
+  }
+  private static boolean isHarvestReflectionRegrow(ResourceLocation blockId) {
+    return UtilString.isInList(harvestReflectionRegrow, blockId);
   }
   private static boolean isIgnored(ResourceLocation blockId) {
     return UtilString.isInList(blockIgnore, blockId);
@@ -227,6 +242,19 @@ public class UtilHarvester {
         //degenerate edge case: either this was made wrong OR its not meant to grow
         //like a stem or log or something;
         return drops;
+      }
+      if (isHarvestReflectionRegrow(blockId)) {
+        //      if (blockId.getResourceDomain().equals("natura")) {
+        Object toDrop = UtilReflection.getFirstPrivate(blockCheck, ItemStack.class);
+        if (toDrop != null) {
+          ItemStack crop = (ItemStack) toDrop;
+          if (crop.isEmpty() == false) {
+            drops.add(crop.copy());
+            //regrow : so only do -1, not full reset
+            world.setBlockState(posCurrent, blockState.withProperty(propInt, maxAge - 1));
+            return drops;
+          }
+        }
       }
       //first get the drops
       if (isHarvestingGetDropsOld(blockId)) {

@@ -59,6 +59,9 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
   }
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
+    if (te == null) {
+      return;
+    }
     renderAnimation(te);
     if (this.itemSlotAbove >= 0) {
       ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
