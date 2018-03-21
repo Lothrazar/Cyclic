@@ -79,7 +79,6 @@ public class ModCyclic {
   static {
     FluidRegistry.enableUniversalBucket();//https://github.com/BluSunrize/ImmersiveEngineering/blob/c76e51998756a54c22dd40ac1877313bf95e8520/src/main/java/blusunrize/immersiveengineering/ImmersiveEngineering.java
   }
-  public static String test = "@TEST@";
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
