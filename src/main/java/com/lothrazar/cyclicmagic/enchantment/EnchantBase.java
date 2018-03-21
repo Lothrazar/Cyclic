@@ -47,6 +47,28 @@ public abstract class EnchantBase extends Enchantment {
     ItemStack off = player.getHeldItemOffhand();
     return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
   }
+  protected int getCurrentArmorLevel(EntityLivingBase player) {
+    EntityEquipmentSlot[] armors = new EntityEquipmentSlot[] {
+        EntityEquipmentSlot.CHEST, EntityEquipmentSlot.FEET, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.LEGS
+    };
+
+    int level = 0;
+    for (EntityEquipmentSlot slot : armors) {
+      ItemStack armor = player.getItemStackFromSlot(slot);
+      if (armor.isEmpty() == false
+          && EnchantmentHelper.getEnchantments(armor) != null
+          && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
+        int newlevel = EnchantmentHelper.getEnchantments(armor).get(this);
+        if (newlevel > level) {
+          level = newlevel;
+        }
+      }
+    }
+    return level;
+  }
+  protected int getLevelAll(EntityLivingBase p) {
+    return Math.max(getCurrentArmorLevel(p), getCurrentLevelTool(p));
+  }
   protected ItemStack getFirstArmorStackWithEnchant(EntityLivingBase player) {
     if (player == null) {
       return ItemStack.EMPTY;

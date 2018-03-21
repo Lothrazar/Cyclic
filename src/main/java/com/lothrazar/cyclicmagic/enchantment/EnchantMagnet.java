@@ -37,7 +37,7 @@ public class EnchantMagnet extends EnchantBase {
   private static final int HRADIUS_PER_LEVEL = 4;
   private static final int ITEM_VRADIUS = 4;
   public EnchantMagnet() {
-    super("magnet", Rarity.VERY_RARE, EnumEnchantmentType.ALL, EntityEquipmentSlot.values());
+    super("magnet", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.values());
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(HRADIUS_PER_LEVEL + "")));
   }
   @Override
@@ -48,7 +48,7 @@ public class EnchantMagnet extends EnchantBase {
   public void onEntityUpdate(LivingUpdateEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     //Ticking
-    int level = getCurrentLevelTool(entity);
+    int level = getLevelAll(entity);
     if (level > 0) {
       UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
