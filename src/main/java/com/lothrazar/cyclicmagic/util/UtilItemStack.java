@@ -145,14 +145,15 @@ public class UtilItemStack {
     }
     return entityItem;
   }
-  public static void dropItemStackMotionless(World worldObj, BlockPos pos, ItemStack stack) {
-    EntityItem entityItem = new EntityItem(worldObj, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
-    if (worldObj.isRemote == false) {
+  public static void dropItemStackMotionless(World world, BlockPos pos, @Nonnull ItemStack stack) {
+    if (stack.isEmpty()) {
+      return;
+    }
+    EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    if (world.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
-      entityItem.setVelocity(0, 0, 0);
-      //    eItem.hoverStart = 0;
       entityItem.motionX = entityItem.motionY = entityItem.motionZ = 0;
-      worldObj.spawnEntity(entityItem);
+      world.spawnEntity(entityItem);
     }
   }
   public static void dropItemStacksInWorld(World world, BlockPos pos, List<ItemStack> stacks) {
