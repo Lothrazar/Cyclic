@@ -22,14 +22,18 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.net.PacketChestSack;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -40,11 +44,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
+public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConfig {
   public static final String name = "chest_sack_empty";
+  private static List<String> blacklistAll;
   public ItemChestSackEmpty() {
     super();
     // imported from my old mod
@@ -55,13 +63,16 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     if (pos == null) {
       return EnumActionResult.FAIL;
     }
-    //    ItemStack stack = entityPlayer.getHeldItem(hand);
     TileEntity tile = world.getTileEntity(pos);
     IBlockState state = world.getBlockState(pos);
     if (state == null || tile == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false
-      if (world.isRemote) {
-        UtilChat.addChatMessage(entityPlayer, "item.chest_sack_empty.inventory");
-      }
+      UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.inventory");
+      return EnumActionResult.FAIL;
+    }
+    ResourceLocation blockId = state.getBlock().getRegistryName();
+    //blacklist?
+    if (UtilString.isInList(blacklistAll, blockId)) {
+      UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.blacklist");
       return EnumActionResult.FAIL;
     }
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
@@ -93,5 +104,14 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   }
   public Item getFullSack() {
     return fullSack;
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.modpackMisc;
+    String[] deflist = new String[] {};
+    String[] blacklist = config.getStringList("SackHoldingBlacklist",
+        category, deflist, "Containers that cannot be lifted up with the Empty Sack of Holding.  Use block id; for example minecraft:chest");
+    blacklistAll = NonNullList.from("",
+        blacklist);
   }
 }
