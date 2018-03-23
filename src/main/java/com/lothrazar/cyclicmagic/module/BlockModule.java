@@ -542,5 +542,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
     TileEntityCableBase.syncConfig(config);
     TileEntityItemPump.syncConfig(config);
+    TileEntityUser.syncConfig(config);
   }
 }

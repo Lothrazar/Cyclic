@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
@@ -39,6 +40,7 @@ import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -67,11 +69,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
@@ -93,6 +97,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
+  private static List<String> blacklistAll;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
   }
@@ -134,9 +139,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       if (triggered) {
         timer = TIMER_FULL;
         try {
-          BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
+          BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
-            this.rightClickBlock(targetPos);
+            if (this.isInBlacklist(targetPos) == false) {
+              this.rightClickBlock(targetPos);
+            }
+            else {
+              ModCyclic.logger.log("IN BLACKLIST OOOO" + targetPos);
+            }
           }
           interactEntities(targetPos);
         }
@@ -147,6 +157,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
+  }
+  private boolean isInBlacklist(BlockPos targetPos) {
+    if (world.getBlockState(targetPos) == null
+        || world.getBlockState(targetPos).getBlock() == null) {
+      return false;
+    }
+    return UtilString.isInList(blacklistAll, world.getBlockState(targetPos).getBlock().getRegistryName());
   }
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = getTargetCenter();
@@ -207,6 +224,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world.isAirBlock(targetPos)) {
       return;
     }
+    ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     if (r != EnumActionResult.SUCCESS) {
@@ -236,11 +254,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             this.tryDumpStacks(Arrays.asList(is));
           }
           else {
+            ItemStack currentHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
+            boolean equalsPrevious = ItemStack.areItemStacksEqual(previousHeldCopy, currentHeldCopy);
             //last chance. EX: Pixelmon trees
             // https://github.com/PrinceOfAmber/Cyclic/issues/736
             fakePlayer.get().interactionManager.onBlockClicked(targetPos, EnumFacing.UP);
-            //true to make sure that it does allow a main hand item export
-            this.tryDumpFakePlayerInvo(true);
+            //spit out my main hand item ONLY IF i wasnt holding it before ( new aquisition )
+            this.tryDumpFakePlayerInvo(!equalsPrevious);
           }
         }
       }
@@ -270,7 +290,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         continue;
       }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName());//leaving in release
+        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName() + "_tryDumpFakePlayerInvo " + includeMainHand);//leaving in release
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -513,5 +533,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+  public static void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.modpackMisc;
+    String[] deflist = new String[] { "minecraft:grass" };
+    String[] blacklist = config.getStringList("AutoUserTargetBlacklist",
+        category, deflist, "Blocks in-world that cannot be targeted by the auto user.  Use block id; for example minecraft:chest");
+    blacklistAll = NonNullList.from("",
+        blacklist);
+    //    blacklistAll.add("minecraft:grass");
   }
 }

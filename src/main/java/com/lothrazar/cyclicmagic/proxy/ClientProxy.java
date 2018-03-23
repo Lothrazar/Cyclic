@@ -76,7 +76,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -99,11 +98,6 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-    // TODO: refactor cable
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/fluid.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/item.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/bundle.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/energy.png")));
   }
   @Override
   public void init() {
@@ -252,6 +246,7 @@ public class ClientProxy extends CommonProxy {
   /**
    * In a GUI we already have the context of the itemrender and font
    */
+  @Override
   public void renderItemOnGui(ItemStack stack, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {
     if (stack == null) {
       return;
@@ -269,29 +264,32 @@ public class ClientProxy extends CommonProxy {
       ModCyclic.logger.error(e.getMessage());
     }
   }
-  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };//was field_78774_b
-  public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k" };//was field_78779_k
+  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };
   /**
    * INSPIRED by universallp
    * 
    * This function was is part of VanillaAutomation which is licenced under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/ github.com/UniversalLP/VanillaAutomation
    */
+  @Override
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
     Minecraft mc = Minecraft.getMinecraft();
     try {
-      if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
-        GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
-        NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
-        ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
-        boolean isFlying = player.capabilities.isFlying;
-        boolean allowFlying = player.capabilities.allowFlying;
-        controller.setGameType(type);
-        player.capabilities.isFlying = isFlying;
-        player.capabilities.allowFlying = allowFlying;
-        mc.playerController = controller;
+      if (player == mc.player) {
+        if (mc.playerController instanceof ReachPlayerController) {
+          ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
+        }
+        else {
+          NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
+          //copy values from existing controller to custom one. since there is no setReachDistance in vanilla
+          ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
+          controller.setGameType(mc.playerController.getCurrentGameType());
+          player.capabilities.isFlying = player.capabilities.isFlying;
+          player.capabilities.allowFlying = player.capabilities.allowFlying;
+          mc.playerController = controller;
+          controller.setReachDistance(currentReach);
+        }
       }
-      ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
     }
     catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
