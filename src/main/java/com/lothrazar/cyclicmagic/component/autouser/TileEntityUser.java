@@ -207,6 +207,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world.isAirBlock(targetPos)) {
       return;
     }
+    ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     if (r != EnumActionResult.SUCCESS) {
@@ -236,11 +237,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             this.tryDumpStacks(Arrays.asList(is));
           }
           else {
+            ItemStack currentHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
+            boolean equalsPrevious = ItemStack.areItemStacksEqual(previousHeldCopy, currentHeldCopy);
+
             //last chance. EX: Pixelmon trees
             // https://github.com/PrinceOfAmber/Cyclic/issues/736
             fakePlayer.get().interactionManager.onBlockClicked(targetPos, EnumFacing.UP);
-            //true to make sure that it does allow a main hand item export
-            this.tryDumpFakePlayerInvo(true);
+            //spit out my main hand item ONLY IF i wasnt holding it before ( new aquisition )
+            this.tryDumpFakePlayerInvo(!equalsPrevious);
           }
         }
       }
@@ -270,9 +274,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         continue;
       }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName());//leaving in release
+        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName() + "_tryDumpFakePlayerInvo " + includeMainHand);//leaving in release
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
+
       }
     }
     tryDumpStacks(toDrop);
