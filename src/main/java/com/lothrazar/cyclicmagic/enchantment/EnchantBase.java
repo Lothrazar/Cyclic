@@ -51,7 +51,6 @@ public abstract class EnchantBase extends Enchantment {
     EntityEquipmentSlot[] armors = new EntityEquipmentSlot[] {
         EntityEquipmentSlot.CHEST, EntityEquipmentSlot.FEET, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.LEGS
     };
-
     int level = 0;
     for (EntityEquipmentSlot slot : armors) {
       ItemStack armor = player.getItemStackFromSlot(slot);

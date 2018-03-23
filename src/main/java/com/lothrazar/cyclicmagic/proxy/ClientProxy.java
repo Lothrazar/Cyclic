@@ -98,7 +98,6 @@ public class ClientProxy extends CommonProxy {
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-
   }
   @Override
   public void init() {
@@ -284,10 +283,9 @@ public class ClientProxy extends CommonProxy {
           NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
           //copy values from existing controller to custom one. since there is no setReachDistance in vanilla
           ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
-      
           controller.setGameType(mc.playerController.getCurrentGameType());
           player.capabilities.isFlying = player.capabilities.isFlying;
-          player.capabilities.allowFlying =  player.capabilities.allowFlying;
+          player.capabilities.allowFlying = player.capabilities.allowFlying;
           mc.playerController = controller;
           controller.setReachDistance(currentReach);
         }
