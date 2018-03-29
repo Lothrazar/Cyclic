@@ -28,7 +28,6 @@ import java.util.Iterator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -39,9 +38,6 @@ import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -82,17 +78,6 @@ public class CreativeTabCyclic extends CreativeTabs {
       ItemStack ebook = new ItemStack(Items.ENCHANTED_BOOK);
       ItemEnchantedBook.addEnchantment(ebook, new EnchantmentData(e, e.getMaxLevel()));
       list.add(ebook);
-    }
-    //fluids and potions that I add are under minecraft: prefix so copy them in here
-    //TODO: add fluid registry arraylist
-    if (FluidsRegistry.fluid_poison != null) {
-      list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME)));
-    }
-    if (FluidsRegistry.fluid_exp != null) {
-      list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME)));
-    }
-    if (FluidsRegistry.fluid_milk != null) {
-      list.add(FluidUtil.getFilledBucket(new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME)));
     }
     for (PotionTypeCyclic pt : PotionTypeRegistry.potions) {
       list.add(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), pt));
