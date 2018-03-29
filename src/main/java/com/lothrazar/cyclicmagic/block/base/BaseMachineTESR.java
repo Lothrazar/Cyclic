@@ -106,11 +106,12 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     }
     World world = te.getWorld();
     // Translate back to local view coordinates so that we can do the acual rendering here
-    GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
-    Tessellator tessellator = Tessellator.getInstance();
-    tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-    //crash on line below, NPE, not sure why. very rare I guess?
     try {
+      GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
+      Tessellator tessellator = Tessellator.getInstance();
+      //if buffer had an "isDrawing" here, i would halt if that is true
+      tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+      //crash on line below, NPE, not sure why. very rare I guess?
       Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
           world,
           getBakedModel(),
@@ -118,6 +119,12 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
           te.getPos(),
           Tessellator.getInstance().getBuffer(), false);
       tessellator.draw();
+    }
+    catch (IllegalStateException alreadyBuilding) {
+      ModCyclic.logger.info("Already building!  BufferBuilder:isDrawing == true I suppose: " + alreadyBuilding.getMessage());
+      //BufferBuilder has a private flag "isDrawing", and if its true it throws this exceptoin
+      //problem: there is no GET method or way to detect "is this drawing" before I start.
+      //instead I catch and ignore this exception/
     }
     catch (Exception e) {
       ModCyclic.logger.info("TESR render baked model exception");
