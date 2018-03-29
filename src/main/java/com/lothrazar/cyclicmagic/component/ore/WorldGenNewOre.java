@@ -42,6 +42,14 @@ public class WorldGenNewOre implements IWorldGenerator {
       if (ore.config.isVanilla() == false && WorldModule.enableModCompatOres == false) {
         continue;//quick patch
       }
+      if (ore.config.isVanilla()) {
+        if (ore.config.getDimension() == Const.Dimension.nether && WorldModule.netherOreEnabled == false) {
+          return;
+        }
+        if (ore.config.getDimension() == Const.Dimension.end && WorldModule.endOreEnabled == false) {
+          return;
+        }
+      }
       if (ore.config.getBlockCount() > 0
           && ore.config.isRegistered()) {
         ore.config.setGen(new WorldGenMinable(
@@ -59,7 +67,6 @@ public class WorldGenNewOre implements IWorldGenerator {
           ore.config.getSpawnChance() > 0 &&
           ore.config.getDimension() == world.provider.getDimension()) {
         //now go!
-        //        ModCyclic.logger.error("run worldgen " + ore.getUnlocalizedName());
         this.run(ore.config.getGen(), world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE,
             ore.config.getSpawnChance(), MIN_HEIGHT, MAX_HEIGHT);
       }
