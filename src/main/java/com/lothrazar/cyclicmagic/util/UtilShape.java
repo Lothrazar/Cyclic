@@ -32,7 +32,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilShape {
-  public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, int height) {
+  public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, final int height) {
     List<BlockPos> newShape = new ArrayList<BlockPos>();
     newShape.addAll(shape);//copy it
     for (int i = 1; i <= height; i++)
@@ -45,7 +45,7 @@ public class UtilShape {
   public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getY();
-    int w = (int) pos.getZ();
+    int w = pos.getZ();
     int radius = diameter / 2;
     int y = radius;
     int x = 0;
@@ -73,7 +73,7 @@ public class UtilShape {
     Collections.sort(circleList, new Comparator<BlockPos>() {
       @Override
       public int compare(final BlockPos object1, final BlockPos object2) {
-        return (int) object1.getX() - object2.getX();
+        return object1.getX() - object2.getX();
       }
     });
     return circleList;
@@ -81,7 +81,7 @@ public class UtilShape {
   public static List<BlockPos> circleHorizontal(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getZ();
-    int height = (int) pos.getY();
+    int height = pos.getY();
     int radius = diameter / 2;
     int z = radius;
     int x = 0;
@@ -109,7 +109,7 @@ public class UtilShape {
     Collections.sort(circleList, new Comparator<BlockPos>() {
       @Override
       public int compare(final BlockPos object1, final BlockPos object2) {
-        return (int) object1.getX() - object2.getX();
+        return object1.getX() - object2.getX();
       }
     });
     return circleList;
@@ -273,7 +273,7 @@ public class UtilShape {
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     return rectHollow(pos, radius, radius);
   }
-  public static List<BlockPos> squarePyramid(final BlockPos pos, int radius, int height) {
+  public static List<BlockPos> squarePyramid(final BlockPos pos, final int radius, final int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int radiusCurrent = radius;
     BlockPos posCurrent = new BlockPos(pos);

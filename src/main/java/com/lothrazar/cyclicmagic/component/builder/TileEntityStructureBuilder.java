@@ -51,7 +51,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int buildType;
   private int buildSize = 3;
-  private int buildHeight = 3;
+  private int height;
   private int needsRedstone = 1;
   private int shapeIndex = 0;// current index of shape array
   private int renderParticles = 1;
@@ -125,19 +125,19 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     switch (buildType) {
       case CIRCLE:
         shape = UtilShape.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
-        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
+        shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case FACING:
         shape = UtilShape.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
-        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
+        shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case SQUARE:
         shape = UtilShape.squareHorizontalHollow(this.getPosTarget(), this.getSize());
-        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
+        shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case SOLID:
         shape = UtilShape.squareHorizontalFull(this.getTargetFacing(), this.getSize());
-        shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
+        shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPosTarget(), this.getSize());
@@ -152,7 +152,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
       break;
       case PYRAMID:
-        shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), this.getHeight());
+        shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
       break;
     }
     return shape;
@@ -181,7 +181,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         case SIZE:
           return this.buildSize;
         case HEIGHT:
-          return this.buildHeight;
+          return this.height;
         case REDSTONE:
           return this.needsRedstone;
         case RENDERPARTICLES:
@@ -227,7 +227,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           if (value > maxHeight) {
             value = maxHeight;
           }
-          this.buildHeight = value;
+          this.height = Math.max(1, value);
         break;
         case REDSTONE:
           this.needsRedstone = value;
@@ -258,6 +258,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
     }
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
@@ -310,22 +311,28 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
     this.rotations = tagCompound.getInteger("rotations");
+    this.setHeight(tagCompound.getInteger("buildHeight"));
+    //ModCyclic.logger.info("HEIGHT IS READ : " + this.getHeight());
+    // ModCyclic.logger.info("HEIGHT IS RAW : " + tagCompound.getInteger("buildHeight"));
     this.offsetX = tagCompound.getInteger("ox");
     this.offsetY = tagCompound.getInteger("oy");
     this.offsetZ = tagCompound.getInteger("oz");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger("buildHeight", height);
+    //  ModCyclic.logger.info("HEIGHT IS WRITTEN : " + tagCompound.getInteger("buildHeight") + "????" + this.getHeight());
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
-    tagCompound.setInteger(NBT_SIZE, this.getSize());
+    tagCompound.setInteger(NBT_SIZE, this.buildSize);
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     tagCompound.setInteger("rotations", rotations);
     tagCompound.setInteger("ox", this.offsetX);
     tagCompound.setInteger("oy", this.offsetY);
     tagCompound.setInteger("oz", this.offsetZ);
+    // ModCyclic.logger.info("buildSize  : " + tagCompound.getInteger(NBT_SIZE) + "????" + buildSize);
     return super.writeToNBT(tagCompound);
   }
   @Override
