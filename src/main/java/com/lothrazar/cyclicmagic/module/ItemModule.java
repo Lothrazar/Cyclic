@@ -413,7 +413,10 @@ public class ItemModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
     }
     if (enableEnderBlaze) {
+      Item fire_dark_anim = new Item();
+      ItemRegistry.register(fire_dark_anim, "fire_dark_anim");
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+      ender_blaze.setRepairItem(new ItemStack(fire_dark_anim));
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
       ModCyclic.instance.events.register(ender_blaze);
