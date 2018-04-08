@@ -74,7 +74,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
   private static final int INVENTORY_SIZE = 6;
+  public static final int FUELSLOT_INDEX = 5;
   public static final int TOOLSLOT_INDEX = 4;
+  public static final int WHITELIST_START_INDEX = 0;
+  public static final int WHITELIST_END_INDEX = 3;
   public final static int TIMER_FULL = 100;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
@@ -203,9 +206,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     Block target = targetState.getBlock();
     //else check blacklist
     ItemStack itemStack;
-    int listSize = this.getSizeInventory() - 1;
     if (this.blacklistIfZero == 0) {
-      for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
+      for (int i = WHITELIST_START_INDEX; i <= WHITELIST_END_INDEX; i++) {
         if (inv.get(i).isEmpty()) {
           continue;
         }
@@ -218,7 +220,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     else {//check it as a WHITELIST
       int countEmpty = 0;
-      for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
+      for (int i = WHITELIST_START_INDEX; i <= WHITELIST_END_INDEX; i++) {
         if (inv.get(i).isEmpty()) {
           countEmpty++;
           continue;
@@ -237,6 +239,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
       }
       //wait, if whitelist is empty then it doesnt matter
+      int listSize = WHITELIST_END_INDEX - WHITELIST_START_INDEX + 1;//3 - 0 + 1 = 4
       if (listSize == countEmpty) {
         return true;
       }
@@ -428,6 +431,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
