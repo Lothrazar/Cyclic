@@ -77,6 +77,9 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
+    if (player.isRiding()) {
+      player.dismountRidingEntity();
+    }
     if (!world.isRemote) {
       EntityPlayerMP mp = (EntityPlayerMP) player;
       //      final EntityPlayer.SleepResult result = player.trySleep(player.getPosition());
