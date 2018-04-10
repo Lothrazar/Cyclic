@@ -46,8 +46,11 @@ public class EventPlayerData {
   // player data storage based on API source code example:
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   @SubscribeEvent
+  //  @SideOnly(Side.SERVER) // no dont do this. breaks hearts in SSP
   public void onSpawn(PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayerMP && event.player.getEntityWorld().isRemote == false) {
+    if (event.player instanceof EntityPlayerMP &&
+        event.player != null &&
+        event.player.isDead == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
@@ -56,8 +59,11 @@ public class EventPlayerData {
     }
   }
   @SubscribeEvent
+  //  @SideOnly(Side.SERVER)// no dont do this. breaks hearts in SSP
   public void onJoinWorld(EntityJoinWorldEvent event) {
-    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().getEntityWorld().isRemote == false) {
+    if (event.getEntity() instanceof EntityPlayerMP &&
+        event.getEntity() != null &&
+        event.getEntity().isDead == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
