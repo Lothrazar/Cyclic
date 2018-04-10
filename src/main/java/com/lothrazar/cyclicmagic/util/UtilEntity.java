@@ -59,22 +59,32 @@ public class UtilEntity {
    * 
    * @return true if teleport was a success
    */
-  public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target) {
-    EnderTeleportEvent event = new EnderTeleportEvent(player, target.getX(), target.getY(), target.getZ(), 0);
+  public static boolean enderTeleportEvent(EntityLivingBase player, World world, double x, double y, double z) {
+    EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
     if (wasCancelled == false) {
       //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
-      UtilEntity.teleportWallSafe(player, world,
-          new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()));
+      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
     }
     return !wasCancelled;
   }
-  public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
+  /**
+   * 
+   * @return true if teleport was a success
+   */
+  public static boolean enderTeleportEvent(EntityLivingBase player, World world, BlockPos target) {
+    return enderTeleportEvent(player, world, target.getX(), target.getY(), target.getZ());
+  }
+  public static void teleportWallSafe(EntityLivingBase player, World world, double x, double y, double z) {
+    BlockPos coords = new BlockPos(x, y, z);
     world.markBlockRangeForRenderUpdate(coords, coords);
     //CommandTP ?
     //       ((EntityPlayerMP)p_189863_0_).connection.setPlayerLocation(p_189863_1_.getAmount(), p_189863_2_.getAmount(), p_189863_3_.getAmount(), f, f1, set);
-    player.setPositionAndUpdate(coords.getX(), coords.getY(), coords.getZ());
+    player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
+  }
+  public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
+    teleportWallSafe(player, world, coords.getX(), coords.getY(), coords.getZ());
   }
   public static void moveEntityWallSafe(EntityLivingBase entity, World world) {
     while (world.collidesWithAnyBlock(entity.getEntityBoundingBox())) {

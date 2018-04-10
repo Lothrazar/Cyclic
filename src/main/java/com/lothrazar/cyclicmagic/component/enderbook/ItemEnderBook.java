@@ -108,6 +108,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     ItemStack book = getPlayersBook(player);
     book.getTagCompound().removeTag(KEY_LOC + "_" + slot);
   }
+
   public static void saveCurrentLocation(EntityPlayer player, String name) {
     ItemStack book = getPlayersBook(player);
     int id = getEmptySlotAndIncrement(book);
@@ -147,7 +148,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       //      EntityPlayerMP p = ((EntityPlayerMP) player);
       float f = 0;//.5F;// center the player on the block. 
       //also moving up so  not stuck in floor
-      boolean success = UtilEntity.enderTeleportEvent(player, player.world, new BlockPos(loc.X - f, loc.Y + 0.9, loc.Z - f));
+      ModCyclic.logger.log("TP to " + loc);
+      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
       //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       if (success) { // try and force chunk loading
         player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
@@ -211,6 +213,10 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       // "["+id + "] "+
       return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
       // showName
+    }
+    @Override
+    public String toString() {
+      return this.toCSV() + " : " + this.display;
     }
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
