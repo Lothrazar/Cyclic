@@ -148,7 +148,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       //      EntityPlayerMP p = ((EntityPlayerMP) player);
       float f = 0;//.5F;// center the player on the block. 
       //also moving up so  not stuck in floor
-      ModCyclic.logger.log("TP to " + loc);
       boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
       //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       if (success) { // try and force chunk loading
