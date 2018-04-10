@@ -413,7 +413,10 @@ public class ItemModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
     }
     if (enableEnderBlaze) {
+      Item fire_dark_anim = new Item();
+      ItemRegistry.register(fire_dark_anim, "fire_dark_anim");
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+      ender_blaze.setRepairItem(new ItemStack(fire_dark_anim));
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
       ModCyclic.instance.events.register(ender_blaze);
@@ -587,7 +590,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(stirrup_inverse, "tool_mount_inverse");
     }
     if (enableHorseFoodUpgrades) {
-      Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Blocks.EMERALD_BLOCK));
+      Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.FERMENTED_SPIDER_EYE));
       Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
       Item diamond_carrot = new ItemHorseUpgrade(HorseUpgradeType.HEALTH, new ItemStack(Items.DIAMOND));
       Item redstone_carrot = new ItemHorseUpgrade(HorseUpgradeType.SPEED, new ItemStack(Items.REDSTONE));

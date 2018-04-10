@@ -143,12 +143,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     BlockPos start = player.getPosition();
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
-      // http://www.minecraftforge.net/forum/index.php?topic=18308.0
-      EntityPlayerMP p = ((EntityPlayerMP) player);
-      float f = 0.5F;// center the player on the block. 
+      // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
-      boolean success = UtilEntity.enderTeleportEvent(player, p.world, new BlockPos(loc.X - f, loc.Y + 0.9, loc.Z - f));
-      //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
+      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
       if (success) { // try and force chunk loading
         player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
         UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);
@@ -157,6 +154,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return true;
   }
+  @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
@@ -211,6 +209,10 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
       // showName
     }
+    @Override
+    public String toString() {
+      return this.toCSV() + " : " + this.display;
+    }
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
     if (expDistRatio <= 0) {
@@ -218,7 +220,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     BlockPos toPos = getLocationPos(book, slot);
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
-    return (int) Math.round(distance / expDistRatio);
+    return Math.round(distance / expDistRatio);
   }
   @Override
   public void syncConfig(Configuration config) {

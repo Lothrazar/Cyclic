@@ -44,16 +44,25 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
   }
   @Override
   public IRecipe addRecipe() {
+    RecipeRegistry.addShapedOreRecipe(new ItemStack(getRepairItem().getItem(), 4),
+        "cb",
+        "bc",
+        'c', new ItemStack(Items.FIRE_CHARGE),
+        'b', "dyeLightBlue");
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         " cc",
         "fbc",
         "ff ",
-        'c', new ItemStack(Items.FIRE_CHARGE),
+        'c', getRepairItem(),
         'b', new ItemStack(Items.BLAZE_POWDER),
         'f', new ItemStack(Items.FLINT));
   }
   @Override
   public SoundEvent getSound() {
     return SoundRegistry.firelaunch;
+  }
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return getRepairItem().isItemEqualIgnoreDurability(toRepair);
   }
 }

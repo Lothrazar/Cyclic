@@ -29,6 +29,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class BaseTool extends BaseItem {
+  private ItemStack repairItem;
   public BaseTool(int durability) {
     super();
     this.setMaxStackSize(1);
@@ -37,5 +38,11 @@ public class BaseTool extends BaseItem {
   public void onUse(ItemStack stack, EntityPlayer player, World world, EnumHand hand) {
     player.swingArm(hand);
     UtilItemStack.damageItem(player, stack);
+  }
+  public ItemStack getRepairItem() {
+    return repairItem;
+  }
+  public void setRepairItem(ItemStack repairItem) {
+    this.repairItem = repairItem;
   }
 }

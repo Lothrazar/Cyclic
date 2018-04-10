@@ -24,16 +24,18 @@
 package com.lothrazar.cyclicmagic.component.wandblaze;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -49,7 +51,8 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
     @Override
     public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
-      return new RenderBall<EntityBlazeBolt>(rm, "fire_dark");
+      RenderSnowball<EntityBlazeBolt> x = new RenderSnowball<EntityBlazeBolt>(rm, Item.getByNameOrId("cyclicmagic:fire_dark_anim"), Minecraft.getMinecraft().getRenderItem());
+      return x;//new RenderBall<EntityBlazeBolt>(rm, "fire_dark");
     }
   }
   public EntityBlazeBolt(World worldIn) {

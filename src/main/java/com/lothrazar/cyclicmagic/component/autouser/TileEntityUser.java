@@ -536,11 +536,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-    String[] deflist = new String[] { "minecraft:grass" };
+    String[] deflist = new String[0];
     String[] blacklist = config.getStringList("AutoUserTargetBlacklist",
         category, deflist, "Blocks in-world that cannot be targeted by the auto user.  Use block id; for example minecraft:chest");
     blacklistAll = NonNullList.from("",
         blacklist);
-    //    blacklistAll.add("minecraft:grass");
   }
 }
