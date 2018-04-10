@@ -108,7 +108,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     ItemStack book = getPlayersBook(player);
     book.getTagCompound().removeTag(KEY_LOC + "_" + slot);
   }
-
   public static void saveCurrentLocation(EntityPlayer player, String name) {
     ItemStack book = getPlayersBook(player);
     int id = getEmptySlotAndIncrement(book);
