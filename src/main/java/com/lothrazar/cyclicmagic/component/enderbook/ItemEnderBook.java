@@ -144,12 +144,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     BlockPos start = player.getPosition();
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
-      // http://www.minecraftforge.net/forum/index.php?topic=18308.0
-      //      EntityPlayerMP p = ((EntityPlayerMP) player);
-      float f = 0;//.5F;// center the player on the block. 
+      // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
-      //p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
       if (success) { // try and force chunk loading
         player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
         UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);
