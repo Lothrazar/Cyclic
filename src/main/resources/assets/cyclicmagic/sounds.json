@@ -29,5 +29,21 @@
 	"magic_missile": {"category" : "player", "sounds" : [{"name":"cyclicmagic:magic_missile"}]},
 	"metal_pitch"  : {"category" : "player", "sounds" : [{"name":"cyclicmagic:metal_pitch"}]},
 	"pew_long"	   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pew_long"}]},
-	"pschew_fire"  : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pschew_fire"}]}
+	"pschew_fire"  : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pschew_fire"}]},
+	"block_scaffolding"  		: {"category" : "player", "sounds" : [{"name":"cyclicmagic:block_scaffolding_0"},{"name":"cyclicmagic:block_scaffolding_1"}]}         ,
+	"chaos_reaper"  		    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:chaos_reaper"}]}                ,
+	"fireball_explode"  		: {"category" : "player", "sounds" : [{"name":"cyclicmagic:fireball_explode"}]}            ,
+	"fireball_staff_launch"  	: {"category" : "player", "sounds" : [{"name":"cyclicmagic:fireball_staff_launch"}]}       ,
+	"frost_staff_launch"  		: {"category" : "player", "sounds" : [{"name":"cyclicmagic:frost_staff_launch"}]}          ,
+	"lightning_staff_launch"  	: {"category" : "player", "sounds" : [{"name":"cyclicmagic:lightning_staff_launch"}]}      ,
+	"machine_launch"  			: {"category" : "player", "sounds" : [{"name":"cyclicmagic:machine_launch"}]}              ,
+	"monster_ball_capture"  	: {"category" : "player", "sounds" : [{"name":"cyclicmagic:monster_ball_capture"}]}        ,
+	"monster_ball_release"  	: {"category" : "player", "sounds" : [{"name":"cyclicmagic:monster_ball_release"}]}        ,
+	"spikes_off"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_off"}]}                  ,
+	"spikes_on"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:spikes_on"}]}                   ,
+	"spirit_seeker"  			: {"category" : "player", "sounds" : [{"name":"cyclicmagic:spirit_seeker"}]}               ,
+	"step_height_down"  		: {"category" : "player", "sounds" : [{"name":"cyclicmagic:step_height_down"}]}            ,
+	"step_height_up"  			: {"category" : "player", "sounds" : [{"name":"cyclicmagic:step_height_up"}]}              ,
+	"tool_mode"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:tool_mode"}]}                   ,
+	"warp_echo"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:warp_echo"}]}                   
 }

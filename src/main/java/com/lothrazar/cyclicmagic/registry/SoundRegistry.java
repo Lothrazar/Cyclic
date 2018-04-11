@@ -62,6 +62,24 @@ public class SoundRegistry {
   public static SoundEvent metal_pitch;
   public static SoundEvent pew_long;
   public static SoundEvent pschew_fire;
+  //deluxe 
+  public static SoundEvent block_scaffolding;
+  public static SoundEvent chaos_reaper;
+  public static SoundEvent fireball_explode;
+  public static SoundEvent fireball_staff_launch;
+  public static SoundEvent frost_staff_launch;
+  public static SoundEvent lightning_staff_launch;
+  public static SoundEvent machine_launch;
+  public static SoundEvent monster_ball_capture;
+  public static SoundEvent monster_ball_release;
+  public static SoundEvent spikes_off;
+  public static SoundEvent spikes_on;
+  public static SoundEvent spirit_seeker;
+  public static SoundEvent step_height_down;
+  public static SoundEvent step_height_up;
+  public static SoundEvent tool_mode;
+  public static SoundEvent warp_echo;
+  //register
   public static void register() {
     basey = registerSound("basey");//used by storage bag deposit
     bip = registerSound("bip");//cyclic wand GUI rotation
@@ -94,6 +112,23 @@ public class SoundRegistry {
     //  hovering = registerSound("hovering");//UNUSED
     //pew_long = registerSound("pew_long");//UNUSED
     // spikemaybe = registerSound("spikemaybe");//UNUSED
+    // new sounds
+    block_scaffolding = registerSound("block_scaffolding");
+    chaos_reaper = registerSound("chaos_reaper");
+    fireball_explode = registerSound("fireball_explode");
+    fireball_staff_launch = registerSound("fireball_staff_launch");
+    frost_staff_launch = registerSound("frost_staff_launch");
+    lightning_staff_launch = registerSound("lightning_staff_launch");
+    machine_launch = registerSound("machine_launch");
+    monster_ball_capture = registerSound("monster_ball_capture");
+    monster_ball_release = registerSound("monster_ball_release");
+    spikes_off = registerSound("spikes_off");
+    spikes_on = registerSound("spikes_on");
+    spirit_seeker = registerSound("spirit_seeker");
+    step_height_down = registerSound("step_height_down");
+    step_height_up = registerSound("step_height_up");
+    tool_mode = registerSound("tool_mode");
+    warp_echo = registerSound("warp_echo");
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3

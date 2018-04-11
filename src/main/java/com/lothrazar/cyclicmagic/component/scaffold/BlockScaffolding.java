@@ -62,8 +62,8 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setTickRandomly(true);
     this.setHardness(0F);
     this.setResistance(0F);
-    SoundEvent crackle = SoundRegistry.crackle;
-    this.setSoundType(new SoundType(0.1F, 1.0F, crackle, crackle, crackle, crackle, crackle));
+    SoundEvent zero = SoundRegistry.block_scaffolding;
+    this.setSoundType(new SoundType(0.1F, 1.0F, zero, zero, zero, zero, zero));
   }
   @Override
   public boolean isFullCube(IBlockState state) {
@@ -73,6 +73,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   public boolean isOpaqueCube(IBlockState state) {
     return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
