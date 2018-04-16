@@ -56,6 +56,6 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
   }
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.goodlaunch;
+    return SoundRegistry.frost_staff_launch;
   }
 }

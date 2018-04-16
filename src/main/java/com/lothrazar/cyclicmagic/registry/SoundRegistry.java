@@ -47,7 +47,7 @@ public class SoundRegistry {
 
   public static SoundEvent dungeonfinder;
   public static SoundEvent firelaunch;
-  public static SoundEvent goodlaunch;
+  // public static SoundEvent goodlaunch;
   public static SoundEvent laserbeanpew;
   //  public static SoundEvent powerupscales;
   public static SoundEvent spikemaybe;
@@ -95,7 +95,7 @@ public class SoundRegistry {
     dungeonfinder = registerSound("dungeonfinder");// wandspawner
     firelaunch = registerSound("firelaunch");//used by wandblaze
     explosm = registerSound("explosm");//entity blaze fire
-    goodlaunch = registerSound("goodlaunch");//used by wandice
+    // goodlaunch = registerSound("goodlaunch");//WAS used by wandice
     laserbeanpew = registerSound("laserbeanpew");// wandlightning
     //    powerupscales = registerSound("powerupscales");//ItemWandHypno
     pschew_fire = registerSound("pschew_fire");//waterremoval
@@ -106,7 +106,7 @@ public class SoundRegistry {
     chaos_reaper = registerSound("chaos_reaper");//ItemWandHypno
     fireball_explode = registerSound("fireball_explode");
     fireball_staff_launch = registerSound("fireball_staff_launch");
-    frost_staff_launch = registerSound("frost_staff_launch");
+    frost_staff_launch = registerSound("frost_staff_launch");//ItemProjectileSnow
     lightning_staff_launch = registerSound("lightning_staff_launch");
     machine_launch = registerSound("machine_launch");
     monster_ball_capture = registerSound("monster_ball_capture");
