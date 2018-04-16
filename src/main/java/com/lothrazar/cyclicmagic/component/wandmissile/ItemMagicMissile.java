@@ -61,7 +61,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
-    UtilSound.playSound(player, SoundRegistry.magic_missile);
+    UtilSound.playSound(player, SoundRegistry.spirit_seeker);
     int x = player.getPosition().getX();
     int y = player.getPosition().getY();
     int z = player.getPosition().getZ();
@@ -81,13 +81,9 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
       //closest actual monster
       EntityLivingBase target = UtilEntity.getClosestEntity(world, player, trimmedTargets);
       EntityHomingProjectile projectile = new EntityHomingProjectile(world, player);
-      //      projectile.setPosition(x, y, z);
+
       projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
-      //      projectile.motionX = 0;
-      //      projectile.motionY = 0;
-      //      projectile.motionZ = 0;
-      //      projectile.rotationPitch = 0;
-      //      projectile.rotationYaw = 0;
+
       projectile.setTarget(target);
       world.spawnEntity(projectile);
     }

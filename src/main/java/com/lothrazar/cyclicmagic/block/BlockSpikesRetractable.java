@@ -173,12 +173,12 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     }
     if (state.getValue(ACTIVATED) == false
         && world.isBlockPowered(pos)) {
-      UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_on, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, true));
     }
     else if (state.getValue(ACTIVATED)
         && world.isBlockPowered(pos) == false) {
-      UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }

@@ -81,17 +81,20 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
         9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-    ////////////////// custom recipe hook
+    // Start Custom recipe type: Hydrator
     registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShapeless, RECIPE_CATEGORY_HYDRATOR);
+    // End Custom recipe type: Hydrator
+    //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
       registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
     }
+    //end of Info tab
   }
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
