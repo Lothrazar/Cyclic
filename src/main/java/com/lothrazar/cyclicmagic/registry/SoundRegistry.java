@@ -44,21 +44,20 @@ public class SoundRegistry {
   public static SoundEvent pow;
   public static SoundEvent thunk;
   public static SoundEvent warp;
-  //  public static SoundEvent spikes_in;
-  //  public static SoundEvent spikes_out;
+
   public static SoundEvent dungeonfinder;
   public static SoundEvent firelaunch;
   public static SoundEvent goodlaunch;
   public static SoundEvent laserbeanpew;
-  public static SoundEvent powerupscales;
+  //  public static SoundEvent powerupscales;
   public static SoundEvent spikemaybe;
-  //  public static SoundEvent bass_echo;
+
   public static SoundEvent coin;
   public static SoundEvent crack;
   public static SoundEvent explosm;
   public static SoundEvent guitar;
   public static SoundEvent hovering;
- // public static SoundEvent magic_missile;
+
   public static SoundEvent metal_pitch;
   public static SoundEvent pew_long;
   public static SoundEvent pschew_fire;
@@ -93,28 +92,18 @@ public class SoundRegistry {
     pew = registerSound("pew");//magic net on catch (previously was base spell thrown)
     thunk = registerSound("thunk");//ChestSack 
     warp = registerSound("warp");//Ender Wings & Book 
-    //    spikes_out = registerSound("spikes_out");//spikes
-    //    spikes_in = registerSound("spikes_in");//spikes
     dungeonfinder = registerSound("dungeonfinder");// wandspawner
     firelaunch = registerSound("firelaunch");//used by wandblaze
     explosm = registerSound("explosm");//entity blaze fire
     goodlaunch = registerSound("goodlaunch");//used by wandice
     laserbeanpew = registerSound("laserbeanpew");// wandlightning
-    powerupscales = registerSound("powerupscales");//wandhypno
-    //magic_missile = registerSound("magic_missile");//item.wand_missile AKA spirit seeker AKA high pitched laser
+    //    powerupscales = registerSound("powerupscales");//ItemWandHypno
     pschew_fire = registerSound("pschew_fire");//waterremoval
     crack = registerSound("crack");//Uncrafter
-    //  bass_echo = registerSound("bass_echo");//UNUSED
-    // pow = registerSound("pow");//UNUSED
-    //metal_pitch = registerSound("metal_pitch");//UNUSED
-    // coin = registerSound("coin");//UNUSED
-    //guitar = registerSound("guitar");//UNUSED
-    //  hovering = registerSound("hovering");//UNUSED
-    //pew_long = registerSound("pew_long");//UNUSED
-    // spikemaybe = registerSound("spikemaybe");//UNUSED
+
     // new sounds
     block_scaffolding = registerSound("block_scaffolding");// BlockScaffolding
-    chaos_reaper = registerSound("chaos_reaper");
+    chaos_reaper = registerSound("chaos_reaper");//ItemWandHypno
     fireball_explode = registerSound("fireball_explode");
     fireball_staff_launch = registerSound("fireball_staff_launch");
     frost_staff_launch = registerSound("frost_staff_launch");

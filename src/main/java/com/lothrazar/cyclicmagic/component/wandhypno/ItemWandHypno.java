@@ -63,7 +63,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
-    UtilSound.playSound(player, SoundRegistry.powerupscales);
+    UtilSound.playSound(player, SoundRegistry.chaos_reaper);
     if (!world.isRemote) {
       int x = player.getPosition().getX();
       int y = player.getPosition().getY();
@@ -113,6 +113,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
         'b', Blocks.RED_MUSHROOM_BLOCK,
         'x', Blocks.BROWN_MUSHROOM_BLOCK);
   }
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return false;
