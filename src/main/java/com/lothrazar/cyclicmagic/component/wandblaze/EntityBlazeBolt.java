@@ -137,7 +137,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }
-    UtilSound.playSound(world, pos, SoundRegistry.explosm, SoundCategory.BLOCKS);
+    UtilSound.playSound(world, pos, SoundRegistry.fireball_explode, SoundCategory.BLOCKS);
     this.setDead();
   }
 }

@@ -59,7 +59,7 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
   }
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.firelaunch;
+    return SoundRegistry.fireball_staff_launch;//fireball_staff_launch
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {

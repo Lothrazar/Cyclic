@@ -44,20 +44,12 @@ public class SoundRegistry {
   public static SoundEvent pow;
   public static SoundEvent thunk;
   public static SoundEvent warp;
-
   public static SoundEvent dungeonfinder;
-  public static SoundEvent firelaunch;
-  // public static SoundEvent goodlaunch;
-  public static SoundEvent laserbeanpew;
-  //  public static SoundEvent powerupscales;
   public static SoundEvent spikemaybe;
-
   public static SoundEvent coin;
   public static SoundEvent crack;
-  public static SoundEvent explosm;
   public static SoundEvent guitar;
   public static SoundEvent hovering;
-
   public static SoundEvent metal_pitch;
   public static SoundEvent pew_long;
   public static SoundEvent pschew_fire;
@@ -93,31 +85,25 @@ public class SoundRegistry {
     thunk = registerSound("thunk");//ChestSack 
     warp = registerSound("warp");//Ender Wings & Book 
     dungeonfinder = registerSound("dungeonfinder");// wandspawner
-    firelaunch = registerSound("firelaunch");//used by wandblaze
-    explosm = registerSound("explosm");//entity blaze fire
-    // goodlaunch = registerSound("goodlaunch");//WAS used by wandice
-    laserbeanpew = registerSound("laserbeanpew");// wandlightning
-    //    powerupscales = registerSound("powerupscales");//ItemWandHypno
     pschew_fire = registerSound("pschew_fire");//waterremoval
     crack = registerSound("crack");//Uncrafter
-
     // new sounds
-    block_scaffolding = registerSound("block_scaffolding");// BlockScaffolding
-    chaos_reaper = registerSound("chaos_reaper");//ItemWandHypno
+    block_scaffolding = registerSound("block_scaffolding");
+    chaos_reaper = registerSound("chaos_reaper");
     fireball_explode = registerSound("fireball_explode");
     fireball_staff_launch = registerSound("fireball_staff_launch");
-    frost_staff_launch = registerSound("frost_staff_launch");//ItemProjectileSnow
+    frost_staff_launch = registerSound("frost_staff_launch");
     lightning_staff_launch = registerSound("lightning_staff_launch");
-    machine_launch = registerSound("machine_launch");
+    machine_launch = registerSound("machine_launch");//////
     monster_ball_capture = registerSound("monster_ball_capture");
     monster_ball_release = registerSound("monster_ball_release");
     spikes_off = registerSound("spikes_off");//spikes
     spikes_on = registerSound("spikes_on");//spikes
-    spirit_seeker = registerSound("spirit_seeker");
-    step_height_down = registerSound("step_height_down");
-    step_height_up = registerSound("step_height_up");
-    tool_mode = registerSound("tool_mode");
-    warp_echo = registerSound("warp_echo");
+    spirit_seeker = registerSound("spirit_seeker");/////
+    step_height_down = registerSound("step_height_down");///
+    step_height_up = registerSound("step_height_up");//
+    tool_mode = registerSound("tool_mode");//
+    warp_echo = registerSound("warp_echo");//
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3

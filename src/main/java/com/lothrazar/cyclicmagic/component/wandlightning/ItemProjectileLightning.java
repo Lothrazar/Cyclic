@@ -55,6 +55,6 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
   }
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.laserbeanpew;
+    return SoundRegistry.lightning_staff_launch;
   }
 }
