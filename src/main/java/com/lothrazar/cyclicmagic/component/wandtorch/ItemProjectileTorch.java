@@ -41,7 +41,8 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   public ItemProjectileTorch() {
     super();
   }
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityTorchBolt(world, x, y, z);
   }
   @Override

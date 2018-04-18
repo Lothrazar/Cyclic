@@ -97,7 +97,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
-            UtilSound.playSoundFromServer(SoundRegistry.crack, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
+            UtilSound.playSoundFromServer(SoundRegistry.uncraft, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
           }
           //          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
         }

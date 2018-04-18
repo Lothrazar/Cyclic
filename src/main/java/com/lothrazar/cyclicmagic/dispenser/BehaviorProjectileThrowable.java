@@ -37,7 +37,7 @@ public class BehaviorProjectileThrowable extends BehaviorProjectileDispense {
   }
   @Override
   protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
-    EntityThrowableDispensable thrown = throwable.getThrownEntity(worldIn, position.getX(), position.getY(), position.getZ());
+    EntityThrowableDispensable thrown = throwable.getThrownEntity(worldIn, stackIn, position.getX(), position.getY(), position.getZ());
     return thrown;
   }
   //  /**

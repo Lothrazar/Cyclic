@@ -43,7 +43,7 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
     this.setMaxStackSize(1);
   }
   @Override
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityFishingBolt(world, x, y, z);
   }
   @Override

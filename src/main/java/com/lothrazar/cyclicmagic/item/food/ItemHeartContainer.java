@@ -77,7 +77,7 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
     //one heart is 2 health points (half heart = 1 health)
     int newVal = UtilEntity.incrementMaxHealth(player, 2 * numHearts);
     prop.setMaxHealth(newVal);
-    UtilSound.playSound(player, SoundRegistry.fill);
+    UtilSound.playSound(player, SoundRegistry.heart_container);
   }
   @Override
   public IRecipe addRecipe() {

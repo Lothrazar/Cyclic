@@ -48,7 +48,8 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
   }
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityShearingBolt(world, x, y, z);
   }
   @Override
@@ -115,10 +116,10 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
         java.util.Random rand = new java.util.Random();
         for (ItemStack stack : drops) {
           float f = 0.7F;
-          double d = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d1 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d2 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.world, (double) pos.getX() + d, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
+          double d = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d1 = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d2 = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.world, pos.getX() + d, pos.getY() + d1, pos.getZ() + d2, stack);
           entityitem.setDefaultPickupDelay();
           player.world.spawnEntity(entityitem);
         }

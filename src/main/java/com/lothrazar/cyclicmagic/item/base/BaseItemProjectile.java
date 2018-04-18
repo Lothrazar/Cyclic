@@ -47,7 +47,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, h);
   }
   public abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
-  public abstract EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z);//, double accelX, double accelY, double accelZ
+  public abstract EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z);//, double accelX, double accelY, double accelZ
   public abstract SoundEvent getSound();
   public void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {

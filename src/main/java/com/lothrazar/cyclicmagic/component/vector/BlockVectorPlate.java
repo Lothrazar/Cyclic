@@ -95,7 +95,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     boolean powerOk = worldIn.isBlockPowered(pos) || (tile.getField(Fields.REDSTONE.ordinal()) == 0);
     if (powerOk && posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       if (tile.playSound()) {
-        UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
+        UtilSound.playSound(worldIn, pos, SoundRegistry.machine_launch, SoundCategory.BLOCKS);
       }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       if (rotationPitch > 0) {
@@ -141,12 +141,15 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     saveTileDataToStack(stack, tile);
     return stack;
   }
+  @Override
   public boolean isOpaqueCube(IBlockState state) {
     return false;
   }
+  @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+  @Override
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }

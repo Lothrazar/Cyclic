@@ -121,7 +121,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));

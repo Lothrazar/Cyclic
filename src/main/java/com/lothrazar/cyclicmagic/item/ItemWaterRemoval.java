@@ -113,7 +113,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
     }
     if (success > 0) {
       UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(hand), success);
-      UtilSound.playSound(playerIn, SoundRegistry.pschew_fire);
+      UtilSound.playSound(playerIn, SoundRegistry.liquid_evaporate);
       playerIn.swingArm(hand);
       //mimic what BlockSponge does : set block with status 2 so dont notify, then later notify them all at once
       //this prevents insta-fillins from neighbours as remvoed
@@ -156,7 +156,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));

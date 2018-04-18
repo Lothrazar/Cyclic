@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.entity.projectile;
+package com.lothrazar.cyclicmagic.component.magicnet;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -66,7 +68,7 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
       spawnEntity.setLocationAndAngles(this.posX, this.posY + 1.1F, this.posZ, this.rotationYaw, 0.0F);
       this.getEntityWorld().spawnEntity(spawnEntity);
       if (spawnEntity instanceof EntityLivingBase) {
-        UtilSound.playSound((EntityLivingBase) spawnEntity, SoundRegistry.byeaa);
+        UtilSound.playSound((EntityLivingBase) spawnEntity, SoundRegistry.monster_ball_release);
         UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), new ItemStack(captured.getItem()));
       }
     }

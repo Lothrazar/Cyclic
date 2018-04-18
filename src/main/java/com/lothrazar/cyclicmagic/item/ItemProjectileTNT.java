@@ -46,7 +46,8 @@ public class ItemProjectileTNT extends BaseItemProjectile {
     this.strength = str;
     this.type = t;
   }
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     switch (type) {
       case NORMAL:
         return new EntityDynamite(world, this.strength, x, y, z);

@@ -116,7 +116,7 @@ public class EnchantLaunch extends EnchantBase {
       float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
       UtilEntity.launch(player, angle, LAUNCH_POWER);
       UtilParticle.spawnParticle(player.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, player.getPosition());
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
       UtilItemStack.damageItem(player, feet);
       uses++;
       if (uses >= level) { // level is maxuses

@@ -53,7 +53,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     this.setMaxStackSize(1);
   }
   @Override
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityDungeonEye(world, x, y, z);
   }
   @Override

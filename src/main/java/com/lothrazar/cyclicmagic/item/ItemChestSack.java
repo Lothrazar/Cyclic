@@ -69,7 +69,7 @@ public class ItemChestSack extends BaseItem {
     ItemStack stack = playerIn.getHeldItem(hand);
     if (placeStoredTileEntity(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, ItemStack.EMPTY);
-      UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
+      UtilSound.playSound(playerIn, pos, SoundRegistry.chest_sack_capture);
       if (playerIn.capabilities.isCreativeMode == false && emptySack != null) {//its never really null tho
         UtilItemStack.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
       }

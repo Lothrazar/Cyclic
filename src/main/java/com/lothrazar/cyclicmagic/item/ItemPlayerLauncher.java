@@ -140,7 +140,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
         vec.y * power / VERTICAL_FACTOR,
         vec.z * power);
     player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
-    UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, 0.1F);
+    UtilSound.playSound(player, player.getPosition(), SoundRegistry.machine_launch, SoundCategory.PLAYERS);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
@@ -159,7 +159,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.3F);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.3F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));

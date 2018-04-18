@@ -75,7 +75,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
       UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.blacklist");
       return EnumActionResult.FAIL;
     }
-    UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
+    UtilSound.playSound(entityPlayer, pos, SoundRegistry.chest_sack_capture);
     if (world.isRemote) {
       ModCyclic.network.sendToServer(new PacketChestSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }

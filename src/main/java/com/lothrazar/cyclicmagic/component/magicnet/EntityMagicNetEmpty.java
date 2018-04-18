@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
+package com.lothrazar.cyclicmagic.component.magicnet;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -64,7 +64,6 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
   }
   private boolean isInBlacklist(Entity thing) {
     ResourceLocation test = UtilEntity.getResourceLocation(thing);
-    ModCyclic.logger.info("cannot capture entity in config blacklist " + test);
     return UtilString.isInList(blacklistIds, test);
   }
   @Override
@@ -82,8 +81,7 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
       captured.setTagCompound(entity);
       mop.entityHit.setDead();
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), captured);
-      UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.pew);
-      //      UtilSound.playSound((EntityLivingBase)mop.entityHit, SoundRegistry.pow);
+      UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.monster_ball_capture);
     }
     else {
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), renderSnowball);

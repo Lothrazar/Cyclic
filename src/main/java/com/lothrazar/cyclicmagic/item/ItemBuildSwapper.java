@@ -125,7 +125,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));

@@ -59,11 +59,15 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
     boolean previousOn = data.isStepHeightOn();
     data.setStepHeightOn(!previousOn);
     if (previousOn) {
+      UtilSound.playSound(player, SoundRegistry.step_height_down);
       data.setForceStepOff(true);
+    }
+    else {
+      UtilSound.playSound(player, SoundRegistry.step_height_up);
     }
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
-    UtilSound.playSound(player, SoundRegistry.bwewe);
+
     if (player.getEntityWorld().isRemote) {
       UtilChat.addChatMessage(player, "unlocks.stepheight." + !previousOn);
     }

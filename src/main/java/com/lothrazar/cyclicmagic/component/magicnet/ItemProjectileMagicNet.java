@@ -21,14 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.component.magicnet;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -54,8 +51,16 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
     super();
   }
   @Override
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-    return new EntityTorchBolt(world, x, y, z);
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
+    if (hasEntity(held)) {
+      ItemStack heldCopy = held.copy();
+      held.getTagCompound().removeTag(NBT_ENTITYID);
+      held.setTagCompound(null);
+      return new EntityMagicNetFull(world, null, heldCopy);
+    }
+    else {
+      return new EntityMagicNetEmpty(world, null);
+    }
   }
   @Override
   public IRecipe addRecipe() {
