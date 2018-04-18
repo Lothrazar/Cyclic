@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandtorch;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
@@ -38,12 +39,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecipe {
+
   public ItemProjectileTorch() {
     super();
   }
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityTorchBolt(world, x, y, z);
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this, 1),
@@ -53,11 +58,13 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
         "treeLeaves",
         "torch");
   }
+
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityTorchBolt(world, player));
     UtilPlayer.decrStackSize(player, hand);
   }
+
   @Override
   public SoundEvent getSound() {
     // TODO Auto-generated method stub

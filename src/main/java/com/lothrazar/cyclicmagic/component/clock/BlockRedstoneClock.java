@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.clock;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -46,32 +47,40 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
+
   private static final int PARTICLE_DENSITY = 2;
   public static final PropertyBool POWERED = net.minecraft.block.BlockLever.POWERED;//PropertyBool.create("powered");
+
   public BlockRedstoneClock() {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_CLOCK);
   }
+
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, POWERED);
   }
+
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(POWERED, false);
   }
+
   @Override
   public boolean canProvidePower(IBlockState state) {
     return true;
   }
+
   @Override
   public int getMetaFromState(IBlockState state) {
     return (state.getValue(POWERED) ? 1 : 0);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityClock();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
@@ -79,6 +88,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.REDSTONE, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, PARTICLE_DENSITY);
     }
   }
+
   private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (world.getTileEntity(pos) instanceof TileEntityClock) {
       TileEntityClock clock = ((TileEntityClock) world.getTileEntity(pos));
@@ -90,14 +100,17 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
     }
     return 0;
   }
+
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
+
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),

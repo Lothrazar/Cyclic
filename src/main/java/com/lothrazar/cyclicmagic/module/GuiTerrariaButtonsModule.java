@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasConfig {
+
   private String position;
   public static boolean restockLeaveOne; //referenced by the PacketRestock
   public static final String posLeft = "topleft";
@@ -55,6 +57,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
   public static final int BTNWIDTH = 20;
   private List<String> blacklistGuis;
   private boolean enableTerrariaButtons;
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiPostInit(InitGuiEvent.Post event) {
@@ -62,6 +65,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
       addButtonsToGui(event);
     }
   }
+
   @SideOnly(Side.CLIENT)
   public void addButtonsToGui(InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
@@ -136,6 +140,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
       event.getButtonList().add(new ButtonTerrariaRestock(button_id++, x, y));
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;

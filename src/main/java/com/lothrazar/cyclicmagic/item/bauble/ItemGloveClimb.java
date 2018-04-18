@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
@@ -34,11 +35,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
+
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;
+
   public ItemGloveClimb() {
     super(6000);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
@@ -50,6 +54,7 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
         'k', "dyeBlack",
         'l', "leather");
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) {

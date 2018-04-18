@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.gear;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.module.EnchantModule;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
@@ -37,9 +38,11 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("incomplete-switch")
 public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
+
   public ItemPowerArmor(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.powerArmorMaterial, 0, armorType);
   }
+
   @Override
   public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
     // bonus easter egg for anyone who does not shift click. not documented
@@ -47,6 +50,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
       stack.addEnchantment(EnchantModule.reach, EnchantModule.reach.getMaxLevel());
     }
   }
+
   private ItemStack addEnchantment(ItemStack stack) {
     switch (this.armorType) {
       case CHEST:
@@ -66,6 +70,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
     }
     return stack;
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (this.armorType) {

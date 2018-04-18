@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.disenchanter;
+
 import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,9 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class DisenchantPylonTESR extends BaseMachineTESR<TileEntityDisenchanter> {
+
   public DisenchantPylonTESR() {
     super();
   }
+
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
     renderItem(te, te.getStackInSlot(1), 0, 0.5F, 1);

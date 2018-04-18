@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UtilTextureRender {
+
   @SideOnly(Side.CLIENT)
   public static void drawTextureSimple(ResourceLocation res, int x, int y, int w, int h) {
     if (res == null) {
@@ -53,6 +55,7 @@ public class UtilTextureRender {
       e.printStackTrace();
     }
   }
+
   @SideOnly(Side.CLIENT)
   public static void drawTextureSquare(ResourceLocation img, int x, int y, int dim) {
     if (img == null) {

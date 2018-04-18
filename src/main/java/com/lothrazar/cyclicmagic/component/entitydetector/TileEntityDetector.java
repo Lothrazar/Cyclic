@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.entitydetector;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -42,16 +43,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle {
+
   private static final int MAX_RANGE = 16;
+
   public static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES;
   }
+
   public static enum EntityType {
     LIVING, ITEM, EXP, PLAYER;
   }
+
   public static enum CompareType {
     LESS, GREATER, EQUAL;
   }
+
   private int rangeX = 5;
   private int rangeY = 5;
   private int rangeZ = 5;
@@ -60,18 +66,22 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;
   private int renderParticles;
+
   public TileEntityDetector() {
     super(0);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     World world = this.getWorld();
@@ -105,6 +115,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       world.notifyNeighborsOfStateChange(this.getPos(), this.blockType, true);//bool is new in 1111
     }
   }
+
   private Class<? extends Entity> getEntityClass() {
     switch (this.entityType) {
       case EXP:
@@ -120,18 +131,22 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     }
     return null;
   }
+
   @Override
   public boolean isPowered() {
     return isPoweredNow;
   }
+
   @Override
   public int getField(int id) {
     return getField(Fields.values()[id]);
   }
+
   @Override
   public void setField(int id, int value) {
     setField(Fields.values()[id], value);
   }
+
   public int getField(Fields f) {
     switch (f) {
       case ENTITYTYPE:
@@ -153,6 +168,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     }
     return 0;
   }
+
   public void setField(Fields f, int value) {
     if (f == Fields.RANGEX || f == Fields.RANGEY || f == Fields.RANGEZ) {
       if (value > MAX_RANGE) {
@@ -202,10 +218,12 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   public EntityType getEntityType() {
     int type = this.getField(Fields.ENTITYTYPE);
     return EntityType.values()[type];
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -220,6 +238,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     if (eType >= 0 && eType < EntityType.values().length)
       this.entityType = EntityType.values()[eType];
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("ox", rangeX);
@@ -230,15 +249,18 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     tagCompound.setInteger("et", entityType.ordinal());
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.rectFrame(this.getPos(), this.rangeX, this.rangeY, this.rangeZ);
   }
+
   @Override
   public void togglePreview() {
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;

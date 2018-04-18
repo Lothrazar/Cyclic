@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -43,21 +44,26 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class InventoryPlayerExtended extends InventoryBase implements IInventory {
+
   private Container eventHandler;
   public WeakReference<EntityPlayer> player;
   //public boolean blockEvents = false;
   public static final int IROW = 4;
   public static final int ICOL = 9;
+
   public InventoryPlayerExtended(EntityPlayer player) {
     super(IROW * ICOL + 20);//+20 somehow magically fixes bottom row
     this.player = new WeakReference<EntityPlayer>(player);
   }
+
   public Container getEventHandler() {
     return eventHandler;
   }
+
   public void setEventHandler(Container eventHandler) {
     this.eventHandler = eventHandler;
   }
+
   @Override
   public ITextComponent getDisplayName() {
     ITextComponent name = super.getDisplayName();
@@ -66,6 +72,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     }
     return name;
   }
+
   /**
    * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
    */
@@ -75,6 +82,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     syncSlotToClients(index);
     return r;
   }
+
   /**
    * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
    */
@@ -83,10 +91,12 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     super.setInventorySlotContents(index, stack);
     syncSlotToClients(index);
   }
+
   @Override
   public int getSizeInventory() {
     return this.inv.size();
   }
+
   @Override
   public ItemStack getStackInSlot(int s) {
     try {
@@ -98,10 +108,12 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     }
     return ItemStack.EMPTY;
   }
+
   @Override
   public int getInventoryStackLimit() {
     return 64;
   }
+
   @Override
   public void markDirty() {
     try {
@@ -109,30 +121,37 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     }
     catch (Exception e) {}
   }
+
   @Override
   public boolean isItemValidForSlot(int i, ItemStack stack) {
     return true;
   }
+
   @Override
   public int getField(int id) {
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {}
+
   @Override
   public int getFieldCount() {
     return 0;
   }
+
   @Override
   public void clear() {
     for (int i = 0; i < inv.size(); i++) {
       this.setInventorySlotContents(i, ItemStack.EMPTY);
     }
   }
+
   public void saveNBT(EntityPlayer player) {
     NBTTagCompound tags = player.getEntityData();
     saveNBT(tags);
   }
+
   public void saveNBT(NBTTagCompound tags) {
     NBTTagList tagList = new NBTTagList();
     NBTTagCompound invSlot;
@@ -146,10 +165,12 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     }
     tags.setTag(Const.MODID + ".Inventory", tagList);
   }
+
   public void readNBT(EntityPlayer player) {
     NBTTagCompound tags = player.getEntityData();
     readNBT(tags);
   }
+
   public void readNBT(NBTTagCompound tags) {
     NBTTagList tagList = tags.getTagList(Const.MODID + ".Inventory", 10);
     for (int i = 0; i < tagList.tagCount(); ++i) {
@@ -161,6 +182,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
       }
     }
   }
+
   public void dropItems(List<EntityItem> drops, BlockPos pos) {
     for (int i = 0; i < this.getSizeInventory(); ++i) {
       if (!this.inv.get(i).isEmpty()) {
@@ -178,6 +200,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
       }
     }
   }
+
   public void syncSlotToClients(int slot) {
     try {
       if (ModCyclic.proxy.getClientWorld() == null) {
@@ -188,6 +211,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
       e.printStackTrace();
     }
   }
+
   @Override
   public boolean isEmpty() {
     return false;

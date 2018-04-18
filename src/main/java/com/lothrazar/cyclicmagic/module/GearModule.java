@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -48,6 +49,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 public class GearModule extends BaseModule implements IHasConfig {
+
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
   // only because theyre private, with no getters
@@ -58,6 +60,7 @@ public class GearModule extends BaseModule implements IHasConfig {
   private boolean enablePurpleGear;
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
+
   @Override
   public void onPreInit() {
     if (enableEmeraldGear) {
@@ -122,6 +125,7 @@ public class GearModule extends BaseModule implements IHasConfig {
       GuideRegistry.register(GuideCategory.GEAR, sandstone_axe, "item.sandstonegear.title", "item.sandstonegear.guide");
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     glowingHelmet = config.getBoolean("GlowingHelmet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

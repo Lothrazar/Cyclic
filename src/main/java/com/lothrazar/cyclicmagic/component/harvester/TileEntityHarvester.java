@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.harvester;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,27 +49,33 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+
   private static final int FUEL_SLOT = 27;
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public final static int TIMER_FULL = 200;
+
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE, FUELDISPLAY;
   }
+
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
+
   public TileEntityHarvester() {
     super(1 + 3 * 9);
     this.setFuelSlot(FUEL_SLOT, BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(IntStream.rangeClosed(0, FUEL_SLOT - 1).boxed().collect(Collectors.toList()));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -77,6 +84,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.renderParticles = tags.getInteger(NBT_RENDER);
     this.normalModeIfZero = tags.getInteger("HM");
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_REDST, this.needsRedstone);
@@ -85,6 +93,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     tags.setInteger("HM", normalModeIfZero);
     return super.writeToNBT(tags);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -108,12 +117,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
+
   private void tryHarvestArea() {
     List<BlockPos> shape = getShapeFilled();
     for (BlockPos posCurrent : shape) {
       this.tryHarvestSingle(posCurrent);
     }
   }
+
   private boolean tryHarvestSingle(BlockPos harvestPos) {
     NonNullList<ItemStack> drops = UtilHarvester.harvestSingle(getWorld(), harvestPos);
     if (drops.size() > 0) {
@@ -128,6 +139,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       return false;
     }
   }
+
   private void setOutputItems(List<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory() - 1);
     if (!toDrop.isEmpty()) {
@@ -136,21 +148,26 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
+
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
+
   private BlockPos getTargetPos() {
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(getFieldCount());
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -173,6 +190,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -201,12 +219,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       break;
     }
   }
+
   public void toggleSizeShape() {
     this.size++;
     if (this.size > MAX_SIZE) {
       this.size = 0;
     }
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -215,21 +235,26 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
+
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
   }
+
   private List<BlockPos> getShapeFilled() {
     return UtilShape.squareHorizontalFull(getTargetCenter(), this.size);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;

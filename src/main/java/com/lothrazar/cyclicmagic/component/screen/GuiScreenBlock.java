@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.screen;
+
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -40,14 +41,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiScreenBlock extends GuiBaseContainer {
+
   private GuiTextFieldMulti txtInput;
   TileEntityScreen screen;
   private ButtonTileEntityField btnToggle;
+
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
     screen = tileEntity;
     screenSize = ScreenSize.STANDARDPLAIN;
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -91,6 +95,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     btnToggle.width = 20;
     this.addButton(btnToggle);
   }
+
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
@@ -99,6 +104,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -109,6 +115,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     }
     btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
   }
+
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
   @Override
@@ -118,6 +125,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
       txtInput.updateCursorCounter();
     }
   }
+
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
@@ -129,6 +137,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTileTextbox(txtInput.getText(), tile.getPos()));
     }
   }
+
   @Override
   protected void mouseClicked(int x, int y, int btn) throws IOException {
     super.mouseClicked(x, y, btn);// x/y pos is 33/30

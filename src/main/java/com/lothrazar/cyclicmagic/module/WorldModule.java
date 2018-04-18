@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
@@ -48,6 +49,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class WorldModule extends BaseEventModule implements IHasConfig {
+
   final static int weightOre = 0;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
@@ -56,11 +58,14 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
+
   public WorldModule() {
     BlockOreRegistry.register();
   }
+
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
   public static boolean enableModCompatOres;
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
@@ -105,6 +110,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     }
     ConfigRegistry.oreConfig.save();
   }
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -129,6 +135,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   @Override
   public void onInit() {
     //syncConfig comes AFTER pre init then init. which is why the configs require a restart 
@@ -147,6 +154,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weightOre);
     }
   }
+
   /**
    * TODO: move this to BlockDimensionOre
    * 

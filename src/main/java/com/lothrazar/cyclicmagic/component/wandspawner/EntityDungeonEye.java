@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandspawner;
+
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
@@ -35,33 +36,41 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityDungeonEye extends EntityThrowableDispensable {
+
   public static class FactoryDungeon implements IRenderFactory<EntityDungeonEye> {
+
     @Override
     public Render<? super EntityDungeonEye> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityDungeonEye>(rm, "dungeon");
     }
   }
+
   private static final double DISTLIMIT = 0.8;
   private static final double VERT = 0.014999999664723873D;
   private static final double HORIZ = 0.0025D;
   private double targetX;
   private double targetY;
   private double targetZ;
+
   public EntityDungeonEye(World worldIn) {
     super(worldIn);
   }
+
   public EntityDungeonEye(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityDungeonEye(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   public void moveTowards(BlockPos pos) {
     this.targetX = (double) pos.getX();
     this.targetY = pos.getY();
     this.targetZ = (double) pos.getZ();
     this.setThrowableHeading(this.targetX, this.targetY, this.targetZ, (float) (this.getGravityVelocity()), 0.01F);
   }
+
   @Override
   public void onUpdate() {
     if (!this.world.isRemote) {
@@ -145,6 +154,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * (double) f3 - 0.5D, this.posZ - this.motionZ * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
     }
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     this.setDead();// does not pass through walls or entities

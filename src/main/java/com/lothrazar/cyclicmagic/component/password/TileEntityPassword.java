@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.password;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -37,20 +38,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable {
+
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";
   private static final String NBT_PASSWORD = "myPass";
   private static final String NBT_UHASH = "uhash";
   private static final String NBT_UNAME = "uname";
+
   public static enum ActiveType {
     TOGGLE, PULSE;
   }
+
   public static enum UsersAllowed {
     ALL, ME;//todo: team? idk if possible
   }
+
   public static enum Fields {
     ACTIVETYPE, USERSALLOWED;
   }
+
   public static List<TileEntityPassword> listeningBlocks = new ArrayList<TileEntityPassword>();
   private ActiveType type;
   private UsersAllowed userPerm;
@@ -58,6 +64,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   private String userHash = "";
   public String userName = "";
   private int powerTimeout = 0;
+
   public TileEntityPassword() {
     super(0);
     setType(ActiveType.TOGGLE);
@@ -68,10 +75,12 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
       listeningBlocks.add(this);
     }
   }
+
   @Override
   public void onChunkUnload() {
     this.invalidate();
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setString(NBT_PASSWORD, getMyPassword());
@@ -81,6 +90,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     tags.setInteger(NBT_ATYPE, getType().ordinal());
     return super.writeToNBT(tags);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     myPassword = tags.getString(NBT_PASSWORD);
@@ -90,16 +100,20 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     setUserPerm(UsersAllowed.values()[tags.getInteger(NBT_USERP)]);
     super.readFromNBT(tags);
   }
+
   public String getMyPassword() {
     return myPassword;
   }
+
   public void setMyPassword(String myPassword) {
     this.myPassword = myPassword;
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -111,6 +125,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -121,18 +136,23 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     }
     return -1;
   }
+
   public ActiveType getType() {
     return type;
   }
+
   public void setType(ActiveType type) {
     this.type = type;
   }
+
   public UsersAllowed getUserPerm() {
     return userPerm;
   }
+
   public void setUserPerm(UsersAllowed userPerm) {
     this.userPerm = userPerm;
   }
+
   public void toggleActiveType() {
     int t = getType().ordinal();
     t++;
@@ -141,6 +161,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     }
     setType(ActiveType.values()[t]);
   }
+
   public void toggleUserType() {
     int t = getUserPerm().ordinal();
     t++;
@@ -149,6 +170,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     }
     setUserPerm(UsersAllowed.values()[t]);
   }
+
   public void onCorrectPassword(World world) {
     Block me = this.getBlockType();
     IBlockState blockState = world.getBlockState(this.getPos());
@@ -165,6 +187,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   @Override
   public void update() {
     if (this.powerTimeout > 0) {
@@ -175,15 +198,19 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+
   public boolean isClaimedBy(EntityPlayer p) {
     return p.getUniqueID().toString().equals(this.userHash);
   }
+
   public boolean isClaimedBySomeone() {
     return this.userHash != null && !this.userHash.isEmpty();
   }
+
   public String getClaimedHash() {
     return userHash;
   }
+
   public void toggleClaimedHash(EntityPlayerMP player) {
     if (isClaimedBySomeone()) {
       this.userHash = "";

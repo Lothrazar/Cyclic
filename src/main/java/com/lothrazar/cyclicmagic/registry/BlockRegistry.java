@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +40,15 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockRegistry {
+
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static Map<Block, GuideCategory> map = new HashMap<Block, GuideCategory>();
   public static BlockBucketStorage block_storeempty;
+
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);
   }
+
   public static void registerBlock(@Nonnull Block b, @Nonnull ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
     b.setCreativeTab(ModCyclic.TAB);
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
@@ -66,6 +70,7 @@ public class BlockRegistry {
       }
     }
   }
+
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));

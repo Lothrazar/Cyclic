@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
@@ -46,20 +47,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickToggle {
+
   private static final int cooldown = 600;//ticks not seconds
   private static final int durability = 16;
+
   public static enum WarpType {
     BED, SPAWN
   }
+
   private WarpType warpType;
+
   public ItemEnderWing(WarpType type) {
     super(durability);
     warpType = type;
   }
+
   @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     tryActivate(player, held);
   }
+
   private boolean tryActivate(EntityPlayer player, ItemStack held) {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return false;
@@ -101,6 +108,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     return success;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -110,6 +118,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -124,6 +133,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       break;
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (warpType) {
@@ -150,6 +160,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
         return null;
     }
   }
+
   @Override
   public boolean isOn(ItemStack held) {
     return true;

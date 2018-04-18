@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.generator;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -36,16 +37,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class BlockPeatGenerator extends BlockBaseHasTile implements IHasRecipe {
+
   private Item peat_fuel;
+
   public BlockPeatGenerator(Item peat_fuel) {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PEATGEN);
     this.peat_fuel = peat_fuel;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPeatGenerator();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

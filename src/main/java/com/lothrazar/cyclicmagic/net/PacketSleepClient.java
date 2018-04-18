@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import io.netty.buffer.ByteBuf;
@@ -35,11 +36,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepClient, IMessage> {
+
   private BlockPos pos;
+
   public PacketSleepClient() {}
+
   public PacketSleepClient(BlockPos p) {
     pos = p;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -48,6 +53,7 @@ public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepC
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -56,6 +62,7 @@ public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepC
     tags.setInteger("z", pos.getZ());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketSleepClient message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT && message.pos != null) {

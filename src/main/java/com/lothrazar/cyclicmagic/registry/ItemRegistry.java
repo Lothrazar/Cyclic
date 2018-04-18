@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -53,7 +54,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemRegistry {
+
   public static List<Item> itemList = new ArrayList<Item>();
+
   public static void register(Item item, String key, GuideCategory cat) {
     item.setUnlocalizedName(key);
     item.setRegistryName(new ResourceLocation(Const.MODID, key));
@@ -70,9 +73,11 @@ public class ItemRegistry {
       GuideRegistry.register(cat, item, recipe, null);
     }
   }
+
   public static void register(Item item, String key) {
     register(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
   }
+
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
@@ -100,10 +105,12 @@ public class ItemRegistry {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
     final IStateMapper STATE_MAPPER = new StateMapperBase() {
+
       @Override
       protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
         return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");

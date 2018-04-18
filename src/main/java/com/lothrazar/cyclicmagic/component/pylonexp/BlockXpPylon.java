@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pylonexp;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -59,6 +60,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockXpPylon() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_XP);
@@ -66,20 +68,24 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     this.setSoundType(SoundType.GLASS);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityXpPylon();
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXpPylon.class, new XpPylonTESR(0, 1));
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -93,6 +99,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
         'r', Items.FIRE_CHARGE,
         's', "ingotBrickNether");
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
@@ -107,6 +114,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   //for fluid and itemblock storage
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -128,6 +136,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     ret.add(stack);
     return ret;
   }
+
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -136,11 +145,13 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
+
   @Override
   public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
     super.harvestBlock(world, player, pos, state, te, tool);
     world.setBlockToAir(pos);
   }
+
   //end of fixing getdrops
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {

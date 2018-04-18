@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,10 +32,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
 public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
+
   private static final int durability = 32;
+
   public ItemCharmAntidote() {
     super(durability);
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
@@ -49,6 +53,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
       super.damageCharm(living, stack);
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.FERMENTED_SPIDER_EYE);

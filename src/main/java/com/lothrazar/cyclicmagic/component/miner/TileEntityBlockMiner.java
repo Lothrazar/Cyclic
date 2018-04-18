@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.miner;
+
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -85,9 +86,11 @@ import net.minecraftforge.common.util.FakePlayer;
  * 
  */
 public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   public TileEntityBlockMiner() {
     super(0);
   }
+
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -98,13 +101,16 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
   private float curBlockDamage;
   private int needsRedstone = 1;
   private BlockPos targetPos = null;
+
   public static enum Fields {
     REDSTONE
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (isRunning()) {
@@ -161,6 +167,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       }
     }
   }
+
   private void verifyUuid(World world) {
     if (uuid == null) {
       uuid = UUID.randomUUID();
@@ -168,6 +175,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
+
   private void tryEquipItem() {
     //only equip if empty handed, dont spam
     if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
@@ -178,10 +186,12 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       fakePlayer.get().setItemStackToSlot(EntityEquipmentSlot.MAINHAND, unbreakingPickaxe);
     }
   }
+
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -195,6 +205,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -211,27 +222,32 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
   }
+
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
       resetProgress(pos);
     }
   }
+
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
   }
+
   //  @Override
   //  public EnumFacing getCurrentFacing() {
   //    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
   //  }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {}
+
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};
   }
+
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount())
@@ -241,6 +257,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount())
@@ -250,10 +267,12 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
       break;
       }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -262,6 +281,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

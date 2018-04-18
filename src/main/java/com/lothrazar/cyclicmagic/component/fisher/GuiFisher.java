@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fisher;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -32,15 +33,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFisher extends GuiBaseContainer {
+
   public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_fish.png");
   private TileEntityFishing tile;
+
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
+
   public String getTitle() {
     return "tile.block_fishing.name";
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -69,6 +74,7 @@ public class GuiFisher extends GuiBaseContainer {
       this.fontRenderer.drawString("(" + displaySp + " Hz)", x, y, 4210752);
     }
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

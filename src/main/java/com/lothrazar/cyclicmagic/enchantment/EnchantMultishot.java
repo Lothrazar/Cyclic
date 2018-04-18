@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -41,18 +42,22 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantMultishot extends EnchantBase {
+
   public EnchantMultishot() {
     super("multishot", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
+
   @Override
   public boolean canApply(ItemStack stack) {
     return stack.getItem() instanceof ItemBow || stack.getItem() == Items.BOOK;
   }
+
   @Override
   public int getMaxLevel() {
     return 1;
   }
+
   @SubscribeEvent
   public void onPlayerUpdate(ArrowLooseEvent event) {
     ItemStack stackBow = event.getBow();
@@ -72,6 +77,7 @@ public class EnchantMultishot extends EnchantBase {
       spawnArrow(worldIn, player, stackBow, charge, right.normalize());
     }
   }
+
   public void spawnArrow(World worldIn, EntityPlayer player, ItemStack stackBow, float charge, Vec3d offsetVector) {
     //TODO: custom ammo one day? The event does not send ammo only the bow
     ItemArrow itemarrow = (ItemArrow) (Items.ARROW);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.component.playerext.EventExtendedInventory;
 import com.lothrazar.cyclicmagic.component.playerext.EventGuiInvoButtons;
@@ -34,7 +35,9 @@ import com.lothrazar.cyclicmagic.potion.EventPotionTick;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EventRegistry {
+
   private ArrayList<Object> events = new ArrayList<Object>();
+
   public void registerCoreEvents() {
     this.register(new EventConfigChanged());
     this.register(new EventExtendedInventory());
@@ -45,9 +48,11 @@ public class EventRegistry {
     this.register(new EventRender());
     this.register(new EventHorseFeed());
   }
+
   public void register(Object e) {
     events.add(e);
   }
+
   public void registerAll() {
     for (Object e : events) {
       MinecraftForge.EVENT_BUS.register(e);

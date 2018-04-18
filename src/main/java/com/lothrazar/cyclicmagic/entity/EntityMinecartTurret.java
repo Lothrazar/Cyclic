@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import net.minecraft.block.BlockObserver;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
@@ -40,42 +41,51 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityMinecartTurret extends EntityGoldMinecart {
+
   private static final float YAW = 0.1F;
   private static final float VELOCITY = 1.1F;
   private static final float INACCRACY = 2.0F;
   private static final int TIME_BTW_DROPS = 40;
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   private int timeSinceDropped = 0;
+
   public EntityMinecartTurret(World worldIn) {
     super(worldIn);
     this.setDisplayTile(getDefaultDisplayTile());
   }
+
   public EntityMinecartTurret(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
     this.setDisplayTile(getDefaultDisplayTile());
   }
+
   public int getSizeInventory() {
     return 0;
   }
+
   public IBlockState getDefaultDisplayTile() {
     return Blocks.OBSERVER.getDefaultState();//.withProperty(BlockChest.FACING, EnumFacing.NORTH);
   }
+
   @Override
   protected void writeEntityToNBT(NBTTagCompound compound) {
     compound.setInteger("tdr", timeSinceDropped);
     super.writeEntityToNBT(compound);
   }
+
   @Override
   protected void readEntityFromNBT(NBTTagCompound compound) {
     timeSinceDropped = compound.getInteger("tdr");
     super.readEntityFromNBT(compound);
   }
+
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
     if (receivingPower) {
       this.dispense(new BlockPos(x, y, z));
     }
   }
+
   /**
    * pulled from BlockDispenser
    * 
@@ -92,6 +102,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     shootThisDirection(enumfacing);
     shootThisDirection(enumfacing.getOpposite());
   }
+
   public void shootThisDirection(EnumFacing enumfacing) {
     BlockPos position = this.getPosition().up().offset(enumfacing, 2);
     EntityTippedArrow entitytippedarrow = new EntityTippedArrow(world, position.getX(), position.getY(), position.getZ());
@@ -100,6 +111,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     entitytippedarrow.setThrowableHeading((double) enumfacing.getFrontOffsetX(), YAW, (double) enumfacing.getFrontOffsetZ(), VELOCITY, INACCRACY);
     world.spawnEntity(entitytippedarrow);
   }
+
   @Override
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     BlockRailBase blockrailbase = (BlockRailBase) state.getBlock();
@@ -136,6 +148,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
       this.setDisplayTile(getDefaultDisplayTile().withProperty(BlockObserver.FACING, fac));
     }
   }
+
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();
@@ -147,6 +160,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);

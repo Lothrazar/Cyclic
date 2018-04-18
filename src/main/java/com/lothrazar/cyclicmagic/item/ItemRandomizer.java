@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -50,21 +51,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemRandomizer extends BaseTool implements IHasRecipe {
+
   private static final int durability = 5000;
   private static final int cooldown = 15;
+
   public ItemRandomizer() {
     super(durability);
   }
+
   public enum ActionType {
     X3, X5, X7, X9;
+
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
+
     public static int getTimeout(ItemStack wand) {
       return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
     }
+
     public static void setTimeout(ItemStack wand) {
       UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
     }
+
     public static void tickTimeout(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int t = tags.getInteger(NBTTIMEOUT);
@@ -72,6 +80,7 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
         UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, t - 1);
       }
     }
+
     public static int get(ItemStack wand) {
       if (wand == null) {
         return 0;
@@ -79,6 +88,7 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
+
     public static String getName(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -88,6 +98,7 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
         return "tool.action." + X3.toString().toLowerCase();
       }
     }
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
@@ -99,6 +110,7 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
       wand.setTagCompound(tags);
     }
   }
+
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -110,13 +122,14 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -132,17 +145,20 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
     this.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
     super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -37,16 +38,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
+
   float itemRenderHeight = 0.99F;
   float red = 0.7F;
   float green = 0F;
   float blue = 1F;
+
   public MachineTESR(Block block, int slot) {
     super(block, slot);
   }
+
   public MachineTESR(Block block) {
     this(block, -1);
   }
+
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p) {
     super.render(te, x, y, z, partialTicks, destroyStage, p);
@@ -57,6 +62,7 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
       }
     }
   }
+
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
     if (te == null) {

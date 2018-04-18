@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
@@ -42,11 +43,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
+
   private static final int durability = 100;
   private static final int cooldown = 30;
+
   public ItemEnderEyeReuse() {
     super(durability);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
@@ -68,6 +72,7 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -77,6 +82,7 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
         'e', new ItemStack(Items.ENDER_EYE),
         's', "blockIron");
   }
+
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;

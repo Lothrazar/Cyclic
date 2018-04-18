@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -32,14 +33,18 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class UtilInventoryTransfer {
+
   public static class BagDepositReturn {
+
     public BagDepositReturn(int m, NonNullList<ItemStack> s) {
       moved = m;
       stacks = s;
     }
+
     public int moved;
     public NonNullList<ItemStack> stacks;
   }
+
   //TODO: this whole class is a big mess, lots of code repetition; needs work.
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
     ItemStack chestEmptySlot;
@@ -68,6 +73,7 @@ public class UtilInventoryTransfer {
     } // close loop on chest items
     UtilPlayer.updatePlayerContainerClient(player);
   }
+
   public static void dumpFromIInventoryToPlayer(World world, IInventory inventory, EntityPlayer player) {
     ItemStack playerEmptySlot;
     ItemStack chestItem;
@@ -91,6 +97,7 @@ public class UtilInventoryTransfer {
     } // close loop on chest items
     UtilPlayer.updatePlayerContainerClient(player);
   }
+
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
@@ -144,6 +151,7 @@ public class UtilInventoryTransfer {
     } // close loop on chest items
     UtilPlayer.updatePlayerContainerClient(player);
   }
+
   public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player, boolean restockLeaveOne) {
     ItemStack chestItem;
     ItemStack playerItem;
@@ -196,9 +204,11 @@ public class UtilInventoryTransfer {
     } // close loop on chest items
     UtilPlayer.updatePlayerContainerClient(player);
   }
+
   private static int getInvoEnd(EntityPlayer p) {
     return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
+
   public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot, int maxSlot) {
     //and return the remainder after dumping
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
@@ -232,9 +242,11 @@ public class UtilInventoryTransfer {
     }
     return remaining;
   }
+
   public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot) {
     return dumpToIInventory(stacks, inventory, startingSlot, inventory.getSizeInventory());
   }
+
   public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
     ItemStack bagItem;

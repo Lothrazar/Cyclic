@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cyclicwand;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
@@ -39,17 +40,21 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSpellFromServer, IMessage> {
+
   private BlockPos pos;
   private BlockPos posOffset;
   private @Nullable EnumFacing face;
   private int spellID;
+
   public PacketSpellFromServer() {}
+
   public PacketSpellFromServer(BlockPos mouseover, BlockPos offset, @Nullable EnumFacing sideMouseover, int spellid) {
     pos = mouseover;
     posOffset = offset;
     spellID = spellid;
     face = sideMouseover;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -65,6 +70,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
     if (tags.hasKey("face"))
       face = EnumFacing.values()[tags.getInteger("face")];
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -79,14 +85,17 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
       tags.setInteger("face", face.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
     checkThreadAndEnqueue(message, ctx);
     return null;
   }
+
   private void checkThreadAndEnqueue(final PacketSpellFromServer message, final MessageContext ctx) {
     IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     thread.addScheduledTask(new Runnable() {
+
       public void run() {
         if (ctx.side.isServer() && message != null && message.pos != null) {
           EntityPlayer p = ctx.getServerHandler().player;

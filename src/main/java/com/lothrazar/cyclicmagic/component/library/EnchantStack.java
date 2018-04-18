@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
@@ -39,27 +40,34 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class EnchantStack {
+
   private static final String NBT_LEVEL = "level";
   private static final String NBT_COUNT = "eCount";
   private static final String NBT_ENCH = "ench";
   private int count = 0;
   private int level = 0;
   private Enchantment ench = null;
+
   public EnchantStack() {}
+
   public EnchantStack(Enchantment e, int lvl) {
     ench = e;
     level = lvl;
     count = 1;
   }
+
   public Enchantment getEnch() {
     return ench;
   }
+
   public Integer getLevel() {
     return level;
   }
+
   public int getCount() {
     return count;
   }
+
   public void readFromNBT(NBTTagCompound tags, String key) {
     NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
     this.count = t.getInteger(NBT_COUNT);
@@ -68,6 +76,7 @@ public class EnchantStack {
     if (enchString.isEmpty() == false)
       this.ench = Enchantment.getEnchantmentByLocation(enchString);
   }
+
   public NBTTagCompound writeToNBT() {
     NBTTagCompound t = new NBTTagCompound();
     t.setInteger(NBT_COUNT, count);
@@ -80,9 +89,11 @@ public class EnchantStack {
     }
     return t;
   }
+
   public boolean isEmpty() {
     return ench == null || getCount() == 0;
   }
+
   public boolean doesMatchNonEmpty(ItemStack stack) {
     if (this.isEmpty()) {
       return false;
@@ -97,12 +108,15 @@ public class EnchantStack {
     }
     return false;
   }
+
   public boolean doesMatch(Enchantment e, int lvl) {
     return ench.equals(e) && level == lvl;
   }
+
   public void add() {
     count++;
   }
+
   public void remove() {
     count--;
     if (count <= 0) {
@@ -110,9 +124,11 @@ public class EnchantStack {
       level = 0;
     }
   }
+
   public boolean equals(EnchantStack e) {
     return this.doesMatch(e.ench, e.getLevel()) && this.getCount() == e.getCount();
   }
+
   @Override
   public String toString() {
     if (this.isEmpty()) {
@@ -120,23 +136,28 @@ public class EnchantStack {
     }
     return countName() + " " + UtilChat.lang(ench.getName()) + " " + levelName();
   }
+
   public String countName() {
     return "[" + count + "]";
   }
+
   public String levelName() {
     return EnchantRegistry.getStrForLevel(level);
   }
+
   public String shortName() {
     if (this.isEmpty()) {
       return "--";
     }
     return UtilChat.lang(ench.getName()).substring(0, 5);
   }
+
   public ItemStack getRenderIcon() {
     return makeEnchantedBook();
     //TODO: this was going to be some crazy config system 
     //TODO: not now. for the future 
   }
+
   public ItemStack makeEnchantedBook() {
     if (this.isEmpty()) {
       return ItemStack.EMPTY;

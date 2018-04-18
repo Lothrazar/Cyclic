@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.itemsort;
+
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -36,14 +37,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemSort extends GuiBaseContainer {
+
   private Map<EnumFacing, ButtonTileEntityField> btnMapLock = Maps.newHashMap();
   private Map<EnumFacing, ButtonTileEntityField> btnMapDamageIgnore = Maps.newHashMap();
   TileEntityItemCableSort te;
+
   public GuiItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort tileEntity) {
     super(new ContainerItemSort(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
     te = tileEntity;
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawDefaultBackground();//dim the background as normal
@@ -56,6 +60,7 @@ public class GuiItemSort extends GuiBaseContainer {
         screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -75,6 +80,7 @@ public class GuiItemSort extends GuiBaseContainer {
       }
     }
   }
+
   @Override
   public void initGui() {
     super.initGui();

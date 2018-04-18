@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -36,6 +37,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemAppleLapis extends BaseItem implements IHasRecipe {
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this),
@@ -43,6 +45,7 @@ public class ItemAppleLapis extends BaseItem implements IHasRecipe {
         "blockLapis");
     return null;
   }
+
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     if (event.getEntity() instanceof EntityPlayer == false) {

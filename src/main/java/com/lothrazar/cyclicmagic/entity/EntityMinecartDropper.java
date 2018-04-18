@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
@@ -40,47 +41,58 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityMinecartDropper extends EntityMinecartChest {
+
   private static final int TIME_BTW_DROPS = 20;
   private int timeSinceDropped = 0;
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   BehaviorMinecartDropItem drop = new BehaviorMinecartDropItem();
+
   public EntityMinecartDropper(World worldIn) {
     super(worldIn);
   }
+
   public EntityMinecartDropper(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   public int getSizeInventory() {
     return 9;
   }
+
   public IBlockState getDefaultDisplayTile() {
     return Blocks.DROPPER.getDefaultState();//.withProperty(BlockChest.FACING, EnumFacing.NORTH);
   }
+
   public String getGuiID() {
     //minecraft:dropper
     return "minecraft:dropper";
   }
+
   @Override
   public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
     this.addLoot(playerIn);
     return new ContainerDispenser(playerInventory, this);
   }
+
   @Override
   protected void writeEntityToNBT(NBTTagCompound compound) {
     compound.setInteger("tdr", timeSinceDropped);
     super.writeEntityToNBT(compound);
   }
+
   @Override
   protected void readEntityFromNBT(NBTTagCompound compound) {
     timeSinceDropped = compound.getInteger("tdr");
     super.readEntityFromNBT(compound);
   }
+
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
     if (receivingPower) {
       this.dispense(this.world, new BlockPos(x, y, z));
     }
   }
+
   protected void dispense(World worldIn, BlockPos pos) {
     if (this.timeSinceDropped > 0) {
       this.timeSinceDropped--;
@@ -97,6 +109,7 @@ public class EntityMinecartDropper extends EntityMinecartChest {
       this.setInventorySlotContents(i, this.drop.dispense(source, itemstack));
     }
   }
+
   @Override
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     BlockRailBase blockrailbase = (BlockRailBase) state.getBlock();
@@ -105,6 +118,7 @@ public class EntityMinecartDropper extends EntityMinecartChest {
     }
     super.moveAlongTrack(pos, state);
   }
+
   /**
    * from TileEntityDispenser
    * 
@@ -120,6 +134,7 @@ public class EntityMinecartDropper extends EntityMinecartChest {
     }
     return i;
   }
+
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();
@@ -131,6 +146,7 @@ public class EntityMinecartDropper extends EntityMinecartChest {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);

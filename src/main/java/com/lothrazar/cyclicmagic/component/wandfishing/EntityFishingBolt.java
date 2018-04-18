@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandfishing;
+
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -42,26 +43,33 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityFishingBolt extends EntityThrowableDispensable {
+
   public static class FactoryFish implements IRenderFactory<EntityFishingBolt> {
+
     @Override
     public Render<? super EntityFishingBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityFishingBolt>(rm, "fishing");
     }
   }
+
   public EntityFishingBolt(World worldIn) {
     super(worldIn);
   }
+
   public EntityFishingBolt(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityFishingBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   static final double plainChance = 60;
   static final double salmonChance = 25 + plainChance; // so it is between 60
   // and 85
   static final double clownfishChance = 2 + salmonChance; // so between 85 and
   // 87
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
@@ -85,6 +93,7 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
     //      }
     //    }
   }
+
   private ItemStack getRandomFish() {
     ItemStack fishSpawned = null;
     // below is from MY BlockFishing.java in the unreleased ./FarmingBlocks/

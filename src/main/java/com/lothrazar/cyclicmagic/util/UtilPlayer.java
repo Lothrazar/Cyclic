@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
 public class UtilPlayer {
+
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (wand.isEmpty()) {
@@ -41,6 +43,7 @@ public class UtilPlayer {
     }
     return wand;
   }
+
   public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
     ItemStack stack = player.inventory.getStackInSlot(slot);
     if (!stack.isEmpty() &&
@@ -51,6 +54,7 @@ public class UtilPlayer {
     }
     return null;
   }
+
   public static int getFirstSlotWithBlock(EntityPlayer player) {
     int ret = -1;
     ItemStack stack;
@@ -64,7 +68,9 @@ public class UtilPlayer {
     }
     return ret;
   }
+
   final static int width = 9;
+
   public static void shiftSlotDown(EntityPlayer player, int currentItem) {
     int topNumber = currentItem + width;
     int midNumber = topNumber + width;
@@ -85,6 +91,7 @@ public class UtilPlayer {
     player.inventory.setInventorySlotContents(lowNumber, ItemStack.EMPTY);
     player.inventory.setInventorySlotContents(lowNumber, bar);
   }
+
   public static void shiftSlotUp(EntityPlayer player, int currentItem) {
     // so we move each up by nine
     int topNumber = currentItem + width;
@@ -106,6 +113,7 @@ public class UtilPlayer {
     player.inventory.setInventorySlotContents(topNumber, ItemStack.EMPTY);
     player.inventory.setInventorySlotContents(topNumber, bar);
   }
+
   public static void shiftBarDown(EntityPlayer player) {
     shiftSlotDown(player, 0);
     shiftSlotDown(player, 1);
@@ -117,6 +125,7 @@ public class UtilPlayer {
     shiftSlotDown(player, 7);
     shiftSlotDown(player, 8);
   }
+
   public static void shiftBarUp(EntityPlayer player) {
     shiftSlotUp(player, 0);
     shiftSlotUp(player, 1);
@@ -128,27 +137,32 @@ public class UtilPlayer {
     shiftSlotUp(player, 7);
     shiftSlotUp(player, 8);
   }
+
   public static IInventory getOpenContainerInventory(EntityPlayer p) {
     // a workaround since player does not reference the inventory, only the
     // container
     // and Container has no get method
     return p.openContainer.getSlot(0).inventory;
   }
+
   public static void decrStackSize(EntityPlayer entityPlayer, int currentItem) {
     if (entityPlayer.capabilities.isCreativeMode == false) {
       entityPlayer.inventory.decrStackSize(currentItem, 1);
     }
   }
+
   public static void decrStackSize(EntityPlayer entityPlayer, EnumHand hand) {
     if (entityPlayer.capabilities.isCreativeMode == false) {
       entityPlayer.getHeldItem(hand).shrink(1);
     }
   }
+
   public static boolean hasValidOpenContainer(EntityPlayer p) {
     return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
         p.openContainer.getSlot(0) != null &&
         p.openContainer.getSlot(0).inventory != null;
   }
+
   /**
    * call this from SERVER SIDE if you are doing stuff to containers/invos/tile entities but your client GUI's are not updating
    * 
@@ -164,6 +178,7 @@ public class UtilPlayer {
       p.openContainer.detectAndSendChanges();
     }
   }
+
   public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
     ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];

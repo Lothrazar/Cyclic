@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.magnet;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -48,7 +49,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
+
   protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
+
   public BlockMagnet() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -56,30 +59,37 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
     this.setTickRandomly(true);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityMagnet();
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BOUNDS;
   }
+
   @Nullable
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
     return NULL_AABB;
   }
+
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
+
   /**
    * Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
    */
   public boolean canSpawnInBlock() {
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
@@ -90,6 +100,7 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
         'b', new ItemStack(Items.COAL),
         'x', "dyePurple");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     //old default was 140
@@ -97,12 +108,14 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
     TileEntityMagnet.ITEM_HRADIUS = config.getInt("MagnetBlockDistance", Const.ConfigCategory.modpackMisc, 16, 2, 128, "Distance it pulls items from.");
     TileEntityMagnet.ITEM_VRADIUS = config.getInt("MagnetBlockHeight", Const.ConfigCategory.modpackMisc, 2, 1, 128, "Height it pulls at items");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     String s = UtilChat.lang("tile.magnet_block.tooltip").replace("$t$", TileEntityMagnet.TIMER_FULL + "");
     tooltip.add(s);
   }
+
   /**
    * adding this stops fences from connecting
    */

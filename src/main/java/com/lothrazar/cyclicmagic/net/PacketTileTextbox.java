@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.ITileTextbox;
 import io.netty.buffer.ByteBuf;
@@ -37,13 +38,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTextbox, IMessage> {
+
   private BlockPos pos;
   private String text;
+
   public PacketTileTextbox() {}
+
   public PacketTileTextbox(String pword, BlockPos p) {
     pos = p;
     text = pword;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -53,6 +58,7 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
     pos = new BlockPos(x, y, z);
     text = tags.getString("txt");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -62,16 +68,19 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
     tags.setString("txt", text);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileTextbox message, MessageContext ctx) {
     PacketTileTextbox.checkThreadAndEnqueue(message, ctx);
     return null;
   }
+
   private static void checkThreadAndEnqueue(final PacketTileTextbox message, final MessageContext ctx) {
     //copied in from my PacketSyncPlayerData
     IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
+
       public void run() {
         EntityPlayerMP player = ctx.getServerHandler().player;
         World world = player.getEntityWorld();

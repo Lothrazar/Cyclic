@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandblaze;
+
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
@@ -44,18 +45,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFireSafe extends BlockFire {
+
   private static final int FIRESECONDS = 10;
+
   public BlockFireSafe() {
     super();
     this.setHardness(0.0F).setLightLevel(1.0F);
     this.enableStats = false;
     this.blockSoundType = SoundType.CLOTH;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
+
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     if (worldIn.getGameRules().getBoolean("doFireTick")) {
@@ -131,6 +136,7 @@ public class BlockFireSafe extends BlockFire {
       }
     }
   }
+
   private boolean canNeighborCatchFire(World worldIn, BlockPos pos) {
     for (EnumFacing enumfacing : EnumFacing.values()) {
       if (this.canCatchFire(worldIn, pos.offset(enumfacing), enumfacing.getOpposite())) {
@@ -139,6 +145,7 @@ public class BlockFireSafe extends BlockFire {
     }
     return false;
   }
+
   private int getNeighborEncouragement(World worldIn, BlockPos pos) {
     if (!worldIn.isAirBlock(pos)) {
       return 0;
@@ -151,6 +158,7 @@ public class BlockFireSafe extends BlockFire {
       return i;
     }
   }
+
   private void tryCatchFire(World worldIn, BlockPos pos, int chance, Random random, int age, EnumFacing face) {
     int i = worldIn.getBlockState(pos).getBlock().getFlammability(worldIn, pos, face);
     if (random.nextInt(chance) < i && worldIn.isAirBlock(pos)) {//safe fire: only set fire if air
@@ -167,6 +175,7 @@ public class BlockFireSafe extends BlockFire {
       }
     }
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!worldIn.isRemote && entityIn instanceof EntityLivingBase

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -32,6 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public class RecipeChangerModule extends BaseModule implements IHasConfig {
+
   private boolean playerSkull;
   private boolean mushroomBlocks;
   private boolean simpleDispenser;
@@ -43,6 +45,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean quartzBlocksToItem;
   private boolean glowstoneBlockToDust;
   private boolean netherwartBlockReverse;
+
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
@@ -70,6 +73,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     netherwartBlockReverse = config.get(category, "NetherwartBlockReverse",
         true, "Craft Netherwart blocks back to item").getBoolean();
   }
+
   @Override
   public void onPreInit() {
     if (glowstoneBlockToDust) {
@@ -107,30 +111,37 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
   }
+
   private void netherwartBlockReverse() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
         new ItemStack(Blocks.NETHER_WART_BLOCK)); // nether_wart_block
   }
+
   private void glowstoneBlockToDust() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),
         new ItemStack(Blocks.GLOWSTONE));
   }
+
   private void snowBlocksBalls() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SNOWBALL, 4),
         new ItemStack(Blocks.SNOW));
   }
+
   private void quartzBlocksItem() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.QUARTZ, 4),
         new ItemStack(Blocks.QUARTZ_BLOCK));
   }
+
   private void melonToSlice() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
         new ItemStack(Blocks.MELON_BLOCK));
   }
+
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
   }
+
   private void playerSkull() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player),
         new ItemStack(Items.SKULL, 1, Const.skull_wither),
@@ -138,17 +149,20 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         new ItemStack(Items.SKULL, 1, Const.skull_zombie),
         new ItemStack(Items.SKULL, 1, Const.skull_creeper));
   }
+
   private void mushroomBlocks() {
     RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.RED_MUSHROOM);
     RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
   }
+
   private void repeaterSimple() {
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.REPEATER),
         "r r", "srs", "ttt",
         't', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
   }
+
   private void minecartsSimple() {
     // normally you would need the minecart created in a different step. this is
     // faster
@@ -157,6 +171,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
     RecipeRegistry.addShapedRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
   }
+
   private void simpleDispenser() {
     RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.DISPENSER),
         "ccc", "csc", "crc",

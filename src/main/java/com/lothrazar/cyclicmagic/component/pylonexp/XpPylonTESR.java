@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pylonexp;
+
 import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,11 +36,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class XpPylonTESR extends BaseMachineTESR<TileEntityXpPylon> {
+
   private int lowerSlot;
+
   public XpPylonTESR(int slot, int ls) {
     super(slot);
     lowerSlot = ls;
   }
+
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
     renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0, 0.5F, 1);

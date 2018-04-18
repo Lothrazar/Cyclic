@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -48,32 +49,40 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
+
   public static boolean defaultPlayerStepUp = false;
+
   public ItemAppleStep() {
     super(4, false);
     this.setAlwaysEdible();
   }
+
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
     boolean previousOn = data.isStepHeightOn();
     data.setStepHeightOn(!previousOn);
     if (previousOn) {
+      UtilSound.playSound(player, SoundRegistry.step_height_down);
       data.setForceStepOff(true);
+    }
+    else {
+      UtilSound.playSound(player, SoundRegistry.step_height_up);
     }
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
-    UtilSound.playSound(player, SoundRegistry.bwewe);
     if (player.getEntityWorld().isRemote) {
       UtilChat.addChatMessage(player, "unlocks.stepheight." + !previousOn);
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         "dyeCyan", "dyeOrange", Blocks.TALLGRASS,
         Items.APPLE);
   }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer) {//some of the items need an off switch
@@ -95,12 +104,14 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
       //else leave it alone (allows other mods to turn it on without me disrupting)
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     super.addInformation(stack, player, tooltip, advanced);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     defaultPlayerStepUp = config.getBoolean("StepHeightDefault", Const.ConfigCategory.player, false, "Set the players default step height value.  False is just like normal minecraft, true means step height is one full block.   Only applies to new players the first time they join the world.  Regardless of setting this can still be toggled with Apple of Lofty Stature.  ");

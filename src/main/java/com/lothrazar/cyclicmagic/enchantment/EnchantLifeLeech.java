@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -35,14 +36,17 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantLifeLeech extends EnchantBase {
+
   public EnchantLifeLeech() {
     super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
+
   @Override
   public int getMaxLevel() {
     return 1;
   }
+
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
@@ -65,6 +69,7 @@ public class EnchantLifeLeech extends EnchantBase {
       }
     }
   }
+
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     if (event.getTarget() instanceof EntityLivingBase == false) {

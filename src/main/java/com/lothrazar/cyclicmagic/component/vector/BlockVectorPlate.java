@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
+
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -63,6 +64,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
+
   private static final int TICKS_MOMENTUM = 15;
   private static final double VERTICAL_MOMENTUM_FACTOR = 0.917;
   private static final String NBT_MOMENTUM = "momentum";
@@ -70,21 +72,25 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
   protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, COLLISION_HEIGHT, 1D);
+
   public BlockVectorPlate() {
     super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_VECTOR);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVector();
   }
+
   @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return COLLISION_AABB;
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     int yFloor = MathHelper.floor(entity.posY);
@@ -95,7 +101,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     boolean powerOk = worldIn.isBlockPowered(pos) || (tile.getField(Fields.REDSTONE.ordinal()) == 0);
     if (powerOk && posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       if (tile.playSound()) {
-        UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
+        UtilSound.playSound(worldIn, pos, SoundRegistry.machine_launch, SoundCategory.BLOCKS);
       }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       if (rotationPitch > 0) {
@@ -105,6 +111,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }
+
   @SubscribeEvent
   public void onUpdate(LivingUpdateEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
@@ -113,6 +120,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       UtilNBT.setEntityInt(entity, NBT_MOMENTUM, UtilNBT.getEntityInt(entity, NBT_MOMENTUM) - 1);
     }
   }
+
   @SubscribeEvent
   public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
     BlockPos pos = event.getPos();
@@ -131,6 +139,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       }
     }
   }
+
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     ItemStack stack = super.getPickBlock(state, target, world, pos, player);
@@ -141,20 +150,28 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     saveTileDataToStack(stack, tile);
     return stack;
   }
+
+  @Override
   public boolean isOpaqueCube(IBlockState state) {
     return false;
   }
+
+  @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
+  @Override
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
+
   //START OF ITEMBLOCK DATA disable regular drops, make my own drop that saves nbt
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return null;
   }
+
   @SubscribeEvent
   public void onBreakEvent(BreakEvent event) {
     if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
@@ -171,6 +188,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
     }
   }
+
   private void saveTileDataToStack(ItemStack stack, TileEntityVector tile) {
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE, tile.getAngle());
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_POWER, tile.getPower());
@@ -178,6 +196,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_SOUND, tile.getField(Fields.SOUND.ordinal()));
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_RED, tile.getField(Fields.REDSTONE.ordinal()));
   }
+
   private void saveStackDataTotile(ItemStack stack, TileEntityVector tile) {
     if (stack.hasTagCompound()) {
       tile.setField(TileEntityVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE));
@@ -187,11 +206,13 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       tile.setField(TileEntityVector.Fields.REDSTONE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_RED));
     }
   }
+
   public static void saveStackDefault(ItemStack stack) {
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE, TileEntityVector.DEFAULT_ANGLE);
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_POWER, TileEntityVector.DEFAULT_POWER);
     UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_YAW, TileEntityVector.DEFAULT_YAW);
   }
+
   /**
    * item stack data pushed into tile entity
    */
@@ -203,12 +224,14 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       saveStackDataTotile(stack, tile);
     }
   }
+
   //END OF ITEMBLOCK DATA
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 6),

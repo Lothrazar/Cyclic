@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandmissile;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -52,16 +53,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ItemMagicMissile extends BaseTool implements IHasRecipe {
+
   private static final double RANGE = 16.0;
   private static final int durability = 500;
   private static final int COOLDOWN = 8;
+
   public ItemMagicMissile() {
     super(durability);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
-    UtilSound.playSound(player, SoundRegistry.magic_missile);
+    UtilSound.playSound(player, SoundRegistry.spirit_seeker);
     int x = player.getPosition().getX();
     int y = player.getPosition().getY();
     int z = player.getPosition().getZ();
@@ -81,13 +85,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
       //closest actual monster
       EntityLivingBase target = UtilEntity.getClosestEntity(world, player, trimmedTargets);
       EntityHomingProjectile projectile = new EntityHomingProjectile(world, player);
-      //      projectile.setPosition(x, y, z);
       projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
-      //      projectile.motionX = 0;
-      //      projectile.motionY = 0;
-      //      projectile.motionZ = 0;
-      //      projectile.rotationPitch = 0;
-      //      projectile.rotationYaw = 0;
       projectile.setTarget(target);
       world.spawnEntity(projectile);
     }
@@ -95,6 +93,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -106,6 +105,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
         'r', "ingotGold",
         'b', "ingotIron");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.farm;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
@@ -50,17 +51,21 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
   private static final int PER_TICK = TileEntityPeatGenerator.PER_TICK / 2;
   private static final int CAPACITY = 60 * Fluid.BUCKET_VOLUME;
+
   public static enum Fields {
     REDSTONE, TIMER, FLUID;
   }
+
   private int needsRedstone = 1;
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   private EnergyStore energy;
   private int blockPointer = 0;
+
   public TileEntityPeatFarm() {
     super(12);
     tank.setTileEntity(this);
@@ -69,9 +74,11 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, this.getSizeInventory());
   }
+
   Block baked = null;
   Block unbaked = null;
   List<BlockPos> outer = null;
+
   private void init() {
     if (baked == null)
       baked = Block.getBlockFromName(Const.MODRES + "peat_baked");
@@ -83,10 +90,12 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       outer.addAll(waterShape);
     }
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) == unbaked;
   }
+
   @Override
   public void update() {
     this.init();
@@ -125,6 +134,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       //    ModCyclic.logger.error("RESET");
     }
   }
+
   private void tryPlacePeat(BlockPos target) {
     for (int i = 0; i < this.getSizeInventory(); i++) {
       if (this.getStackInSlot(i).isItemEqual(new ItemStack(unbaked))) {
@@ -141,6 +151,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
     //  ModCyclic.logger.error("not enough blocks");
   }
+
   private void tryPlaceWater(BlockPos target) {
     if (world.getBlockState(target).getBlock().isReplaceable(world, target)
         && tank.getFluidAmount() >= Fluid.BUCKET_VOLUME
@@ -149,24 +160,29 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       world.setBlockState(target, Blocks.FLOWING_WATER.getDefaultState());
     }
   }
+
   private void tryHarvest(BlockPos target) {
     if (world.getBlockState(target).getBlock() == baked) {
       //    ModCyclic.logger.error("HARVEST peat " + target);
       world.destroyBlock(target, true);
     }
   }
+
   private List<BlockPos> getShape() {
     List<BlockPos> outer = UtilShape.squareHorizontalHollow(this.pos, 7);
     outer.addAll(UtilShape.squareHorizontalHollow(this.pos, 5));
     return outer;
   }
+
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public int getFieldCount() {
     return getFieldOrdinals().length;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -175,6 +191,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
     CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
@@ -183,6 +200,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     compound.setInteger("blockPointer", blockPointer);
     return super.writeToNBT(compound);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -191,9 +209,11 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -206,6 +226,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -220,6 +241,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   private int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -228,6 +250,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
+
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -240,6 +263,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     fluid.amount = amt;
     this.tank.setFluid(fluid);
   }
+
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -247,6 +271,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -257,11 +282,13 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     }
     return super.getCapability(capability, facing);
   }
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     int result = tank.fill(resource, doFill);
@@ -269,6 +296,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result);
     return result;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     FluidStack result = tank.drain(resource, doDrain);
@@ -276,6 +304,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result.amount);
     return result;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);

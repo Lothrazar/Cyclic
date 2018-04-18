@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
@@ -38,11 +39,14 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class ItemCharmFire extends BaseCharm implements IHasRecipe {
+
   private static final int durability = 16;
   private static final int seconds = 10;
+
   public ItemCharmFire() {
     super(durability);
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
@@ -57,6 +61,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe {
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.BLAZE_ROD);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.clock;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -34,14 +35,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityClock extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+
   public static enum Fields {
     TIMER, TOFF, TON, POWER, REDSTONE, N, E, S, W, U, D;
   }
+
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
   private int power;
   private int needsRedstone = 0;
   private Map<EnumFacing, Boolean> poweredSides = new HashMap<EnumFacing, Boolean>();
+
   public TileEntityClock() {
     super(0);
     timer = 0;
@@ -50,33 +54,41 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     power = 15;
     this.facingResetAllOn();
   }
+
   public int getPower() {
     return this.power;
   }
+
   public int getPowerForSide(EnumFacing side) {
     if (this.getSideHasPower(side))
       return this.power;
     else
       return 0;
   }
+
   public boolean getSideHasPower(EnumFacing side) {
     return this.poweredSides.get(side);
   }
+
   public int getSideField(EnumFacing side) {
     return this.getSideHasPower(side) ? 1 : 0;
   }
+
   public void setSideField(EnumFacing side, int pow) {
     this.poweredSides.put(side, (pow == 1));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
     //oldState.getBlock() instanceof BlockRedstoneClock &&
     return !(newSate.getBlock() instanceof BlockRedstoneClock);// : oldState != newSate;
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -107,6 +119,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -135,6 +148,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -178,6 +192,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       break;
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger("off", timeOff);
@@ -189,6 +204,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     return super.writeToNBT(compound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -203,6 +219,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       this.facingResetAllOn();//fix legacy data for one
     }
   }
+
   private boolean detectAllOff() {
     boolean areAnyOn = false;
     for (EnumFacing f : EnumFacing.values()) {
@@ -210,15 +227,18 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     }
     return !areAnyOn;
   }
+
   private void facingResetAllOn() {
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, true);
     }
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.fluid;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,11 +36,14 @@ import net.minecraftforge.fluids.FluidStack;
  *
  */
 public class FluidTankFixDesync extends FluidTankBase {
+
   private final TileEntityBaseMachineInvo parent;
+
   public FluidTankFixDesync(int capacity, TileEntityBaseMachineInvo parent) {
     super(capacity);
     this.parent = parent;
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     int amount = super.fill(resource, doFill);
@@ -48,6 +52,7 @@ public class FluidTankFixDesync extends FluidTankBase {
     }
     return amount;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     FluidStack fluid = super.drain(resource, doDrain);
@@ -56,6 +61,7 @@ public class FluidTankFixDesync extends FluidTankBase {
     }
     return fluid;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack fluid = super.drain(maxDrain, doDrain);
@@ -64,6 +70,7 @@ public class FluidTankFixDesync extends FluidTankBase {
     }
     return fluid;
   }
+
   private void sendClientUpdate() {
     //   ModCyclic.logger.info(" sendClientUpdate() ");
     if (parent.getWorld().isRemote == false) {
@@ -82,6 +89,7 @@ public class FluidTankFixDesync extends FluidTankBase {
     }
     // ModCyclic.network.sendTo(message, player);
   }
+
   @Override
   protected void onContentsChanged() {
     // ModCyclic.logger.info(" onContentsChanged() ");

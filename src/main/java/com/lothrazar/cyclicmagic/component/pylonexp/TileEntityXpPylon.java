@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pylonexp;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -45,6 +46,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
+
   public static final int TANK_FULL = 1000000;
   private static final int XP_PER_SPEWORB = 50;
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
@@ -57,23 +59,28 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_COLLECT = "collect";
   public final static int RADIUS = 16;
+
   public static enum Fields {
     TIMER, EXP, COLLECT, REDSTONE;
   }
+
   public static enum ActionMode {
     SPRAY, COLLECT;
   }
+
   private int timer = 0;
   private int collect = 1;
   private int needsRedstone = 0;
   private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
+
   public TileEntityXpPylon() {
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index == SLOT_INPUT) {
@@ -81,10 +88,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     return super.isItemValidForSlot(index, stack);
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -111,6 +120,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       updateBottle();
     }
   }
+
   /**
    * outgoing: convert fluid to EXP in a bottle
    */
@@ -127,6 +137,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       this.inputSlotDecrement();
     }
   }
+
   /**
    * outgoing: convert fluid to EXP
    */
@@ -151,6 +162,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
+
   /**
    * incoming: convert EXP to fluid
    */
@@ -171,6 +183,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
+
   private void outputSlotIncrement() {
     ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
     if (UtilItemStack.isEmpty(fullOnes)) {
@@ -181,10 +194,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     this.setInventorySlotContents(SLOT_OUTPUT, fullOnes);
   }
+
   private boolean outputSlotHasRoom() {
     ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
     return fullOnes.getCount() < 64;
   }
+
   private boolean inputSlotHasSome() {
     ItemStack emptyOnes = this.getStackInSlot(SLOT_INPUT);
     if (emptyOnes.getItem() != Items.GLASS_BOTTLE) {
@@ -192,6 +207,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     return !UtilItemStack.isEmpty(emptyOnes) && (emptyOnes.getCount() > 0);
   }
+
   private void inputSlotDecrement() {
     ItemStack fullOnes = this.getStackInSlot(SLOT_INPUT);
     fullOnes.shrink(1);
@@ -200,6 +216,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     this.setInventorySlotContents(SLOT_INPUT, fullOnes);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
@@ -209,6 +226,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setBoolean("legacy", this.isLegacy);
     return super.writeToNBT(tags);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -222,10 +240,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     else
       this.isLegacy = tags.getBoolean("legacy");
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -242,6 +262,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     return -1;
   }
+
   public int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -250,6 +271,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
+
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -257,6 +279,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     return fluidHandler.getTankProperties()[0].getContents();
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -276,6 +299,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       break;
     }
   }
+
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -289,6 +313,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
+
   /******************************
    * fluid properties here
    ******************************/
@@ -299,6 +324,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -307,11 +333,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
@@ -321,6 +349,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.setField(Fields.EXP.ordinal(), result);
     return result;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
@@ -330,16 +359,19 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
     this.setField(Fields.EXP.ordinal(), result.amount);
     return result;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

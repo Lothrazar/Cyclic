@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandtorch;
+
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import net.minecraft.block.BlockTorch;
@@ -37,21 +38,27 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityTorchBolt extends EntityThrowableDispensable {
+
   public static class FactoryTorch implements IRenderFactory<EntityTorchBolt> {
+
     @Override
     public Render<? super EntityTorchBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityTorchBolt>(rm, "torch");
     }
   }
+
   public EntityTorchBolt(World worldIn) {
     super(worldIn);
   }
+
   public EntityTorchBolt(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityTorchBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {

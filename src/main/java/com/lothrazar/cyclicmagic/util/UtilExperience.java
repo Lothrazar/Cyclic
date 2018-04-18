@@ -22,9 +22,11 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import net.minecraft.entity.player.EntityPlayer;
 
 public class UtilExperience {
+
   public static double getExpTotal(EntityPlayer player) {
     validateExpPositive(player);
     int level = player.experienceLevel;
@@ -35,6 +37,7 @@ public class UtilExperience {
     totalExp += (int) progress;
     return totalExp;
   }
+
   public static boolean drainExp(EntityPlayer player, float f) {
     double totalExp = getExpTotal(player);
     if (totalExp - f < 0) {
@@ -44,6 +47,7 @@ public class UtilExperience {
     setXp(player, result);
     return true;
   }
+
   public static int getXpToGainLevel(int level) {
     // numeric reference:
     // http://minecraft.gamepedia.com/Experience#Leveling_up
@@ -59,6 +63,7 @@ public class UtilExperience {
       nextLevelExp = 9 * level - 158;
     return nextLevelExp;
   }
+
   public static int getXpForLevel(int level) {
     // numeric reference:
     // http://minecraft.gamepedia.com/Experience#Leveling_up
@@ -72,6 +77,7 @@ public class UtilExperience {
       totalExp = (int) (4.5 * level * level - 162.5 * level + 2220);
     return totalExp;
   }
+
   public static int getLevelForXp(int xp) {
     int lev = 0;
     while (getXpForLevel(lev) < xp) {
@@ -79,9 +85,11 @@ public class UtilExperience {
     }
     return lev - 1;
   }
+
   public static void incrementExp(EntityPlayer player, int xp) {
     setXp(player, (int) getExpTotal(player) + xp);
   }
+
   public static void setXp(EntityPlayer player, int xp) {
     if (xp < 0) {
       xp = 0;
@@ -99,6 +107,7 @@ public class UtilExperience {
     //so backfill and sanity check all values
     validateExpPositive(player);
   }
+
   private static void validateExpPositive(EntityPlayer player) {
     if (player.experience < 0) {
       player.experience = 0;

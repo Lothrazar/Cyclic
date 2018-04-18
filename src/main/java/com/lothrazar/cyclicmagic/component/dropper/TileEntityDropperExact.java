@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.dropper;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -31,20 +32,24 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   private int needsRedstone = 1;
   private int slotCurrent = 0;
   private int dropCount = 1;
   private int delay = 10;
   private int hOffset = 0;
+
   public static enum Fields {
     TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
   }
+
   public TileEntityDropperExact() {
     super(9);
     this.setSlotsForExtract(0, 8);
     this.setSlotsForInsert(0, 8);
     timer = delay;
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -65,6 +70,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       }
     }
   }
+
   //same logic as dispenser
   private void updateCurrentSlot() {
     int j = 1;
@@ -76,6 +82,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     }
     slotCurrent = -1;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -85,6 +92,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     this.dropCount = tagCompound.getInteger("dropCount");
     this.hOffset = tagCompound.getInteger("hOffset");
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
@@ -94,15 +102,18 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     tagCompound.setInteger("hOffset", this.hOffset);
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -119,6 +130,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -139,10 +151,12 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       break;
     }
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(getFieldCount());
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,15 +33,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVector, IMessage> {
+
   private BlockPos pos;
   private int tileFieldId;
   private int value;
+
   public PacketTileVector() {}
+
   public PacketTileVector(BlockPos p, int val, int t) {
     pos = p;
     tileFieldId = t;
     value = val;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -51,6 +56,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     tileFieldId = tags.getInteger("type");
     value = tags.getInteger("d");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -61,6 +67,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     tags.setInteger("d", value);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileVector message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

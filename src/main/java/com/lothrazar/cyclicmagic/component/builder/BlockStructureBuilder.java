@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.builder;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -47,22 +48,27 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+
   public static int FUEL_COST = 0;
+
   public BlockStructureBuilder() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStructureBuilder.class, new MachineTESR(this, 0));
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityStructureBuilder();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
@@ -72,6 +78,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
         'r', "blockRedstone",
         'b', Blocks.MAGMA);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);

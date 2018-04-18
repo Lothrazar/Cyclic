@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
@@ -45,11 +46,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSack, IMessage> {
+
   private BlockPos pos;
+
   public PacketChestSack() {}
+
   public PacketChestSack(BlockPos mouseover) {
     pos = mouseover;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -58,6 +63,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -66,16 +72,19 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
     tags.setInteger("z", pos.getZ());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketChestSack message, MessageContext ctx) {
     PacketChestSack.checkThreadAndEnqueue(message, ctx);
     return null;
   }
+
   private static void checkThreadAndEnqueue(final PacketChestSack message, final MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
       // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
       thread.addScheduledTask(new Runnable() {
+
         public void run() {
           BlockPos position = message.pos;
           EntityPlayer player = ctx.getServerHandler().player;

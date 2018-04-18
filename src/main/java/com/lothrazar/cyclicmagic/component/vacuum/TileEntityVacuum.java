@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vacuum;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -42,32 +43,39 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
+
   private static final int VRADIUS = 2;
   private static final int MAX_SIZE = 9;//7 means 15x15
   public static final int TIMER_FULL = 20;
   public final static int ROWS = 4;
   public final static int COLS = 9;
   public final static int FILTERSLOTS = 5 * 2;
+
   public static enum Fields {
     TIMER, RENDERPARTICLES, REDSTONE, SIZE;
   }
+
   private int timer = 0;
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private int size = 4;//center plus 4 in each direction = 9x9
+
   public TileEntityVacuum() {
     super(ROWS * COLS + FILTERSLOTS);
     this.setSlotsForExtract(0, ROWS * COLS - 1);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (!this.isRunning()) {
@@ -79,6 +87,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
     updateCollection();
   }
+
   private void updateCollection() {
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
     BlockPos center = this.getTargetCenter();
@@ -91,6 +100,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
       processItemOnGround(itemOnGround);
     }
   }
+
   @SuppressWarnings("serial")
   private void processItemOnGround(EntityItem itemOnGround) {
     if (this.canPickup(itemOnGround) == false) {
@@ -99,6 +109,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     ItemStack contained = itemOnGround.getItem();
     //making it a list not  a single is a superhack
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(new ArrayList<ItemStack>() {
+
       {
         add(contained);
       }
@@ -111,6 +122,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
       itemOnGround.setDead();
     }
   }
+
   private List<ItemStack> getFilterCopy() {
     List<ItemStack> filt = new ArrayList<ItemStack>();
     int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
@@ -123,6 +135,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
     return filt;
   }
+
   private boolean canPickup(EntityItem itemOnGround) {
     if (itemOnGround.isDead) {
       return false;//nope
@@ -139,10 +152,12 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
     return false;
   }
+
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), size + 1);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
@@ -151,6 +166,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     tags.setInteger(NBT_SIZE, size);
     return super.writeToNBT(tags);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -159,10 +175,12 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     this.renderParticles = tags.getInteger(NBT_RENDER);
     this.size = tags.getInteger(NBT_SIZE);
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -177,6 +195,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -194,9 +213,11 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
       break;
     }
   }
+
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
+
   @Override
   public List<BlockPos> getShape() {
     //vertical radius goes both up and down. so to draw shape, start below and push up
@@ -205,18 +226,22 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
         UtilShape.squareHorizontalHollow(bottmCenter, size),
         VRADIUS * 2);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.needsRedstone = (this.needsRedstone + 1) % 2;
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void toggleSizeShape() {
     this.size++;

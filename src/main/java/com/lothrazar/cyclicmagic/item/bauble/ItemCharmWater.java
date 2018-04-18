@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
@@ -39,16 +40,20 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class ItemCharmWater extends BaseCharm implements IHasRecipe {
+
   private static final int breath = 6;
   private static final int durability = 32;
   private static final int seconds = 60;
+
   public ItemCharmWater() {
     super(durability);
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
 import net.minecraft.entity.Entity;
@@ -33,10 +34,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
+
   private static final int durability = 4096;
+
   public ItemCharmBoat() {
     super(durability);
   }
+
   /**
    * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and update it's contents.
    */
@@ -45,6 +49,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
       onTick(stack, (EntityPlayer) entityIn);
     }
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer entityIn) {
     if (!this.canTick(stack)) {
@@ -63,6 +68,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
       }
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.ARMOR_STAND);

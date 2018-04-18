@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import javax.annotation.Nullable;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,24 +38,28 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
 public class InventoryMerchantBetter extends InventoryMerchant implements IInventory {
+
   private final IMerchant theMerchant;
   private final NonNullList<ItemStack> inv = NonNullList.withSize(3, ItemStack.EMPTY);
   private final EntityPlayer thePlayer;
   private MerchantRecipe currentRecipe;
   private int currentRecipeIndex;
   private MerchantRecipeList trades;
+
   public InventoryMerchantBetter(EntityPlayer thePlayerIn, IMerchant theMerchantIn) {
     super(thePlayerIn, theMerchantIn);
     this.thePlayer = thePlayerIn;
     this.theMerchant = theMerchantIn;
     trades = this.theMerchant.getRecipes(this.thePlayer);
   }
+
   /**
    * Returns the number of slots in the inventory.
    */
   public int getSizeInventory() {
     return this.inv.size();
   }
+
   /**
    * Returns the stack in the given slot.
    */
@@ -62,6 +67,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   public ItemStack getStackInSlot(int index) {
     return this.inv.get(index);
   }
+
   public ItemStack decrStackSize(int index, int count) {
     ItemStack itemstack = (ItemStack) this.inv.get(index);
     if (index == 2 && !itemstack.isEmpty()) {
@@ -75,13 +81,16 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       return itemstack1;
     }
   }
+
   private boolean inventoryResetNeededOnSlotChange(int slotIn) {
     return slotIn == 0 || slotIn == 1;
   }
+
   @Nullable
   public ItemStack removeStackFromSlot(int index) {
     return ItemStackHelper.getAndRemove(this.inv, index);
   }
+
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
     if (index > inv.size()) {
       return;
@@ -94,37 +103,49 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       this.resetRecipeAndSlots();
     }
   }
+
   public String getName() {
     return "mob.villager";
   }
+
   public boolean hasCustomName() {
     return false;
   }
+
   public ITextComponent getDisplayName() {
     return (ITextComponent) (this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]));
   }
+
   public int getInventoryStackLimit() {
     return 64;
   }
+
   public boolean isUseableByPlayer(EntityPlayer player) {
     return this.theMerchant.getCustomer() == player;
   }
+
   public void openInventory(EntityPlayer player) {}
+
   public void closeInventory(EntityPlayer player) {}
+
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return true;
   }
+
   public void markDirty() {
     this.resetRecipeAndSlots();
   }
+
   public void setRecipes(MerchantRecipeList t) {
     if (t.size() != trades.size()) {
       trades = t;
     }
   }
+
   public MerchantRecipeList getRecipes() {
     return trades;
   }
+
   public void resetRecipeAndSlots() {
     this.currentRecipe = null;
     ItemStack itemstack = this.inv.get(0);
@@ -161,20 +182,26 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     }
     this.theMerchant.verifySellingItem(this.getStackInSlot(2));
   }
+
   public MerchantRecipe getCurrentRecipe() {
     return this.currentRecipe;
   }
+
   public void setCurrentRecipeIndex(int currentRecipeIndexIn) {
     this.currentRecipeIndex = currentRecipeIndexIn;
     this.resetRecipeAndSlots();
   }
+
   public int getField(int id) {
     return 0;
   }
+
   public void setField(int id, int value) {}
+
   public int getFieldCount() {
     return 0;
   }
+
   public void clear() {
     for (int i = 0; i < this.inv.size(); ++i) {
       this.inv.set(i, ItemStack.EMPTY);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,15 +30,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
+
   //TODO: nameplage ugly when block on top. also redundant. revive one day??
   boolean doNameplate = false;
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.6F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
   final float vOffset = -0.11F;
+
   public LibraryTESR(Block block) {
     super(block);
   }
+
   @SuppressWarnings("unchecked")
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -53,6 +57,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       }
     }
   }
+
   private void renderStack(TileEntityLibrary te, EnchantStack stack, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
     float scaleFactor = 0.045F;
     int angle = angleOfFace(face);
@@ -93,6 +98,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
+
   private void renderEnchantStack(TileEntityLibrary te, EnchantStack stack, QuadrantEnum quad, EnumFacing face, double x, double y, double z, int destroyStage, float xt, float yt, float zt) {
     if (stack.isEmpty() == false) {
       renderStack(te, stack, face, quad, x, y, z);

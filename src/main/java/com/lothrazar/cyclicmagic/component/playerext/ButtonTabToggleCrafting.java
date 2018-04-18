@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
@@ -34,7 +35,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ButtonTabToggleCrafting extends GuiButtonTooltip {
+
   private GuiScreen gui;
+
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
     super(256, x, y, 15, 10, "");
     gui = g;
@@ -46,6 +49,7 @@ public class ButtonTabToggleCrafting extends GuiButtonTooltip {
       this.displayString = "C";//the legacy one. in case someone is just running with the key unbound
     }
   }
+
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);

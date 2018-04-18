@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -32,15 +33,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHydrator extends GuiBaseContainer {
+
   private TileEntityHydrator tile;
   boolean debugLabels = false;
   private ButtonTileEntityField btnToggle;
+
   public GuiHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator tileEntity) {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
     // this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -51,6 +55,7 @@ public class GuiHydrator extends GuiBaseContainer {
     btnToggle.width = btnToggle.height = 20;
     this.addButton(btnToggle);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -64,6 +69,7 @@ public class GuiHydrator extends GuiBaseContainer {
       btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
     }
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -92,6 +98,7 @@ public class GuiHydrator extends GuiBaseContainer {
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     this.drawFluidBar();
   }
+
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;

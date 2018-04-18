@@ -22,19 +22,23 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.log;
+
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModLogger implements IHasConfig {
+
   private Logger logger;
   private boolean sendInfo = true;//info are things we WANT to stay on release. by default
   private boolean sendLogs = false;//in config. only used for dev or live debugging
   private boolean runUnitTests;
+
   public ModLogger(Logger l) {
     logger = l;
   }
+
   /**
    * info defaults to TRUE in config file use this for logs you want to run in release
    * 
@@ -44,6 +48,7 @@ public class ModLogger implements IHasConfig {
     if (sendInfo)
       logger.info(string);
   }
+
   /**
    * Defaults to FALSE in config file use for dev debugging, and then leave some in place for release that will safely not spam out unless turned on
    * 
@@ -53,6 +58,7 @@ public class ModLogger implements IHasConfig {
     if (sendLogs)
       logger.info(string);
   }
+
   /**
    * Always send the log in every environment
    * 
@@ -61,9 +67,11 @@ public class ModLogger implements IHasConfig {
   public void error(String string) {
     logger.error(string);
   }
+
   public void error(String string, Object... params) {
     logger.error(string, params);
   }
+
   /**
    * always check this before running a unit test
    * 
@@ -72,6 +80,7 @@ public class ModLogger implements IHasConfig {
   public boolean runUnitTests() {
     return this.runUnitTests;
   }
+
   /**
    * logs only if runUnitTests() is true
    * 
@@ -81,6 +90,7 @@ public class ModLogger implements IHasConfig {
     if (runUnitTests())
       logger.info("[UnitTest]" + string);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.logging;

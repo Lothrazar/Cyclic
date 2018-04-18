@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fluidstorage;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.tileentity.TileEntity;
@@ -30,10 +31,13 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityBucketStorage extends TileEntityBaseMachineFluid implements ITickable {
+
   public static final int TRANSFER_FLUID_PER_TICK = 500;
+
   public TileEntityBucketStorage() {
     super(Fluid.BUCKET_VOLUME * 64);
   }
+
   @Override
   public void update() {
     //drain below but only to one of myself

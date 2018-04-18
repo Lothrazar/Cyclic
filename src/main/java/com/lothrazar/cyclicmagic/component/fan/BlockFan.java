@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fan;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -39,6 +40,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
+
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockFan() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_FAN);
@@ -48,14 +50,17 @@ public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
     this.setTickRandomly(true);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityFan();
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

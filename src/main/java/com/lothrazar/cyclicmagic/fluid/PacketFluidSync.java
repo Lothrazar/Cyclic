@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.fluid;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
 import io.netty.buffer.ByteBuf;
@@ -37,13 +38,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketFluidSync implements IMessage, IMessageHandler<PacketFluidSync, IMessage> {
+
   private BlockPos pos;
   public FluidStack fluid;
+
   public PacketFluidSync() {}
+
   public PacketFluidSync(BlockPos p, FluidStack fluid) {
     pos = p;
     this.fluid = fluid;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -53,6 +58,7 @@ public class PacketFluidSync implements IMessage, IMessageHandler<PacketFluidSyn
     pos = new BlockPos(x, y, z);
     fluid = FluidStack.loadFluidStackFromNBT(tags);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -64,6 +70,7 @@ public class PacketFluidSync implements IMessage, IMessageHandler<PacketFluidSyn
     }
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketFluidSync message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -59,6 +60,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHasConfig {
+
   private static final PropertyBool ACTIVATED = PropertyBool.create("activated");
   private static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
   private static final float LARGE = 0.9375F;
@@ -74,6 +76,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   private boolean doesPlayerDamage;
   private int damageIron = 1;
   private int damageDiamond = 2;
+
   public BlockSpikesRetractable(boolean doesPlayer) {
     super(Material.IRON);
     setHardness(1.5F);
@@ -81,20 +84,25 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     this.setTranslucent();
     this.doesPlayerDamage = doesPlayer;
   }
+
   //copy vanilla methods: 8 facing directions bitwise-combined with enabled or not
   public static EnumFacing getFacing(int meta) {
     return EnumFacing.getFront(meta & 7);
   }
+
   public static EnumFacing getFacing(IBlockState state) {
     return state.getValue(FACING);
   }
+
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
   }
+
   private int getDamage() {
     return (this.doesPlayerDamage) ? this.damageDiamond : this.damageIron;
   }
+
   @Override
   public int getMetaFromState(IBlockState state) {
     byte b0 = 0;
@@ -104,6 +112,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     }
     return i;
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
@@ -127,10 +136,12 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
       }
     }
   }
+
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, new IProperty[] { FACING, ACTIVATED });
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     if (state.getValue(ACTIVATED)) {
@@ -153,14 +164,17 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     }
     return FULL_BLOCK_AABB;//CANT BE NULL, causes crashes.   
   }
+
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos) {
     return NULL_AABB;
   }
+
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   @Override
   public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
     EnumFacing facState = getFacing(state);
@@ -173,27 +187,31 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     }
     if (state.getValue(ACTIVATED) == false
         && world.isBlockPowered(pos)) {
-      UtilSound.playSoundFromServer(SoundRegistry.spikes_in, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_on, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, true));
     }
     else if (state.getValue(ACTIVATED)
         && world.isBlockPowered(pos) == false) {
-      UtilSound.playSoundFromServer(SoundRegistry.spikes_out, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
       world.setBlockState(pos, state.withProperty(ACTIVATED, false));
     }
   }
+
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
     this.neighborChanged(state, worldIn, pos, this, pos);
   }
+
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase player, EnumHand hand) {
     return worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) ? this.getDefaultState().withProperty(FACING, facing).withProperty(ACTIVATED, false) : this.getDefaultState().withProperty(FACING, EnumFacing.DOWN).withProperty(ACTIVATED, false);
   }
+
   @Override
   public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
     return worldIn.isSideSolid(pos.offset(side.getOpposite()), side, true);//only place on solid placements
   }
+
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
     for (EnumFacing fac : EnumFacing.values()) {
@@ -203,6 +221,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
     }
     return false;
   }
+
   @Override
   public IRecipe addRecipe() {
     if (this.doesPlayerDamage) {
@@ -222,6 +241,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
           't', Blocks.STONE_PRESSURE_PLATE);
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     this.damageIron = config.getInt("SpikeIronDamage", Const.ConfigCategory.modpackMisc, 1, 1, 99, "Damage per second of iron spikes");

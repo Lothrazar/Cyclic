@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandice;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
@@ -47,27 +48,36 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntitySnowballBolt extends EntityThrowableDispensable {
+
   private static final int SLOWNESSLEVEL = 2;
   private static final int POTIONSECONDS = 30;
+
   public static class FactorySnow implements IRenderFactory<EntitySnowballBolt> {
+
     @Override
     public Render<? super EntitySnowballBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntitySnowballBolt>(rm, "snow");
     }
   }
+
   private float damage = 3;
+
   public EntitySnowballBolt(World worldIn) {
     super(worldIn);
   }
+
   public EntitySnowballBolt(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntitySnowballBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   public void setDamage(float d) {
     damage = d;
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     World world = getEntityWorld();
@@ -90,11 +100,13 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       this.setDead();
     }
   }
+
   private void onHitPlayer(RayTraceResult mop, EntityPlayer entityHit) {
     //not slowness only snow
     entityHit.extinguish();
     entityHit.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * POTIONSECONDS));
   }
+
   private void onHitEntity(RayTraceResult mop) {
     EntityLivingBase e = (EntityLivingBase) mop.entityHit;
     if (e.isBurning()) {
@@ -105,6 +117,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
     // do the snowball damage, which should be none. put out the fire
     mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
   }
+
   private void onHitGround(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
     if (pos == null) {
@@ -147,6 +160,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       setNewSnow(world, hitUp);
     }
   }
+
   public void onHitWater(RayTraceResult mop) {
     World world = getEntityWorld();
     BlockPos posWater = this.getPosition();
@@ -163,6 +177,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       world.setBlockState(posWater, Blocks.ICE.getDefaultState());
     }
   }
+
   private static void setMoreSnow(World world, BlockPos pos) {
     IBlockState hitState = world.getBlockState(pos);
     int m = hitState.getBlock().getMetaFromState(hitState) + 1;
@@ -175,6 +190,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       setNewSnow(world, pos.up());
     }
   }
+
   private static void setNewSnow(World world, BlockPos pos) {
     world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState());
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_SNOW_PLACE, SoundCategory.BLOCKS);

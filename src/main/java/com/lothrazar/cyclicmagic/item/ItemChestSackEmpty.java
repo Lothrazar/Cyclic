@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -51,13 +52,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConfig {
+
   public static final String name = "chest_sack_empty";
   private static List<String> blacklistAll;
+
   public ItemChestSackEmpty() {
     super();
     // imported from my old mod
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSack.java
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (pos == null) {
@@ -75,12 +79,13 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
       UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.blacklist");
       return EnumActionResult.FAIL;
     }
-    UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
+    UtilSound.playSound(entityPlayer, pos, SoundRegistry.chest_sack_capture);
     if (world.isRemote) {
       ModCyclic.network.sendToServer(new PacketChestSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }
     return EnumActionResult.SUCCESS;
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -98,13 +103,17 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
         'b', new ItemStack(Items.APPLE),
         's', "string");
   }
+
   private Item fullSack;
+
   public void setFullSack(Item item) {
     fullSack = item;
   }
+
   public Item getFullSack() {
     return fullSack;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;

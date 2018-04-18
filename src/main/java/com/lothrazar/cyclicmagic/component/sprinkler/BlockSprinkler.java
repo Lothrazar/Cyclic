@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.sprinkler;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -48,24 +49,29 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+
   public BlockSprinkler() {
     super(Material.IRON);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileSprinkler();
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return false;
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileSprinkler.class, new SprinklerTESR<TileSprinkler>(this));
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileSprinkler te = (TileSprinkler) world.getTileEntity(pos);
@@ -78,6 +84,7 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
     }
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

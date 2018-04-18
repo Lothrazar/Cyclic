@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,11 +51,14 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
 
 public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
+
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 10;
+
   public ItemSpawnInspect() {
     super(DURABILITY);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -87,6 +91,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
           String strLight = "Light: " + chunk.getLightSubtracted(pos, 0) + " (" + chunk.getLightFor(EnumSkyBlock.SKY, pos) + " sky, " + chunk.getLightFor(EnumSkyBlock.BLOCK, pos) + " block)";
           UtilChat.addChatMessage(player, strLight);
           Collections.sort(names, new Comparator<SpawnDetail>() {
+
             @Override
             public int compare(SpawnDetail o1, SpawnDetail o2) {
               return o1.getSortBy().compareTo(o2.getSortBy());
@@ -107,6 +112,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -117,10 +123,13 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
         's', new ItemStack(Items.FLINT),
         'g', "blockGlassPurple");
   }
+
   public static class SpawnDetail {
+
     private int itemWeight;
     private String displayName;
     private String creatureTypeName;
+
     //    private boolean lightEnabled = true;
     public SpawnDetail(Biome.SpawnListEntry entry, EnumCreatureType creatureType) {
       itemWeight = entry.itemWeight;
@@ -138,6 +147,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
       //        }
       //      }
     }
+
     public SpawnDetail(String n, EnumCreatureType creatureType, int odds) {
       //special case of JUST witherywither
       itemWeight = odds;
@@ -147,9 +157,11 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
       //        lightEnabled = true;
       //      }
     }
+
     public String getSortBy() {
       return displayName;
     }
+
     public String toString(boolean showOdds) {
       //      TextFormatting color = (lightEnabled) ? TextFormatting.WHITE : TextFormatting.DARK_GRAY;
       if (showOdds) // todo; super.tostring here?

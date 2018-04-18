@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -47,14 +48,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
+
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 12;
   private static int range = 16;
   private boolean isBlacklist;
   private String[] blocklist;
+
   public ItemProspector() {
     super(DURABILITY);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -103,6 +107,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
+
   public boolean isBlockShowable(ItemStack stack) {
     if (stack == null || stack.getItem() == null) {
       return false;
@@ -126,6 +131,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
     boolean yesShowIt = (this.isBlacklist) ? (!isInList) : isInList;
     return yesShowIt;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -136,6 +142,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
         'b', new ItemStack(Items.BLAZE_ROD),
         'g', "blockGlassLightBlue");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;

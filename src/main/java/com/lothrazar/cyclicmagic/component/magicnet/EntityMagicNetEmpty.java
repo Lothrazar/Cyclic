@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
+package com.lothrazar.cyclicmagic.component.magicnet;
+
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -45,28 +46,35 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetEmpty extends EntityThrowableDispensable {
+
   public static Item renderSnowball;
   public static NonNullList<String> blacklistIds;
+
   public static class FactoryBallEmpty implements IRenderFactory<EntityMagicNetEmpty> {
+
     @Override
     public Render<? super EntityMagicNetEmpty> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityMagicNetEmpty>(rm, "net");
     }
   }
+
   public EntityMagicNetEmpty(World worldIn) {
     super(worldIn);
   }
+
   public EntityMagicNetEmpty(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityMagicNetEmpty(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   private boolean isInBlacklist(Entity thing) {
     ResourceLocation test = UtilEntity.getResourceLocation(thing);
-    ModCyclic.logger.info("cannot capture entity in config blacklist " + test);
     return UtilString.isInList(blacklistIds, test);
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null
@@ -82,8 +90,7 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
       captured.setTagCompound(entity);
       mop.entityHit.setDead();
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), captured);
-      UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.pew);
-      //      UtilSound.playSound((EntityLivingBase)mop.entityHit, SoundRegistry.pow);
+      UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.monster_ball_capture);
     }
     else {
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), renderSnowball);

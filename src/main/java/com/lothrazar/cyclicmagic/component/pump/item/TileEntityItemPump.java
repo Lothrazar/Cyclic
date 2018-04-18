@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
@@ -41,24 +42,30 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+
   private static final int SLOT_TRANSFER = 0;
   private static int TRANSFER_ITEM_TICK_DELAY = 0;
+
   public static enum Fields {
     REDSTONE, FILTERTYPE;
   }
+
   static final int FILTER_SIZE = 9;
   private int itemTransferCooldown = 0;
   private int needsRedstone = 0;
   private int filterType = 0;
+
   public TileEntityItemPump() {
     super(1 + FILTER_SIZE);
     this.setSlotsForExtract(0);
     this.setSlotsForInsert(0);
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -69,6 +76,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -80,10 +88,12 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   private boolean isWhitelist() {
     //default is zero, and default blacklist makes sense -> it is empty, so everythings allowed
     return this.filterType == 1;
   }
+
   private boolean isStackInvalid(ItemStack stackToTest) {
     List<ItemStack> inventoryContents = getFilter();
     //edge case: if list is empty ?? should be covered already
@@ -98,10 +108,12 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     //here is the opposite: i did NOT match the list
     return this.isWhitelist();
   }
+
   private List<ItemStack> getFilter() {
     List<ItemStack> validForSide = this.inv.subList(1, FILTER_SIZE + 1);
     return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
   }
+
   @Override
   public EnumFacing getCurrentFacing() {
     // weird hack IDK when its needed
@@ -112,6 +124,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     }
     return facingTo;
   }
+
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
@@ -143,6 +156,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     this.tryExport();
     this.tryImport();
   }
+
   public void tryExport() {
     if (this.getStackInSlot(SLOT_TRANSFER).isEmpty()) {
       return;//im empty nothing to give
@@ -170,6 +184,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         cable.updateIncomingItemFace(importFromSide.getOpposite());
     }
   }
+
   public void tryImport() {
     if (this.getStackInSlot(SLOT_TRANSFER).isEmpty() == false) {
       return;//im full leave me alone
@@ -203,6 +218,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -210,6 +226,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     needsRedstone = compound.getInteger(NBT_REDST);
     filterType = compound.getInteger("wbtype");
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
@@ -217,15 +234,18 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     compound.setInteger("wbtype", filterType);
     return super.writeToNBT(compound);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   public static void syncConfig(Configuration config) {
     TRANSFER_ITEM_TICK_DELAY = config.getInt("TRANSFER_ITEM_TICK_DELAY", Const.ConfigCategory.cables, 1, 1, 200, "Tick Delay between item transfers (1 means 1 item per tick so no delay).  Only affects Item Extractor.  ");
   }

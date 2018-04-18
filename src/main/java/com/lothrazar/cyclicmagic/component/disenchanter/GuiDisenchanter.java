@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.disenchanter;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -32,7 +33,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDisenchanter extends GuiBaseContainer {
+
   private TileEntityDisenchanter tile;
+
   public GuiDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter tileEntity) {
     super(new ContainerDisenchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -42,10 +45,12 @@ public class GuiDisenchanter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityDisenchanter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityDisenchanter.Fields.TIMER.ordinal(), TileEntityDisenchanter.TIMER_FULL);
   }
+
   @Override
   public void initGui() {
     super.initGui();
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -87,6 +92,7 @@ public class GuiDisenchanter extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

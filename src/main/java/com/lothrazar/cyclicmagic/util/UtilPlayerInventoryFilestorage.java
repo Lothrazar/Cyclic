@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,8 +47,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  * so i was able to use parts of that to make this
  * **/
 public class UtilPlayerInventoryFilestorage {
+
   public static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   private static HashMap<String, InventoryPlayerExtended> playerItems = new HashMap<String, InventoryPlayerExtended>();
+
   public static void playerSetupOnLoad(PlayerEvent.LoadFromFile event) {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
@@ -68,9 +71,11 @@ public class UtilPlayerInventoryFilestorage {
     loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
+
   public static void clearPlayerInventory(EntityPlayer player) {
     playerItems.remove(player.getDisplayNameString());
   }
+
   public static InventoryPlayerExtended getPlayerInventory(EntityPlayer player) {
     if (!playerItems.containsKey(player.getDisplayNameString())) {
       InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);
@@ -78,16 +83,20 @@ public class UtilPlayerInventoryFilestorage {
     }
     return playerItems.get(player.getDisplayNameString());
   }
+
   public static ItemStack getPlayerInventoryStack(EntityPlayer player, int slot) {
     return getPlayerInventory(player).getStackInSlot(slot);
   }
+
   public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack) {
     //    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
     getPlayerInventory(player).inv.set(slot, itemStack);
   }
+
   public static void setPlayerInventory(EntityPlayer player, InventoryPlayerExtended inventory) {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
+
   public static void loadPlayerInventory(EntityPlayer player, File file1, File file2) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
@@ -131,6 +140,7 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
+
   public static void savePlayerItems(EntityPlayer player, File file1, File file2) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
@@ -169,9 +179,11 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
+
   public static final String ext = "invo";
   public static final String extback = "backup";
   public static final String regex = "[^a-zA-Z0-9_]";
+
   public static File getPlayerFile(String suffix, File playerDirectory, String playername) {
     // some other mods/servers/plugins add things like "[Owner] > " prefix to player names
     //which are invalid filename chars.   https://github.com/PrinceOfAmber/Cyclic/issues/188
@@ -179,12 +191,14 @@ public class UtilPlayerInventoryFilestorage {
     String playernameFiltered = playername.replaceAll(regex, "");
     return new File(playerDirectory, "_" + playernameFiltered + "." + suffix);
   }
+
   public static void syncItems(EntityPlayer player) {
     int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;//+20 somehow magically fixes bottom row
     for (int a = 0; a < size; a++) {
       getPlayerInventory(player).syncSlotToClients(a);
     }
   }
+
   public static void putDataIntoInventory(InventoryPlayerExtended inventory, EntityPlayer player) {
     inventory.inv = getPlayerInventory(player).inv;
   }

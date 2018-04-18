@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.harvester;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -47,17 +48,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+
   public static int FUEL_COST = 0;
+
   public BlockHarvester() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_HARVESTER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityHarvester();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
@@ -67,12 +72,14 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
         'r', "gemEmerald",
         'b', "gemDiamond");
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHarvester.class, new MachineTESR(this));
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);

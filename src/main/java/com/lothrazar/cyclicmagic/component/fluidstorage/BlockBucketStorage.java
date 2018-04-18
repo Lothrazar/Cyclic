@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fluidstorage;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -58,6 +59,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBucketStorage extends BlockBase implements ITileEntityProvider, IHasRecipe, IBlockHasTESR {
+
   public BlockBucketStorage() {
     super(Material.GLASS);
     this.setHardness(7F);
@@ -66,6 +68,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
+
   //  @Override
   //  public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
   //    Fluid fluid = this.getCurrentFluid(world, pos);
@@ -98,6 +101,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     ret.add(stack);
     return ret;
   }
+
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     if (stack.getTagCompound() != null) {
@@ -110,6 +114,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
   }
+
   //  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
   //    TileEntity here = world.getTileEntity(pos);
   //    //on initial placement, this might be null
@@ -131,14 +136,17 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT; // http://www.minecraftforge.net/forum/index.php?topic=18754.0
   }
+
   @Override
   public boolean isOpaqueCube(IBlockState state) { // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
     return false;
   }
+
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityBucketStorage();
   }
+
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -147,11 +155,13 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
+
   @Override
   public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
     super.harvestBlock(world, player, pos, state, te, tool);
     world.setBlockToAir(pos);
   }
+
   //end of fixing getdrops
   @Override
   public IRecipe addRecipe() {
@@ -161,6 +171,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
         "igi",
         'o', "obsidian", 'i', "ingotIron", 'g', "blockGlass");
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
@@ -181,6 +192,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {

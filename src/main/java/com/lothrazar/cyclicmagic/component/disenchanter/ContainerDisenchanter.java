@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.disenchanter;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerDisenchanter extends ContainerBaseMachine {
+
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_INPUT = 0;
   public static final int SLOTX_BOTTLE = 1;
@@ -49,6 +51,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public static final int SLOTY_REDSTONE = 2;
   public static final int SLOTY_GLOWSTONE = 3;
   public static final int SLOTY_BOOK = 4;
+
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     super(te);
     this.screenSize = ScreenSize.LARGE;
@@ -100,6 +103,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -132,11 +136,13 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.beaconpotion;
+
 import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -35,8 +36,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBeaconPotion extends GuiBaseContainer {
+
   private GuiButtonToggleSize btnSize;
   private ButtonTileEntityField btnEntityType;
+
   public GuiBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion tileEntity) {
     super(new ContainerBeaconPotion(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -45,6 +48,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
       this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), TileEntityBeaconPotion.MAX_POTION);
     }
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -67,6 +71,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     btnSize.width = w;
     this.buttonList.add(btnSize);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -82,6 +87,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
       progressBar.maxValue = tile.getField(Fields.FUELMAX.ordinal());
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

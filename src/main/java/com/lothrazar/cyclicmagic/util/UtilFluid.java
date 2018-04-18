@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -42,6 +43,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class UtilFluid {
+
   //  public static ItemStack dispenseStack(World world, BlockPos pos, ItemStack stack, EnumFacing facing) {
   //    if (FluidUtil.getFluidContained(stack) != null) {
   //      return dumpContainer(world, pos, stack);
@@ -62,6 +64,7 @@ public class UtilFluid {
     //    if (res == FluidActionResult.FAILURE) { return stackIn; }
     //    return res.getResult();
   }
+
   /**
    * Drains a filled container and places the fluid.
    * 
@@ -88,6 +91,7 @@ public class UtilFluid {
     }
     return null;
   }
+
   public static ItemStack drainOneBucket(ItemStack d) {
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(d);
     if (fluidHandler == null) {
@@ -96,28 +100,36 @@ public class UtilFluid {
     fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
     return fluidHandler.getContainer();
   }
+
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
     return FluidUtil.getFluidContained(returnMe) == null;
   }
+
   public static FluidStack getFluidContained(ItemStack returnMe) {
     return FluidUtil.getFluidContained(returnMe);
   }
+
   public static Fluid getFluidType(ItemStack returnMe) {
     FluidStack f = FluidUtil.getFluidContained(returnMe);
     return (f == null) ? null : f.getFluid();
   }
+
   public static boolean stackHasFluidHandler(ItemStack stackIn) {
     return FluidUtil.getFluidHandler(stackIn) != null;
   }
+
   public static boolean hasFluidHandler(TileEntity tile, EnumFacing side) {
     return tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
   }
+
   public static IFluidHandler getFluidHandler(TileEntity tile, EnumFacing side) {
     return (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) ? tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side) : null;
   }
+
   public static boolean interactWithFluidHandler(@Nonnull EntityPlayer player, @Nonnull World world, @Nonnull BlockPos pos, @Nullable EnumFacing side) {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
+
   /**
    * Look for a fluid handler with gien position and direction try to extract from that pos and fill the tank
    * 
@@ -163,6 +175,7 @@ public class UtilFluid {
       return false;
     }
   }
+
   public static boolean tryFillPositionFromTank(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankFrom, int amount) {
     try {
       IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -44,16 +45,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemScythe extends BaseTool implements IHasRecipe {
+
   private static final int RADIUS = 6;//13x13
   private static final int RADIUS_SNEAKING = 2;//2x2
+
   public enum ScytheType {
     WEEDS, LEAVES, CROPS;
   }
+
   private ScytheType harvestType;
+
   public ItemScythe(ScytheType c) {
     super(1000);
     harvestType = c;
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //    System.out.println("scytheisRemote" + world.isRemote);
@@ -85,6 +91,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
     super.onUse(stack, player, world, hand);
     return super.onItemUse(player, world, offset, hand, side, hitX, hitY, hitZ);
   }
+
   public static List<BlockPos> getShape(BlockPos center, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape.addAll(UtilShape.squareHorizontalFull(center.down().down(), radius));
@@ -94,6 +101,7 @@ public class ItemScythe extends BaseTool implements IHasRecipe {
     shape.addAll(UtilShape.squareHorizontalFull(center.up().up(), radius));
     return shape;
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (harvestType) {

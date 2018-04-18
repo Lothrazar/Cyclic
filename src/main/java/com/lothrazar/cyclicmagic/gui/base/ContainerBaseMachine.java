@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.base;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -39,18 +40,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBaseMachine extends ContainerBase {
+
   public static final int SLOTX_FUEL = 8 * Const.SQ + Const.PAD;
   public static final int SLOTY_FUEL = Const.PAD;
   private int[] tileMap;
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   private boolean hasTile;
+
   public ContainerBaseMachine() {
     this.hasTile = false;
   }
+
   public ContainerBaseMachine(TileEntityBaseMachineInvo t) {
     this.setTile(t);
   }
+
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 9; j++) {
@@ -62,16 +67,19 @@ public class ContainerBaseMachine extends ContainerBase {
     }
     bindPlayerHotbar(inventoryPlayer);
   }
+
   private void setTile(TileEntityBaseMachineInvo tile) {
     this.hasTile = true;
     this.tile = tile;
     this.tileMap = new int[tile.getFieldOrdinals().length];
   }
+
   protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new Slot(inventoryPlayer, i, screenSize.playerOffsetX() + i * Const.SQ, screenSize.playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
     }
   }
+
   protected void syncFields() {
     int fieldId;
     for (int i = 0; i < this.listeners.size(); ++i) {
@@ -97,6 +105,7 @@ public class ContainerBaseMachine extends ContainerBase {
       this.tileMap[j] = this.tile.getField(fieldId);
     }
   }
+
   @Override
   public void detectAndSendChanges() {
     if (tile != null) {
@@ -104,10 +113,12 @@ public class ContainerBaseMachine extends ContainerBase {
     }
     super.detectAndSendChanges();
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     return ItemStack.EMPTY;
   }
+
   //cant have no slots. breaks shiftclick
   public void addFurnaceFuelSlot(int slotxFuel, int slotyFuel) {
     Slot fuel;
@@ -119,16 +130,19 @@ public class ContainerBaseMachine extends ContainerBase {
     }
     addSlotToContainer(fuel);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, tile);
   }
+
   @Override
   public boolean canInteractWith(EntityPlayer player) {
     if (this.hasTile == false) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fluidplacer;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
@@ -44,6 +45,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
 public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+
   public BlockFluidPlacer() {
     super(Material.WOOD);
     this.setHardness(3F);
@@ -51,10 +53,12 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPlacer();
   }
+
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -63,11 +67,13 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
     } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
+
   @Override
   public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
     super.harvestBlock(world, player, pos, state, te, tool);
     world.setBlockToAir(pos);
   }
+
   //end of fixing getdrops
   @Override
   public IRecipe addRecipe() {
@@ -80,6 +86,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
         'f', Blocks.FURNACE,
         'd', Items.BUCKET);
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE

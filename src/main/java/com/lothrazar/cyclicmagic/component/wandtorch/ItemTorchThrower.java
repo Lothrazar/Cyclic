@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandtorch;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -38,13 +39,16 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class ItemTorchThrower extends BaseTool implements IHasRecipe {
+
   private static final float VELOCITY_DEFAULT = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;//copied from BaseItemProjectile
   private static final int COOLDOWN = 8;//ticks
+
   public ItemTorchThrower() {
     super(256);//at 64 it reparied 21->37
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -58,6 +62,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
     super.onUse(stack, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -69,6 +74,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
         'l', "logWood");
     return null;
   }
+
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {//176 to 240 as an example repair
     ItemStack mat = new ItemStack(Blocks.COAL_BLOCK);

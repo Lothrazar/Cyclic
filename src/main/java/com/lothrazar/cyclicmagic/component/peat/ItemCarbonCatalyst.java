@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,15 +53,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasRecipe {
+
   public static List<String> plants = new ArrayList<String>();
   static Item peat_biomass = null;
   static Item peat_carbon = null;
+
   public ItemCarbonCatalyst() {
     super(500);
   }
+
   public static boolean isPlantMatter(ItemStack found) {
     return UtilOreDictionary.doesMatchOreDict(found, plants);
   }
+
   @SubscribeEvent
   public static void onLeftClickBlock(PlayerInteractEvent.RightClickBlock event) {
     if (peat_biomass == null) {
@@ -120,6 +125,7 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
       UtilChat.sendStatusMessage(event.getEntityPlayer(), "peat.plantmatter.dry");
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     //TODO: this is not the config file, rename method
@@ -140,6 +146,7 @@ public class ItemCarbonCatalyst extends BaseTool implements IHasConfig, IHasReci
     plants.add("lilypad");
     plants.add("tallgrass");
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

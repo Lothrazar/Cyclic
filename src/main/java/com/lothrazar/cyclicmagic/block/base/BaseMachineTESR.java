@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -45,23 +46,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> extends BaseTESR<T> {
+
   protected int itemSlotAbove = -1;
+
   public BaseMachineTESR(Block res, int slot) {
     super(res);
     this.itemSlotAbove = slot;
   }
+
   public BaseMachineTESR(int slot) {
     this(null, slot);
   }
+
   public BaseMachineTESR() {
     this(null, -1);
   }
+
   /**
    * override this in your main class to call other animation hooks
    * 
    * @param te
    */
   public abstract void renderBasic(TileEntityBaseMachineInvo te);
+
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z,
       float partialTicks, int destroyStage, float alpha
@@ -78,6 +85,7 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
+
   protected void renderAnimation(@Nonnull TileEntityBaseMachineInvo te) {
     if (Minecraft.getMinecraft() == null
         || Minecraft.getMinecraft().getBlockRendererDispatcher() == null

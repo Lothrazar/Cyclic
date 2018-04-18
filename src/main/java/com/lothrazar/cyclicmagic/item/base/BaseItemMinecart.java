@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.base;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.material.Material;
@@ -39,13 +40,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class BaseItemMinecart extends BaseItem {
+
   public BaseItemMinecart() {
     super();
     this.maxStackSize = 16;
     BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, CYCLICMINECART_DISPENSER_BEHAVIOR);
   }
+
   public abstract EntityMinecart summonMinecart(World world);
+
   public abstract EntityMinecart summonMinecart(World world, double x, double y, double z);
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState iblockstate = worldIn.getBlockState(pos);
@@ -71,8 +76,11 @@ public abstract class BaseItemMinecart extends BaseItem {
       return EnumActionResult.SUCCESS;
     }
   }
+
   public static final IBehaviorDispenseItem CYCLICMINECART_DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem() {
+
     private final BehaviorDefaultDispenseItem behaviourDefaultDispenseItem = new BehaviorDefaultDispenseItem();
+
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
@@ -119,6 +127,7 @@ public abstract class BaseItemMinecart extends BaseItem {
       stack.shrink(1);
       return stack;
     }
+
     /**
      * Play the dispense sound from the specified block.
      */

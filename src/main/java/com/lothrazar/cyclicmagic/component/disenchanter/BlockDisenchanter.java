@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.disenchanter;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -44,6 +45,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+
   public BlockDisenchanter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_DISENCH);
     this.setHardness(3F);
@@ -52,16 +54,19 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasR
     this.setTickRandomly(true);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityDisenchanter();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisenchanter.class, new DisenchantPylonTESR());
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

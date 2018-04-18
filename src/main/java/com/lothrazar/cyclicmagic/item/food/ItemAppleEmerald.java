@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -46,7 +47,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
+
   private static final int CONVTIME = 1200;
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -57,11 +60,13 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
         'g', "nuggetGold",
         'i', "nuggetIron");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public EnumRarity getRarity(ItemStack par1ItemStack) {
     return EnumRarity.RARE;
   }
+
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     if (event.getEntity() instanceof EntityPlayer == false) {
@@ -89,12 +94,14 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
       }
     }
   }
+
   private void consumeSelf(ItemStack itemstack) {
     itemstack.shrink(1);
     if (itemstack.getCount() == 0) {
       itemstack = ItemStack.EMPTY;
     }
   }
+
   @Override
   public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     if (entity instanceof EntityZombieVillager
@@ -111,6 +118,7 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
     }
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
   }
+
   private void startConverting(EntityZombieVillager v, int t) {
     //      v.conversionTime = t;
     ObfuscationReflectionHelper.setPrivateValue(EntityZombieVillager.class, v, t, "conversionTime", "field_82234_d");

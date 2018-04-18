@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandice;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItemRapidScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -34,9 +35,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasRecipe {
+
   public ItemProjectileSnow() {
     super(1000);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
@@ -48,14 +51,16 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
         'r', "dustRedstone",
         'i', "ingotIron");
   }
+
   @Override
   public EntitySnowballBolt createBullet(World world, EntityPlayer player, float dmg) {
     EntitySnowballBolt s = new EntitySnowballBolt(world, player);
     s.setDamage(dmg);
     return s;
   }
+
   @Override
   public SoundEvent getSound() {
-    return SoundRegistry.goodlaunch;
+    return SoundRegistry.frost_staff_launch;
   }
 }

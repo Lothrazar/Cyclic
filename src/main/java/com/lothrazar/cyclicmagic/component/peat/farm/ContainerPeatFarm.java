@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.farm;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
@@ -34,10 +35,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPeatFarm extends ContainerBaseMachine {
+
   static final int SLOTY_FLUID = 39;
   static final int SLOTX_START = 8;
   static final int MID_SPACING = 52;
   public static final int SLOTY = 36;
+
   public ContainerPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(te);
     int slotNum = 0;
@@ -56,16 +59,19 @@ public class ContainerPeatFarm extends ContainerBaseMachine {
     }
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tile);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fluidstorage;
+
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -36,6 +37,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
+
   @Override
   public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     FluidStack fluidStack = te.getCurrentFluidStack();
@@ -124,15 +126,18 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
     GlStateManager.popMatrix();
   }
 }
+
 /**
  * I learned some of these tips and tricks from Mekanism fluid rendering
  * https://github.com/aidancbrady/Mekanism/blob/f9ec882bcebf685c3b75237bc90d460b217b52a8/src/main/java/mekanism/client/render/MekanismRenderer.java#L429
  *
  */
 class UtilRender {
+
   private static float lightmapLastX;
   private static float lightmapLastY;
   private static boolean optifineBreak = false;
+
   public static void glowOn(int glow) {
     GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
     try {
@@ -148,6 +153,7 @@ class UtilRender {
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, glowRatioX, glowRatioY);
     }
   }
+
   public static void glowOff() {
     if (!optifineBreak) {
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapLastX, lightmapLastY);

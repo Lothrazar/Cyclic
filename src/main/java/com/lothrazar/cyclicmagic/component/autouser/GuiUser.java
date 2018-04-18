@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.autouser;
+
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -38,10 +39,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContainer {
+
   private ButtonTileEntityField actionBtn;
   private GuiButtonToggleSize btnSize;
   private ButtonTileEntityField yOffsetBtn;
   private ButtonTileEntityField btnSpeed;
+
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -50,6 +53,7 @@ public class GuiUser extends GuiBaseContainer {
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
     this.setFieldFuel(Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -87,6 +91,7 @@ public class GuiUser extends GuiBaseContainer {
     this.addButton(btnSpeedD);
     this.registerButtonDisableTrigger(btnSpeedD, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), 1);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -112,6 +117,7 @@ public class GuiUser extends GuiBaseContainer {
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

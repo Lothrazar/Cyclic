@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.workbench;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -41,6 +42,7 @@ import net.minecraft.world.World;
  *
  */
 public class ContainerWorkBench extends ContainerBaseMachine {
+
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
@@ -48,6 +50,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   private InventoryCraftResult craftResult = new InventoryCraftResult();
   private World world;
   private final EntityPlayer player;
+
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     super(te);
     craftMatrix = new InventoryWorkbench(this, te);
@@ -75,6 +78,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     bindPlayerInventory(inventoryPlayer);
     this.onCraftMatrixChanged(this.craftMatrix);
   }
+
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     //i have to assume the recipe will safely validate itself
@@ -88,6 +92,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
       ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
     }
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
@@ -35,11 +36,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtended extends ContainerBase {
+
   public InventoryPlayerExtended inventory;
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
   private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   final int pad = Const.PAD;
+
   public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
     inventory = eInvo;
     inventory.setEventHandler(this);
@@ -51,14 +54,17 @@ public class ContainerPlayerExtended extends ContainerBase {
       armorY = Const.PAD + k * Const.SQ;
       final EntityEquipmentSlot slot = ARMOR[k];
       this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), armorX, armorY) {
+
         @Override
         public int getSlotStackLimit() {
           return 1;
         }
+
         @Override
         public boolean isItemValid(ItemStack stack) {
           return stack.getItem().isValidArmor(stack, slot, player);
         }
+
         @Override
         @SideOnly(Side.CLIENT)
         public String getSlotTexture() {
@@ -93,6 +99,7 @@ public class ContainerPlayerExtended extends ContainerBase {
       this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
     }
   }
+
   /**
    * Called when the container is closed.
    */
@@ -103,6 +110,7 @@ public class ContainerPlayerExtended extends ContainerBase {
       UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
     }
   }
+
   /**
    * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
    */
@@ -148,6 +156,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     }
     return stack;
   }
+
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;
     int k = par2;

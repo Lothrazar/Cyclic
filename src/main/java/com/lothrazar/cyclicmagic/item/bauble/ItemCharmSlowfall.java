@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
@@ -38,13 +39,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 
 public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
+
   private final static int seconds = 30;
   private final static int fallDistanceLimit = 6;
   private final static int durability = 64;
   private final static Potion potion = PotionEffectRegistry.SLOWFALL;
+
   public ItemCharmSlowfall() {
     super(durability);
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
@@ -62,6 +66,7 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
       }
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.RABBIT_FOOT);

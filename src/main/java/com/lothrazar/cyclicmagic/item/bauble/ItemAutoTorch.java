@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -40,12 +41,15 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
+
   private static final int durability = 256;
   private static int lightLimit = 7;
+
   public ItemAutoTorch() {
     super(durability);
     this.repairedBy = new ItemStack(Items.COAL);
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
@@ -62,6 +66,7 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
       }
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), "blockCoal", "blockCoal", "blockCoal");
@@ -72,6 +77,7 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
         'c', "blockCoal",
         'i', Blocks.IRON_BARS);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     lightLimit = config.getInt("AutoTorchLightLevel", Const.ConfigCategory.modpackMisc, 7, 1, 14, "At which light level will auto torch place.  Set to 7 means it will place a torch 7 or darker.  (15 is full light, 0 is full dark)");

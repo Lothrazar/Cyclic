@@ -29,6 +29,8 @@ package com.lothrazar.cyclicmagic.block.base;
  *
  */
 public interface ITileTextbox {
+
   public void setText(String s);
+
   public String getText();
 }

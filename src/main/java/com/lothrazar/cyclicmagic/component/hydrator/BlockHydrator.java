@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -60,8 +61,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
   public static ArrayList<RecipeHydrate> recipesShapeless = new ArrayList<RecipeHydrate>();
+
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -70,10 +73,12 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     this.setTranslucent();
     this.addAllRecipes();
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
+
   public static void addRecipe(RecipeHydrate rec) {
     if (rec.isShapeless()) {
       recipesShapeless.add(rec);
@@ -82,6 +87,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
       recipesShaped.add(rec);
     }
   }
+
   private void addAllRecipes() {
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
     addRecipe(new RecipeHydrate(
@@ -151,10 +157,12 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityHydrator();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -166,6 +174,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
         's', Blocks.DROPPER,
         'r', Items.WATER_BUCKET);
   }
+
   @Override
   public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
     TileEntity te = world.getTileEntity(pos);
@@ -175,11 +184,13 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     }
     return 0;
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHydrator.class, new HydratorTESR(0, 4));
   }
+
   /**
    * with thanks and gratitude @KnightMiner https://github.com/KnightMiner/Ceramics/blob/1.11/src/main/java/knightminer/ceramics/blocks/BlockBarrel.java
    * 
@@ -201,6 +212,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   //for fluid and itemblock storage
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -222,6 +234,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     ret.add(stack);
     return ret;
   }
+
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
   @Override
   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -230,11 +243,13 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     } //If it will harvest, delay deletion of the block until after getDrops
     return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
+
   @Override
   public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
     super.harvestBlock(world, player, pos, state, te, tool);
     world.setBlockToAir(pos);
   }
+
   //end of fixing getdrops
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.fluid;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -35,6 +36,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+
   public BlockFluidPump() {
     super(Material.WOOD);
     this.setHardness(3F);
@@ -44,10 +46,12 @@ public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityPr
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_FLUIDPUMP);
     this.placeType = PlacementType.SIDE_BLOCK;
   }
+
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityFluidPump();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

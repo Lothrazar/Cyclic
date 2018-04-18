@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import javax.annotation.Nullable;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -45,13 +46,16 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
 public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> {
+
   protected IModel model;
   protected IBakedModel bakedModel;
   protected String resource = null;
+
   public BaseTESR(@Nullable Block block) {
     if (block != null)
       resource = "tesr/" + block.getUnlocalizedName().replace("tile.", "").replace(".name", "");
   }
+
   @Nullable
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
@@ -67,6 +71,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
       }
       bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
           new Function<ResourceLocation, TextureAtlasSprite>() {
+
             @Override
             public TextureAtlasSprite apply(ResourceLocation location) {
               return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
@@ -75,12 +80,15 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     }
     return bakedModel;
   }
+
   protected void renderItem(TileEntity te, ItemStack stack, float itemHeight) {
     this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
   }
+
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y) {
     this.renderItem(te, stack, x, itemHeight, y, 0, true, 0.4F);
   }
+
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning, float scaleFactor) {
     //    GuiHelper.drawTexturedRect(minecraft, texture, x, y, width, height, zLevel, texPosX, texPosY, texWidth, texHeight);
     if (stack == null || stack.isEmpty()) {
@@ -107,6 +115,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
     GlStateManager.popMatrix();
   }
+
   public void fixLighting(TileEntity te) {
     int ambLight = getWorld().getCombinedLight(te.getPos().offset(EnumFacing.UP), 0);
     if (ambLight == 0) {
@@ -117,6 +126,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lu / 1.0F, lv / 1.0F);
     //end of 'fix lighting'
   }
+
   /**
    * TextColor similar to int textColor = 0xFF0055;
    * 
@@ -165,6 +175,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
       GlStateManager.matrixMode(5888);
     }
   }
+
   public int angleOfFace(EnumFacing side) {
     switch (side) {
       case SOUTH:

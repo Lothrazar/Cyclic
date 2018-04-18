@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
+
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiVector extends GuiBaseContainer {
+
   private static final int SOUTH = 0;
   private static final int NORTH = 180;
   private static final int EAST = 270;
@@ -51,12 +53,14 @@ public class GuiVector extends GuiBaseContainer {
   private ButtonVector soundBtn;
   private GuiTextFieldInteger txtYaw;
   private GuiTextFieldInteger txtAngle;
+
   public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     screenSize = ScreenSize.STANDARDPLAIN;
     this.fieldRedstoneBtn = TileEntityVector.Fields.REDSTONE.ordinal();
   }
+
   //  public String getTitle() {
   //    return "tile.plate_vector.name";
   //  }
@@ -98,10 +102,12 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xAngle + 24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString = "/";
     addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
   }
+
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
   }
+
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,
         this.guiLeft + x,
@@ -110,6 +116,7 @@ public class GuiVector extends GuiBaseContainer {
     this.buttonList.add(btn);
     return btn;
   }
+
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     super.actionPerformed(button);
@@ -129,6 +136,7 @@ public class GuiVector extends GuiBaseContainer {
       }
     }
   }
+
   private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
     GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
@@ -137,6 +145,7 @@ public class GuiVector extends GuiBaseContainer {
     txtBoxes.add(txt);
     return txt;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -156,11 +165,13 @@ public class GuiVector extends GuiBaseContainer {
     renderString("tile.plate_vector.gui.angle", xAngle + 18, yAngle + 26);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
   private void renderString(String s, int x, int y) {
     String str = UtilChat.lang(s);
     int strWidth = this.fontRenderer.getStringWidth(str);
     this.fontRenderer.drawString(str, x - strWidth / 2, y, 4210752);
   }
+
   @Override
   public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     super.updateScreen();
@@ -170,6 +181,7 @@ public class GuiVector extends GuiBaseContainer {
       }
     }
   }
+
   @Override
   protected void keyTyped(char pchar, int keyCode) throws IOException {
     super.keyTyped(pchar, keyCode);

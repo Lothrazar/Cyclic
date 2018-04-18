@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wireless;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
@@ -55,32 +56,41 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecipe {
+
   private static final int PARTICLE_DENSITY = 2;
   public static final PropertyBool POWERED = net.minecraft.block.BlockLever.POWERED;
+
   public static enum WirelessType {
     TRANSMITTER, RECEIVER;
   }
+
   WirelessType type;
+
   public BlockRedstoneWireless(WirelessType t) {
     super(Material.IRON);
     type = t;
   }
+
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, POWERED);
   }
+
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(POWERED, false);
   }
+
   @Override
   public boolean canProvidePower(IBlockState state) {
     return true;
   }
+
   @Override
   public int getMetaFromState(IBlockState state) {
     return (state.getValue(POWERED) ? 1 : 0);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     if (type == WirelessType.TRANSMITTER)
@@ -88,6 +98,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     else
       return new TileEntityWirelessRec();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
@@ -95,20 +106,24 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.REDSTONE, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, PARTICLE_DENSITY);
     }
   }
+
   private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (world.getTileEntity(pos) instanceof TileEntityWirelessRec) {
       return 15;
     }
     return 0;
   }
+
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
+
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (world.getTileEntity(pos) instanceof TileEntityWirelessTr) {
@@ -122,6 +137,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     }
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     if (this.type == WirelessType.TRANSMITTER)
@@ -141,6 +157,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
           's', "stone",
           'q', Blocks.REDSTONE_TORCH);
   }
+
   @SubscribeEvent
   public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
     BlockPos pos = event.getPos();
@@ -152,6 +169,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       UtilChat.sendStatusMessage(event.getEntityPlayer(), UtilChat.lang("tile.wireless_transmitter.saved") + UtilChat.blockPosToString(pos));
     }
   }
+
   /**
    * item stack data pushed into tile entity
    */
@@ -164,6 +182,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       ((TileEntityWirelessTr) tile).setTargetPos(posTarget);
     }
   }
+
   /**
    * tile entity data saved to item stack
    * 
@@ -187,6 +206,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
     }
   }
+
   //disable regular drops, make my own drop that saves nbt
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {

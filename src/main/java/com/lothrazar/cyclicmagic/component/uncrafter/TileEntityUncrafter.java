@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.uncrafter;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -39,6 +40,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
 public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
@@ -50,9 +52,11 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_COLS = 7;
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
+
   public static enum Fields {
     TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
+
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 2);
     timer = TIMER_FULL;
@@ -60,20 +64,24 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     this.setSlotsForInsert(SLOT_UNCRAFTME);
     this.setSlotsForExtract(1, this.getSizeInventory() - 2);//-2, one for fuel one for input
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void update() {
     if (!this.isRunning()) {
@@ -97,7 +105,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
-            UtilSound.playSoundFromServer(SoundRegistry.crack, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
+            UtilSound.playSoundFromServer(SoundRegistry.uncraft, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
           }
           //          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
         }
@@ -119,6 +127,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     } //end of timer go
   }
+
   private void setOutputItems(List<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (!toDrop.isEmpty()) {
@@ -127,6 +136,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -146,6 +156,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     }
     return -7;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -168,15 +179,18 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       break;
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

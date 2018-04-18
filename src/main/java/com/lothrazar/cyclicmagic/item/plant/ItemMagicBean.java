@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.plant;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -42,11 +43,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
+
   private final Block soilBlockID;
+
   public ItemMagicBean(Block crops, Block soil) {
     super(crops, soil);
     soilBlockID = soil;
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState state = worldIn.getBlockState(pos);
@@ -58,6 +62,7 @@ public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
       return EnumActionResult.FAIL;
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
@@ -71,6 +76,7 @@ public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
         'c', Items.PUMPKIN_SEEDS,
         'd', Items.NETHER_WART);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {

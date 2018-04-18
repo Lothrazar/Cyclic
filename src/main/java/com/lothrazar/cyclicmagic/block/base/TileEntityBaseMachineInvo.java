@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
+
   protected static final int SPEED_FUELED = 8;
   /**
    * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal item has 1600 burn time and 1 coal item also gives 80,000 RF (max output based on survey of mods) so i want to make
@@ -79,75 +81,91 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   InvWrapperRestricted invHandler;
   private EnergyStore energyStorage;
   private boolean setRenderGlobally;
+
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     invHandler = new InvWrapperRestricted(this);
     this.fuelSlot = -1;
   }
+
   protected void setSlotsForExtract(int slot) {
     this.setSlotsForExtract(Arrays.asList(slot));
   }
+
   protected void setSlotsForInsert(int slot) {
     this.setSlotsForInsert(Arrays.asList(slot));
   }
+
   protected void setSlotsForExtract(List<Integer> slots) {
     invHandler.setSlotsExtract(slots);
   }
+
   protected void setSlotsForExtract(int startInclusive, int endInclusive) {
     setSlotsForExtract(
         IntStream.rangeClosed(
             startInclusive,
             endInclusive).boxed().collect(Collectors.toList()));
   }
+
   protected void setSlotsForInsert(int startInclusive, int endInclusive) {
     setSlotsForInsert(
         IntStream.rangeClosed(
             startInclusive,
             endInclusive).boxed().collect(Collectors.toList()));
   }
+
   protected void setSlotsForInsert(List<Integer> slots) {
     invHandler.setSlotsInsert(slots);
   }
+
   protected void setSlotsForBoth(List<Integer> slots) {
     invHandler.setSlotsInsert(slots);
     invHandler.setSlotsExtract(slots);
   }
+
   /**
    * no input means all slots
    */
   protected void setSlotsForBoth() {
     this.setSlotsForBoth(IntStream.rangeClosed(0, this.getSizeInventory()).boxed().collect(Collectors.toList()));
   }
+
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn)
         && this.invHandler.canInsert(index);
   }
+
   @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return index != this.fuelCost && //override to inv handler: do not extract fuel
         this.invHandler.canExtract(index);
   }
+
   protected void setFuelSlot(int slot, int fcost) {
     if (fcost > 0) {
       this.fuelSlot = slot;
       this.fuelCost = fcost;
     }
   }
+
   public int getFuelMax() {
     this.initEnergyStorage();
     return this.energyStorage.getMaxEnergyStored();
   }
+
   @Override
   public int getFuelCurrent() {
     this.initEnergyStorage();
     return this.energyStorage.getEnergyStored();
   }
+
   protected void setFuelCurrent(int f) {
     this.initEnergyStorage();
     this.energyStorage.setEnergyStored(f);
   }
+
   public double getPercentFormatted() {
     if (this.getFuelMax() == 0) {
       return 0;
@@ -156,12 +174,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
+
   public boolean doesUseFuel() {
     return this.fuelCost > 0;
   }
+
   public int getFuelCost() {
     return this.fuelCost;
   }
+
   public void consumeFuel() {
     if (doesUseFuel() && world.isRemote == false) {//only drain on server
       if (this.getFuelCurrent() >= this.getFuelCost()) {
@@ -171,6 +192,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   protected void importFuel() {
     ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
     //pull in item from fuel slot, if it has fuel burn time
@@ -198,9 +220,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
   }
+
   @Override
   public boolean isRunning() {
     if (this.doesUseFuel()) {
@@ -209,6 +233,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return super.isRunning();
   }
+
   public boolean updateFuelIsBurning() {
     if (this.doesUseFuel()) {
       this.importFuel();
@@ -222,6 +247,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return true;
   }
+
   /**
    * look for connected energy-compatble blocks and try to drain
    * 
@@ -252,6 +278,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   @Override
   protected void spawnParticlesAbove() {
     //turn off when its off
@@ -259,6 +286,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       super.spawnParticlesAbove();
     }
   }
+
   @Override
   public boolean hasEnoughFuel() {
     if (doesUseFuel() == false) {
@@ -266,6 +294,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return this.getFuelCurrent() >= this.getFuelCost();
   }
+
   protected boolean updateTimerIsZero() {
     timer -= this.getSpeed();
     if (timer < 0) {
@@ -273,6 +302,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return timer == 0;
   }
+
   @Override
   public String getName() {
     if (this.getBlockType() == null) {
@@ -281,45 +311,57 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return this.getBlockType().getUnlocalizedName() + ".name";
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return true;
   }
+
   @Override
   public int getField(int id) {
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {}
+
   @Override
   public int getFieldCount() {
     return 0;
   }
+
   @Override
   public boolean hasCustomName() {
     return false;
   }
+
   @Override
   public ITextComponent getDisplayName() {
     return null;
   }
+
   @Override
   public int getInventoryStackLimit() {
     return 64;
   }
+
   @Override
   public void openInventory(EntityPlayer player) {}
+
   @Override
   public void closeInventory(EntityPlayer player) {}
+
   @Override
   public void clear() {
     for (int i = 0; i < this.inv.size(); ++i) {
       inv.set(i, ItemStack.EMPTY);
     }
   }
+
   protected void shiftAllUp() {
     shiftAllUp(0);
   }
+
   /**
    * pass in how many slots on the end ( right ) to skip
    * 
@@ -330,6 +372,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       shiftPairUp(i, i + 1);
     }
   }
+
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
@@ -339,10 +382,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       this.setInventorySlotContents(low, second);
     }
   }
+
   @Override
   public int getSizeInventory() {
     return inv.size();
   }
+
   @Override
   public ItemStack getStackInSlot(int index) {
     if (index < 0 || index >= getSizeInventory()) {
@@ -350,9 +395,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return inv.get(index);
   }
+
   public ItemStack decrStackSize(int index) {
     return this.decrStackSize(index, 1);
   }
+
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
@@ -369,12 +416,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return stack;
   }
+
   @Override
   public ItemStack removeStackFromSlot(int index) {
     ItemStack stack = getStackInSlot(index);
     setInventorySlotContents(index, ItemStack.EMPTY);
     return stack;
   }
+
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     if (stack == null) {
@@ -385,18 +434,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     inv.set(index, stack);
   }
+
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return IntStream.range(0, this.getSizeInventory()).toArray();
   }
+
   @Override
   public boolean isEmpty() {
     return false;
   }
+
   @Override
   public boolean isUsableByPlayer(EntityPlayer player) {
     return true;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
@@ -410,6 +463,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     super.readFromNBT(compound);
   }
+
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -420,6 +474,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
@@ -433,6 +488,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return super.writeToNBT(compound);
   }
+
   private void writeInvoToNBT(NBTTagCompound compound) {
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.size(); i++) {
@@ -446,6 +502,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     compound.setTag(NBT_INV, itemList);
   }
+
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -456,6 +513,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return super.receiveClientEvent(id, value);
     }
   }
+
   public ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
     ItemStack current = this.getStackInSlot(furnaceSlot);
     boolean success = false;
@@ -476,9 +534,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return held;
   }
+
   public int[] getFieldOrdinals() {
     return new int[0];
   }
+
   @Override
   public int getSpeed() {
     if (this.doesUseFuel() == false) {
@@ -493,20 +553,24 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   public void setSpeed(int value) {
     if (value < 0) {
       value = 0;
     }
     speed = Math.min(value, MAX_SPEED);
   }
+
   @Override
   public void incrementSpeed() {
     this.setSpeed(this.getSpeed() - 1);
   }
+
   @Override
   public void decrementSpeed() {
     this.setSpeed(this.getSpeed() + 1);
   }
+
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
@@ -518,6 +582,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return super.hasCapability(capability, facing);
   }
+
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
@@ -530,18 +595,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return super.getCapability(capability, facing);
   }
+
   public void initEnergyStorage() {
     if (energyStorage == null)
       energyStorage = new EnergyStore();
   }
+
   @Override
   public void toggleFuelDisplay() {
     this.fuelDisplay = (this.fuelDisplay + 1) % 2;
   }
+
   @Override
   public boolean getFuelDisplay() {
     return this.fuelDisplay == 0;
   }
+
   /**
    * returns true only if one or more inventory slots is empty
    * 
@@ -563,6 +632,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     //no empty stacks found
     return true;
   }
+
   /**
    * Returns true only if every slot is empty
    * 
@@ -583,12 +653,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     //every stack we tested was empty
     return true;
   }
+
   public boolean isSetRenderGlobally() {
     return setRenderGlobally;
   }
+
   public void setSetRenderGlobally(boolean setRenderGlobally) {
     this.setRenderGlobally = setRenderGlobally;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public double getMaxRenderDistanceSquared() {
@@ -597,6 +670,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     else
       return super.getMaxRenderDistanceSquared();
   }
+
   /**
    * https://shadowfacts.net/tutorials/forge-modding-1112/dynamic-tileentity-rendering/
    */

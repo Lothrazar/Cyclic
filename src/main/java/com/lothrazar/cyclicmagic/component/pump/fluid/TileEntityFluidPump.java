@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.fluid;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -32,14 +33,19 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+
   private static final int TRANSFER_PER_TICK = 100;
+
   public static enum Fields {
     REDSTONE;
   }
+
   private int needsRedstone = 0;
+
   public TileEntityFluidPump() {
     super(Fluid.BUCKET_VOLUME);
   }
+
   @Override
   public EnumFacing getCurrentFacing() {
     //TODO: same as item pump so pump base class!?!?
@@ -49,6 +55,7 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     }
     return facingTo;
   }
+
   /**
    * for every side connected to me pull fluid in from it UNLESS its my current facing direction. for THAT side, i push fluid out from me pull first then push
    *
@@ -77,16 +84,19 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
         cable.updateIncomingFluidFace(exportToSide.getOpposite());
     }
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -95,6 +105,7 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -103,15 +114,18 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
       break;
     }
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

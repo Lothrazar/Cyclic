@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.placer;
+
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,10 +34,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlacer extends ContainerBaseMachine {
+
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
+
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
     super(te);
     for (int i = 0; i < tile.getSizeInventory(); i++) {
@@ -44,6 +47,7 @@ public class ContainerPlacer extends ContainerBaseMachine {
     }
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -76,11 +80,13 @@ public class ContainerPlacer extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.button;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
@@ -38,19 +39,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ButtonTileEntityField extends GuiButtonTexture {
+
   private BlockPos pos;
   private int field;
   private int value;
+
   public static enum ButtonMode {
     INCREMENT, SET;
   }
+
   public ButtonMode buttonMode = ButtonMode.INCREMENT;
+
   public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p, int fld) {
     this(buttonId, x, y, p, fld, 1);
   }
+
   public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p, int fld, int diff) {
     this(buttonId, x, y, p, fld, diff, 40, 20);
   }
+
   public ButtonTileEntityField(int buttonId, int x, int y, BlockPos p,
       int fld, int diff,
       int w, int h) {
@@ -59,6 +66,7 @@ public class ButtonTileEntityField extends GuiButtonTexture {
     field = fld;
     this.value = diff;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
@@ -75,9 +83,11 @@ public class ButtonTileEntityField extends GuiButtonTexture {
     }
     return pressed;
   }
+
   public int getFieldId() {
     return field;
   }
+
   public int getValue() {
     return value;
   }

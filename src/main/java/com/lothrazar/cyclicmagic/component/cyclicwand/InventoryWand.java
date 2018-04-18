@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cyclicwand;
+
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
@@ -40,38 +41,47 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryWand extends InventoryBase implements IInventory {
+
   public static final int INV_SIZE = 18;
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
+
   public InventoryWand(EntityPlayer player, ItemStack wand) {
     super(INV_SIZE);
     internalWand = wand;
     inv = readFromNBT(wand);
     thePlayer = player;
   }
+
   public EntityPlayer getPlayer() {
     return thePlayer;
   }
+
   @Override
   public String getName() {
     return "Wand Inventory";
   }
+
   @Override
   public boolean hasCustomName() {
     return false;
   }
+
   @Override
   public ITextComponent getDisplayName() {
     return null;
   }
+
   @Override
   public int getSizeInventory() {
     return INV_SIZE;
   }
+
   @Override
   public ItemStack getStackInSlot(int index) {
     return inv.get(index);
   }
+
   @Override
   public ItemStack decrStackSize(int slot, int amount) {
     ItemStack stack = getStackInSlot(slot);
@@ -89,6 +99,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     return stack;
   }
+
   @Override
   public ItemStack removeStackFromSlot(int index) {
     // used to be 'getStackInSlotOnClosing'
@@ -96,6 +107,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     setInventorySlotContents(index, ItemStack.EMPTY);
     return stack;
   }
+
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
     inv.set(slot, stack);
@@ -104,10 +116,12 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     markDirty();
   }
+
   @Override
   public int getInventoryStackLimit() {
     return 64;
   }
+
   @Override
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
@@ -123,6 +137,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     writeToNBT(internalWand, inv);
   }
+
   //  @Override
   //  public boolean isUseableByPlayer(EntityPlayer player) {
   //    return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
@@ -132,6 +147,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     // only placeable blocks, not any old item
     return !(stack.getItem() instanceof ItemCyclicWand) && Block.getBlockFromItem(stack.getItem()) != Blocks.AIR;
   }
+
   /************** public static ******************/
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
     NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
@@ -152,6 +168,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     return inv;
   }
+
   public static void writeToNBT(ItemStack wandStack, NonNullList<ItemStack> theInventory) {
     NBTTagCompound tagcompound = wandStack.getTagCompound();
     // Create a new NBT Tag List to store itemstacks as NBT Tags
@@ -178,6 +195,7 @@ public class InventoryWand extends InventoryBase implements IInventory {
     // "ItemInventory"
     tagcompound.setTag("ItemInventory", items);
   }
+
   public static void decrementSlot(ItemStack wand, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryWand.readFromNBT(wand);
     //    invv[itemSlot].stackSize--;
@@ -188,12 +206,14 @@ public class InventoryWand extends InventoryBase implements IInventory {
     //    }
     InventoryWand.writeToNBT(wand, invv);
   }
+
   public static ItemStack getFromSlot(ItemStack wand, int i) {
     if (i < 0 || i >= InventoryWand.INV_SIZE) {
       return ItemStack.EMPTY;
     }
     return InventoryWand.readFromNBT(wand).get(i);
   }
+
   public static IBlockState getToPlaceFromSlot(ItemStack wand, int i) {
     ItemStack toPlace = getFromSlot(wand, i);
     if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != Blocks.AIR) {
@@ -202,10 +222,12 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     return null;
   }
+
   private static boolean isSlotEmpty(NonNullList<ItemStack> inv, int i) {
     ItemStack s = inv.get(i);
     return s == null || s.getItem() == null || Block.getBlockFromItem(s.getItem()) == Blocks.AIR;
   }
+
   public static int calculateSlotCurrent(ItemStack wand) {
     int itemSlot = ItemCyclicWand.BuildType.getSlot(wand);
     int buildType = ItemCyclicWand.BuildType.get(wand);
@@ -266,9 +288,11 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     return itemSlot;
   }
+
   /******** required unmodified ****/
   @Override
   public void openInventory(EntityPlayer player) {}
+
   @Override
   public void closeInventory(EntityPlayer player) {
     //called on gui close
@@ -278,22 +302,28 @@ public class InventoryWand extends InventoryBase implements IInventory {
       ItemCyclicWand.BuildType.setNextSlot(internalWand);
     }
   }
+
   @Override
   public int getField(int id) {
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {}
+
   @Override
   public int getFieldCount() {
     return 0;
   }
+
   @Override
   public void clear() {}
+
   @Override
   public boolean isEmpty() {
     return false;
   }
+
   @Override
   public boolean isUsableByPlayer(EntityPlayer player) {
     return true;

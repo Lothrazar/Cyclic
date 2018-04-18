@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.autouser;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
@@ -49,24 +50,29 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
   public static int maxAttackPer;
+
   public BlockUser() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_USER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityUser();
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", " b ", "ooo",
@@ -75,6 +81,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
         'r', "ingotGold",
         'b', Blocks.MAGMA);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);

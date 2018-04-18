@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vacuum;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -34,7 +35,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiVacuum extends GuiBaseContainer {
+
   private GuiButtonToggleSize btnSize;
+
   public GuiVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum tileEntity) {
     super(new ContainerVacuum(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -42,6 +45,7 @@ public class GuiVacuum extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityVacuum.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityVacuum.Fields.RENDERPARTICLES.ordinal();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -51,6 +55,7 @@ public class GuiVacuum extends GuiBaseContainer {
     btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -60,6 +65,7 @@ public class GuiVacuum extends GuiBaseContainer {
     this.drawString(s, xCenter - 30 - this.fontRenderer.getStringWidth(s) / 2, 20);
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityVacuum.Fields.SIZE.ordinal()));
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

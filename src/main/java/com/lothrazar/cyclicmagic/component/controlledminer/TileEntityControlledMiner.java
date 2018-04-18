@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.controlledminer;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +61,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * 
  */
 public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+
   private static final int FUEL_SLOT = 5;
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
@@ -90,18 +92,22 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
+
   public static enum Fields {
     HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
+
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
     this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, "block_miner_smart");
@@ -110,11 +116,13 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       }
     }
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public void update() {
     if (isRunning()) {
@@ -146,6 +154,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       }
     }
   }
+
   /**
    * return true if block is harvested/broken
    */
@@ -178,6 +187,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     return false;
   }
+
   private void tryEquipItem() {
     ItemStack equip = this.getStackInSlot(TOOLSLOT_INDEX);
     if (equip.getCount() == 0) {
@@ -190,6 +200,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, equip);
     }
   }
+
   private void verifyUuid(World world) {
     if (uuid == null) {
       uuid = UUID.randomUUID();
@@ -197,6 +208,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
+
   private boolean isTargetValid() {
     World world = getWorld();
     if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) {
@@ -246,11 +258,13 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       return false;//check as blacklist
     }
   }
+
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     //so the rand range is basically [0,8], then we left shift into [-4,+4]
     return getPos().offset(this.getCurrentFacing(), size + 1);
   }
+
   private void updateTargetPos() {
     //lets make it a AxA?
     //always restart here so we dont offset out of bounds
@@ -286,6 +300,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     curBlockDamage = 0;
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -303,6 +318,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -323,11 +339,13 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     blacklistIfZero = tagCompound.getInteger(NBT_LIST);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
+
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
       resetProgress(pos);
     }
   }
+
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
@@ -335,6 +353,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       curBlockDamage = 0;
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -359,6 +378,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -393,15 +413,19 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
     }
   }
+
   public void toggleListType() {
     blacklistIfZero = (blacklistIfZero + 1) % 2;
   }
+
   public int getHeight() {
     return this.height;//this.getField(Fields.HEIGHT.ordinal());
   }
+
   public void setHeight(int val) {
     this.height = val;
   }
+
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -412,10 +436,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       return super.receiveClientEvent(id, value);
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
@@ -423,6 +449,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -431,10 +458,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void toggleSizeShape() {
     this.size++;
@@ -442,10 +471,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       this.size = 0;//size zero means a 1x1 area
     }
   }
+
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
+
   @Override
   public List<BlockPos> getShape() {
     List<BlockPos> allPos = new ArrayList<BlockPos>();
@@ -454,6 +485,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
     return allPos;
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;

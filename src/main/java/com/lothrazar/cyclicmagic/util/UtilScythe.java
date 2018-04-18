@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.ItemScythe.ScytheType;
@@ -40,14 +41,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilScythe {
+
   //private static final int FORTUNE = 5;
   private static NonNullList<String> blacklistAll;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
+
   private static class ScytheConfig {
+
     NonNullList<String> blockWhitelist;
     NonNullList<String> oreDictWhitelist;
   }
+
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -122,6 +127,7 @@ public class UtilScythe {
    
     /* @formatter:on */
   }
+
   //TODO:::::::::: brush scythe DOES hit
   //  <harvestcraft:pampeach>
   //which has zero ore dict entries. soo.. hmm. 
@@ -135,6 +141,7 @@ public class UtilScythe {
       return UtilOreDictionary.doesMatchOreDict(bStack, type.oreDictWhitelist.toArray(new String[0]));
     }
   }
+
   public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
@@ -238,6 +245,7 @@ public class UtilScythe {
     }
     return false;
   }
+
   private static boolean isItemInBlacklist(String itemName) {
     for (String s : blacklistAll) {//dont use .contains on the list. must use .equals on string
       if (s != null && s.equals(itemName)) {

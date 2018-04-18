@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -37,30 +38,38 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class UtilChat {
+
   public static void addChatMessage(EntityPlayer player, String text) {
     player.sendMessage(new TextComponentTranslation(lang(text)));
   }
+
   public static void addChatMessage(ICommandSender sender, String text) {
     sender.sendMessage(new TextComponentTranslation(lang(text)));
   }
+
   public static void addChatMessage(EntityPlayer player, ITextComponent textComponentTranslation) {
     player.sendMessage(textComponentTranslation);
   }
+
   public static String blockPosToString(BlockPos pos) {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
+
   public static String lang(String string) {
     //if we use the clientside one, it literally does not work & crashes on serverside run
     return I18n.translateToLocal(string);
   }
+
   public static void addChatMessage(World worldObj, ITextComponent textComponentTranslation) {
     if (worldObj.getMinecraftServer() != null) {
       worldObj.getMinecraftServer().sendMessage(textComponentTranslation);
     }
   }
+
   public static void addChatMessage(World worldObj, String s) {
     addChatMessage(worldObj, new TextComponentTranslation(s));
   }
+
   public static List<String> splitIntoEqualLengths(FontRenderer fr, String input, int lineWidth) {
     List<String> lines = new ArrayList<String>();
     String aLine = "";
@@ -81,6 +90,7 @@ public class UtilChat {
     }
     return lines;
   }
+
   public static String[] splitIntoLine(String input, int maxCharInLine) {
     // https://stackoverflow.com/questions/7528045/large-string-split-into-lines-with-maximum-length-in-java
     // better than spell.getInfo().split("(?<=\\G.{25})")
@@ -106,6 +116,7 @@ public class UtilChat {
     }
     return output.toString().split("\n");
   }
+
   public static String getDirectionsString(ICommandSender player, BlockPos pos) {
     //https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchItem.java
     int x = pos.getX();
@@ -142,9 +153,11 @@ public class UtilChat {
       yStr = Math.abs(yDist) + " down ";
     return xStr + yStr + zStr;
   }
+
   public static void sendStatusMessage(EntityPlayer player, String string) {
     player.sendStatusMessage(new TextComponentTranslation(string), true);
   }
+
   public static String formatSecondsToMinutes(int secontsTotal) {
     if (secontsTotal < 0) {
       return "";

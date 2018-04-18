@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
@@ -41,6 +42,7 @@ import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
+
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
@@ -65,6 +67,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enableExcavate;
   private boolean enableMultishot;
   private EnchantMultishot multishot;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -117,6 +120,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       EnchantRegistry.register(multishot);
     }
   }
+
   @Override
   public void syncConfig(Configuration c) {
     enableMultishot = c.getBoolean("EnchantMultishot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

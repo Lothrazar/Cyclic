@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
@@ -36,18 +37,22 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantAutoSmelt extends EnchantBase {
+
   public EnchantAutoSmelt() {
     super("autosmelt", Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
+
   @Override
   public int getMaxLevel() {
     return 1;
   }
+
   @Override
   public boolean canApplyTogether(Enchantment ench) {
     return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
   }
+
   @SubscribeEvent(priority = EventPriority.HIGHEST) // // i almost tried this for the compat bugs
   public void onHarvestDrops(HarvestDropsEvent event) {
     if (event.getHarvester() == null) {

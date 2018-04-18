@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -45,7 +46,9 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 public class VillagerCreateModule extends BaseModule implements IHasConfig {
+
   private boolean extraVillagersEnabled;
+
   private EntityVillager.ITradeList[][] buildDruidTrades() {
     return new EntityVillager.ITradeList[][] {
         {
@@ -79,6 +82,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
             new ListItemForEmeraldsFixed(new ItemStack(Items.DYE, 16, EnumDyeColor.BLACK.getDyeDamage()), new PriceInfo(1, 3)) }
     };
   }
+
   private EntityVillager.ITradeList[][] buildSageTrades() {
     return new EntityVillager.ITradeList[][] {
         {
@@ -107,6 +111,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
         }
     };
   }
+
   private void addVillager(String name, EntityVillager.ITradeList[][] trades) {
     VillagerProfession prof = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",
@@ -117,6 +122,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       villager.addTrade(i + 1, trades[i]);
     }
   }
+
   @Override
   public void onPreInit() {
     //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
@@ -125,11 +131,13 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       addVillager("druid", buildDruidTrades());
     }
   }
+
   public void syncConfig(Configuration c) {
     String category = Const.ConfigCategory.villagers;
     c.addCustomCategoryComment(category, "Two new villagers with more trades");
     extraVillagersEnabled = c.getBoolean("SageAndDruidVillagers", category, true, "Adds more  villager types (Sage and Druid) with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Spawn naturally and from mob eggs. ");
   }
+
   /**
    * replace ListItemForEmeralds, instead of extending it just like vanilla/forge version BUT we do not ignore stackSize
    * 
@@ -137,17 +145,20 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
    *
    */
   public static class ListItemForEmeraldsFixed implements EntityVillager.ITradeList {
+
     /** The item that is being bought for emeralds */
     public ItemStack itemToBuy;
     /**
      * The price info for the amount of emeralds to sell for, or if negative, the amount of the item to buy for an emerald.
      */
     public EntityVillager.PriceInfo priceInfo;
+
     public ListItemForEmeraldsFixed(Item par1Item, EntityVillager.PriceInfo priceInfo) {
       // super(par1Item,priceInfo);
       this.itemToBuy = new ItemStack(par1Item);
       this.priceInfo = priceInfo;
     }
+
     /**
      * 
      * @param stack
@@ -158,6 +169,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       this.itemToBuy = stack;
       this.priceInfo = priceInfo;
     }
+
     /**
      * Affects the given MerchantRecipeList to possibly add or remove MerchantRecipes.
      */
@@ -181,6 +193,7 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       }
       recipeList.add(new MerchantRecipe(itemstack, itemstack1));
     }
+
     @Override
     public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {}
   }

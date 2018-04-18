@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -35,12 +36,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerHydrator extends ContainerBaseMachine {
+
   static final int MID_SPACING = 133;
   static final int SLOTX_FLUID = 70;
   static final int SLOTY_FLUID = 39;
   static final int SLOTX_START = 8;
   public static final int SLOTY = 30;
   static final int SQ = 18;
+
   public ContainerHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator te) {
     super(te);
     int slotNum = 0;
@@ -61,6 +64,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
         SLOTY_FLUID));
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -96,15 +100,18 @@ public class ContainerHydrator extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

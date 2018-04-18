@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
@@ -33,6 +34,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.cyclicmagic.Hydrator")
 @ZenRegister
 public class RecipeZen {
+
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeShapedRecipe(IItemStack output) {
@@ -44,6 +46,7 @@ public class RecipeZen {
       }
     }
   }
+
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeShapelessRecipe(IItemStack output) {
@@ -55,10 +58,12 @@ public class RecipeZen {
       }
     }
   }
+
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs, int water) {
     BlockHydrator.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
   }
+
   /**
    * THANKS TO https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java @ https://github.com/jaredlll08/MTLib which is MIT license
    * https://github.com/jaredlll08/MTLib/blob/1.12/LICENSE.md
@@ -76,6 +81,7 @@ public class RecipeZen {
       return (ItemStack) internal;
     }
   }
+
   /**
    * THANKS TO https://github.com/jaredlll08/MTLib/blob/1.12/src/main/java/com/blamejared/mtlib/helpers/InputHelper.java @ https://github.com/jaredlll08/MTLib which is MIT license
    * https://github.com/jaredlll08/MTLib/blob/1.12/LICENSE.md

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.clock;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClock extends GuiBaseContainer {
+
   private Map<EnumFacing, ButtonCheckboxTileField> poweredButtons = new HashMap<EnumFacing, ButtonCheckboxTileField>();
   boolean debugLabels = false;
   private int btnId = 0;
@@ -58,11 +60,13 @@ public class GuiClock extends GuiBaseContainer {
   int yRow3 = yRow2 + h + colOffset;
   int xColFacing = xCol4 + w + Const.PAD;
   TileEntityClock tileClock;
+
   public GuiClock(InventoryPlayer inventoryPlayer, TileEntityClock tileEntity) {
     super(new ContainerClock(inventoryPlayer, tileEntity), tileEntity);
     tileClock = (TileEntityClock) this.tile;
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -98,6 +102,7 @@ public class GuiClock extends GuiBaseContainer {
       addButtonFacing(f);
     }
   }
+
   private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
     GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
@@ -106,6 +111,7 @@ public class GuiClock extends GuiBaseContainer {
     txtBoxes.add(txt);
     return txt;
   }
+
   private void addButtonFacing(EnumFacing side) {
     int x = 0, y = 0;
     int xCenter = 140, yCenter = Const.PAD * 4;
@@ -151,6 +157,7 @@ public class GuiClock extends GuiBaseContainer {
     this.buttonList.add(btn);
     poweredButtons.put(side, btn);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     super.actionPerformed(button);
@@ -165,6 +172,7 @@ public class GuiClock extends GuiBaseContainer {
       }
     }
   }
+
   private void addButton(int x, int y, int field, int value, String tooltip) {
     ButtonTileEntityField btn = new ButtonTileEntityField(btnId++,
         this.guiLeft + x,
@@ -185,6 +193,7 @@ public class GuiClock extends GuiBaseContainer {
     btn.setTooltip("tile.clock." + tooltip);
     this.buttonList.add(btn);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -198,6 +207,7 @@ public class GuiClock extends GuiBaseContainer {
     //  this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
   }
+
   //  @Override
   //  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   //    super.updateScreen();

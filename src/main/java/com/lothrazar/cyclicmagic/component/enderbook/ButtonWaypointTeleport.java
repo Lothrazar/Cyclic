@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enderbook;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -38,22 +39,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton {
+
   private int bookSlot;
   List<String> tooltips = new ArrayList<String>();
+
   public int getSlot() {
     return bookSlot;
   }
+
   public ButtonWaypointTeleport(int id, int x, int y, int w, int h, String txt, int slot) {
     super(id, x, y, w, h, txt);
     bookSlot = slot;
   }
+
   @Override
   public List<String> getTooltips() {
     return tooltips;
   }
+
   public void addTooltipLine(String s) {
     tooltips.add(s);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {

@@ -22,12 +22,16 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.ArrayList;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
+import com.lothrazar.cyclicmagic.component.magicnet.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.component.magicnet.EntityMagicNetFull;
+import com.lothrazar.cyclicmagic.component.magicnet.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.playerext.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.component.playerext.ItemFoodInventory;
@@ -55,8 +59,6 @@ import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
@@ -73,7 +75,6 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemPistonWand;
 import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
-import com.lothrazar.cyclicmagic.item.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.item.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.ItemProjectileTNT.ExplosionType;
 import com.lothrazar.cyclicmagic.item.ItemProspector;
@@ -129,6 +130,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemModule extends BaseModule implements IHasConfig {
+
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;
@@ -198,6 +200,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean evokerFang;
   private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
+
   @Override
   public void onPreInit() {
     if (enableCGlove) {
@@ -224,6 +227,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     if (enableTrader) {
       ItemMerchantAlmanac tool_trade = new ItemMerchantAlmanac();
       ItemRegistry.register(tool_trade, "tool_trade");
+      ModCyclic.instance.events.register(tool_trade);
     }
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
@@ -644,12 +648,14 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(glowing_chorus);
     }
   }
+
   @Override
   public void onPostInit() {
     for (BaseItemProjectile item : projectiles) {
       BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorProjectileThrowable(item));
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enableChaos = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

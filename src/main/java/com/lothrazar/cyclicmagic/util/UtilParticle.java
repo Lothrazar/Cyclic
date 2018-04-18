@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
 import net.minecraft.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class UtilParticle {
+
   private static final int count = 12;//if you just spawn one, its basically invisible. unless its over time like potions
   private static final double RANDOM_HORIZ = 0.8;
   private static final double RANDOM_VERT = 1.5;
@@ -38,9 +40,11 @@ public class UtilParticle {
    * for particles from server: how far away to players see it
    */
   private static final double RANGE = 32;
+
   public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos, int c) {
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ(), c);
   }
+
   public static void spawnParticleNarrow(World world, EnumParticleTypes sparkle, BlockPos pos) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     for (int countparticles = 0; countparticles <= count; ++countparticles) {
@@ -51,6 +55,7 @@ public class UtilParticle {
           0.0D, 0.0D, 0.0D);
     }
   }
+
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
     // client side
     // http://www.minecraftforge.net/forum/index.php?topic=9744.0
@@ -62,18 +67,23 @@ public class UtilParticle {
           0.0D, 0.0D, 0.0D);
     }
   }
+
   private static double getVertRandom(World world, double rando) {
     return world.rand.nextDouble() * (double) rando - (double) 0.1;
   }
+
   private static double getHorizRandom(World world, double rando) {
     return (world.rand.nextDouble() - 0.5D) * (double) rando;
   }
+
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z) {
     spawnParticle(world, sparkle, x, y, z, count);
   }
+
   public static void spawnParticle(World world, EnumParticleTypes sparkle, Entity entity) {
     spawnParticle(world, sparkle, entity.getPosition());
   }
+
   public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
     if (pos == null) {
       //      ModCyclic.logger.warn("Particle at position null");
@@ -81,6 +91,7 @@ public class UtilParticle {
     }
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
   }
+
   public static void spawnParticleBeam(World world, EnumParticleTypes sparkle, BlockPos start, BlockPos end, int count) {
     // thanks to http://www.minecraftforge.net/forum/index.php?topic=30567.0
     // and http://mathforum.org/library/drmath/view/65721.html
@@ -95,12 +106,14 @@ public class UtilParticle {
       UtilParticle.spawnParticle(world, sparkle, x, y, z, count);
     }
   }
+
   public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos pos, int dimension) {
     //dont use sendToAll: lag inducing. EX: 3 players in nether, none in overworld. overworled is chunk loaded.
     //particles are a waste in this case.
     //  ModCyclic.network.sendToAll(new PacketParticleAtPosition(pos, particle.getParticleID(), count));
     spawnParticlePacket(particle, dimension, pos.getX(), pos.getY(), pos.getZ());
   }
+
   public static void spawnParticlePacket(EnumParticleTypes particle, int dimension, double x, double y, double z) {
     ModCyclic.network.sendToAllAround(new PacketParticleAtPosition(new BlockPos(x, y, z), particle.getParticleID(), count), new TargetPoint(dimension, x, y, z, RANGE));
   }

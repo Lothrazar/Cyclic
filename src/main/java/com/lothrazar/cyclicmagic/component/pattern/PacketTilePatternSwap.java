@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pattern;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,16 +33,21 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTilePatternSwap, IMessage> {
+
   private BlockPos pos;
   private int type;
+
   public static enum SwapType {
     POSITION, RENDER;
   }
+
   public PacketTilePatternSwap() {}
+
   public PacketTilePatternSwap(BlockPos p, SwapType t) {
     pos = p;
     type = t.ordinal();
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -51,6 +57,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     pos = new BlockPos(x, y, z);
     type = tags.getInteger("t");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -60,6 +67,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     tags.setInteger("t", type);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTilePatternSwap message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

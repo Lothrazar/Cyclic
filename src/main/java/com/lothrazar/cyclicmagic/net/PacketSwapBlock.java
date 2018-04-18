@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -55,17 +56,21 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBlock, IMessage> {
+
   private BlockPos pos;
   private ItemBuildSwapper.ActionType actionType;
   private ItemBuildSwapper.WandType wandType;
   private EnumFacing side;
+
   public PacketSwapBlock() {}
+
   public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemBuildSwapper.ActionType t, ItemBuildSwapper.WandType w) {
     pos = mouseover;
     actionType = t;
     wandType = w;
     side = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -80,6 +85,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     int w = tags.getInteger("w");
     wandType = ItemBuildSwapper.WandType.values()[w];
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -91,6 +97,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     tags.setInteger("s", side.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(final PacketSwapBlock message, final MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
@@ -103,6 +110,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         //ONLY JAVA 8
         // s.addScheduledTask(() -> handle(message, ctx));
         s.addScheduledTask(new Runnable() {
+
           public void run() {
             handle(message, ctx);
           }
@@ -111,6 +119,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     }
     return null;
   }
+
   private void handle(PacketSwapBlock message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();
@@ -220,6 +229,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       ModCyclic.logger.error(e.getStackTrace().toString());
     }
   }
+
   public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, ActionType actionType, WandType wandType, EnumFacing side, IBlockState matched) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();

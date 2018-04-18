@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -52,16 +53,20 @@ import com.lothrazar.cyclicmagic.module.VillagerCreateModule;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 
 public class ModuleRegistry {
+
   public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
+
   public static void init() {
     modules = new ArrayList<ICyclicModule>();
   }
+
   public static void register(ICyclicModule m) {
     modules.add(m);
     if (m instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) m);
     }
   }
+
   public static void registerAll() {
     register(new BlockModule());
     register(new CommandModule());

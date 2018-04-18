@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pattern;
+
 import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
+
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
@@ -46,6 +48,7 @@ public class GuiPattern extends GuiBaseContainer {
   private ButtonTileEntityField btnFlipZ;
   private ButtonTileEntityField btnFlipY;
   private ButtonTileEntityField btnFlipX;
+
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -56,6 +59,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.setFieldFuel(Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -122,6 +126,7 @@ public class GuiPattern extends GuiBaseContainer {
     //24, 12,
     this.buttonList.add(bt);
   }
+
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonTileEntityField btn = new ButtonTileEntityField(id,
         this.guiLeft + x, this.guiTop + y, tile.getPos(),
@@ -132,9 +137,11 @@ public class GuiPattern extends GuiBaseContainer {
     btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase() + (isUp ? "up" : "down"));
     this.buttonList.add(btn);
   }
+
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
     this.drawFieldAt(x, y, f.ordinal());
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -154,6 +161,7 @@ public class GuiPattern extends GuiBaseContainer {
     drawFieldAt(xOtherbox, yRows[2], TileEntityPatternBuilder.Fields.OFFSRCZ);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

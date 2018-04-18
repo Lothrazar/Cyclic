@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.crafting;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtWorkbench extends ContainerBase {
+
   public InventoryPlayerExtWorkbench craftMatrix;
   private final EntityPlayer thePlayer;
   private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
@@ -48,6 +50,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public static final int HOTBAR_SIZE = 9;
   public InventoryCraftResult craftResult = new InventoryCraftResult();
   final int pad = 8;
+
   public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, EntityPlayer player) {
     this.thePlayer = player;
     craftMatrix = new InventoryPlayerExtWorkbench(this, player);
@@ -58,10 +61,12 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       final EntityEquipmentSlot slot = ARMOR[k];
       slotId = 4 * VCOL + (VROW - k);
       this.addSlotToContainer(new Slot(playerInv, slotId, pad, pad + k * SQ) {
+
         @Override
         public int getSlotStackLimit() {
           return 1;
         }
+
         @Override
         public boolean isItemValid(ItemStack stack) {
           if (stack.isEmpty()) {
@@ -71,6 +76,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
             return stack.getItem().isValidArmor(stack, slot, thePlayer);
           }
         }
+
         @Override
         @SideOnly(Side.CLIENT)
         public String getSlotTexture() {
@@ -80,9 +86,11 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     }
     slotId++;
     this.addSlotToContainer(new Slot(playerInv, 40, 77, 62) {
+
       public boolean isItemValid(@Nullable ItemStack stack) {
         return super.isItemValid(stack);
       }
+
       @Nullable
       @SideOnly(Side.CLIENT)
       public String getSlotTexture() {
@@ -115,6 +123,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     }
     this.onCraftMatrixChanged(craftMatrix);
   }
+
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     //i have to assume the recipe will safely validate itself
@@ -128,6 +137,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
     }
   }
+
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
@@ -140,6 +150,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     }
     this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
     ItemStack itemStack = ItemStack.EMPTY;

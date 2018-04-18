@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -30,15 +31,18 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
 public abstract class EnchantBase extends Enchantment {
+
   protected EnchantBase(String name, Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);
     this.setName(name);
   }
+
   protected int getCurrentLevelTool(ItemStack stack) {
     if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this))
       return EnchantmentHelper.getEnchantments(stack).get(this);
     return -1;
   }
+
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) {
       return -1;
@@ -47,6 +51,7 @@ public abstract class EnchantBase extends Enchantment {
     ItemStack off = player.getHeldItemOffhand();
     return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
   }
+
   protected int getCurrentArmorLevel(EntityLivingBase player) {
     EntityEquipmentSlot[] armors = new EntityEquipmentSlot[] {
         EntityEquipmentSlot.CHEST, EntityEquipmentSlot.FEET, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.LEGS
@@ -65,9 +70,11 @@ public abstract class EnchantBase extends Enchantment {
     }
     return level;
   }
+
   protected int getLevelAll(EntityLivingBase p) {
     return Math.max(getCurrentArmorLevel(p), getCurrentLevelTool(p));
   }
+
   protected ItemStack getFirstArmorStackWithEnchant(EntityLivingBase player) {
     if (player == null) {
       return ItemStack.EMPTY;

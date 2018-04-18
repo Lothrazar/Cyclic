@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.password;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +52,9 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
+
   public static final PropertyBool POWERED = PropertyBool.create("powered");
+
   public BlockPassword() {
     super(Material.ROCK);
     this.setHardness(4F);
@@ -60,33 +63,41 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     this.setHarvestLevel("pickaxe", 0);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PASSWORD);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPassword();
   }
+
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(POWERED, meta == 1 ? true : false);
   }
+
   @Override
   public int getMetaFromState(IBlockState state) {
     return (state.getValue(POWERED)) ? 1 : 0;
   }
+
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, new IProperty[] { POWERED });
   }
+
   @Override
   public boolean canProvidePower(IBlockState state) {
     return true;
   }
+
   @Override
   public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? 15 : 0;
   }
+
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     return blockState.getValue(POWERED) ? 15 : 0;
   }
+
   @SubscribeEvent
   public void chatEvent(ServerChatEvent event) {
     World world = event.getPlayer().getEntityWorld();
@@ -131,6 +142,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
         UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getUnlocalizedName() + ".triggeredmany") + event.getMessage());
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

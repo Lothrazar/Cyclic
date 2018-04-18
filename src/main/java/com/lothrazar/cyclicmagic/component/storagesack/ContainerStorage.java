@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.storagesack;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
@@ -34,6 +35,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerStorage extends ContainerBase {
+
   final InventoryStorage inventory;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
@@ -42,6 +44,7 @@ public class ContainerStorage extends ContainerBase {
   final static int hotbar = 9;
   final static int rows = 6;
   final static int cols = 11;
+
   public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
@@ -72,6 +75,7 @@ public class ContainerStorage extends ContainerBase {
       this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
     }
   }
+
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
     ItemStack wand = UtilPlayer.getPlayerItemIfHeld(player);
@@ -82,10 +86,12 @@ public class ContainerStorage extends ContainerBase {
     }
     return super.slotClick(slot, dragType, clickTypeIn, player);
   }
+
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
     return true;//inventory.isUseableByPlayer(playerIn);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
     ItemStack itemstack = ItemStack.EMPTY;

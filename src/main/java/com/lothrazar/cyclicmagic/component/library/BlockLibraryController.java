@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
@@ -41,12 +42,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockLibraryController extends BlockBase implements IHasRecipe {
+
   private static final int RANGE = 4;
   Block libraryInstance;
+
   public BlockLibraryController(Block lib) {
     super(Material.WOOD);
     libraryInstance = lib;
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     List<BlockPos> connectors = UtilWorld.getMatchingInRange(world, pos, libraryInstance, RANGE);
@@ -76,6 +80,7 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
     // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
     return false;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

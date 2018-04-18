@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.jei;
+
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
@@ -53,7 +54,9 @@ import net.minecraft.util.ResourceLocation;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
+
   private static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+
   @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
@@ -81,70 +84,90 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
         9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-    ////////////////// custom recipe hook
+    // Start Custom recipe type: Hydrator
     registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(BlockHydrator.recipesShapeless, RECIPE_CATEGORY_HYDRATOR);
+    // End Custom recipe type: Hydrator
+    //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
       registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
     }
+    //end of Info tab
   }
+
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
     registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
   }
+
   public static class HydratorFactory implements IRecipeWrapperFactory<RecipeHydrate> {
+
     @Override
     public IRecipeWrapper getRecipeWrapper(RecipeHydrate recipe) {
       return new HydratorWrapper(recipe);
     }
   }
+
   public static class HydratorWrapper implements IRecipeWrapper {
+
     private RecipeHydrate src;
+
     public HydratorWrapper(RecipeHydrate source) {
       this.src = source;
     }
+
     public ItemStack getOut() {
       return src.getRecipeOutput();
     }
+
     @Override
     public void getIngredients(IIngredients ingredients) {
       ingredients.setInputs(ItemStack.class, Arrays.asList(src.getRecipeInput()));
       ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
     }
   }
+
   public static class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> {
+
     private IDrawable gui;
     private IDrawable icon;
+
     public HydratorRecipeCategory(IGuiHelper helper) {
       gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
       //TOD: block is wrong of course, just POC
       icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
     }
+
     @Override
     public String getUid() {
       return RECIPE_CATEGORY_HYDRATOR;
     }
+
     @Override
     public String getTitle() {
       return UtilChat.lang("tile.block_hydrator.name");
     }
+
     @Override
     public String getModName() {
       return Const.MODID;
     }
+
     @Override
     public IDrawable getIcon() {
       return icon;
     }
+
     @Override
     public IDrawable getBackground() {
       return gui;
     }
+
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();

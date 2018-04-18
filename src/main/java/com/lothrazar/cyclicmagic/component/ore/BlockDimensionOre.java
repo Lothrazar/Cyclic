@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.ore;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDimensionOre extends BlockOre implements IHasOreDict {
+
   public OreConfig config = new OreConfig();
   private Item dropped;
   private int droppedMeta;
@@ -51,18 +53,23 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private SpawnType spawn = null;
   private ItemStack smeltOut;
   private String oreDict;
+
   public static enum SpawnType {
     ENDERMITE, SILVERFISH
   }
+
   public BlockDimensionOre() {
     this(null, 0);
   }
+
   public BlockDimensionOre(Item drop) {
     this(drop, 0);
   }
+
   public BlockDimensionOre(Item drop, int dmg) {
     this(drop, 0, 1);
   }
+
   public BlockDimensionOre(Item drop, int dmg, int max) {
     super();
     config = new OreConfig();
@@ -74,33 +81,41 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     this.setHarvestLevel(Const.ToolStrings.axe, 0);
     this.setHarvestLevel(Const.ToolStrings.shovel, 0);
   }
+
   public BlockDimensionOre setPickaxeHarvestLevel(int h) {
     this.setHarvestLevel(Const.ToolStrings.pickaxe, h);
     return this;
   }
+
   public BlockDimensionOre setSpawnType(SpawnType t, int chance) {
     this.spawn = t;
     this.spawnChance = chance;
     return this;
   }
+
   public BlockDimensionOre registerSmeltingOutput(Item out) {
     smeltOut = new ItemStack(out);
     return this;
   }
+
   public BlockDimensionOre registerSmeltingOutput(ItemStack out) {
     smeltOut = out;
     return this;
   }
+
   public ItemStack getSmeltingOutput() {
     return smeltOut;
   }
+
   public void registerOreDict(String out) {
     oreDict = out;
   }
+
   @Override
   public String getOreDict() {
     return oreDict;
   }
+
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
     if (this.spawn != null && world.getDifficulty() != EnumDifficulty.PEACEFUL) {
       int rand = world.rand.nextInt(100);
@@ -121,14 +136,17 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
       }
     }
   }
+
   @Override
   public int damageDropped(IBlockState state) {
     return droppedMeta;
   }
+
   @Override
   public int quantityDroppedWithBonus(int fortune, Random random) {
     return super.quantityDroppedWithBonus(fortune, random);
   }
+
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     if (dropped == null) {
@@ -136,6 +154,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     }
     return dropped;
   }
+
   @Override
   public int quantityDropped(Random random) {
     if (randomMax == 1) {
@@ -143,19 +162,23 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     }
     return 1 + random.nextInt(randomMax);
   }
+
   @Override
   public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
     Random rand = world instanceof World ? ((World) world).rand : new Random();
     return MathHelper.getInt(rand, 2, 5);
   }
+
   @Override
   public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
     return true;
   }
+
   @Override
   public String toString() {
     return this.getLocalizedName();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -31,8 +32,10 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 public class StackSizeModule extends BaseModule implements IHasConfig {
+
   private Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
   private Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
+
   public StackSizeModule() {
     int boat = 16;
     int MAX = 64;
@@ -61,6 +64,7 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     stackMap.put(Items.ENDER_PEARL, MAX);
     stackMap.put(Items.EGG, MAX);
   }
+
   public void onInit() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       boolean enabled = (enabledMap.get(entry.getKey()) == 1);
@@ -69,6 +73,7 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
       }
     }
   }
+
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.itemsTack;
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {

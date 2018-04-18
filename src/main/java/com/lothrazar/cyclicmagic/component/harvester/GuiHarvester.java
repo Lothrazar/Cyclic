@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.harvester;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -39,10 +40,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHarvester extends GuiBaseContainer {
+
   // private TileEntityHarvester tile;
   boolean debugLabels = false;
   private GuiButtonToggleSize btnSize;
   private GuiButtonTooltip btnSpray;
+
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -53,6 +56,7 @@ public class GuiHarvester extends GuiBaseContainer {
         ContainerHarvester.SLOTY + 3 * Const.SQ + 4, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
     this.setFieldFuel(TileEntityHarvester.Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -70,12 +74,14 @@ public class GuiHarvester extends GuiBaseContainer {
     btnSpray.setTooltip("button.harvester.mode.tooltip");
     this.buttonList.add(btnSpray);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == btnSpray.id) {
       ModCyclic.network.sendToServer(new PacketTileIncrementField(tile.getPos(), TileEntityHarvester.Fields.HARVESTMODE.ordinal()));
     }
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -101,6 +107,7 @@ public class GuiHarvester extends GuiBaseContainer {
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

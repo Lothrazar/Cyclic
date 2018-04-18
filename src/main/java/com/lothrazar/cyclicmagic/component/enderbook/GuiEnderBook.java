@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enderbook;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
@@ -42,20 +43,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnderBook extends GuiScreen {
+
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
   // public final ResourceLocation texture = new
   // ResourceLocation(ModSamsContent.MODID,
   // "textures/enderbook/textures/gui/book_ender.png" );
   final int maxNameLen = 20;
+
   public GuiEnderBook(EntityPlayer entityPlayer, ItemStack book) {
     this.entityPlayer = entityPlayer;
     bookStack = book;
   }
+
   public static int buttonIdNew;
   GuiButton buttonNew;
   GuiTextField txtNew;
   final int DELETE_OFFSET = 1000;
+
   @Override
   public void initGui() {
     Keyboard.enableRepeatEvents(true);
@@ -116,10 +121,12 @@ public class GuiEnderBook extends GuiScreen {
       buttonList.add(del);
     }
   }
+
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
   }
+
   @Override
   public void drawScreen(int x, int y, float par3) {
     drawDefaultBackground();
@@ -138,6 +145,7 @@ public class GuiEnderBook extends GuiScreen {
       }
     }
   }
+
   @Override
   protected void actionPerformed(GuiButton btn) {
     if (btn.id == buttonIdNew) {
@@ -151,10 +159,12 @@ public class GuiEnderBook extends GuiScreen {
     }
     this.entityPlayer.closeScreen();
   }
+
   @Override
   public boolean doesGuiPauseGame() {
     return false;
   }
+
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
   @Override
@@ -164,6 +174,7 @@ public class GuiEnderBook extends GuiScreen {
       txtNew.updateCursorCounter();
     }
   }
+
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {
     super.keyTyped(par1, par2);
@@ -171,6 +182,7 @@ public class GuiEnderBook extends GuiScreen {
       txtNew.textboxKeyTyped(par1, par2);
     }
   }
+
   @Override
   protected void mouseClicked(int x, int y, int btn) throws IOException {
     super.mouseClicked(x, y, btn);

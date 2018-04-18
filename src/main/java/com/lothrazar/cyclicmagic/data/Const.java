@@ -22,10 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.data;
+
 import net.minecraft.util.ResourceLocation;
 
 public class Const {
+
   public static class Res {
+
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
     public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
@@ -55,8 +58,10 @@ public class Const {
     public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
     public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
   }
+
   public static enum ScreenSize {
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;
+
     public int width() {
       switch (this) {
         case STANDARD:
@@ -68,6 +73,7 @@ public class Const {
       }
       return 0;
     }
+
     public int height() {
       switch (this) {
         case STANDARD:
@@ -79,6 +85,7 @@ public class Const {
       }
       return 0;
     }
+
     public int playerOffsetY() {
       switch (this) {
         case STANDARD:
@@ -90,6 +97,7 @@ public class Const {
       }
       return 0;
     }
+
     public int playerOffsetX() {
       switch (this) {
         case LARGE:
@@ -101,6 +109,7 @@ public class Const {
       }
       return 0;
     }
+
     public ResourceLocation texture() {
       switch (this) {
         case STANDARD:
@@ -115,10 +124,13 @@ public class Const {
       return null;
     }
   }
+
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";
   public static final String MODCONF = Const.MODID + ".";
+
   public class ConfigCategory {
+
     //to store categories. basically an enum/lookup table
     public static final String global = MODCONF + "global";
     public static final String player = MODCONF + "player";
@@ -142,14 +154,19 @@ public class Const {
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
   }
+
   public class ConfigText {
+
     public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
   }
+
   public class ToolStrings {
+
     public static final String pickaxe = "pickaxe";
     public static final String shovel = "shovel";
     public static final String axe = "axe";
   }
+
   public static final int SQ = 18;
   public static final int ARMOR_SIZE = 4;
   public static final int ROWS_VANILLA = 3;
@@ -179,18 +196,23 @@ public class Const {
   public static final int DIR_NORTH = 2;
   public static final int HOTBAR_SIZE = 9;
   public static final String SkullOwner = "SkullOwner";
+
   public class Dimension {
+
     public static final int overworld = 0;
     public static final int end = 1;
     public static final int nether = -1;
   }
+
   public class Potions {
+
     public final static int I = 0;
     public final static int II = 1;
     public final static int III = 2;
     public final static int IV = 3;
     public final static int V = 4;
   }
+
   public final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   public static final int WORLDHEIGHT = 256;
   //http://minecraft.gamepedia.com/Light#Mobs
@@ -202,7 +224,9 @@ public class Const {
    * defined in vanilla VluidRegistry where Fluid LAVA is registered (tile.lava)
    */
   public static final int LAVA_TEMPERATURE = 1300;
+
   public static class HorseMeta {
+
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;
     public static final int variant_chestnut = 2;

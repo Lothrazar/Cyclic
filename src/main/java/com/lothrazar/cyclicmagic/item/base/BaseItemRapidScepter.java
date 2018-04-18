@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.base;
+
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,16 +45,21 @@ import net.minecraft.world.World;
  *
  */
 public abstract class BaseItemRapidScepter extends BaseTool {
+
   private static final float VELOCITY_MAX = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
   private static final float MAX_CHARGE = 9.7F;
+
   //private static final int COOLDOWN = 5;
   public BaseItemRapidScepter(int durability) {
     super(durability);
   }
+
   public abstract SoundEvent getSound();
+
   public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -79,10 +85,12 @@ public abstract class BaseItemRapidScepter extends BaseTool {
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
+
   private void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
     EntityThrowable proj = createBullet(world, player, damage);
     this.launchProjectile(world, player, proj, velocityFactor);
   }
+
   private void shootTwins(World world, EntityPlayer player, float velocityFactor, float damage) {
     Vec3d vecCrossRight = player.getLookVec().normalize().crossProduct(new Vec3d(0, 2, 0));
     Vec3d vecCrossLeft = player.getLookVec().normalize().crossProduct(new Vec3d(0, -2, 0));
@@ -95,6 +103,7 @@ public abstract class BaseItemRapidScepter extends BaseTool {
     projLeft.posZ += vecCrossLeft.z;
     this.launchProjectile(world, player, projLeft, velocityFactor);
   }
+
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn

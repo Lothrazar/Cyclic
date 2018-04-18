@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
+
   public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID, Const.Res.folder + "tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;
@@ -60,6 +62,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   EntityPlayer player;
   private int selectedMerchantRecipe;
   private List<GuiButtonPurchase> merchButtons = new ArrayList<GuiButtonPurchase>();
+
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn));
     player = ip.player;
@@ -67,9 +70,11 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
   }
+
   public ContainerMerchantBetter getContainer() {
     return (ContainerMerchantBetter) this.inventorySlots;
   }
+
   public void initGui() {
     super.initGui();
     //setup for the validate btns
@@ -77,6 +82,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     this.yBtnStart = getMiddleY();
     this.lastUnusedButtonId = 1;
   }
+
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     int s = merchantrecipelist.size();
@@ -97,22 +103,27 @@ public class GuiMerchantBetter extends GuiBaseContainer {
       }
     }
   }
+
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {}
+
   public void updateScreen() {
     super.updateScreen();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);//try to sync between both containers
     this.validateMerchantButtons();
   }
+
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonPurchase) {
       setAndTryPurchase(((GuiButtonPurchase) button));
     }
   }
+
   private void setAndTryPurchase(GuiButtonPurchase button) {
     this.selectedMerchantRecipe = button.getRecipeIndex();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
     ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -124,23 +135,28 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
   }
+
   /**
    * this HAS to be a nested class, because the Gui itemRender is not public
    */
   @SideOnly(Side.CLIENT)
   static class GuiButtonPurchase extends GuiButton implements ITooltipButton {
+
     final static int rowCount = 4;
     final static int spacing = 18;
     private int recipeIndex;
     private GuiMerchantBetter parent;
+
     public GuiButtonPurchase(int buttonId, int x, int y, int widthIn, int heightIn, int r, GuiMerchantBetter p) {
       super(buttonId, x, y, widthIn, heightIn, "");
       recipeIndex = r;
       this.parent = p;
     }
+
     public int getRecipeIndex() {
       return recipeIndex;
     }
+
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
       super.drawButton(mc, mouseX, mouseY, p);
@@ -181,6 +197,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         }
       }
     }
+
     @Override
     public List<String> getTooltips() {
       List<String> tt = new ArrayList<String>();

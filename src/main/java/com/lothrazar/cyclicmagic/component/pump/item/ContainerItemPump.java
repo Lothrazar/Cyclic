@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.item;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
@@ -34,8 +35,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerItemPump extends ContainerBaseMachine {
+
   public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = Const.SQ + Const.PAD * 3;
+
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
     super(te);
     for (int col = 1; col < 10; col++) {
@@ -45,6 +48,7 @@ public class ContainerItemPump extends ContainerBaseMachine {
     }
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -77,11 +81,13 @@ public class ContainerItemPump extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

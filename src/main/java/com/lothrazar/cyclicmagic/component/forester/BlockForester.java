@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.forester;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
@@ -49,17 +50,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {//, IBlockHasTESR 
+
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
+
   public BlockForester() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_FORESTER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityForester();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
@@ -67,6 +72,7 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForester.class, new MachineTESR(this, 0));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -78,6 +84,7 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
         'x', "ingotIron",
         'r', "logWood");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);

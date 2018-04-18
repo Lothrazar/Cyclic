@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.beacon;
+
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -47,16 +48,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implements ITickable {
+
   @SideOnly(Side.CLIENT)
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
   private float beamRenderScale;
   private final List<TileEntityBeaconPowered.BeamSegment> beamSegments = Lists.<TileEntityBeaconPowered.BeamSegment> newArrayList();
   private String customName;
+
   public TileEntityBeaconPowered() {
     super(0);
     this.setSetRenderGlobally(true);
   }
+
   @Override
   public void update() {
     if (this.world.getTotalWorldTime() % 80L == 0L) {
@@ -64,11 +68,13 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
   }
+
   public void updateBeacon() {
     if (this.world != null) {
       this.updateSegmentColors();
     }
   }
+
   private void updateSegmentColors() {
     int i = this.pos.getX();
     int j = this.pos.getY();
@@ -115,10 +121,12 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
       flag = false;
     }
   }
+
   @SideOnly(Side.CLIENT)
   public List<TileEntityBeaconPowered.BeamSegment> getBeamSegments() {
     return this.beamSegments;
   }
+
   @SideOnly(Side.CLIENT)
   public float shouldBeamRender() {
     // if no redstone power, return zero;
@@ -139,19 +147,23 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     }
     return this.beamRenderScale;
   }
+
   @Override
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
   }
+
   @Override
   public NBTTagCompound getUpdateTag() {
     return this.writeToNBT(new NBTTagCompound());
   }
+
   @Nullable
   private static Potion isBeaconEffect(int i) {
     return Potion.getPotionById(i);
   }
+
   /**
    * Returns true if this thing is named
    */
@@ -159,9 +171,11 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public boolean hasCustomName() {
     return this.customName != null && !this.customName.isEmpty();
   }
+
   public void setName(String name) {
     this.customName = name;
   }
+
   /**
    * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
    */
@@ -169,12 +183,15 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem().isBeaconPayment(stack);
   }
+
   public String getGuiID() {
     return "minecraft:beacon";
   }
+
   public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
     return new ContainerBeacon(playerInventory, this);
   }
+
   @Override
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
@@ -185,10 +202,12 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
       return super.receiveClientEvent(id, type);
     }
   }
+
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[0];
   }
+
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.
    */
@@ -196,6 +215,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return false;
   }
+
   /**
    * Returns true if automation can extract the given item in the given slot from the given side.
    */
@@ -203,23 +223,29 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
   }
+
   public static class BeamSegment {
+
     /** RGB (0 to 1.0) colors of this beam segment */
     private final float[] colors;
     private int height;
+
     public BeamSegment(float[] colorsIn) {
       this.colors = colorsIn;
       this.height = 1;
     }
+
     protected void incrementHeight() {
       ++this.height;
     }
+
     /**
      * Returns RGB (0 to 1.0) colors of this beam segment
      */
     public float[] getColors() {
       return this.colors;
     }
+
     @SideOnly(Side.CLIENT)
     public int getHeight() {
       return this.height;

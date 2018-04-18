@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.uncrafter;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -49,14 +50,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
+
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public static int FUEL_COST = 0;
+
   public BlockUncrafting() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_UNCRAFTING);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
@@ -64,10 +68,12 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUncrafter.class, new MachineTESR(this, 0));
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityUncrafter();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -79,6 +85,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         'f', Blocks.FURNACE,
         'd', "gemDiamond");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 200, 0, 500000, Const.ConfigText.fuelCost);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -45,18 +46,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChestSack extends BaseItem {
+
   public static final String name = "chest_sack";
   public static final String KEY_BLOCKID = "block";
   public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
   public static final String KEY_BLOCKSTATE = "blockstate";
   private Item emptySack;
+
   public ItemChestSack() {
     super();
     this.setMaxStackSize(1);
     // imported from my old mod
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSack.java
   }
+
   /**
    * Called when a Block is right-clicked with this Item
    */
@@ -69,13 +73,14 @@ public class ItemChestSack extends BaseItem {
     ItemStack stack = playerIn.getHeldItem(hand);
     if (placeStoredTileEntity(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, ItemStack.EMPTY);
-      UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
+      UtilSound.playSound(playerIn, pos, SoundRegistry.chest_sack_capture);
       if (playerIn.capabilities.isCreativeMode == false && emptySack != null) {//its never really null tho
         UtilItemStack.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
       }
     }
     return EnumActionResult.SUCCESS;
   }
+
   private boolean placeStoredTileEntity(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
     NBTTagCompound itemData = UtilNBT.getItemStackNBT(heldChestSack);
     Block block = Block.getBlockById(itemData.getInteger(KEY_BLOCKID));
@@ -110,6 +115,7 @@ public class ItemChestSack extends BaseItem {
     heldChestSack.setTagCompound(null);
     return true;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack itemStack, World player, List<String> list, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -121,10 +127,12 @@ public class ItemChestSack extends BaseItem {
     }
     //super.addInformation(itemStack, player, list, advanced);
   }
+
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
   }
+
   public void setEmptySack(ItemChestSackEmpty item) {
     emptySack = item;
   }

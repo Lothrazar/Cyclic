@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.uncrafter;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -41,8 +42,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ContainerUncrafting extends ContainerBaseMachine {
+
   public static final int SLOTX_INPUT = 8;
   public static final int SLOTY_INPUT = 68;
+
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
     super(te);
     this.screenSize = ScreenSize.LARGE;
@@ -61,6 +64,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -93,11 +97,13 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

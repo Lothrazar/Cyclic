@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.entity.Entity;
@@ -38,11 +39,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
+
   // private static final String KEY_LOCKMOUNT = "LOCKMOUNT";
   private static final String KEY_MOUNTENTITY = "CYCLIC_ENTITYID";
   private boolean showHungerMounted;
   // private boolean disableHurtMount;
   private boolean mountedPearl;
+
   //  @SubscribeEvent
   //  public void onLivingHurtEvent(LivingHurtEvent event) {
   //    if (disableHurtMount == false) { return;//this is always off. it seems like in vanilla minecraft this just never happens
@@ -71,6 +74,7 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
       GuiIngameForge.renderFood = true;
     } //else config is false, so leave it alone
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.player;
@@ -79,6 +83,7 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
     mountedPearl = config.getBoolean("Pearls On Horseback", category, true,
         "Enderpearls work on a horse, bringing it with you");
   }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     EntityLivingBase playerRider = event.getEntityLiving();
@@ -97,6 +102,7 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
     if (mountedPearl) {

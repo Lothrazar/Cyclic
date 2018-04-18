@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.guideapi;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +55,7 @@ import net.minecraftforge.fml.common.Optional;
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
+
   //private static final String GUIDE_API_MOD_ID = "guideapi";
   private static final int MAX_PAGE_LENGTH = 314;
   private static Book book;
@@ -68,6 +70,7 @@ public class CyclicGuideBook implements IGuideBook {
   private Map<ResourceLocation, EntryAbstract> entriesItemBaubles = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItemThrow = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesTransport = new HashMap<ResourceLocation, EntryAbstract>();
+
   private void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:
@@ -104,9 +107,11 @@ public class CyclicGuideBook implements IGuideBook {
       break;
     }
   }
+
   private void buildPages() {
     List<GuideItem> items = GuideRegistry.getItems();
     Comparator<GuideItem> comparator = new Comparator<GuideItem>() {
+
       @Override
       public int compare(final GuideItem first, final GuideItem second) {
         return first.title.compareTo(second.title);
@@ -134,6 +139,7 @@ public class CyclicGuideBook implements IGuideBook {
       addEntry(item.cat, pages, item.title, new ItemStack(item.icon));
     }
   }
+
   @Override
   public Book buildBook() {
     buildPages();
@@ -141,6 +147,7 @@ public class CyclicGuideBook implements IGuideBook {
     buildBookItem();
     return book;
   }
+
   private void buildCategories() {
     addCategory(entriesBlocks, GuideCategory.BLOCK);
     addCategory(entriesBlockMachine, GuideCategory.BLOCKMACHINE);
@@ -154,11 +161,13 @@ public class CyclicGuideBook implements IGuideBook {
     addCategory(entriesItemThrow, GuideCategory.ITEMTHROW);
     addCategory(entriesTransport, GuideCategory.TRANSPORT);
   }
+
   private void addCategory(Map<ResourceLocation, EntryAbstract> entriesBlockPlate,
       GuideCategory cat) {
     categories.add(new CategoryItemStack(entriesBlockPlate,
         cat.text(), cat.icon()));
   }
+
   private void buildBookItem() {
     book = new Book();
     book.setTitle("guide.title");
@@ -170,6 +179,7 @@ public class CyclicGuideBook implements IGuideBook {
     book.setRegistryName(new ResourceLocation(Const.MODID, "guide"));
     book.setSpawnWithBook(true);
   }
+
   @Override
   public void handleModel(ItemStack bookStack) {
     GuideAPI.setModel(book);
@@ -186,6 +196,7 @@ public class CyclicGuideBook implements IGuideBook {
     //    // we get a forge warning if using cyclic mod id, since recipe base doesnt match item base
     //    RecipeRegistry.add(recipe, location);
   }
+
   @Override
   public void handlePost(ItemStack bookStack) {
     // recipe used to work in handle post, had to move into handleModel in 1.12

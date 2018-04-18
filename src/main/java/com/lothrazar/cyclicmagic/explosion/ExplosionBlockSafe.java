@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.explosion;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -51,6 +52,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("unused")
 public class ExplosionBlockSafe extends Explosion {
+
   /** whether or not the explosion sets fire to blocks around it */
   private final boolean isFlaming;
   /** whether or not this explosion spawns smoke particles */
@@ -65,15 +67,18 @@ public class ExplosionBlockSafe extends Explosion {
   private final List<BlockPos> affectedBlockPositions;
   private final Map<EntityPlayer, Vec3d> playerKnockbackMap;
   private final Vec3d position;
+
   @SideOnly(Side.CLIENT)
   public ExplosionBlockSafe(World worldIn, Entity entityIn, double x, double y, double z, float size, List<BlockPos> affectedPositions) {
     this(worldIn, entityIn, x, y, z, size, false, true, affectedPositions);
   }
+
   @SideOnly(Side.CLIENT)
   public ExplosionBlockSafe(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean smoking, List<BlockPos> affectedPositions) {
     this(worldIn, entityIn, x, y, z, size, flaming, smoking);
     this.affectedBlockPositions.addAll(affectedPositions);
   }
+
   public ExplosionBlockSafe(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean smoking) {
     super(worldIn, entityIn, x, y, z, size, flaming, smoking);
     this.explosionRNG = new Random();
@@ -89,6 +94,7 @@ public class ExplosionBlockSafe extends Explosion {
     this.isSmoking = smoking;
     this.position = new Vec3d(explosionX, explosionY, explosionZ);
   }
+
   /**
    * Does the first part of the explosion (destroy blocks)
    */
@@ -175,6 +181,7 @@ public class ExplosionBlockSafe extends Explosion {
       }
     }
   }
+
   /**
    * Does the second part of the explosion (sound, particles, drop spawn)
    */

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.forester;
+
 import com.lothrazar.cyclicmagic.component.forester.TileEntityForester.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiForester extends GuiBaseContainer {
+
   public GuiForester(InventoryPlayer inventoryPlayer, TileEntityForester tileEntity) {
     super(new ContainerForester(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.STANDARD);
@@ -40,6 +42,7 @@ public class GuiForester extends GuiBaseContainer {
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.setFieldFuel(Fields.FUEL.ordinal());
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -53,6 +56,7 @@ public class GuiForester extends GuiBaseContainer {
     }
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

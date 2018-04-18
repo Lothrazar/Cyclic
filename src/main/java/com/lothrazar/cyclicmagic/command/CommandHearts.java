@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -33,15 +34,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandHearts extends BaseCommand implements ICommand {
+
   public static final String name = "sethearts";
+
   public CommandHearts(boolean op) {
     super(name, op);
     this.setUsernameIndex(0);
   }
+
   @Override
   public String getUsage(ICommandSender sender) {
     return "/" + getName() + " <player> <hearts>";
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     EntityPlayer ptarget = null;

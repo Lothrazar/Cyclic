@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -41,13 +42,17 @@ import net.minecraft.world.World;
  *
  */
 public abstract class BlockBaseHasTile extends BlockBase {
+
   private int guiID = -1;
+
   public BlockBaseHasTile(Material materialIn) {
     super(materialIn);
   }
+
   public void setGuiId(int id) {
     this.guiID = id;
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (player.isSneaking()) {
@@ -62,14 +67,17 @@ public abstract class BlockBaseHasTile extends BlockBase {
     }
     return false;
   }
+
   @Override
   public boolean hasTileEntity() {
     return true;
   }
+
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
+
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -79,6 +87,7 @@ public abstract class BlockBaseHasTile extends BlockBase {
     }
     super.breakBlock(worldIn, pos, state);
   }
+
   public String getRawName() {
     return this.getUnlocalizedName().replace("tile.", "");
   }

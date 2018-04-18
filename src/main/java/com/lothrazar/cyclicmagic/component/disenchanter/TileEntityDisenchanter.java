@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.disenchanter;
+
 import java.util.Arrays;
 import java.util.Map;
 import com.google.common.collect.Maps;
@@ -40,9 +41,11 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
 public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   public static enum Fields {
     REDSTONE, TIMER
   }
+
   public static final int TIMER_FULL = 100;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_BOTTLE = 1;
@@ -50,11 +53,13 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   public static final int SLOT_GLOWSTONE = 3;
   public static final int SLOT_BOOK = 4;
   private int needsRedstone = 1;
+
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
     this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index == SLOT_INPUT) {
@@ -71,10 +76,12 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     }
     return false;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (!isRunning()) {
@@ -133,6 +140,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     this.decrStackSize(SLOT_BOOK);
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
   }
+
   private void dropStack(ItemStack stack) {
     for (int i = SLOT_BOOK + 1; i < this.getSizeInventory(); i++) {
       if (this.getStackInSlot(i).isEmpty()) {
@@ -144,6 +152,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     EntityItem ei = UtilItemStack.dropItemStackInWorld(world, this.pos.up(), stack);
     ei.addVelocity(0, 1, 0);
   }
+
   private boolean isInputValid() {
     return this.getStackInSlot(SLOT_BOOK).getItem() == Items.BOOK
         && this.getStackInSlot(SLOT_REDSTONE).getItem() == Items.REDSTONE
@@ -151,6 +160,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
         && this.getStackInSlot(SLOT_BOTTLE).getItem() == Items.EXPERIENCE_BOTTLE
         && this.getStackInSlot(SLOT_INPUT).isEmpty() == false;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -159,9 +169,11 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -172,6 +184,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {

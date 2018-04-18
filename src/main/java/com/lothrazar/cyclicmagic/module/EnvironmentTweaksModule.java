@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -40,12 +41,15 @@ import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
+
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
+
   @Override
   public void onInit() {
     updateHardness();
   }
+
   private void updateHardness() {
     if (spawnersUnbreakable) {
       Blocks.MOB_SPAWNER.setBlockUnbreakable();//just like .setHardness(-1.0F);
@@ -54,6 +58,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       Blocks.MOB_SPAWNER.setHardness(5.0F);//reset to normal http://minecraft.gamepedia.com/Monster_Spawner
     }
   }
+
   @SubscribeEvent
   public void onItemExpireEvent(ItemExpireEvent event) {
     if (saplingDespawnGrow) {
@@ -79,6 +84,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;

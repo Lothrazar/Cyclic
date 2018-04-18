@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -71,11 +72,15 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  *
  */
 public class RecipeRegistry {
+
   public static List<IRecipe> recipes = new ArrayList<IRecipe>();
+
   public static void register(IRecipe recipeHydrate) {
     recipes.add(recipeHydrate);
   }
+
   public static class Util1pt12 {
+
     public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
       int index = 0;
@@ -85,6 +90,7 @@ public class RecipeRegistry {
       }
       return firstTry;
     }
+
     private static NonNullList<Ingredient> convertToNonNullList(Object[] input) {
       NonNullList<Ingredient> list = NonNullList.create();
       for (Object any : input) {
@@ -102,17 +108,21 @@ public class RecipeRegistry {
       return list;
     }
   }
+
   public static void add(IRecipe r, ResourceLocation location) {
     r.setRegistryName(location);
     recipes.add(r);
   }
+
   ResourceLocation group = new ResourceLocation(Const.MODID, "recipes");
+
   public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(stack);
     IRecipe recipe = new ShapelessOreRecipe(location, stack, recipeComponents);
     add(recipe, location);
     return recipe;
   }
+
   /**
    * wrapper for Forge addShapeless recipe, except the difference is this returns it after registering it
    * 
@@ -146,6 +156,7 @@ public class RecipeRegistry {
     add(recipe, location);
     return recipe;
   }
+
   /**
    * thin wrapper for addShapedRecipe
    * 
@@ -159,6 +170,7 @@ public class RecipeRegistry {
     add(recipe, Util1pt12.buildName(output));
     return recipe;
   }
+
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
     for (Object object : recipeComponents) {
       if (object instanceof String) {
@@ -167,17 +179,20 @@ public class RecipeRegistry {
     }
     return _addShapedRecipe(output, recipeComponents);
   }
+
   public static IRecipe addShapedOreRecipe(ItemStack output, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(output);
     IRecipe recipe = new ShapedOreRecipe(location, output, recipeComponents);
     add(recipe, Util1pt12.buildName(output));
     return recipe;
   }
+
   @SubscribeEvent
   public static void onRegisterRecipe(RegistryEvent.Register<IRecipe> event) {
     FluidsRegistry.addPoisonRecipe();//yeah kinda hacky since fluids have no register event yet
     event.getRegistry().registerAll(RecipeRegistry.recipes.toArray(new IRecipe[0]));
   }
+
   /**
    * Currently not used but it does work.
    * 

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.world.gen;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockCrops;
@@ -33,10 +34,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class GeneratePlant extends WorldGenerator {
+
   private BlockCrops crop;
+
   public GeneratePlant(BlockCrops state) {
     crop = state;
   }
+
   public boolean generate(World worldIn, Random rand, BlockPos pos) {
     //similar to WolrdGenPumpkin in vanilla code
     int fullGrownMeta = crop.getMaxAge();//func_185526_g();
@@ -55,12 +59,10 @@ public class GeneratePlant extends WorldGenerator {
       }
     }
     catch (StackOverflowError e) {
-      /*
-       * Description: Exception initializing level
+      /* Description: Exception initializing level
        * 
        * java.lang.: Exception initializing level at net.minecraft.world.gen.ChunkProviderServer.provideChunk( ChunkProviderServer.java:153) at
-       * net.minecraft.world.World.getChunkFromChunkCoords(World.java:349)
-       */
+       * net.minecraft.world.World.getChunkFromChunkCoords(World.java:349) */
       ModCyclic.logger.error(e.getStackTrace().toString());
     }
     return true;

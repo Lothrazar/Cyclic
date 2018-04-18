@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
@@ -50,13 +51,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+
   public BlockLibrary() {
     super(Material.WOOD);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityLibrary();
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
@@ -99,9 +103,11 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     }
     return false;//so you can still sneak with books or whatever
   }
+
   private void onSuccess(EntityPlayer player) {
     UtilSound.playSound(player, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
   }
+
   private void dropEnchantedBookOnPlayer(EnchantStack ench, EntityPlayer player, BlockPos pos) {
     ItemStack stack = ench.makeEnchantedBook();
     if (player.addItemStackToInventory(stack) == false) {
@@ -109,6 +115,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
       player.dropItem(stack, true);
     }
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
@@ -116,6 +123,7 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLibrary.class, new LibraryTESR<TileEntityLibrary>(this));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),

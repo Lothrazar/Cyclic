@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandshears;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
@@ -43,14 +44,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
+
   public ItemShearsRanged() {
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
   }
-  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityShearingBolt(world, x, y, z);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
@@ -61,15 +66,18 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
         't', new ItemStack(Blocks.CACTUS),
         's', new ItemStack(Items.SHEARS));
   }
+
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityShearingBolt(world, player));
     UtilItemStack.damageItem(player, held);
   }
+
   @Override
   public SoundEvent getSound() {
     return SoundEvents.ENTITY_EGG_THROW;
   }
+
   /**
    * Returns true if the item can be used on the given entity, e.g. shears on sheep. COPY from vanilla SHEARS
    */
@@ -97,6 +105,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
     }
     return false;
   }
+
   /**
    * 
    * COPY from vanilla SHEARS
@@ -115,10 +124,10 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
         java.util.Random rand = new java.util.Random();
         for (ItemStack stack : drops) {
           float f = 0.7F;
-          double d = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d1 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d2 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.world, (double) pos.getX() + d, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
+          double d = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d1 = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d2 = rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.world, pos.getX() + d, pos.getY() + d1, pos.getZ() + d2, stack);
           entityitem.setDefaultPickupDelay();
           player.world.spawnEntity(entityitem);
         }
@@ -130,6 +139,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
     }
     return false;
   }
+
   @Override
   public float getStrVsBlock(ItemStack stack, IBlockState state) {
     Block block = state.getBlock();

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat;
+
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -43,8 +44,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockPeat extends BlockBase implements IHasRecipe {
+
   private static final double CHANCE_BAKE_PCT = 0.05;
   private boolean isBaked;
+
   public BlockPeat(boolean baked) {
     super(Material.GROUND);
     this.setSoundType(SoundType.GROUND);
@@ -52,6 +55,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     this.setTickRandomly(true);
     isBaked = baked;
   }
+
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     if (this.isBaked) {
@@ -59,6 +63,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     }
     return super.getItemDropped(state, rand, fortune);
   }
+
   @Override
   public int quantityDropped(Random rand) {
     if (this.isBaked) {
@@ -66,6 +71,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     }
     return 1;
   }
+
   @Override
   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
     if (this.isBaked) {
@@ -82,6 +88,7 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
       }
     }
   }
+
   private void tryBake(World world, BlockPos pos) {
     if (this.isBaked == false && world.rand.nextDouble() < CHANCE_BAKE_PCT) {
       world.setBlockToAir(pos);
@@ -89,10 +96,12 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, pos);
     }
   }
+
   @Override
   public int tickRate(World worldIn) {
     return 1100;
   }
+
   @Override
   public IRecipe addRecipe() {
     if (isBaked) {

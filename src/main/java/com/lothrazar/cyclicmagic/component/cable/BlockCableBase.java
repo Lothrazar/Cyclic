@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
  */
 @SuppressWarnings("deprecation")
 public abstract class BlockCableBase extends BlockBaseHasTile {
+
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -85,13 +87,16 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, 0.375D, 0.375D, 0.375D, 0.625D, 0.625D))
           .put(EnumFacing.EAST, new AxisAlignedBB(0.625D, 0.375D, 0.375D, 1.0D, 0.625D, 0.625D))
           .build());
+
   public enum EnumConnectType implements IStringSerializable {
     NONE, CABLE, INVENTORY;
+
     @Override
     public String getName() {
       return this.name().toLowerCase();
     }
   }
+
   public BlockCableBase() {
     super(Material.CLOTH);
     setDefaultState(getDefaultState());
@@ -100,7 +105,9 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     setResistance(2.5F);
     setLightOpacity(0);
   }
+
   public abstract TileEntity createTileEntity(World world, IBlockState state);
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
@@ -111,6 +118,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     // otherwise return true if it is a fluid handler to prevent in world placement    
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -119,14 +127,17 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     }
     super.breakBlock(worldIn, pos, state);
   }
+
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState();
   }
+
   @Override
   public int getMetaFromState(IBlockState state) {
     return 0;
   }
+
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
     BlockPos pos = new BlockPos(origin);
@@ -172,16 +183,19 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     }
     return super.getActualState(state, world, origin);
   }
+
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return world.getBlockState(pos.offset(side)).getBlock() != this
         && super.shouldSideBeRendered(state, world, pos, side);
   }
+
   @Override
   public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity, boolean isActualState) {
     addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_NONE);
@@ -192,6 +206,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
       }
     }
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
@@ -204,10 +219,12 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     }
     return box;
   }
+
   @Override
   public boolean isOpaqueCube(IBlockState state) {
     return false;
   }
+
   @Override
   public RayTraceResult collisionRayTrace(IBlockState state, World world, BlockPos pos, Vec3d start, Vec3d end) {
     List<AxisAlignedBB> boxes = Lists.newArrayList(AABB_NONE);
@@ -241,11 +258,13 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     }
     return ret;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT_MIPPED;
   }
+
   @Override
   protected BlockStateContainer createBlockState() {
     BlockStateContainer.Builder builder = new BlockStateContainer.Builder(this);
@@ -254,19 +273,24 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     }
     return builder.build();
   }
+
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return true;
   }
+
   private boolean itemTransport = false;
   private boolean fluidTransport = false;
   private boolean powerTransport = false;
+
   public void setItemTransport() {
     this.itemTransport = true;
   }
+
   public void setFluidTransport() {
     this.fluidTransport = true;
   }
+
   public void setPowerTransport() {
     this.powerTransport = true;
   }

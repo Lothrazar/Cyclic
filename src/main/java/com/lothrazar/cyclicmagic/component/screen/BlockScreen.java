@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.screen;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -45,30 +46,36 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe {
+
   public BlockScreen() {
     super(Material.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
     this.setLightOpacity(0);
   }
+
   @Override
   public boolean isOpaqueCube(IBlockState state) {
     return false;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.SOLID;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityScreen();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityScreen.class, new ScreenTESR<TileEntityScreen>(this));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

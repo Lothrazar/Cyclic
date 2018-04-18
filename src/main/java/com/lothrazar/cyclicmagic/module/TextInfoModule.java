@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.text.DecimalFormat;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -47,10 +48,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TextInfoModule extends BaseEventModule implements IHasConfig {
+
   private boolean spawnDistanceEnabled;
   private boolean horseInfoEnabled;
   private boolean foodDetails;
   private boolean fuelDetails;
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onItemTooltipEvent(ItemTooltipEvent event) {
@@ -77,6 +80,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
@@ -91,6 +95,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       addHorseInfo(event);
     }
   }
+
   @SideOnly(Side.CLIENT)
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -106,16 +111,15 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       event.getLeft().add(UtilChat.lang("debug.horsejump") + df.format(jumpHeight));
     }
   }
+
   @SideOnly(Side.CLIENT)
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayerSP player = Minecraft.getMinecraft().player;
-    /*
-     * The spawn chunks usually consist of an area of 16×16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5×5 chunks around them
+    /* The spawn chunks usually consist of an area of 16×16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5×5 chunks around them
      * are loaded, limiting their activities to an area of 12×12 chunks.
      * 
      * The exact rule includes chunks whose center is less than or equal to 128 blocks away from the world spawn along both axes. In the rare case where the world spawn is located at the exact center
-     * of a chunk, 17 chunks will be loaded along that axis, of which 13 activate entities.
-     */
+     * of a chunk, 17 chunks will be loaded along that axis, of which 13 activate entities. */
     BlockPos spawn = player.getEntityWorld().getSpawnPoint();
     BlockPos here = player.getPosition();
     Chunk chunkHere = player.getEntityWorld().getChunkFromBlockCoords(here);
@@ -134,6 +138,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
       event.getLeft().add(TextFormatting.GREEN + UtilChat.lang("debug.spawn.chunks"));
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     spawnDistanceEnabled = config.getBoolean("F3SpawnChunkInfo", Const.ConfigCategory.player, true, "Show Within Spawn Chunks or Distance from Spawn in F3 screen.");

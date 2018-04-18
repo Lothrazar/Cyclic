@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enchanter;
+
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -32,9 +33,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerEnchanter extends ContainerBaseMachine {
+
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIss
   public static final int SLOTX = 50;
   public static final int SLOTY = 38;
+
   public ContainerEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter te) {
     super(te);
     this.addSlotToContainer(new Slot(tile, 0, 50, SLOTY));
@@ -42,6 +45,7 @@ public class ContainerEnchanter extends ContainerBaseMachine {
     super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
+
   // places it into the tileEntity is possible since its in the player inventory
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
@@ -73,11 +77,13 @@ public class ContainerEnchanter extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

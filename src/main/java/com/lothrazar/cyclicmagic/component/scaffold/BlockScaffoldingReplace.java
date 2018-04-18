@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.scaffold;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
@@ -36,10 +37,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRecipe {
+
   public BlockScaffoldingReplace() {
     super(false);
     this.dropBlock = true;
   }
+
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack heldItem = playerIn.getHeldItem(hand);
@@ -54,6 +57,7 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
     }
     return false;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', "stickWood");

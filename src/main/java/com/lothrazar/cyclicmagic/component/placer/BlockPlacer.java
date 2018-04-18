@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.placer;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -36,6 +37,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe {
+
   public BlockPlacer() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -43,10 +45,12 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe {
     this.setTickRandomly(true);//TODO: remove this
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PLACER);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPlacer();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

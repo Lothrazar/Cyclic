@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.entitydetector;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -44,6 +45,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+
   public BlockDetector() {
     super(Material.ROCK);
     this.setHardness(3F);
@@ -51,6 +53,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_DETECTOR);
     this.setTranslucent();
   }
+
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
     TileEntityDetector te = (TileEntityDetector) blockAccess.getTileEntity(pos);
@@ -59,24 +62,29 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
     }
     return te.isPowered() ? 15 : 0;
   }
+
   @Override
   public boolean shouldCheckWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return false;
   }
+
   @Override
   public boolean canProvidePower(IBlockState state) {
     return true;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityDetector();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDetector.class, new EntityDetectorTESR());
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

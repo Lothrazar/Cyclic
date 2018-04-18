@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
@@ -153,6 +154,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockModule extends BaseModule implements IHasConfig {
+
   private boolean fragileEnabled;
   private boolean fishingBlock;
   private boolean enableBucketBlocks;
@@ -196,6 +198,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableInterdict;
   private boolean vectorPlate;
   private boolean enableApple;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -486,6 +489,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;

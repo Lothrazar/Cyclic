@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
@@ -42,14 +43,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSoulstone extends BaseItem implements IHasRecipe {
+
   public ItemSoulstone() {
     super();
     this.setMaxStackSize(1);
   }
+
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
   }
+
   @SubscribeEvent
   public void onPlayerHurt(LivingHurtEvent event) {
     if (event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof EntityPlayer) {
@@ -76,6 +80,7 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe {
       }
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

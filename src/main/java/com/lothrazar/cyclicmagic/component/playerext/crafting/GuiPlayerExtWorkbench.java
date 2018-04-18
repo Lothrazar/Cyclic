@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.crafting;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.gui.GuiButton;
 //import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -32,22 +33,27 @@ import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
+
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventorycraft.png");
   private float oldMouseX;
   private float oldMouseY;
+
   public GuiPlayerExtWorkbench(ContainerPlayerExtWorkbench ctr) {
     super(ctr);
     this.allowUserInput = true;
   }
+
   @Override
   public void updateScreen() {
     this.updateActivePotionEffects();
   }
+
   @Override
   public void initGui() {
     this.buttonList.clear();
     super.initGui();
   }
+
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
@@ -55,6 +61,7 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     this.oldMouseX = (float) mouseX;
     this.oldMouseY = (float) mouseY;
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawDefaultBackground();//dim the background as normal
@@ -66,6 +73,7 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     //COPIED FROM GuiInventory
     GuiInventory.drawEntityOnScreen(i + 51, j + 75, 30, (float) (i + 51) - this.oldMouseX, (float) (j + 75 - 50) - this.oldMouseY, this.mc.player);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) {
     //    if (button.id == 0) {

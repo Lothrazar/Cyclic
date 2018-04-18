@@ -22,11 +22,14 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import net.minecraft.util.EnumFacing;
 
 public enum QuadrantEnum {
   TL, TR, BL, BR;
+
   private static final float HALF = 0.5F;
+
   /**
    * using (x,y) in [0,1] determine quadrant of block hit
    * 
@@ -48,6 +51,7 @@ public enum QuadrantEnum {
       return BR;
     }
   }
+
   /**
    * based on facing side, convert either hitX or hitZ to hitHorizontal relative to player orientation
    * 

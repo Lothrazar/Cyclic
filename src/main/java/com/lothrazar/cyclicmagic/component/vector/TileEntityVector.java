@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,6 +36,7 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class TileEntityVector extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+
   public static final int MAX_ANGLE = 90;
   public static final int MAX_YAW = 360;
   public static final int MAX_POWER = 300;///999 is op, maybe upgraes or config later
@@ -51,16 +53,20 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
   public static final String NBT_SOUND = "sound";
   private int playSound = 1;
   private int needsRedstone = 0;
+
   public static enum Fields {
     ANGLE, POWER, YAW, SOUND, REDSTONE;
   }
+
   public TileEntityVector() {
     super(0);
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -70,6 +76,7 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
     playSound = tagCompound.getInteger(NBT_SOUND);
     needsRedstone = tagCompound.getInteger(NBT_RED);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_POWER, power);
@@ -79,24 +86,30 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
     tagCompound.setInteger(NBT_RED, needsRedstone);
     return super.writeToNBT(tagCompound);
   }
+
   public float getActualPower() {//stored as integer. used as decimal from 0.01 and up
     float actual = ((float) power) / 100F;//over 100 so that power 100 is = 1 and so on
     //also divide by 3 bc 999 is overpowered. so maximum actual is 333
     //actual = Math.max(actual / 3F, 0.01F);//but not lower than 1. so 1-5 is the same, is fine
     return actual;
   }
+
   public int getPower() {
     return power;
   }
+
   public int getAngle() {
     return angle;
   }
+
   public int getYaw() {
     return yaw;
   }
+
   public boolean playSound() {
     return this.playSound == 1;
   }
+
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -115,6 +128,7 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -138,10 +152,12 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
       }
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -150,6 +166,7 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

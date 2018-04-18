@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
@@ -29,12 +30,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class InterModCommsRegistry {
+
   /**
    * All IMC registrations go here
    */
   public static void register() {
     registerCraftingTweaks();
   }
+
   /**
    * 
    * https://minecraft.curseforge.com/projects/crafting-tweaks https://github.com/blay09/CraftingTweaks/blob/1.12/README.md

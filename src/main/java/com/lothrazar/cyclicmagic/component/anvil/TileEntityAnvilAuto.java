@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.anvil;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
@@ -42,18 +43,22 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
+
   public static final int TANK_FULL = 10000;
   public static final int TIMER_FULL = 3;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;
   static NonNullList<String> blacklistBlockIds;
+
   public static enum Fields {
     TIMER, FLUID, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
+
   private int timer = 0;
   private int needsRedstone = 0;
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
+
   public TileEntityAnvilAuto() {
     super(3);
     this.setFuelSlot(2, BlockAnvilAuto.FUEL_COST);
@@ -61,13 +66,16 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.LAVA);
   }
+
   private boolean isBlockAllowed(ItemStack thing) {
     return UtilString.isInList(blacklistBlockIds, thing.getItem().getRegistryName()) == false;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -105,10 +113,12 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       }
     }
   }
+
   private boolean hasEnoughFluid() {
     FluidStack contains = this.tank.getFluid();
     return (contains != null && contains.amount >= FLUID_COST);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
@@ -116,6 +126,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     tags.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tags);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -123,10 +134,12 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
     this.needsRedstone = tags.getInteger(NBT_REDST);
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   public int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -135,6 +148,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
+
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -142,6 +156,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     return fluidHandler.getTankProperties()[0].getContents();
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -160,6 +175,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -182,6 +198,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       break;
     }
   }
+
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -194,6 +211,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     fluid.amount = amt;
     this.tank.setFluid(fluid);
   }
+
   /******************************
    * fluid properties here
    ******************************/
@@ -204,6 +222,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -211,31 +230,37 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     return super.getCapability(capability, facing);
   }
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     int result = tank.fill(resource, doFill);
     this.setField(Fields.FLUID.ordinal(), result);
     return result;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     FluidStack result = tank.drain(resource, doDrain);
     return result;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
     return result;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

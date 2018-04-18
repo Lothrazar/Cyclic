@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.terrariabuttons;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -36,11 +37,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonTerrariaRestock extends GuiButton implements ITooltipButton {
+
   private List<String> tooltip = new ArrayList<String>();
+
   public ButtonTerrariaRestock(int buttonId, int x, int y) {
     super(buttonId, x, y, GuiTerrariaButtonsModule.BTNWIDTH, Const.btnHeight, "R");
     tooltip.add(UtilChat.lang("button.terraria.restock"));
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
@@ -50,6 +54,7 @@ public class ButtonTerrariaRestock extends GuiButton implements ITooltipButton {
     }
     return pressed;
   }
+
   @Override
   public List<String> getTooltips() {
     return tooltip;

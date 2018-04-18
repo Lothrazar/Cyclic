@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
@@ -44,15 +45,18 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockShears extends BlockBase implements IHasRecipe {
+
   private static final double OFFSET = 0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0.0D, OFFSET, 1 - OFFSET, 1 - OFFSET, 1 - OFFSET);
   final static int FORTUNE = 10;// f yeah why not
   // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
+
   public BlockShears() {
     super(Material.CLOTH);
     this.setSoundType(SoundType.CLOTH);
     this.setTranslucent();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -62,6 +66,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
         's', new ItemStack(Items.SHEARS, 1, OreDictionary.WILDCARD_VALUE),
         'o', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata()));
   }
+
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof IShearable) {
@@ -73,6 +78,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
       }
     }
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return AABB;

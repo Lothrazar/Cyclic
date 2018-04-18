@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandblaze;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -46,24 +47,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityBlazeBolt extends EntityThrowableDispensable {
+
   static final float damage = 10;
   public static final int fireSeconds = 4;
+
   public static class FactoryFire implements IRenderFactory<EntityBlazeBolt> {
+
     @Override
     public Render<? super EntityBlazeBolt> createRenderFor(RenderManager rm) {
       RenderSnowball<EntityBlazeBolt> x = new RenderSnowball<EntityBlazeBolt>(rm, Item.getByNameOrId("cyclicmagic:fire_dark_anim"), Minecraft.getMinecraft().getRenderItem());
       return x;//new RenderBall<EntityBlazeBolt>(rm, "fire_dark");
     }
   }
+
   public EntityBlazeBolt(World worldIn) {
     super(worldIn);
   }
+
   public EntityBlazeBolt(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityBlazeBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
@@ -137,7 +145,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
         world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }
-    UtilSound.playSound(world, pos, SoundRegistry.explosm, SoundCategory.BLOCKS);
+    UtilSound.playSound(world, pos, SoundRegistry.fireball_explode, SoundCategory.BLOCKS);
     this.setDead();
   }
 }

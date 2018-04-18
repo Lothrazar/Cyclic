@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fisher;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
+
   // currently only used by the thermal fishing rod
   private static final int ENERGY_PER_FISH = 100;
   private static final String NBT_INV = "Inventory";
@@ -62,6 +64,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
   static final int SLOT_TOOL = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
+
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
     waterBoth.add(Blocks.FLOWING_WATER);
@@ -69,11 +72,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     this.setSlotsForInsert(SLOT_TOOL);
     this.setSlotsForExtract(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
   }
+
   //new idea: speed depends on number of sides covered in water in the 6 sides
   //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
     return this.countWetSides() >= MINIMUM_WET_SIDES;
   }
+
   /**
    * how much surrounded by water. TODO: update text on tooltip
    * 
@@ -89,6 +94,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return cov;
   }
+
   /**
    * [0,17]
    * 
@@ -104,9 +110,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return cov;
   }
+
   private List<BlockPos> getWaterArea() {
     return UtilShape.cubeFilled(this.getPos().down(2), 2, 2);
   }
+
   public int countWater() {
     int cov = 0;
     List<BlockPos> areas = getWaterArea();
@@ -117,6 +125,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return cov;
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index == SLOT_TOOL) {
@@ -124,6 +133,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return super.isItemValidForSlot(index, stack);
   }
+
   public boolean isEquipmentValid() {
     ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (equip.isEmpty()) {
@@ -131,6 +141,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return isValidFishingrod(equip);
   }
+
   public boolean isValidFishingrod(ItemStack equip) {
     if (equip.getItem() instanceof ItemFishingRod) {
       return true;
@@ -138,6 +149,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     //TODO: a whitelist of modid:itemid here
     return false;
   }
+
   private boolean isFishCaught() {
     if (world == null) {
       return false;//why was this check here i forget
@@ -158,6 +170,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         isEquipmentValid() &&
         perChance;
   }
+
   @Override
   public void update() {
     World world = this.getWorld();
@@ -200,6 +213,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
+
   private void sendOutputItem(ItemStack itemstack) {
     for (int i = SLOT_TOOL + 1; i <= FISHSLOTS; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
@@ -210,6 +224,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
+
   public double getFishSpeed() {
     //flowing water is usually zero, unless water levels are constantly fluctuating then it spikes
     int mult = this.countWaterFlowing() * 4 + this.countWater();// water in motion worth more so it varies a bit
@@ -219,12 +234,14 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return mult * SPEEDFACTOR + randFact;//+ Math.random()/10;
   }
+
   private void attemptRepairTool() {
     ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (!equip.isEmpty() && equip.getItemDamage() > 0) {//if it has zero damage, its fully repaired already
       equip.setItemDamage(equip.getItemDamage() - 1);//repair by one point
     }
   }
+
   private void damageTool() {
     ItemStack equip = this.getStackInSlot(SLOT_TOOL);
     if (equip.isEmpty()) {
@@ -252,6 +269,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
     }
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,6 +44,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvester {
+
   private static final int FORTUNE = 5;
   private static final String AGE = "age";
   static final boolean tryRemoveOneSeed = true;
@@ -58,6 +60,7 @@ public class UtilHarvester {
   private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
   private static Map<String, Integer> harvestCustomMaxAge;
   private static Map<String, String> stupidModsThatDontUseAge = new HashMap<String, String>();
+
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
@@ -148,33 +151,43 @@ public class UtilHarvester {
     harvestCustomMaxAge.put("simplecorn:corn", 9);
     /* @formatter:on */
   }
+
   private static boolean isHarvestReflectionRegrow(ResourceLocation blockId) {
     return UtilString.isInList(harvestReflectionRegrow, blockId);
   }
+
   private static boolean isIgnored(ResourceLocation blockId) {
     return UtilString.isInList(blockIgnore, blockId);
   }
+
   private static boolean isBreakGetDrops(ResourceLocation blockId) {
     return UtilString.isInList(breakGetDrops, blockId);
   }
+
   private static boolean isBreakGetDropsDeprec(ResourceLocation blockId) {
     return UtilString.isInList(breakGetDropsDeprecated, blockId);
   }
+
   private static boolean isSimpleSilktouch(ResourceLocation blockId) {
     return UtilString.isInList(breakSilkTouch, blockId);
   }
+
   private static boolean isHarvestingGetDropsOld(ResourceLocation blockId) {
     return UtilString.isInList(harvestGetDropsDeprecated, blockId);
   }
+
   private static boolean isBreakAboveIfMatching(ResourceLocation blockId) {
     return UtilString.isInList(blocksBreakAboveIfMatching, blockId);
   }
+
   private static boolean isBreakAboveIfMatchingAfterHarvest(ResourceLocation blockId) {
     return UtilString.isInList(blocksBreakAboveIfMatchingAfterHarvest, blockId);
   }
+
   private static boolean doesBlockMatch(World world, Block blockCheck, BlockPos pos) {
     return world.getBlockState(pos).getBlock().equals(blockCheck);
   }
+
   private static PropertyInteger getAgeProperty(IBlockState blockState, ResourceLocation blockId) {
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
     while (unmodifiableiterator.hasNext()) {
@@ -193,6 +206,7 @@ public class UtilHarvester {
     }
     return null;
   }
+
   @SuppressWarnings("deprecation")
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
     final NonNullList<ItemStack> drops = NonNullList.create();
