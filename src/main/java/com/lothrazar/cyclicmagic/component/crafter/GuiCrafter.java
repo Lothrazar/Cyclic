@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.crafter;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiCrafter extends GuiBaseContainer {
+
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
     this.setScreenSize(ScreenSize.LARGE);
@@ -38,10 +40,12 @@ public class GuiCrafter extends GuiBaseContainer {
     //    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -80,6 +84,7 @@ public class GuiCrafter extends GuiBaseContainer {
     }
     super.tryDrawFuelSlot(ContainerCrafter.SLOTX_FUEL - 1, ContainerCrafter.SLOTY_FUEL - 1);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

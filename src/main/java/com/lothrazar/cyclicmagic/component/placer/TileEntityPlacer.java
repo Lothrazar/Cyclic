@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.placer;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -34,28 +35,35 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   private static final int buildSpeed = 1;
   public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
+
   public static enum Fields {
     TIMER, REDSTONE
   }
+
   private int timer;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private int needsRedstone = 1;
+
   public TileEntityPlacer() {
     super(9);
     this.setSlotsForBoth();
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) != null;
   }
+
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount())
@@ -67,6 +75,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount())
@@ -79,28 +88,34 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       break;
       }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(tagCompound);
   }
+
   public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
+
   @Override
   public void update() {
     shiftAllUp();
@@ -134,6 +149,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     }
     this.markDirty();
   }
+
   //  @Override
   //  protected EnumFacing getCurrentFacing() {
   //    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
@@ -142,6 +158,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
   }
+
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -152,6 +169,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       return super.receiveClientEvent(id, value);
     }
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -160,6 +178,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

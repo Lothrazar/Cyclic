@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.sprinkler;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -36,21 +37,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
 
 public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickable {
+
   private static final int RADIUS = 4;
   private static final int TICKS = 30;
   private static final float CHANCE_GROW = 0.4F;
   private static final int TIMER_FULL = 100;
   private boolean spawnParticles = true;
   private int timerUserToggle;
+
   public TileSprinkler() {
     super(0);
     this.timer = TIMER_FULL;
     this.timerUserToggle = 0;
   }
+
   @Override
   public boolean isRunning() {
     return (world.getBlockState(this.pos.down()).getBlock() == Blocks.WATER);
   }
+
   @Override
   public void update() {
     if (this.isInvalid() || !this.isRunning()) {
@@ -98,6 +103,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
       }
     }
   }
+
   public void toggleSpawnParticles() {
     if (timerUserToggle > 0) {
       return;
@@ -105,14 +111,17 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
     this.spawnParticles = !this.spawnParticles;
     timerUserToggle = 15;
   }
+
   public boolean isSpawningParticles() {
     return this.spawnParticles;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     spawnParticles = compound.getBoolean("spawnParticles");
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setBoolean("spawnParticles", spawnParticles);

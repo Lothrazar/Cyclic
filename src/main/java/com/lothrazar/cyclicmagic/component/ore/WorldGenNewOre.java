@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.ore;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
@@ -35,8 +36,10 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenNewOre implements IWorldGenerator {
+
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
+
   public WorldGenNewOre() {
     for (BlockDimensionOre ore : WorldModule.ores) {
       if (ore.config.isVanilla() == false && WorldModule.enableModCompatOres == false) {
@@ -59,6 +62,7 @@ public class WorldGenNewOre implements IWorldGenerator {
       }
     }
   }
+
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
     for (BlockDimensionOre ore : WorldModule.ores) {
@@ -72,6 +76,7 @@ public class WorldGenNewOre implements IWorldGenerator {
       }
     }
   }
+
   private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight) {
     if (minHeight < 0 || maxHeight > 256 || minHeight > maxHeight)
       throw new IllegalArgumentException("Illegal Height Arguments for WorldGenerator");

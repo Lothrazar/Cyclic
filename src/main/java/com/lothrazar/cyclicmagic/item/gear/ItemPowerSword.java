@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.gear;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -56,17 +57,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig {
+
   private static final int COOLDOWN = Const.TICKS_PER_SEC;
+
   public enum SwordType {
     SLOW, WEAK, ENDER;
   }
+
   private SwordType type;
   private boolean enableShooting;
+
   public ItemPowerSword(SwordType t) {
     super(MaterialRegistry.powerToolMaterial);
     this.type = t;
     this.setMaxDamage(1);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -75,6 +81,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
     }
     super.addInformation(stack, player, tooltip, advanced);
   }
+
   @Override
   public IRecipe addRecipe() {
     ItemStack item = ItemStack.EMPTY;
@@ -98,6 +105,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
         'd', Items.DRAGON_BREATH,
         's', "blockEmerald");
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     if (enableShooting) {
@@ -122,6 +130,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }
+
   private void spawnLingeringPotion(EntityPlayer player, PotionType ptype) {
     World world = player.getEntityWorld();
     ItemStack potion = PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), ptype);
@@ -132,15 +141,18 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
       world.spawnEntity(entitypotion);
     }
   }
+
   @Override
   public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
     //overrides to disable item damage
     return true;
   }
+
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
     return true;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     this.enableShooting = config.getBoolean(this.getUnlocalizedName().replace("item.", "") + "_projectiles", Const.ConfigCategory.modpackMisc, true, "Disable the projectile (splash potion / ender pearl) from this endgame sword");

@@ -22,16 +22,19 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 public class UtilString {
+
   /**
    * One day i might make this a setting or an input arg for now i have no use to turn it off
    */
   public static final boolean matchWildcard = true;
+
   /**
    * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then match is true
    * 
@@ -64,6 +67,7 @@ public class UtilString {
     }
     return false;
   }
+
   /**
    * TODO: make a unit testing module, or install a framework for now these pass so i removed call to them
    */

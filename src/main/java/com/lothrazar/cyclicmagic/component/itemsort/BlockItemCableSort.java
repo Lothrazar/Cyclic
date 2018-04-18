@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.itemsort;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -38,14 +39,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
+
   public BlockItemCableSort() {
     super(Material.CLAY);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityItemCableSort();
   }
+
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -54,6 +58,7 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
     }
     super.breakBlock(worldIn, pos, state);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),

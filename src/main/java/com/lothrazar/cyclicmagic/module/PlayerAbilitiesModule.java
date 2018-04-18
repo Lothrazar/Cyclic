@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -55,6 +56,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig {
+
   private static final int LADDER_ROTATIONLIMIT = -78;
   private static final double LADDER_SPEED = 0.10;
   private boolean signSkullName;
@@ -65,6 +67,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean passThroughClick;
   private boolean armorStandSwap;
   private boolean stardewFurnace; // inspired by stardew valley
+
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.RightClickBlock event) {
     if (passThroughClick) {
@@ -98,6 +101,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     if (nameVillagerTag) {
@@ -133,6 +137,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   @SubscribeEvent
   public void onPlayerInteract(PlayerInteractEvent event) {
     if (signSkullName) {
@@ -167,6 +172,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   @SubscribeEvent
   public void onPlayerTick(LivingUpdateEvent event) {
     if (fastLadderClimb) {
@@ -182,6 +188,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   @SubscribeEvent
   public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer entityPlayer = event.getEntityPlayer();
@@ -245,8 +252,10 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   private final static EntityEquipmentSlot[] armorStandEquipment = {
       EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
+
   @SubscribeEvent
   public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
     if (armorStandSwap) {
@@ -271,6 +280,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.player;

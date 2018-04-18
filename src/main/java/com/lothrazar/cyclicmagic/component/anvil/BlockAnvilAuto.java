@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.anvil;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -55,8 +56,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
+
   protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
   public static int FUEL_COST = 0;
+
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilAuto() {
     super(Material.ANVIL);
@@ -65,20 +68,24 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     this.setHardness(3.0F).setResistance(3.0F);
     this.setTranslucent();
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return Z_AXIS_AABB;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityAnvilAuto();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvilAuto.class, new AnvilAutoTESR(TileEntityAnvilAuto.SLOT_INPUT));
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
@@ -98,6 +105,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
         category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles");
     TileEntityAnvilAuto.blacklistBlockIds = NonNullList.from("", blacklist);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -108,6 +116,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
         'e', Blocks.ENCHANTING_TABLE,
         'd', "gemDiamond");
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE

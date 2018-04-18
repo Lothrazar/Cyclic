@@ -22,14 +22,18 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.potion;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class PotionSlowfall extends PotionBase {
+
   public static final float slowfallSpeed = 0.41F;
+
   public PotionSlowfall(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }
+
   @Override
   public void tick(EntityLivingBase entityLiving) {
     if (entityLiving instanceof EntityPlayer) {

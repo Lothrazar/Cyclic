@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -30,10 +31,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class CommandGetHome extends BaseCommand implements ICommand {
+
   public static final String name = "gethome";
+
   public CommandGetHome(boolean op) {
     super(name, op);
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
     if (ic instanceof EntityPlayer == false) {

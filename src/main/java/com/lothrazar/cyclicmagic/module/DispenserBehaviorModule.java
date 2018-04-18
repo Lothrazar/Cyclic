@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorPlantSeed;
@@ -32,7 +33,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class DispenserBehaviorModule extends BaseModule implements IHasConfig {
+
   private boolean seedsEnabled;
+
   @Override
   public void onPostInit() {
     if (seedsEnabled) {
@@ -43,6 +46,7 @@ public class DispenserBehaviorModule extends BaseModule implements IHasConfig {
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.crafter;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -38,15 +39,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {
+
   public static int FUEL_COST = 0;
+
   public BlockCrafter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_CRAFTER);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityCrafter();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -59,6 +64,7 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
         'c', "workbench",
         'p', "dyePurple");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);

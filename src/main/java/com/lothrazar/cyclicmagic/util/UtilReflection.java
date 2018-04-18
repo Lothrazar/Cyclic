@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 @SuppressWarnings("rawtypes")
 public class UtilReflection {
+
   public static Field getPrivateField(String name, String mapping, Class c) {
     try {
       for (Field f : c.getDeclaredFields()) {
@@ -46,6 +48,7 @@ public class UtilReflection {
     }
     return null;
   }
+
   /**
    * Return a property of obj that is of type T the first one found
    * 
@@ -77,6 +80,7 @@ public class UtilReflection {
     }
     return null;
   }
+
   @SuppressWarnings("unchecked")
   public static List<LootPool> getLoot(Object obj) {
     for (Field f : obj.getClass().getDeclaredFields()) {
@@ -98,6 +102,7 @@ public class UtilReflection {
     }
     return null;
   }
+
   public static void callPrivateMethod(Class theClass, Object obj, String name, String obsName) {
     try {
       Method m = ReflectionHelper.findMethod(theClass, name, obsName);

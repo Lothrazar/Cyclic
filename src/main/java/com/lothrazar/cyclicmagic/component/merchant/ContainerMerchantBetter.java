@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -41,6 +42,7 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class ContainerMerchantBetter extends ContainerBaseMachine {
+
   final static int HOTBAR_START = 27;
   final static int HOTBAR_END = 35;
   final static int INV_START = 0;
@@ -49,6 +51,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private MerchantRecipeList trades;
   private final InventoryMerchantBetter merchantInventory;
   private EntityPlayer player;
+
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
     this.screenSize = ScreenSize.LARGEWIDE;
     this.merchant = m;
@@ -58,16 +61,20 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     bindPlayerInventory(playerInventory);
     this.detectAndSendChanges();
   }
+
   public void setCareer(int c) {
     UtilEntity.setVillagerCareer(merchant, c);
   }
+
   public InventoryMerchantBetter getMerchantInventory() {
     return this.merchantInventory;
   }
+
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
   }
+
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
@@ -77,19 +84,24 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       ModCyclic.network.sendTo(new PacketSyncVillagerToClient(this.getCareer(), merchantrecipelist), mp);
     }
   }
+
   private int getCareer() {
     return UtilEntity.getVillagerCareer(merchant);
   }
+
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.merchantInventory.resetRecipeAndSlots();
     super.onCraftMatrixChanged(inventoryIn);
   }
+
   public void setCurrentRecipeIndex(int currentRecipeIndex) {
     this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
   }
+
   public boolean canInteractWith(EntityPlayer playerIn) {
     return this.merchant.getCustomer() == playerIn;
   }
+
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
     ItemStack itemstack = ItemStack.EMPTY;
@@ -123,19 +135,23 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     }
     return itemstack;
   }
+
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
     this.merchant.setCustomer((EntityPlayer) null);
     super.onContainerClosed(playerIn);
   }
+
   public void setTrades(MerchantRecipeList t) {
     this.trades = t;
     this.merchant.setRecipes(t);
     this.merchantInventory.setRecipes(t);
   }
+
   public MerchantRecipeList getTrades() {
     return trades;
   }
+
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
     if (trade.isRecipeDisabled()) {

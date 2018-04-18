@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +53,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
+
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
@@ -61,6 +63,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   private boolean dropSeedOnHarvest;
   private ArrayList<String> myDropStrings;
   private Random rand = new Random();
+
   public BlockCropMagicBean() {
     Item[] drops = new Item[] {
         //treasure
@@ -121,26 +124,32 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
       myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
     }
   }
+
   @Override
   protected PropertyInteger getAgeProperty() {
     return AGE;
   }
+
   @Nullable
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();
   }
+
   @Override
   protected Item getSeed() {
     return seed;
   }
+
   public void setSeed(ItemMagicBean item) {
     seed = item;
   }
+
   @Override
   protected Item getCrop() {
     return null;//the null tells harvestcraft hey: dont remove my drops
   }
+
   private ItemStack getCropStack() {
     String res = this.myDropStrings.get(rand.nextInt(myDropStrings.size()));
     try {
@@ -163,20 +172,24 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
     }
     //    return myDrops.get(rand.nextInt(myDrops.size()));
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }
+
   @Override
   public int quantityDropped(Random random) {
     return super.quantityDropped(random) + 1;
   }
+
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     NonNullList<ItemStack> ret = NonNullList.create();
     this.getDrops(ret, world, pos, state, fortune);
     return ret;
   }
+
   @Override
   public void getDrops(NonNullList<ItemStack> ret, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     // Used by regular 'block break' and also by other harvesting features
@@ -192,18 +205,22 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
     }
     //    return ret;
   }
+
   @Override
   public int getMaxAge() {
     return MAX_AGE;
   }
+
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
     return allowBonemeal ? 1 : 0;
   }
+
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
     return getBonemealAgeIncrease(worldIn) > 0;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks + ".magicbean";

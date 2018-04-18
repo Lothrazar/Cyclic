@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -38,9 +39,11 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MobChangesModule extends BaseEventModule implements IHasConfig {
+
   private boolean endermanDrop;
   private boolean endermanPickupBlocks;
   private boolean nameTagDeath;
+
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {
     Entity entity = event.getEntity();
@@ -62,6 +65,7 @@ public class MobChangesModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobs;
@@ -73,6 +77,7 @@ public class MobChangesModule extends BaseEventModule implements IHasConfig {
     endermanPickupBlocks = config.getBoolean("Enderman Pickup Blocker", category, true,
         "False is the same as vanilla behavior.  True means that this mod will block enderman from picking up all registered blocks (does not listen to mob actions, this scans registry only once on startup and sets properties).  ");
   }
+
   @Override
   public void onPostInit() {
     if (endermanPickupBlocks) {

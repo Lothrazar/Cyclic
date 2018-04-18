@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.autouser;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +81,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
 public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -98,9 +100,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int vRange = 2;
   public int yOffset = 0;
   private static List<String> blacklistAll;
+
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
   }
+
   public TileEntityUser() {
     super(10);
     timer = TIMER_FULL;
@@ -109,10 +113,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     this.setSlotsForInsert(Arrays.asList(0, 1, 2));
     this.setSlotsForExtract(Arrays.asList(3, 4, 5, 6, 7, 8));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (isRunning() == false) {
@@ -158,6 +164,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
   }
+
   private boolean isInBlacklist(BlockPos targetPos) {
     if (world.getBlockState(targetPos) == null
         || world.getBlockState(targetPos).getBlock() == null) {
@@ -165,6 +172,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     return UtilString.isInList(blacklistAll, world.getBlockState(targetPos).getBlock().getRegistryName());
   }
+
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = getTargetCenter();
     AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
@@ -217,6 +225,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
   }
+
   private void rightClickBlock(BlockPos targetPos) {
     if (rightClickFluidAttempt(targetPos)) {
       return;
@@ -266,6 +275,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
   }
+
   private void tryDumpStacks(List<ItemStack> toDump) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(toDump, this, 3, 9);
     ///only drop now that its full
@@ -280,6 +290,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
   }
+
   private void tryDumpFakePlayerInvo(boolean includeMainHand) {
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
@@ -297,6 +308,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     tryDumpStacks(toDrop);
   }
+
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
     if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
@@ -340,6 +352,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     return false;
   }
+
   /**
    * detect if tool stack is empty or destroyed and reruns equip
    */
@@ -351,6 +364,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       inv.set(toolSlot, ItemStack.EMPTY);
     }
   }
+
   private ItemStack tryEquipItem() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
     if (!maybeTool.isEmpty()) {
@@ -373,6 +387,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     return maybeTool;
   }
+
   private void verifyUuid(World world) {
     if (uuid == null) {
       uuid = UUID.randomUUID();
@@ -380,6 +395,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (uuid != null) {
@@ -392,6 +408,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger("yoff", yOffset);
     return super.writeToNBT(compound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -404,6 +421,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -430,6 +448,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -473,10 +492,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
@@ -484,18 +505,22 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
+
   public int getTimer() {
     return timer;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void toggleSizeShape() {
     this.size++;
@@ -503,10 +528,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       this.size = 0;
     }
   }
+
   @Override
   public int getSpeed() {
     return speed;
   }
+
   @Override
   public void setSpeed(int value) {
     if (value < 1) {
@@ -514,26 +541,32 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     speed = Math.min(value, MAX_SPEED);
   }
+
   private BlockPos getTargetPos() {
     BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
     return targetPos;
   }
+
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1).offset(EnumFacing.UP, yOffset);
   }
+
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
+
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
+
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[0];

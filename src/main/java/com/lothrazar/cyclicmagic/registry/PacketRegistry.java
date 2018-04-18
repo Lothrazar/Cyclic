@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
@@ -73,6 +74,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketRegistry {
+
   public static void register(SimpleNetworkWrapper network) {
     int packetID = 0;
     network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);

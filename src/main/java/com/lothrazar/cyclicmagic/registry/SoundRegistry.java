@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +31,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SoundRegistry {
+
   public static ArrayList<SoundEvent> sounds = new ArrayList<SoundEvent>();
   public static SoundEvent sack_holding;
   public static SoundEvent inventory_upgrade;
@@ -56,6 +58,7 @@ public class SoundRegistry {
   public static SoundEvent step_height_up;
   public static SoundEvent tool_mode;
   public static SoundEvent warp;
+
   public static void register() {
     //old sounds kept - lothrazar originals
     sack_holding = registerSound("basey");
@@ -84,6 +87,7 @@ public class SoundRegistry {
     tool_mode = registerSound("tool_mode");
     warp = registerSound("warp_echo");
   }
+
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3
     // and http://www.minecraftforge.net/forum/index.php?topic=38076.0
@@ -93,6 +97,7 @@ public class SoundRegistry {
     sounds.add(sound);
     return sound;
   }
+
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<SoundEvent> event) {
     for (SoundEvent b : sounds) {

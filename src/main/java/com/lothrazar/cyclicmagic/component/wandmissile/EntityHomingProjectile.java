@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandmissile;
+
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -43,40 +44,49 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
  * 
  */
 public class EntityHomingProjectile extends EntityThrowable {
+
   private static final int MAX_LIFETIME = 120;
   private static final int TIME_UNTIL_HOMING = 8;
   //higher speed is fasterS
   private static final double SPEED = 0.95;
+
   public static class FactoryMissile implements IRenderFactory<EntityHomingProjectile> {
+
     @Override
     public Render<? super EntityHomingProjectile> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityHomingProjectile>(rm, "magic_missile", false);
     }
   }
+
   private int lifetime = MAX_LIFETIME;
   private UUID targetId = null;
   private BlockPos targetPos;
   private EntityLivingBase targetEntity;
   private float damage = 6.0f;
+
   public EntityHomingProjectile(World worldIn) {
     super(worldIn);
     init();
   }
+
   public EntityHomingProjectile(World worldIn, EntityLivingBase thrower) {
     super(worldIn, thrower);
     init();
   }
+
   private void init() {
     this.setNoGravity(true);
     isImmuneToFire = true;
     this.setSize(0.1F, 0.1F);
   }
+
   public void setTarget(EntityLivingBase target) {
     this.targetId = target.getUniqueID();
     targetPos = target.getPosition();
     targetEntity = target;
     // ModCyclic.logger.error("pos  =" + this.targetPos);
   }
+
   //  @Override
   //  public int getBrightnessForRender() {
   //    return 255;
@@ -98,11 +108,13 @@ public class EntityHomingProjectile extends EntityThrowable {
       //  }
     }
   }
+
   @Override
   public void setDead() {
     super.setDead();
     this.setInvisible(true);
   }
+
   @Override
   public void onUpdate() {
     super.onUpdate();

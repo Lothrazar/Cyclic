@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -39,6 +40,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+
   public BlockItemPump() {
     super(Material.WOOD);
     this.setHardness(3F);
@@ -48,16 +50,19 @@ public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityPro
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
     this.placeType = PlacementType.SIDE_BLOCK;
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (side == EnumFacing.UP || side == EnumFacing.DOWN)
       return false;//allows, for example, you to open chest that is directly below
     return true;
   }
+
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
     return new TileEntityItemPump();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

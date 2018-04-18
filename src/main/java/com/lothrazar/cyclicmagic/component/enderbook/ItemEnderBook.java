@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enderbook;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -54,15 +55,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
+
   public static String KEY_LOC = "location";
   public static String KEY_LARGEST = "loc_largest";
   public static int maximumSaved = 16;
   public static int expDistRatio = 10;
   public static final int BTNS_PER_COLUMN = 8;
+
   public ItemEnderBook() {
     super();
     this.setMaxStackSize(1);
   }
+
   public static ArrayList<BookLocation> getLocations(ItemStack itemStack) {
     ArrayList<BookLocation> list = new ArrayList<BookLocation>();
     String KEY;
@@ -77,17 +81,21 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return list;
   }
+
   private static int getLocationsCount(ItemStack itemStack) {
     return getLocations(itemStack).size();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));
   }
+
   public static int getLargestSlot(ItemStack itemStack) {
     return UtilNBT.getItemStackNBT(itemStack).getInteger(KEY_LARGEST);
   }
+
   public static int getEmptySlotAndIncrement(ItemStack itemStack) {
     int empty = UtilNBT.getItemStackNBT(itemStack).getInteger(KEY_LARGEST);
     if (empty == 0) {
@@ -96,6 +104,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     UtilNBT.getItemStackNBT(itemStack).setInteger(KEY_LARGEST, empty + 1);
     return empty;
   }
+
   public static ItemStack getPlayersBook(EntityPlayer player) {
     ItemStack book = player.getHeldItem(EnumHand.MAIN_HAND);
     if (book == null || book.getItem() instanceof ItemEnderBook == false) {
@@ -104,16 +113,19 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     UtilNBT.getItemStackNBT(book);
     return book;
   }
+
   public static void deleteWaypoint(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
     book.getTagCompound().removeTag(KEY_LOC + "_" + slot);
   }
+
   public static void saveCurrentLocation(EntityPlayer player, String name) {
     ItemStack book = getPlayersBook(player);
     int id = getEmptySlotAndIncrement(book);
     BookLocation loc = new BookLocation(id, player, name);
     book.getTagCompound().setString(KEY_LOC + "_" + id, loc.toCSV());
   }
+
   private static BookLocation getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
     if (csv == null || csv.isEmpty()) {
@@ -121,6 +133,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return new BookLocation(csv);
   }
+
   public static BlockPos getLocationPos(ItemStack stack, int slot) {
     BookLocation loc = getLocation(stack, slot);
     if (loc == null) {
@@ -128,6 +141,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return new BlockPos(loc.X, loc.Y, loc.Z);
   }
+
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
     String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
@@ -154,6 +168,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
@@ -163,6 +178,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
         'n', "blockEmerald");
     // if you want to clean out the book and start over
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {
     ItemStack stack = entityPlayer.getHeldItem(hand);
@@ -173,13 +189,16 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
   }
+
   public static class BookLocation {
+
     public double X;
     public double Y;
     public double Z;
     public int id;
     public int dimension;
     public String display;
+
     public BookLocation(int idx, EntityPlayer p, String d) {
       X = p.posX;
       Y = p.posY;
@@ -188,6 +207,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       dimension = p.dimension;
       display = d;
     }
+
     public BookLocation(String csv) {
       String[] pts = csv.split(",");
       id = Integer.parseInt(pts[0]);
@@ -198,22 +218,27 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       if (pts.length > 5)
         display = pts[5];
     }
+
     public String toCSV() {
       return id + "," + X + "," + Y + "," + Z + "," + dimension + "," + display;
     }
+
     public BlockPos toBlockPos() {
       return new BlockPos(X, Y, Z);
     }
+
     public String coordsDisplay() {
       // "["+id + "] "+
       return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
       // showName
     }
+
     @Override
     public String toString() {
       return this.toCSV() + " : " + this.display;
     }
   }
+
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
     if (expDistRatio <= 0) {
       return 0;
@@ -222,6 +247,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return Math.round(distance / expDistRatio);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc,

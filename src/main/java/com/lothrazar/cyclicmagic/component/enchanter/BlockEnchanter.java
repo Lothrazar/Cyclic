@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enchanter;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -54,8 +55,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IHasConfig {
+
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.75, 1);
   public static int FUEL_COST = 0;
+
   public BlockEnchanter() {
     super(Material.ROCK);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENCHANTER);
@@ -63,24 +66,29 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
     this.setSoundType(SoundType.GLASS);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityEnchanter();
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class, new EnchanterTESR(TileEntityEnchanter.SLOT_INPUT));
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -91,6 +99,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
         'e', "gemEmerald",
         'o', "obsidian");
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
@@ -105,6 +114,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);

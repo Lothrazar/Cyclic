@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -47,14 +48,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
+
   private static final int VOL_REDUCE_PER_BLOCK = 4;
   private static final int RADIUS = 6;
+
   //TODO: future upgrade: Filter by category. some types only filter some types of block categories?
   //filter by range? b power? different block types?
   public BlockSoundSuppress() {
     super(Material.CLAY);
     this.myTooltip = UtilChat.lang("tile.block_soundproofing.tooltip") + RADIUS;
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
@@ -80,66 +84,83 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
       e.printStackTrace();//getVolume() in naive Positioned sound event gives NPE
     }
   }
+
   //copy a sound and control its volume
   //because there is no setVolume() fn in ISound... we must clone it
   private static class SoundVolumeControlled implements ISound {
+
     public float volume;
     public ISound sound;
+
     public SoundVolumeControlled(ISound s) {
       sound = s;
     }
+
     public void setVolume(float v) {
       this.volume = v;
     }
+
     @Override
     public float getVolume() {
       return volume * sound.getVolume();//not from the input, our own control
     }
+
     @Override
     public ResourceLocation getSoundLocation() {
       return sound.getSoundLocation();
     }
+
     @Override
     public SoundEventAccessor createAccessor(SoundHandler handler) {
       return sound.createAccessor(handler);
     }
+
     @Override
     public Sound getSound() {
       return sound.getSound();
     }
+
     @Override
     public SoundCategory getCategory() {
       return sound.getCategory();
     }
+
     @Override
     public boolean canRepeat() {
       return sound.canRepeat();
     }
+
     @Override
     public int getRepeatDelay() {
       return sound.getRepeatDelay();
     }
+
     @Override
     public float getPitch() {
       return sound.getPitch();
     }
+
     @Override
     public float getXPosF() {
       return sound.getXPosF();
     }
+
     @Override
     public float getYPosF() {
       return sound.getYPosF();
     }
+
     @Override
     public float getZPosF() {
       return sound.getZPosF();
     }
+
     @Override
     public AttenuationType getAttenuationType() {
       return sound.getAttenuationType();
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),

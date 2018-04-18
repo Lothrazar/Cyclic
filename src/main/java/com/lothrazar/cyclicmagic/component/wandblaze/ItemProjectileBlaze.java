@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandblaze;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -34,14 +35,17 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRecipe {
+
   public ItemProjectileBlaze() {
     super(1000);
   }
+
   @Override
   public EntityBlazeBolt createBullet(World world, EntityPlayer player, float dmg) {
     EntityBlazeBolt s = new EntityBlazeBolt(world, player);
     return s;
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedOreRecipe(new ItemStack(getRepairItem().getItem(), 4),
@@ -57,10 +61,12 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
         'b', new ItemStack(Items.BLAZE_POWDER),
         'f', new ItemStack(Items.FLINT));
   }
+
   @Override
   public SoundEvent getSound() {
     return SoundRegistry.fireball_staff_launch;//fireball_staff_launch
   }
+
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     return getRepairItem().isItemEqualIgnoreDurability(toRepair);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
+
   private static final int TIMER_SIDE_INPUT = 15;
   private static int TRANSFER_FLUID_PER_TICK = 500; //config
   //config
@@ -65,6 +67,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private EnergyStore cableEnergyStore;
+
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
@@ -81,24 +84,31 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       mapIncomingEnergy.put(f, 0);
     }
   }
+
   public void setItemTransport() {
     this.itemTransport = true;
   }
+
   public void setFluidTransport() {
     this.fluidTransport = true;
   }
+
   public void setPowerTransport() {
     this.energyTransport = true;
   }
+
   public boolean isItemPipe() {
     return this.itemTransport;
   }
+
   public boolean isFluidPipe() {
     return this.fluidTransport;
   }
+
   public boolean isEnergyPipe() {
     return this.energyTransport;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -113,6 +123,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
@@ -128,9 +139,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return compound;
   }
+
   public String getLabelTextOrEmpty() {
     return labelText.isEmpty() ? UtilChat.lang("cyclic.item.empty") : this.labelText;
   }
+
   /**
    * with normal item movement it moves too fast for user to read cache the current item for a few ticks so full item pipes dont show empty or flashing fast text
    */
@@ -159,6 +172,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       this.labelTimer = TICKS_TEXT_CACHED;
     }
   }
+
   private String getIncomingStringsFromMap(Map<EnumFacing, Integer> map) {
     String in = "";
     for (EnumFacing f : EnumFacing.values()) {
@@ -167,6 +181,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return in.trim();
   }
+
   private String getIncomingStringsFluid() {
     String tmpName = this.getCurrentFluidStack().getLocalizedName();
     String incoming = getIncomingStringsFromMap(this.mapIncomingFluid);
@@ -175,6 +190,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return tmpName;
   }
+
   private String getIncomingStringsItem() {
     String tmpName = this.getStackInSlot(0).getDisplayName();
     String incoming = getIncomingStringsFromMap(this.mapIncomingItems);
@@ -183,6 +199,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return tmpName;
   }
+
   private String getIncomingStringsEnergy() {
     String tmpName = this.cableEnergyStore.getEnergyStored() + "";
     String incoming = getIncomingStringsFromMap(this.mapIncomingEnergy);
@@ -191,24 +208,31 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return tmpName;
   }
+
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
     mapIncomingFluid.put(inputFrom, TIMER_SIDE_INPUT);
   }
+
   private boolean isFluidIncomingFromFace(EnumFacing face) {
     return mapIncomingFluid.get(face) > 0;
   }
+
   private boolean isEnergyIncomingFromFace(EnumFacing face) {
     return mapIncomingEnergy.get(face) > 0;
   }
+
   public void updateIncomingEnergyFace(EnumFacing inputFrom) {
     mapIncomingEnergy.put(inputFrom, TIMER_SIDE_INPUT);
   }
+
   public void updateIncomingItemFace(EnumFacing inputFrom) {
     this.mapIncomingItems.put(inputFrom, TIMER_SIDE_INPUT);
   }
+
   private boolean isItemIncomingFromFace(EnumFacing face) {
     return mapIncomingItems.get(face) > 0;
   }
+
   @Override
   public void update() {
     this.tickLabelText();
@@ -234,6 +258,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       e.printStackTrace();
     }
   }
+
   private void tickCableFlow() {
     ArrayList<Integer> shuffledFaces = new ArrayList<>();
     for (int i = 0; i < EnumFacing.values().length; i++) {
@@ -255,6 +280,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       }
     }
   }
+
   private void moveItems(EnumFacing f) {
     //TICK COUNTDOWN
     ItemStack stackToExport = this.getStackInSlot(0).copy();
@@ -279,6 +305,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
         cable.updateIncomingItemFace(f.getOpposite());
     }
   }
+
   private void moveFluid(EnumFacing f) {
     BlockPos posTarget = pos.offset(f);
     int toFlow = TRANSFER_FLUID_PER_TICK;
@@ -299,6 +326,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     //            cable.updateIncomingFluidFace(f.getOpposite());
     //          }
   }
+
   /**
    * try to move energy out in this direction
    * 
@@ -331,6 +359,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       }
     }
   }
+
   public boolean hasAnyIncomingFluidFaces() {
     for (EnumFacing f : EnumFacing.values()) {
       if (mapIncomingFluid.get(f) > 0)
@@ -338,6 +367,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return false;
   }
+
   public boolean hasAnyIncomingEnergyFaces() {
     for (EnumFacing f : EnumFacing.values()) {
       if (mapIncomingEnergy.get(f) > 0)
@@ -345,30 +375,35 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return false;
   }
+
   public void tickDownIncomingFluidFaces() {
     for (EnumFacing f : EnumFacing.values()) {
       if (mapIncomingFluid.get(f) > 0)
         mapIncomingFluid.put(f, mapIncomingFluid.get(f) - 1);
     }
   }
+
   public void tickDownIncomingItemFaces() {
     for (EnumFacing f : EnumFacing.values()) {
       if (mapIncomingItems.get(f) > 0)
         mapIncomingItems.put(f, mapIncomingItems.get(f) - 1);
     }
   }
+
   public void tickDownIncomingPowerFaces() {
     for (EnumFacing f : EnumFacing.values()) {
       if (mapIncomingEnergy.get(f) > 0)
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
     }
   }
+
   @Override
   public AxisAlignedBB getRenderBoundingBox() {
     double renderExtention = 1.0d;
     AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - renderExtention, pos.getY() - renderExtention, pos.getZ() - renderExtention, pos.getX() + 1 + renderExtention, pos.getY() + 1 + renderExtention, pos.getZ() + 1 + renderExtention);
     return bb;
   }
+
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {
@@ -379,6 +414,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
@@ -386,6 +422,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     return super.getCapability(capability, facing);
   }
+
   public static void syncConfig(Configuration config) {
     TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
     TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");

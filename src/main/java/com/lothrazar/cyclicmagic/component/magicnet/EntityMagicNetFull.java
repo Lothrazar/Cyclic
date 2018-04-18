@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.magicnet;
+
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -38,24 +39,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityMagicNetFull extends EntityThrowableDispensable {
+
   public static class FactoryBall implements IRenderFactory<EntityMagicNetFull> {
+
     @Override
     public Render<? super EntityMagicNetFull> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityMagicNetFull>(rm, "net");
     }
   }
+
   private ItemStack captured;
+
   public EntityMagicNetFull(World worldIn) {
     super(worldIn);
   }
+
   public EntityMagicNetFull(World worldIn, EntityLivingBase ent, ItemStack c) {
     super(worldIn, ent);
     this.captured = c;
   }
+
   public EntityMagicNetFull(World worldIn, double x, double y, double z, ItemStack c) {
     super(worldIn, x, y, z);
     this.captured = c;
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (captured == null || captured.hasTagCompound() == false) {

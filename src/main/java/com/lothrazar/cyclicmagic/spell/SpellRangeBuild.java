@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.spell;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
@@ -41,15 +42,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer {
+
   final static int max = 32;// max search range
   private PlaceType type;
+
   public static enum PlaceType {
     PLACE, UP, DOWN, LEFT, RIGHT;
   }
+
   public SpellRangeBuild(int id, String n, PlaceType t) {
     super.init(id, n);
     this.type = t;
   }
+
   @Override
   public boolean cast(World world, EntityPlayer p, ItemStack wand, BlockPos pos, EnumFacing side) {
     if (world.isRemote) {
@@ -71,6 +76,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     }
     return true;
   }
+
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);

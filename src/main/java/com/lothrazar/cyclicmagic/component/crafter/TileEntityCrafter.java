@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.crafter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,22 +43,27 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+
   public static final int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
   public static final int SIZE_GRID = 3 * 3;//19
   public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
+
   public static enum Fields {
     REDSTONE, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
+
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
   private InventoryCrafting crafter;
+
   public TileEntityCrafter() {
     super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
+
       @Override
       public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
         return false;
@@ -68,10 +74,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     this.setSlotsForExtract(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -95,6 +103,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     }
   }
+
   private boolean tryPayCost() {
     ItemStack fromRecipe;
     ItemStack fromInput;
@@ -151,6 +160,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     return true;
   }
+
   private void sendOutput(ItemStack craftingResult) {
     //bit o a hack since util method assmes takes a list, and we have only one, so just wrap it eh
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(Arrays.asList(craftingResult), this, SIZE_INPUT + SIZE_GRID);
@@ -161,6 +171,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     }
   }
+
   private void findRecipe() {
     setRecipeInput();//make sure the 3x3 inventory is linked o the crater
     if (this.recipe != null && recipe.matches(crafter, world)) {
@@ -182,6 +193,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     }
   }
+
   private void setRecipeInput() {
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
@@ -190,6 +202,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -206,6 +219,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -225,24 +239,29 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       break;
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     timer = compound.getInteger(NBT_TIMER);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_TIMER, timer);

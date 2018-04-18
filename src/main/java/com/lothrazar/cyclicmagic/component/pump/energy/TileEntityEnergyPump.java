@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.energy;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -36,23 +37,29 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+
   // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
   private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+
   public static enum Fields {
     REDSTONE;
   }
+
   private EnergyStore pumpEnergyStore;
   private int needsRedstone = 0;
+
   public TileEntityEnergyPump() {
     super(0);
     pumpEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     CapabilityEnergy.ENERGY.readNBT(pumpEnergyStore, null, compound.getTag("powercable"));
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
@@ -60,6 +67,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(pumpEnergyStore, null));
     return compound;
   }
+
   @Override
   public EnumFacing getCurrentFacing() {
     //TODO: same as item pump so pump base class!?!?
@@ -69,6 +77,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     }
     return facingTo;
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -119,6 +128,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
       }
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -127,6 +137,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -135,19 +146,23 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
       break;
     }
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {
@@ -155,6 +170,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     }
     return super.getCapability(capability, facing);
   }
+
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY &&

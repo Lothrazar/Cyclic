@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilShape {
+
   public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, final int height) {
     List<BlockPos> newShape = new ArrayList<BlockPos>();
     newShape.addAll(shape);//copy it
@@ -41,6 +43,7 @@ public class UtilShape {
       }
     return newShape;
   }
+
   //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
   public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
     int centerX = pos.getX();
@@ -71,6 +74,7 @@ public class UtilShape {
     }
     while (x <= y);
     Collections.sort(circleList, new Comparator<BlockPos>() {
+
       @Override
       public int compare(final BlockPos object1, final BlockPos object2) {
         return object1.getX() - object2.getX();
@@ -78,6 +82,7 @@ public class UtilShape {
     });
     return circleList;
   }
+
   public static List<BlockPos> circleHorizontal(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getZ();
@@ -107,6 +112,7 @@ public class UtilShape {
     }
     while (x <= z);
     Collections.sort(circleList, new Comparator<BlockPos>() {
+
       @Override
       public int compare(final BlockPos object1, final BlockPos object2) {
         return object1.getX() - object2.getX();
@@ -114,6 +120,7 @@ public class UtilShape {
     });
     return circleList;
   }
+
   public static List<BlockPos> rectFrame(final BlockPos posCenter, int rx, int height, int rz) {
     BlockPos botCenter = posCenter;
     BlockPos topCenter = posCenter.add(0, height, 0);
@@ -132,9 +139,11 @@ public class UtilShape {
     cube.addAll(line(b4, EnumFacing.UP, sideLen));
     return cube;
   }
+
   public static List<BlockPos> cubeFrame(final BlockPos posCenter, final int radius, final int height) {
     return rectFrame(posCenter, radius, height, radius);
   }
+
   public static List<BlockPos> readAllSolid(World world, final BlockPos posCenter, final int radius, final int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     List<BlockPos> region = cubeFilled(posCenter, radius, height);
@@ -145,6 +154,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> flipShape(BlockPos posCenter, List<BlockPos> shapeInput, EnumFacing.Axis axis) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int diff;
@@ -171,6 +181,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> rotateShape(BlockPos posCenter, List<BlockPos> shapeInput, Rotation rot) {
     if (rot == Rotation.NONE) {
       return shapeInput;
@@ -183,6 +194,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> cubeFilled(final BlockPos posCenter, final int radius, final int height) {
     BlockPos botCenter = posCenter;
     List<BlockPos> cube = squareHorizontalFull(botCenter, radius);
@@ -193,6 +205,7 @@ public class UtilShape {
     }
     return cube;
   }
+
   public static List<BlockPos> squareVerticalX(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -213,6 +226,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   //TODO: merge x/z vers
   public static List<BlockPos> squareVerticalZ(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
@@ -234,6 +248,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> squareHorizontalFull(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -251,6 +266,7 @@ public class UtilShape {
     //corners are done so offset
     return shape;
   }
+
   public static List<BlockPos> rectHollow(final BlockPos pos, int radiusX, int radiusZ) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -270,9 +286,11 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     return rectHollow(pos, radius, radius);
   }
+
   public static List<BlockPos> squarePyramid(final BlockPos pos, final int radius, final int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int radiusCurrent = radius;
@@ -284,6 +302,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {
@@ -297,6 +316,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> line(BlockPos pos, EnumFacing efacing, int want) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;
@@ -305,15 +325,19 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> sphereDome(BlockPos pos, int radius) {
     return sphere(pos, radius, true, false);
   }
+
   public static List<BlockPos> sphereCup(BlockPos pos, int radius) {
     return sphere(pos, radius, false, true);
   }
+
   public static List<BlockPos> sphere(BlockPos pos, int radius) {
     return sphere(pos, radius, false, false);
   }
+
   /**
    * top and bottom should not be both true
    * 

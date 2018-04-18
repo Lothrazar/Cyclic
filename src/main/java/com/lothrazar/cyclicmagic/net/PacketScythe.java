@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.ItemScythe;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
@@ -38,15 +39,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMessage> {
+
   private BlockPos pos;
   private ItemScythe.ScytheType type;
   private int radius;
+
   public PacketScythe() {}
+
   public PacketScythe(BlockPos mouseover, ItemScythe.ScytheType t, int r) {
     pos = mouseover;
     type = t;
     radius = r;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -58,6 +63,7 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
     type = ItemScythe.ScytheType.values()[t];
     radius = tags.getInteger("s");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -68,6 +74,7 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
     tags.setInteger("s", radius);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(final PacketScythe message, final MessageContext ctx) {
     MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -78,6 +85,7 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
       //only java 8
       //s.addScheduledTask(() -> handle(message, ctx));
       s.addScheduledTask(new Runnable() {
+
         public void run() {
           handle(message, ctx);
         }
@@ -85,6 +93,7 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
     }
     return null;
   }
+
   private void handle(PacketScythe message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       EntityPlayer player = ctx.getServerHandler().player;

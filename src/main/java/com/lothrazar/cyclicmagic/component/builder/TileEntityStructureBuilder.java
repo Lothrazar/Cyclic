@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.builder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+
   private static final int spotsSkippablePerTrigger = 50;
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final String NBT_BUILDTYPE = "build";
@@ -61,11 +63,14 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int offsetX = 0;
   private int offsetY = 0;
   private int offsetZ = 0;
+
   public static enum Fields {
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS, OX, OY, OZ, FUELDISPLAY;
   }
+
   public enum BuildType {
     FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
+
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
@@ -74,11 +79,13 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
       return BuildType.values()[type];
     }
+
     public boolean hasHeight() {
       if (this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
         return false;
       return true;
     }
+
     public String shortcode() {
       switch (this) {
         case CIRCLE:
@@ -103,20 +110,24 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       return "";
     }
   }
+
   public TileEntityStructureBuilder() {
     super(10);
     this.setFuelSlot(9, BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public List<BlockPos> getShape() {
     BuildType buildType = getBuildTypeEnum();
@@ -157,17 +168,21 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     return shape;
   }
+
   private BlockPos getPosTarget() {
     return this.getPos().add(this.offsetX, this.offsetY, this.offsetZ);
   }
+
   public BlockPos getTargetFacing() {
     //move center over that much, not including exact horizontal
     return this.getPosTarget().offset(this.getCurrentFacing(), this.getSize() + 1);
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) != null;
   }
+
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -204,6 +219,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -258,29 +274,37 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
     }
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
   }
+
   public int getHeight() {
     return this.getField(Fields.HEIGHT.ordinal());
   }
+
   public void setHeight(int value) {
     this.setField(Fields.HEIGHT.ordinal(), value);
   }
+
   public int getBuildType() {
     return this.getField(Fields.BUILDTYPE.ordinal());
   }
+
   public void setBuildType(int value) {
     this.setField(Fields.BUILDTYPE.ordinal(), value);
   }
+
   public BuildType getBuildTypeEnum() {
     int bt = Math.min(this.getBuildType(), BuildType.values().length - 1);
     return BuildType.values()[bt];
   }
+
   public void setSize(int s) {
     if (s <= 0) {
       s = 1;
@@ -290,6 +314,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     this.setField(Fields.SIZE.ordinal(), s);
   }
+
   public int getSize() {
     int s = this.getField(Fields.SIZE.ordinal());
     if (s <= 0) {
@@ -297,10 +322,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     return s;
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -318,6 +345,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.offsetY = tagCompound.getInteger("oy");
     this.offsetZ = tagCompound.getInteger("oz");
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("buildHeight", height);
@@ -335,6 +363,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     // ModCyclic.logger.info("buildSize  : " + tagCompound.getInteger(NBT_SIZE) + "????" + buildSize);
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false || this.isInventoryEmpty()) {
@@ -385,6 +414,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       }
     }
   }
+
   private void incrementPosition(List<BlockPos> shape) {
     if (shape == null || shape.size() == 0) {
       return;
@@ -397,22 +427,26 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       shapeIndex = c;
     }
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public void toggleSizeShape() {
     TileEntityStructureBuilder.BuildType old = this.getBuildTypeEnum();
     TileEntityStructureBuilder.BuildType next = TileEntityStructureBuilder.BuildType.getNextType(old);
     this.setBuildType(next.ordinal());
   }
+
   @Override
   public void togglePreview() {
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;

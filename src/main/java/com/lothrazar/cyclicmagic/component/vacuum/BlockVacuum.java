@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vacuum;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -44,16 +45,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockVacuum() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_VACUUM);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.STONE);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVacuum();
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -65,6 +69,7 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
         'r', "ingotIron",
         'h', Blocks.HOPPER);
   }
+
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));

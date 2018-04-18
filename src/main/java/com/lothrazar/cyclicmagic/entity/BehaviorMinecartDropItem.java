@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import net.minecraft.block.BlockRailBase.EnumRailDirection;
 import net.minecraft.block.BlockRailPowered;
 import net.minecraft.block.state.IBlockState;
@@ -36,6 +37,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
+
   /**
    * Dispenses the specified ItemStack from a dispenser.
    */
@@ -45,9 +47,11 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     this.spawnDispenseParticles(source, getFacing(source));
     return itemstack;
   }
+
   public EnumFacing getFacing(IBlockSource state) {
     return getFacing(state.getBlockState());
   }
+
   public EnumFacing getFacing(IBlockState state) {
     if (state.getBlock() == Blocks.ACTIVATOR_RAIL) {
       EnumRailDirection dir = state.getValue(BlockRailPowered.SHAPE);
@@ -78,6 +82,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     }
     return EnumFacing.NORTH;
   }
+
   /**
    * Dispense the specified stack, play the dispense sound and spawn particles.
    */
@@ -88,6 +93,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     doDispense(source.getWorld(), itemstack, 6, enumfacing, iposition);
     return stack;
   }
+
   /**
    * Get the position where the dispenser at the given Coordinates should dispense to.
    */
@@ -98,6 +104,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     double d2 = coords.getZ() + 0.7D * (double) enumfacing.getFrontOffsetZ();
     return new PositionImpl(d0, d1, d2);
   }
+
   public static void doDispense(World worldIn, ItemStack stack, int speed, EnumFacing facing, IPosition position) {
     double d0 = position.getX();
     double d1 = position.getY();
@@ -118,18 +125,21 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     entityitem.motionZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
     worldIn.spawnEntity(entityitem);
   }
+
   /**
    * Play the dispense sound from the specified block.
    */
   protected void playDispenseSound(IBlockSource source) {
     source.getWorld().playEvent(1000, source.getBlockPos(), 0);
   }
+
   /**
    * Order clients to display dispense particles from the specified block and facing.
    */
   protected void spawnDispenseParticles(IBlockSource source, EnumFacing facingIn) {
     source.getWorld().playEvent(2000, source.getBlockPos(), this.getWorldEventDataFrom(facingIn));
   }
+
   private int getWorldEventDataFrom(EnumFacing facingIn) {
     return facingIn.getFrontOffsetX() + 1 + (facingIn.getFrontOffsetZ() + 1) * 3;
   }

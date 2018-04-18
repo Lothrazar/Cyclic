@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.world.gen;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.block.Block;
@@ -36,9 +37,11 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenOreSingleton implements IWorldGenerator {
+
   private WorldGenMinable gen;
   private Block blockOre;
   private int minHeight = 0;
+
   public WorldGenOreSingleton(Block ore, int mh) {
     //http://minecraft.gamepedia.com/Ore#Availability
     // http://minecraft.gamepedia.com/Customized#Ore_settings
@@ -46,6 +49,7 @@ public class WorldGenOreSingleton implements IWorldGenerator {
     minHeight = mh;
     gen = new WorldGenMinable(blockOre.getDefaultState(), 1, BlockMatcher.forBlock(Blocks.STONE));
   }
+
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
     int spawnTries = 50;
@@ -53,6 +57,7 @@ public class WorldGenOreSingleton implements IWorldGenerator {
       this.run(gen, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, spawnTries, minHeight, Const.WORLDHEIGHT - 1);
     }
   }
+
   private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight) {
     if (minHeight < 0 || maxHeight > Const.WORLDHEIGHT || minHeight > maxHeight)
       throw new IllegalArgumentException("Illegal Height Arguments for WorldGenerator");

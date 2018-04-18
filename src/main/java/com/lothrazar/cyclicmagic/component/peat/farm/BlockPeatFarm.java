@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.farm;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -43,16 +44,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 
 public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
+
   private Block peat_generator;
+
   public BlockPeatFarm(Block peat_generator) {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PEATFARM);
     this.peat_generator = peat_generator;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPeatFarm();
   }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
@@ -68,6 +73,7 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
     // otherwise return true if it is a fluid handler to prevent in world placement
     return success || FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public IRecipe addRecipe() {
     Block placer_block = Block.getBlockFromName(Const.MODRES + "placer_block");

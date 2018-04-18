@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -37,6 +38,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class UtilFakePlayer {
+
   public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws, UUID uname, String blockName) {
     GameProfile breakerProfile = new GameProfile(uname, Const.MODID + ".fake_player." + blockName);
     WeakReference<FakePlayer> fakePlayer;
@@ -53,6 +55,7 @@ public class UtilFakePlayer {
     }
     fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
+
       @SuppressWarnings("rawtypes")
       @Override
       public void sendPacket(Packet packetIn) {}

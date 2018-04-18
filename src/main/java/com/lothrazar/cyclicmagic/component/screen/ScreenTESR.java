@@ -22,21 +22,25 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.screen;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
+
   public static final int SCREEN_WIDTH = 96;
   // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
   public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
   public static final float rowHeight = -0.11F;// TODO: font size?
+
   public ScreenTESR(Block block) {
     super(block);
   }
+
   @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

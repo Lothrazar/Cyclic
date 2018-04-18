@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.beaconpotion;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,15 +56,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITileSizeToggle {
+
   static final int MAX_POTION = 16000;
   private static final int POTION_TICKS = Const.TICKS_PER_SEC * 8;// 8 seconds
   private static final int MAX_RADIUS = 8;
+
   public static enum Fields {
     REDSTONE, TIMER, FUELMAX, ENTITYTYPE, RANGE;
   }
+
   public static enum EntityType {
     PLAYERS, NONPLAYER, ALL, MONSTER, CREATURE, AMBIENT, WATER; // ambient, monster, creature, water
   }
+
   static boolean doesConsumePotions;
   static List<String> blacklist;
   @SideOnly(Side.CLIENT)
@@ -78,12 +83,14 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private List<PotionEffect> effects;
   private int needsRedstone;
   private int radius = MAX_RADIUS - 2;//just a mid tier default 
+
   public TileEntityBeaconPotion() {
     super(9);
     this.setSetRenderGlobally(true);
     this.timer = 0;
     this.setSlotsForBoth();
   }
+
   @Override
   public void update() {
     if (!isRunning()) {
@@ -120,6 +127,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       world.addBlockEvent(this.pos, Blocks.BEACON, 1, 0);
     }
   }
+
   private boolean isPotionValid(List<PotionEffect> newEffects) {
     String id;
     for (PotionEffect eff : newEffects) {
@@ -132,18 +140,21 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     return true;
   }
+
   public void updateBeacon() {
     if (this.world != null) {
       this.updateSegmentColors();
       this.addEffectsToEntities();
     }
   }
+
   public String getFirstEffectName() {
     if (this.effects == null || this.effects.size() == 0) {
       return "";
     }
     return this.effects.get(0).getEffectName();
   }
+
   private void addEffectsToEntities() {
     if (this.effects == null || this.effects.size() == 0) {
       return;
@@ -182,6 +193,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       }
     }
   }
+
   @SuppressWarnings("incomplete-switch")
   private EnumCreatureType getCreatureType() {
     switch (this.entityType) {
@@ -196,6 +208,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     return null;
   }
+
   private void updateSegmentColors() {
     int i = this.pos.getX();
     int j = this.pos.getY();
@@ -242,10 +255,12 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       flag = false;
     }
   }
+
   @SideOnly(Side.CLIENT)
   public List<TileEntityBeaconPotion.BeamSegment> getBeamSegments() {
     return this.beamSegments;
   }
+
   @SideOnly(Side.CLIENT)
   public float shouldBeamRender() {
     if (!this.isRunning()) { // if no redstone power, return zero to hide beam
@@ -265,19 +280,23 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     return this.beamRenderScale;
   }
+
   @Override
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
   }
+
   @Override
   public NBTTagCompound getUpdateTag() {
     return this.writeToNBT(new NBTTagCompound());
   }
+
   @Nullable
   private static Potion isBeaconEffect(int i) {
     return Potion.getPotionById(i);
   }
+
   /**
    * Returns true if this thing is named
    */
@@ -285,13 +304,16 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public boolean hasCustomName() {
     return this.customName != null && !this.customName.isEmpty();
   }
+
   public void setName(String name) {
     this.customName = name;
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return stack.getItem() != null && stack.getItem() instanceof ItemPotion;
   }
+
   @Override
   public boolean receiveClientEvent(int id, int type) {
     if (id == 1) {
@@ -302,6 +324,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       return super.receiveClientEvent(id, type);
     }
   }
+
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.
    */
@@ -309,10 +332,12 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return true;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -329,6 +354,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -352,14 +378,17 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       break;
     }
   }
+
   @Override
   public void toggleNeedsRedstone() {
     this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   /**
    * Returns true if automation can extract the given item in the given slot from the given side.
    */
@@ -367,6 +396,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -388,6 +418,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
       this.entityType = EntityType.values()[eType];
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("radius", radius);
@@ -405,35 +436,44 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     tagCompound.setTag("potion_list", itemList);
     return super.writeToNBT(tagCompound);
   }
+
   public EntityType getEntityType() {
     int type = this.getField(Fields.ENTITYTYPE.ordinal());
     return EntityType.values()[type];
   }
+
   public static class BeamSegment {
+
     /** RGB (0 to 1.0) colors of this beam segment */
     private final float[] colors;
     private int height;
+
     public BeamSegment(float[] colorsIn) {
       this.colors = colorsIn;
       this.height = 1;
     }
+
     protected void incrementHeight() {
       ++this.height;
     }
+
     /**
      * Returns RGB (0 to 1.0) colors of this beam segment
      */
     public float[] getColors() {
       return this.colors;
     }
+
     @SideOnly(Side.CLIENT)
     public int getHeight() {
       return this.height;
     }
   }
+
   public int getRadiusCalc() {
     return (int) Math.pow(2, this.radius);
   }
+
   @Override
   public void toggleSizeShape() {
     int newRad = this.getField(Fields.RANGE.ordinal()) + 1;

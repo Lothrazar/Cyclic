@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,9 +35,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class TileEntityBaseMachine extends TileEntity {
+
   public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
+
   /**
    * thanks to darkhax
    * 
@@ -45,12 +48,15 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   public boolean isValid() {
     return !this.isInvalid() && this.getWorld().isBlockLoaded(this.getPos());
   }
+
   public boolean isRunning() {
     return this.isValid() && !this.onlyRunIfPowered() || this.isPowered();
   }
+
   public boolean onlyRunIfPowered() {
     return false;//default is no, dont only run if powered, just go
   }
+
   public EnumFacing getCurrentFacing() {
     if (this.getBlockType() instanceof BlockBaseFacingOmni) {
       return BlockBaseFacingOmni.getCurrentFacing(world, pos);
@@ -66,9 +72,11 @@ public abstract class TileEntityBaseMachine extends TileEntity {
       facing = b.getFacingFromState(this.getWorld().getBlockState(this.getPos()));
     return facing;
   }
+
   protected BlockPos getCurrentFacingPos() {
     return this.getPos().offset(this.getCurrentFacing());
   }
+
   protected void spawnParticlesAbove() {
     if (this.getWorld().rand.nextDouble() < 0.05) {//was 0.1
       if (this.getWorld().isRemote == false) {
@@ -76,6 +84,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
       }
     }
   }
+
   /**
    * Block the data being lost when block stat e changes THANKS TO http://www.minecraftforge.net/forum/index.php?topic=29544.0
    */
@@ -83,6 +92,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());// : oldState != newSate;
   }
+
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
@@ -90,6 +100,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
+
   @Override
   public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
     // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
@@ -97,6 +108,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     NBTTagCompound syncData = getUpdateTag();
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
   }
+
   @Override
   public NBTTagCompound getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
@@ -104,6 +116,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     this.writeToNBT(syncData);//this calls writeInternal
     return syncData;
   }
+
   protected int getDimension() {
     if (this.world == null || this.world.provider == null) {
       return 0;

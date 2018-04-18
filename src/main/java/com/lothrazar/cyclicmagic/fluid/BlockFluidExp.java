@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.fluid;
+
 import com.lothrazar.cyclicmagic.block.base.BlockFluidBase;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
@@ -39,12 +40,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFluidExp extends BlockFluidBase {
+
   public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
+
   public BlockFluidExp() {
     super(FluidsRegistry.fluid_exp, Material.WATER);
     FluidsRegistry.fluid_exp.setBlock(this);
     stack = new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
@@ -54,6 +58,7 @@ public class BlockFluidExp extends BlockFluidBase {
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
     ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+
       @Override
       protected ModelResourceLocation getModelResourceLocation(IBlockState bs) {
         return modelResourceLocation;

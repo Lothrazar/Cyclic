@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -35,6 +36,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+
   private ItemStack[] recipeInput = new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
@@ -42,16 +44,20 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
    * typically, size 1x1 is shapeless, and 2x2 is not shapeless
    */
   private boolean isShapeless;
+
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }, out, true);
   }
+
   public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
     this(in, out, false);
     this.fluidCost = w;
   }
+
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
     this(in, out, false);
   }
+
   public RecipeHydrate(ItemStack[] in, ItemStack out, boolean shapeless) {
     this.isShapeless = shapeless;
     if (in.length == 1) {
@@ -69,9 +75,11 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
   }
+
   public boolean isShapeless() {
     return this.isShapeless;
   }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     ItemStack s0 = inv.getStackInSlot(0);
@@ -93,10 +101,12 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
           recipeSlotMatches(s3, recipeInput[3]);
     }
   }
+
   private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
     return OreDictionary.itemMatches(sInvo, sRecipe, false)
         && sInvo.getCount() >= sRecipe.getCount();
   }
+
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
     if (tank.getFluidAmount() < this.getFluidCost()) {
       return false;//not enough fluid, so stop now
@@ -140,28 +150,35 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     tank.drain(this.getFluidCost(), true);
     return true;
   }
+
   public boolean isSlotEmpty(int slot) {
     ItemStack inv = recipeInput[slot];
     return inv == null || inv.isEmpty();
   }
+
   @Override
   public ItemStack getCraftingResult(InventoryCrafting inv) {
     return resultItem.copy();
   }
+
   @Override
   public boolean canFit(int width, int height) {
     return (width <= 2 && height <= 2);
   }
+
   @Override
   public ItemStack getRecipeOutput() {
     return resultItem.copy();
   }
+
   public ItemStack[] getRecipeInput() {
     return recipeInput.clone();
   }
+
   public int getFluidCost() {
     return fluidCost;
   }
+
   public void setFluidCost(int fluidCost) {
     this.fluidCost = fluidCost;
   }

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
@@ -42,12 +43,14 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraftforge.common.config.Configuration;
 
 public class EntityMinecartModule extends BaseModule implements IHasConfig {
+
   private boolean goldMinecart;
   private boolean stoneMinecart;
   private boolean chestMinecart;
   private boolean dropperMinecart;
   private boolean dispenserMinecart;
   private boolean turretMinecart;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -96,6 +99,7 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
     //TURRET CART:? shoots arrows
     //ONE THAT CAN HOLD ANY ITEM
   }
+
   @Override
   public void syncConfig(Configuration config) {
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -35,23 +36,29 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVillagerTrade, IMessage> {
+
   private static final String NBT_DUPE_BLOCKER = Const.MODID + "_iscurrentlytrading";
   private int selectedMerchantRecipe;
+
   public PacketVillagerTrade() {}
+
   public PacketVillagerTrade(int s) {
     selectedMerchantRecipe = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     selectedMerchantRecipe = tags.getInteger("selectedMerchantRecipe");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("selectedMerchantRecipe", selectedMerchantRecipe);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketVillagerTrade message, MessageContext ctx) {
     if (ctx.side == Side.SERVER) {

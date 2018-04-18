@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enchanter;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -32,13 +33,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiBaseContainer {
+
   private TileEntityEnchanter tile;
+
   public GuiEnchanter(InventoryPlayer inventoryPlayer, TileEntityEnchanter tileEntity) {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
     this.setFieldFuel(TileEntityEnchanter.Fields.FUEL.ordinal());
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -55,6 +59,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
     this.drawFluidBar();
   }
+
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;

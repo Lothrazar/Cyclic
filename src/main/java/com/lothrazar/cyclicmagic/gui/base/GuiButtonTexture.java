@@ -22,25 +22,31 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.base;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiButtonTexture extends GuiButtonTooltip {
+
   private static final ResourceLocation icon = new ResourceLocation(Const.MODID, "textures/gui/buttons.png");
   private int textureIndex = 0;
   private int textureSize = 16;
+
   public GuiButtonTexture(int buttonId, int x, int y, int w, int h) {
     super(buttonId, x, y, w, h, "");
     this.textureIndex = -1;
   }
+
   public GuiButtonTexture(int buttonId, int x, int y) {
     this(buttonId, x, y, 18, 20);
   }
+
   public void setTextureIndex(int i) {
     textureIndex = i;
   }
+
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
     if (this.visible) {

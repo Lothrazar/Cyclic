@@ -22,19 +22,23 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.workbench;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiWorkbench extends GuiBaseContainer {
+
   public GuiWorkbench(InventoryPlayer inventoryPlayer, TileEntityWorkbench tileEntity) {
     super(new ContainerWorkBench(inventoryPlayer, tileEntity), tileEntity);
   }
+
   @Override
   public void initGui() {
     super.initGui();
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

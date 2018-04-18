@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pylonexp;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
@@ -35,15 +36,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylon, IMessage> {
+
   private BlockPos pos;
   private int value;
   private TileEntityXpPylon.Fields type;
+
   public PacketTilePylon() {}
+
   public PacketTilePylon(BlockPos p, int s, TileEntityXpPylon.Fields spr) {
     pos = p;
     value = s;
     type = spr;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -54,6 +59,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     value = tags.getInteger("value");
     type = TileEntityXpPylon.Fields.values()[tags.getInteger("t")];
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -64,6 +70,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     tags.setInteger("t", type.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTilePylon message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

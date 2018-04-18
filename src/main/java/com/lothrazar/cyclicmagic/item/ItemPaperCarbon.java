@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
@@ -51,6 +52,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
+
   public static final String name = "carbon_paper";
   public static int NOTE_EMPTY = -1;
   private static final String KEY_SIGN0 = "sign_0";
@@ -58,12 +60,15 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   private static final String KEY_SIGN2 = "sign_2";
   private static final String KEY_SIGN3 = "sign_3";
   private static final String KEY_NOTE = "note";
+
   public ItemPaperCarbon() {
     super();
   }
+
   private static void setItemStackNBT(ItemStack item, String prop, String value) {
     item.getTagCompound().setString(prop, value);
   }
+
   private static String getItemStackNBT(ItemStack item, String prop) {
     String s = item.getTagCompound().getString(prop);
     if (s == null) {
@@ -71,6 +76,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     return s;
   }
+
   public static void copySign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
@@ -82,6 +88,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     held.getTagCompound().setByte(KEY_NOTE, (byte) NOTE_EMPTY);
     // entityPlayer.swingItem();
   }
+
   public static void pasteSign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
@@ -94,12 +101,14 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     // client side
     // entityPlayer.swingItem();
   }
+
   public static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
     held.getTagCompound().setByte(KEY_NOTE, noteblock.note);
   }
+
   public static void pasteNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
     if (held.getTagCompound() == null) {
       return;
@@ -109,6 +118,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     noteblock.note = held.getTagCompound().getByte(KEY_NOTE);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -129,6 +139,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       list.add(UtilChat.lang("item.carbon_paper.note") + s);
     }
   }
+
   //onItemUse
   //	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
   @Override
@@ -172,6 +183,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     return EnumActionResult.PASS;
   }
+
   public static String noteToString(byte note) {
     String s = null;
     switch (note) {
@@ -253,6 +265,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     return s;
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));

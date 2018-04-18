@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -44,11 +45,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
+
   private static final int numFood = 10;
+
   public ItemFoodCrafting() {
     super(numFood, false);
     this.setAlwaysEdible();
   }
+
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
@@ -64,11 +68,13 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
       UtilChat.addChatMessage(player, "unlocks.crafting");
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         "workbench", Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, "gemDiamond", "gemEmerald", "gemQuartz");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {

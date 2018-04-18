@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.proxy;
+
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.magicnet.EntityMagicNetEmpty;
@@ -87,6 +88,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
+
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
@@ -94,23 +96,28 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
+
   @Override
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
   }
+
   @Override
   public void init() {
     registerKeys();
   }
+
   @Override
   public World getClientWorld() {
     return FMLClientHandler.instance().getClient().world;
   }
+
   @Override
   public EntityPlayer getClientPlayer() {
     return Minecraft.getMinecraft().player;
   }
+
   private void registerKeys() {
     if (KeyInventoryShiftModule.enableInvoKeys) {
       keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
@@ -127,6 +134,7 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }
+
   private void registerEntities() {
     //minecarts
     //http://wiki.mcjty.eu/modding/index.php/Mobs-1.9
@@ -150,6 +158,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public EnumFacing getSideMouseover(int max) {
@@ -161,6 +170,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverSingle() {
@@ -170,6 +180,7 @@ public class ClientProxy extends CommonProxy {
     }
     return mouseOver.getBlockPos();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverExact(int max) {
@@ -182,6 +193,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverOffset(int max) {
@@ -201,6 +213,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
@@ -215,11 +228,13 @@ public class ClientProxy extends CommonProxy {
       }
     }
   }
+
   //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
   @Override
   public IThreadListener getThreadFromContext(MessageContext ctx) {
     return (ctx.side.isClient() ? Minecraft.getMinecraft() : super.getThreadFromContext(ctx));
   }
+
   @Override
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
     // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
@@ -230,6 +245,7 @@ public class ClientProxy extends CommonProxy {
     // Solution is to double-check side before returning the player:
     return (ctx.side.isClient() ? getClientPlayer() : super.getPlayerEntity(ctx));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void renderItemOnScreen(ItemStack current, int x, int y) {
@@ -243,6 +259,7 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(current, x, y);
     RenderHelper.disableStandardItemLighting();
   }
+
   /**
    * In a GUI we already have the context of the itemrender and font
    */
@@ -254,6 +271,7 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(stack, x, y);
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }
+
   @Override
   public void closeSpectatorGui() {
     try {
@@ -264,7 +282,9 @@ public class ClientProxy extends CommonProxy {
       ModCyclic.logger.error(e.getMessage());
     }
   }
+
   public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };
+
   /**
    * INSPIRED by universallp
    * 
@@ -297,21 +317,26 @@ public class ClientProxy extends CommonProxy {
       ModCyclic.logger.error("Error setting reach : " + e.getMessage());
     }
   }
+
   /**
    * From the open source project:/github.com/UniversalLP/VanillaAutomation who in turn got it from from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {
+
     //in vanilla code, it has a getBlockReachDistance but there is no variable to reflect over
     //instead it just returns 5 or 4.5 hardcoded. thanks mojang...
     private float distance = 0F;
+
     public ReachPlayerController(Minecraft mcIn, NetHandlerPlayClient netHandler) {
       super(mcIn, netHandler);
     }
+
     @Override
     public float getBlockReachDistance() {
       return distance;
     }
+
     public void setReachDistance(float f) {
       distance = f;
     }

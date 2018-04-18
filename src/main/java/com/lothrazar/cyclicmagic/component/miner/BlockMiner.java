@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.miner;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -38,21 +39,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe {
+
   public BlockMiner() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BLOCKMINER);
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBlockMiner();
   }
+
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     ((TileEntityBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
     super.breakBlock(worldIn, pos, state);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

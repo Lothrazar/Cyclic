@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
@@ -49,27 +50,34 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  *
  */
 public class PacketGuiShortOverride implements IMessage, IMessageHandler<PacketGuiShortOverride, IMessage> {
+
   public int fieldId, value;
+
   public PacketGuiShortOverride() {}
+
   public PacketGuiShortOverride(int f, int v) {
     this.fieldId = f;
     this.value = v;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     fieldId = buf.readInt();
     value = buf.readInt();
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     //not writeShort as the legacy vanilla system does
     buf.writeInt(fieldId);
     buf.writeInt(value);
   }
+
   @Override
   public IMessage onMessage(PacketGuiShortOverride message, MessageContext ctx) {
     final IThreadListener mainThread = Minecraft.getMinecraft();
     mainThread.addScheduledTask(new Runnable() {
+
       @Override
       public void run() {
         if (Minecraft.getMinecraft().player.openContainer != null) {

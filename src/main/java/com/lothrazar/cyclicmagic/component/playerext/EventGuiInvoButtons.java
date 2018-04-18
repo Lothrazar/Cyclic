@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
@@ -39,6 +40,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventGuiInvoButtons {
+
   @SideOnly(value = Side.CLIENT)
   @SubscribeEvent
   public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {

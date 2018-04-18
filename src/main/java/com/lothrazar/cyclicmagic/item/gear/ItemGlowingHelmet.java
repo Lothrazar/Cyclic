@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.gear;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -47,11 +48,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClickToggle {
+
   public static final String NBT_GLOW = Const.MODID + "_glow";
   private final static String NBT_STATUS = "onoff";
+
   public ItemGlowingHelmet(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.glowingArmorMaterial, 0, armorType);
   }
+
   @Override
   public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
     boolean isTurnedOn = this.isOn(itemStack);
@@ -59,9 +63,11 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     if (isTurnedOn)
       setNightVision(player);
   }
+
   private void setNightVision(EntityPlayer player) {
     player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
+
   public static void checkIfHelmOff(EntityPlayer player) {
     Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EntityEquipmentSlot.HEAD);
     if (player.getEntityData().getBoolean(ItemGlowingHelmet.NBT_GLOW) &&
@@ -70,12 +76,14 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
       setGlowing(player, false);
     }
   }
+
   public static void setGlowing(EntityPlayer player, boolean hidden) {
     player.setGlowing(hidden);//hidden means dont render
     //flag it so we know the purple glow was from this item, not something else
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
     player.removeActivePotionEffect(MobEffects.NIGHT_VISION);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
@@ -84,6 +92,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
     super.addInformation(held, player, list, par4);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -93,11 +102,13 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
         'i', "dyeOrange",
         'o', "glowstone");
   }
+
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
+
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     if (tags.hasKey(NBT_STATUS) == false) {
@@ -105,6 +116,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     } //default for newlycrafted//legacy items
     return tags.getInteger(NBT_STATUS) == 1;
   }
+
   /**
    * TODO: maybe should be static inside powerarmor class?
    * 

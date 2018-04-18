@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.magicnet;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -46,10 +47,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasConfig, IHasRecipe {
+
   public static final String NBT_ENTITYID = "id";
+
   public ItemProjectileMagicNet() {
     super();
   }
+
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     if (hasEntity(held)) {
@@ -62,6 +66,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
       return new EntityMagicNetEmpty(world, null);
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
@@ -73,14 +78,17 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
         'l', "dyeCyan",
         'q', new ItemStack(Items.SNOWBALL));
   }
+
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return hasEntity(stack);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -91,6 +99,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
       super.addInformation(stack, playerIn, tooltip, advanced);
     }
   }
+
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     if (hasEntity(held)) {
@@ -103,10 +112,12 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
     }
     UtilPlayer.decrStackSize(player, hand);
   }
+
   @Override
   public SoundEvent getSound() {
     return SoundEvents.ENTITY_EGG_THROW;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc + ".magic_net";

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity.projectile;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.model.ModelLlamaSpit;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,10 +32,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderSpell<T extends Entity> extends Render<T> {
+
   private final ModelLlamaSpit model = new ModelLlamaSpit();
+
   protected RenderSpell(RenderManager renderManager) {
     super(renderManager);
   }
+
   @Override
   public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
     GlStateManager.pushMatrix();
@@ -54,6 +58,7 @@ public class RenderSpell<T extends Entity> extends Render<T> {
     GlStateManager.popMatrix();
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
   }
+
   @Override
   protected ResourceLocation getEntityTexture(T entity) {
     return new ResourceLocation(Const.MODID, "textures/entity/spit.png");

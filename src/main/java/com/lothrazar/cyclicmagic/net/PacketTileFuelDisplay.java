@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -42,11 +43,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  *
  */
 public class PacketTileFuelDisplay implements IMessage, IMessageHandler<PacketTileFuelDisplay, IMessage> {
+
   private BlockPos pos;
+
   public PacketTileFuelDisplay() {}
+
   public PacketTileFuelDisplay(BlockPos p) {
     this.pos = p;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -55,6 +60,7 @@ public class PacketTileFuelDisplay implements IMessage, IMessageHandler<PacketTi
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -63,6 +69,7 @@ public class PacketTileFuelDisplay implements IMessage, IMessageHandler<PacketTi
     tags.setInteger("z", pos.getZ());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileFuelDisplay message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,12 +61,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventRender {
+
   public static SpellHud spellHud;
   //TODO: loc should be a property of hud, not standalone
   public static RenderLoc renderLocation;
+
   public EventRender() {
     spellHud = new SpellHud();
   }
+
   /**
    * BIG thank you to this MIT licensed source code
    * 
@@ -102,6 +106,7 @@ public class EventRender {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
@@ -128,6 +133,7 @@ public class EventRender {
       event.getRight().add(UtilChat.lang("screentext.noclip.seconds") + time);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
@@ -150,12 +156,15 @@ public class EventRender {
       //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
     }
   }
+
   //TODO: refactor this
   public static enum RenderLoc {
     TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT;
+
     private static final int yPadding = 6;
     private static final int xPadding = 6;//was 30 if manabar is showing
     private static final int spellSize = 16;
+
     @SideOnly(Side.CLIENT)
     public static int locToX(RenderLoc loc, int leftOffset, int rightOffset) {
       ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
@@ -169,6 +178,7 @@ public class EventRender {
       }
       return 0;
     }
+
     @SideOnly(Side.CLIENT)
     public static int locToY(RenderLoc loc, int topOffset, int bottomOffset) {
       ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
@@ -185,9 +195,12 @@ public class EventRender {
       return 0;
     }
   }
+
   private class SpellHud {
+
     private int ymain = RenderLoc.yPadding;
     private int xmain;
+
     @SideOnly(Side.CLIENT)
     public void drawSpellWheel(ItemStack wand) {
       if (wand.getItem() instanceof ItemCyclicWand == false) {
@@ -206,9 +219,11 @@ public class EventRender {
       drawNextSpells(player, spellCurrent);
       drawPrevSpells(player, spellCurrent);
     }
+
     private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent) {
       UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplay(), xmain, ymain, RenderLoc.spellSize);
     }
+
     private void drawPrevSpells(EntityPlayer player, ISpell spellCurrent) {
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       ISpell prev = SpellRegistry.prev(wand, spellCurrent);
@@ -240,6 +255,7 @@ public class EventRender {
         }
       }
     }
+
     private void drawNextSpells(EntityPlayer player, ISpell spellCurrent) {
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       ISpell next = SpellRegistry.next(wand, spellCurrent);

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandhypno;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -53,13 +54,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ItemWandHypno extends BaseTool implements IHasRecipe {
+
   //private static final double TRIGGERODDS = 0.5;
   private static final double RANGE = 16.0;
   private static final int durability = 100;
   private static final int COOLDOWN = 60;
+
   public ItemWandHypno() {
     super(durability);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
@@ -101,6 +105,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -113,6 +118,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
         'b', Blocks.RED_MUSHROOM_BLOCK,
         'x', Blocks.BROWN_MUSHROOM_BLOCK);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

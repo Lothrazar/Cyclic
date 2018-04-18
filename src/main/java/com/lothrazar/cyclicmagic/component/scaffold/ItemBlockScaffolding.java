@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.scaffold;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -39,9 +40,11 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemBlockScaffolding extends ItemBlock {
+
   public ItemBlockScaffolding(Block block) {
     super(block);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -107,6 +110,7 @@ public class ItemBlockScaffolding extends ItemBlock {
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
+
   /**
    * This event is fired on both sides whenever the player right clicks while targeting a block. This event controls which of {@link net.minecraft.block.Block#onBlockActivated} and/or
    * {@link net.minecraft.item.Item#onItemUse} will be called after {@link net.minecraft.item.Item#onItemUseFirst} is called. Canceling the event will cause none of the above three to be called. There

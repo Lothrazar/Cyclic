@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.button;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiCheckboxTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
@@ -31,13 +32,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonCheckboxTileField extends GuiCheckboxTooltip {
+
   private BlockPos pos;
   private int field;
+
   public ButtonCheckboxTileField(int buttonId, int x, int y, BlockPos p, int fld, int w, int h) {
     super(buttonId, x, y, "", true);
     this.pos = p;
     field = fld;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {

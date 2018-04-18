@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,22 +33,28 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncVillagerToServer implements IMessage, IMessageHandler<PacketSyncVillagerToServer, IMessage> {
+
   private int selectedMerchantRecipe;
+
   public PacketSyncVillagerToServer() {}
+
   public PacketSyncVillagerToServer(int s) {
     selectedMerchantRecipe = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     selectedMerchantRecipe = tags.getInteger("selectedMerchantRecipe");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("selectedMerchantRecipe", selectedMerchantRecipe);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketSyncVillagerToServer message, MessageContext ctx) {
     if (ctx.side == Side.SERVER) {

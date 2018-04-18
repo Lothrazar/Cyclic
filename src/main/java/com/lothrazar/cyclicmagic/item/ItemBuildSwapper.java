@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -59,27 +60,35 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
+
   private static final int durability = 1000;
   private static final int COOLDOWN = 5;
   public static String[] swapBlacklist;
   private WandType wandType;
+
   public ItemBuildSwapper(WandType t) {
     super(durability);
     setWandType(t);
   }
+
   public enum WandType {
     NORMAL, MATCH;
   }
+
   public enum ActionType {
     SINGLE, X3, X5, X7, X9;
+
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
+
     public static int getTimeout(ItemStack wand) {
       return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
     }
+
     public static void setTimeout(ItemStack wand) {
       UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
     }
+
     public static void tickTimeout(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int t = tags.getInteger(NBTTIMEOUT);
@@ -87,6 +96,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
         UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, t - 1);
       }
     }
+
     public static int get(ItemStack wand) {
       if (wand.isEmpty()) {
         return 0;
@@ -94,6 +104,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
+
     public static String getName(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -103,6 +114,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
         return "tool.action." + SINGLE.toString().toLowerCase();
       }
     }
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
@@ -114,6 +126,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       wand.setTagCompound(tags);
     }
   }
+
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -132,6 +145,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
@@ -152,6 +166,7 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
       }
     }
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -171,21 +186,25 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
     }
     return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(hand));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
     super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
   }
+
   @Override
   public IRecipe addRecipe() {
     String ingredient = null;
@@ -205,9 +224,11 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
         'g', ingredient,
         'o', "obsidian");
   }
+
   public WandType getWandType() {
     return wandType;
   }
+
   public void setWandType(WandType wandType) {
     this.wandType = wandType;
   }

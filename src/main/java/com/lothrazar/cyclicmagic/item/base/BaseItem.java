@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.base;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.item.Item;
@@ -31,9 +32,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BaseItem extends Item {
+
   protected String getTooltip() {
     return this.getUnlocalizedName() + ".tooltip";
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {

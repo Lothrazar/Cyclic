@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -34,7 +35,9 @@ import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 
 public class PlantsModule extends BaseModule implements IHasConfig {
+
   private boolean enableBeans;
+
   @Override
   public void onPreInit() {
     if (enableBeans) {
@@ -47,6 +50,7 @@ public class PlantsModule extends BaseModule implements IHasConfig {
       //      AchievementRegistry.registerItemAchievement(sprout_seed);
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

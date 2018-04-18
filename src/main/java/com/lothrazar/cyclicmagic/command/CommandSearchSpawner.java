@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -33,13 +34,17 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class CommandSearchSpawner extends BaseCommand implements ICommand {
+
   public static final String name = "searchspawner";
+
   public CommandSearchSpawner(boolean op) {
     super(name, op);
   }
+
   public static final int MAXRADIUS = 128;
   // yes no?
   public static final int DEFAULTRADIUS = 64;
+
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     int radius = 0;

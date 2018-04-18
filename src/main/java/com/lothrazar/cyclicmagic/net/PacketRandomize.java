@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,15 +42,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomize, IMessage> {
+
   private BlockPos pos;
   private ItemRandomizer.ActionType actionType;
   private EnumFacing side;
+
   public PacketRandomize() {}
+
   public PacketRandomize(BlockPos mouseover, EnumFacing s, ItemRandomizer.ActionType t) {
     pos = mouseover;
     actionType = t;
     side = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -62,6 +67,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     int t = tags.getInteger("t");
     actionType = ItemRandomizer.ActionType.values()[t];
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -72,6 +78,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     tags.setInteger("s", side.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketRandomize message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {

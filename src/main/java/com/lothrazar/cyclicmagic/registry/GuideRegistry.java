@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -37,13 +38,17 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipe;
 
 public class GuideRegistry {
+
   private static List<GuideItem> items = new ArrayList<GuideItem>();
   private static final String SUFFIX = ".guide";
+
   public enum GuideCategory {
     BLOCK, ITEM, WORLD, GEAR, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
+
     public String text() {
       return "guide.category." + name().toLowerCase();
     }
+
     public ItemStack icon() {
       switch (this) {
         case BLOCK:
@@ -73,31 +78,38 @@ public class GuideRegistry {
       }
     }
   }
+
   public static GuideItem register(Enchantment ench, @Nonnull List<String> args) {
     args.add(ench.getRarity().name().toLowerCase().replace("_", " "));
     return register(GuideCategory.ENCHANT, Items.ENCHANTED_BOOK, ench.getName(), ench.getName() + SUFFIX, null, args);
   }
+
   public static GuideItem register(GuideCategory cat, Block block) {
     //    String pageTitle = block.getUnlocalizedName() + ".name";
     //    String text = block.getUnlocalizedName() + SUFFIX;
     return register(cat, block, null, null);
   }
+
   public static GuideItem register(GuideCategory cat, Block block, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = block.getUnlocalizedName() + ".name";
     String text = block.getUnlocalizedName() + SUFFIX;
     return register(cat, Item.getItemFromBlock(block), pageTitle, text, recipe, args);
   }
+
   public static GuideItem register(GuideCategory cat, Item item) {
     return register(cat, item, (IRecipe) null, null);
   }
+
   public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + SUFFIX;
     return register(cat, item, pageTitle, above, recipe, args);
   }
+
   public static GuideItem register(GuideCategory cat, Item icon, String title, String text) {
     return register(cat, icon, title, text, null, null);
   }
+
   public static GuideItem register(GuideCategory cat, @Nonnull Item icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
     //layer of seperation between guidebook api. 1 for optional include and 2 in case i ever need to split it out and 3 for easy registering
     if (args != null && args.size() > 0) {
@@ -112,6 +124,7 @@ public class GuideRegistry {
     items.add(itempage);
     return itempage;
   }
+
   /**
    * to create an empty line item without any pages
    * 
@@ -125,28 +138,37 @@ public class GuideRegistry {
     items.add(itempage);
     return itempage;
   }
+
   public static List<GuideItem> getItems() {
     return items;
   }
+
   public static class GuidePage {
+
     public String text = null;
     public IRecipe recipe = null;
     public BrewingRecipe brewRecipe = null;
+
     public GuidePage(String t) {
       text = t;
     }
+
     public GuidePage(IRecipe t) {
       recipe = t;
     }
+
     public GuidePage(BrewingRecipe t) {
       brewRecipe = t;
     }
   }
+
   public static class GuideItem {
+
     public GuideCategory cat;
     public Item icon;
     public String title;
     public List<GuidePage> pages = new ArrayList<GuidePage>();
+
     public GuideItem(@Nonnull GuideCategory cat, @Nonnull Item icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
       this.cat = cat;
       this.icon = icon;
@@ -158,18 +180,21 @@ public class GuideRegistry {
         this.pages.add(new GuidePage(recipe));
       }
     }
+
     public void addRecipePage(IRecipe t) {
       if (t == null) {
         return;
       }
       this.pages.add(new GuidePage(t));
     }
+
     public void addRecipePage(BrewingRecipe t) {
       if (t == null) {
         return;
       }
       this.pages.add(new GuidePage(t));
     }
+
     public void addTextPage(String t) {
       this.pages.add(new GuidePage(t));
     }

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandshears;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
@@ -41,22 +42,29 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityShearingBolt extends EntityThrowableDispensable {
+
   private static final int FORTUNE = 3;
+
   public static class FactoryShear implements IRenderFactory<EntityShearingBolt> {
+
     @Override
     public Render<? super EntityShearingBolt> createRenderFor(RenderManager rm) {
       return new RenderBall<EntityShearingBolt>(rm, "shears");
     }
   }
+
   public EntityShearingBolt(World worldIn) {
     super(worldIn);
   }
+
   public EntityShearingBolt(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
+
   public EntityShearingBolt(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     World world = getEntityWorld();

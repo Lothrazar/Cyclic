@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.controlledminer;
+
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
+
   private TileEntityControlledMiner tile;
   private int xHeightTextbox = 100;
   private int yHeightTxtbox = 38;
@@ -45,6 +47,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonTileEntityField btnHeightUp;
   private GuiButtonToggleSize btnSize;
   private ButtonTileEntityField btnWhitelist;
+
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
@@ -54,6 +57,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
     this.setFieldFuel(TileEntityControlledMiner.Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -92,6 +96,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -104,6 +109,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

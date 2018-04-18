@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -37,7 +38,9 @@ import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class FuelAdditionModule extends BaseModule implements IHasConfig {
+
   private boolean enabled;
+
   //links existing vanilla items as burnable fuel
   @Override
   public void syncConfig(Configuration config) {
@@ -45,14 +48,18 @@ public class FuelAdditionModule extends BaseModule implements IHasConfig {
     Property prop = config.get(category, "More Furnace Fuel", true, "Tons more wood and plant related items now can burn as fuel");
     enabled = prop.getBoolean();
   }
+
   @Override
   public void onInit() {
     if (enabled) {
       GameRegistry.registerFuelHandler(new FuelHandler());
     }
   }
+
   private class FuelHandler implements IFuelHandler {
+
     Map<Item, Integer> fuelMap = new HashMap<Item, Integer>();
+
     public FuelHandler() {
       // http://minecraft.gamepedia.com/Smelting
       int stick = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.STICK));
@@ -86,6 +93,7 @@ public class FuelAdditionModule extends BaseModule implements IHasConfig {
       fuelMap.put(Item.getItemFromBlock(Blocks.LEAVES), stick);
       fuelMap.put(Item.getItemFromBlock(Blocks.LEAVES2), stick);
     }
+
     @Override
     public int getBurnTime(ItemStack fuel) {
       if (fuelMap.containsKey(fuel.getItem())) {

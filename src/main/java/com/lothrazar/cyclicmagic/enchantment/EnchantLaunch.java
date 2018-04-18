@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -52,18 +53,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EnchantLaunch extends EnchantBase {
+
   private static final float LAUNCH_POWER = 1.05F;
   private static final int ROTATIONPITCH = 70;
   private static final int COOLDOWN = 3 * 20;
   private static final String NBT_USES = "launchuses";
+
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(COOLDOWN + "")));
   }
+
   @Override
   public int getMaxLevel() {
     return 5;
   }
+
   @Override
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
@@ -73,10 +78,12 @@ public class EnchantLaunch extends EnchantBase {
             && ((ItemArmor) stack.getItem()).armorType == EntityEquipmentSlot.FEET;
     return yes;
   }
+
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
     return this.canApply(stack);
   }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
@@ -93,6 +100,7 @@ public class EnchantLaunch extends EnchantBase {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {

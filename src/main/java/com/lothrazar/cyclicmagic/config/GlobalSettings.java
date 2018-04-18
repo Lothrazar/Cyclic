@@ -22,9 +22,11 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.config;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class GlobalSettings implements IHasConfig {
+
   //  public static boolean fuelBarHorizontal;
   @Override
   public void syncConfig(Configuration config) {

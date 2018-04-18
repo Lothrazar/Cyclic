@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pattern;
+
 import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -30,11 +31,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder> {
+
   public PatternBuilderTESR() {
     super();
   }
+
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {}
+
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage, float p) {
     super.render(te, x, y, z, partialTicks, destroyStage, p);

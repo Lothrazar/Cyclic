@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.library;
+
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -35,18 +36,21 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLibrary extends TileEntityBaseMachine implements ITickable {
+
   public static final int MAX_COUNT = 64;
   private static final int HEADER_TIMER = 10;
   private static final String NBT_CLICKED = "lastClicked";
   EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
   QuadrantEnum lastClicked = null;
   private int timer = 0;
+
   public TileEntityLibrary() {
     super();
     for (int i = 0; i < storage.length; i++) {
       storage[i] = new EnchantStack();
     }
   }
+
   @Override
   public void update() {
     if (this.timer > 0) {
@@ -56,13 +60,16 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       this.lastClicked = null;
     }
   }
+
   public EnchantStack getEnchantStack(QuadrantEnum area) {
     //EnchantStack
     return storage[area.ordinal()];
   }
+
   public void removeEnchantment(QuadrantEnum area) {
     storage[area.ordinal()].remove();
   }
+
   public boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
     int index = area.ordinal();
     EnchantStack enchStackCurrent = storage[index];
@@ -83,6 +90,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       return false;
     }
   }
+
   public boolean addEnchantmentFromPlayer(EntityPlayer player, EnumHand hand, QuadrantEnum segment) {
     Enchantment enchToRemove = null;
     ItemStack playerHeld = player.getHeldItem(hand);
@@ -115,6 +123,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     }
     return false;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -127,6 +136,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       storage[q.ordinal()] = s;
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     for (QuadrantEnum q : QuadrantEnum.values()) {
@@ -138,13 +148,16 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     tags.setInteger("t", timer);
     return super.writeToNBT(tags);
   }
+
   public void setLastClicked(QuadrantEnum segment) {
     this.timer = HEADER_TIMER * Const.TICKS_PER_SEC;
     this.lastClicked = segment;
   }
+
   public QuadrantEnum getLastClicked() {
     return this.lastClicked;
   }
+
   public boolean isEmpty() {
     for (int i = 0; i < storage.length; i++) {
       if (storage[i].isEmpty() == false) {
@@ -153,6 +166,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     }
     return true;
   }
+
   public QuadrantEnum findEmptyQuadrant() {
     for (int i = 0; i < storage.length; i++) {
       if (storage[i].isEmpty()) {
@@ -161,6 +175,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     }
     return null;
   }
+
   public QuadrantEnum findMatchingQuadrant(ItemStack enchBookStack) {
     for (int i = 0; i < storage.length; i++) {
       if (storage[i].doesMatchNonEmpty(enchBookStack)) {

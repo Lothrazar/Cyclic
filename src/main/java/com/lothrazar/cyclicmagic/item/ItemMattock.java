@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -55,13 +56,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemMattock extends ItemTool implements IHasRecipe {
+
   final static int RADIUS = 1;//radius 2 is 5x5 area square
   private Set<Material> mats;
+
   public ItemMattock(float attackDamageIn, float attackSpeedIn, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Set<Material> mats) {
     super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
     this.mats = mats;
     this.setMaxDamage(9000);
   }
+
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     ItemStack mat = new ItemStack(Blocks.OBSIDIAN);
@@ -70,19 +74,23 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
     }
     return super.getIsRepairable(toRepair, repair);
   }
+
   @Override
   public Set<String> getToolClasses(ItemStack stack) {
     return com.google.common.collect.ImmutableSet.of(Const.ToolStrings.shovel, Const.ToolStrings.pickaxe);
   }
+
   @Override
   public boolean canHarvestBlock(IBlockState state) {
     Block block = state.getBlock();//    super.canHarvestBlock(blockIn)
     return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
   }
+
   @Override
   public float getStrVsBlock(ItemStack stack, IBlockState state) {
     return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
   }
+
   /**
    * <<<< made with some help from Tinkers Construct and Spark's Hammers
    * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java and
@@ -158,12 +166,14 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
     }
     return super.onBlockStartBreak(stack, posHit, player);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     super.addInformation(held, player, list, par4);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.base;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -59,16 +60,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public abstract class BaseItemChargeScepter extends BaseTool {
+
   private static final float VELOCITY_MAX = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
   private static final float MAX_CHARGE = 9.7F;
   private static final int TICKS_USING = 93000;
   private static final int COOLDOWN = 5;
+
   public enum ActionType {
     SINGLE, DOUBLE, TRIPLE;
+
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT) + 1;
@@ -78,6 +83,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
     }
+
     public static ActionType getAction(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -87,15 +93,19 @@ public abstract class BaseItemChargeScepter extends BaseTool {
         return SINGLE;
       }
     }
+
     public static String getName(ItemStack wand) {
       return "wand.action." + ActionType.getAction(wand).toString().toLowerCase();
     }
+
     public static void setTimeout(ItemStack wand) {
       UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
     }
+
     public static int getTimeout(ItemStack wand) {
       return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
     }
+
     public static void tickTimeout(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int t = tags.getInteger(NBTTIMEOUT);
@@ -104,11 +114,15 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       }
     }
   }
+
   public BaseItemChargeScepter(int durability) {
     super(durability);
   }
+
   public abstract SoundEvent getSound();
+
   public abstract EntityThrowable createBullet(World world, EntityPlayer player, float dmg);
+
   //start of toggle fns
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
@@ -128,21 +142,25 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public void onUpdate(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
   }
+
   //end of toggle fns
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return TICKS_USING;//bow has 72000
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
     if (hand != EnumHand.MAIN_HAND || player.getCooldownTracker().hasCooldown(player.getHeldItem(hand).getItem())) {
@@ -152,10 +170,12 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     player.setActiveHand(hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
   }
+
   @Override
   public EnumAction getItemUseAction(ItemStack stack) {
     return EnumAction.BOW;//make it use cooldown
   }
+
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
     if (entity instanceof EntityPlayer == false) {
@@ -199,10 +219,12 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
+
   private void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
     EntityThrowable proj = createBullet(world, player, damage);
     this.launchProjectile(world, player, proj, velocityFactor * VELOCITY_MAX);
   }
+
   private void shootTwins(World world, EntityPlayer player, float velocityFactor, float damage) {
     Vec3d vecCrossRight = player.getLookVec().normalize().crossProduct(new Vec3d(0, 2, 0));
     Vec3d vecCrossLeft = player.getLookVec().normalize().crossProduct(new Vec3d(0, -2, 0));
@@ -215,6 +237,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     projLeft.posZ += vecCrossLeft.z;
     this.launchProjectile(world, player, projLeft, velocityFactor * VELOCITY_MAX);
   }
+
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn

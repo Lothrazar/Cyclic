@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.password;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
@@ -36,18 +37,23 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTilePassword implements IMessage, IMessageHandler<PacketTilePassword, IMessage> {
+
   public static enum PacketType {
     PASSTEXT, ACTIVETYPE, USERSALLOWED, USERCLAIM;
   }
+
   private BlockPos pos;
   private String password;
   private PacketType type = null;
+
   public PacketTilePassword() {}
+
   public PacketTilePassword(PacketType t, String pword, BlockPos p) {
     pos = p;
     password = pword;
     type = t;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -58,6 +64,7 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     pos = new BlockPos(x, y, z);
     password = tags.getString("p");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     if (type == null) {
@@ -71,11 +78,13 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     tags.setString("p", password);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTilePassword message, MessageContext ctx) {
     PacketTilePassword.checkThreadAndEnqueue(message, ctx);
     return null;
   }
+
   private static void checkThreadAndEnqueue(final PacketTilePassword message, final MessageContext ctx) {
     if (message.type == null) {
       message.type = PacketType.PASSTEXT;//legacy safety
@@ -84,6 +93,7 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
+
       public void run() {
         EntityPlayerMP player = ctx.getServerHandler().player;
         World world = player.getEntityWorld();

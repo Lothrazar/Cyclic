@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.storagesack;
+
 import com.lothrazar.cyclicmagic.gui.base.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,39 +35,48 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage extends InventoryBase implements IInventory {
+
   public static final int INV_SIZE = 66; //6*11
   //  private ItemStack[] inv = new ItemStack[INV_SIZE];
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
+
   public InventoryStorage(EntityPlayer player, ItemStack wand) {
     super(INV_SIZE);
     internalWand = wand;
     inv = readFromNBT(internalWand);
     thePlayer = player;
   }
+
   public EntityPlayer getPlayer() {
     return thePlayer;
   }
+
   @Override
   public String getName() {
     return "";
   }
+
   @Override
   public boolean hasCustomName() {
     return false;
   }
+
   @Override
   public ITextComponent getDisplayName() {
     return null;
   }
+
   @Override
   public int getSizeInventory() {
     return INV_SIZE;
   }
+
   @Override
   public ItemStack getStackInSlot(int index) {
     return inv.get(index);
   }
+
   @Override
   public ItemStack decrStackSize(int slot, int amount) {
     ItemStack stack = getStackInSlot(slot);
@@ -84,6 +94,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     return stack;
   }
+
   @Override
   public ItemStack removeStackFromSlot(int index) {
     // used to be 'getStackInSlotOnClosing'
@@ -91,6 +102,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     setInventorySlotContents(index, null);
     return stack;
   }
+
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
     if (stack == null) {
@@ -102,10 +114,12 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     markDirty();
   }
+
   @Override
   public int getInventoryStackLimit() {
     return 64;
   }
+
   @Override
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
@@ -121,14 +135,17 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     writeToNBT(internalWand, inv);
   }
+
   @Override
   public boolean isUsableByPlayer(EntityPlayer player) {
     return true;
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return true;
   }
+
   /************** public static ******************/
   public static int countNonEmpty(ItemStack stack) {
     NonNullList<ItemStack> inv = readFromNBT(stack);
@@ -140,6 +157,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     return count;
   }
+
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
     NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
     if (stack.isEmpty()) {
@@ -156,6 +174,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     return inv;
   }
+
   public static void writeToNBT(ItemStack item, NonNullList<ItemStack> theInventory) {
     NBTTagCompound tagcompound = UtilNBT.getItemStackNBT(item);
     // Create a new NBT Tag List to store itemstacks as NBT Tags
@@ -182,6 +201,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     // "ItemInventory"
     tagcompound.setTag("ItemInventory", items);
   }
+
   public static void decrementSlot(ItemStack stack, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryStorage.readFromNBT(stack);
     invv.get(itemSlot).shrink(1);
@@ -192,6 +212,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     }
     InventoryStorage.writeToNBT(stack, invv);
   }
+
   public static ItemStack getFromSlot(ItemStack stack, int i) {
     if (i < 0 || i >= InventoryStorage.INV_SIZE) {
       return ItemStack.EMPTY;

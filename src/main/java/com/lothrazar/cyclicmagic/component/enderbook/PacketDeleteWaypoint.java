@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.enderbook;
+
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,19 +34,25 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketDeleteWaypoint implements IMessage, IMessageHandler<PacketDeleteWaypoint, IMessage> {
+
   public int slot;
+
   public PacketDeleteWaypoint() {}
+
   public PacketDeleteWaypoint(int s) {
     slot = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     this.slot = buf.readInt();
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     buf.writeInt(slot);
   }
+
   @Override
   public IMessage onMessage(PacketDeleteWaypoint message, MessageContext ctx) {
     EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;

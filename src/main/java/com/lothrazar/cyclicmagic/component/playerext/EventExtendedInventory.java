@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext;
+
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -33,7 +34,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class EventExtendedInventory {
+
   public static boolean keepOnDeath;
+
   @SubscribeEvent
   public void playerLoggedInEvent(PlayerLoggedInEvent event) {
     Side side = FMLCommonHandler.instance().getEffectiveSide();
@@ -41,6 +44,7 @@ public class EventExtendedInventory {
       UtilPlayerInventoryFilestorage.playerEntityIds.add(event.player.getEntityId());
     }
   }
+
   @SubscribeEvent
   public void playerTick(PlayerEvent.LivingUpdateEvent event) {
     // player events
@@ -52,14 +56,17 @@ public class EventExtendedInventory {
       }
     }
   }
+
   @SubscribeEvent
   public void playerLoad(PlayerEvent.LoadFromFile event) {
     UtilPlayerInventoryFilestorage.playerSetupOnLoad(event);
   }
+
   @SubscribeEvent
   public void playerSave(PlayerEvent.SaveToFile event) {
     UtilPlayerInventoryFilestorage.savePlayerItems(event.getEntityPlayer(), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
   }
+
   @SubscribeEvent
   public void playerDeath(PlayerDropsEvent event) {
     if (keepOnDeath == false) {

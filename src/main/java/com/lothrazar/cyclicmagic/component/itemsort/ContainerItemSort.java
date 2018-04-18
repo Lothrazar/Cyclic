@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.itemsort;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
@@ -36,8 +37,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerItemSort extends ContainerBaseMachine {
+
   public static final int SLOTX_START = Const.PAD;
   public static final int SLOTY = Const.SQ;
+
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
     super(te);
     this.screenSize = ScreenSize.LARGE;
@@ -55,6 +58,7 @@ public class ContainerItemSort extends ContainerBaseMachine {
     }
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
@@ -87,11 +91,13 @@ public class ContainerItemSort extends ContainerBaseMachine {
     }
     return stack;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
     this.tile.setField(id, data);
   }
+
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);

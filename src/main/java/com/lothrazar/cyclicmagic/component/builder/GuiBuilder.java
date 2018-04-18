@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.builder;
+
 import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContainer {
+
   private TileEntityStructureBuilder tile;
   private ButtonTileEntityField btnSizeUp;
   private ButtonTileEntityField btnSizeDown;
@@ -47,6 +49,7 @@ public class GuiBuilder extends GuiBaseContainer {
   private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
+
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -56,6 +59,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
     this.setFieldFuel(TileEntityStructureBuilder.Fields.FUEL.ordinal());
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -184,6 +188,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.addButton(btnRotDown);
     this.registerButtonDisableTrigger(btnRotDown, ButtonTriggerType.EQUAL, fld.ordinal(), 0);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -210,6 +215,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.drawStringCenteredCheckLength(display, x, y);
     updateDisabledButtons();
   }
+
   private void updateDisabledButtons() {
     //a semi hack to hide btns
     if (btnHeightDown != null)
@@ -217,6 +223,7 @@ public class GuiBuilder extends GuiBaseContainer {
     if (btnHeightUp != null)
       this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

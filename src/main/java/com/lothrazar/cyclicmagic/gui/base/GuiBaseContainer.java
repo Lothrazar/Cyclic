@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.base;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
+
   public final static int FONTCOLOR = 4210752;
   public TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
@@ -59,23 +61,28 @@ public abstract class GuiBaseContainer extends GuiContainer {
   private GuiButtonTogglePreview btnPreview;
   private int fuelX, fuelY, fuelXE, fuelYE;
   private GuiButtonToggleFuelBar btnFuelToggle;
+
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
   }
+
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
     this.tile = null;
   }
+
   protected void setScreenSize(Const.ScreenSize ss) {
     this.screenSize = ss;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
   }
+
   protected void setFieldFuel(int ordinal) {
     this.fieldFuel = ordinal;
     this.fieldMaxFuel = ordinal + 1;
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -101,6 +108,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.buttonList.add(btnFuelToggle);
     }
   }
+
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
    * 
@@ -113,6 +121,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     x = (display.length() > 1) ? x - 3 : x;
     this.drawString(display, x, y);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -128,6 +137,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+
   /**
    * shift the x param over if the length is over 1, to center between the two digits made for numeric strings up to 99
    * 
@@ -139,12 +149,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
     x = (display.length() > 1) ? x - 3 : x;
     this.drawString(display, x, y);
   }
+
   public void drawNameText() {
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
       this.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6);
     }
   }
+
   public void updateToggleButtonStates() {
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
@@ -159,20 +171,25 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     updateDisabledButtonTriggers();
   }
+
   public void drawStringCentered(String s, int x, int y) {
     this.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, y);
   }
+
   public void drawString(String s, int x, int y) {
     this.fontRenderer.drawString(UtilChat.lang(s), x, y, FONTCOLOR);
   }
+
   public int getMiddleY() {
     int yMiddle = (this.height - this.ySize) / 2;
     return yMiddle;
   }
+
   public int getMiddleX() {
     int xMiddle = (this.width - this.xSize) / 2;
     return xMiddle;
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     //      super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
@@ -192,6 +209,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       drawFuelBar();
     }
   }
+
   public void drawFuelText() {
     if (this.fieldFuel > -1 && this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
       ITileFuel tileFuel = (ITileFuel) this.tile;
@@ -212,6 +230,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+
   public void drawFuelBar() {
     if (this.tile instanceof ITileFuel == false) {
       return;
@@ -258,24 +277,28 @@ public abstract class GuiBaseContainer extends GuiContainer {
           innerWidth, innerLength);
     }
   }
+
   private String getFuelAmtDisplay() {
     if (tile.getField(this.fieldMaxFuel) == 0) {
       return "0";
     }
     return tile.getField(this.fieldFuel) + "/" + tile.getField(this.fieldMaxFuel);
   }
+
   @SuppressWarnings("serial")
   private void tryDrawFuelTooltip(int mouseX, int mouseY) {
     if (fuelX < mouseX && mouseX < fuelXE
         && fuelY < mouseY && mouseY < fuelYE) {
       String display = getFuelAmtDisplay();
       drawHoveringText(new ArrayList<String>() {
+
         {
           add(display);
         }
       }, mouseX, mouseY, fontRenderer);
     }
   }
+
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
@@ -292,6 +315,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+
   public void drawProgressBar() {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(progressBar.getProgressCtrAsset());
@@ -311,6 +335,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
   }
+
   public void tryDrawFuelSlot(int x, int y) {
     if (this.fieldFuel < 0 || tile == null || tile.doesUseFuel() == false) {
       return;
@@ -319,14 +344,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
+
   @Override
   protected <T extends GuiButton> T addButton(T buttonIn) {
     return super.addButton(buttonIn);
   }
+
   protected void registerButtonDisableTrigger(GuiButton buttonIn, ButtonTriggerWrapper.ButtonTriggerType trigger,
       int fieldId, int fv) {
     this.buttonWrappers.add(new ButtonTriggerWrapper(buttonIn, trigger, fieldId, fv));
   }
+
   private void updateDisabledButtonTriggers() {
     for (ButtonTriggerWrapper btnWrap : this.buttonWrappers) {
       int fieldValue = this.tile.getField(btnWrap.fld);
@@ -348,6 +376,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       btnWrap.btn.enabled = !isDisabled;
     }
   }
+
   @Override
   protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
     super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
@@ -360,14 +389,18 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+
   public static class ButtonTriggerWrapper {
+
     public static enum ButtonTriggerType {
       GREATER, LESS, EQUAL, NOTEQUAL;
     }
+
     public GuiButton btn;
     public ButtonTriggerType trig;
     public int fld;
     public int triggerValue;
+
     public ButtonTriggerWrapper(GuiButton buttonIn, ButtonTriggerType trigger, int fieldId, int tval) {
       this.btn = buttonIn;
       this.trig = trigger;

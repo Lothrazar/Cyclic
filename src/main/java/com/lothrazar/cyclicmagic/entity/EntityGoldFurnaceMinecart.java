@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockFurnace;
@@ -46,25 +47,31 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityGoldFurnaceMinecart extends EntityMinecart {
+
   public static ItemGoldFurnaceMinecart dropItem;
   private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean> createKey(EntityMinecartFurnace.class, DataSerializers.BOOLEAN);
   private int fuel;
   public double pushX;
   public double pushZ;
+
   public EntityGoldFurnaceMinecart(World worldIn) {
     super(worldIn);
     this.setDisplayTile(this.getDefaultDisplayTile());
   }
+
   public EntityGoldFurnaceMinecart(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   public EntityMinecart.Type getType() {
     return EntityMinecart.Type.FURNACE;
   }
+
   protected void entityInit() {
     super.entityInit();
     this.dataManager.register(POWERED, Boolean.valueOf(false));
   }
+
   /**
    * Called to update the entity's position/logic.
    */
@@ -86,6 +93,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + 0.8D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
     }
   }
+
   /**
    * Get's the maximum speed for a minecart vanilla is 0.4D default
    */
@@ -93,6 +101,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   protected double getMaximumSpeed() {
     return super.getMaximumSpeed() + 0.5D;
   }
+
   /**
    * Returns the carts max speed when traveling on rails. Carts going faster than 1.1 cause issues with chunk loading. Carts cant traverse slopes or corners at greater than 0.5 - 0.6. This value is
    * compared with the rails max speed and the carts current speed cap to determine the carts current max speed. A normal rail's max speed is 0.4.
@@ -102,6 +111,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   public float getMaxCartSpeedOnRail() {
     return super.getMaxCartSpeedOnRail() + 0.1f;//super is 1.2
   }
+
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();
@@ -113,10 +123,12 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);
   }
+
   @Override
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     super.moveAlongTrack(pos, state);
@@ -160,6 +172,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       }
     }
   }
+
   protected void applyDrag() {
     if (this.fuel > 0) {
       return;
@@ -183,6 +196,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     }
     super.applyDrag();
   }
+
   public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
     ItemStack itemstack = player.getHeldItem(hand);
     if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
@@ -197,6 +211,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     }
     return true;
   }
+
   /**
    * (abstract) Protected helper method to write subclass entity data to NBT.
    */
@@ -206,6 +221,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     compound.setDouble("PushZ", this.pushZ);
     compound.setShort("Fuel", (short) this.fuel);
   }
+
   /**
    * (abstract) Protected helper method to read subclass entity data from NBT.
    */
@@ -215,15 +231,19 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     this.pushZ = compound.getDouble("PushZ");
     this.fuel = compound.getShort("Fuel");
   }
+
   protected boolean isMinecartPowered() {
     return ((Boolean) this.dataManager.get(POWERED)).booleanValue();
   }
+
   protected void setMinecartPowered(boolean p_94107_1_) {
     this.dataManager.set(POWERED, Boolean.valueOf(p_94107_1_));
   }
+
   public IBlockState getDefaultDisplayTile() {
     return (this.isMinecartPowered() ? Blocks.LIT_FURNACE : Blocks.FURNACE).getDefaultState().withProperty(BlockFurnace.FACING, EnumFacing.NORTH);
   }
+
   @Override
   public void applyEntityCollision(Entity entityIn) {
     double motionXprev = this.motionX;

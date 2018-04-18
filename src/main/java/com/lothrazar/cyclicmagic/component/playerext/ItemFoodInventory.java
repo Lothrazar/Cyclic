@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -47,11 +48,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfig {
+
   private static final int numFood = 10;
+
   public ItemFoodInventory() {
     super(numFood, false);
     this.setAlwaysEdible();
   }
+
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
@@ -67,15 +71,18 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
       UtilChat.addChatMessage(player, "unlocks.extended");
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), "chestEnder", Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, "gemDiamond", "gemEmerald", "gemQuartz");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;
     EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {

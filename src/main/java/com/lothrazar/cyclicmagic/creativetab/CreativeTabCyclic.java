@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.creativetab;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -42,20 +43,25 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabCyclic extends CreativeTabs {
+
   Item tabItem = null;
   Comparator<ItemStack> comparator = new Comparator<ItemStack>() {
+
     @Override
     public int compare(final ItemStack first, final ItemStack second) {
       return first.getDisplayName().compareTo(second.getDisplayName());
     }
   };
+
   public CreativeTabCyclic() {
     super(Const.MODID);
   }
+
   @Override
   public ItemStack getTabIconItem() {
     return tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(tabItem);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void displayAllRelevantItems(NonNullList<ItemStack> list) {
@@ -89,6 +95,7 @@ public class CreativeTabCyclic extends CreativeTabs {
       list.add(new ItemStack(guidebook));
     }
   }
+
   public void setTabItemIfNull(Item i) {
     if (tabItem == null)
       tabItem = i;

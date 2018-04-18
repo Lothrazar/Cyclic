@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFlat;
@@ -47,19 +48,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
+
   private static final int RECIPE_OUTPUT = 8;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   private final static float ANGLE = 1;
   private static final float powerCorrection = 0.02F;
+
   public static enum SpeedType {
     TINY, SMALL, MEDIUM, LARGE;
   }
+
   private SpeedType type;
   private float power;
   private SoundEvent sound;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
+
   public BlockConveyor(SpeedType t) {
     super(Material.IRON);//, MapColor.GRASS
     this.setSoundType(SoundType.SLIME);
@@ -83,13 +88,16 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     }
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
+
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
@@ -129,12 +137,14 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       }
     }
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     int speed = (int) (this.power * 100);
     tooltip.add(UtilChat.lang("tile.plate_push.tooltip") + speed);
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (type) {

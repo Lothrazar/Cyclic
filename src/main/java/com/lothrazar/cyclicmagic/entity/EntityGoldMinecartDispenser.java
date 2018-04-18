@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockDispenser;
@@ -42,25 +43,31 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityGoldMinecartDispenser extends EntityMinecartChest {
+
   private static final int TIME_BTW_DROPS = 40;
   private int timeSinceDropped = 0;
   private FakeWorld fakeWorld;
+
   public EntityGoldMinecartDispenser(World worldIn) {
     super(worldIn);
     fakeWorld = new FakeWorld(worldIn, this);
     this.setDisplayTile(getDefaultDisplayTile());
   }
+
   public EntityGoldMinecartDispenser(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
     fakeWorld = new FakeWorld(worldIn, this);
     this.setDisplayTile(getDefaultDisplayTile());
   }
+
   public int getSizeInventory() {
     return 9;
   }
+
   public IBlockState getDefaultDisplayTile() {
     return Blocks.DISPENSER.getDefaultState();//.withProperty(BlockChest.FACING, EnumFacing.NORTH);
   }
+
   @Override
   public IBlockState getDisplayTile() {
     IBlockState s = super.getDisplayTile();
@@ -68,24 +75,29 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     //    ModCyclic.logger.info("getDisplayTile facing " + s.getValue(BlockDispenser.FACING));
     return s;
   }
+
   @Override
   protected void writeEntityToNBT(NBTTagCompound compound) {
     compound.setInteger("tdr", timeSinceDropped);
     super.writeEntityToNBT(compound);
   }
+
   @Override
   protected void readEntityFromNBT(NBTTagCompound compound) {
     timeSinceDropped = compound.getInteger("tdr");
     super.readEntityFromNBT(compound);
   }
+
   public String getGuiID() {
     return "minecraft:dispenser";
   }
+
   @Override
   public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
     this.addLoot(playerIn);
     return new ContainerDispenser(playerInventory, this);
   }
+
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
     //    EnumFacing fac = this.getAdjustedHorizontalFacing();//.getOpposite();
@@ -95,6 +107,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
       this.dispense(this.fakeWorld, new BlockPos(x, y, z));
     }
   }
+
   /**
    * pulled from BlockDispenser
    * 
@@ -126,6 +139,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
       }
     }
   }
+
   //  @Override
   //  public boolean attackEntityFrom(DamageSource source, float amount) {
   //    if (source.getEntity() == this || source.getEntity() instanceof EntityArrow) {
@@ -154,6 +168,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     }
     return i;
   }
+
   /**
    * 
    * pulled from BlockDispenser
@@ -165,6 +180,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     //    ModCyclic.logger.info("BEHAVIOR??? "+ stack);
     return BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(stack.getItem());
   }
+
   @Override
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     BlockRailBase blockrailbase = (BlockRailBase) state.getBlock();

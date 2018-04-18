@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.fluid;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -33,6 +34,7 @@ import net.minecraftforge.fluids.Fluid;
  *
  */
 public class FluidExp extends Fluid {
+
   public FluidExp() {
     super("xpjuice", new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_base"), new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000

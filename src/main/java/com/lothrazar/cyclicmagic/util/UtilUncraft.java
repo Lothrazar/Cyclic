@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
@@ -32,21 +33,26 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 
 public class UtilUncraft {
+
   public static boolean dictionaryFreedom;
   public static List<String> blacklistInput = new ArrayList<String>();
   public static List<String> blacklistOutput = new ArrayList<String>();
   public static List<String> blacklistMod = new ArrayList<String>();
+
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
+
   public static enum UncraftResultType {
     BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS, EMPTY, ENCHANTMATCH, UNKNOWN;
   }
+
   public static void resetBlacklists() {
     blacklistInput = new ArrayList<String>();
     blacklistOutput = new ArrayList<String>();
     blacklistMod = new ArrayList<String>();
   }
+
   public static void setBlacklist(String[] list, BlacklistType type) {
     if (list == null || list.length == 0) {
       return;
@@ -65,12 +71,14 @@ public class UtilUncraft {
       }
     }
   }
+
   private static boolean isItemInBlacklist(ItemStack drop, BlacklistType type) {
     if (drop == null || drop.getItem() == null) {
       return true;
     }
     return isItemInBlacklist(drop.getItem(), type);
   }
+
   private static boolean isItemInBlacklist(Item item, BlacklistType type) {
     String itemName;
     switch (type) {
@@ -101,12 +109,16 @@ public class UtilUncraft {
     }
     return false;
   }
+
   public static class Uncrafter {
+
     private ArrayList<ItemStack> drops;
     private ItemStack toUncraft;
     private int outsize;
     private String errorString = "";
+
     public Uncrafter() {}
+
     /**
      * It works but we dont want to use it right now
      * 
@@ -119,12 +131,15 @@ public class UtilUncraft {
       //EXAMPLE: milk_bucket has containerItem == milk
       return hasContainerItem;
     }
+
     public ArrayList<ItemStack> getDrops() {
       return drops;
     }
+
     public int getOutsize() {
       return outsize;
     }
+
     /**
      * try to add an entry that is either a stack, or a list of possibilities from ore dictionary
      * 
@@ -145,6 +160,7 @@ public class UtilUncraft {
         // else size is > 1 , so its something like wooden planks but not for now
       }
     }
+
     /**
      * add drop after checking blacklists
      * 
@@ -172,12 +188,15 @@ public class UtilUncraft {
         drops.add(stack);
       }
     }
+
     private boolean doesRecipeMatch(IRecipe r) {
       return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
     }
+
     private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
       return recipeOutput.isItemEqual(toUncraft);
     }
+
     public UncraftResultType process(ItemStack stuff) {
       this.toUncraft = stuff;
       this.drops = new ArrayList<ItemStack>();
@@ -230,6 +249,7 @@ public class UtilUncraft {
       }
       return result;
     }
+
     /**
      * could be a list of ItemStacks, or a list of Objects which are ore dictionary entries
      * 
@@ -268,9 +288,11 @@ public class UtilUncraft {
       //      //else it could be anything from a custom mod ex: solderer
       //      return null;
     }
+
     public String getErrorString() {
       return errorString;
     }
+
     public void setErrorString(String errorString) {
       this.errorString = errorString;
     }

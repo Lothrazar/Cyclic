@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -33,6 +34,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilSpellCaster {
+
   public static ItemStack getPlayerWandIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (!wand.isEmpty() && wand.getItem() instanceof ItemCyclicWand) {
@@ -44,13 +46,16 @@ public class UtilSpellCaster {
     }
     return ItemStack.EMPTY;
   }
+
   public static boolean spellsEnabled(EntityPlayer player) {
     // current requirement is only a wand
     return !UtilSpellCaster.getPlayerWandIfHeld(player).isEmpty();
   }
+
   public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side, ItemStack wand, EnumHand hand) {
     return tryCast(getPlayerCurrentISpell(player), world, player, pos, side, wand, hand);
   }
+
   public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, ItemStack wand, EnumHand hand) {
     //ItemStack wand = getPlayerWandIfHeld(player);
     if (wand.isEmpty()) {
@@ -76,6 +81,7 @@ public class UtilSpellCaster {
       return false;
     }
   }
+
   //	public static void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
   //
   //		// succes should do things like: drain resources, play sounds
@@ -95,6 +101,7 @@ public class UtilSpellCaster {
     int left = SpellRegistry.prev(wand, curr).getID();
     ItemCyclicWand.Spells.setSpellCurrent(wand, left);
   }
+
   public static void shiftRight(EntityPlayer player) {
     ItemStack wand = getPlayerWandIfHeld(player);
     if (wand.isEmpty()) {
@@ -104,6 +111,7 @@ public class UtilSpellCaster {
     int right = SpellRegistry.next(wand, curr).getID();
     ItemCyclicWand.Spells.setSpellCurrent(wand, right);
   }
+
   public static ISpell getPlayerCurrentISpell(EntityPlayer player) {
     ItemStack wand = getPlayerWandIfHeld(player);
     ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellIDCurrent(wand));
@@ -112,9 +120,9 @@ public class UtilSpellCaster {
     }
     return current;
   }
+
   public static void rechargeWithExp(EntityPlayer player) {
-    /*
-     * ItemStack wand = getPlayerWandIfHeld(player);
+    /* ItemStack wand = getPlayerWandIfHeld(player);
      * 
      * 
      * int MAX = ItemCyclicWand.Energy.getMaximum(wand);
@@ -125,7 +133,6 @@ public class UtilSpellCaster {
      * ItemCyclicWand.Energy.rechargeBy(wand, Energy.RECHARGE_MANA_AMT);
      * 
      * UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST); UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.fill); } else{ UtilSound.playSound(player.worldObj,
-     * player.getPosition(), UtilSound.Own.buzzp); }
-     */
+     * player.getPosition(), UtilSound.Own.buzzp); } */
   }
 }

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.forester;
+
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +59,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityForester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
+
   private static final String[] validTargetsOreDict = new String[] { "logWood", "treeLeaves" };
   private static final String[] validSaplingsOreDict = new String[] { "treeSapling" };
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
@@ -78,23 +80,28 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
+
   public static enum Fields {
     REDSTONE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
   }
+
   public TileEntityForester() {
     super(INVENTORY_SIZE);
     this.setFuelSlot(FUEL_SLOT, BlockForester.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, "block_forester");
@@ -103,6 +110,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+
   @Override
   public void update() {
     if (!isRunning()) {
@@ -124,6 +132,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       this.updateMiningProgress();
     }
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index != FUEL_SLOT) {
@@ -131,6 +140,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     return super.isItemValidForSlot(index, stack);
   }
+
   private void updatePlantSaplings() {
     ItemStack sapling = this.getStackInSlot(0);
     if (this.isSaplingValid(sapling)
@@ -145,6 +155,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
           this.targetPos.down(), EnumFacing.UP, 0.5F, 0.5F, 0.5F);
     }
   }
+
   /**
    * return true if block is harvested/broken
    */
@@ -177,6 +188,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     return false;
   }
+
   private void tryEquipItem() {
     if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
       ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_AXE, 1);
@@ -187,6 +199,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
     }
   }
+
   private void verifyUuid(World world) {
     if (uuid == null) {
       uuid = UUID.randomUUID();
@@ -194,9 +207,11 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
+
   private boolean isSaplingValid(ItemStack sapling) {
     return UtilOreDictionary.doesMatchOreDict(sapling, validSaplingsOreDict);
   }
+
   private boolean isTargetValid() {
     World world = getWorld();
     if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) {
@@ -206,11 +221,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     Block target = targetState.getBlock();
     return UtilOreDictionary.doesMatchOreDict(new ItemStack(target), validTargetsOreDict);
   }
+
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     //so the rand range is basically [0,8], then we left shift into [-4,+4]
     return getPos();
   }
+
   private void updateTargetPos() {
     //spiraling outward from center
     //first are we out of bounds? if so start at center + 1
@@ -240,6 +257,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     //this means we have passed over the threshold of ALL coordinates
     targetPos = new BlockPos(minX, minY, minZ);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -255,6 +273,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -268,11 +287,13 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
+
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
       resetProgress(pos);
     }
   }
+
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
@@ -280,6 +301,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       curBlockDamage = 0;
     }
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -298,6 +320,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     return 0;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -320,6 +343,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -330,10 +354,12 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       return super.receiveClientEvent(id, value);
     }
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
@@ -341,6 +367,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -349,18 +376,22 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
+
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.squareHorizontalHollow(this.pos, size);
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;

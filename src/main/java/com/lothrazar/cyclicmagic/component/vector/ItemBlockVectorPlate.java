@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.vector;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -34,10 +35,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockVectorPlate extends ItemBlock {
+
   // http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1432714-forge-using-addinformation-on-a-block
   public ItemBlockVectorPlate(Block block) {
     super(block);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -52,6 +55,7 @@ public class ItemBlockVectorPlate extends ItemBlock {
     if (d.length() > 0)
       tooltip.add(UtilChat.lang("tile.plate_vector.tooltip.yaw") + d);
   }
+
   /**
    * set default dag data so its nonempty. just like ItemSkull
    */

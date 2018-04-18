@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -34,12 +35,15 @@ import net.minecraft.village.Village;
 import net.minecraft.world.World;
 
 public class CommandVillageInfo extends BaseCommand implements ICommand {
+
   //5852309458819775221
   // is a seed with village at spawn; for testing
   public static final String name = "villageinfo";
+
   public CommandVillageInfo(boolean op) {
     super(name, op);
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     BlockPos pos = sender.getPosition();

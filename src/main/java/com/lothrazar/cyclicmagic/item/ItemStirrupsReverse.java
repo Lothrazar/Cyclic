@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -34,9 +35,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemStirrupsReverse extends BaseTool implements IHasRecipe {
+
   public ItemStirrupsReverse() {
     super(100);
   }
+
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     World world = entity.getEntityWorld();
@@ -50,6 +53,7 @@ public class ItemStirrupsReverse extends BaseTool implements IHasRecipe {
     super.onUse(stack, player, world, hand);
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

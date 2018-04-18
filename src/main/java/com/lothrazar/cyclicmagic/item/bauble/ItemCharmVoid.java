@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.bauble;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseCharm;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -37,16 +38,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
+
   private static final int durability = 16;
   private static final int yLowest = -30;
   private static final int yDest = 255;
+
   public ItemCharmVoid() {
     super(durability);
   }
+
   @Override
   public IRecipe addRecipe() {
     return super.addRecipeAndRepair(Items.ENDER_EYE);
   }
+
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {

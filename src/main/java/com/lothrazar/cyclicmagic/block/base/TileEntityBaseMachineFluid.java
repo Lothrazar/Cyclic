@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.base;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.fluid.FluidTankFixDesync;
@@ -40,23 +41,30 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implements IFluidHandler {
+
   public FluidTankBase tank;
+
   public TileEntityBaseMachineFluid(int fluidTankSize) {
     this(0, fluidTankSize);
   }
+
   public TileEntityBaseMachineFluid(int inventorySize, int fluidTankSize) {
     super(inventorySize);
     tank = new FluidTankFixDesync(fluidTankSize, this);
   }
+
   public static class ContainerDummy extends Container {
+
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
       return false;
     }
   }
+
   public int getCapacity() {
     return tank.getCapacity();
   }
+
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -64,17 +72,20 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     }
     return fluidHandler.getTankProperties()[0].getContents();
   }
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
+
   private boolean doesFluidMatchTank(FluidStack incoming) {
     if (tank.getFluid() == null) {
       return true;
     }
     return tank.getFluid().getFluid() == incoming.getFluid();
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     if (resource == null || doesFluidMatchTank(resource) == false) {
@@ -87,6 +98,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     tank.setFluid(resource);
     return result;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (doesFluidMatchTank(resource) == false) {
@@ -96,22 +108,26 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     tank.setFluid(resource);
     return result;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
     tank.setFluid(result);
     return result;
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
     return super.writeToNBT(tagCompound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
   }
+
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -119,6 +135,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -127,6 +144,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
+
   /**
    * fix fluid rendering breaks because pipes and pumps update my fluid level only client side
    * 

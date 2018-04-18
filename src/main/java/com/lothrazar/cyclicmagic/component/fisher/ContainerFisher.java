@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fisher;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
@@ -32,11 +33,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerFisher extends ContainerBaseMachine {
+
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 30;
   public static final int SLOTY = 20;
   public static final int SLOTX_FISH = 80;
   public static final int SLOTY_FISH = 20;
+
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {
     super(te);
     //the first slot is the rod
@@ -52,6 +55,7 @@ public class ContainerFisher extends ContainerBaseMachine {
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;

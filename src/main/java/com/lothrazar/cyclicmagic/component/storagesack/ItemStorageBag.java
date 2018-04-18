@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.storagesack;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -53,16 +54,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemStorageBag extends BaseItem implements IHasRecipe {
+
   public static enum StorageActionType {
     NOTHING, DEPOSIT, MERGE;
+
     private final static String NBT = "build";
     private final static String NBTTIMEOUT = "timeout";
+
     public static int getTimeout(ItemStack wand) {
       return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
     }
+
     public static void setTimeout(ItemStack wand) {
       UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
     }
+
     public static void tickTimeout(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int t = tags.getInteger(NBTTIMEOUT);
@@ -70,6 +76,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, t - 1);
       }
     }
+
     public static int get(ItemStack wand) {
       if (wand == null) {
         return 0;
@@ -77,6 +84,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
+
     public static String getName(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -86,6 +94,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         return "item.storage_bag." + NOTHING.toString().toLowerCase();
       }
     }
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
@@ -97,13 +106,16 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       wand.setTagCompound(tags);
     }
   }
+
   public ItemStorageBag() {
     this.setMaxStackSize(1);
   }
+
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -112,11 +124,13 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     StorageActionType.tickTimeout(stack);
     super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
   }
+
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -165,6 +179,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       }
     }
   }
+
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
@@ -175,6 +190,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
     return wand;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     if (!world.isRemote) {
@@ -184,6 +200,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
     return super.onItemRightClick(world, player, hand);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 //import com.lothrazar.util.Util;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import io.netty.buffer.ByteBuf;
@@ -36,12 +37,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketParticleAtPosition implements IMessage, IMessageHandler<PacketParticleAtPosition, IMessage> {
+
   private int x;
   private int y;
   private int z;
   private int particle;
   private int count;
+
   public PacketParticleAtPosition() {}
+
   public PacketParticleAtPosition(BlockPos p, int part, int c) {
     x = p.getX();
     y = p.getY();
@@ -49,6 +53,7 @@ public class PacketParticleAtPosition implements IMessage, IMessageHandler<Packe
     particle = part;
     count = c;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -58,6 +63,7 @@ public class PacketParticleAtPosition implements IMessage, IMessageHandler<Packe
     particle = tags.getInteger("p");
     count = tags.getInteger("c");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -68,6 +74,7 @@ public class PacketParticleAtPosition implements IMessage, IMessageHandler<Packe
     tags.setInteger("c", count);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketParticleAtPosition message, MessageContext ctx) {
     if (ctx.side.isClient() && Minecraft.getMinecraft().player != null) {

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import io.netty.buffer.ByteBuf;
@@ -34,22 +35,28 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncPlayerHealth implements IMessage, IMessageHandler<PacketSyncPlayerHealth, IMessage> {
+
   private int health;
+
   public PacketSyncPlayerHealth() {}
+
   public PacketSyncPlayerHealth(int h) {
     health = h;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     health = tags.getInteger("h");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("h", health);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketSyncPlayerHealth message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {

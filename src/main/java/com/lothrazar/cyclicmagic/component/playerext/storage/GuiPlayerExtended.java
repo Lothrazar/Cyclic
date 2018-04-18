@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.storage;
+
 import com.lothrazar.cyclicmagic.component.playerext.ButtonToggleHotbar;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -31,17 +32,21 @@ import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtended extends InventoryEffectRenderer {
+
   //TODO: in const repo
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
   public static final ResourceLocation armor = new ResourceLocation(Const.MODID, "textures/gui/armor.png");
+
   public GuiPlayerExtended(ContainerPlayerExtended ctr) {
     super(ctr);
     this.allowUserInput = true;
   }
+
   @Override
   public void updateScreen() {
     this.updateActivePotionEffects();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -70,6 +75,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     btn = new ButtonToggleHotbar(id, x, y, w, 4 * Const.SQ);
     this.buttonList.add(btn);
   }
+
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
@@ -85,6 +91,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     }
     this.renderHoveredToolTip(mouseX, mouseY);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawDefaultBackground();//dim the background as normal

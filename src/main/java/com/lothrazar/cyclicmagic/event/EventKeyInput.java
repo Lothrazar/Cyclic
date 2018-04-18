@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -60,6 +61,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventKeyInput {
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
@@ -86,6 +88,7 @@ public class EventKeyInput {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
@@ -124,6 +127,7 @@ public class EventKeyInput {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
@@ -157,6 +161,7 @@ public class EventKeyInput {
       thePlayer.closeScreen();
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseInputEvent.Pre event) {
@@ -193,6 +198,7 @@ public class EventKeyInput {
       // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410
     }
   }
+
   @SideOnly(Side.CLIENT)
   private boolean isGuiKeyDown(KeyBinding keybinding) {
     if (keybinding == null) {

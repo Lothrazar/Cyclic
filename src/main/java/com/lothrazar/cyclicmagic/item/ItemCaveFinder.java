@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -41,12 +42,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
+
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 12;
   private static int range = 32;
+
   public ItemCaveFinder() {
     super(DURABILITY);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -87,6 +91,7 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -97,6 +102,7 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
         's', new ItemStack(Items.FLINT),
         'g', "dyeBlue");
   }
+
   @Override
   public void syncConfig(Configuration config) {
     range = config.getInt("CavefinderRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.fluid.BlockFluidExp;
 import com.lothrazar.cyclicmagic.fluid.BlockFluidMilk;
@@ -36,12 +37,14 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
 public class FluidsRegistry {
+
   public static FluidMilk fluid_milk;
   public static BlockFluidMilk block_milk;
   public static FluidExp fluid_exp;
   public static BlockFluidExp block_exp;
   public static FluidPoison fluid_poison;
   public static BlockFluidPoison block_poison;
+
   public static void registerPoison() {
     fluid_poison = new FluidPoison();
     FluidRegistry.registerFluid(fluid_poison);
@@ -50,6 +53,7 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_poison, "poison", null);
     FluidRegistry.addBucketForFluid(fluid_poison);
   }
+
   public static void registerMilk() {
     fluid_milk = new FluidMilk();
     FluidRegistry.registerFluid(fluid_milk);
@@ -58,6 +62,7 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_milk, "milk", null);
     FluidRegistry.addBucketForFluid(fluid_milk);
   }
+
   public static void registerExp() {
     if (fluid_exp != null) {
       return;
@@ -69,6 +74,7 @@ public class FluidsRegistry {
     BlockRegistry.registerBlock(block_exp, "xpjuice", null);
     FluidRegistry.addBucketForFluid(fluid_exp);
   }
+
   public static void addPoisonRecipe() {
     try {
       //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.beacon;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -42,32 +43,40 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+
   public BlockBeaconPowered() {
     super(Material.IRON);
   }
+
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
   }
+
   public EnumBlockRenderType getRenderType(IBlockState state) {
     return EnumBlockRenderType.MODEL;
   }
+
   public boolean isOpaqueCube(IBlockState state) {
     return false;
   }
+
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBeaconPowered();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBeaconPowered.class, new TileEntityBeaconRedstoneRenderer());
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

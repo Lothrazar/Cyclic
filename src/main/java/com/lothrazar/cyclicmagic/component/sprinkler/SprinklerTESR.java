@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.sprinkler;
+
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.base.BaseTESR;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -35,9 +36,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.world.World;
 
 public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
+
   public SprinklerTESR(Block block) {
     super(block);
   }
+
   @Override
   public void render(TileSprinkler te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     GlStateManager.pushAttrib();
@@ -49,6 +52,7 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
+
   protected void renderAnimation(TileEntityBaseMachineInvo te) {
     GlStateManager.pushMatrix();
     if (te.isRunning()) {

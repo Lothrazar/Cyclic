@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fisher;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+
   public BlockFishing() {
     super(Material.ROCK);
     this.setHardness(3F);
@@ -54,10 +56,12 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_FISHER);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityFishing();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
@@ -65,6 +69,7 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFishing.class, new FishingTESR(0));
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this),

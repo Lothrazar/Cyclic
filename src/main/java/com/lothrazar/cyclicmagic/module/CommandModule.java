@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.command.CommandEnderChest;
@@ -44,9 +45,11 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class CommandModule extends BaseModule implements IHasConfig {
+
   private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
   private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
   private static String category;
+
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
     if (configToggle.get(CommandNbt.name)) {
@@ -89,6 +92,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
       event.registerServerCommand(new CommandWorldHome(commandNeedsOp.get(CommandWorldHome.name)));
     }
   }
+
   private void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp, String comment) {
     Property prop = config.get(category, name, true, comment);
     prop.setRequiresMcRestart(true);
@@ -97,6 +101,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
     prop.setRequiresMcRestart(true);
     commandNeedsOp.put(name, prop.getBoolean());
   }
+
   @Override
   public void syncConfig(Configuration config) {
     category = Const.ConfigCategory.commands;

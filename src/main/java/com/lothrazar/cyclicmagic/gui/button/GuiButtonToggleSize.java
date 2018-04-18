@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui.button;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
@@ -32,12 +33,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonToggleSize extends GuiButtonTooltip {
+
   private BlockPos tilePos;
+
   public GuiButtonToggleSize(int buttonId, int x, int y, BlockPos p) {
     super(buttonId, x, y, 44, 20, "");
     this.tilePos = p;
     this.setTooltip("button.size.tooltip");
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {

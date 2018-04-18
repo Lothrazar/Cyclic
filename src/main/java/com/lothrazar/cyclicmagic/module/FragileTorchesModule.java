@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -35,8 +36,10 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FragileTorchesModule extends BaseEventModule implements IHasConfig {
+
   private static final float oddsWillBreak = 0.01F;
   private boolean fragileTorches;
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (fragileTorches) {
@@ -67,6 +70,7 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -30,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 public class UtilPlantable {
+
   public static ItemStack tryPlantSeed(World world, BlockPos posForPlant, ItemStack stack) {
     BlockPos posSoil = posForPlant.down();
     if (stack != null && stack.getItem() instanceof IPlantable) {

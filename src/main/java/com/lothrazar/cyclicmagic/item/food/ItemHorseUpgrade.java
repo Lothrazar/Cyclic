@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import java.lang.reflect.Field;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -54,6 +55,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
+
   public static int HEARTS_MAX;
   public static int SPEED_MAX;
   public static int JUMP_MAX;
@@ -61,11 +63,13 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   private static final double JUMP_AMT = 0.008;
   private ItemStack recipeItem;
   private HorseUpgradeType upgradeType;
+
   public ItemHorseUpgrade(HorseUpgradeType type, ItemStack rec) {
     super();
     recipeItem = rec;
     upgradeType = type;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -75,10 +79,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     Item carrot = stack.getItem();
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
+
   public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     if (ahorse.isDead) {
       return;
@@ -209,6 +215,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       ahorse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
   }
+
   public static enum HorseUpgradeType {
     HEALTH, JUMP, SPEED, TYPE, VARIANT
   }

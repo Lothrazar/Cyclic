@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pylonexp;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiPylon extends GuiBaseContainer {
+
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
   public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
@@ -44,12 +46,14 @@ public class GuiPylon extends GuiBaseContainer {
   boolean debugLabels = false;
   private ButtonExpPylon btnCollect;
   private ButtonExpPylon btnDepositAll;
+
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -109,6 +113,7 @@ public class GuiPylon extends GuiBaseContainer {
     btnDepositAll.setTooltip("button.exp_pylon.depositall.tooltip");
     this.buttonList.add(btnDepositAll);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == btnCollect.id) {
@@ -122,6 +127,7 @@ public class GuiPylon extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), ((ButtonExpPylon) button).getValue(), TileEntityXpPylon.Fields.EXP));
     }
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -136,6 +142,7 @@ public class GuiPylon extends GuiBaseContainer {
     }
     this.drawFluidBar();
   }
+
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
@@ -157,6 +164,7 @@ public class GuiPylon extends GuiBaseContainer {
         16, hpct,
         16, h);
   }
+
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

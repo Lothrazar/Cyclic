@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandspawner;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -45,21 +46,26 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
+
   private static final int COOLDOWN = 10;
   private static int DUNGEONRADIUS = 64;
+
   public ItemProjectileDungeon() {
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
   }
+
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
     return new EntityDungeonEye(world, x, y, z);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of dungeonfinder");
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
@@ -70,6 +76,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
         's', new ItemStack(Blocks.MOSSY_COBBLESTONE),
         'p', "enderpearl");
   }
+
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
@@ -88,6 +95,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
   }
+
   @Override
   public SoundEvent getSound() {
     return SoundRegistry.dungeonfinder;

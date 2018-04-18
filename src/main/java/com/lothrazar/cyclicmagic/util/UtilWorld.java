@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,21 +54,26 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 public class UtilWorld {
+
   // 1 chunk is 16x16 blocks
   public static int blockToChunk(int blockVal) {
     return blockVal >> 4; // ">>4" == "/16"
   }
+
   public static int chunkToBlock(int chunkVal) {
     return chunkVal << 4; // "<<4" == "*16"
   }
+
   public static boolean isNight(World world) {
     long t = world.getWorldTime();
     int timeOfDay = (int) t % 24000;
     return timeOfDay > 12000;
   }
+
   public static BlockPos convertIposToBlockpos(IPosition here) {
     return new BlockPos(here.getX(), here.getY(), here.getZ());
   }
+
   public static BlockPos getFirstBlockAbove(World world, BlockPos pos) {
     //similar to vanilla fn getTopSolidOrLiquidBlock
     BlockPos posCurrent = null;
@@ -81,6 +87,7 @@ public class UtilWorld {
     }
     return null;
   }
+
   public static List<BlockPos> getPositionsInRange(BlockPos center, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
     List<BlockPos> found = new ArrayList<BlockPos>();
     for (int x = xMin; x <= xMax; x++)
@@ -90,6 +97,7 @@ public class UtilWorld {
         }
     return found;
   }
+
   public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
     int x = here.getX();
     int z = here.getZ();
@@ -102,6 +110,7 @@ public class UtilWorld {
     int posZ = MathHelper.getInt(rand, zMin, zMax);
     return new BlockPos(posX, here.getY(), posZ);
   }
+
   public static boolean tryTpPlayerToBed(World world, EntityPlayer player) {
     if (world.isRemote) {
       return false;
@@ -122,6 +131,7 @@ public class UtilWorld {
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
     return true;
   }
+
   public static Map<IInventory, BlockPos> findTileEntityInventories(ICommandSender player, int RADIUS) {
     // function imported
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
@@ -145,6 +155,7 @@ public class UtilWorld {
     }
     return found;
   }
+
   public static int searchTileInventory(String search, IInventory inventory) {
     int foundQty;
     foundQty = 0;
@@ -162,6 +173,7 @@ public class UtilWorld {
     } // end loop on current tile entity
     return foundQty;
   }
+
   public static BlockPos findClosestBlock(EntityPlayer player, Block blockHunt, int RADIUS) {
     BlockPos found = null;
     int xMin = (int) player.posX - RADIUS;
@@ -194,6 +206,7 @@ public class UtilWorld {
     }
     return found;
   }
+
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = (int) start.getX() - RADIUS;
@@ -215,19 +228,23 @@ public class UtilWorld {
     }
     return found;
   }
+
   public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {
     int xDistance = Math.abs(start.getX() - end.getX());
     int zDistance = Math.abs(start.getZ() - end.getZ());
     // ye olde pythagoras
     return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
   }
+
   public static double distanceBetweenVertical(BlockPos start, BlockPos end) {
     return Math.abs(start.getY() - end.getY());
   }
+
   public static boolean doBlockStatesMatch(IBlockState replaced, IBlockState newToPlace) {
     return replaced.getBlock() == newToPlace.getBlock() &&
         replaced.getBlock().getMetaFromState(replaced) == newToPlace.getBlock().getMetaFromState(newToPlace);
   }
+
   public static boolean isAirOrWater(World world, BlockPos pos) {
     ArrayList<Block> waterBoth = new ArrayList<Block>();
     waterBoth.add(Blocks.FLOWING_WATER);
@@ -238,6 +255,7 @@ public class UtilWorld {
     return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
+
   public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
     BlockPos posToPlaceAt = new BlockPos(posIn);
     BlockPos posLoop = new BlockPos(posIn);
@@ -252,6 +270,7 @@ public class UtilWorld {
     }
     return posToPlaceAt;
   }
+
   public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
     BlockPos posToPlaceAt = new BlockPos(posIn);
     BlockPos posLoop = new BlockPos(posIn);
@@ -267,6 +286,7 @@ public class UtilWorld {
     }
     return posToPlaceAt;
   }
+
   /**
    * Everything in this inner class is From a mod that has MIT license owned by romelo333 and maintained by McJty
    * 
@@ -283,6 +303,7 @@ public class UtilWorld {
    * @param b
    */
   public static class OutlineRenderer {
+
     public static void renderOutlines(RenderWorldLastEvent evt, EntityPlayerSP p, Set<BlockPos> coordinates, int r, int g, int b) {
       double doubleX = p.lastTickPosX + (p.posX - p.lastTickPosX) * evt.getPartialTicks();
       double doubleY = p.lastTickPosY + (p.posY - p.lastTickPosY) * evt.getPartialTicks();
@@ -298,6 +319,7 @@ public class UtilWorld {
       GlStateManager.popMatrix();
       GlStateManager.popAttrib();
     }
+
     private static void renderOutlines(Set<BlockPos> coordinates, int r, int g, int b, int thickness) {
       Tessellator tessellator = Tessellator.getInstance();
       //    net.minecraft.client.renderer.VertexBuffer
@@ -313,6 +335,7 @@ public class UtilWorld {
       }
       tessellator.draw();
     }
+
     public static void renderHighLightedBlocksOutline(BufferBuilder buffer, float mx, float my, float mz, float r, float g, float b, float a) {
       buffer.pos(mx, my, mz).color(r, g, b, a).endVertex();
       buffer.pos(mx + 1, my, mz).color(r, g, b, a).endVertex();
@@ -340,6 +363,7 @@ public class UtilWorld {
       buffer.pos(mx, my + 1, mz + 1).color(r, g, b, a).endVertex();
     }
   }
+
   /**
    * Functions from this inner class are not authored by me (Sam Bassett aka Lothrazar) they are from BuildersGuides by
    * 
@@ -355,13 +379,16 @@ public class UtilWorld {
    */
   @SuppressWarnings("serial")
   public static class RenderShadow {
+
     public static void renderBlockPos(BlockPos p, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
       UtilWorld.RenderShadow.renderBlockList(new ArrayList<BlockPos>() {
+
         {
           add(p);
         }
       }, center, relX, relY, relZ, red, green, blue);
     }
+
     public static void renderBlockList(List<BlockPos> blockPosList, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
       GlStateManager.pushAttrib();
       GlStateManager.pushMatrix();
@@ -392,6 +419,7 @@ public class UtilWorld {
       GlStateManager.popMatrix();
       GlStateManager.popAttrib();
     }
+
     private static void shadedCube(float scale) {
       float size = 1.0F * scale;
       Tessellator tessellator = Tessellator.getInstance();
@@ -432,6 +460,7 @@ public class UtilWorld {
       tessellator.draw();
     }
   }
+
   public static boolean isBlockTorch(World world, BlockPos pos) {
     IBlockState blockState = world.getBlockState(pos);
     Block blockHit = blockState.getBlock();
@@ -441,6 +470,7 @@ public class UtilWorld {
         blockId.equals("tconstruct:stone_torch/0") ||
         blockId.equals("actuallyadditions:block_tiny_torch/0"));
   }
+
   public static List<BlockPos> getMatchingInRange(World world, BlockPos pos, Block blockToMatch, int maxRange) {
     List<BlockPos> found = new ArrayList<BlockPos>();
     List<BlockPos> searchRange = UtilShape.cubeFilled(pos, maxRange, maxRange);

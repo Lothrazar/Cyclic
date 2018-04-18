@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
@@ -48,9 +49,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
+
   public ItemPasswordRemote() {
     this.setMaxStackSize(1);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -60,6 +63,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
     }
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     ItemStack stack = playerIn.getHeldItem(hand);
@@ -80,6 +84,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
         return EnumActionResult.FAIL;
     }
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack stack = playerIn.getHeldItem(hand);
@@ -92,6 +97,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
     else
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
+
   private boolean trigger(ItemStack stack, World worldIn, EntityPlayer playerIn) {
     BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
     if (blockPos == null) {
@@ -116,6 +122,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
       }
     }
   }
+
   private void setLeverPowerState(World worldIn, BlockPos blockPos, IBlockState blockState, boolean hasPowerHere) {
     IBlockState stateNew = blockState.withProperty(BlockLever.POWERED, !hasPowerHere);
     boolean success = worldIn.setBlockState(blockPos, stateNew);
@@ -129,12 +136,14 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
       flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
     }
   }
+
   private void flagUpdate(World worldIn, BlockPos blockPos, IBlockState blockState, IBlockState stateNew) {
     //    worldIn.notifyBlockUpdate(blockPos,blockState,stateNew,3);
     worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock(), true);//THIS one works only with true
     //    worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
     //    worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

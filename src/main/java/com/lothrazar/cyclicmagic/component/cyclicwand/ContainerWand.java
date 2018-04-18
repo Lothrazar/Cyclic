@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cyclicwand;
+
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -32,10 +33,12 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerWand extends ContainerBase {
+
   final InventoryWand inventory;
   final int SQ = 18;
   final int pad = 8;
   final int hotbar = 9;
+
   public ContainerWand(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryWand invoWand) {
     this.inventory = invoWand;
     int x, y = 35;
@@ -58,6 +61,7 @@ public class ContainerWand extends ContainerBase {
       this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, y));
     }
   }
+
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
@@ -68,11 +72,14 @@ public class ContainerWand extends ContainerBase {
     }
     return super.slotClick(slot, dragType, clickTypeIn, player);
   }
+
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
     return inventory.isUsableByPlayer(playerIn);
   }
+
   public static final int INV_START = InventoryWand.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
+
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
     ItemStack itemstack = ItemStack.EMPTY;

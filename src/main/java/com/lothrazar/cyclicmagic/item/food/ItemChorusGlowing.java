@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -44,17 +45,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
+
   public static final int FLY_SECONDS = 2 * 60;
+
   public ItemChorusGlowing() {
     super(4, false);
     this.setAlwaysEdible();
   }
+
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     setFlying(player);
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     props.setFlyingTimer(props.getFlyingTimer() + FLY_SECONDS * Const.TICKS_PER_SEC);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
@@ -64,11 +69,13 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
         'g', "dustGlowstone",
         'l', Items.CHORUS_FRUIT);
   }
+
   private void setFlying(EntityPlayer player) {
     player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
     player.capabilities.isFlying = true;
   }
+
   private void setNonFlying(EntityPlayer player) {
     player.capabilities.allowFlying = false;
     player.capabilities.isFlying = false;
@@ -76,6 +83,7 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
       ModCyclic.network.sendTo(new PacketSyncPlayerFlying(false), (EntityPlayerMP) player);
     }
   }
+
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) {
@@ -94,11 +102,13 @@ public class ItemChorusGlowing extends ItemFood implements IHasRecipe {
     }
     //else it is zero. so this is the same as null/undefined/ so player has never eaten or it wore off.
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

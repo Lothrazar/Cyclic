@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.uncrafter;
+
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -40,7 +41,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiBaseContainer {
+
   private TileEntityUncrafter tile;
+
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -51,6 +54,7 @@ public class GuiUncrafting extends GuiBaseContainer {
         ContainerUncrafting.SLOTY_INPUT + 2 * Const.SQ + Const.PAD,
         TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -59,6 +63,7 @@ public class GuiUncrafting extends GuiBaseContainer {
         this.guiTop + ContainerUncrafting.SLOTY_INPUT - 2, 12, 20, "?");
     this.buttonList.add(helpBtn);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
@@ -70,6 +75,7 @@ public class GuiUncrafting extends GuiBaseContainer {
           + uncrafter.getErrorString());
     }
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

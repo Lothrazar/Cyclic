@@ -22,17 +22,20 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.data;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 public class Location {
+
   public double X;
   public double Y;
   public double Z;
   public int index;
   public int dimension = 0;// : this is unused right now
   public String name;
+
   public Location(BlockPos pos) {
     X = pos.getX();
     Y = pos.getY();
@@ -41,6 +44,7 @@ public class Location {
     dimension = 0;
     name = "";
   }
+
   public Location(BlockPos pos, int dim, int idx, String pname) {
     X = pos.getX();
     Y = pos.getY();
@@ -49,6 +53,7 @@ public class Location {
     dimension = dim;
     name = pname;
   }
+
   public Location(int idx, double pX, double pY, double pZ, int d, String pname) {
     X = pX;
     Y = pY;
@@ -59,6 +64,7 @@ public class Location {
     if (name == null)
       name = "";
   }
+
   public Location(int idx, EntityPlayer p, String pname) {
     X = p.posX;
     Y = p.posY;
@@ -70,6 +76,7 @@ public class Location {
       name = "";
     }
   }
+
   public Location(String csv) {
     String[] pts = csv.split(",");
     X = Double.parseDouble(pts[0]);
@@ -81,11 +88,13 @@ public class Location {
     if (name == null)
       name = "";
   }
+
   public String toCSV() {
     if (name == null)
       name = "";
     return X + "," + Y + "," + Z + "," + dimension + "," + name;
   }
+
   public String toDisplay()// different from toCSV, since we round off the
   // numbers and format
   {
@@ -97,6 +106,7 @@ public class Location {
     // "[" + index + "] " +
     return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z) + showName;
   }
+
   public String toDisplayShort() {
     if (name == null)
       name = "";
@@ -105,9 +115,11 @@ public class Location {
       showName = "  :  " + name;
     return showName + Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z);
   }
+
   public String toDisplayNoCoords() {
     return name + " (y = " + MathHelper.floor(Y) + ")";
   }
+
   public BlockPos toBlockPos() {
     return new BlockPos(X, Y, Z);
   }

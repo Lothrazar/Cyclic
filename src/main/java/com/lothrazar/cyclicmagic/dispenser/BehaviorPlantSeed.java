@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.dispenser;
+
 import com.lothrazar.cyclicmagic.util.UtilPlantable;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.BlockDispenser;
@@ -32,6 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem {
+
   @Override
   public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
     World world = source.getWorld();

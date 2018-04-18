@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,10 +42,12 @@ import net.minecraft.item.ItemStack;
  * 
  */
 public class RecipeFileWriter {
+
   //Replace calls to GameRegistry.addShapeless/ShapedRecipe with these methods, which will dump it to a json in your dir of choice
   //Also works with OD, replace GameRegistry.addRecipe(new ShapedOreRecipe/ShapelessOreRecipe with the same calls
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
   private static final File RECIPE_DIR = new File("Q:/CODE/minecraft/eclipseWorkspace/cyclic/src/main/resources/assets/cyclicmagic/recipes");
+
   public static void addShapedRecipe(ItemStack result, Object... components) {
     if (!RECIPE_DIR.exists()) {
       RECIPE_DIR.mkdir();
@@ -96,6 +99,7 @@ public class RecipeFileWriter {
       e.printStackTrace();
     }
   }
+
   public static void addShapelessRecipe(ItemStack result, Object... components) {
     if (!RECIPE_DIR.exists()) {
       RECIPE_DIR.mkdir();
@@ -128,6 +132,7 @@ public class RecipeFileWriter {
       e.printStackTrace();
     }
   }
+
   private static Map<String, Object> serializeItem(Object thing) {
     if (thing instanceof Item) {
       return serializeItem(new ItemStack((Item) thing));

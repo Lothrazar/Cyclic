@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity.projectile;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -41,18 +42,22 @@ import net.minecraft.util.ResourceLocation;
  * @param <T>
  */
 public class RenderBall<T extends Entity> extends Render<T> {
+
   private static final int SPIN_SPEED = 6;
   private ResourceLocation resource;
   private boolean isSpinning = false;
+
   public RenderBall(RenderManager renderManager, String texture, boolean spinning) {
     this(renderManager, texture);
     isSpinning = spinning;
   }
+
   public RenderBall(RenderManager renderManager, String texture) {
     super(renderManager);
     resource = new ResourceLocation(Const.MODID, "textures/entity/projectile/" + texture + ".png");
     ModCyclic.logger.log("RenderBall init " + resource);
   }
+
   @Override
   public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
     GlStateManager.pushMatrix();
@@ -91,6 +96,7 @@ public class RenderBall<T extends Entity> extends Render<T> {
     GlStateManager.popMatrix();
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
   }
+
   @Override
   protected ResourceLocation getEntityTexture(T entity) {
     return resource;

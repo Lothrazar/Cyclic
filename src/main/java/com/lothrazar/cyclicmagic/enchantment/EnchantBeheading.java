@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,15 +53,18 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantBeheading extends EnchantBase implements IHasConfig {
+
   private Map<String, String> mapClassToSkin;
   private Map<String, String> mapResourceToSkin;
   private Map<String, NBTTagCompound> mapClassToTag;
   private int percentDrop;
+
   public EnchantBeheading() {
     super("beheading", Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
     buildDefaultHeadList();
   }
+
   private void buildDefaultHeadList() {
     mapClassToSkin = new HashMap<String, String>();
     mapResourceToSkin = new HashMap<String, String>();
@@ -109,10 +113,12 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
     mapClassToTag.put("net.minecraft.entity.passive.EntitySkeletonHorse", horseTag);
     mapClassToTag.put("net.minecraft.entity.passive.EntityZombieHorse", horseTag);
   }
+
   @Override
   public int getMaxLevel() {
     return 1;
   }
+
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
@@ -180,6 +186,7 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
       ModCyclic.logger.error("Beheading : mob not found in EntityList " + target.getName());
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     this.percentDrop = config.getInt("BeheadingPercent", Const.ConfigCategory.modpackMisc, 10, 1, 100, "Percent chance that the beheading enchant will actually drop a head.");

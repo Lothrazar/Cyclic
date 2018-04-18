@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.ArrayList;
 import java.util.Set;
 import com.google.common.collect.Sets;
@@ -129,6 +130,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemModule extends BaseModule implements IHasConfig {
+
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;
@@ -198,6 +200,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean evokerFang;
   private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
+
   @Override
   public void onPreInit() {
     if (enableCGlove) {
@@ -644,12 +647,14 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(glowing_chorus);
     }
   }
+
   @Override
   public void onPostInit() {
     for (BaseItemProjectile item : projectiles) {
       BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorProjectileThrowable(item));
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enableChaos = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

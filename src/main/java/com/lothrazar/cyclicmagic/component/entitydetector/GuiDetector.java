@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.entitydetector;
+
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDetector extends GuiBaseContainer {
+
   static final int GUI_ROWS = 2;
   private TileEntityDetector tile;
   private int leftColX;
@@ -42,11 +44,13 @@ public class GuiDetector extends GuiBaseContainer {
   private int[] yRows = new int[3];
   private ButtonTileEntityField greaterLessBtn;
   private ButtonTileEntityField entityBtn;
+
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldPreviewBtn = TileEntityDetector.Fields.RENDERPARTICLES.ordinal();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -75,9 +79,11 @@ public class GuiDetector extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
     //TODO: PREVIEW BUTTON
   }
+
   private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
     return this.addPatternButtonAt(id, x, y, isUp, f, 15, 10);
   }
+
   private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
     int val = (isUp) ? 1 : -1;
     ButtonTileEntityField btn = new ButtonTileEntityField(id,
@@ -94,9 +100,11 @@ public class GuiDetector extends GuiBaseContainer {
     this.buttonList.add(btn);
     return btn;
   }
+
   private void drawFieldAt(int x, int y, Fields f) {
     this.drawFieldAt(x, y, f.ordinal());
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

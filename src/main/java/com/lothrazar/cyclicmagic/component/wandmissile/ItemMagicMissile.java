@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.wandmissile;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -52,12 +53,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class ItemMagicMissile extends BaseTool implements IHasRecipe {
+
   private static final double RANGE = 16.0;
   private static final int durability = 500;
   private static final int COOLDOWN = 8;
+
   public ItemMagicMissile() {
     super(durability);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
@@ -89,6 +93,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -100,6 +105,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
         'r', "ingotGold",
         'b', "ingotIron");
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

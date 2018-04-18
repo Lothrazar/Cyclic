@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.dispenser;
+
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
@@ -31,10 +32,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class BehaviorProjectileThrowable extends BehaviorProjectileDispense {
+
   BaseItemProjectile throwable;
+
   public BehaviorProjectileThrowable(BaseItemProjectile item) {
     throwable = item;
   }
+
   @Override
   protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
     EntityThrowableDispensable thrown = throwable.getThrownEntity(worldIn, stackIn, position.getX(), position.getY(), position.getZ());

@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -41,6 +42,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionTypeRegistry {
+
   public static List<PotionTypeCyclic> potions = new ArrayList<PotionTypeCyclic>();
   private static PotionTypeCyclic potionTypeSlowfall;
   private static PotionTypeCyclic potionTypeBounce;
@@ -61,6 +63,7 @@ public class PotionTypeRegistry {
   private static PotionTypeCyclic potionTypeIce;
   private static final int SHORT = 1800;
   private static final int NORMAL = 3600;
+
   //  private static final int LONG = 9600;
   public static void register() {
     if (ItemPotionModule.enableSlowfall) {
@@ -145,12 +148,15 @@ public class PotionTypeRegistry {
     // ! hunger, pointless
     // ! unluck?? waste of time, skip this.
   }
+
   private static PotionTypeCyclic addPotionType(PotionEffect eff, String name, ItemStack item) {
     return new PotionTypeCyclic(name, new PotionEffect[] { eff }, item);
   }
+
   private static PotionTypeCyclic addPotionType(PotionEffect eff, String name, Item item) {
     return addPotionType(eff, name, new ItemStack(item));
   }
+
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
     PotionTypeRegistry.register();

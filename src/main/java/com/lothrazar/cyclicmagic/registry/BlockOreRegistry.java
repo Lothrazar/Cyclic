@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
+
 import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -11,10 +12,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class BlockOreRegistry {
+
   static boolean DEFAULT_MODORES_ENABLED = true;//TODO: false for release
+
   private static void addOre(BlockDimensionOre ore) {
     WorldModule.ores.add(ore);
   }
+
   private static BlockDimensionOre createOre(int dimension, String oreDict, String name, int harvestLevel) {
     String block = null, dimName = null;
     if (dimension == Const.Dimension.nether) {
@@ -46,6 +50,7 @@ public class BlockOreRegistry {
     addOre(ore);
     return ore;
   }
+
   public static void register() {
     String oreDict, name;
     final int coalHarvest = 0;

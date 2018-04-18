@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.merchant;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -39,11 +40,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
+
   public static final int radius = 5;
+
   public ItemMerchantAlmanac() {
     super();
     this.setMaxStackSize(1);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     BlockPos p = player.getPosition();
@@ -52,6 +56,7 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",

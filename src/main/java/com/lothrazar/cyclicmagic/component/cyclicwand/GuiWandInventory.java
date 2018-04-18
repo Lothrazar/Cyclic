@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cyclicwand;
+
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
@@ -34,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiBaseContainer {
+
   private final InventoryWand inventory;
   private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png"); // 176x156
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
@@ -42,12 +44,14 @@ public class GuiWandInventory extends GuiBaseContainer {
   final int padding = 4;
   ContainerWand container;
   private EntityPlayer player;
+
   public GuiWandInventory(ContainerWand containerItem, ItemStack wand) {
     super(containerItem);
     this.inventory = containerItem.inventory;
     this.container = containerItem;
     this.player = inventory.getPlayer();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -64,6 +68,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     }
     this.buttonList.add(b);
   }
+
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
@@ -82,17 +87,20 @@ public class GuiWandInventory extends GuiBaseContainer {
     }
     GlStateManager.popMatrix();
   }
+
   @Override
   public void onGuiClosed() {
     inventory.closeInventory(inventory.getPlayer());
     super.onGuiClosed();
   }
+
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
     this.drawDefaultBackground();//dim the background as normal
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(getBackground());
     this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
   }
+
   public ResourceLocation getBackground() {
     return BACKGROUND;
   }

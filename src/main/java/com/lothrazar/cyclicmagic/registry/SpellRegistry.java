@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +36,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class SpellRegistry {
+
   //  public static boolean renderOnLeft;
   private static Map<Integer, ISpell> hashbook;
   public static boolean doParticles;
+
   public static class Spells {
+
     private static SpellInventory inventory;
     private static SpellRangeBuild reachdown;
     private static SpellRangeBuild reachup;
@@ -46,12 +50,11 @@ public class SpellRegistry {
     private static SpellRangeBuild reachleft;
     private static SpellRangeBuild reachright;
   }
+
   public static void register(ItemCyclicWand wand) {
     hashbook = new HashMap<Integer, ISpell>();
-    /*
-     * SPELL REG 0 Inventory SPELL REG 1 Rotation SPELL REG 2 Push Block SPELL REG 3 Pull Block SPELL REG 4 Build Up SPELL REG 5 Place Block SPELL REG 6 Build Down SPELL REG 7 Build Left SPELL REG 8
-     * Build Right
-     */
+    /* SPELL REG 0 Inventory SPELL REG 1 Rotation SPELL REG 2 Push Block SPELL REG 3 Pull Block SPELL REG 4 Build Up SPELL REG 5 Place Block SPELL REG 6 Build Down SPELL REG 7 Build Left SPELL REG 8
+     * Build Right */
     Spells.inventory = new SpellInventory(0, "inventory");
     registerSpell(Spells.inventory);
     Spells.reachup = new SpellRangeBuild(4, "reachup", SpellRangeBuild.PlaceType.UP);
@@ -73,19 +76,23 @@ public class SpellRegistry {
     spellbookBuild.add(Spells.reachright);
     wand.setSpells(spellbookBuild);
   }
+
   private static void registerSpell(ISpell spell) {
     hashbook.put(spell.getID(), spell);
   }
+
   public static boolean spellsEnabled(EntityPlayer player) {
     // current requirement is only a wand
     return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
   }
+
   public static ISpell getSpellFromID(int id) {
     if (hashbook.containsKey(id)) {
       return hashbook.get(id);
     }
     return null;
   }
+
   public static List<ISpell> getSpellbook(ItemStack wand) {
     // extra check https://github.com/PrinceOfAmber/Cyclic/issues/593
     if (wand.getItem() instanceof ItemCyclicWand == false) {
@@ -93,6 +100,7 @@ public class SpellRegistry {
     }
     return ((ItemCyclicWand) wand.getItem()).getSpells();
   }
+
   public static ISpell next(ItemStack wand, ISpell spell) {
     List<ISpell> book = getSpellbook(wand);
     int indexCurrent = book.indexOf(spell);
@@ -102,6 +110,7 @@ public class SpellRegistry {
     }
     return book.get(indexNext);
   }
+
   public static ISpell prev(ItemStack wand, ISpell spell) {
     List<ISpell> book = getSpellbook(wand);
     int indexCurrent = book.indexOf(spell);

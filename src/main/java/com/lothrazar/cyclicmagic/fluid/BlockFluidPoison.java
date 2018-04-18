@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.fluid;
+
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.base.BlockFluidBase;
 import com.lothrazar.cyclicmagic.data.Const;
@@ -47,12 +48,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFluidPoison extends BlockFluidBase {
+
   public static FluidStack stack;
+
   public BlockFluidPoison() {
     super(FluidsRegistry.fluid_poison, Material.WATER);
     FluidsRegistry.fluid_poison.setBlock(this);
     stack = new FluidStack(FluidsRegistry.fluid_poison, Fluid.BUCKET_VOLUME);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
@@ -62,12 +66,14 @@ public class BlockFluidPoison extends BlockFluidBase {
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
     ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+
       @Override
       protected ModelResourceLocation getModelResourceLocation(IBlockState bs) {
         return modelResourceLocation;
       }
     });
   }
+
   @Override
   @Nonnull
   public Vec3d modifyAcceleration(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull Entity entity, @Nonnull Vec3d vec) {

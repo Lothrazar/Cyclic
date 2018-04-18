@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fan;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -38,6 +39,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
+
   private static final int MIN_RANGE = 1;
   private static final int TIMER_FULL = 30;
   public static final int MAX_SPEED = 10;
@@ -45,22 +47,27 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
   private static final String NBT_RANGE = "range";
+
   public static enum Fields {
     TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE, SPEED;
   }
+
   private int timer;
   private int needsRedstone = 1;
   private int pushIfZero = 0;//else pull. 0 as default
   private int showParticles = 0;// 0 as default
   private int range = 16;
+
   public TileEntityFan() {
     super(0);
     this.speed = 5;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -79,10 +86,12 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     pushEntities();
   }
+
   public List<BlockPos> getShape() {
     //UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
   }
+
   private int pushEntities() {
     List<BlockPos> shape = getShape();
     if (shape.size() == 0) {
@@ -136,15 +145,18 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
     return entitiesFound.size();
   }
+
   private float getSpeedCalc() {
     return ((float) this.speed) / 15F;
   }
+
   private void doParticles() {
     List<BlockPos> shape = getShape();
     for (BlockPos pos : shape) {
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos, 1);
     }
   }
+
   private int getCurrentRange() {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
@@ -156,19 +168,23 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     return getRange();
   }
+
   public int getRange() {
     return this.range;
   }
+
   private void setRange(int value) {
     this.range = Math.min(value, MAX_RANGE);
     if (range < MIN_RANGE) {
       range = MIN_RANGE;
     }
   }
+
   private boolean canBlowThrough(BlockPos tester) {
     //passes through air, and anything NOT a full block
     return this.getWorld().isAirBlock(tester) || !this.getWorld().getBlockState(tester).isFullBlock();
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
@@ -178,6 +194,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     tags.setInteger(NBT_RANGE, this.range);
     return super.writeToNBT(tags);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
@@ -187,26 +204,32 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     this.pushIfZero = tags.getInteger(NBT_PUSH);
     this.range = tags.getInteger(NBT_RANGE);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
     this.setField(Fields.REDSTONE.ordinal(), val % 2);
   }
+
   private void setShowParticles(int value) {
     this.showParticles = value % 2;
   }
+
   private void setPushPull(int value) {
     this.pushIfZero = value % 2;
     this.markDirty();
     this.world.markBlockRangeForRenderUpdate(pos, pos);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
+
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -227,6 +250,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
@@ -252,6 +276,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       }
     }
   }
+
   @Override
   public void setSpeed(int value) {
     if (value < 1) {
@@ -259,10 +284,12 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     speed = Math.min(value, MAX_SPEED);
   }
+
   @Override
   public void togglePreview() {
     this.showParticles = (this.showParticles + 1) % 2;
   }
+
   @Override
   public boolean isPreviewVisible() {
     return this.showParticles == 1;

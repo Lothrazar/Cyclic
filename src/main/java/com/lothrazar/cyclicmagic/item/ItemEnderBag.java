@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -35,9 +36,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemEnderBag extends BaseItem implements IHasRecipe {
+
   public ItemEnderBag() {
     this.setMaxStackSize(1);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     player.displayGUIChest(player.getInventoryEnderChest());
@@ -47,6 +50,7 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
     return super.onItemRightClick(world, player, hand);///return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

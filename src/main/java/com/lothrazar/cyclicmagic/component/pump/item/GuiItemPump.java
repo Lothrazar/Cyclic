@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.pump.item;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -32,13 +33,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemPump extends GuiBaseContainer {
+
   TileEntityItemPump te;
   private ButtonTileEntityField btn;
+
   public GuiItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump tileEntity) {
     super(new ContainerItemPump(inventoryPlayer, tileEntity), tileEntity);
     te = tileEntity;
     this.fieldRedstoneBtn = TileEntityItemPump.Fields.REDSTONE.ordinal();
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -51,6 +55,7 @@ public class GuiItemPump extends GuiBaseContainer {
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -58,6 +63,7 @@ public class GuiItemPump extends GuiBaseContainer {
     btn.displayString = UtilChat.lang("button.itemfilter.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal()));
     btn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal())));
   }
+
   @Override
   public void initGui() {
     super.initGui();

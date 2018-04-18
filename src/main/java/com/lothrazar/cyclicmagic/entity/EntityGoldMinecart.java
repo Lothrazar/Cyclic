@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
+
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,14 +36,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityGoldMinecart extends EntityMinecart {
+
   private static final double DRAG_RIDDEN = 0.95D;//vanilla reduces this 0.75
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
+
   public EntityGoldMinecart(World worldIn) {
     super(worldIn);
   }
+
   public EntityGoldMinecart(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+
   /**
    * Get's the maximum speed for a minecart vanilla is 0.4D default
    */
@@ -50,6 +55,7 @@ public class EntityGoldMinecart extends EntityMinecart {
   protected double getMaximumSpeed() {
     return super.getMaximumSpeed() + 0.1D;
   }
+
   @Override
   protected double getMaxSpeed() {
     return this.getMaximumSpeed();
@@ -57,6 +63,7 @@ public class EntityGoldMinecart extends EntityMinecart {
     //      float railMaxSpeed = ((BlockRailBase)state.getBlock()).getRailMaxSpeed(world, this, pos);
     //      return Math.min(railMaxSpeed, getCurrentCartSpeedCapOnRail());
   }
+
   /**
    * 
    * Returns the carts max speed when traveling on rails. Carts going faster than 1.1 cause issues with chunk loading. Carts cant traverse slopes or corners at greater than 0.5 - 0.6. This value is
@@ -68,6 +75,7 @@ public class EntityGoldMinecart extends EntityMinecart {
   public float getMaxCartSpeedOnRail() {
     return super.getMaxCartSpeedOnRail() + 0.1f;//super is 1.2
   }
+
   /**
    * Moved to allow overrides. This code handles minecart movement and speed capping when on a rail.
    */
@@ -84,6 +92,7 @@ public class EntityGoldMinecart extends EntityMinecart {
     mZ = MathHelper.clamp(mZ, -max, max);
     this.move(MoverType.SELF, mX, 0.0D, mZ);
   }
+
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();
@@ -95,10 +104,12 @@ public class EntityGoldMinecart extends EntityMinecart {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);
   }
+
   /**
    * Called every tick the minecart is on an activator rail.
    */
@@ -116,6 +127,7 @@ public class EntityGoldMinecart extends EntityMinecart {
       }
     }
   }
+
   @Override
   public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
     if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
@@ -132,6 +144,7 @@ public class EntityGoldMinecart extends EntityMinecart {
       return true;
     }
   }
+
   @Override
   public Type getType() {
     return EntityMinecart.Type.RIDEABLE;

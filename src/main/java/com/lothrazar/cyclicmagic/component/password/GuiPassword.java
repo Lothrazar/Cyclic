@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.password;
+
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPassword extends GuiBaseContainer {
+
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, "textures/gui/password.png");
   private GuiTextField txtPassword;
   private ContainerPassword ctr;
@@ -45,12 +47,14 @@ public class GuiPassword extends GuiBaseContainer {
   private ButtonPassword buttonUserPerm;
   private String namePref;
   private ButtonPassword buttonUserClaim;
+
   public GuiPassword(TileEntityPassword tileEntity) {
     super(new ContainerPassword(tileEntity), tileEntity);
     ctr = (ContainerPassword) this.inventorySlots;
     this.ySize = 79;//texture size in pixels
     namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
   }
+
   @Override
   public void initGui() {
     Keyboard.enableRepeatEvents(true);
@@ -73,10 +77,12 @@ public class GuiPassword extends GuiBaseContainer {
     this.addButton(buttonUserPerm);
     updateVisibility();
   }
+
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -110,6 +116,7 @@ public class GuiPassword extends GuiBaseContainer {
     this.buttonActiveType.displayString = UtilChat.lang(namePref + buttonActiveType.type.name().toLowerCase() + "." + ctr.tile.getType().name().toLowerCase());
     this.buttonUserPerm.displayString = UtilChat.lang(namePref + buttonUserPerm.type.name().toLowerCase() + "." + ctr.tile.getUserPerm().name().toLowerCase());
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -121,6 +128,7 @@ public class GuiPassword extends GuiBaseContainer {
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof ButtonPassword) {
@@ -128,6 +136,7 @@ public class GuiPassword extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePassword(btn.type, "", ctr.tile.getPos()));
     }
   }
+
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
   @Override
@@ -138,6 +147,7 @@ public class GuiPassword extends GuiBaseContainer {
       updateVisibility();
     }
   }
+
   private void updateVisibility() {
     boolean isMine = ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer());
     boolean visible = !ctr.tile.isClaimedBySomeone() || isMine;
@@ -149,6 +159,7 @@ public class GuiPassword extends GuiBaseContainer {
     buttonUserClaim.visible = visible;
     buttonUserPerm.visible = isMine;
   }
+
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
@@ -159,6 +170,7 @@ public class GuiPassword extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePassword(PacketType.PASSTEXT, txtPassword.getText(), ctr.tile.getPos()));
     }
   }
+
   @Override
   protected void mouseClicked(int x, int y, int btn) throws IOException {
     super.mouseClicked(x, y, btn);// x/y pos is 33/30

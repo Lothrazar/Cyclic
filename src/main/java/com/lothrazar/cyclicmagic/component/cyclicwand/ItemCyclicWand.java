@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.cyclicwand;
+
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -55,19 +56,24 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
+
   private static final String NBT_SPELLCURRENT = "spell_id";
   private List<ISpell> spellbook;
+
   public ItemCyclicWand() {
     this.setMaxStackSize(1);
     this.setFull3D();
     this.setContainerItem(this);
   }
+
   public void setSpells(List<ISpell> spells) {
     this.spellbook = spells;
   }
+
   public List<ISpell> getSpells() {
     return this.spellbook;
   }
+
   @Override
   public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
     if (!slotChanged) {
@@ -75,12 +81,14 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     }
     return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
   }
+
   @Override
   public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
     //Energy.rechargeBy(stack, Energy.START);
     Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
     super.onCreated(stack, worldIn, playerIn);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -96,11 +104,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     }
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public EnumRarity getRarity(ItemStack par1ItemStack) {
     return EnumRarity.UNCOMMON;
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos,
       EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -111,6 +121,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side, stack, hand);
     return success ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
@@ -121,11 +132,14 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     //    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
   }
+
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
   }
+
   public static class Spells {
+
     public static int getSpellIDCurrent(ItemStack stack) {
       // workaround for default spell being replace. and oncrafting not
       if (UtilNBT.getItemStackNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
@@ -138,22 +152,27 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       int c = UtilNBT.getItemStackNBT(stack).getInteger(NBT_SPELLCURRENT);
       return c;
     }
+
     public static ISpell getSpellCurrent(ItemStack stack) {
       int idCurrent = getSpellIDCurrent(stack);
       ISpell s = SpellRegistry.getSpellFromID(idCurrent);
       return s;
     }
+
     public static void setSpellCurrent(ItemStack stack, int spell_id) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(stack);
       tags.setInteger(NBT_SPELLCURRENT, spell_id);
       stack.setTagCompound(tags);
     }
   }
+
   public enum BuildType {
     FIRST, ROTATE, RANDOM;
+
     private final static String NBT = "build";
     private final static String NBT_SLOT = "buildslot";
     private final static String NBT_SIZE = "buildsize";
+
     public static String getName(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -163,6 +182,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         return "button.build." + FIRST.toString().toLowerCase();
       }
     }
+
     public static int get(ItemStack wand) {
       if (wand.isEmpty()) {
         return 0;
@@ -170,6 +190,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
@@ -185,16 +206,19 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         setNextSlot(wand);
       }
     }
+
     public static int getBuildSize(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int s = tags.getInteger(NBT_SIZE);
       return s;
     }
+
     public static void setBuildSize(ItemStack wand, int size) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       tags.setInteger(NBT_SIZE, size);
       wand.setTagCompound(tags);
     }
+
     public static int getSlot(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       if (!tags.hasKey(NBT_SLOT)) {
@@ -203,10 +227,12 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
       return tags.getInteger(NBT_SLOT);
     }
+
     public static void resetSlot(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       tags.setInteger(NBT_SLOT, 0);
     }
+
     public static void setNextSlot(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int prev = getSlot(wand);
@@ -215,6 +241,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         tags.setInteger(NBT_SLOT, next);
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
@@ -240,6 +267,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     category = Const.ConfigCategory.modpackMisc;
     BaseSpellRange.maxRange = config.getInt("Build Scepter Max Range", category, 64, 8, 128, "Cyclic Scepter: Maximum range for all spells");
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

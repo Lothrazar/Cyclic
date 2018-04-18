@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.magnetanti;
+
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -31,32 +32,39 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITickable {
+
   private static final String NBT_TIMER = "Timer";
   public final static int TIMER_FULL = 10;
   public final static int ITEM_VRADIUS = 3;
   public final static int ITEM_HRADIUS = 32;
   private final static float SPEED = 1.4F;//was 0.9
   private int timer;
+
   public TileEntityMagnetAnti() {
     this.timer = TIMER_FULL;
   }
+
   @Override
   public ITextComponent getDisplayName() {
     return null;
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     timer = tagCompound.getInteger(NBT_TIMER);
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(tagCompound);
   }
+
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
+
   @Override
   public void update() {
     boolean trigger = false;
@@ -75,6 +83,7 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
       spawnParticles();
     }
   }
+
   protected void spawnParticles() {
     if (this.getWorld().isRemote) {
       double x = this.getPos().getX() + 0.5; //center of the block;

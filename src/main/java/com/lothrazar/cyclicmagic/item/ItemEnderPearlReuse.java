@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -40,16 +41,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
+
   private static final int durability = 2000;
   private static final int cooldown = 10;
+
   public static enum OrbType {
     NORMAL, MOUNTED;
   }
+
   private OrbType orbType;
+
   public ItemEnderPearlReuse(OrbType o) {
     super(durability);
     orbType = o;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
@@ -67,6 +73,7 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
     super.onUse(itemStackIn, playerIn, worldIn, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (orbType) {
@@ -91,6 +98,7 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
     }
     return null;
   }
+
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;

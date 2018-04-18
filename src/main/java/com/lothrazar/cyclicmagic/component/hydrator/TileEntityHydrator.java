@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.hydrator;
+
 import java.util.Arrays;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -49,16 +50,20 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   private static final int SLOT_INFLUID = 8;
   public final static int TIMER_FULL = 40;
+
   public static enum Fields {
     REDSTONE, TIMER, FLUID, RECIPELOCKED;
   }
+
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
   private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
     timer = TIMER_FULL;
@@ -67,15 +72,19 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
   }
+
   private int needsRedstone = 1;
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public int getFieldCount() {
     return getFieldOrdinals().length;
   }
+
   @Override
   public void update() {
     tryFillTankFromItems();
@@ -93,6 +102,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+
   /**
    * try to match a shaped or shapeless recipe
    * 
@@ -120,6 +130,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     return null;
   }
+
   public boolean tryProcessRecipe() {
     RecipeHydrate rec = findMatchingRecipe();
     if (rec != null && this.getCurrentFluid() >= rec.getFluidCost()) {
@@ -131,6 +142,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     return false;
   }
+
   public void tryFillTankFromItems() {
     ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
     FluidStack f = FluidUtil.getFluidContained(maybeBucket);
@@ -145,6 +157,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
+
   public void sendOutputItem(ItemStack itemstack) {
     for (int i = 3 + 1; i < 8; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
@@ -155,6 +168,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.up(), itemstack);
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
@@ -162,6 +176,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     compound.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(compound);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -169,6 +184,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.recipeIsLocked = compound.getInteger("rlock");
     tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -183,6 +199,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -200,6 +217,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       break;
     }
   }
+
   private int getCurrentFluid() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -208,6 +226,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
     return (fluid == null) ? 0 : fluid.amount;
   }
+
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -215,6 +234,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     return fluidHandler.getTankProperties()[0].getContents();
   }
+
   private void setCurrentFluid(int amt) {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -228,6 +248,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
+
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
@@ -236,23 +257,28 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
+
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
+
   public float getFillRatio() {
     return tank.getFluidAmount() / tank.getCapacity();
   }
+
   /**
    * For the crafting inventory, since its never in GUI and is just used for auto processing
    * 
    * @author Sam
    */
   public static class ContainerDummy extends Container {
+
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
       return false;
     }
   }
+
   /******************************
    * fluid properties here
    ******************************/
@@ -260,6 +286,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
   }
+
   @Override
   public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -268,11 +295,13 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
     return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
   }
+
   @Override
   public int fill(FluidStack resource, boolean doFill) {
     int result = tank.fill(resource, doFill);
@@ -280,6 +309,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result);
     return result;
   }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     FluidStack result = tank.drain(resource, doDrain);
@@ -287,6 +317,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.FLUID.ordinal(), result.amount);
     return result;
   }
+
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);

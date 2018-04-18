@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.fan;
+
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFan extends GuiBaseContainer {
+
   private TileEntityFan tile;
   boolean debugLabels = false;
   //private ButtonIncrementField btnHeightDown;
@@ -41,12 +43,14 @@ public class GuiFan extends GuiBaseContainer {
   private int yHeightTxtbox = 38;
   //  private ButtonFan btnTogglePrt;
   private ButtonTileEntityField btnTogglePush;
+
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityFan.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityFan.Fields.PARTICLES.ordinal();
   }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -119,6 +123,7 @@ public class GuiFan extends GuiBaseContainer {
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
   }
+
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -128,6 +133,7 @@ public class GuiFan extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFan.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerFan.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

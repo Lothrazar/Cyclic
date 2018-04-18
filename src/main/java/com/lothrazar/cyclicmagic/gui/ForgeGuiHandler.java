@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
+
 import com.lothrazar.cyclicmagic.component.anvil.ContainerAnvilAuto;
 import com.lothrazar.cyclicmagic.component.anvil.GuiAnvilAuto;
 import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
@@ -151,6 +152,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class ForgeGuiHandler implements IGuiHandler {
+
   public static final int VANILLA_SIGN = 100;
   public static final int GUI_INDEX_UNCRAFTING = 0;
   public static final int GUI_INDEX_WAND = 1;
@@ -190,6 +192,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DROPPER = 35;
   public static final int GUI_INDEX_FLUIDPUMP = 36;
   public static final int GUI_INDEX_ENERGYPUMP = 37;
+
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -387,6 +390,7 @@ public class ForgeGuiHandler implements IGuiHandler {
     }
     return null;
   }
+
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);

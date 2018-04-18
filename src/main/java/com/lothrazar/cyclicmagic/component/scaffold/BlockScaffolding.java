@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.scaffold;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBase;
@@ -51,11 +52,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 public class BlockScaffolding extends BlockBase implements IHasRecipe {
+
   private static final double CLIMB_SPEED = 0.31D;//climbing glove is 0.288D
   private static final double OFFSET = 0.0125D;//shearing & cactus are  0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0, OFFSET, 1 - OFFSET, 1, 1 - OFFSET);//required to make entity collied happen for ladder climbing
   protected boolean dropBlock = true;//does it drop item on non-player break
   private boolean doesAutobreak = true;
+
   public BlockScaffolding(boolean autoBreak) {
     super(Material.GLASS);
     doesAutobreak = autoBreak;
@@ -65,37 +68,45 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     SoundEvent zero = SoundRegistry.block_scaffolding;
     this.setSoundType(new SoundType(0.1F, 1.0F, zero, zero, zero, zero, zero));
   }
+
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;//required so that when climbing inside it stays invisible
   }
+
   @Override
   public boolean isOpaqueCube(IBlockState state) {
     return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.CUTOUT;
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return AABB;
   }
+
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
     if (doesAutobreak && worldObj.rand.nextDouble() < 0.5) {
       worldObj.destroyBlock(pos, dropBlock);
     }
   }
+
   @Override
   public int tickRate(World worldIn) {
     return 200;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', "stickWood");
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!(entityIn instanceof EntityLivingBase)) {

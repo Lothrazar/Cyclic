@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.generator;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
@@ -39,6 +40,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implements ITickable {
+
   public final static int TIMER_FULL = 200;
   public final static int SLOT_INPUT = 0;
   //FOR REFERENCERF tools coal gen is 64 per tick
@@ -49,16 +51,20 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   private static final int CAPACITY = PER_TICK * 100;
   //output slower than we generate
   private static final int TRANSFER_ENERGY_PER_TICK = PER_TICK / 2;
+
   public static enum Fields {
     TIMER;
   }
+
   private EnergyStore energy;
+
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForInsert(SLOT_INPUT);
     energy = new EnergyStore(CAPACITY);
     timer = 0;
   }
+
   @Override
   public void update() {
     if (isValid() == false) {
@@ -85,6 +91,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
       }
     }
   }
+
   private void tryOutputPower() {
     // TODO share code in base class somehow? with CableBase maybe?
     for (EnumFacing f : EnumFacing.values()) {
@@ -115,21 +122,26 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
       }
     }
   }
+
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return isValidFuel(stack);
   }
+
   private boolean isValidFuel(ItemStack peat) {
     return peat.getItem().equals(Item.getByNameOrId(Const.MODRES + "peat_fuel"));
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
+
   @Override
   public int getFieldCount() {
     return getFieldOrdinals().length;
   }
+
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -138,6 +150,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     }
     return -1;
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -145,6 +158,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
         timer = value;
     }
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
@@ -152,6 +166,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
       CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
     }
   }
+
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (energy != null) {
@@ -159,6 +174,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     }
     return super.writeToNBT(compound);
   }
+
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {
@@ -166,6 +182,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     }
     return super.hasCapability(capability, facing);
   }
+
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {

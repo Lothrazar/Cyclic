@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -46,13 +47,16 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemFangs extends BaseTool implements IHasRecipe {
+
   private static final String NBT_FANG_FROMPLAYER = "cyclicfang";
   private static final int COOLDOWN = 10;//ticks not seconds
   private static final int DURABILITY = 666;
   private static final int MAX_RANGE = 16;
+
   public ItemFangs() {
     super(DURABILITY);
   }
+
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     if (player.getCooldownTracker().hasCooldown(this)) {
@@ -62,6 +66,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return true;
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (player.getCooldownTracker().hasCooldown(this)) {
@@ -71,6 +76,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;
   }
+
   /**
    * Summon a ray of fangs in the direction of these coordinates away from the caster
    * 
@@ -93,6 +99,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     }
     onCastSuccess(caster);
   }
+
   /**
    * cast a single fang from the caster towards the direction of the given coordinates with delay
    * 
@@ -110,10 +117,12 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     //this number is the damage that it deals.  ( It should be a property )
     UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
   }
+
   private void onCastSuccess(EntityPlayer caster) {
     UtilSound.playSound(caster, SoundEvents.EVOCATION_ILLAGER_PREPARE_ATTACK);
     caster.getCooldownTracker().setCooldown(this, COOLDOWN);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
@@ -126,6 +135,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
         'p', Blocks.ICE, //ore dict ice doesnt exist
         'd', "gemEmerald");
   }
+
   @SubscribeEvent
   public void onAttack(LivingHurtEvent event) {
     //true source is player that was holding the fang item

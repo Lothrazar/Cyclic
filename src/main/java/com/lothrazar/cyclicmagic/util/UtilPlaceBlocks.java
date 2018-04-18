@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
+
 import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -44,21 +45,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
+
   public static boolean placeStateDestroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
     if (world.destroyBlock(placePos, dropBlock)) {
       return placeStateSafe(world, player, placePos, placeState);
     }
     return false;
   }
-  /*
-   * TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143
-   */
+
+  /* TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143 */
   public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (world.setBlockToAir(placePos)) {
       return placeStateSafe(world, player, placePos, placeState);
     }
     return false;
   }
+
   /**
    * overloaded version to disable sound
    */
@@ -66,6 +68,7 @@ public class UtilPlaceBlocks {
       BlockPos placePos, IBlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
   }
+
   /**
    * This will return true only if world.setBlockState(..) returns true or if the block here is already identical
    * 
@@ -132,7 +135,9 @@ public class UtilPlaceBlocks {
     }
     return success;
   }
+
   public static ArrayList<Block> ignoreList = new ArrayList<Block>();
+
   private static void translateCSV() {
     if (ignoreList.size() == 0) {
       ignoreList.add(Blocks.END_PORTAL_FRAME);
@@ -150,6 +155,7 @@ public class UtilPlaceBlocks {
       ignoreList.add(Blocks.DOUBLE_PLANT);
     }
   }
+
   public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere) {
     IBlockState newStateToPlace = world.getBlockState(pos);
     translateCSV();
@@ -193,6 +199,7 @@ public class UtilPlaceBlocks {
     }
     return moved;
   }
+
   public static void destroyBlock(World world, BlockPos pos) {
     if (world.getTileEntity(pos) != null) {
       world.removeTileEntity(pos);
@@ -214,6 +221,7 @@ public class UtilPlaceBlocks {
     tryUpdateNeighbour(world, pos.east());
     tryUpdateNeighbour(world, pos.west());
   }
+
   public static void tryUpdateNeighbour(World world, BlockPos pos) {
     // https://github.com/PrinceOfAmber/Cyclic/issues/119
     //in case its a linked tile entity // double chest, make sure we pass updates along
@@ -223,6 +231,7 @@ public class UtilPlaceBlocks {
       tile.markDirty();
     }
   }
+
   /**
    * wrap moveBlockTo but detect the destination based on the side hit
    * 
@@ -240,6 +249,7 @@ public class UtilPlaceBlocks {
       return null;
     }
   }
+
   public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
     BlockPos posAwayPlayer = pos.offset(face.getOpposite());
     if (moveBlockTo(worldIn, player, pos, posAwayPlayer)) {
@@ -249,6 +259,7 @@ public class UtilPlaceBlocks {
       return null;
     }
   }
+
   //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public static boolean rotateBlockValidState(World worldObj, @Nullable EntityPlayer p, BlockPos pos, EnumFacing side) {

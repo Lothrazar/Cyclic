@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.magnetanti;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -45,7 +46,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
+
   protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
+
   public BlockMagnetAnti() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -53,27 +56,34 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
     this.setTickRandomly(true);
     this.setTranslucent();
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityMagnetAnti();
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BOUNDS;
   }
+
   @Nullable
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
     return NULL_AABB;
   }
+
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
+
   public boolean canSpawnInBlock() {
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
@@ -83,6 +93,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
         's', "dyeBlue",
         'b', new ItemStack(Blocks.NETHER_WART_BLOCK));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -90,6 +101,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
     s = s.replace("$r$", TileEntityMagnetAnti.ITEM_HRADIUS + "");
     tooltip.add(s);
   }
+
   /**
    * adding this stops fences from connecting
    */

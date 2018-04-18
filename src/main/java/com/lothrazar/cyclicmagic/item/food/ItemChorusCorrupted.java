@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.food;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -50,23 +51,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasConfig {
+
   //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
   public static int GHOST_SECONDS;
   public static int POTION_SECONDS;
   private static final int numFood = 2;
+
   public ItemChorusCorrupted() {
     super(numFood, false);
     this.setAlwaysEdible();
   }
+
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     setPlayerGhostMode(player, world);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 3),
@@ -74,12 +80,14 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
         'l', Items.FERMENTED_SPIDER_EYE,
         'a', Items.CHORUS_FRUIT);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 10, 1, 60, "How long you can noclip after eating corrupted chorus");
     POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
   }
+
   private void setPlayerGhostMode(EntityPlayer player, World par2World) {
     if (par2World.isRemote == false) {
       player.setGameType(GameType.SPECTATOR);
@@ -90,6 +98,7 @@ public class ItemChorusCorrupted extends ItemFood implements IHasRecipe, IHasCon
     props.setChorusStart(player.getPosition());
     props.setChorusDim(player.dimension);
   }
+
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) {
