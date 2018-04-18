@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -38,6 +39,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
 
@@ -46,6 +49,16 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
   public ItemMerchantAlmanac() {
     super();
     this.setMaxStackSize(1);
+  }
+
+  @SubscribeEvent
+  public void onEntityInteractEvent(EntityInteract event) {
+    if (event.getTarget() instanceof EntityVillager && event.getEntityPlayer().getHeldItem(event.getHand()).getItem() == this) {
+      BlockPos p = event.getTarget().getPosition();
+      event.getEntityPlayer().openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_VILLAGER, event.getWorld(),
+          p.getX(), p.getY(), p.getZ());
+      //      event.setCanceled(true);
+    }
   }
 
   @Override

@@ -227,6 +227,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     if (enableTrader) {
       ItemMerchantAlmanac tool_trade = new ItemMerchantAlmanac();
       ItemRegistry.register(tool_trade, "tool_trade");
+      ModCyclic.instance.events.register(tool_trade);
     }
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
