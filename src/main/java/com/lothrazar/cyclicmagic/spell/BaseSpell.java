@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -42,18 +42,21 @@ public abstract class BaseSpell implements ISpell {
     name = n;
     icon = new ResourceLocation(Const.MODID, "textures/spells/" + name + ".png");
   }
+  @Override
   public String getName() {
     return UtilChat.lang("spell." + name + ".name");
   }
+  @Override
   public String getUnlocalizedName() {
     return name;
   }
+  @Override
   public String getInfo() {
     return UtilChat.lang("spell." + name + ".info");
   }
   @Override
   public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
-    UtilSound.playSound(player, pos, SoundRegistry.buzzp);
+    UtilSound.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
   }
   @Override
   public int getID() {

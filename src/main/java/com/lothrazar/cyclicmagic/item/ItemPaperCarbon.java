@@ -26,13 +26,13 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.base.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -168,7 +168,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       if (consumeItem) {
         UtilPlayer.decrStackSize(entityPlayer, hand); // on paste, we consume the item
       }
-      UtilSound.playSound(entityPlayer, pos, SoundRegistry.buzzp);
+      UtilSound.playSound(entityPlayer, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return EnumActionResult.PASS;
   }

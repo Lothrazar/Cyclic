@@ -39,6 +39,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -70,7 +71,7 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
     if (isPlayerMaxHearts(player)) {
-      UtilSound.playSound(player, SoundRegistry.buzzp);
+      UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
       //      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
       return;
     }
@@ -114,6 +115,7 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
+  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
     //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )

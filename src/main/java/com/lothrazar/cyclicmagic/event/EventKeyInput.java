@@ -78,12 +78,12 @@ public class EventKeyInput {
     if (event.getDwheel() < 0) {
       ModCyclic.network.sendToServer(new PacketSpellShiftRight());
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode);
     }
     else if (event.getDwheel() > 0) {
       ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode);
     }
   }
   @SideOnly(Side.CLIENT)

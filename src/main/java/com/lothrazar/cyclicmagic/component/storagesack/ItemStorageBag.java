@@ -147,7 +147,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
               UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + ret.moved);
             }
           }
-          UtilSound.playSound(player, SoundRegistry.basey);
+          UtilSound.playSound(player, SoundRegistry.sack_holding);
         }
       }
       else { //hit something not an invenotry

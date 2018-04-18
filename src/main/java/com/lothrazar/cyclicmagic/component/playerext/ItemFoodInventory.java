@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -55,7 +56,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
     if (data.hasInventoryExtended()) {
-      UtilSound.playSound(player, SoundRegistry.buzzp);
+      UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
       return;
     }
     data.setInventoryExtended(true);

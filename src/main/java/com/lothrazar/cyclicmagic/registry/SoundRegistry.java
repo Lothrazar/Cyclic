@@ -31,26 +31,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SoundRegistry {
   public static ArrayList<SoundEvent> sounds = new ArrayList<SoundEvent>();
-  public static SoundEvent basey;
-  public static SoundEvent bip;
-  public static SoundEvent buzzp;
+  public static SoundEvent sack_holding;
   public static SoundEvent inventory_upgrade;
   public static SoundEvent enchant_launch;
-  //public static SoundEvent dcoin;
   public static SoundEvent heart_container;
-  public static SoundEvent pew;
-  public static SoundEvent pow;
   public static SoundEvent chest_sack_capture;
   public static SoundEvent dungeonfinder;
-  public static SoundEvent spikemaybe;
-  public static SoundEvent coin;
   public static SoundEvent uncraft;
-  public static SoundEvent guitar;
-  public static SoundEvent hovering;
   public static SoundEvent metal_pitch;
-  public static SoundEvent pew_long;
   public static SoundEvent liquid_evaporate;
-  //deluxe 
   public static SoundEvent block_scaffolding;
   public static SoundEvent chaos_reaper;
   public static SoundEvent fireball_explode;
@@ -67,24 +56,17 @@ public class SoundRegistry {
   public static SoundEvent step_height_up;
   public static SoundEvent tool_mode;
   public static SoundEvent warp;
-  //register
   public static void register() {
-    basey = registerSound("basey");//used by storage bag deposit
-    bip = registerSound("bip");//cyclic wand GUI rotation
-    buzzp = registerSound("buzzp");//carbon paper & invo food & heart-eat-fail
-    inventory_upgrade = registerSound("bwewe"); //invo food success
-    //  dcoin = registerSound("dcoin");//tool toggles: auto torch, piston, randomize, exchange scepters
-
-    pew = registerSound("pew");//magic net on catch (previously was base spell thrown)
-
-    dungeonfinder = registerSound("dungeonfinder");// wandspawner
-    //old sounds - keep
-    heart_container = registerSound("fill");//heart food success
+    //old sounds kept - lothrazar originals
+    sack_holding = registerSound("basey");
+    dungeonfinder = registerSound("dungeonfinder");
+    inventory_upgrade = registerSound("bwewe");
+    heart_container = registerSound("fill");
     enchant_launch = registerSound("bwoaaap");
     uncraft = registerSound("crack");
     chest_sack_capture = registerSound("thunk");
     liquid_evaporate = registerSound("pschew_fire");
-    // new sounds
+    // new sounds - Ithronyar
     block_scaffolding = registerSound("block_scaffolding");
     chaos_reaper = registerSound("chaos_reaper");//wand_hypno=chaos reaper
     fireball_explode = registerSound("fireball_explode");
@@ -97,8 +79,8 @@ public class SoundRegistry {
     spikes_off = registerSound("spikes_off");
     spikes_on = registerSound("spikes_on");
     spirit_seeker = registerSound("spirit_seeker");//wand_missile=SpiritSeeker
-    step_height_down = registerSound("step_height_down");///
-    step_height_up = registerSound("step_height_up");//
+    step_height_down = registerSound("step_height_down");
+    step_height_up = registerSound("step_height_up");
     tool_mode = registerSound("tool_mode");
     warp = registerSound("warp_echo");
   }
