@@ -35,7 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiItemPump extends GuiBaseContainer {
 
   TileEntityItemPump te;
-  private ButtonTileEntityField btn;
+  private ButtonTileEntityField filterBtn;
 
   public GuiItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump tileEntity) {
     super(new ContainerItemPump(inventoryPlayer, tileEntity), tileEntity);
@@ -60,20 +60,22 @@ public class GuiItemPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    btn.displayString = UtilChat.lang("button.itemfilter.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal()));
-    btn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal())));
+    int filterType = tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal());
+    //    filterBtn.displayString = UtilChat.lang("button.itemfilter.type" + filterType);
+    filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
+    filterBtn.setTextureIndex(11 + filterType);
   }
 
   @Override
   public void initGui() {
     super.initGui();
     int id = 2;
-    btn = new ButtonTileEntityField(
+    filterBtn = new ButtonTileEntityField(
         id++,
         this.guiLeft + 150,
         this.guiTop + Const.PAD / 2,
         tile.getPos(), TileEntityItemPump.Fields.FILTERTYPE.ordinal(), 1,
         20, 20);
-    this.addButton(btn);
+    this.addButton(filterBtn);
   }
 }
