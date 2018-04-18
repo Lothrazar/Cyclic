@@ -67,7 +67,6 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
     }
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
-
     if (player.getEntityWorld().isRemote) {
       UtilChat.addChatMessage(player, "unlocks.stepheight." + !previousOn);
     }
