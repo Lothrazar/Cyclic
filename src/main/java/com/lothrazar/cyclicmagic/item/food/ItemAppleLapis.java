@@ -40,10 +40,10 @@ public class ItemAppleLapis extends BaseItem implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         Items.APPLE,
         "blockLapis");
-    return null;
+
   }
 
   @SubscribeEvent

@@ -41,6 +41,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -63,7 +64,8 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
     boolean previousOn = data.isStepHeightOn();
     data.setStepHeightOn(!previousOn);
     if (previousOn) {
-      UtilSound.playSound(player, SoundRegistry.step_height_down);
+
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.step_height_down, SoundCategory.PLAYERS, 1.0F);
       data.setForceStepOff(true);
     }
     else {
