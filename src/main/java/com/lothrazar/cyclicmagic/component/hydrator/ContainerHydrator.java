@@ -38,8 +38,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerHydrator extends ContainerBaseMachine {
 
   static final int MID_SPACING = 133;
-  static final int SLOTX_FLUID = 70;
-  static final int SLOTY_FLUID = 39;
   static final int SLOTX_START = 8;
   public static final int SLOTY = 30;
   static final int SQ = 18;
@@ -59,9 +57,7 @@ public class ContainerHydrator extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    addSlotToContainer(new Slot(tile, slotNum,
-        SLOTX_FLUID,
-        SLOTY_FLUID));
+
     bindPlayerInventory(inventoryPlayer);
   }
 

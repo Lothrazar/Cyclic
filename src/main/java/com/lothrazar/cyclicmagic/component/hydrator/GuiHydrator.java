@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHydrator extends GuiBaseContainer {
 
-  boolean debugLabels = false;
+  boolean debugLabels = true;
   private ButtonTileEntityField btnToggle;
 
   public GuiHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator tileEntity) {
@@ -89,11 +89,7 @@ public class GuiHydrator extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_WATER);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + ContainerHydrator.SLOTX_FLUID - 1,
-        this.guiTop + ContainerHydrator.SLOTY_FLUID - 1,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+
     this.drawFluidBar();
   }
 

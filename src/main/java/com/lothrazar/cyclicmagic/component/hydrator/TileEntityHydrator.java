@@ -37,23 +37,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
 
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  private static final int SLOT_INFLUID = 8;
   public final static int TIMER_FULL = 40;
 
   public static enum Fields {
@@ -65,7 +60,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
 
   public TileEntityHydrator() {
-    super(2 * RECIPE_SIZE + 1);// in, out,  fluid transfer
+    super(2 * RECIPE_SIZE);// in, out 
     timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
@@ -87,7 +82,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public void update() {
-    tryFillTankFromItems();
     if (!isRunning()) {
       return;
     }
@@ -141,21 +135,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       return true;
     }
     return false;
-  }
-
-  public void tryFillTankFromItems() {
-    ItemStack maybeBucket = this.getStackInSlot(SLOT_INFLUID);
-    FluidStack f = FluidUtil.getFluidContained(maybeBucket);
-    IFluidHandlerItem bucketHandler = FluidUtil.getFluidHandler(maybeBucket);
-    if (f != null && bucketHandler != null && f.getFluid().equals(FluidRegistry.WATER)) {
-      //https://github.com/BluSunrize/ImmersiveEngineering/blob/fc022675bb550318cbadc879b3f28dde511e29c3/src/main/java/blusunrize/immersiveengineering/common/blocks/wooden/TileEntityWoodenBarrel.java
-      FluidActionResult r = FluidUtil.tryEmptyContainer(maybeBucket, tank, Fluid.BUCKET_VOLUME, null, true);
-      //in the case of a full bucket, it becomes empty. 
-      //also supports any other fluid holding item, simply draining that fixed amount each round
-      if (r.success) {
-        this.setInventorySlotContents(SLOT_INFLUID, r.result);
-      }
-    }
   }
 
   public void sendOutputItem(ItemStack itemstack) {
@@ -258,6 +237,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
