@@ -45,7 +45,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
 
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < 9; i++) {
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

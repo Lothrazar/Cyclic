@@ -48,7 +48,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
 
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     addSlotToContainer(new Slot(tile, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_INPUT, SLOTY_INPUT));
     int slot = 1;
     int xPrefix = 2 * Const.SQ + Const.PAD;

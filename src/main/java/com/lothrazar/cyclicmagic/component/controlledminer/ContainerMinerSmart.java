@@ -46,7 +46,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
 
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < SLOTID_EQUIP; i++) {
       addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

@@ -45,7 +45,7 @@ public class ContainerPylon extends ContainerBaseMachine {
 
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       Item filt = (i == 0) ? Items.GLASS_BOTTLE : Items.EXPERIENCE_BOTTLE;
       addSlotToContainer(new SlotItemRestricted(tile, i, SLOTX, SLOTY + i * (8 + Const.SQ), filt));

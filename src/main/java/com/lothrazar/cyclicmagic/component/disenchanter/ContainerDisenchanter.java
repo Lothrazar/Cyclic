@@ -54,34 +54,34 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
 
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
           itemFiltered = Items.BOOK;
-          x = screenSize.width() / 2;
+          x = getScreenSize().width() / 2;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_GLOWSTONE://left mid
           itemFiltered = Items.GLOWSTONE_DUST;
-          x = screenSize.width() / 4;
+          x = getScreenSize().width() / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
           itemFiltered = Items.EXPERIENCE_BOTTLE;
-          x = screenSize.width() / 2;
+          x = getScreenSize().width() / 2;
           y = ystart + 2 * spacing;
         break;
         case TileEntityDisenchanter.SLOT_REDSTONE:// right mid
           itemFiltered = Items.REDSTONE;
-          x = screenSize.width() - screenSize.width() / 4;
+          x = getScreenSize().width() - getScreenSize().width() / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_INPUT://top center
           itemFiltered = Items.ENCHANTED_BOOK;//not reallyjust the book
-          x = screenSize.width() / 2;
+          x = getScreenSize().width() / 2;
           y = ystart;
         break;
         default:

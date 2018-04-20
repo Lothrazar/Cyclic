@@ -45,7 +45,7 @@ public class ContainerBaseMachine extends ContainerBase {
   public static final int SLOTY_FUEL = Const.PAD;
   private int[] tileMap;
   protected TileEntityBaseMachineInvo tile;
-  protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
+  private Const.ScreenSize screenSize = ScreenSize.STANDARD;
   private boolean hasTile;
 
   public ContainerBaseMachine() {
@@ -56,12 +56,20 @@ public class ContainerBaseMachine extends ContainerBase {
     this.setTile(t);
   }
 
+  protected void setScreenSize(Const.ScreenSize ss) {
+    this.screenSize = ss;
+  }
+
+  public Const.ScreenSize getScreenSize() {
+    return screenSize;
+  }
+
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 9; j++) {
         addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-            screenSize.playerOffsetX() + j * Const.SQ, /// X
-            screenSize.playerOffsetY() + i * Const.SQ// Y
+            getScreenSize().playerOffsetX() + j * Const.SQ, /// X
+            getScreenSize().playerOffsetY() + i * Const.SQ// Y
         ));
       }
     }
@@ -76,7 +84,7 @@ public class ContainerBaseMachine extends ContainerBase {
 
   protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i, screenSize.playerOffsetX() + i * Const.SQ, screenSize.playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
+      addSlotToContainer(new Slot(inventoryPlayer, i, getScreenSize().playerOffsetX() + i * Const.SQ, getScreenSize().playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
     }
   }
 
@@ -151,4 +159,5 @@ public class ContainerBaseMachine extends ContainerBase {
     return player.getDistanceSq(this.tile.getPos().getX(), this.tile.getPos().getY(), this.tile.getPos().getZ()) <= 32
         && this.tile.isValid() && this.tile.getWorld().getTileEntity(this.tile.getPos()) == tile;
   }
+
 }

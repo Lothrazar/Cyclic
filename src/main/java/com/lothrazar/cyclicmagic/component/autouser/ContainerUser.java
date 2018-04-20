@@ -44,7 +44,7 @@ public class ContainerUser extends ContainerBaseMachine {
 
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < 3; i++) {//0 1 2 
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

@@ -34,15 +34,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHydrator extends GuiBaseContainer {
 
-  private TileEntityHydrator tile;
   boolean debugLabels = false;
   private ButtonTileEntityField btnToggle;
 
   public GuiHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator tileEntity) {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    // this.progressBar = new ProgressBar(this, 10, ContainerHydrator.SLOTY + 40, TileEntityHydrator.Fields.TIMER.ordinal(), TileEntityHydrator.TIMER_FULL);
   }
 
   @Override

@@ -45,7 +45,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
 
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     super(te);
-    screenSize = ScreenSize.LARGE;
+    setScreenSize(ScreenSize.LARGE);
     int slot = 0;
     //inpt on left
     int xPrefix = Const.PAD, yPrefix = SLOTY;
@@ -61,7 +61,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     }
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);
     yPrefix = SLOTY + Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

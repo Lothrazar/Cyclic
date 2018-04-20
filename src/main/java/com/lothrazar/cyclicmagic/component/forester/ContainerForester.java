@@ -42,7 +42,7 @@ public class ContainerForester extends ContainerBaseMachine {
 
   public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
     super(te);
-    this.screenSize = ScreenSize.STANDARD;
+    this.setScreenSize(ScreenSize.STANDARD);
     for (int i = 0; i < TileEntityForester.INVENTORY_SIZE - 1; i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, i,
           SLOTX_START + i % 8 * Const.SQ + Const.SQ,

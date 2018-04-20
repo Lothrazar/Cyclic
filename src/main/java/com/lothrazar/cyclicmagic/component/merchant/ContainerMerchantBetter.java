@@ -53,7 +53,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private EntityPlayer player;
 
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
-    this.screenSize = ScreenSize.LARGEWIDE;
+    this.setScreenSize(ScreenSize.LARGEWIDE);
     this.merchant = m;
     this.merchantInventory = im;
     player = playerInventory.player;

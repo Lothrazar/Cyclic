@@ -38,7 +38,7 @@ public class ContainerPeatGenerator extends ContainerBaseMachine {
   public ContainerPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
     super(te);
     addSlotToContainer(new SlotCheckTileValid(te, 0,
-        this.screenSize.width() / 2 - 8, 34));
+        this.getScreenSize().width() / 2 - 8, 34));
     bindPlayerInventory(inventoryPlayer);
   }
 

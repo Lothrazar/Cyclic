@@ -44,7 +44,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
 
   public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

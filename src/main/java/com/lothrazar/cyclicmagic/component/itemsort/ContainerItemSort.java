@@ -43,7 +43,7 @@ public class ContainerItemSort extends ContainerBaseMachine {
 
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
     super(te);
-    this.screenSize = ScreenSize.LARGE;
+    this.setScreenSize(ScreenSize.LARGE);
     int fs = TileEntityItemCableSort.FILTER_SIZE;
     int slot = 1;
     int y = SLOTY;
