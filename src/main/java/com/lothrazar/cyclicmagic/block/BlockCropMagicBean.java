@@ -36,14 +36,12 @@ import com.lothrazar.cyclicmagic.item.plant.ItemMagicBean;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -66,56 +64,30 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
 
   public BlockCropMagicBean() {
     Item[] drops = new Item[] {
-        //treasure
-        Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD,
-        Items.COAL, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
-        Items.QUARTZ, Items.LEAD, Items.NAME_TAG,
-        //mob drops
-        Items.ENDER_PEARL, Items.ENDER_EYE, Items.SLIME_BALL,
-        Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.LEATHER,
-        Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE,
-        Items.FLINT, Items.GHAST_TEAR,
-        // footstuffs
-        Items.APPLE, Items.STICK, Items.SUGAR, Items.COOKED_FISH,
-        Items.CARROT, Items.POTATO, Items.BEETROOT, Items.WHEAT, Items.MELON,
-        Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS,
-        Items.EGG,
-        //random crap
-        Items.COMPASS, Items.CLOCK, Items.CAULDRON, Items.COMPARATOR, Items.REPEATER,
-        Items.FIRE_CHARGE, Items.POISONOUS_POTATO,
-        Items.RABBIT_FOOT, Items.RABBIT_HIDE, Items.PUMPKIN_PIE,
-        Items.FERMENTED_SPIDER_EYE, Items.EXPERIENCE_BOTTLE,
-        Items.FLOWER_POT, Items.ITEM_FRAME, Items.PAINTING,
-        Items.CAKE, Items.COOKIE, Items.SPECKLED_MELON, Items.SNOWBALL,
-        Items.GLASS_BOTTLE, Items.BOOK, Items.PAPER, Items.CLAY_BALL, Items.BRICK,
-        //plants
-        Items.NETHER_WART, Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
-        Item.getItemFromBlock(Blocks.RED_MUSHROOM), Item.getItemFromBlock(Blocks.BROWN_MUSHROOM),
-        Item.getItemFromBlock(Blocks.TALLGRASS), Item.getItemFromBlock(Blocks.REEDS),
-        Item.getItemFromBlock(Blocks.DEADBUSH), Item.getItemFromBlock(Blocks.CACTUS),
-        Item.getItemFromBlock(Blocks.VINE), Item.getItemFromBlock(Blocks.WATERLILY),
-        Item.getItemFromBlock(Blocks.END_ROD), Item.getItemFromBlock(Blocks.CHORUS_PLANT)
+        //  junk
+        Items.STICK,
+        Items.WHEAT_SEEDS,
+        //plants 
+        Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
+        Item.getItemFromBlock(Blocks.TALLGRASS), //TYPES?
+        Item.getItemFromBlock(Blocks.DEADBUSH)//TYPES?
     };
-    //metadata specific blocks
-    myDrops.add(new ItemStack(Items.COAL, 1, 1));//charcoal
-    myDrops.add(new ItemStack(Blocks.PUMPKIN));
-    myDrops.add(new ItemStack(Blocks.LIT_PUMPKIN));
-    myDrops.add(new ItemStack(Blocks.REDSTONE_LAMP));
     for (Item i : drops) {
       myDrops.add(new ItemStack(i));
     }
-    for (EnumDyeColor dye : EnumDyeColor.values()) {//all 16 cols
+    EnumDyeColor[] dyeItems = new EnumDyeColor[] {
+        EnumDyeColor.GRAY, EnumDyeColor.LIGHT_BLUE, EnumDyeColor.CYAN, EnumDyeColor.RED, EnumDyeColor.ORANGE, EnumDyeColor.YELLOW,
+        EnumDyeColor.LIME, EnumDyeColor.MAGENTA, EnumDyeColor.PURPLE, EnumDyeColor.PINK, EnumDyeColor.SILVER
+        //no ink sac
+        //no lapis
+        //no cooked cactus
+        // no bonemeal
+    };
+    for (EnumDyeColor dye : dyeItems) {
       myDrops.add(new ItemStack(Items.DYE, 1, dye.getMetadata()));
-      myDrops.add(new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata()));//these ones are new
-      myDrops.add(new ItemStack(Blocks.WOOL, 1, dye.getMetadata()));
-      myDrops.add(new ItemStack(Blocks.STAINED_GLASS, 1, dye.getMetadata()));
+    }
+    for (EnumDyeColor dye : EnumDyeColor.values()) {//all 16 cols
       myDrops.add(new ItemStack(Blocks.STAINED_GLASS_PANE, 1, dye.getMetadata()));
-    }
-    for (ItemFishFood.FishType f : ItemFishFood.FishType.values()) {
-      myDrops.add(new ItemStack(Items.FISH, 1, f.getMetadata()));
-    }
-    for (BlockPlanks.EnumType b : BlockPlanks.EnumType.values()) {
-      myDrops.add(new ItemStack(Blocks.SAPLING, 1, b.getMetadata()));
     }
     for (BlockFlower.EnumFlowerType b : BlockFlower.EnumFlowerType.values()) {
       myDrops.add(new ItemStack(Blocks.RED_FLOWER, 1, b.getMeta()));
@@ -170,12 +142,11 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
       ModCyclic.logger.error(e.getMessage());
       return new ItemStack(Blocks.DIRT);
     }
-    //    return myDrops.get(rand.nextInt(myDrops.size()));
   }
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
+    return AABB[state.getValue(this.getAgeProperty()).intValue()];
   }
 
   @Override
@@ -191,19 +162,23 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   }
 
   @Override
-  public void getDrops(NonNullList<ItemStack> ret, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     // Used by regular 'block break' and also by other harvesting features
     boolean isGrown = this.isMaxAge(state);
     if (isGrown) {
       int count = quantityDropped(state, fortune, rand);
       for (int i = 0; i < count; i++) {
-        ret.add(getCropStack().copy()); //copy to make sure we return a new instance
+        drops.add(getCropStack().copy()); //copy to make sure we return a new instance
+      }
+      if (dropSeedOnHarvest) {
+        //ok full grown ones get the seed too
+        drops.add(new ItemStack(getSeed()).copy());// default config means only a seed if NOT fully
       }
     }
-    if (!isGrown || dropSeedOnHarvest) {//either its !grown, so drop seed, OR it is grown, but config says drop on full grown
-      ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    else {
+      drops.add(new ItemStack(getSeed()).copy());
+      ///else not fully grown. always drop a seed
     }
-    //    return ret;
   }
 
   @Override
@@ -225,7 +200,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks + ".magicbean";
     allowBonemeal = config.getBoolean("MagicBeanBonemeal", category, true, "Allow bonemeal on magic bean");
-    dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, true, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");
+    dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, false, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");
     ArrayList<String> deft = new ArrayList<String>();
     for (ItemStack drop : myDrops) {
       if (drop == null || drop.getItem() == null) {
