@@ -69,8 +69,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
-  public static final int INVENTORY_SIZE = 17;
-  private static final int FUEL_SLOT = INVENTORY_SIZE - 1;
+  public static final int INVENTORY_SIZE = 16;
   private static final int HEIGHT = 32;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -87,7 +86,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityForester() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(FUEL_SLOT, BlockForester.FUEL_COST);
+    this.setFuelSlot(BlockForester.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
   }
 
@@ -135,10 +134,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    if (index != FUEL_SLOT) {
+
       return isSaplingValid(stack);
-    }
-    return super.isItemValidForSlot(index, stack);
+
   }
 
   private void updatePlantSaplings() {

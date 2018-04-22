@@ -33,15 +33,12 @@ import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -75,7 +72,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected NonNullList<ItemStack> inv;
   protected int fuelDisplay = 0;
   protected int fuelCost = 0;
-  private int fuelSlot = -1;
+
   protected int speed = 1;
   protected int timer;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
@@ -87,7 +84,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     invHandler = new InvWrapperRestricted(this);
-    this.fuelSlot = -1;
+
   }
 
   protected void setSlotsForExtract(int slot) {
@@ -144,21 +141,18 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-  protected void setFuelSlot(int slot, int fcost) {
-    if (fcost > 0) {
-      this.fuelSlot = slot;
-      this.fuelCost = fcost;
-    }
+  protected void setFuelSlot(int fcost) {
+    this.fuelCost = fcost;
   }
 
   public int getFuelMax() {
-    this.initEnergyStorage();
+    //    this.initEnergyStorage();
     return this.energyStorage.getMaxEnergyStored();
   }
 
   @Override
   public int getFuelCurrent() {
-    this.initEnergyStorage();
+    //    this.initEnergyStorage();
     return this.energyStorage.getEnergyStored();
   }
 
@@ -190,34 +184,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
   }
 
-  protected void importFuel() {
-    ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-    //pull in item from fuel slot, if it has fuel burn time
-    int fuelFromStack = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-    if (fuelFromStack > 0 && this.energyStorage.emptyCapacity() >= fuelFromStack
-        && world.isRemote == false) {
-      int newEnergy = Math.min(this.getFuelMax(), this.getFuelCurrent() + fuelFromStack);
-      this.energyStorage.setEnergyStored(newEnergy);
-      if (itemstack.getItem() instanceof ItemBucket && itemstack.getCount() == 1) {
-        this.setInventorySlotContents(this.fuelSlot, new ItemStack(Items.BUCKET));
-      }
-      else {
-        itemstack.shrink(1);
-      }
-    }
-    //what if item in fuel slot is an RF battery type item? start draining it ya
-    if (itemstack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-      IEnergyStorage storage = itemstack.getCapability(CapabilityEnergy.ENERGY, null);
-      if (storage != null && storage.getEnergyStored() > 0) {
-        int canWithdraw = Math.min(EnergyStore.MAX_INPUT, storage.getEnergyStored());
-        if (canWithdraw > 0 && this.getFuelCurrent() + canWithdraw <= this.getFuelMax()) {
-          storage.extractEnergy(canWithdraw, false);
-          this.setFuelCurrent(this.getFuelCurrent() + canWithdraw);
-        }
-      }
-    }
-  }
-
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
   }
@@ -233,7 +199,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   public boolean updateFuelIsBurning() {
     if (this.fuelCost > 0) {
-      this.importFuel();
       if (this.hasEnoughFuel()) {
         this.consumeFuel();
       }
@@ -289,6 +254,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (this.fuelCost == 0) {
       return true;
     }
+    //    if (this.world.isRemote == false)
+    //      System.out.println("?" + this.getFuelCurrent());
     return this.getFuelCurrent() >= this.getFuelCost();
   }
 
@@ -618,9 +585,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    */
   protected boolean isInventoryFull() {
     for (int i = 0; i < this.inv.size(); i++) {
-      if (i == this.fuelSlot) {
-        continue;
-      }
+
       //if its empty or it is below max count, then it has room -> not full
       if (this.inv.get(i).isEmpty()
           || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()) {
@@ -640,9 +605,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    */
   protected boolean isInventoryEmpty() {
     for (int i = 0; i < this.inv.size(); i++) {
-      if (i == this.fuelSlot) {
-        continue;
-      }
+
       // something is non-empty: false right away
       if (this.inv.get(i).isEmpty() == false) {
         return false;

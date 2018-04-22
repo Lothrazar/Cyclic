@@ -55,7 +55,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -107,7 +107,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     }
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 1, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 
   @SideOnly(Side.CLIENT)

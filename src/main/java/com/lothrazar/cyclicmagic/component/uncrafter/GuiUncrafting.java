@@ -49,7 +49,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
     this.progressBar = new ProgressBar(this, 10,
         ContainerUncrafting.SLOTY_INPUT + 2 * Const.SQ + Const.PAD,
         TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
@@ -91,7 +91,6 @@ public class GuiUncrafting extends GuiBaseContainer {
             this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1,
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
-    }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 }

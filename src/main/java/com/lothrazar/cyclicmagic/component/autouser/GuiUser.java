@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -51,7 +50,7 @@ public class GuiUser extends GuiBaseContainer {
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -115,7 +114,6 @@ public class GuiUser extends GuiBaseContainer {
           this.guiTop + ContainerUser.SLOTY - 1 - Const.SQ, u, v,
           Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 
   @SideOnly(Side.CLIENT)

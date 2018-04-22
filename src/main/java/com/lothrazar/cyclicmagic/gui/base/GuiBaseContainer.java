@@ -82,7 +82,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     this.ySize = screenSize.height();
   }
 
-  protected void setFieldFuel() {
+  protected void setUsesEnergy() {
     this.usesEnergy = true;
   }
 
@@ -369,15 +369,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
           (int) (ProgressBar.WIDTH * percent),
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
-  }
-
-  public void tryDrawFuelSlot(int x, int y) {
-    if (tile == null || tile.getFuelCost() == 0) {
-      return;
-    }
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x, this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 
   @Override

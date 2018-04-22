@@ -40,7 +40,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -56,7 +56,6 @@ public class GuiEnchanter extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerEnchanter.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
     this.drawFluidBar();
   }
 

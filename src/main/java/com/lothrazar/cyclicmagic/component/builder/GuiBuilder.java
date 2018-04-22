@@ -57,7 +57,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -232,6 +232,5 @@ public class GuiBuilder extends GuiBaseContainer {
     for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 }

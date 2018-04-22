@@ -38,7 +38,7 @@ public class GuiCrafter extends GuiBaseContainer {
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     //    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -82,7 +82,6 @@ public class GuiCrafter extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    super.tryDrawFuelSlot(ContainerCrafter.SLOTX_FUEL - 1, ContainerCrafter.SLOTY_FUEL - 1);
   }
 
   @SideOnly(Side.CLIENT)

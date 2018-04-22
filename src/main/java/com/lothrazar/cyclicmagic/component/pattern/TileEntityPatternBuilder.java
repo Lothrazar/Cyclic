@@ -79,8 +79,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   public TileEntityPatternBuilder() {
-    super(19);
-    this.setFuelSlot(18, BlockPatternBuilder.FUEL_COST);
+    super(9 + 9);
+    this.setFuelSlot(BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
     syncBlockItemMap();
   }
@@ -159,6 +159,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     return slot;
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

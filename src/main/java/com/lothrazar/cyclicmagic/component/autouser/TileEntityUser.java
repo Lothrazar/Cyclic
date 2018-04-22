@@ -106,10 +106,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   public TileEntityUser() {
-    super(10);
+    super(9);
     timer = TIMER_FULL;
     speed = SPEED_FUELED;
-    this.setFuelSlot(9, BlockUser.FUEL_COST);
+    this.setFuelSlot(BlockUser.FUEL_COST);
     this.initEnergyStorage();
     this.setSlotsForInsert(Arrays.asList(0, 1, 2));
     this.setSlotsForExtract(Arrays.asList(3, 4, 5, 6, 7, 8));

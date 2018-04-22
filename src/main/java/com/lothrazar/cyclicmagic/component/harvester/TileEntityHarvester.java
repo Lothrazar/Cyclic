@@ -25,8 +25,6 @@ package com.lothrazar.cyclicmagic.component.harvester;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -50,7 +48,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
 
-  private static final int FUEL_SLOT = 27;
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public final static int TIMER_FULL = 200;
@@ -64,11 +61,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
 
   public TileEntityHarvester() {
-    super(1 + 3 * 9);
-    this.setFuelSlot(FUEL_SLOT, BlockHarvester.FUEL_COST);
+    super(3 * 9);
+    this.setFuelSlot(BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
-    this.setSlotsForExtract(IntStream.rangeClosed(0, FUEL_SLOT - 1).boxed().collect(Collectors.toList()));
-
+    this.setSlotsForExtract(0, this.getSizeInventory());
   }
 
   @Override

@@ -51,7 +51,7 @@ public class ContainerPattern extends ContainerBaseMachine {
       addSlotToContainer(new Slot(tile, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
       s++;
     }
-    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
+    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

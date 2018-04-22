@@ -55,7 +55,7 @@ public class GuiHarvester extends GuiBaseContainer {
     this.progressBar = new ProgressBar(this, 10,
         ContainerHarvester.SLOTY + 3 * Const.SQ + 4, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
 
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -105,8 +105,7 @@ public class GuiHarvester extends GuiBaseContainer {
           this.guiLeft + ContainerHarvester.SLOTX_START - 1 + (k - 18) * Const.SQ,
           this.guiTop + 2 * Const.SQ + ContainerHarvester.SLOTY - 1,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 
   @SideOnly(Side.CLIENT)

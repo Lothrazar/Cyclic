@@ -57,7 +57,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -173,6 +173,5 @@ public class GuiPattern extends GuiBaseContainer {
       col = i % GUI_ROWS; // and %3 will go 012 012 012
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, +ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 }

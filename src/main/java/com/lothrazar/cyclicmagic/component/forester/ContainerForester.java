@@ -48,7 +48,6 @@ public class ContainerForester extends ContainerBaseMachine {
           SLOTX_START + i % 8 * Const.SQ + Const.SQ,
           SLOTY + (i / 8) * Const.SQ));
     }
-    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
 

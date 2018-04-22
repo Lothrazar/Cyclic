@@ -48,7 +48,6 @@ public class ContainerBuilder extends ContainerBaseMachine {
     for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     bindPlayerInventory(inventoryPlayer);
   }
 

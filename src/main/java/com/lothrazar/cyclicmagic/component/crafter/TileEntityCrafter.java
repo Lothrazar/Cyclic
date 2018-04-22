@@ -61,7 +61,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private InventoryCrafting crafter;
 
   public TileEntityCrafter() {
-    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
+    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);// left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
 
       @Override
@@ -70,7 +70,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.setFuelSlot(this.getSizeInventory() - 1, BlockCrafter.FUEL_COST);
+    this.setFuelSlot(BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     this.setSlotsForExtract(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28));
   }
@@ -89,7 +89,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.updateTimerIsZero() == false) {
       return;
     }
-    this.importFuel();
+    
     //so now we do not burn fuel if timer is stuck at zero with no craft action
     if (this.getFuelCurrent() >= this.getFuelCost()) {
       findRecipe();

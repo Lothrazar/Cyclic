@@ -40,7 +40,7 @@ public class GuiForester extends GuiBaseContainer {
     setScreenSize(ScreenSize.STANDARD);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
@@ -54,7 +54,6 @@ public class GuiForester extends GuiBaseContainer {
           this.guiTop + ContainerForester.SLOTY - 1 + (k / 8) * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    super.tryDrawFuelSlot(ContainerBaseMachine.SLOTX_FUEL - 1, ContainerBaseMachine.SLOTY_FUEL - 1);
   }
 
   @SideOnly(Side.CLIENT)

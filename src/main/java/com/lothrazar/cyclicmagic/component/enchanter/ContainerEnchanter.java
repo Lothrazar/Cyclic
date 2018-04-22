@@ -42,7 +42,6 @@ public class ContainerEnchanter extends ContainerBaseMachine {
     super(te);
     this.addSlotToContainer(new Slot(tile, 0, 50, SLOTY));
     this.addSlotToContainer(new Slot(tile, 1, 110, SLOTY));
-    super.addFurnaceFuelSlot(SLOTX_FUEL, SLOTY_FUEL);
     this.bindPlayerInventory(inventoryPlayer);
   }
 

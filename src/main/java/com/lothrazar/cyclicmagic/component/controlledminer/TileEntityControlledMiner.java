@@ -62,7 +62,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
 
-  private static final int FUEL_SLOT = 5;
+
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -75,8 +75,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final String NBT_SIZE = "size";
   private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
-  private static final int INVENTORY_SIZE = 6;
-  public static final int FUELSLOT_INDEX = 5;
+  private static final int INVENTORY_SIZE = 5;
   public static final int TOOLSLOT_INDEX = 4;
   public static final int WHITELIST_START_INDEX = 0;
   public static final int WHITELIST_END_INDEX = 3;
@@ -99,7 +98,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(FUEL_SLOT, BlockMinerSmart.FUEL_COST);
+    this.setFuelSlot(BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
 

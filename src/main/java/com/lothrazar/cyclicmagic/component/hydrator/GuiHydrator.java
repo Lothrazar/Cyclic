@@ -41,7 +41,7 @@ public class GuiHydrator extends GuiBaseContainer {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
 
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    this.setFieldFuel();
+    this.setUsesEnergy();
   }
 
   @Override
