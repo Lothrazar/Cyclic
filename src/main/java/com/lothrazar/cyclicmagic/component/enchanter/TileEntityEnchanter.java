@@ -45,7 +45,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   public static int FLUID_COST = 300;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
+    TIMER, REDSTONE, FUELDISPLAY;
   }
 
   private int timer = 0;
@@ -133,10 +133,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
 
       case REDSTONE:
         return needsRedstone;
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
+
       case FUELDISPLAY:
         return this.fuelDisplay;
     }
@@ -153,11 +150,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
-      case FUELMAX:
-      break;
+
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;
       break;

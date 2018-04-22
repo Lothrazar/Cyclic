@@ -75,7 +75,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
 
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL, FUELMAX, FUELDISPLAY;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUELDISPLAY;
   }
 
   public TileEntityPatternBuilder() {
@@ -356,10 +356,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return flipY;
       case FLIPZ:
         return flipZ;
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
+
       case FUELDISPLAY:
         return this.fuelDisplay;
     }
@@ -417,13 +414,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       case FLIPZ:
         flipZ = value % 2;
       break;
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;
-      break;
-      case FUELMAX:
       break;
     }
   }

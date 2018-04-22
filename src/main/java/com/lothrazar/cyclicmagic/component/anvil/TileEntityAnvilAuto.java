@@ -47,7 +47,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
   static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
+    TIMER, REDSTONE, FUELDISPLAY;
   }
 
   private int timer = 0;
@@ -160,10 +160,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
       case TIMER:
         return timer;
 
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
+
       case FUELDISPLAY:
         return this.fuelDisplay;
       case REDSTONE:
@@ -179,11 +176,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
         this.timer = value;
       break;
 
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
-      case FUELMAX:
-      break;
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;
       break;
@@ -192,20 +184,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
       break;
     }
   }
-
-  //  private void setCurrentFluid(int amt) {
-  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-  //      return;
-  //    }
-  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-  //    if (fluid == null) {
-  //      fluid = new FluidStack(FluidRegistry.LAVA, amt);
-  //    }
-  //    fluid.amount = amt;
-  //    this.tank.setFluid(fluid);
-  //  }
-
 
   @Override
   public void toggleNeedsRedstone() {

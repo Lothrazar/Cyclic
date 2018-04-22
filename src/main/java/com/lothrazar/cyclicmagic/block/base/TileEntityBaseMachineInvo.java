@@ -182,7 +182,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public void consumeFuel() {
-    if (this.fuelCost > 0 && world.isRemote == false) {//only drain on server
+    if (this.fuelCost > 0) {//only drain on server //not anymore bitches && world.isRemote == false
       if (this.getFuelCurrent() >= this.getFuelCost()) {
         //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
         //            + " and total was " + this.getFuelCurrent());

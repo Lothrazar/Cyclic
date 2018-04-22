@@ -102,7 +102,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX, Y_OFFSET, FUELDISPLAY;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUELDISPLAY;
   }
 
   public TileEntityUser() {
@@ -234,7 +234,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world.isAirBlock(targetPos)) {
       return;
     }
-    ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
+    //  ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     if (r != EnumActionResult.SUCCESS) {
@@ -436,10 +436,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
+      //      case FUEL:
+      //        return this.getFuelCurrent();
+      //      case FUELMAX:
+      //        return this.getFuelMax();
       case RENDERPARTICLES:
         return this.renderParticles;
       case Y_OFFSET:
@@ -480,11 +480,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       case SIZE:
         this.size = value;
       break;
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
-      case FUELMAX:
-      break;
+      //      case FUEL:
+      //        this.setFuelCurrent(value);
+      //      break;
+      //      case FUELMAX:
+      //      break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;

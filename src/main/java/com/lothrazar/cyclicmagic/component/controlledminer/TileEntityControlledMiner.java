@@ -55,11 +55,6 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**
- * 
- * SEE TileMachineMiner
- * 
- */
 public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
 
 
@@ -93,7 +88,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private UUID uuid;
 
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX, FUELDISPLAY;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUELDISPLAY;
   }
 
   public TileEntityControlledMiner() {
@@ -366,10 +361,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return blacklistIfZero;
       case RENDERPARTICLES:
         return this.renderParticles;
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
+
       case TIMER:
         return this.timer;
       case FUELDISPLAY:
@@ -399,11 +391,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
-      case FUELMAX:
-      break;
+
       case TIMER:
         this.timer = value;
       break;

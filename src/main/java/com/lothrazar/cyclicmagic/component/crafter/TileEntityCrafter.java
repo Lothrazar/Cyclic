@@ -52,7 +52,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL, FUELMAX, FUELDISPLAY;
+    REDSTONE, TIMER, FUELDISPLAY;
   }
 
   private Container fakeContainer;
@@ -210,10 +210,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FUEL:
-        return this.getFuelCurrent();
-      case FUELMAX:
-        return this.getFuelMax();
       case FUELDISPLAY:
         return this.fuelDisplay;
     }
@@ -228,11 +224,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case FUEL:
-        this.setFuelCurrent(value);
-      break;
-      case FUELMAX:
       break;
       case FUELDISPLAY:
         this.fuelDisplay = value % 2;

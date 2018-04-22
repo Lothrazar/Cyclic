@@ -65,7 +65,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int offsetZ = 0;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, FUEL, FUELMAX, ROTATIONS, OX, OY, OZ, FUELDISPLAY;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ, FUELDISPLAY;
   }
 
   public enum BuildType {
@@ -201,10 +201,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.needsRedstone;
         case RENDERPARTICLES:
           return this.renderParticles;
-        case FUEL:
-          return this.getFuelCurrent();
-        case FUELMAX:
-          return this.getFuelMax();
+
         case ROTATIONS:
           return this.rotations;
         case OX:
@@ -251,11 +248,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         case RENDERPARTICLES:
           this.renderParticles = value;
         break;
-        case FUEL:
-          this.setFuelCurrent(value);
-        break;
-        case FUELMAX:
-        break;
+
         case ROTATIONS:
           this.rotations = Math.max(0, value);
         break;
