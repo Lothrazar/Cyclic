@@ -29,6 +29,8 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -52,6 +54,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -60,11 +63,12 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
   public static ArrayList<RecipeHydrate> recipesShapeless = new ArrayList<RecipeHydrate>();
 
+  public static int FUEL_COST = 0;
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -185,6 +189,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
     return 0;
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -262,5 +267,10 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasRecipe, IBloc
       if (fluidObj != null)
         container.fill(new FluidStack(fluidObj, fluidAmt), true);
     }
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

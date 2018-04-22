@@ -42,6 +42,9 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,7 +62,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
-  private int fuelX, fuelY, fuelXE, fuelYE;
+  protected int fuelX, fuelY, fuelXE, fuelYE;
   private GuiButtonToggleFuelBar btnFuelToggle;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
@@ -205,14 +208,23 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.progressBar != null) {
       drawProgressBar();
     }
-    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
-      drawFuelBar();
+    if (tile == null) {
+      return;
     }
+    //    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
+    //      //this.btnFuelToggle
+    //    }
+    if (this.tile instanceof ITileFuel && tile.doesUseFuel()) {
+      drawFuelBarOutsideContainer();
+    }
+    //    else if (this.fieldFuel > -1 && tile.doesUseFuel()) {
+    //      this.drawEnergyBarInside();
+    //    }
   }
 
   public void drawFuelText() {
     if (this.fieldFuel > -1 && this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
-      ITileFuel tileFuel = (ITileFuel) this.tile;
+      ITileFuel tileFuel = this.tile;
       this.btnFuelToggle.setState(tileFuel.getFuelDisplay());
       //      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
       double pct = tile.getPercentFormatted();
@@ -231,11 +243,31 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
 
-  public void drawFuelBar() {
+  protected void drawEnergyBarInside() {
+    int u = 0, v = 0;
+    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
+    int outerLength = 62, outerWidth = 16;
+    int innerLength = 60, innerWidth = 14;
+    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
+    Gui.drawModalRectWithCustomSizedTexture(
+        fuelX - 1,
+        fuelY - 1, u, v,
+        outerWidth, outerLength,
+        outerWidth, outerLength);
+    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
+    Gui.drawModalRectWithCustomSizedTexture(
+        fuelX,
+        fuelY, u, v,
+        innerWidth, (int) (innerLength * percent),
+        innerWidth, innerLength);
+  }
+
+  private void drawFuelBarOutsideContainer() {
     if (this.tile instanceof ITileFuel == false) {
       return;
     }
-    ITileFuel tileFuel = (ITileFuel) this.tile;
+    ITileFuel tileFuel = this.tile;
     int u = 0, v = 0;
     float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
@@ -322,7 +354,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + progressBar.xOffset,
         this.guiTop + progressBar.yOffset, u, v,
-        (int) ProgressBar.WIDTH, ProgressBar.HEIGHT,
+        ProgressBar.WIDTH, ProgressBar.HEIGHT,
         ProgressBar.WIDTH, ProgressBar.HEIGHT);
     if (progressBar.getProgressCurrent() > 0) {
       this.mc.getTextureManager().bindTexture(progressBar.getProgressAsset());

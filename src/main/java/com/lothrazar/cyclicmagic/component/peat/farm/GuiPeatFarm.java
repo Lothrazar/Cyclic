@@ -27,21 +27,14 @@ import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class GuiPeatFarm extends GuiBaseContainer {
 
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
-  }
-
-  @Override
-  public void initGui() {
-    super.initGui();
-    // BUTTONS! 
+    fuelX = this.guiLeft + 152;
+    fuelY = this.guiTop + 17;
   }
 
   @Override
@@ -63,30 +56,12 @@ public class GuiPeatFarm extends GuiBaseContainer {
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     //DRAW ENERGY BAR
-    this.drawEnergyBar();
+    fuelX = this.guiLeft + 152;
+    fuelY = this.guiTop + 17;
+    this.drawEnergyBarInside();
     this.drawFluidBar();
   }
 
-  private void drawEnergyBar() {
-    int u = 0, v = 0;
-    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    int outerLength = 62, outerWidth = 16;
-    int innerLength = 60, innerWidth = 14;
-    int fuelX = this.guiLeft + 152;
-    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
-    Gui.drawModalRectWithCustomSizedTexture(
-        fuelX - 1,
-        this.guiTop + 16, u, v,
-        outerWidth, outerLength,
-        outerWidth, outerLength);
-    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
-    Gui.drawModalRectWithCustomSizedTexture(
-        fuelX,
-        this.guiTop + 17, u, v,
-        innerWidth, (int) (innerLength * percent),
-        innerWidth, innerLength);
-  }
 
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162

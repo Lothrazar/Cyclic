@@ -52,7 +52,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
   public final static int TIMER_FULL = 40;
 
   public static enum Fields {
-    REDSTONE, TIMER, FLUID, RECIPELOCKED;
+    REDSTONE, TIMER, FLUID, RECIPELOCKED, FUEL, FUELMAX;
   }
 
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
@@ -66,6 +66,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
+    fuelCost = BlockHydrator.FUEL_COST;
   }
 
   private int needsRedstone = 1;
@@ -82,7 +83,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public void update() {
-    if (!isRunning()) {
+    if (this.isRunning() == false) {
+      return;
+    }
+    if (this.updateFuelIsBurning() == false) {
       return;
     }
     //ignore timer when filling up water
@@ -175,6 +179,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
         return this.getCurrentFluid();
       case RECIPELOCKED:
         return this.recipeIsLocked;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
     }
     return -1;
   }
@@ -193,6 +201,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
       break;
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
       break;
     }
   }

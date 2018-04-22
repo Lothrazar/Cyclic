@@ -73,7 +73,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
   protected int fuelDisplay = 0;
-  private int fuelCost = 0;
+  protected int fuelCost = 0;
   private int fuelSlot = -1;
   protected int speed = 1;
   protected int timer;

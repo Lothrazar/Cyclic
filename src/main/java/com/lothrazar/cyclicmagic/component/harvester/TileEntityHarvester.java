@@ -68,6 +68,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.setFuelSlot(FUEL_SLOT, BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(IntStream.rangeClosed(0, FUEL_SLOT - 1).boxed().collect(Collectors.toList()));
+
   }
 
   @Override
@@ -220,6 +221,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     }
   }
 
+  @Override
   public void toggleSizeShape() {
     this.size++;
     if (this.size > MAX_SIZE) {
