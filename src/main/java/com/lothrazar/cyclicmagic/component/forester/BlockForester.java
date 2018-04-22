@@ -52,7 +52,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {//, IBlockHasTESR 
 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
-  public static int FUEL_COST = 0;
+  public static int FUEL_COST;
 
   public BlockForester() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_FORESTER);

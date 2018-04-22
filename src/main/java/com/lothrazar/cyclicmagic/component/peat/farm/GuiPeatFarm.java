@@ -34,7 +34,6 @@ public class GuiPeatFarm extends GuiBaseContainer {
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
-
   }
 
   @Override
@@ -61,7 +60,6 @@ public class GuiPeatFarm extends GuiBaseContainer {
     this.drawEnergyBarInside();
     this.drawFluidBar();
   }
-
 
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162

@@ -56,6 +56,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
 
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
+    this.initEnergyWithCost(BlockDisenchanter.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
     this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
   }
@@ -91,6 +92,9 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       return;
     }
     this.spawnParticlesAbove();
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     timer -= 1;
     if (timer > 0) {
       return;
@@ -170,6 +174,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

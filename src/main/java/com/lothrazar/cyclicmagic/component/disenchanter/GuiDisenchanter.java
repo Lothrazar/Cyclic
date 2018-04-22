@@ -46,14 +46,11 @@ public class GuiDisenchanter extends GuiBaseContainer {
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityDisenchanter.Fields.TIMER.ordinal(), TileEntityDisenchanter.TIMER_FULL);
   }
 
-  @Override
-  public void initGui() {
-    super.initGui();
-  }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
     int u = 0, v = 0;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
@@ -91,6 +88,10 @@ public class GuiDisenchanter extends GuiBaseContainer {
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    //DRAW ENERGY BAR
+    fuelX = this.guiLeft + 154;
+    fuelY = this.guiTop + 17;
+    this.drawEnergyBarInside();
   }
 
   @SideOnly(Side.CLIENT)

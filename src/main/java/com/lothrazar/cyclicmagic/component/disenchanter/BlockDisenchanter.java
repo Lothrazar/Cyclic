@@ -26,6 +26,8 @@ package com.lothrazar.cyclicmagic.component.disenchanter;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
@@ -40,12 +42,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
+  public static int FUEL_COST;
   public BlockDisenchanter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_DISENCH);
     this.setHardness(3F);
@@ -79,5 +83,10 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasR
         'g', "blockGlassPurple",
         'r', Items.FIRE_CHARGE,
         's', "ingotBrickNether");
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
