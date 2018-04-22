@@ -250,6 +250,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int outerLength = 62, outerWidth = 16;
     int innerLength = 60, innerWidth = 14;
     this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
+    fuelXE = fuelX + innerLength;
+    fuelYE = fuelY + innerWidth;
     Gui.drawModalRectWithCustomSizedTexture(
         fuelX - 1,
         fuelY - 1, u, v,
@@ -267,12 +269,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.tile instanceof ITileFuel == false) {
       return;
     }
-    ITileFuel tileFuel = this.tile;
+
     int u = 0, v = 0;
-    float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
+    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
+    //float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;
-    if (tileFuel.getFuelDisplay()) {// vertical
+    if (tile.getFuelDisplay()) {// vertical
       fuelX = this.guiLeft + screenSize.width() - innerLength - 8;
       fuelXE = fuelX + innerLength;
       fuelY = this.guiTop - outerWidth + 5;
@@ -311,10 +315,12 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   private String getFuelAmtDisplay() {
-    if (tile.getField(this.fieldMaxFuel) == 0) {
+    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+    //    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
+    if (energy.getEnergyStored() == 0) {
       return "0";
     }
-    return tile.getField(this.fieldFuel) + "/" + tile.getField(this.fieldMaxFuel);
+    return energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
   }
 
   @SuppressWarnings("serial")
