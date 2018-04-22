@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.component.anvil;
 
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -59,7 +58,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
 
   private void drawFluidBar() {
     int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());
+    int currentFluid = ((TileEntityAnvilAuto) tile).getCurrentFluidStackAmount();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int fuelWidth = 16;

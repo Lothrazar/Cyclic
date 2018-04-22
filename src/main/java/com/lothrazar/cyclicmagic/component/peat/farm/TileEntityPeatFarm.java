@@ -24,9 +24,8 @@
 package com.lothrazar.cyclicmagic.component.peat.farm;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
@@ -36,21 +35,13 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IFluidHandler {
+public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, IFluidHandler {
 
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
@@ -58,16 +49,15 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
   private static final int CAPACITY = 60 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
-    REDSTONE, TIMER, FLUID;
+    REDSTONE, TIMER;
   }
 
   private int needsRedstone = 1;
-  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
-
   private int blockPointer = 0;
 
   public TileEntityPeatFarm() {
     super(12);
+    tank = new FluidTankBase(TANK_FULL);
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.initEnergy();
@@ -190,15 +180,13 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     blockPointer = compound.getInteger("blockPointer");
-    tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
-    // CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
+
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-    compound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
-    //compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
+
     compound.setInteger("blockPointer", blockPointer);
     return super.writeToNBT(compound);
   }
@@ -224,8 +212,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FLUID:
-        return this.getCurrentFluid();
+
     }
     return -1;
   }
@@ -239,78 +226,76 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       case TIMER:
         this.timer = value;
       break;
-      case FLUID:
-        this.setCurrentFluid(value);
-      break;
+
     }
   }
 
-  private int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-
-  private void setCurrentFluid(int amt) {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    if (fluid == null) {
-      fluid = new FluidStack(FluidRegistry.WATER, amt);
-    }
-    fluid.amount = amt;
-    this.tank.setFluid(fluid);
-  }
-
-  @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityEnergy.ENERGY || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return true;
-    }
-    return super.hasCapability(capability, facing);
-  }
-
-  @Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
-    }
-
-    return super.getCapability(capability, facing);
-  }
-
-  @Override
-  public IFluidTankProperties[] getTankProperties() {
-    FluidTankInfo info = tank.getInfo();
-    return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
-  }
-
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    int result = tank.fill(resource, doFill);
-    this.world.markChunkDirty(pos, this);
-    this.setField(Fields.FLUID.ordinal(), result);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(FluidStack resource, boolean doDrain) {
-    FluidStack result = tank.drain(resource, doDrain);
-    this.world.markChunkDirty(pos, this);
-    this.setField(Fields.FLUID.ordinal(), result.amount);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(int maxDrain, boolean doDrain) {
-    FluidStack result = tank.drain(maxDrain, doDrain);
-    this.world.markChunkDirty(pos, this);
-    this.setField(Fields.FLUID.ordinal(), result.amount);
-    return result;
-  }
+  //  private int getCurrentFluid() {
+  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+  //      return 0;
+  //    }
+  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+  //    return (fluid == null) ? 0 : fluid.amount;
+  //  }
+  //
+  //  private void setCurrentFluid(int amt) {
+  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+  //      return;
+  //    }
+  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+  //    if (fluid == null) {
+  //      fluid = new FluidStack(FluidRegistry.WATER, amt);
+  //    }
+  //    fluid.amount = amt;
+  //    this.tank.setFluid(fluid);
+  //  }
+  //
+  //  @Override
+  //  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  //    if (capability == CapabilityEnergy.ENERGY || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+  //      return true;
+  //    }
+  //    return super.hasCapability(capability, facing);
+  //  }
+  //
+  //  @Override
+  //  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+  //    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+  //      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
+  //    }
+  //
+  //    return super.getCapability(capability, facing);
+  //  }
+  //
+  //  @Override
+  //  public IFluidTankProperties[] getTankProperties() {
+  //    FluidTankInfo info = tank.getInfo();
+  //    return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
+  //  }
+  //
+  //  @Override
+  //  public int fill(FluidStack resource, boolean doFill) {
+  //    int result = tank.fill(resource, doFill);
+  //    this.world.markChunkDirty(pos, this);
+  //    this.setField(Fields.FLUID.ordinal(), result);
+  //    return result;
+  //  }
+  //
+  //  @Override
+  //  public FluidStack drain(FluidStack resource, boolean doDrain) {
+  //    FluidStack result = tank.drain(resource, doDrain);
+  //    this.world.markChunkDirty(pos, this);
+  //    this.setField(Fields.FLUID.ordinal(), result.amount);
+  //    return result;
+  //  }
+  //
+  //  @Override
+  //  public FluidStack drain(int maxDrain, boolean doDrain) {
+  //    FluidStack result = tank.drain(maxDrain, doDrain);
+  //    this.world.markChunkDirty(pos, this);
+  //    this.setField(Fields.FLUID.ordinal(), result.amount);
+  //    return result;
+  //  }
 }

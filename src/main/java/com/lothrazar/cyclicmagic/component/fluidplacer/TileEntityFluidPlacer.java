@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.component.fluidplacer;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -34,7 +35,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements ITickable {
 
   public TileEntityFluidPlacer() {
-    super(Fluid.BUCKET_VOLUME);
+    super(0);
+    tank = new FluidTankBase(Fluid.BUCKET_VOLUME);
   }
 
   @Override

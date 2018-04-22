@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.component.enchanter;
 
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -62,7 +61,8 @@ public class GuiEnchanter extends GuiBaseContainer {
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityEnchanter.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+    int currentFluid = tile.getCurrentFluidStackAmount();
+    //    int currentFluid = tile.getField(TileEntityEnchanter.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int fuelWidth = 16;

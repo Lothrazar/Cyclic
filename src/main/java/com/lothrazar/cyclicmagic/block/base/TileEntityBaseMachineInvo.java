@@ -52,11 +52,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
 
   protected static final int SPEED_FUELED = 8;
-  /**
-   * one second of Fuel Burn Time gives 50 RF this was computed since 1 coal item has 1600 burn time and 1 coal item also gives 80,000 RF (max output based on survey of mods) so i want to make
-   * internal consumption of fuel more efficient than just getting raw power especially because actual RF mods will have better power gen anyway
-   */
-  private static final int FUEL_FACTOR = 50;
+
   private static final int MAX_SPEED = 10;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -523,7 +519,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         return 0; // do not run without fuel
       }
       else {
-        return SPEED_FUELED;// i have fuel, use what it says eh
+        return Math.max(this.speed, 1);// i have fuel, use what it says eh
       }
     }
   }

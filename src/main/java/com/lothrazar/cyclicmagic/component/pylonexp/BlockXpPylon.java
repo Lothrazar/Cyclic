@@ -74,6 +74,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     return new TileEntityXpPylon();
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -107,7 +108,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        int currentFluid = te.getField(TileEntityXpPylon.Fields.EXP.ordinal());
+        int currentFluid = te.getCurrentFluidStackAmount();
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

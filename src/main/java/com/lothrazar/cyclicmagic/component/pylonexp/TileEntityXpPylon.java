@@ -24,8 +24,7 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 
 import java.util.List;
-import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -33,19 +32,12 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
+public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 1000000;
   private static final int XP_PER_SPEWORB = 50;
@@ -71,13 +63,12 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private int timer = 0;
   private int collect = 1;
   private int needsRedstone = 0;
-  private boolean isLegacy = false;//newly placed ones are NOT legacy for sure
-  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
 
   public TileEntityXpPylon() {
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
+    tank = new FluidTankBase(TANK_FULL);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
 
@@ -99,15 +90,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     if (this.isRunning() == false) {
       return;
     }
-    if (this.isLegacy) {
-      int current = this.getCurrentFluid();
-      //I used to hold EXP. now I hold fluid that has an exp value with this ratio
-      this.isLegacy = false;//not legacy anymore , 100%
-      this.setCurrentFluid(Math.min(current * FLUID_PER_EXP, TANK_FULL));
-    }
-    if (this.getCurrentFluid() < 0) {
-      this.setCurrentFluid(0);
-    }
+
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
@@ -127,7 +110,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private void updateBottle() {
     //so 11*20 is the fluid per bottle
     int fluidToDrain = XP_PER_BOTTLE * FLUID_PER_EXP;
-    if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluid() >= fluidToDrain) {
+    if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluidStackAmount() >= fluidToDrain) {
       //pay the cost first
       FluidStack actuallyDrained = this.tank.drain(fluidToDrain, true);
       if (actuallyDrained == null || actuallyDrained.amount == 0) {
@@ -144,9 +127,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private void updateSpray() {
     //for example if we drain 200 fluid units, which gives us 10 xp in the orb
     int fluidToDrain = XP_PER_SPEWORB * FLUID_PER_EXP;
-    int toSpew = Math.min(fluidToDrain, this.getCurrentFluid());
+    int toSpew = Math.min(fluidToDrain, this.getCurrentFluidStackAmount());
     int expToRelease = toSpew / XP_PER_SPEWORB;
-    if (expToRelease > 0 && this.getCurrentFluid() >= toSpew) {
+    if (expToRelease > 0 && this.getCurrentFluidStackAmount() >= toSpew) {
       FluidStack actuallyDrained = this.tank.drain(toSpew, true);
       //was the correct amount drained
       if (actuallyDrained == null || actuallyDrained.amount == 0) {
@@ -221,9 +204,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_COLLECT, this.collect);
-    tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+
     tags.setInteger(NBT_REDST, this.needsRedstone);
-    tags.setBoolean("legacy", this.isLegacy);
+
     return super.writeToNBT(tags);
   }
 
@@ -232,13 +215,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
     collect = tags.getInteger(NBT_COLLECT);
-    tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
-    this.needsRedstone = tags.getInteger(NBT_REDST);
-    if (tags.hasKey("legacy") == false) {
-      this.isLegacy = true;//old ones will not have this, so they ARE legacy
-    }
-    else
-      this.isLegacy = tags.getBoolean("legacy");
+    needsRedstone = tags.getInteger(NBT_REDST);
+
   }
 
   @Override
@@ -252,7 +230,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       case TIMER:
         return timer;
       case EXP:
-        return this.getCurrentFluid();
+        return this.getCurrentFluidStackAmount();
       case COLLECT:
         return collect;
       case REDSTONE:
@@ -263,23 +241,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     return -1;
   }
 
-  public int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
-  }
-
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -287,7 +248,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         this.timer = value;
       break;
       case EXP:
-        this.setCurrentFluid(value);
+        this.tank.setFluidAmount(value);
       break;
       case COLLECT:
         this.collect = value % 2;
@@ -299,73 +260,21 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       break;
     }
   }
+  //
+  //  private void setCurrentFluid(int amt) {
+  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+  //      return;
+  //    }
+  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+  //    if (fluid == null) {
+  //      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
+  //    }
+  //    fluid.amount = amt;
+  //    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
+  //    this.tank.setFluid(fluid);
+  //  }
 
-  private void setCurrentFluid(int amt) {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    if (fluid == null) {
-      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
-    }
-    fluid.amount = amt;
-    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
-    this.tank.setFluid(fluid);
-  }
-
-  /******************************
-   * fluid properties here
-   ******************************/
-  @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return true;
-    }
-    return super.hasCapability(capability, facing);
-  }
-
-  @Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
-    }
-    this.world.markChunkDirty(pos, this);
-    return super.getCapability(capability, facing);
-  }
-
-  @Override
-  public IFluidTankProperties[] getTankProperties() {
-    FluidTankInfo info = tank.getInfo();
-    return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
-  }
-
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
-      return 0;
-    }
-    int result = tank.fill(resource, doFill);
-    this.setField(Fields.EXP.ordinal(), result);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(FluidStack resource, boolean doDrain) {
-    if (resource.getFluid() != FluidRegistry.getFluid("xpjuice")) {
-      return resource;
-    }
-    FluidStack result = tank.drain(resource, doDrain);
-    this.setField(Fields.EXP.ordinal(), result.amount);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(int maxDrain, boolean doDrain) {
-    FluidStack result = tank.drain(maxDrain, doDrain);
-    this.setField(Fields.EXP.ordinal(), result.amount);
-    return result;
-  }
 
   @Override
   public void toggleNeedsRedstone() {

@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.component.pump.fluid;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,7 +44,8 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
   private int needsRedstone = 0;
 
   public TileEntityFluidPump() {
-    super(Fluid.BUCKET_VOLUME);
+    super(0);
+    tank = new FluidTankBase(Fluid.BUCKET_VOLUME);
   }
 
   @Override

@@ -107,7 +107,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        int currentFluid = te.getField(TileEntityEnchanter.Fields.EXP.ordinal());
+        int currentFluid = te.getCurrentFluidStackAmount();
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

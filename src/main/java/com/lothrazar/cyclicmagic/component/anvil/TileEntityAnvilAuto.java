@@ -23,8 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.anvil;
 
-import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilString;
@@ -33,16 +32,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, IFluidHandler, ITileRedstoneToggle {
+public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
   public static final int TIMER_FULL = 3;
@@ -52,19 +47,20 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, FLUID, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
+    TIMER, REDSTONE, FUEL, FUELMAX, FUELDISPLAY;
   }
 
   private int timer = 0;
   private int needsRedstone = 0;
-  public FluidTankBase tank = new FluidTankBase(TANK_FULL);
+
 
   public TileEntityAnvilAuto() {
     super(2);
+    tank = new FluidTankBase(TANK_FULL);
+    tank.setFluidAllowed(FluidRegistry.LAVA);
     this.initEnergyWithCost(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-    tank.setFluidAllowed(FluidRegistry.LAVA);
   }
 
   private boolean isBlockAllowed(ItemStack thing) {
@@ -122,7 +118,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
-    tags.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+
     tags.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tags);
   }
@@ -131,7 +127,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
-    tank.readFromNBT(tags.getCompoundTag(NBT_TANK));
+
     this.needsRedstone = tags.getInteger(NBT_REDST);
   }
 
@@ -149,6 +145,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     return (fluid == null) ? 0 : fluid.amount;
   }
 
+  @Override
   public FluidStack getCurrentFluidStack() {
     IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
     if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
@@ -162,8 +159,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     switch (Fields.values()[id]) {
       case TIMER:
         return timer;
-      case FLUID:
-        return this.getCurrentFluid();
+
       case FUEL:
         return this.getFuelCurrent();
       case FUELMAX:
@@ -182,9 +178,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       case TIMER:
         this.timer = value;
       break;
-      case FLUID:
-        this.setCurrentFluid(value);
-      break;
+
       case FUEL:
         this.setFuelCurrent(value);
       break;
@@ -199,62 +193,19 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
   }
 
-  private void setCurrentFluid(int amt) {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    if (fluid == null) {
-      fluid = new FluidStack(FluidRegistry.LAVA, amt);
-    }
-    fluid.amount = amt;
-    this.tank.setFluid(fluid);
-  }
+  //  private void setCurrentFluid(int amt) {
+  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+  //      return;
+  //    }
+  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+  //    if (fluid == null) {
+  //      fluid = new FluidStack(FluidRegistry.LAVA, amt);
+  //    }
+  //    fluid.amount = amt;
+  //    this.tank.setFluid(fluid);
+  //  }
 
-  /******************************
-   * fluid properties here
-   ******************************/
-  @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return true;
-    }
-    return super.hasCapability(capability, facing);
-  }
-
-  @Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
-    }
-    return super.getCapability(capability, facing);
-  }
-
-  @Override
-  public IFluidTankProperties[] getTankProperties() {
-    FluidTankInfo info = tank.getInfo();
-    return new IFluidTankProperties[] { new FluidTankProperties(info.fluid, info.capacity, true, true) };
-  }
-
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    int result = tank.fill(resource, doFill);
-    this.setField(Fields.FLUID.ordinal(), result);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(FluidStack resource, boolean doDrain) {
-    FluidStack result = tank.drain(resource, doDrain);
-    return result;
-  }
-
-  @Override
-  public FluidStack drain(int maxDrain, boolean doDrain) {
-    FluidStack result = tank.drain(maxDrain, doDrain);
-    return result;
-  }
 
   @Override
   public void toggleNeedsRedstone() {

@@ -124,7 +124,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        int currentFluid = te.getField(TileEntityAnvilAuto.Fields.FLUID.ordinal());
+        int currentFluid = te.getCurrentFluidStackAmount();
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.base;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
-import com.lothrazar.cyclicmagic.fluid.FluidTankFixDesync;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,13 +43,8 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
 
   public FluidTankBase tank;
 
-  public TileEntityBaseMachineFluid(int fluidTankSize) {
-    this(0, fluidTankSize);
-  }
-
-  public TileEntityBaseMachineFluid(int inventorySize, int fluidTankSize) {
-    super(inventorySize);
-    tank = new FluidTankFixDesync(fluidTankSize, this);
+  public TileEntityBaseMachineFluid(int invoSize) {
+    super(invoSize);
   }
 
   public static class ContainerDummy extends Container {
@@ -63,6 +57,14 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
 
   public int getCapacity() {
     return tank.getCapacity();
+  }
+
+  public final int getCurrentFluidStackAmount() {
+    FluidStack fluid = getCurrentFluidStack();
+    if (fluid == null) {
+      return 0;
+    }
+    return fluid.amount;
   }
 
   public FluidStack getCurrentFluidStack() {
@@ -118,14 +120,18 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    if (tank != null) {
+      tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+    }
     return super.writeToNBT(tagCompound);
   }
 
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+    if (tank != null) {
+      tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
+    }
   }
 
   @Override
@@ -152,6 +158,21 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
    */
   @SideOnly(Side.CLIENT)
   public void updateFluidTo(FluidStack fluid) {
+    this.tank.setFluid(fluid);
+  }
+
+  protected void setCurrentFluid(int amt) {
+    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return;
+    }
+    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
+    //    if (fluid == null) {
+    //      //      fluid = this.flu
+    //      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
+    //    }
+    fluid.amount = amt;
+    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
 }

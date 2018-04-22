@@ -47,4 +47,9 @@ public class FluidTankBase extends FluidTank {
     //else either allowed is null, or they match
     return super.canFillFluidType(fluid);
   }
+
+  public void setFluidAmount(int amt) {
+    if (this.fluid != null)
+      this.fluid.amount = amt;
+  }
 }

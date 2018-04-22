@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.farm;
 
+import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
@@ -65,7 +66,7 @@ public class GuiPeatFarm extends GuiBaseContainer {
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityPeatFarm.Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+    //background first
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int x = this.guiLeft + 120, y = this.guiTop + 16;
@@ -73,9 +74,16 @@ public class GuiPeatFarm extends GuiBaseContainer {
         x, y, u, v,
         pngWidth / f, h,
         pngWidth / f, h);
+    //IFluidHandler fluidHandler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    //    FluidStack fluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStack();
+    //    if (fluid == null) {
+    //      return;
+    //    }
+    final int currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();// tile.getField(TileEntityPeatFarm.Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+
     h -= 2;// inner texture is 2 smaller, one for each border
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
-    float percent = ((float) currentFluid / ((float) TileEntityPeatFarm.TANK_FULL));
+    float percent = ((float) currentFluid / (TileEntityPeatFarm.TANK_FULL));
     int hpct = (int) (h * percent);
     Gui.drawModalRectWithCustomSizedTexture(
         x + 1, y + 1 + h - hpct,

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.component.fluidstorage;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.fluid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -35,7 +36,8 @@ public class TileEntityBucketStorage extends TileEntityBaseMachineFluid implemen
   public static final int TRANSFER_FLUID_PER_TICK = 500;
 
   public TileEntityBucketStorage() {
-    super(Fluid.BUCKET_VOLUME * 64);
+    super(0);
+    tank = new FluidTankFixDesync(Fluid.BUCKET_VOLUME * 64, this);
   }
 
   @Override

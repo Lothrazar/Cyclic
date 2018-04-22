@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -68,8 +69,10 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
 
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
-    super(invoSize, fluidTankSize);
-    //TODO: fix input awkwardness 
+    super(invoSize);
+    if (fluidTankSize > 0) {
+      tank = new FluidTankBase(fluidTankSize);
+    }
     if (powerPerTick > 0) {
       energyStorage = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
     }

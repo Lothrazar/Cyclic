@@ -28,7 +28,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -210,7 +209,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
     success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
       if (!world.isRemote) {
-        int currentFluid = te.getField(Fields.FLUID.ordinal());
+        int currentFluid = te.getCurrentFluidStackAmount();
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

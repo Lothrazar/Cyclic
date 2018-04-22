@@ -65,8 +65,8 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
     boolean success = false;
     success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {
-      if (!world.isRemote) {
-        int currentFluid = te.getField(TileEntityPeatFarm.Fields.FLUID.ordinal());
+      if (!world.isRemote && te.getCurrentFluidStack() != null) {
+        int currentFluid = te.getCurrentFluidStack().amount;
         UtilChat.sendStatusMessage(player, UtilChat.lang("cyclic.fluid.amount") + currentFluid);
       }
     }

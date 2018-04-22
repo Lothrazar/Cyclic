@@ -24,18 +24,21 @@
 package com.lothrazar.cyclicmagic.component.trash;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITickable {
 
   public TileEntityTrash() {
-    super(1, 1000);
+    super(1);
+    tank = new FluidTankBase(Fluid.BUCKET_VOLUME);
     this.setSlotsForBoth();
   }
 
   @Override
   public void update() {
     this.removeStackFromSlot(0);
-    this.drain(100, true);
+    this.drain(500, true);
   }
 }
