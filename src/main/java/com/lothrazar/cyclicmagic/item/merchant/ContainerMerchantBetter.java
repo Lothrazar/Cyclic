@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.item.merchant;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.data.Const.ScreenSize;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.pump.fluid;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

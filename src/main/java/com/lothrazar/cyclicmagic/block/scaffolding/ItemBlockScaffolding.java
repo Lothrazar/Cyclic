@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.scaffolding;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

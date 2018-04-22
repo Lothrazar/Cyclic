@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.hydrator;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;

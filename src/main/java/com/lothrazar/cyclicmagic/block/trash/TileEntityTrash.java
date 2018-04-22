@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.trash;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 

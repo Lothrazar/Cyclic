@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.base.BaseTool;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -33,6 +32,7 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

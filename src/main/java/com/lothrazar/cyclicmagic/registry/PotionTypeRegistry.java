@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
 import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;

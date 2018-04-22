@@ -24,12 +24,12 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.fluid.BlockFluidExp;
-import com.lothrazar.cyclicmagic.fluid.BlockFluidMilk;
-import com.lothrazar.cyclicmagic.fluid.BlockFluidPoison;
-import com.lothrazar.cyclicmagic.fluid.FluidExp;
-import com.lothrazar.cyclicmagic.fluid.FluidMilk;
-import com.lothrazar.cyclicmagic.fluid.FluidPoison;
+import com.lothrazar.cyclicmagic.liquid.BlockFluidExp;
+import com.lothrazar.cyclicmagic.liquid.BlockFluidMilk;
+import com.lothrazar.cyclicmagic.liquid.BlockFluidPoison;
+import com.lothrazar.cyclicmagic.liquid.FluidExp;
+import com.lothrazar.cyclicmagic.liquid.FluidMilk;
+import com.lothrazar.cyclicmagic.liquid.FluidPoison;
 import net.minecraft.init.Items;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;

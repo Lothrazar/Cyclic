@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

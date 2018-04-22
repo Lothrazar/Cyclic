@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;

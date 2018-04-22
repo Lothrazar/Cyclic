@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.potion;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;

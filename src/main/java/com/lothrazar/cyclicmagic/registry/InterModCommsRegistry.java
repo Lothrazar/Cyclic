@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
-import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 

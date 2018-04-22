@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;

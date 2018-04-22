@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.module;
 
 import java.util.Random;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.IMerchant;

@@ -28,7 +28,6 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
@@ -104,10 +103,10 @@ import com.lothrazar.cyclicmagic.item.mobs.ItemVillagerMagic;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemChorusCorrupted;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemChorusGlowing;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemFoodCrafting;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemFoodInventory;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemCraftingUnlock;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemInventoryUnlock;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
@@ -116,6 +115,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
@@ -626,24 +626,24 @@ public class ItemModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
     }
     if (enableInventoryCrafting) {
-      ItemFoodCrafting crafting_food = new ItemFoodCrafting();
+      ItemCraftingUnlock crafting_food = new ItemCraftingUnlock();
       ItemRegistry.register(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food);
     }
     if (enableInventoryUpgrade) {
-      ItemFoodInventory inventory_food = new ItemFoodInventory();
+      ItemInventoryUnlock inventory_food = new ItemInventoryUnlock();
       ItemRegistry.register(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food);
     }
     if (enableCorruptedChorus) {
-      ItemChorusCorrupted corrupted_chorus = new ItemChorusCorrupted();
+      ItemNoclipGhost corrupted_chorus = new ItemNoclipGhost();
       ItemRegistry.register(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
     }
     if (enableGlowingChorus) {
-      ItemChorusGlowing glowing_chorus = new ItemChorusGlowing();
+      ItemFlight glowing_chorus = new ItemFlight();
       ItemRegistry.register(glowing_chorus, "glowing_chorus");
       ModCyclic.instance.events.register(glowing_chorus);
     }

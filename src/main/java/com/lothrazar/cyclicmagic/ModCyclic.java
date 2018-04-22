@@ -25,9 +25,7 @@ package com.lothrazar.cyclicmagic;
 
 import java.io.File;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -49,6 +47,8 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import com.lothrazar.cyclicmagic.util.UtilString;
+import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.util.log.ModLogger;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;

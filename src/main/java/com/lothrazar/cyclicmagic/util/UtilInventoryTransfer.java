@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

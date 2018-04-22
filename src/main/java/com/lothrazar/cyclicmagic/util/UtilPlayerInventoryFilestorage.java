@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;

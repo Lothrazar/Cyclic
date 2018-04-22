@@ -28,7 +28,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;

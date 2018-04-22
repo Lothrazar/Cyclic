@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

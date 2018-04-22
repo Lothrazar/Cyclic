@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.base;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;

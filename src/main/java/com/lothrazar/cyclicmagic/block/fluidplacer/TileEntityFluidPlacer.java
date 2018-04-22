@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.fluidplacer;
 
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;

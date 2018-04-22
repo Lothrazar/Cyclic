@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.fluid.FluidTankBase;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

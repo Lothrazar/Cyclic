@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.util.ResourceLocation;
 
 public class ProgressBar {

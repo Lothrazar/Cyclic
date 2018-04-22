@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;

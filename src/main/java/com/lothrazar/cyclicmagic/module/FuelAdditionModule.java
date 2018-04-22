@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

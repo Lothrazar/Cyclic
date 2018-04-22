@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary;
 
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;

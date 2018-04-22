@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionBounce;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
@@ -36,6 +35,7 @@ import com.lothrazar.cyclicmagic.potion.PotionSnow;
 import com.lothrazar.cyclicmagic.potion.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;

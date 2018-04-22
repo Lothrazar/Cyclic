@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.item.magic.dynamite;
 
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.explosion.ExplosionMining;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;

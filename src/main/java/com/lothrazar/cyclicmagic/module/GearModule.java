@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldHoe;
@@ -44,6 +43,7 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;

@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotPotion;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;

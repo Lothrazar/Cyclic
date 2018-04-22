@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.config;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;

@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.collector;
 
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;

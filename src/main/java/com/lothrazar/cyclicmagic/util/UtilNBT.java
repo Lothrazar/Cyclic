@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.Entity;

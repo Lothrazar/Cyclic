@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;

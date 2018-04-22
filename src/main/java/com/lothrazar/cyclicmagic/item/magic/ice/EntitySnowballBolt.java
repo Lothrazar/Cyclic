@@ -23,12 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.magic.ice;
 
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;

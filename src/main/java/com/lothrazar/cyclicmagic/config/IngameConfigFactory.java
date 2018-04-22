@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.config;
 
 import java.util.HashSet;
 import java.util.Set;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
