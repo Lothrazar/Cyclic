@@ -23,19 +23,16 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.peat.generator;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -56,12 +53,10 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     TIMER;
   }
 
-  private EnergyStore energy;
-
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForInsert(SLOT_INPUT);
-    energy = new EnergyStore(CAPACITY);
+    energyStorage = new EnergyStore(CAPACITY);
     timer = 0;
   }
 
@@ -73,12 +68,12 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     this.tryOutputPower();
     // only if burning peat 
     if (timer > 0) {
-      int actuallyGained = this.energy.receiveEnergy(PER_TICK, true);
+      int actuallyGained = this.energyStorage.receiveEnergy(PER_TICK, true);
       if (actuallyGained == PER_TICK) {
         this.spawnParticlesAbove();
         // either we have room to eat everything that generated, or we didnt.
         //if we did, burn some fuel. if not, wait for more room in battery
-        this.energy.receiveEnergy(PER_TICK, false);
+        this.energyStorage.receiveEnergy(PER_TICK, false);
         timer--;
       }
     }
@@ -159,35 +154,4 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     }
   }
 
-  @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    if (this.energy != null && compound.hasKey("powercable")) {
-      CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
-    }
-  }
-
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    if (energy != null) {
-      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
-    }
-    return super.writeToNBT(compound);
-  }
-
-  @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == CapabilityEnergy.ENERGY) {
-      return true;
-    }
-    return super.hasCapability(capability, facing);
-  }
-
-  @Override
-  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
-    if (capability == CapabilityEnergy.ENERGY) {
-      return CapabilityEnergy.ENERGY.cast(this.energy);
-    }
-    return super.getCapability(capability, facing);
-  }
 }
