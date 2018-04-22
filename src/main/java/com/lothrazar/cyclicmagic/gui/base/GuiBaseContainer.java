@@ -55,15 +55,16 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
-  protected int fieldFuel = -1;
-  protected int fieldMaxFuel = -1;
+
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
   public ProgressBar progressBar = null;
+  //energybar? 
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
   protected int fuelX, fuelY, fuelXE, fuelYE;
   private GuiButtonToggleFuelBar btnFuelToggle;
+  private boolean usesEnergy;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -81,9 +82,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     this.ySize = screenSize.height();
   }
 
-  protected void setFieldFuel(int ordinal) {
-    this.fieldFuel = ordinal;
-    this.fieldMaxFuel = ordinal + 1;
+  protected void setFieldFuel() {
+    this.usesEnergy = true;
   }
 
   @Override
@@ -104,7 +104,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-    if (tile != null && tile.doesUseFuel() && this.fieldFuel >= 0 && this.tile instanceof ITileFuel) {
+    if (this.usesEnergy && tile.doesUseFuel() && this.tile instanceof ITileFuel) {
       btnFuelToggle = new GuiButtonToggleFuelBar(3,
           this.guiLeft + this.xSize - Const.PAD,
           this.guiTop + 1, this.tile.getPos());
@@ -223,7 +223,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   public void drawFuelText() {
-    if (this.fieldFuel > -1 && this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
+    if (this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
       ITileFuel tileFuel = this.tile;
       this.btnFuelToggle.setState(tileFuel.getFuelDisplay());
       //      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
@@ -250,8 +250,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int outerLength = 62, outerWidth = 16;
     int innerLength = 60, innerWidth = 14;
     this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
-    fuelXE = fuelX + innerLength;
-    fuelYE = fuelY + innerWidth;
+    fuelXE = fuelX + innerWidth + 2;
+    fuelYE = fuelY + innerLength + 2;
     Gui.drawModalRectWithCustomSizedTexture(
         fuelX - 1,
         fuelY - 1, u, v,
@@ -375,7 +375,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   public void tryDrawFuelSlot(int x, int y) {
-    if (this.fieldFuel < 0 || tile == null || tile.doesUseFuel() == false) {
+    if (tile == null || tile.doesUseFuel() == false) {
       return;
     }
     int u = 0, v = 0;

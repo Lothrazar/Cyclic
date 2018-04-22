@@ -54,7 +54,8 @@ public class GuiHarvester extends GuiBaseContainer {
     this.fieldPreviewBtn = TileEntityHarvester.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10,
         ContainerHarvester.SLOTY + 3 * Const.SQ + 4, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
-    this.setFieldFuel(TileEntityHarvester.Fields.FUEL.ordinal());
+
+    this.setFieldFuel();
   }
 
   @Override

@@ -49,7 +49,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-    this.setFieldFuel(TileEntityUncrafter.Fields.FUEL.ordinal());
+    this.setFieldFuel();
     this.progressBar = new ProgressBar(this, 10,
         ContainerUncrafting.SLOTY_INPUT + 2 * Const.SQ + Const.PAD,
         TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);

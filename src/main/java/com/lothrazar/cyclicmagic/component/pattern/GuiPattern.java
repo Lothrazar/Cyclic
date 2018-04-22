@@ -57,7 +57,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.setFieldFuel(Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override

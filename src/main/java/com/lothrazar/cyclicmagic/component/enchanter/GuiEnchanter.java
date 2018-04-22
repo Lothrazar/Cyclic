@@ -40,7 +40,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
-    this.setFieldFuel(TileEntityEnchanter.Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override

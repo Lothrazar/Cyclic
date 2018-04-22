@@ -38,7 +38,7 @@ public class GuiCrafter extends GuiBaseContainer {
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     //    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
-    this.setFieldFuel(TileEntityCrafter.Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override

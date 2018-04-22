@@ -38,7 +38,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
-    this.setFieldFuel(TileEntityAnvilAuto.Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override

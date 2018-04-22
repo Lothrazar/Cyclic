@@ -57,7 +57,7 @@ public class GuiBuilder extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
-    this.setFieldFuel(TileEntityStructureBuilder.Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override

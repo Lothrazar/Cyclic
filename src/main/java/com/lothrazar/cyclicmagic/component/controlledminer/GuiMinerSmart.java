@@ -55,7 +55,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
-    this.setFieldFuel(TileEntityControlledMiner.Fields.FUEL.ordinal());
+    this.setFieldFuel();
   }
 
   @Override
