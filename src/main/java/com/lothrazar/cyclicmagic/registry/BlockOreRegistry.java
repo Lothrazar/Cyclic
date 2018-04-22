@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
-import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;

@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.food.ItemAppleStep;
-import com.lothrazar.cyclicmagic.item.food.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

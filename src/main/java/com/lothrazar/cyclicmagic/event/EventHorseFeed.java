@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
+import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

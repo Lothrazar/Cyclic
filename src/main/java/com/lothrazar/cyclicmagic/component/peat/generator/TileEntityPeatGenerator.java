@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.component.peat.generator;
 
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.data.Const;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

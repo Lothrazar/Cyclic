@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.component.playerext.storage;
 
-import com.lothrazar.cyclicmagic.component.playerext.ButtonToggleHotbar;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.playerupgrade.ButtonToggleHotbar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;

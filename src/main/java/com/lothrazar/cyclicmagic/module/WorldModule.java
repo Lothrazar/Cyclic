@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.module;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
-import com.lothrazar.cyclicmagic.component.ore.WorldGenNewOre;
+import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.ore.WorldGenNewOre;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.registry.BlockOreRegistry;

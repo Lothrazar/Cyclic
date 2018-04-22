@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity.projectile;
 
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteBlockSafe;
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteMining;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.Render;

@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.gui;
 import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.lothrazar.cyclicmagic.component.screen.ScreenTESR;
+import com.lothrazar.cyclicmagic.block.screen.ScreenTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

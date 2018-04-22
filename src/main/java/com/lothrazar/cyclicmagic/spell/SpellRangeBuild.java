@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.spell;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
+import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
