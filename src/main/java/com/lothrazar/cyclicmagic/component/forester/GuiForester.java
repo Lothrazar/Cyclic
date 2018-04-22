@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.component.forester;
 import com.lothrazar.cyclicmagic.component.forester.TileEntityForester.Fields;
 import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.data.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -48,7 +47,7 @@ public class GuiForester extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_SAPLING);
-    for (int k = 0; k < TileEntityForester.INVENTORY_SIZE - 1; k++) {
+    for (int k = 0; k < tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           this.guiLeft + ContainerForester.SLOTX_START - 1 + (k % 8) * Const.SQ + Const.SQ,
           this.guiTop + ContainerForester.SLOTY - 1 + (k / 8) * Const.SQ,
