@@ -98,7 +98,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.setFuelSlot(BlockMinerSmart.FUEL_COST);
+    this.initEnergyWithCost(BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
 

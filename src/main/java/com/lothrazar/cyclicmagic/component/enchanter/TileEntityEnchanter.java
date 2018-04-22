@@ -62,7 +62,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityEnchanter() {
     super(2);
-    this.setFuelSlot(BlockEnchanter.FUEL_COST);
+    this.initEnergyWithCost(BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));

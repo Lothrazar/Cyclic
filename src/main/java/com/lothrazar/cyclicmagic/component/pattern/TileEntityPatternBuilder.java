@@ -80,7 +80,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
 
   public TileEntityPatternBuilder() {
     super(9 + 9);
-    this.setFuelSlot(BlockPatternBuilder.FUEL_COST);
+    this.initEnergyWithCost(BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
     syncBlockItemMap();
   }

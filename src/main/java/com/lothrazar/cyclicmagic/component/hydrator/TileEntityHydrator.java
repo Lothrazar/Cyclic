@@ -66,7 +66,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineInvo implements ITi
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    fuelCost = BlockHydrator.FUEL_COST;
+    this.initEnergyWithCost(BlockHydrator.FUEL_COST);
   }
 
   private int needsRedstone = 1;

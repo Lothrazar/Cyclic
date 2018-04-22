@@ -63,7 +63,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_TIMER = "Timer";
   public static final String NBT_REDST = "redstone";
   public static final String NBT_SIZE = "size";
-  public static final String NBT_FUEL = "fuel";
+
   public static final String NBTPLAYERID = "uuid";
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
@@ -71,7 +71,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
   protected int fuelDisplay = 0;
-  protected int fuelCost = 0;
+  private int fuelCost = 0;
 
   protected int speed = 1;
   protected int timer;
@@ -79,6 +79,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   InvWrapperRestricted invHandler;
   protected EnergyStore energyStorage;
   private boolean setRenderGlobally;
+  private boolean hasEnergy;
 
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
@@ -141,23 +142,33 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-  protected void setFuelSlot(int fcost) {
+  protected void initEnergyWithCost(int fcost) {
+    initEnergy();
     this.fuelCost = fcost;
   }
 
+  protected void initEnergy() {
+    this.hasEnergy = true;
+    this.energyStorage = new EnergyStore();
+  }
+
   public int getFuelMax() {
-    //    this.initEnergyStorage();
+    if (energyStorage == null) {
+      return 0;
+    }
     return this.energyStorage.getMaxEnergyStored();
   }
 
   @Override
   public int getFuelCurrent() {
-    //    this.initEnergyStorage();
+    if (this.energyStorage == null) {
+      return 0;
+    }
     return this.energyStorage.getEnergyStored();
   }
 
   protected void setFuelCurrent(int f) {
-    this.initEnergyStorage();
+
     this.energyStorage.setEnergyStored(f);
   }
 
@@ -430,9 +441,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
     fuelDisplay = compound.getInteger("fueldisplay");
-    this.setFuelCurrent(compound.getInteger(NBT_FUEL));
-    this.initEnergyStorage();
-    if (energyStorage != null && compound.hasKey(NBT_ENERGY)) {
+
+    if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
     super.readFromNBT(compound);
@@ -443,11 +453,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
     compound.setInteger(NBT_SPEED, speed);
-    compound.setInteger(NBT_FUEL, getFuelCurrent());
+
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger("fueldisplay", fuelDisplay);
-    this.initEnergyStorage();
-    if (energyStorage != null) {
+
+    if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
     return super.writeToNBT(compound);
@@ -554,17 +564,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return (T) invHandler;
     }
-    if (this.energyStorage != null && capability == CapabilityEnergy.ENERGY) {
+    if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
       //      this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
   }
 
-  public void initEnergyStorage() {
-    if (energyStorage == null)
-      energyStorage = new EnergyStore();
-  }
 
   @Override
   public void toggleFuelDisplay() {

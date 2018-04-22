@@ -62,7 +62,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityHarvester() {
     super(3 * 9);
-    this.setFuelSlot(BlockHarvester.FUEL_COST);
+    this.initEnergyWithCost(BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(0, this.getSizeInventory());
   }

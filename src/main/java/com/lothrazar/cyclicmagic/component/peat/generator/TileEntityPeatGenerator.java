@@ -56,6 +56,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForInsert(SLOT_INPUT);
+    this.initEnergy();
     energyStorage = new EnergyStore(CAPACITY);
     timer = 0;
   }

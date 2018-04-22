@@ -113,7 +113,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   public TileEntityStructureBuilder() {
     super(9);
-    this.setFuelSlot(BlockStructureBuilder.FUEL_COST);
+    this.initEnergyWithCost(BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
   }
 

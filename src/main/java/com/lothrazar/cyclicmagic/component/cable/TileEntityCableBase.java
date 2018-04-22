@@ -66,13 +66,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private Map<EnumFacing, Integer> mapIncomingFluid = Maps.newHashMap();
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
-  private EnergyStore cableEnergyStore;
 
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize, fluidTankSize);
     //TODO: fix input awkwardness 
     if (powerPerTick > 0) {
-      cableEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
+      energyStorage = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
     }
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
@@ -119,9 +118,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
     }
-    if (this.cableEnergyStore != null && compound.hasKey("powercable")) {
-      CapabilityEnergy.ENERGY.readNBT(cableEnergyStore, null, compound.getTag("powercable"));
-    }
+
   }
 
   @Override
@@ -134,9 +131,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
       compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
     }
-    if (cableEnergyStore != null) {
-      compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(cableEnergyStore, null));
-    }
+
     return compound;
   }
 
@@ -163,7 +158,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       validLabels.add(this.getIncomingStringsFluid());
     }
     if (this.isEnergyPipe() &&
-        this.cableEnergyStore != null && this.cableEnergyStore.getEnergyStored() > 0) {
+        this.energyStorage != null && this.energyStorage.getEnergyStored() > 0) {
       validLabels.add(this.getIncomingStringsEnergy());
     }
     //if its a multi pipe pick a random one
@@ -201,7 +196,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private String getIncomingStringsEnergy() {
-    String tmpName = this.cableEnergyStore.getEnergyStored() + "";
+    String tmpName = this.energyStorage.getEnergyStored() + "";
     String incoming = getIncomingStringsFromMap(this.mapIncomingEnergy);
     if (incoming.isEmpty() == false) {
       tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
@@ -418,7 +413,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   @Override
   public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
-      return CapabilityEnergy.ENERGY.cast(this.cableEnergyStore);
+      return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }
     return super.getCapability(capability, facing);
   }

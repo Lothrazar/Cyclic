@@ -61,7 +61,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityAnvilAuto() {
     super(2);
-    this.setFuelSlot(BlockAnvilAuto.FUEL_COST);
+    this.initEnergyWithCost(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank.setFluidAllowed(FluidRegistry.LAVA);
