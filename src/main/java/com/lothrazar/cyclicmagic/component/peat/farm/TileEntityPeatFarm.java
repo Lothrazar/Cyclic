@@ -70,6 +70,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     super(12);
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
+    this.initEnergy();
     energyStorage = new EnergyStore(CAPACITY);
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, this.getSizeInventory());
