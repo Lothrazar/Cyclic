@@ -33,8 +33,7 @@ public class GuiPeatFarm extends GuiBaseContainer {
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
-    fuelX = this.guiLeft + 152;
-    fuelY = this.guiTop + 17;
+
   }
 
   @Override
