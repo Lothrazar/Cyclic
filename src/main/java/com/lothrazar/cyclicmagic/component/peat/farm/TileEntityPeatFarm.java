@@ -63,14 +63,14 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
 
   private int needsRedstone = 1;
   public FluidTankBase tank = new FluidTankBase(TANK_FULL);
-  private EnergyStore energy;
+
   private int blockPointer = 0;
 
   public TileEntityPeatFarm() {
     super(12);
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
-    energy = new EnergyStore(CAPACITY);
+    energyStorage = new EnergyStore(CAPACITY);
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, this.getSizeInventory());
   }
@@ -103,8 +103,8 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
       blockPointer = 0;//start over when turned off
       return;
     }
-    energy.extractEnergy(PER_TICK, false);
-    if (energy.getEnergyStored() == 0) {
+    energyStorage.extractEnergy(PER_TICK, false);
+    if (energyStorage.getEnergyStored() == 0) {
       return;
     }
     //GET VALIDATE ITEM
@@ -174,6 +174,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     return outer;
   }
 
+  @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
@@ -189,14 +190,14 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     this.needsRedstone = compound.getInteger(NBT_REDST);
     blockPointer = compound.getInteger("blockPointer");
     tank.readFromNBT(compound.getCompoundTag(NBT_TANK));
-    CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
+    // CapabilityEnergy.ENERGY.readNBT(energy, null, compound.getTag("powercable"));
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
     compound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
-    compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
+    //compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(energy, null));
     compound.setInteger("blockPointer", blockPointer);
     return super.writeToNBT(compound);
   }
@@ -210,6 +211,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
@@ -277,9 +279,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineInvo implements ITi
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
-    if (capability == CapabilityEnergy.ENERGY) {
-      return CapabilityEnergy.ENERGY.cast(this.energy);
-    }
+
     return super.getCapability(capability, facing);
   }
 

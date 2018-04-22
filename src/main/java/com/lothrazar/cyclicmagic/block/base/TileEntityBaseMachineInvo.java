@@ -50,6 +50,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
 
@@ -79,7 +80,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected int timer;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
-  private EnergyStore energyStorage;
+  protected EnergyStore energyStorage;
   private boolean setRenderGlobally;
 
   public TileEntityBaseMachineInvo(int invoSize) {
@@ -175,16 +176,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return pctOneDecimal;
   }
 
-  public boolean doesUseFuel() {
-    return this.fuelCost > 0;
-  }
-
   public int getFuelCost() {
     return this.fuelCost;
   }
 
   public void consumeFuel() {
-    if (doesUseFuel() && world.isRemote == false) {//only drain on server
+    if (this.fuelCost > 0 && world.isRemote == false) {//only drain on server
       if (this.getFuelCurrent() >= this.getFuelCost()) {
         //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
         //            + " and total was " + this.getFuelCurrent());
@@ -227,7 +224,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean isRunning() {
-    if (this.doesUseFuel()) {
+    if (this.fuelCost > 0) {
       // update from power cables/batteries next door
       this.updateIncomingEnergy();
     }
@@ -235,7 +232,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public boolean updateFuelIsBurning() {
-    if (this.doesUseFuel()) {
+    if (this.fuelCost > 0) {
       this.importFuel();
       if (this.hasEnoughFuel()) {
         this.consumeFuel();
@@ -289,7 +286,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean hasEnoughFuel() {
-    if (doesUseFuel() == false) {
+    if (this.fuelCost == 0) {
       return true;
     }
     return this.getFuelCurrent() >= this.getFuelCost();
@@ -450,20 +447,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return true;
   }
 
-  @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    this.readInvoFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
-    speed = compound.getInteger(NBT_SPEED);
-    fuelDisplay = compound.getInteger("fueldisplay");
-    this.setFuelCurrent(compound.getInteger(NBT_FUEL));
-    this.initEnergyStorage();
-    if (energyStorage != null && doesUseFuel() && compound.hasKey(NBT_ENERGY)) {
-      CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
-    }
-    super.readFromNBT(compound);
-  }
-
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -474,6 +457,20 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    this.readInvoFromNBT(compound);
+    timer = compound.getInteger(NBT_TIMER);
+    speed = compound.getInteger(NBT_SPEED);
+    fuelDisplay = compound.getInteger("fueldisplay");
+    this.setFuelCurrent(compound.getInteger(NBT_FUEL));
+    this.initEnergyStorage();
+    if (energyStorage != null && compound.hasKey(NBT_ENERGY)) {
+      CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
+    }
+    super.readFromNBT(compound);
+  }
+
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -483,7 +480,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger("fueldisplay", fuelDisplay);
     this.initEnergyStorage();
-    if (energyStorage != null && doesUseFuel()) {
+    if (energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
     return super.writeToNBT(compound);
@@ -541,7 +538,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public int getSpeed() {
-    if (this.doesUseFuel() == false) {
+    if (this.fuelCost == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
@@ -573,11 +570,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
-    if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+    if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
         && this.getSizeInventory() > 0) {
       return true;
     }
-    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
+    if (capability == CapabilityEnergy.ENERGY
+        && this.energyStorage != null) {
       return true;
     }
     return super.hasCapability(capability, facing);
@@ -589,8 +587,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return (T) invHandler;
     }
-    if (doesUseFuel() && capability == CapabilityEnergy.ENERGY) {
-      this.initEnergyStorage();
+    if (this.energyStorage != null && capability == CapabilityEnergy.ENERGY) {
+      //      this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);

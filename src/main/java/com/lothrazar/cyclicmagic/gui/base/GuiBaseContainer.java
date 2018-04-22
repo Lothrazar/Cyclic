@@ -104,7 +104,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-    if (this.usesEnergy && tile.doesUseFuel() && this.tile instanceof ITileFuel) {
+    if (this.usesEnergy && tile.getFuelCost() > 0 && this.tile instanceof ITileFuel) {
       btnFuelToggle = new GuiButtonToggleFuelBar(3,
           this.guiLeft + this.xSize - Const.PAD,
           this.guiTop + 1, this.tile.getPos());
@@ -131,7 +131,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
     updateToggleButtonStates();
-    if (tile != null && tile.doesUseFuel()) {
+    if (tile != null && tile.getFuelCost() > 0) {
       drawFuelText();
     }
     for (GuiTextField txt : txtBoxes) {
@@ -214,7 +214,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     //    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
     //      //this.btnFuelToggle
     //    }
-    if (this.tile instanceof ITileFuel && tile.doesUseFuel()) {
+    if (this.tile instanceof ITileFuel && tile.getFuelCost() > 0) {
       drawFuelBarOutsideContainer();
     }
     //    else if (this.fieldFuel > -1 && tile.doesUseFuel()) {
@@ -316,10 +316,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
   private String getFuelAmtDisplay() {
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-    //    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    if (energy.getEnergyStored() == 0) {
-      return "0";
-    }
+
     return energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
   }
 
@@ -375,7 +372,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   public void tryDrawFuelSlot(int x, int y) {
-    if (tile == null || tile.doesUseFuel() == false) {
+    if (tile == null || tile.getFuelCost() == 0) {
       return;
     }
     int u = 0, v = 0;

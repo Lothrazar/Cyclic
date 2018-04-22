@@ -130,7 +130,7 @@ public class ContainerBaseMachine extends ContainerBase {
   //cant have no slots. breaks shiftclick
   public void addFurnaceFuelSlot(int slotxFuel, int slotyFuel) {
     Slot fuel;
-    if (tile.doesUseFuel()) {
+    if (tile.getFuelCost() > 0) {
       fuel = new SlotFuel(tile, tile.getSizeInventory() - 1, slotxFuel, slotyFuel);
     }
     else {
