@@ -35,7 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerDropperExact extends ContainerBaseMachine {
 
-  public static final int SLOTX_START = 104;
+  public static final int SLOTX_START = 100;
   public static final int SLOTY = 20;
 
   public ContainerDropperExact(InventoryPlayer inventoryPlayer, TileEntityDropperExact tileEntity) {
@@ -67,7 +67,7 @@ public class ContainerDropperExact extends ContainerBaseMachine {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
-    Slot slotObject = (Slot) inventorySlots.get(slot);
+    Slot slotObject = inventorySlots.get(slot);
     //getSizeInventory is only 9 though, because output stack is not part of the size
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

@@ -45,6 +45,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
 
   public TileEntityDropperExact() {
     super(9);
+    this.initEnergyWithCost(BlockDropperExact.FUEL_COST);
     this.setSlotsForExtract(0, 8);
     this.setSlotsForInsert(0, 8);
     timer = delay;
@@ -55,8 +56,11 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.isRunning() == false) {
       return;
     }
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     //TODO: not like this. find list of slots that are NONEMPTY and then pick one
-    //
+
     if (this.updateTimerIsZero()) {
       this.updateCurrentSlot();
       if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {

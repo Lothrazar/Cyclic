@@ -40,10 +40,7 @@ public class GuiFisher extends GuiBaseContainer {
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-  }
-
-  public String getTitle() {
-    return "tile.block_fishing.name";
+    this.fieldRedstoneBtn = TileEntityFishing.Fields.REDSTONE.ordinal();
   }
 
   @SideOnly(Side.CLIENT)

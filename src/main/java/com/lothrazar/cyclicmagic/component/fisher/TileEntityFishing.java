@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -40,7 +40,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -53,20 +52,26 @@ import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   // currently only used by the thermal fishing rod
   private static final int ENERGY_PER_FISH = 100;
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
+
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
   static final int SLOT_TOOL = 0;
+
+  public static enum Fields {
+    REDSTONE;
+  }
+
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
+  private int needsRedstone = 1;
 
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
+    this.initEnergyWithCost(BlockFishing.FUEL_COST);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     this.setSlotsForInsert(SLOT_TOOL);
@@ -173,6 +178,12 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
 
   @Override
   public void update() {
+    if (this.isRunning() == false || isEquipmentValid() == false) {
+      return;
+    }
+    if (this.updateFuelIsBurning() == false) {
+      return;
+    }
     World world = this.getWorld();
     Random rand = world.rand;
     if (this.isFishCaught() && world instanceof WorldServer) {
@@ -273,13 +284,51 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = tagList.getCompoundTagAt(i);
-      byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.size()) {
-        inv.set(i, UtilNBT.itemFromNBT(tag));
-      }
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(tagCompound);
+  }
+
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = (this.needsRedstone + 1) % 2;
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
+  }
+
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
     }
+    return -1;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+    }
+  }
+
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(getFieldCount());
+  }
+
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
   }
 }

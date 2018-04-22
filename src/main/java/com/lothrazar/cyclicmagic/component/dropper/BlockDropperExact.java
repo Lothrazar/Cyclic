@@ -25,6 +25,8 @@ package com.lothrazar.cyclicmagic.component.dropper;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
@@ -34,8 +36,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class BlockDropperExact extends BlockBaseFacingOmni implements IHasRecipe {
+public class BlockDropperExact extends BlockBaseFacingOmni implements IHasConfig, IHasRecipe {
+
+  public static int FUEL_COST = 0;
 
   public BlockDropperExact() {
     super(Material.ROCK);
@@ -55,5 +60,10 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IHasRecipe
         "ggg",
         'g', "ingotGold",
         'd', Blocks.DROPPER);
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
