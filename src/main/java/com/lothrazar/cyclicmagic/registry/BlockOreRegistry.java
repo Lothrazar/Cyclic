@@ -2,9 +2,10 @@ package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.guide.GuideItem;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.module.WorldModule;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;

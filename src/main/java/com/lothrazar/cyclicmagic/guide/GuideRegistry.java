@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.guide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,54 +30,14 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.brewing.BrewingRecipe;
 
 public class GuideRegistry {
 
   private static List<GuideItem> items = new ArrayList<GuideItem>();
   private static final String SUFFIX = ".guide";
-
-  public enum GuideCategory {
-    BLOCK, ITEM, WORLD, GEAR, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
-
-    public String text() {
-      return "guide.category." + name().toLowerCase();
-    }
-
-    public ItemStack icon() {
-      switch (this) {
-        case BLOCK:
-          return new ItemStack(Blocks.ENDER_CHEST);
-        case BLOCKMACHINE:
-          return new ItemStack(Blocks.FURNACE);
-        case ENCHANT:
-          return new ItemStack(Items.ENCHANTED_BOOK);
-        case GEAR:
-          return new ItemStack(Items.DIAMOND_SWORD);
-        case ITEM:
-          return new ItemStack(Items.STICK);
-        //        case POTION:
-        //          return new ItemStack(Items.POTIONITEM);
-        case WORLD:
-          return new ItemStack(Blocks.GOLD_ORE);
-        case BLOCKPLATE:
-          return new ItemStack(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-        case ITEMBAUBLES:
-          return new ItemStack(Items.TOTEM_OF_UNDYING);
-        case ITEMTHROW:
-          return new ItemStack(Items.ELYTRA);
-        case TRANSPORT:
-          return new ItemStack(Items.FURNACE_MINECART);
-        default:
-          return new ItemStack(Blocks.DIRT);//wont happen unless new cat undefined
-      }
-    }
-  }
 
   public static GuideItem register(Enchantment ench, @Nonnull List<String> args) {
     args.add(ench.getRarity().name().toLowerCase().replace("_", " "));
@@ -141,62 +101,5 @@ public class GuideRegistry {
 
   public static List<GuideItem> getItems() {
     return items;
-  }
-
-  public static class GuidePage {
-
-    public String text = null;
-    public IRecipe recipe = null;
-    public BrewingRecipe brewRecipe = null;
-
-    public GuidePage(String t) {
-      text = t;
-    }
-
-    public GuidePage(IRecipe t) {
-      recipe = t;
-    }
-
-    public GuidePage(BrewingRecipe t) {
-      brewRecipe = t;
-    }
-  }
-
-  public static class GuideItem {
-
-    public GuideCategory cat;
-    public Item icon;
-    public String title;
-    public List<GuidePage> pages = new ArrayList<GuidePage>();
-
-    public GuideItem(@Nonnull GuideCategory cat, @Nonnull Item icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
-      this.cat = cat;
-      this.icon = icon;
-      this.title = UtilChat.lang(title);
-      if (text != null) {
-        this.pages.add(new GuidePage(UtilChat.lang(text)));
-      }
-      if (recipe != null) {
-        this.pages.add(new GuidePage(recipe));
-      }
-    }
-
-    public void addRecipePage(IRecipe t) {
-      if (t == null) {
-        return;
-      }
-      this.pages.add(new GuidePage(t));
-    }
-
-    public void addRecipePage(BrewingRecipe t) {
-      if (t == null) {
-        return;
-      }
-      this.pages.add(new GuidePage(t));
-    }
-
-    public void addTextPage(String t) {
-      this.pages.add(new GuidePage(t));
-    }
   }
 }

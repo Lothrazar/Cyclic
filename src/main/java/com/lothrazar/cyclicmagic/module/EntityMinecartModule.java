@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartChest;
@@ -37,7 +38,6 @@ import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraftforge.common.config.Configuration;

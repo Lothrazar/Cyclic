@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -37,11 +37,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
- * I am not the author this is from here by williewillus https://gist.github.com/williewillus/a1a899ce5b0f0ba099078d46ae3dae6e
+ * I am not the original author this is from here by williewillus https://gist.github.com/williewillus/a1a899ce5b0f0ba099078d46ae3dae6e
  * 
  * 
  */
-public class RecipeFileWriter {
+public class UtilGenerateRecipeJson {
 
   //Replace calls to GameRegistry.addShapeless/ShapedRecipe with these methods, which will dump it to a json in your dir of choice
   //Also works with OD, replace GameRegistry.addRecipe(new ShapedOreRecipe/ShapelessOreRecipe with the same calls
@@ -158,7 +158,7 @@ public class RecipeFileWriter {
     if (thing instanceof String) {
       Map<String, Object> ret = new HashMap<>();
       ret.put("type", "forge:ore_dict");
-      ret.put("ore", ((String) thing)); // NOTE you need to add this to your _constants.json!
+      ret.put("ore", (thing)); // NOTE you need to add this to your _constants.json!
       // todo autogenerate constants.json as well
       //False. well, if its an exiting OreDict entry it does NOT need the "#" + 
       return ret;

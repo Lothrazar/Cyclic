@@ -29,14 +29,17 @@ import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.guide.GuideItem;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
+import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
 import com.lothrazar.cyclicmagic.item.ItemMattock;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
-import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
 import com.lothrazar.cyclicmagic.item.ItemPistonWand;
 import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
 import com.lothrazar.cyclicmagic.item.ItemProspector;
@@ -63,6 +66,19 @@ import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmSpeed;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmVoid;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmWater;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemGloveClimb;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldArmor;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldAxe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldHoe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldPickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldSpade;
+import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldSword;
+import com.lothrazar.cyclicmagic.item.equipment.ItemGlowingHelmet;
+import com.lothrazar.cyclicmagic.item.equipment.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.item.equipment.ItemPowerSword;
+import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneHoe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.item.magic.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.item.magic.ItemEnderEyeReuse;
 import com.lothrazar.cyclicmagic.item.magic.ItemEnderPearlReuse;
@@ -95,35 +111,33 @@ import com.lothrazar.cyclicmagic.item.magic.torch.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseTame;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade;
-import com.lothrazar.cyclicmagic.item.mobs.ItemVillagerMagic;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade.HorseUpgradeType;
+import com.lothrazar.cyclicmagic.item.mobs.ItemVillagerMagic;
 import com.lothrazar.cyclicmagic.item.random.ItemRandomizer;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.tiletransporter.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemCraftingUnlock;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemInventoryUnlock;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemInventoryUnlock;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
-import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
-import com.lothrazar.cyclicmagic.util.data.Const;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
+import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -201,8 +215,74 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
 
+  private boolean enableEmeraldGear;
+  private boolean enableSandstoneTools;
+  private boolean enablePurpleGear;
+  private boolean enablePurpleSwords;
+  private boolean glowingHelmet;
   @Override
   public void onPreInit() {
+    if (enableEmeraldGear) {
+      ItemEmeraldArmor emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
+      ItemRegistry.register(emerald_head, "emerald_helmet", null);
+      Item emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
+      ItemRegistry.register(emerald_chest, "emerald_chestplate", null);
+      Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
+      ItemRegistry.register(emerald_legs, "emerald_leggings", null);
+      Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+      ItemRegistry.register(emerald_boots, "emerald_boots", null);
+      Item emerald_sword = new ItemEmeraldSword();
+      ItemRegistry.register(emerald_sword, "emerald_sword", null);
+      Item emerald_pickaxe = new ItemEmeraldPickaxe();
+      ItemRegistry.register(emerald_pickaxe, "emerald_pickaxe", null);
+      Item emerald_axe = new ItemEmeraldAxe();
+      ItemRegistry.register(emerald_axe, "emerald_axe", null);
+      Item emerald_shovel = new ItemEmeraldSpade();
+      ItemRegistry.register(emerald_shovel, "emerald_spade", null);
+      Item emerald_hoe = new ItemEmeraldHoe();
+      ItemRegistry.register(emerald_hoe, "emerald_hoe", null);
+      LootTableRegistry.registerLoot(emerald_pickaxe);
+      LootTableRegistry.registerLoot(emerald_sword);
+      LootTableRegistry.registerLoot(emerald_chest);
+      GuideRegistry.register(GuideCategory.GEAR, emerald_head, "item.emeraldgear.title", "item.emeraldgear.guide");
+    }
+    if (enablePurpleGear) {
+      Item purple_boots = new ItemPowerArmor(EntityEquipmentSlot.FEET);
+      ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
+      Item purple_leggings = new ItemPowerArmor(EntityEquipmentSlot.LEGS);
+      ItemRegistry.register(purple_leggings, "purple_leggings", GuideCategory.GEAR);
+      Item purple_chestplate = new ItemPowerArmor(EntityEquipmentSlot.CHEST);
+      ItemRegistry.register(purple_chestplate, "purple_chestplate", GuideCategory.GEAR);
+      Item purple_helmet = new ItemPowerArmor(EntityEquipmentSlot.HEAD);
+      ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
+    }
+    if (glowingHelmet) {
+      Item glowing_helmet = new ItemGlowingHelmet(EntityEquipmentSlot.HEAD);
+      ItemRegistry.register(glowing_helmet, "glowing_helmet", GuideCategory.GEAR);
+      ModCyclic.instance.events.register(glowing_helmet);
+    }
+    if (enablePurpleSwords) {
+      ItemPowerSword sword_weakness = new ItemPowerSword(ItemPowerSword.SwordType.WEAK);
+      ItemRegistry.register(sword_weakness, "sword_weakness", GuideCategory.GEAR);
+      ItemPowerSword sword_slowness = new ItemPowerSword(ItemPowerSword.SwordType.SLOW);
+      ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
+      ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
+      ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
+    }
+    if (enableSandstoneTools) {
+      Item sandstone_pickaxe = new ItemSandstonePickaxe();
+      ItemRegistry.register(sandstone_pickaxe, "sandstone_pickaxe", null);
+      Item sandstone_axe = new ItemSandstoneAxe();
+      ItemRegistry.register(sandstone_axe, "sandstone_axe", null);
+      Item sandstone_spade = new ItemSandstoneSpade();
+      ItemRegistry.register(sandstone_spade, "sandstone_spade", null);
+      Item sandstone_hoe = new ItemSandstoneHoe();
+      ItemRegistry.register(sandstone_hoe, "sandstone_hoe", null);
+      LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
+      LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
+      LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
+      GuideRegistry.register(GuideCategory.GEAR, sandstone_axe, "item.sandstonegear.title", "item.sandstonegear.guide");
+    }
     if (enableCGlove) {
       ItemGloveClimb glove_climb = new ItemGloveClimb();
       ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
@@ -732,5 +812,10 @@ public class ItemModule extends BaseModule implements IHasConfig {
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
     enableMattock = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    glowingHelmet = config.getBoolean("GlowingHelmet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePurpleGear = config.getBoolean("PurpleArmor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSandstoneTools = config.getBoolean("SandstoneTools", Const.ConfigCategory.content, true, "Sandstone tools are between wood and stone. " + Const.ConfigCategory.contentDefaultText);
+    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
+    enablePurpleSwords = config.getBoolean("SwordsFrostEnder", Const.ConfigCategory.content, true, "Enable the epic swords. " + Const.ConfigCategory.contentDefaultText);
   }
 }
