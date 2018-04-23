@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.scaffolding;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.SoundType;

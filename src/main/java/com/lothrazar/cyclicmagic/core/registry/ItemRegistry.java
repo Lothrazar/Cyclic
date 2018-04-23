@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.core.registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.core.IHasOreDict;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

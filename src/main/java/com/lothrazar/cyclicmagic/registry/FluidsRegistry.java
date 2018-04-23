@@ -24,6 +24,8 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.liquid.exp.BlockFluidExp;
 import com.lothrazar.cyclicmagic.liquid.exp.FluidExp;
 import com.lothrazar.cyclicmagic.liquid.milk.BlockFluidMilk;

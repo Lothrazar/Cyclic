@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.config.GlobalSettings;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilScythe;
@@ -44,7 +43,6 @@ public class ConfigRegistry {
     config = c;
     config.load();
     configHandlers = new ArrayList<IHasConfig>();
-    configHandlers.add(new GlobalSettings());
   }
 
   public static void register(IHasConfig c) {

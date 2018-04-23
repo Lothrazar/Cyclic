@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.pump.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

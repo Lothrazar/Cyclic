@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.tweak.recipe;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.module.BaseModule;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;

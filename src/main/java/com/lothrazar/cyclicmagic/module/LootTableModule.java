@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

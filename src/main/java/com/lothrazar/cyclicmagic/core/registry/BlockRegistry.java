@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.core.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,10 +29,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tank.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -44,7 +44,6 @@ public class BlockRegistry {
 
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static Map<Block, GuideCategory> map = new HashMap<Block, GuideCategory>();
-  public static BlockBucketStorage block_storeempty;
 
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);

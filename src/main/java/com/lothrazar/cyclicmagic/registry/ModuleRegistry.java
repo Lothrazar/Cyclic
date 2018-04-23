@@ -44,12 +44,12 @@ import com.lothrazar.cyclicmagic.module.MountedTweaksModule;
 import com.lothrazar.cyclicmagic.module.PlantsModule;
 import com.lothrazar.cyclicmagic.module.PlayerAbilitiesModule;
 import com.lothrazar.cyclicmagic.module.TextInfoModule;
-import com.lothrazar.cyclicmagic.module.VillagerCreateModule;
 import com.lothrazar.cyclicmagic.module.WorldModule;
 import com.lothrazar.cyclicmagic.tweak.FuelAdditionModule;
 import com.lothrazar.cyclicmagic.tweak.MobChangesModule;
 import com.lothrazar.cyclicmagic.tweak.StackSizeModule;
 import com.lothrazar.cyclicmagic.tweak.recipe.RecipeChangerModule;
+import com.lothrazar.cyclicmagic.villager.VillagerCreateModule;
 
 public class ModuleRegistry {
 

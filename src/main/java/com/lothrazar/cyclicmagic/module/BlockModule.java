@@ -26,6 +26,10 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
+import com.lothrazar.cyclicmagic.block.BlockLaunch;
+import com.lothrazar.cyclicmagic.block.BlockShears;
+import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
+import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
@@ -125,11 +129,9 @@ import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessRec;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
-import com.lothrazar.cyclicmagic.block.BlockLaunch;
-import com.lothrazar.cyclicmagic.block.BlockShears;
-import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
-import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.energy.peat.ItemCarbonCatalyst;
@@ -141,10 +143,8 @@ import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.magic.fire.BlockFireSafe;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -451,10 +451,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
     }
     if (enableBucketBlocks) {
       //tank
-      BlockRegistry.block_storeempty = new BlockBucketStorage();
-      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
+      BlockBucketStorage block_storeempty = new BlockBucketStorage();
+      BlockRegistry.registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
+      GuideRegistry.register(GuideCategory.BLOCK, block_storeempty, null, null);
     }
     if (fluidPlacer) {
       //fluid placer
