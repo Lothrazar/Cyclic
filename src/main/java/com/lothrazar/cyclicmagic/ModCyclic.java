@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic;
 
 import java.io.File;
+import com.lothrazar.cyclicmagic.core.log.ModLogger;
 import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
@@ -48,7 +49,6 @@ import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import com.lothrazar.cyclicmagic.util.log.ModLogger;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
