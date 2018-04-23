@@ -29,7 +29,7 @@ import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;

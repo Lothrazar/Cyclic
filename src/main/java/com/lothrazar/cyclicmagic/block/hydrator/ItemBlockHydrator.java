@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

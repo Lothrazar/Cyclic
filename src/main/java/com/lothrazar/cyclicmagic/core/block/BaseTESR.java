@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.core.block;
 import javax.annotation.Nullable;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

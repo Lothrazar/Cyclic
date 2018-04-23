@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.interdiction;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;

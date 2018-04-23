@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.core.block;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

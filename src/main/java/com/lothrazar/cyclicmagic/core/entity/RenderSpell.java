@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.entity;
 
-import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.client.model.ModelLlamaSpit;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;

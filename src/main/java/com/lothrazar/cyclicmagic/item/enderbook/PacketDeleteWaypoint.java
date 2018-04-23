@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.enderbook;
 
-import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

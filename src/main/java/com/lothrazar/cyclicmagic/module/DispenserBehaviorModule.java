@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorPlantSeed;
-import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.IPlantable;

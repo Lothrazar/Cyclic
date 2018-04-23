@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.util.UtilHarvester;
-import com.lothrazar.cyclicmagic.util.UtilScythe;
+import com.lothrazar.cyclicmagic.core.util.UtilHarvester;
+import com.lothrazar.cyclicmagic.core.util.UtilScythe;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigRegistry {

@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.util.log;
 
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModLogger implements IHasConfig {

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade;
 
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;

@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
-import com.lothrazar.cyclicmagic.util.data.Const;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

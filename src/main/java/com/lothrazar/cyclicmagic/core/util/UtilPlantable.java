@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.util;
+package com.lothrazar.cyclicmagic.core.util;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;

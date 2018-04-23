@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.storagesack;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.util.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.util.data;
+package com.lothrazar.cyclicmagic.core.data;
 
 /**
  * This class was created by <ChickenBones>. It's distributed as

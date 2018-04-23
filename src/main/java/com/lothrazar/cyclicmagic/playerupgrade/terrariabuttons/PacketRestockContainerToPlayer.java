@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.terrariabuttons;
 
+import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
-import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

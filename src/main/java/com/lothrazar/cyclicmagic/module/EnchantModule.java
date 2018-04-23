@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantExcavation;
@@ -38,7 +39,6 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchantment.EnchantWaterwalking;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
-import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {

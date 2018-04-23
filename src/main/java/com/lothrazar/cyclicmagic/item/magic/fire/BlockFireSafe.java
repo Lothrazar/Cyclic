@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.item.magic.fire;
 
 import java.util.List;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTNT;

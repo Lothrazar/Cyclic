@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.core.item;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

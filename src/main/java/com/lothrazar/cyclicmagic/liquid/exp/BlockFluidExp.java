@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.liquid.exp;
 
 import com.lothrazar.cyclicmagic.core.block.BlockFluidBase;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
-import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
