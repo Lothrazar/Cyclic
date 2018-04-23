@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
 import com.lothrazar.cyclicmagic.liquid.poison.BlockFluidPoison;
 import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import net.minecraft.init.Items;
+import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -75,6 +76,13 @@ public class FluidsRegistry {
     fluid_exp.setBlock(block_exp);
     BlockRegistry.registerBlock(block_exp, "xpjuice", null);
     FluidRegistry.addBucketForFluid(fluid_exp);
+  }
+
+  public static void register(BlockFluidClassic block, Fluid fluid, String name) {
+    FluidRegistry.registerFluid(fluid);
+    fluid.setBlock(block);
+    BlockRegistry.registerBlock(block, name, null);
+    FluidRegistry.addBucketForFluid(fluid);
   }
 
   public static void addPoisonRecipe() {

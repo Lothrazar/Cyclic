@@ -46,7 +46,7 @@ public class GuiPeatGenerator extends GuiBaseContainer {
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     //DRAW ENERGY BAR
-    fuelX = this.guiLeft + screenSize.width() - 25;
+    fuelX = this.guiLeft + getScreenSize().width() - 25;
     fuelY = this.guiTop + 8;
     this.drawEnergyBarInside();
 

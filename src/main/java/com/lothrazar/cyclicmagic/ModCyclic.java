@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic;
 
 import java.io.File;
 import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -36,7 +37,6 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
-import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.InterModCommsRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;

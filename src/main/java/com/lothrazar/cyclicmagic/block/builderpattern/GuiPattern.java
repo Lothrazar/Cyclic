@@ -52,9 +52,9 @@ public class GuiPattern extends GuiBaseContainer {
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    screenSize = ScreenSize.LARGE;
-    this.xSize = screenSize.width();
-    this.ySize = screenSize.height();
+    setScreenSize(ScreenSize.LARGE);
+    this.xSize = getScreenSize().width();
+    this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.setUsesEnergy();
@@ -119,7 +119,7 @@ public class GuiPattern extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
     //flip button in bottom center
     ButtonFlipRegions bt = new ButtonFlipRegions(id++,
-        this.guiLeft + screenSize.width() / 2 - 12,
+        this.guiLeft + getScreenSize().width() / 2 - 12,
         this.guiTop + yRows[2], this.tile.getPos());
     bt.displayString = "<->";
     bt.setTooltip("tile.builder_pattern.flip");

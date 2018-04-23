@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.dropper;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
@@ -35,6 +36,7 @@ public class GuiDropperExact extends GuiBaseContainer {
     super(new ContainerDropperExact(inventoryPlayer, tileEntity));
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityDropperExact.Fields.REDSTONE.ordinal();
+    this.energyBar = new EnergyBar(this);
   }
 
   @Override

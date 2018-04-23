@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.core.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;

@@ -66,9 +66,9 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn));
     player = ip.player;
-    this.screenSize = ScreenSize.LARGEWIDE;
-    this.xSize = screenSize.width();
-    this.ySize = screenSize.height();
+    this.setScreenSize(ScreenSize.LARGEWIDE);
+    this.xSize = getScreenSize().width();
+    this.ySize = getScreenSize().height();
   }
 
   public ContainerMerchantBetter getContainer() {
@@ -127,13 +127,13 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(screenSize.texture());
+    this.mc.getTextureManager().bindTexture(getScreenSize().texture());
     int thisX = this.getMiddleX();
     int thisY = this.getMiddleY();
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
-        screenSize.width(), screenSize.height(),
-        screenSize.width(), screenSize.height());
+        getScreenSize().width(), getScreenSize().height(),
+        getScreenSize().width(), getScreenSize().height());
   }
 
   /**

@@ -57,8 +57,8 @@ public class GuiItemSort extends GuiBaseContainer {
     int thisY = getMiddleY();
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
-        screenSize.width(), screenSize.height(),
-        screenSize.width(), screenSize.height());
+        getScreenSize().width(), getScreenSize().height(),
+        getScreenSize().width(), getScreenSize().height());
   }
 
   @SideOnly(Side.CLIENT)

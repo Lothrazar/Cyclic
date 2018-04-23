@@ -28,8 +28,9 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
@@ -52,14 +53,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
   public final static int FONTCOLOR = 4210752;
   public TileEntityBaseMachineInvo tile;
-  protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
+  private Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
 
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
   public ProgressBar progressBar = null;
-  //energybar? 
+  public EnergyBar energyBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
   protected int fuelX, fuelY, fuelXE, fuelYE;
@@ -198,13 +199,13 @@ public abstract class GuiBaseContainer extends GuiContainer {
     //      super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
     this.drawDefaultBackground();//dim the background as normal
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(screenSize.texture());
+    this.mc.getTextureManager().bindTexture(getScreenSize().texture());
     int thisX = getMiddleX();
     int thisY = getMiddleY();
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
-        screenSize.width(), screenSize.height(),
-        screenSize.width(), screenSize.height());
+        getScreenSize().width(), getScreenSize().height(),
+        getScreenSize().width(), getScreenSize().height());
     if (this.progressBar != null) {
       drawProgressBar();
     }
@@ -214,7 +215,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     //    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
     //      //this.btnFuelToggle
     //    }
-    if (this.tile instanceof ITileFuel && tile.getFuelCost() > 0) {
+    if (this.tile instanceof ITileFuel) {
       drawFuelBarOutsideContainer();
     }
     //    else if (this.fieldFuel > -1 && tile.doesUseFuel()) {
@@ -266,7 +267,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   private void drawFuelBarOutsideContainer() {
-    if (this.tile instanceof ITileFuel == false) {
+    if (tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP) == false) {
       return;
     }
 
@@ -277,13 +278,13 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int outerLength = 100, outerWidth = 28;
     int innerLength = 84, innerWidth = 14;
     if (tile.getFuelDisplay()) {// vertical
-      fuelX = this.guiLeft + screenSize.width() - innerLength - 8;
+      fuelX = this.guiLeft + getScreenSize().width() - innerLength - 8;
       fuelXE = fuelX + innerLength;
       fuelY = this.guiTop - outerWidth + 5;
       fuelYE = fuelY + innerWidth;
       this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTRVERT);
       Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + screenSize.width() - outerLength,
+          this.guiLeft + getScreenSize().width() - outerLength,
           this.guiTop - outerWidth - 2, u, v,
           outerLength, outerWidth,
           outerLength, outerWidth);
@@ -295,13 +296,13 @@ public abstract class GuiBaseContainer extends GuiContainer {
           innerLength, innerWidth);
     }
     else {
-      fuelX = this.guiLeft + screenSize.width() + Const.PAD;
+      fuelX = this.guiLeft + getScreenSize().width() + Const.PAD;
       fuelXE = fuelX + innerWidth;
       fuelY = this.guiTop + Const.PAD;
       fuelYE = fuelY + innerLength;
       this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
       Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + screenSize.width() + 1,
+          this.guiLeft + getScreenSize().width() + 1,
           this.guiTop, u, v,
           outerWidth, outerLength,
           outerWidth, outerLength);
@@ -414,6 +415,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
         txt.setFocused(flag);
       }
     }
+  }
+
+  protected Const.ScreenSize getScreenSize() {
+    return screenSize;
   }
 
   public static class ButtonTriggerWrapper {

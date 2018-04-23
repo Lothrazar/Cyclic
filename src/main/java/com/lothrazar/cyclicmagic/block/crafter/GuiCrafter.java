@@ -63,7 +63,7 @@ public class GuiCrafter extends GuiBaseContainer {
     }
     //grid
     rows = cols = 3;
-    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
     yPrefix = ContainerCrafter.SLOTY + Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

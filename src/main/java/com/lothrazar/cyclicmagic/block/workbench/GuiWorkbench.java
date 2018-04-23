@@ -51,7 +51,7 @@ public class GuiWorkbench extends GuiBaseContainer {
     int cols = TileEntityWorkbench.COLS;
     //grid
     rows = cols = 3;
-    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotPotion;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +46,7 @@ public class ContainerBeaconPotion extends ContainerBaseMachine {
       addSlotToContainer(new SlotPotion(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     super.bindPlayerInventory(inventoryPlayer);
+    this.setScreenSize(ScreenSize.LARGE);
   }
 
   @Override

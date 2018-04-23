@@ -57,7 +57,7 @@ public class GuiVector extends GuiBaseContainer {
   public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    screenSize = ScreenSize.STANDARDPLAIN;
+    setScreenSize(ScreenSize.STANDARDPLAIN);
     this.fieldRedstoneBtn = TileEntityVector.Fields.REDSTONE.ordinal();
   }
 
