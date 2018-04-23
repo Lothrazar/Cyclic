@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.gui.base;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;

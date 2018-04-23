@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.magic.fire;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseItemChargeScepter;
+import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;

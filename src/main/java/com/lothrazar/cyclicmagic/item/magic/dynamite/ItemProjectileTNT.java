@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.magic.dynamite;
 
-import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.item.base.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

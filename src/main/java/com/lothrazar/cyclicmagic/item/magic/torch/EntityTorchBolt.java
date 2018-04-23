@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.magic.torch;
 
-import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.entity.projectile.RenderBall;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.core.entity.RenderBall;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

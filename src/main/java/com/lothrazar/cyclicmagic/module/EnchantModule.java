@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
-import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantExcavation;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;

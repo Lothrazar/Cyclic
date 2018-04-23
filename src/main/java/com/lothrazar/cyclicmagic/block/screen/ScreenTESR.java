@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.screen;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.base.BaseTESR;
+import com.lothrazar.cyclicmagic.core.block.BaseTESR;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 

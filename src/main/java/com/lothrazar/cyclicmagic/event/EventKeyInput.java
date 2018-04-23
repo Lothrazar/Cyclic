@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.event;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;

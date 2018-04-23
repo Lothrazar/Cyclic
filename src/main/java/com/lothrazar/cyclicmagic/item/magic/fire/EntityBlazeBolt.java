@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.magic.fire;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;

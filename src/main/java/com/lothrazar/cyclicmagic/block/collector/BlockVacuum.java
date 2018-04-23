@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.block.collector;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.base.MachineTESR;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.core.block.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;

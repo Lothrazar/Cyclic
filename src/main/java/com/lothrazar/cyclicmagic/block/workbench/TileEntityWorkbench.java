@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityWorkbench extends TileEntityBaseMachineInvo {

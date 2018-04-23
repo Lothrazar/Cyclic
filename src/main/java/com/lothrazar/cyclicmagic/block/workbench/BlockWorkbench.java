@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.workbench;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
+import com.lothrazar.cyclicmagic.core.IHasOreDict;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;

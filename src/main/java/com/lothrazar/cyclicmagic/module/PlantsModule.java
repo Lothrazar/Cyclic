@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
 
-import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
+import com.lothrazar.cyclicmagic.block.bean.BlockCropMagicBean;
+import com.lothrazar.cyclicmagic.block.bean.ItemMagicBean;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.item.plant.ItemMagicBean;
 //import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;

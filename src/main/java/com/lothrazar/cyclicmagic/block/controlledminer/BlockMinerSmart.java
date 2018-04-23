@@ -24,11 +24,11 @@
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.block.base.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.base.MachineTESR;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.core.block.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.data.Const;

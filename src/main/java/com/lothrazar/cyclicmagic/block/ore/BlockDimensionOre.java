@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.ore;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.block.base.IHasOreDict;
+import com.lothrazar.cyclicmagic.core.IHasOreDict;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;

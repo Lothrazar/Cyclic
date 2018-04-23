@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import net.minecraft.enchantment.Enchantment;

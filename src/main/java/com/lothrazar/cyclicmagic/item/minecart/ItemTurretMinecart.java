@@ -24,8 +24,7 @@
 package com.lothrazar.cyclicmagic.item.minecart;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
-import com.lothrazar.cyclicmagic.item.base.BaseItemMinecart;
+import com.lothrazar.cyclicmagic.core.item.BaseItemMinecart;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Blocks;

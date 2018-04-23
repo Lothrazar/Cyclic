@@ -24,13 +24,13 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartChest;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDispenser;
-import com.lothrazar.cyclicmagic.entity.EntityMinecartDropper;
-import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
-import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartChest;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartDispenser;
+import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartDropper;
+import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartTurret;
+import com.lothrazar.cyclicmagic.item.minecart.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemDropperMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;

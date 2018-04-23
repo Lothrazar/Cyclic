@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.enchantment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;

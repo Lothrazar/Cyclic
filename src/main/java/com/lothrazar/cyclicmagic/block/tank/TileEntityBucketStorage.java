@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.tank;
 
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

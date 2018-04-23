@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.energy.peat;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import net.minecraft.item.crafting.IRecipe;
 
 public class ItemPeatFuel extends BaseItem implements IHasRecipe {

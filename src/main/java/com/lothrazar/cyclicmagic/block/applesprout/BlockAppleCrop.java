@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.applesprout;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.core.block.BlockBase;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import net.minecraft.block.Block;

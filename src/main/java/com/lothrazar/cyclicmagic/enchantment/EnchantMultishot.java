@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;

@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.base.BaseMachineTESR;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.util.ResourceLocation;

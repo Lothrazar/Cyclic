@@ -23,6 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.energy.peat;
 
-import com.lothrazar.cyclicmagic.item.base.BaseItem;
+import com.lothrazar.cyclicmagic.core.item.BaseItem;
 
 public class ItemBiomass extends BaseItem {}

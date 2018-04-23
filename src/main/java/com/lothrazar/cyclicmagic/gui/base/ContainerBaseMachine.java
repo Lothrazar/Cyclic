@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.gui.base;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.net.PacketGuiShortOverride;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.util.data.Const;
 import com.lothrazar.cyclicmagic.util.data.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;

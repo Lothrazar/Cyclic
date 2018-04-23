@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.exppylon;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
+import com.lothrazar.cyclicmagic.core.block.BlockBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

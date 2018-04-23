@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.magic.ice;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseItemRapidScepter;
+import com.lothrazar.cyclicmagic.core.item.BaseItemRapidScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;

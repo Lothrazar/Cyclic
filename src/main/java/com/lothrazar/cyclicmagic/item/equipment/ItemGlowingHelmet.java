@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.item.equipment;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary;
 
-import com.lothrazar.cyclicmagic.block.base.BaseTESR;
+import com.lothrazar.cyclicmagic.core.block.BaseTESR;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
