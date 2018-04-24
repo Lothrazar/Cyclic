@@ -32,8 +32,8 @@ import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.core.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry.ChestType;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideItem;
@@ -115,6 +115,18 @@ import com.lothrazar.cyclicmagic.item.magic.torch.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.magic.torch.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.magic.torch.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartChest;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartDispenser;
+import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartDropper;
+import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartTurret;
+import com.lothrazar.cyclicmagic.item.minecart.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemDropperMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseTame;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseUpgrade.HorseUpgradeType;
@@ -145,6 +157,12 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ItemModule extends BaseModule implements IHasConfig {
 
+  private boolean goldMinecart;
+  private boolean stoneMinecart;
+  private boolean chestMinecart;
+  private boolean dropperMinecart;
+  private boolean dispenserMinecart;
+  private boolean turretMinecart;
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;
@@ -222,6 +240,50 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean glowingHelmet;
   @Override
   public void onPreInit() {
+    if (goldMinecart) {
+      ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
+      ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
+      EntityGoldMinecart.dropItem = gold_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecart.class, "goldminecart", 1100);
+      ItemGoldFurnaceMinecart gold_furnace_minecart = new ItemGoldFurnaceMinecart();
+      ItemRegistry.register(gold_furnace_minecart, "gold_furnace_minecart", GuideCategory.TRANSPORT);
+      EntityGoldFurnaceMinecart.dropItem = gold_furnace_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityGoldFurnaceMinecart.class, "goldfurnaceminecart", 1101);
+    }
+    if (stoneMinecart) {
+      ItemStoneMinecart stone_minecart = new ItemStoneMinecart();
+      ItemRegistry.register(stone_minecart, "stone_minecart", GuideCategory.TRANSPORT);
+      EntityStoneMinecart.dropItem = stone_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
+    }
+    if (chestMinecart) {
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
+    }
+    if (dropperMinecart) {
+      ItemDropperMinecart dropper_minecart = new ItemDropperMinecart();
+      ItemRegistry.register(dropper_minecart, "dropper_minecart", GuideCategory.TRANSPORT);
+      EntityMinecartDropper.dropItem = dropper_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityMinecartDropper.class, "golddropperminecart", 1104);
+    }
+    if (dispenserMinecart) {
+      //BROKEN:
+      //it spawns entity in the world. so like an arrow, it flies to the arget but then magically teleports back o teh  cart position
+      //stop for now
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
+    }
+    if (turretMinecart) {
+      ItemTurretMinecart turret_minecart = new ItemTurretMinecart();
+      ItemRegistry.register(turret_minecart, "turret_minecart", GuideCategory.TRANSPORT);
+      EntityMinecartTurret.dropItem = turret_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityMinecartTurret.class, "turretminecart", 1106);
+    }
+    //if i have a mob on a LEAD< i can put it in a minecart with thehit
+    //maybe 2 passengers..?? idk
+    //connect together??
+    //DISPENSERR minecart
+    //??FLUID CART?
+    //TURRET CART:? shoots arrows
+    //ONE THAT CAN HOLD ANY ITEM
     if (enableEmeraldGear) {
       ItemEmeraldArmor emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
       ItemRegistry.register(emerald_head, "emerald_helmet", null);
@@ -738,6 +800,12 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dropperMinecart = config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    turretMinecart = config.getBoolean("GoldTurretMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    stoneMinecart = config.getBoolean("StoneMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableChaos = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMissile = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     magicNet = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

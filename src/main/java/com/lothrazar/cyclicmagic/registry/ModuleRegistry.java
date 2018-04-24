@@ -29,8 +29,6 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.module.BlockModule;
 import com.lothrazar.cyclicmagic.module.CommandModule;
 import com.lothrazar.cyclicmagic.module.EnchantModule;
-import com.lothrazar.cyclicmagic.module.EntityMinecartModule;
-import com.lothrazar.cyclicmagic.module.FluidsModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.ItemModule;
@@ -86,7 +84,5 @@ public class ModuleRegistry {
     register(new StackSizeModule());
     register(new VillagerCreateModule());
     register(new WorldModule());
-    register(new EntityMinecartModule());
-    register(new FluidsModule());
   }
 }
