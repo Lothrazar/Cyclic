@@ -23,8 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -67,27 +65,27 @@ public abstract class BlockBaseFlat extends BlockBase {
   /**
    * Determines if an entity can path through this block
    */
-  @Override
-  public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-    return true;
-  }
+  //  @Override
+  //  public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+  //    return true;
+  //  }
 
-  @Override
-  public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-    return this.canBePlacedOn(worldIn, pos.down());
-  }
+  //  @Override
+  //  public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+  //    return this.canBePlacedOn(worldIn, pos.down());
+  //  }
+  //
+  //  @Override
+  //  public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+  //    if (!this.canBePlacedOn(worldIn, pos.down())) {
+  //      this.dropBlockAsItem(worldIn, pos, state, 0);
+  //      worldIn.setBlockToAir(pos);
+  //    }
+  //  }
 
-  @Override
-  public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    if (!this.canBePlacedOn(worldIn, pos.down())) {
-      this.dropBlockAsItem(worldIn, pos, state, 0);
-      worldIn.setBlockToAir(pos);
-    }
-  }
-
-  private boolean canBePlacedOn(World worldIn, BlockPos pos) {
-    return worldIn.getBlockState(pos).isTopSolid() || worldIn.getBlockState(pos).getBlock() instanceof BlockFence;
-  }
+  //  private boolean canBePlacedOn(World worldIn, BlockPos pos) {
+  //    return worldIn.getBlockState(pos).isTopSolid() || worldIn.getBlockState(pos).getBlock() instanceof BlockFence;
+  //  }
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -113,12 +111,12 @@ public abstract class BlockBaseFlat extends BlockBase {
   }
 
   public EnumFacing getFacingFromState(IBlockState state) {
-    return (EnumFacing) state.getValue(PROPERTYFACING);
+    return state.getValue(PROPERTYFACING);
   }
 
   @Override
   public int getMetaFromState(IBlockState state) {
-    EnumFacing facing = (EnumFacing) state.getValue(PROPERTYFACING);
+    EnumFacing facing = state.getValue(PROPERTYFACING);
     int facingbits = facing.getHorizontalIndex();
     return facingbits;
   }

@@ -39,6 +39,8 @@ import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
+import com.lothrazar.cyclicmagic.block.bean.BlockCropMagicBean;
+import com.lothrazar.cyclicmagic.block.bean.ItemMagicBean;
 import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
@@ -132,6 +134,7 @@ import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
@@ -146,6 +149,7 @@ import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.magic.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -198,10 +202,20 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableInterdict;
   private boolean vectorPlate;
   private boolean enableApple;
+  private boolean enableBeans;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (enableBeans) {
+      BlockCropMagicBean sprout = new BlockCropMagicBean();
+      BlockRegistry.registerBlock(sprout, "sprout", null);
+      ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
+      ItemRegistry.register(sprout_seed, "sprout_seed");
+      LootTableRegistry.registerLoot(sprout_seed);
+      sprout.setSeed(sprout_seed);
+      //      AchievementRegistry.registerItemAchievement(sprout_seed);
+    }
     if (enableApple) {
       BlockAppleCrop apple = new BlockAppleCrop();
       BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
@@ -493,6 +507,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
