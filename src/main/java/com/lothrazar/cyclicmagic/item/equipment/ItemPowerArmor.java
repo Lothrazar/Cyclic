@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.item.equipment;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.module.EnchantModule;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -46,8 +46,8 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
   @Override
   public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
     // bonus easter egg for anyone who does not shift click. not documented
-    if (this.armorType == EntityEquipmentSlot.CHEST && EnchantModule.reach != null) {
-      stack.addEnchantment(EnchantModule.reach, EnchantModule.reach.getMaxLevel());
+    if (this.armorType == EntityEquipmentSlot.CHEST && EnchantRegistry.reach != null) {
+      stack.addEnchantment(EnchantRegistry.reach, EnchantRegistry.reach.getMaxLevel());
     }
   }
 

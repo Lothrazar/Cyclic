@@ -43,17 +43,6 @@ import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
 
-  public static EnchantLaunch launch;
-  public static EnchantMagnet magnet;
-  public static EnchantVenom venom;
-  public static EnchantLifeLeech lifeleech;
-  public static EnchantAutoSmelt autosmelt;
-  public static EnchantXpBoost xpboost;
-  public static EnchantReach reach;
-  public static EnchantBeheading beheading;
-  public static EnchantQuickdraw quickdraw;
-  public static EnchantWaterwalking waterwalk;
-  private static EnchantExcavation excavation;
   private boolean enablexpboost;
   private boolean enableLaunch;
   private boolean enableMagnet;
@@ -66,57 +55,56 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enablewaterwalk;
   private boolean enableExcavate;
   private boolean enableMultishot;
-  private EnchantMultishot multishot;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
     if (enablewaterwalk) {
-      waterwalk = new EnchantWaterwalking();
+      EnchantWaterwalking waterwalk = new EnchantWaterwalking();
       EnchantRegistry.register(waterwalk);
     }
     if (enablereach) {
-      reach = new EnchantReach();
-      EnchantRegistry.register(reach);
+      EnchantRegistry.reach = new EnchantReach();
+      EnchantRegistry.register(EnchantRegistry.reach);
     }
     if (enablexpboost) {
-      xpboost = new EnchantXpBoost();
+      EnchantXpBoost xpboost = new EnchantXpBoost();
       EnchantRegistry.register(xpboost);
     }
     if (enableautosmelt) {
-      autosmelt = new EnchantAutoSmelt();
+      EnchantAutoSmelt autosmelt = new EnchantAutoSmelt();
       EnchantRegistry.register(autosmelt);
     }
     if (enableLaunch) {
-      launch = new EnchantLaunch();
+      EnchantLaunch launch = new EnchantLaunch();
       EnchantRegistry.register(launch);
     }
     if (enableMagnet) {
-      magnet = new EnchantMagnet();
+      EnchantMagnet magnet = new EnchantMagnet();
       EnchantRegistry.register(magnet);
     }
     if (enableVenom) {
-      venom = new EnchantVenom();
+      EnchantVenom venom = new EnchantVenom();
       EnchantRegistry.register(venom);
     }
     if (enableLifeleech) {
-      lifeleech = new EnchantLifeLeech();
+      EnchantBase lifeleech = new EnchantLifeLeech();
       EnchantRegistry.register(lifeleech);
     }
     if (enablebeheading) {
-      beheading = new EnchantBeheading();
+      EnchantBase beheading = new EnchantBeheading();
       EnchantRegistry.register(beheading);
     }
     if (enableQuickdraw) {
-      quickdraw = new EnchantQuickdraw();
+      EnchantBase quickdraw = new EnchantQuickdraw();
       EnchantRegistry.register(quickdraw);
     }
     if (enableExcavate) {
-      excavation = new EnchantExcavation();
+      EnchantBase excavation = new EnchantExcavation();
       EnchantRegistry.register(excavation);
     }
     if (enableMultishot) {
-      multishot = new EnchantMultishot();
+      EnchantMultishot multishot = new EnchantMultishot();
       EnchantRegistry.register(multishot);
     }
   }

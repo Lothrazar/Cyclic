@@ -204,9 +204,33 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableApple;
   private boolean enableBeans;
 
+  private boolean enableMilk;
+  private boolean enablePoison;
+
+  /**
+   * - create the object (or just a Feature if none exists) and submit to _______ registry listing
+   * 
+   * - config runs: it syncConfig on listing
+   * 
+   * 
+   * 
+   * - new subInterface from IFCONFIG actually: also needs isEnabled() and preInit(), init(), postInit() - AN ACTUAL MODULE! HOW BOUT DAT!; call it Feature module
+   * 
+   * - onPreInit runs everywhere: loop through _______. check if is enabled and run their preInit Feature phase (doing exactly what this if statement does)
+   * 
+   * 
+   * 
+   * 
+   */
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (enableMilk) {
+      FluidsRegistry.registerMilk();
+    }
+    if (enablePoison) {
+      FluidsRegistry.registerPoison();
+    }
     if (enableBeans) {
       BlockCropMagicBean sprout = new BlockCropMagicBean();
       BlockRegistry.registerBlock(sprout, "sprout", null);
@@ -507,6 +531,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
