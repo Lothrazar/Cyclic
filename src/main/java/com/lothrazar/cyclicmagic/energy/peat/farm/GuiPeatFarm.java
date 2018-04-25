@@ -57,7 +57,6 @@ public class GuiPeatFarm extends GuiBaseContainer {
     //DRAW ENERGY BAR
     fuelX = this.guiLeft + 152;
     fuelY = this.guiTop + 17;
-    this.drawEnergyBarInside();
     this.drawFluidBar();
   }
 

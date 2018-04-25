@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.anvil;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -37,7 +38,9 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
-    this.setUsesEnergy();
+    //    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(10).setX(156);
   }
 
   @Override

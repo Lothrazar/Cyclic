@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.gui.base;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import org.lwjgl.opengl.GL11;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
@@ -56,7 +56,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
   private Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
-
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
   public ProgressBar progressBar = null;
@@ -132,9 +131,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
     updateToggleButtonStates();
-    if (tile != null && tile.getFuelCost() > 0) {
-      drawFuelText();
-    }
+    //    if (tile != null && tile.getFuelCost() > 0) {
+    //      drawFuelText();
+    //    }
     for (GuiTextField txt : txtBoxes) {
       if (txt != null) {
         txt.drawTextBox();
@@ -215,7 +214,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
     //    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
     //      //this.btnFuelToggle
     //    }
-    if (this.tile instanceof ITileFuel) {
+    if (this.energyBar != null && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+      this.drawEnergyBar();
+    }
+    else if (this.tile instanceof ITileFuel) {
       drawFuelBarOutsideContainer();
     }
     //    else if (this.fieldFuel > -1 && tile.doesUseFuel()) {
@@ -223,54 +225,33 @@ public abstract class GuiBaseContainer extends GuiContainer {
     //    }
   }
 
-  public void drawFuelText() {
-    if (this.tile instanceof ITileFuel && this.btnFuelToggle != null) {
-      ITileFuel tileFuel = this.tile;
-      this.btnFuelToggle.setState(tileFuel.getFuelDisplay());
-      //      int percent = (int) ((float) tile.getField(this.fieldFuel) / (float) tile.getField(this.fieldMaxFuel) * 100);
-      double pct = tile.getPercentFormatted();
-      if (pct > 0) {
-        GL11.glPushMatrix();
-        float fontScale = 0.5F;
-        GL11.glScalef(fontScale, fontScale, fontScale);
-        if (tileFuel.getFuelDisplay()) {
-          this.drawString(pct + "%", 176, -38);
-        }
-        else {
-          this.drawString(pct + "%", this.xSize * 2 + 18, 24);
-        }
-        GL11.glPopMatrix();
-      }
-    }
-  }
-
-  protected void drawEnergyBarInside() {
+  private void drawEnergyBar() {
     int u = 0, v = 0;
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
     float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    int outerLength = 62, outerWidth = 16;
-    int innerLength = 60, innerWidth = 14;
+    //must store fuelXY for tooltip?
+    int outerLength = energyBar.getHeight() + 2 * energyBar.getBorder();
+    int outerWidth = energyBar.getWidth() + 2 * energyBar.getBorder();
+    //draw the outer container
     this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
-    fuelXE = fuelX + innerWidth + 2;
-    fuelYE = fuelY + innerLength + 2;
     Gui.drawModalRectWithCustomSizedTexture(
-        fuelX - 1,
-        fuelY - 1, u, v,
+        this.guiLeft + energyBar.getX(),
+        this.guiTop + energyBar.getY(), u, v,
         outerWidth, outerLength,
         outerWidth, outerLength);
+    //draw the inner actual thing
     this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
     Gui.drawModalRectWithCustomSizedTexture(
-        fuelX,
-        fuelY, u, v,
-        innerWidth, (int) (innerLength * percent),
-        innerWidth, innerLength);
+        this.guiLeft + energyBar.getX() + energyBar.getBorder(),
+        this.guiTop + energyBar.getY() + energyBar.getBorder(), u, v,
+        energyBar.getWidth(), (int) (energyBar.getHeight() * percent),
+        energyBar.getWidth(), energyBar.getHeight());
   }
 
   private void drawFuelBarOutsideContainer() {
     if (tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP) == false) {
       return;
     }
-
     int u = 0, v = 0;
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
     float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
@@ -317,29 +298,21 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
   private String getFuelAmtDisplay() {
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-
     return energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
   }
 
-  @SuppressWarnings("serial")
-  private void tryDrawFuelTooltip(int mouseX, int mouseY) {
-    if (fuelX < mouseX && mouseX < fuelXE
-        && fuelY < mouseY && mouseY < fuelYE) {
-      String display = getFuelAmtDisplay();
-      drawHoveringText(new ArrayList<String>() {
-
-        {
-          add(display);
-        }
-      }, mouseX, mouseY, fontRenderer);
-    }
+  private void renderEnergyTooltip(int mouseX, int mouseY) {
+    String display = getFuelAmtDisplay();
+    drawHoveringText(Arrays.asList(display), mouseX, mouseY, fontRenderer);
   }
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    this.tryDrawFuelTooltip(mouseX, mouseY);
+    if (energyBar != null && energyBar.isMouseover(mouseX, mouseY)) {
+      this.renderEnergyTooltip(mouseX, mouseY);
+    }
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {

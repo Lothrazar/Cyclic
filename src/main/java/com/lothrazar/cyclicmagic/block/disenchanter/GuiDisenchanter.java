@@ -91,7 +91,6 @@ public class GuiDisenchanter extends GuiBaseContainer {
     //DRAW ENERGY BAR
     fuelX = this.guiLeft + 154;
     fuelY = this.guiTop + 17;
-    this.drawEnergyBarInside();
   }
 
   @SideOnly(Side.CLIENT)

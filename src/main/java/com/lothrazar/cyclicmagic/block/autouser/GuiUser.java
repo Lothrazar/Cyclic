@@ -25,8 +25,9 @@ package com.lothrazar.cyclicmagic.block.autouser;
 
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
@@ -50,7 +51,9 @@ public class GuiUser extends GuiBaseContainer {
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
-    this.setUsesEnergy();
+    //    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setHeight(50).setX(156).setY(6);
   }
 
   @Override

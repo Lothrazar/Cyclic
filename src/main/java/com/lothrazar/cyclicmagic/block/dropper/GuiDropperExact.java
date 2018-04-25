@@ -37,6 +37,7 @@ public class GuiDropperExact extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityDropperExact.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
+    energyBar.setX(156);
   }
 
   @Override
@@ -86,6 +87,5 @@ public class GuiDropperExact extends GuiBaseContainer {
     //DRAW ENERGY BAR
     fuelX = this.guiLeft + 156;
     fuelY = this.guiTop + 17;
-    this.drawEnergyBarInside();
   }
 }

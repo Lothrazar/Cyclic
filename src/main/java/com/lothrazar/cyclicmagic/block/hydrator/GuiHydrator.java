@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
@@ -41,7 +42,8 @@ public class GuiHydrator extends GuiBaseContainer {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
 
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setX(70).setY(16).setWidth(14);
   }
 
   @Override
