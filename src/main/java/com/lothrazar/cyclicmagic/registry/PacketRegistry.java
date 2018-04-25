@@ -66,10 +66,6 @@ import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
-import com.lothrazar.cyclicmagic.playerupgrade.terrariabuttons.PacketDepositContainerToPlayer;
-import com.lothrazar.cyclicmagic.playerupgrade.terrariabuttons.PacketDepositPlayerToNearby;
-import com.lothrazar.cyclicmagic.playerupgrade.terrariabuttons.PacketQuickStack;
-import com.lothrazar.cyclicmagic.playerupgrade.terrariabuttons.PacketRestockContainerToPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -90,10 +86,10 @@ public class PacketRegistry {
     network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketDeleteWaypoint.class, PacketDeleteWaypoint.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketDepositPlayerToNearby.class, PacketDepositPlayerToNearby.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketDepositContainerToPlayer.class, PacketDepositContainerToPlayer.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketQuickStack.class, PacketQuickStack.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketRestockContainerToPlayer.class, PacketRestockContainerToPlayer.class, packetID++, Side.SERVER);
+    packetID++;
+    packetID++;
+    packetID++;
+    packetID++;
     network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
