@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.block.harvester;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
@@ -55,7 +55,8 @@ public class GuiHarvester extends GuiBaseContainer {
     this.progressBar = new ProgressBar(this, 10,
         ContainerHarvester.SLOTY + 3 * Const.SQ + 4, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
 
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(10).setHeight(42).setX(156).setY(8);
   }
 
   @Override

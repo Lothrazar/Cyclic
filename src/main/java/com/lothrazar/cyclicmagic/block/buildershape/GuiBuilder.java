@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.block.buildershape;
 
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -45,7 +45,7 @@ public class GuiBuilder extends GuiBaseContainer {
   private ButtonTileEntityField btnSizeDown;
   private ButtonTileEntityField btnHeightUp;
   private ButtonTileEntityField btnHeightDown;
-  private final static int yRowTextbox = 30;
+  private final static int yRowTextbox = 50;
   private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
@@ -57,7 +57,8 @@ public class GuiBuilder extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(10).setY(4).setX(160).setHeight(42);
   }
 
   @Override
@@ -194,7 +195,7 @@ public class GuiBuilder extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String label = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
-    this.drawString(label, 112, 76);
+    this.drawString(label, 66, 76);
     int sp = Const.PAD / 2;
     int x = xControlsStart + sp;
     int y = yRowTextbox + yOffset - sp;
