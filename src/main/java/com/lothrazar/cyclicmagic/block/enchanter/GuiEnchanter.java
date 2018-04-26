@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.enchanter;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,7 +40,8 @@ public class GuiEnchanter extends GuiBaseContainer {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setX(152);
   }
 
   @Override

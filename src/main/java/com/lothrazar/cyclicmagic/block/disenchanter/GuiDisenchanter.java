@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.disenchanter;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
@@ -44,8 +45,9 @@ public class GuiDisenchanter extends GuiBaseContainer {
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = TileEntityDisenchanter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityDisenchanter.Fields.TIMER.ordinal(), TileEntityDisenchanter.TIMER_FULL);
+    this.energyBar = new EnergyBar(this);
+    energyBar.setX(156).setY(22);
   }
-
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

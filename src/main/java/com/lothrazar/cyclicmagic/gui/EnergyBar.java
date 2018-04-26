@@ -6,7 +6,7 @@ public class EnergyBar {
 
   //  public boolean isOutsideContainer = true;
   private int x = 156;
-  private int y = 17;
+  private int y = 16;
   private int width = 10;//inner
   private int height = 60;//inner
   private int border = 1;

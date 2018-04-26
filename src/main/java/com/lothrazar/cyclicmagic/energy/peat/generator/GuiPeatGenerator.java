@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.energy.peat.generator;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
@@ -34,6 +35,8 @@ public class GuiPeatGenerator extends GuiBaseContainer {
   public GuiPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
     super(new ContainerPeatGenerator(inventoryPlayer, te), te);
     this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(16).setY(8).setX(150);
   }
 
   @Override

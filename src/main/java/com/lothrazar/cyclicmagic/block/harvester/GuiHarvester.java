@@ -41,7 +41,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHarvester extends GuiBaseContainer {
 
-  // private TileEntityHarvester tile;
   boolean debugLabels = false;
   private GuiButtonToggleSize btnSize;
   private GuiButtonTooltip btnSpray;

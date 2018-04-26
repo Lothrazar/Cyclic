@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.energy.peat.farm;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -34,6 +35,8 @@ public class GuiPeatFarm extends GuiBaseContainer {
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setX(152);
   }
 
   @Override
