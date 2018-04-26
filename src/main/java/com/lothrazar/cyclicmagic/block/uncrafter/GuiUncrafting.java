@@ -26,12 +26,12 @@ package com.lothrazar.cyclicmagic.block.uncrafter;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilUncraft.UncraftResultType;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -42,16 +42,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiBaseContainer {
 
-  private TileEntityUncrafter tile;
-
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setHeight(76).setX(148).setY(24).setWidth(16);
     this.progressBar = new ProgressBar(this, 10,
-        ContainerUncrafting.SLOTY_INPUT + 2 * Const.SQ + Const.PAD,
+        ContainerUncrafting.SLOTY_INPUT + 3 * Const.SQ + Const.PAD,
         TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
   }
 
@@ -83,7 +82,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //first draw the zero slot
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_INPUT - 1, this.guiTop + ContainerUncrafting.SLOTY_INPUT - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    int xPrefix = 2 * Const.SQ + Const.PAD;
+    int xPrefix = 48;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         Gui.drawModalRectWithCustomSizedTexture(
@@ -91,6 +90,6 @@ public class GuiUncrafting extends GuiBaseContainer {
             this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1,
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
-    }//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
   }
 }

@@ -44,14 +44,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerUncrafting extends ContainerBaseMachine {
 
   public static final int SLOTX_INPUT = 8;
-  public static final int SLOTY_INPUT = 68;
+  public static final int SLOTY_INPUT = 46;
 
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
     addSlotToContainer(new Slot(tile, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_INPUT, SLOTY_INPUT));
     int slot = 1;
-    int xPrefix = 2 * Const.SQ + Const.PAD;
+    int xPrefix = 48;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         addSlotToContainer(new SlotOutputOnly(tile, slot,

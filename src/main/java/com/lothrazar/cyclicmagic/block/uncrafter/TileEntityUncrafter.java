@@ -48,8 +48,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   // http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
   // http://www.minecraftforge.net/forum/index.php?topic=18871.0
   public static final int SLOT_UNCRAFTME = 0;
-  public static final int SLOT_ROWS = 3;
-  public static final int SLOT_COLS = 7;
+  public static final int SLOT_ROWS = 4;
+  public static final int SLOT_COLS = 5;
   public static final int TIMER_FULL = 200;
   private int needsRedstone = 1;
 
@@ -62,7 +62,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     timer = TIMER_FULL;
     this.initEnergyWithCost(BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(SLOT_UNCRAFTME);
-    this.setSlotsForExtract(1, this.getSizeInventory() - 2);//-2, one for fuel one for input
+    this.setSlotsForExtract(1, this.getSizeInventory() - 1);
   }
 
   @Override

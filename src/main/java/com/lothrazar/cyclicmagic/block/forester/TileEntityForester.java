@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.forester;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -62,14 +61,10 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   private static final String[] validTargetsOreDict = new String[] { "logWood", "treeLeaves" };
   private static final String[] validSaplingsOreDict = new String[] { "treeSapling" };
-  //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
-  //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
-  // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_REDST = "redstone";
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
-  public static final int INVENTORY_SIZE = 16;
   private static final int HEIGHT = 32;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -85,9 +80,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
 
   public TileEntityForester() {
-    super(INVENTORY_SIZE);
+    super(18);
     this.initEnergyWithCost(BlockForester.FUEL_COST);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
+    this.setSlotsForInsert(0, 18);
   }
 
   @Override

@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.forester;
 import com.lothrazar.cyclicmagic.block.forester.TileEntityForester.Fields;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,7 +40,8 @@ public class GuiForester extends GuiBaseContainer {
     setScreenSize(ScreenSize.STANDARD);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.setUsesEnergy();
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(16).setX(150);
   }
 
   @Override
@@ -47,10 +49,11 @@ public class GuiForester extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_SAPLING);
+    int rowsize = 6;
     for (int k = 0; k < tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + ContainerForester.SLOTX_START - 1 + (k % 8) * Const.SQ + Const.SQ,
-          this.guiTop + ContainerForester.SLOTY - 1 + (k / 8) * Const.SQ,
+          this.guiLeft + ContainerForester.SLOTX_START - 1 + (k % rowsize) * Const.SQ + Const.SQ,
+          this.guiTop + ContainerForester.SLOTY - 1 + (k / rowsize) * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
