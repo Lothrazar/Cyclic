@@ -58,7 +58,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private static final int ENERGY_PER_FISH = 100;
 
   public static final int FISHSLOTS = 15;
-  public static final int MINIMUM_WET_SIDES = 2;
+  public static final int MINIMUM_WET_SIDES = 1;
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
   static final int SLOT_TOOL = 0;
 
@@ -181,7 +181,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (this.isRunning() == false || isEquipmentValid() == false) {
       return;
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     World world = this.getWorld();

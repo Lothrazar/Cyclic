@@ -169,7 +169,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     if (isRunning() == false) { // it works ONLY if its powered
       return;
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     timer -= 1;

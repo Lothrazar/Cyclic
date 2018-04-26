@@ -68,7 +68,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
   protected int fuelDisplay = 0;
-  private int fuelCost = 0;
+  private int energyCost = 0;
 
   protected int speed = 1;
   protected int timer;
@@ -135,13 +135,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-    return index != this.fuelCost && //override to inv handler: do not extract fuel
+    return index != this.energyCost && //override to inv handler: do not extract fuel
         this.invHandler.canExtract(index);
   }
 
   protected void initEnergyWithCost(int fcost) {
     initEnergy();
-    this.fuelCost = fcost;
+    this.energyCost = fcost;
   }
 
   protected void initEnergy() {
@@ -157,7 +157,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   @Override
-  public int getFuelCurrent() {
+  public int getEnergyCurrent() {
     if (this.energyStorage == null) {
       return 0;
     }
@@ -173,21 +173,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (this.getFuelMax() == 0) {
       return 0;
     }
-    double percent = ((float) this.getFuelCurrent() / (float) this.getFuelMax());
+    double percent = ((float) this.getEnergyCurrent() / (float) this.getFuelMax());
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
 
-  public int getFuelCost() {
-    return this.fuelCost;
+  public int getEnergyCost() {
+    return this.energyCost;
   }
 
-  public void consumeFuel() {
-    if (this.fuelCost > 0) {//only drain on server //not anymore bitches && world.isRemote == false
-      if (this.getFuelCurrent() >= this.getFuelCost()) {
+  public void consumeEnergy() {
+    if (this.energyCost > 0) {//only drain on server //not anymore bitches && world.isRemote == false
+      if (this.getEnergyCurrent() >= this.getEnergyCost()) {
         //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
         //            + " and total was " + this.getFuelCurrent());
-        this.energyStorage.extractEnergy(this.getFuelCost(), false);
+        this.energyStorage.extractEnergy(this.getEnergyCost(), false);
       }
     }
   }
@@ -198,17 +198,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean isRunning() {
-    if (this.fuelCost > 0) {
+    if (this.energyCost > 0) {
       // update from power cables/batteries next door
       this.updateIncomingEnergy();
     }
     return super.isRunning();
   }
 
-  public boolean updateFuelIsBurning() {
-    if (this.fuelCost > 0) {
-      if (this.hasEnoughFuel()) {
-        this.consumeFuel();
+  public boolean isDoingWork() {
+    return super.isRunning() && this.hasEnoughEnergy();
+  }
+
+  public boolean updateEnergyIsBurning() {
+    if (this.energyCost > 0) {
+      if (this.hasEnoughEnergy()) {
+        this.consumeEnergy();
       }
       else {
         // dont run, dont count down, just stop now 
@@ -252,19 +256,19 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   protected void spawnParticlesAbove() {
     //turn off when its off
-    if (this.isRunning()) {//&& this.hasEnoughFuel()
+    if (this.isRunning()) {
       super.spawnParticlesAbove();
     }
   }
 
   @Override
-  public boolean hasEnoughFuel() {
-    if (this.fuelCost == 0) {
+  public boolean hasEnoughEnergy() {
+    if (this.energyCost == 0) {
       return true;
     }
     //    if (this.world.isRemote == false)
     //      System.out.println("?" + this.getFuelCurrent());
-    return this.getFuelCurrent() >= this.getFuelCost();
+    return this.getEnergyCurrent() >= this.getEnergyCost();
   }
 
   protected boolean updateTimerIsZero() {
@@ -512,11 +516,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public int getSpeed() {
-    if (this.fuelCost == 0) {
+    if (this.energyCost == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
-      if (this.getFuelCurrent() == 0) {
+      if (this.getEnergyCurrent() == 0) {
         return 0; // do not run without fuel
       }
       else {

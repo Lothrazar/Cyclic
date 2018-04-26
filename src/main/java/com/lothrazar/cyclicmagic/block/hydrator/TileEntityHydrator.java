@@ -81,7 +81,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     if (this.isRunning() == false) {
       return;
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     //ignore timer when filling up water
@@ -175,7 +175,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       case RECIPELOCKED:
         return this.recipeIsLocked;
       case FUEL:
-        return this.getFuelCurrent();
+        return this.getEnergyCurrent();
       case FUELMAX:
         return this.getFuelMax();
     }

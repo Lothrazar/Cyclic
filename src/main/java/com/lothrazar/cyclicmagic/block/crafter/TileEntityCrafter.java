@@ -91,7 +91,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getFuelCurrent() >= this.getFuelCost()) {
+    if (this.getEnergyCurrent() >= this.getEnergyCost()) {
       findRecipe();
       if (recipe != null && tryPayCost()) {
         // pay the cost  
@@ -99,7 +99,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         //confirmed this test does actually et the outut: 4x planks 
         sendOutput(craftingResult);
         timer = TIMER_FULL;
-        this.consumeFuel();
+        this.consumeEnergy();
       }
     }
   }

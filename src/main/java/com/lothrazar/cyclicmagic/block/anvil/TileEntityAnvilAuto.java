@@ -93,7 +93,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     }
     this.spawnParticlesAbove();
     //pay energy each tick
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     if (this.getCurrentFluid() < 0) {

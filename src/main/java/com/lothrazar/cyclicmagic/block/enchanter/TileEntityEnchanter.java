@@ -74,7 +74,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
     if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
 

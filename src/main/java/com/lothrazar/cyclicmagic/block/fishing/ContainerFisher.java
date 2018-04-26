@@ -35,9 +35,9 @@ import net.minecraft.item.ItemStack;
 public class ContainerFisher extends ContainerBaseMachine {
 
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 30;
+  public static final int SLOTX_START = 44;
   public static final int SLOTY = 20;
-  public static final int SLOTX_FISH = 80;
+  public static final int SLOTX_FISH = 62;
   public static final int SLOTY_FISH = 20;
 
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {

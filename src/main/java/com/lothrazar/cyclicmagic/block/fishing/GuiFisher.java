@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.fishing;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,17 +40,22 @@ public class GuiFisher extends GuiBaseContainer {
 
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
+
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityFishing.Fields.REDSTONE.ordinal();
+    this.energyBar = new EnergyBar(this);
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    if (tile.isDoingWork() == false) {
+      return;
+    }
+    int x = Const.PAD;
     if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
       String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
-      int x = 13 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
       int y = 42;
       this.drawString(s, x, y);
       y += 14;
@@ -62,7 +68,7 @@ public class GuiFisher extends GuiBaseContainer {
     }
     if (tile.isEquipmentValid() && tile.isValidPosition()) {
       String s = UtilChat.lang("tile.block_fishing.progress");
-      int x = 4 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
+      // int x = 4 + this.xSize / 3 - this.fontRenderer.getStringWidth(s);
       int y = 50;
       this.fontRenderer.drawString(s, x, y, 4210752);
       y += 14;

@@ -40,7 +40,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
 
-  private TileEntityControlledMiner tile;
   private int xHeightTextbox = 100;
   private int yHeightTxtbox = 38;
   private ButtonTileEntityField btnHeightDown;
@@ -51,7 +50,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
-    tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
@@ -122,7 +120,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
     int y = ContainerMinerSmart.SLOTEQUIP_Y - 14;
     this.drawString("tile.block_miner_smart.tool", x, y);
-    String display = "" + this.tile.getHeight();
+    String display = "" + this.tile.getField(TileEntityControlledMiner.Fields.HEIGHT.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.drawString(display, x, yHeightTxtbox);

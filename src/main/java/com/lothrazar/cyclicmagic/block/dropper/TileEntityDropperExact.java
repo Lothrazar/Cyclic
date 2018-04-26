@@ -56,7 +56,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
     if (this.isRunning() == false) {
       return;
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     //TODO: not like this. find list of slots that are NONEMPTY and then pick one

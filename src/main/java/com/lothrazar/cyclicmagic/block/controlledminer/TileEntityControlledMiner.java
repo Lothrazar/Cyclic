@@ -131,7 +131,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       }
       if (isRunning()) {
         //now drain energy. and halt if not enough
-        if (this.updateFuelIsBurning() == false) {
+        if (this.updateEnergyIsBurning() == false) {
           return;
         }
         if (this.updateTimerIsZero()) {

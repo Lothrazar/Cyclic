@@ -99,7 +99,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     if (this.isInventoryFull()) {
       return;
     }
-    if (this.updateFuelIsBurning() == false) {
+    if (this.updateEnergyIsBurning() == false) {
       return;
     }
     if (this.updateTimerIsZero()) {
@@ -125,7 +125,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private boolean tryHarvestSingle(BlockPos harvestPos) {
     NonNullList<ItemStack> drops = UtilHarvester.harvestSingle(getWorld(), harvestPos);
     if (drops.size() > 0) {
-      this.updateFuelIsBurning();
+      this.updateEnergyIsBurning();
       if (isPreviewVisible()) {
         UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvestPos);
       }
@@ -177,7 +177,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       case RENDERPARTICLES:
         return this.renderParticles;
       case FUEL:
-        return this.getFuelCurrent();
+        return this.getEnergyCurrent();
       case FUELMAX:
         return this.getFuelMax();
       case HARVESTMODE:
