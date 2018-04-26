@@ -40,7 +40,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.util.Constants;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
@@ -50,6 +52,8 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_INPUT = ROWS * COLS;//10
   public static final int SIZE_GRID = 3 * 3;//19
   public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
+  public static final int FILTER_SIZE = 9;
+  private Map<Integer, StackWrapper> filter = new HashMap<Integer, StackWrapper>();
 
   public static enum Fields {
     REDSTONE, TIMER;
@@ -247,12 +251,36 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     timer = compound.getInteger(NBT_TIMER);
+    setFilter(new HashMap<Integer, StackWrapper>());
+    NBTTagList invList = compound.getTagList("crunchTE", Constants.NBT.TAG_COMPOUND);
+    for (int i = 0; i < invList.tagCount(); i++) {
+      NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+      int slot = stackTag.getByte("Slot");
+      getFilter().put(slot, StackWrapper.loadStackWrapperFromNBT(stackTag));
+    }
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    NBTTagList invList = new NBTTagList();
+    for (int i = 0; i < FILTER_SIZE; i++) {
+      if (getFilter().get(i) != null) {
+        NBTTagCompound stackTag = new NBTTagCompound();
+        stackTag.setByte("Slot", (byte) i);
+        getFilter().get(i).writeToNBT(stackTag);
+        invList.appendTag(stackTag);
+      }
+    }
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
+  }
+
+  public Map<Integer, StackWrapper> getFilter() {
+    return filter;
+  }
+
+  public void setFilter(Map<Integer, StackWrapper> filter) {
+    this.filter = filter;
   }
 }
