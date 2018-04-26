@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.fluid;
 
-import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFluidPump extends GuiBaseContainer {

@@ -23,11 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.crafter;
 
+import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -60,17 +59,17 @@ public class ContainerCrafter extends ContainerBaseMachine {
       }
     }
     //crafting in the middle
-    rows = cols = 3;
-    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);
-    yPrefix = SLOTY + Const.SQ;
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new SlotSingleStack(tile, slot,
-            xPrefix + j * Const.SQ,
-            yPrefix + i * Const.SQ));
-        slot++;
-      }
-    }
+    //    rows = cols = 3;
+    //    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);
+    //    yPrefix = SLOTY + Const.SQ;
+    //    for (int i = 0; i < rows; i++) {
+    //      for (int j = 0; j < cols; j++) {
+    //        addSlotToContainer(new SlotSingleStack(tile, slot,
+    //            xPrefix + j * Const.SQ,
+    //            yPrefix + i * Const.SQ));
+    //        slot++;
+    //      }
+    //    }
     //output on right
     xPrefix = 134;
     yPrefix = SLOTY;

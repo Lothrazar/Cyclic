@@ -30,6 +30,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.core.InvWrapperRestricted;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
@@ -44,6 +45,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
@@ -626,5 +628,27 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return TileEntity.INFINITE_EXTENT_AABB;
     else
       return super.getRenderBoundingBox();
+  }
+
+  public void readStackWrappers(StackWrapper[] stacksWrapped, NBTTagCompound compound) {
+    NBTTagList invList = compound.getTagList("ghostSlots", Constants.NBT.TAG_COMPOUND);
+    for (int i = 0; i < invList.tagCount(); i++) {
+      NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+      int slot = stackTag.getByte("Slot");
+      stacksWrapped[slot] = StackWrapper.loadStackWrapperFromNBT(stackTag);
+    }
+  }
+
+  public void writeStackWrappers(StackWrapper[] stacksWrapped, NBTTagCompound compound) {
+    NBTTagList invList = new NBTTagList();
+    for (int i = 0; i < stacksWrapped.length; i++) {
+      if (stacksWrapped[i] != null) {
+        NBTTagCompound stackTag = new NBTTagCompound();
+        stackTag.setByte("Slot", (byte) i);
+        stacksWrapped[i].writeToNBT(stackTag);
+        invList.appendTag(stackTag);
+      }
+    }
+    compound.setTag("ghostSlots", invList);
   }
 }

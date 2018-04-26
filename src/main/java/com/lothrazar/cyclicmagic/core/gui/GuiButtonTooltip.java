@@ -21,15 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.core.gui;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 
-public class GuiEnergyPump extends GuiBaseContainer {
+public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
 
-  public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
-    super(new ContainerEnergyPump(inventoryPlayer, tileEntity), tileEntity);
-    this.fieldRedstoneBtn = TileEntityEnergyPump.Fields.REDSTONE.ordinal();
+  public GuiButtonTooltip(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
+    super(buttonId, x, y, widthIn, heightIn, buttonText);
+  }
+
+  private List<String> tooltip = new ArrayList<String>();
+
+  @Override
+  public List<String> getTooltips() {
+    return tooltip;
+  }
+
+  public void setTooltips(List<String> t) {
+    tooltip = t;
+  }
+
+  public GuiButtonTooltip setTooltip(final String t) {
+    List<String> remake = new ArrayList<String>();
+    remake.add(UtilChat.lang(t));
+    tooltip = remake;
+    return this;
   }
 }

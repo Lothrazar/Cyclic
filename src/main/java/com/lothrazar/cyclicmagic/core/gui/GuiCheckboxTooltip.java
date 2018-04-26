@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.base;
+package com.lothrazar.cyclicmagic.core.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.config.GuiCheckBox;
 
-public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
+public class GuiCheckboxTooltip extends GuiCheckBox implements ITooltipButton {
 
-  public GuiButtonTooltip(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
-    super(buttonId, x, y, widthIn, heightIn, buttonText);
+  public GuiCheckboxTooltip(int buttonId, int x, int y, String buttonText, boolean ch) {
+    super(buttonId, x, y, buttonText, ch);
   }
 
   private List<String> tooltip = new ArrayList<String>();
@@ -46,10 +46,9 @@ public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
     tooltip = t;
   }
 
-  public GuiButtonTooltip setTooltip(final String t) {
+  public void setTooltip(final String t) {
     List<String> remake = new ArrayList<String>();
     remake.add(UtilChat.lang(t));
     tooltip = remake;
-    return this;
   }
 }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.base;
+package com.lothrazar.cyclicmagic.core.gui;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.client.Minecraft;

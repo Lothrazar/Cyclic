@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.base.GuiCheckboxTooltip;
+import com.lothrazar.cyclicmagic.core.gui.GuiCheckboxTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;

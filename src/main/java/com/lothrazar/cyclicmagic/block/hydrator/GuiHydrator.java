@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.block.hydrator;
 
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator.Fields;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.base.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBase;
+import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

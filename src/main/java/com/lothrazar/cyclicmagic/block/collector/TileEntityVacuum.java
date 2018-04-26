@@ -25,7 +25,9 @@ package com.lothrazar.cyclicmagic.block.collector;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
@@ -34,22 +36,19 @@ import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
+public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
 
+  private StackWrapper[] stacksWrapped = new StackWrapper[10];
   private static final int VRADIUS = 2;
   private static final int MAX_SIZE = 9;//7 means 15x15
   public static final int TIMER_FULL = 20;
   public final static int ROWS = 4;
   public final static int COLS = 9;
-  public final static int FILTERSLOTS = 5 * 2;
 
   public static enum Fields {
     TIMER, RENDERPARTICLES, REDSTONE, SIZE;
@@ -61,14 +60,14 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   private int size = 4;//center plus 4 in each direction = 9x9
 
   public TileEntityVacuum() {
-    super(ROWS * COLS + FILTERSLOTS);
-    this.setSlotsForExtract(0, ROWS * COLS - 1);
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+    super(ROWS * COLS);
+    this.setSetRenderGlobally(true);
+    this.setSlotsForExtract(0, ROWS * COLS);
+    for (int i = 0; i < stacksWrapped.length; i++) {
+      if (stacksWrapped[i] == null) {
+        stacksWrapped[i] = new StackWrapper();
+      }
+    }
   }
 
   @Override
@@ -123,14 +122,11 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
   }
 
-  private List<ItemStack> getFilterCopy() {
+  private List<ItemStack> getFilterNonempty() {
     List<ItemStack> filt = new ArrayList<ItemStack>();
-    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
-    ItemStack s;
-    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS; k++) {
-      s = this.getStackInSlot(k + start);
-      if (s.isEmpty() == false) {
-        filt.add(s.copy());
+    for (StackWrapper wrap : this.stacksWrapped) {
+      if (wrap.isEmpty() == false) {
+        filt.add(wrap.getStack().copy());
       }
     }
     return filt;
@@ -140,7 +136,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     if (itemOnGround.isDead) {
       return false;//nope
     }
-    List<ItemStack> filt = this.getFilterCopy();
+    List<ItemStack> filt = this.getFilterNonempty();
     if (filt.size() == 0) {
       return true;//filter is empty, no problem eh
     }
@@ -160,6 +156,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    writeStackWrappers(stacksWrapped, tags);
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_RENDER, renderParticles);
@@ -170,6 +167,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
+    readStackWrappers(stacksWrapped, tags);
     timer = tags.getInteger(NBT_TIMER);
     this.needsRedstone = tags.getInteger(NBT_REDST);
     this.renderParticles = tags.getInteger(NBT_RENDER);
@@ -214,6 +212,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     }
   }
 
+  @Override
   public void togglePreview() {
     this.renderParticles = (renderParticles + 1) % 2;
   }
@@ -248,5 +247,20 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITick
     if (this.size > MAX_SIZE) {
       this.size = 0;//size zero means a 1x1 area
     }
+  }
+
+  @Override
+  public StackWrapper getStackWrapper(int i) {
+    return stacksWrapped[i];
+  }
+
+  @Override
+  public void setStackWrapper(int i, StackWrapper stack) {
+    stacksWrapped[i] = stack;
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.length;
   }
 }

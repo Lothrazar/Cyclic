@@ -21,34 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.base;
+package com.lothrazar.cyclicmagic.core.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import net.minecraftforge.fml.client.config.GuiCheckBox;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 
-public class GuiCheckboxTooltip extends GuiCheckBox implements ITooltipButton {
-
-  public GuiCheckboxTooltip(int buttonId, int x, int y, String buttonText, boolean ch) {
-    super(buttonId, x, y, buttonText, ch);
-  }
-
-  private List<String> tooltip = new ArrayList<String>();
+public class ContainerBase extends Container {
 
   @Override
-  public List<String> getTooltips() {
-    return tooltip;
-  }
-
-  public void setTooltips(List<String> t) {
-    tooltip = t;
-  }
-
-  public void setTooltip(final String t) {
-    List<String> remake = new ArrayList<String>();
-    remake.add(UtilChat.lang(t));
-    tooltip = remake;
+  public boolean canInteractWith(EntityPlayer playerIn) {
+    return true;
   }
 }

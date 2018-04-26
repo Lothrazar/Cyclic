@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.base;
+package com.lothrazar.cyclicmagic.core.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
@@ -35,12 +37,15 @@ import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
+import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -78,6 +83,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
     this.ySize = screenSize.height();
   }
 
+  protected Const.ScreenSize getScreenSize() {
+    return screenSize;
+  }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -96,7 +105,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-
   }
 
   /**
@@ -118,7 +126,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
     updateToggleButtonStates();
-
     for (GuiTextField txt : txtBoxes) {
       if (txt != null) {
         txt.drawTextBox();
@@ -193,16 +200,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.progressBar != null) {
       drawProgressBar();
     }
-    if (tile == null) {
-      return;
-    }
-    //    if (this.fieldFuel > -1 && tile != null && tile.doesUseFuel()) {
-    //      //this.btnFuelToggle
-    //    }
-    if (this.energyBar != null && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+    if (this.energyBar != null && tile != null
+        && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
       this.drawEnergyBar();
     }
-
   }
 
   private void drawEnergyBar() {
@@ -227,7 +228,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
         energyBar.getWidth(), (int) (energyBar.getHeight() * percent),
         energyBar.getWidth(), energyBar.getHeight());
   }
-
 
   private String getFuelAmtDisplay() {
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
@@ -313,6 +313,15 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
     super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
+    if (tile instanceof ITileStackWrapper) {
+      mouseClickedWrapper((ITileStackWrapper) tile, mouseX, mouseY);
+    }
+    if (txtBoxes != null) {
+      mouseClickedTextboxes(mouseX, mouseY, btn);
+    }
+  }
+
+  private void mouseClickedTextboxes(int mouseX, int mouseY, int btn) {
     for (GuiTextField txt : txtBoxes) {
       txt.mouseClicked(mouseX, mouseY, btn);
       if (btn == 0) {//basically left click
@@ -323,26 +332,42 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
 
-  protected Const.ScreenSize getScreenSize() {
-    return screenSize;
+  protected void mouseClickedWrapper(ITileStackWrapper te, int mouseX, int mouseY) {
+    ItemStack stackInMouse = mc.player.inventory.getItemStack();
+    StackWrapper wrap;
+    for (int i = 0; i < te.getWrapperCount(); i++) {
+      wrap = te.getStackWrapper(i);
+      if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+        if (stackInMouse.isEmpty() && wrap.isEmpty()) {
+          //if both empty, do nothing. dont waste a packet
+          break;
+        }
+        if (stackInMouse.isEmpty()) {
+          wrap.setStack(ItemStack.EMPTY);
+        }
+        else {
+          wrap.setStack(stackInMouse.copy());
+          wrap.setCount(1);
+        }
+        //PACKET TIIIIME
+        ModCyclic.network.sendToServer(new PacketTileStackWrapped(i, wrap, tile.getPos()));
+        return;
+      }
+    }
   }
 
-  public static class ButtonTriggerWrapper {
-
-    public static enum ButtonTriggerType {
-      GREATER, LESS, EQUAL, NOTEQUAL;
-    }
-
-    public GuiButton btn;
-    public ButtonTriggerType trig;
-    public int fld;
-    public int triggerValue;
-
-    public ButtonTriggerWrapper(GuiButton buttonIn, ButtonTriggerType trigger, int fieldId, int tval) {
-      this.btn = buttonIn;
-      this.trig = trigger;
-      this.fld = fieldId;
-      this.triggerValue = tval;
+  public void renderStackWrappers(ITileStackWrapper te) {
+    for (int i = 0; i < te.getWrapperCount(); i++) {
+      //set its position for mouseclick later
+      StackWrapper wrap = te.getStackWrapper(i);
+      if (wrap.isEmpty() == false) {
+        GlStateManager.pushMatrix();
+        RenderHelper.enableGUIStandardItemLighting();
+        mc.getRenderItem().renderItemAndEffectIntoGUI(wrap.getStack(), wrap.getX() + 1, wrap.getY() + 1);
+        //keep this render quantity for later
+        //          mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, s, x + 1, y + 1, "1");
+        GlStateManager.popMatrix();
+      }
     }
   }
 }

@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.base;
+package com.lothrazar.cyclicmagic.core;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 
-public class ContainerBase extends Container {
+public interface ITileStackWrapper {
 
-  @Override
-  public boolean canInteractWith(EntityPlayer playerIn) {
-    return true;
-  }
+  public int getWrapperCount();
+
+  public StackWrapper getStackWrapper(int i);
+
+  public void setStackWrapper(int i, StackWrapper stack);
 }

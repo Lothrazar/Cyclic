@@ -23,10 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.collector;
 
+import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.base.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -53,19 +52,19 @@ public class ContainerVacuum extends ContainerBaseMachine {
       }
     }
     //now add the filter slots at the end.
-    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
-    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
-      addSlotToContainer(new SlotSingleStack(tile, start + k,
-          Const.PAD + (k + 4) * Const.SQ, /// X
-          Const.SQ - 1// Y
-      ));
-    }
-    for (int k = TileEntityVacuum.FILTERSLOTS / 2; k < TileEntityVacuum.FILTERSLOTS; k++) {
-      addSlotToContainer(new SlotSingleStack(tile, start + k,
-          Const.PAD + (k - 1) * Const.SQ, /// X
-          2 * Const.SQ - 1 // Y
-      ));
-    }
+    //    int start = TileEntityVacuum.ROWS * TileEntityVacuum.COLS;
+    //    for (int k = 0; k < TileEntityVacuum.FILTERSLOTS / 2; k++) {
+    //      addSlotToContainer(new SlotSingleStack(tile, start + k,
+    //          Const.PAD + (k + 4) * Const.SQ, /// X
+    //          Const.SQ - 1// Y
+    //      ));
+    //    }
+    //    for (int k = TileEntityVacuum.FILTERSLOTS / 2; k < TileEntityVacuum.FILTERSLOTS; k++) {
+    //      addSlotToContainer(new SlotSingleStack(tile, start + k,
+    //          Const.PAD + (k - 1) * Const.SQ, /// X
+    //          2 * Const.SQ - 1 // Y
+    //      ));
+    //    }
     bindPlayerInventory(inventoryPlayer);
   }
 

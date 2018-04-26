@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.playerupgrade.storage;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.base.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerHotbar;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;

@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.gui.button;
 
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.gui.base.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
