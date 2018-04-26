@@ -102,7 +102,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUELDISPLAY;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
   }
 
   public TileEntityUser() {
@@ -436,16 +436,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
-      //      case FUEL:
-      //        return this.getFuelCurrent();
-      //      case FUELMAX:
-      //        return this.getFuelMax();
+
       case RENDERPARTICLES:
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
-      case FUELDISPLAY:
-        return this.fuelDisplay;
     }
     return 0;
   }
@@ -480,17 +475,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       case SIZE:
         this.size = value;
       break;
-      //      case FUEL:
-      //        this.setFuelCurrent(value);
-      //      break;
-      //      case FUELMAX:
-      //      break;
+
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
-      case FUELDISPLAY:
-        this.fuelDisplay = value % 2;
-      break;
+
     }
   }
 

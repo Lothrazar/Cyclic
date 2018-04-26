@@ -47,7 +47,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
   static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUELDISPLAY;
+    TIMER, REDSTONE;
   }
 
   private int timer = 0;
@@ -160,9 +160,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
       case TIMER:
         return timer;
 
-
-      case FUELDISPLAY:
-        return this.fuelDisplay;
       case REDSTONE:
         return needsRedstone;
     }
@@ -174,10 +171,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
-
-      case FUELDISPLAY:
-        this.fuelDisplay = value % 2;
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;

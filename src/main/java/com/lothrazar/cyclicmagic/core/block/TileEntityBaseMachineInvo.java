@@ -67,7 +67,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
-  protected int fuelDisplay = 0;
+
   private int energyCost = 0;
 
   protected int speed = 1;
@@ -441,7 +441,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.readInvoFromNBT(compound);
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
-    fuelDisplay = compound.getInteger("fueldisplay");
 
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
@@ -456,7 +455,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     compound.setInteger(NBT_SPEED, speed);
 
     compound.setInteger(NBT_TIMER, timer);
-    compound.setInteger("fueldisplay", fuelDisplay);
 
     if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
@@ -537,16 +535,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   @Override
-  public void incrementSpeed() {
-    this.setSpeed(this.getSpeed() - 1);
-  }
-
-  @Override
-  public void decrementSpeed() {
-    this.setSpeed(this.getSpeed() + 1);
-  }
-
-  @Override
   public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, EnumFacing facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
         && this.getSizeInventory() > 0) {
@@ -570,17 +558,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
-  }
-
-
-  @Override
-  public void toggleFuelDisplay() {
-    this.fuelDisplay = (this.fuelDisplay + 1) % 2;
-  }
-
-  @Override
-  public boolean getFuelDisplay() {
-    return this.fuelDisplay == 0;
   }
 
   /**

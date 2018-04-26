@@ -364,8 +364,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
       case TIMER:
         return this.timer;
-      case FUELDISPLAY:
-        return this.fuelDisplay;
     }
     return 0;
   }
@@ -395,9 +393,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       case TIMER:
         this.timer = value;
       break;
-      case FUELDISPLAY:
-        this.fuelDisplay = value % 2;
-      break;
+
     }
   }
 

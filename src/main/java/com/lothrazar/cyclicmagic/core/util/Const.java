@@ -43,12 +43,12 @@ public class Const {
     public static final ResourceLocation TABLEFILTER = new ResourceLocation(Const.MODID, folder + "filter.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
-    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
-    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
+    //    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
+    //    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
     public static final ResourceLocation ENERGY_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_ctr.png");
     public static final ResourceLocation ENERGY_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_inner.png");
-    public static final ResourceLocation FUEL_CTRVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr_vert.png");
-    public static final ResourceLocation FUEL_INNERVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner_vert.png");
+    //    public static final ResourceLocation FUEL_CTRVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr_vert.png");
+    //    public static final ResourceLocation FUEL_INNERVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner_vert.png");
     public static final ResourceLocation FLUID = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
     public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
     public static final ResourceLocation FLUID_EXP = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_exp.png");

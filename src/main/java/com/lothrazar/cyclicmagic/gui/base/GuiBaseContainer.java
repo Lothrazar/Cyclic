@@ -31,10 +31,8 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleFuelBar;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import net.minecraft.client.gui.Gui;
@@ -63,8 +61,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
   protected int fuelX, fuelY, fuelXE, fuelYE;
-  private GuiButtonToggleFuelBar btnFuelToggle;
-  private boolean usesEnergy;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -80,10 +76,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     this.screenSize = ss;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
-  }
-
-  protected void setUsesEnergy() {
-    this.usesEnergy = true;
   }
 
   @Override
@@ -104,12 +96,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);
     }
-    if (this.usesEnergy && tile.getEnergyCost() > 0 && this.tile instanceof ITileFuel) {
-      btnFuelToggle = new GuiButtonToggleFuelBar(3,
-          this.guiLeft + this.xSize - Const.PAD,
-          this.guiTop + 1, this.tile.getPos());
-      this.buttonList.add(btnFuelToggle);
-    }
+
   }
 
   /**
@@ -131,9 +118,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     drawNameText();
     updateToggleButtonStates();
-    //    if (tile != null && tile.getFuelCost() > 0) {
-    //      drawFuelText();
-    //    }
+
     for (GuiTextField txt : txtBoxes) {
       if (txt != null) {
         txt.drawTextBox();
@@ -217,12 +202,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.energyBar != null && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
       this.drawEnergyBar();
     }
-    else if (this.tile instanceof ITileFuel) {
-      drawFuelBarOutsideContainer();
-    }
-    //    else if (this.fieldFuel > -1 && tile.doesUseFuel()) {
-    //      this.drawEnergyBarInside();
-    //    }
+
   }
 
   private void drawEnergyBar() {
@@ -248,53 +228,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
         energyBar.getWidth(), energyBar.getHeight());
   }
 
-  private void drawFuelBarOutsideContainer() {
-    if (tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP) == false) {
-      return;
-    }
-    int u = 0, v = 0;
-    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    //float percent = ((float) tile.getField(this.fieldFuel)) / ((float) tile.getField(this.fieldMaxFuel));
-    int outerLength = 100, outerWidth = 28;
-    int innerLength = 84, innerWidth = 14;
-    if (tile.getFuelDisplay()) {// vertical
-      fuelX = this.guiLeft + getScreenSize().width() - innerLength - 8;
-      fuelXE = fuelX + innerLength;
-      fuelY = this.guiTop - outerWidth + 5;
-      fuelYE = fuelY + innerWidth;
-      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTRVERT);
-      Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + getScreenSize().width() - outerLength,
-          this.guiTop - outerWidth - 2, u, v,
-          outerLength, outerWidth,
-          outerLength, outerWidth);
-      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNERVERT);
-      Gui.drawModalRectWithCustomSizedTexture(
-          fuelX,
-          fuelY, u, v,
-          (int) (innerLength * percent), innerWidth,
-          innerLength, innerWidth);
-    }
-    else {
-      fuelX = this.guiLeft + getScreenSize().width() + Const.PAD;
-      fuelXE = fuelX + innerWidth;
-      fuelY = this.guiTop + Const.PAD;
-      fuelYE = fuelY + innerLength;
-      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_CTR);
-      Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + getScreenSize().width() + 1,
-          this.guiTop, u, v,
-          outerWidth, outerLength,
-          outerWidth, outerLength);
-      this.mc.getTextureManager().bindTexture(Const.Res.FUEL_INNER);
-      Gui.drawModalRectWithCustomSizedTexture(
-          fuelX,
-          fuelY, u, v,
-          innerWidth, (int) (innerLength * percent),
-          innerWidth, innerLength);
-    }
-  }
 
   private String getFuelAmtDisplay() {
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
