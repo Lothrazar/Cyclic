@@ -630,24 +630,23 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return super.getRenderBoundingBox();
   }
 
-  public void readStackWrappers(StackWrapper[] stacksWrapped, NBTTagCompound compound) {
+  public void readStackWrappers(NonNullList<StackWrapper> stacksWrapped, NBTTagCompound compound) {
     NBTTagList invList = compound.getTagList("ghostSlots", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < invList.tagCount(); i++) {
       NBTTagCompound stackTag = invList.getCompoundTagAt(i);
       int slot = stackTag.getByte("Slot");
-      stacksWrapped[slot] = StackWrapper.loadStackWrapperFromNBT(stackTag);
+      stacksWrapped.set(slot, StackWrapper.loadStackWrapperFromNBT(stackTag));
     }
   }
 
-  public void writeStackWrappers(StackWrapper[] stacksWrapped, NBTTagCompound compound) {
+  public void writeStackWrappers(NonNullList<StackWrapper> stacksWrapped, NBTTagCompound compound) {
     NBTTagList invList = new NBTTagList();
-    for (int i = 0; i < stacksWrapped.length; i++) {
-      if (stacksWrapped[i] != null) {
+    for (int i = 0; i < stacksWrapped.size(); i++) {
         NBTTagCompound stackTag = new NBTTagCompound();
         stackTag.setByte("Slot", (byte) i);
-        stacksWrapped[i].writeToNBT(stackTag);
+        stacksWrapped.get(i).writeToNBT(stackTag);
         invList.appendTag(stackTag);
-      }
+
     }
     compound.setTag("ghostSlots", invList);
   }

@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.pump.item;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -41,11 +40,11 @@ public class ContainerItemPump extends ContainerBaseMachine {
 
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
     super(te);
-    for (int col = 1; col < 10; col++) {
-      addSlotToContainer(new SlotSingleStack(tile, col,
-          SLOTX_START + (col - 1) * Const.SQ,
-          SLOTY));
-    }
+    //    for (int col = 1; col < 10; col++) {
+    //      addSlotToContainer(new SlotSingleStack(tile, col,
+    //          SLOTX_START + (col - 1) * Const.SQ,
+    //          SLOTY));
+    //    }
     bindPlayerInventory(inventoryPlayer);
   }
 

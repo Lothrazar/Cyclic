@@ -43,10 +43,11 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITileRedstoneToggle, ITickable {
 
-  private StackWrapper[] stacksWrapped = new StackWrapper[9];
+  private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   public static final int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
@@ -75,11 +76,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     this.initEnergyWithCost(BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     this.setSlotsForExtract(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28));
-    for (int i = 0; i < stacksWrapped.length; i++) {
-      if (stacksWrapped[i] == null) {
-        stacksWrapped[i] = new StackWrapper();
-      }
-    }
+
   }
 
   @Override
@@ -264,16 +261,16 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
 
   @Override
   public StackWrapper getStackWrapper(int i) {
-    return stacksWrapped[i];
+    return stacksWrapped.get(i);
   }
 
   @Override
   public void setStackWrapper(int i, StackWrapper stack) {
-    stacksWrapped[i] = stack;
+    stacksWrapped.set(i, stack);
   }
 
   @Override
   public int getWrapperCount() {
-    return stacksWrapped.length;
+    return stacksWrapped.size();
   }
 }

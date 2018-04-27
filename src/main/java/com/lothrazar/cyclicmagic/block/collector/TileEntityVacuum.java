@@ -38,12 +38,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
 
-  private StackWrapper[] stacksWrapped = new StackWrapper[10];
+  private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(10, new StackWrapper());
   private static final int VRADIUS = 2;
   private static final int MAX_SIZE = 9;//7 means 15x15
   public static final int TIMER_FULL = 20;
@@ -63,11 +64,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     super(ROWS * COLS);
     this.setSetRenderGlobally(true);
     this.setSlotsForExtract(0, ROWS * COLS);
-    for (int i = 0; i < stacksWrapped.length; i++) {
-      if (stacksWrapped[i] == null) {
-        stacksWrapped[i] = new StackWrapper();
-      }
-    }
+
   }
 
   @Override
@@ -251,16 +248,16 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
 
   @Override
   public StackWrapper getStackWrapper(int i) {
-    return stacksWrapped[i];
+    return stacksWrapped.get(i);
   }
 
   @Override
   public void setStackWrapper(int i, StackWrapper stack) {
-    stacksWrapped[i] = stack;
+    stacksWrapped.set(i, stack);
   }
 
   @Override
   public int getWrapperCount() {
-    return stacksWrapped.length;
+    return stacksWrapped.size();
   }
 }

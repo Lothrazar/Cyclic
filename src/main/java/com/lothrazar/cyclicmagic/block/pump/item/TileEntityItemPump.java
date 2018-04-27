@@ -23,9 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.item;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -41,8 +44,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle {
 
+  private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   private static final int SLOT_TRANSFER = 0;
   private static int TRANSFER_ITEM_TICK_DELAY = 0;
 
@@ -50,13 +54,12 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     REDSTONE, FILTERTYPE;
   }
 
-  static final int FILTER_SIZE = 9;
   private int itemTransferCooldown = 0;
   private int needsRedstone = 0;
   private int filterType = 0;
 
   public TileEntityItemPump() {
-    super(1 + FILTER_SIZE);
+    super(1);
     this.setSlotsForExtract(0);
     this.setSlotsForInsert(0);
   }
@@ -95,7 +98,7 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
   }
 
   private boolean isStackInvalid(ItemStack stackToTest) {
-    List<ItemStack> inventoryContents = getFilter();
+    List<ItemStack> inventoryContents = getFilterNonempty();
     //edge case: if list is empty ?? should be covered already
     if (OreDictionary.containsMatch(true,
         NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
@@ -109,9 +112,14 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     return this.isWhitelist();
   }
 
-  private List<ItemStack> getFilter() {
-    List<ItemStack> validForSide = this.inv.subList(1, FILTER_SIZE + 1);
-    return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
+  private List<ItemStack> getFilterNonempty() {
+    List<ItemStack> filt = new ArrayList<ItemStack>();
+    for (StackWrapper wrap : this.stacksWrapped) {
+      if (wrap.isEmpty() == false) {
+        filt.add(wrap.getStack().copy());
+      }
+    }
+    return filt;
   }
 
   @Override
@@ -225,10 +233,12 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     itemTransferCooldown = compound.getInteger("itemTransferCooldown");
     needsRedstone = compound.getInteger(NBT_REDST);
     filterType = compound.getInteger("wbtype");
+    readStackWrappers(stacksWrapped, compound);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    writeStackWrappers(stacksWrapped, compound);
     compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger("itemTransferCooldown", itemTransferCooldown);
     compound.setInteger("wbtype", filterType);
@@ -248,5 +258,20 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
 
   public static void syncConfig(Configuration config) {
     TRANSFER_ITEM_TICK_DELAY = config.getInt("TRANSFER_ITEM_TICK_DELAY", Const.ConfigCategory.cables, 1, 1, 200, "Tick Delay between item transfers (1 means 1 item per tick so no delay).  Only affects Item Extractor.  ");
+  }
+
+  @Override
+  public StackWrapper getStackWrapper(int i) {
+    return stacksWrapped.get(i);
+  }
+
+  @Override
+  public void setStackWrapper(int i, StackWrapper stack) {
+    stacksWrapped.set(i, stack);
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.size();
   }
 }

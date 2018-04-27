@@ -23,7 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.item;
 
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -34,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemPump extends GuiBaseContainer {
 
-  TileEntityItemPump te;
+  ITileStackWrapper te;
   private ButtonTileEntityField filterBtn;
 
   public GuiItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump tileEntity) {
@@ -46,14 +48,21 @@ public class GuiItemPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
+    int u = 0, v = 0, x, y, slotNum = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int j = 1; j < 10; j++) {
+      x = this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1;
+      y = this.guiTop + ContainerItemPump.SLOTY - 1;
       Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1,
-          this.guiTop + ContainerItemPump.SLOTY - 1,
+          x,
+          y,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      StackWrapper wrap = te.getStackWrapper(slotNum);
+      wrap.setX(x);
+      wrap.setY(y);
+      slotNum++;
     }
+    this.renderStackWrappers(te);
   }
 
   @SideOnly(Side.CLIENT)
@@ -64,6 +73,17 @@ public class GuiItemPump extends GuiBaseContainer {
     //    filterBtn.displayString = UtilChat.lang("button.itemfilter.type" + filterType);
     filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
     filterBtn.setTextureIndex(11 + filterType);
+  }
+
+  /**
+   * mouseover render for fake slots
+   */
+  @Override
+  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    super.drawScreen(mouseX, mouseY, partialTicks);
+
+    //if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+    //    {}
   }
 
   @Override

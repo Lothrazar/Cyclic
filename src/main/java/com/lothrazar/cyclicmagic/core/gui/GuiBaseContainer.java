@@ -243,6 +243,30 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    if (tile instanceof ITileStackWrapper) {
+      ITileStackWrapper te = (ITileStackWrapper) tile;
+      StackWrapper wrap;
+      //  if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled())
+      for (int i = 0; i < te.getWrapperCount(); i++) {
+        wrap = te.getStackWrapper(i);
+        if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+
+          //      this.hoveredSlot = slot;
+          final int normalOverlay = -1130706433;
+          GlStateManager.disableLighting();
+          GlStateManager.disableDepth();
+          int j1 = wrap.getX() + 1;
+          int k1 = wrap.getY() + 1;
+          GlStateManager.colorMask(true, true, true, false);
+          this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, normalOverlay, normalOverlay);
+          GlStateManager.colorMask(true, true, true, true);
+          GlStateManager.enableLighting();
+          GlStateManager.enableDepth();
+          if (wrap.isEmpty() == false)
+            this.renderToolTip(wrap.getStack(), mouseX, mouseY);
+        }
+      }
+    }
     if (energyBar != null && energyBar.isMouseover(mouseX, mouseY)) {
       this.renderEnergyTooltip(mouseX, mouseY);
     }
@@ -256,6 +280,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         break;// cant hover on 2 at once
       }
     }
+
   }
 
   public void drawProgressBar() {
