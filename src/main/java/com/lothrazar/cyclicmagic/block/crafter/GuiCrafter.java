@@ -23,9 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.crafter;
 
-import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -35,7 +33,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiCrafter extends GuiBaseContainer {
 
-  ITileStackWrapper tileCrafter;
+  TileEntityCrafter tileCrafter;
 
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
@@ -44,6 +42,7 @@ public class GuiCrafter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
+    energyBar.setHeight(82).setWidth(14).setY(28).setX(150);
   }
 
   @Override
@@ -67,24 +66,18 @@ public class GuiCrafter extends GuiBaseContainer {
       }
     }
     //grid 
-    int slotNum = 0;
+    //grid
     rows = cols = 3;
-    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
-    yPrefix = ContainerCrafter.SLOTY + Const.SQ;
+    xPrefix = (getScreenSize().width() / 2 - 40);//calculate exact center
+    yPrefix = ContainerCrafter.SLOTY + 2 * Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        x = guiLeft + xPrefix - 1 + j * Const.SQ;
-        y = guiTop + yPrefix - 1 + i * Const.SQ;
-        Gui.drawModalRectWithCustomSizedTexture(x,
-            y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-        StackWrapper wrap = tileCrafter.getStackWrapper(slotNum);
-        wrap.setX(x);
-        wrap.setY(y);
-        slotNum++;
+        Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
+            this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
     //output
-    xPrefix = 134;
+    xPrefix = 106;
     yPrefix = ContainerCrafter.SLOTY;
     rows = TileEntityCrafter.ROWS;
     cols = TileEntityCrafter.COLS;
@@ -94,6 +87,5 @@ public class GuiCrafter extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    this.renderStackWrappers(tileCrafter);
   }
 }

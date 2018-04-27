@@ -26,13 +26,12 @@ package com.lothrazar.cyclicmagic.block.crafter;
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
+import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,7 +39,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
 
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 33;
+  public static final int SLOTY = 27;
 
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     super(te);
@@ -59,25 +58,25 @@ public class ContainerCrafter extends ContainerBaseMachine {
       }
     }
     //crafting in the middle
-    //    rows = cols = 3;
-    //    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);
-    //    yPrefix = SLOTY + Const.SQ;
-    //    for (int i = 0; i < rows; i++) {
-    //      for (int j = 0; j < cols; j++) {
-    //        addSlotToContainer(new SlotSingleStack(tile, slot,
-    //            xPrefix + j * Const.SQ,
-    //            yPrefix + i * Const.SQ));
-    //        slot++;
-    //      }
-    //    }
+    rows = cols = 3;
+    xPrefix = (getScreenSize().width() / 2 - 40);
+    yPrefix = SLOTY + Const.SQ * 2;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        addSlotToContainer(new SlotSingleStack(tile, slot,
+            xPrefix + j * Const.SQ,
+            yPrefix + i * Const.SQ));
+        slot++;
+      }
+    }
     //output on right
-    xPrefix = 134;
+    xPrefix = 106;
     yPrefix = SLOTY;
     rows = TileEntityCrafter.ROWS;
     cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new SlotOutputOnly(tile, slot,
+        addSlotToContainer(new Slot(tile, slot,
             xPrefix + j * Const.SQ,
             yPrefix + i * Const.SQ));
         slot++;
@@ -102,14 +101,8 @@ public class ContainerCrafter extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      else if (TileEntityFurnace.isItemFuel(stack)) {
-        //fuel slot
-        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) {
-          return ItemStack.EMPTY;
-        }
-        //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
-      }
-      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) {
+
+      else if (!this.mergeItemStack(stackInSlot, 0, TileEntityCrafter.SIZE_INPUT, true)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {

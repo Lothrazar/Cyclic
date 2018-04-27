@@ -32,7 +32,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -65,15 +64,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
-      else if (TileEntityFurnace.isItemFuel(stack)) {
-        //fuel slot
-        if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), true)) {
-          return ItemStack.EMPTY;
-        }
-        //        else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory()-1, false)) { return ItemStack.EMPTY; }
-      }
+
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory() - 1, false)) {
         return ItemStack.EMPTY;
       }
