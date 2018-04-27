@@ -26,13 +26,11 @@ package com.lothrazar.cyclicmagic.block.sorting;
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,18 +42,18 @@ public class ContainerItemSort extends ContainerBaseMachine {
   public ContainerItemSort(InventoryPlayer inventoryPlayer, TileEntityItemCableSort te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    int fs = TileEntityItemCableSort.FILTER_SIZE;
-    int slot = 1;
-    int y = SLOTY;
-    for (int col = 0; col < EnumFacing.values().length; col++) {
-      y = col * Const.SQ;
-      for (int row = 0; row < fs; row++) {
-        addSlotToContainer(new SlotSingleStack(tile, slot,
-            SLOTX_START + row % fs * Const.SQ + Const.SQ,
-            SLOTY + y));
-        slot++;
-      }
-    }
+    //    int fs = TileEntityItemCableSort.FILTER_SIZE;
+    //    int slot = 1;
+    //    int y = SLOTY;
+    //    for (int col = 0; col < EnumFacing.values().length; col++) {
+    //      y = col * Const.SQ;
+    //      for (int row = 0; row < fs; row++) {
+    //        addSlotToContainer(new SlotSingleStack(tile, slot,
+    //            SLOTX_START + row % fs * Const.SQ + Const.SQ,
+    //            SLOTY + y));
+    //        slot++;
+    //      }
+    //    }
     bindPlayerInventory(inventoryPlayer);
   }
 

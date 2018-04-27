@@ -31,7 +31,9 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -43,8 +45,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable {
 
+  private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(FILTER_SIZE * EnumFacing.values().length, new StackWrapper());
   public static final int FILTER_SIZE = 8;
   private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
@@ -66,8 +69,8 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private String labelText = "";
 
   public TileEntityItemCableSort() {
-    super(FILTER_SIZE * EnumFacing.values().length + 1);// 49
-    this.setSlotsForInsert(0);
+    super(1);
+    this.setSlotsForInsert(1);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
       allowEverything.put(f, 0);
@@ -91,11 +94,17 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     //so its 48 total slots, skip 0 for transfer
     // [1,8], [9, 16], [17, 24] [25, 32] [33, 40] , [41, 48]
     //sublist loses the specific type so convert it back
-    int start = row * FILTER_SIZE + 1;
-    int end = (row + 1) * FILTER_SIZE;
-    List<ItemStack> validForSide = this.inv.subList(start, end + 1);
+    int start = row * FILTER_SIZE;
+    int end = (row + 1) * FILTER_SIZE - 1;
+    List<ItemStack> validForSide = new ArrayList<>();
+
+    for (int i = start; i < end; i++) {
+      if (this.stacksWrapped.get(i).isEmpty() == false) {
+        validForSide.add(stacksWrapped.get(i).getStack());
+      }
+    }
     // this.debugStacks(" items for side (r,s,e) " + row + "," + start + "," + end + "::", f, validForSide);
-    return NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
+    return validForSide;//NonNullList.<ItemStack> from(ItemStack.EMPTY, validForSide.toArray(new ItemStack[0]));
   }
 
   public String getLabelText() {
@@ -106,6 +115,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
+    readStackWrappers(stacksWrapped, compound);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, compound.getInteger(f.getName() + "_incoming"));
       allowEverything.put(f, compound.getInteger(f.getName() + "_toggle"));
@@ -118,7 +128,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    super.writeToNBT(compound);
+    writeStackWrappers(stacksWrapped, compound);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setInteger(f.getName() + "_incoming", mapIncoming.get(f));
       compound.setInteger(f.getName() + "_toggle", allowEverything.get(f));
@@ -126,7 +136,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     }
     compound.setString("label", labelText);
     compound.setInteger("labelt", labelTimer);
-    return compound;
+    return super.writeToNBT(compound);
   }
 
   public BlockPos getConnectedPos() {
@@ -148,6 +158,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private List<EnumFacing> getValidSidesForStack(ItemStack stackToExport) {
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
+      //      getFilterForSide(f);
       if (this.isIncomingFromFace(f)) {
         continue;
       }
@@ -300,6 +311,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     return in.trim();
   }
 
+  @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(getFieldCount());
   }
@@ -335,5 +347,20 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
       ignoreDamageIfOne.put(enumID, value % 2);
       // ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
     }
+  }
+
+  @Override
+  public StackWrapper getStackWrapper(int i) {
+    return stacksWrapped.get(i);
+  }
+
+  @Override
+  public void setStackWrapper(int i, StackWrapper stack) {
+    stacksWrapped.set(i, stack);
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.size();
   }
 }

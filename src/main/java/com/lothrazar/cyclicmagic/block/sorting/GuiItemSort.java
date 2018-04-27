@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.sorting;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -55,10 +56,38 @@ public class GuiItemSort extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.TABLEFILTER);
     int thisX = getMiddleX();
     int thisY = getMiddleY();
-    int u = 0, v = 0;
+    int u = 0, v = 0, slotNum = 0, x, y;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
         getScreenSize().width(), getScreenSize().height(),
         getScreenSize().width(), getScreenSize().height());
+    //set locations
+    
+    /*    int fs = TileEntityItemCableSort.FILTER_SIZE;
+    int slot = 1;
+    int y = SLOTY;
+    for (int col = 0; col < EnumFacing.values().length; col++) {
+      y = col * Const.SQ;
+      for (int row = 0; row < fs; row++) {
+        addSlotToContainer(new SlotSingleStack(tile, slot,
+            SLOTX_START + row % fs * Const.SQ + Const.SQ,
+            SLOTY + y));
+        slot++;
+      }
+    }*/
+    int fs = TileEntityItemCableSort.FILTER_SIZE;
+
+    for (int col = 0; col < EnumFacing.values().length; col++) {
+      y = guiTop+col * Const.SQ + ContainerItemSort.SLOTY;
+      for (int row = 0; row < fs; row++) {
+        StackWrapper wrap = te.getStackWrapper(slotNum);
+        x =  guiLeft+ ContainerItemSort.SLOTX_START + row % fs * Const.SQ + Const.SQ;//Const.PAD + Const.SQ * row;
+
+        wrap.setX(x);
+        wrap.setY(y);
+        slotNum++;
+      }
+    }
+    this.renderStackWrappers(te);
   }
 
   @SideOnly(Side.CLIENT)
