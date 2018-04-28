@@ -1,0 +1,8 @@
+{
+	"parent": "cyclicmagic:block/conveyor_corner_l",
+
+	"textures": {
+		"top": "cyclicmagic:blocks/conveyor_medium_corner",
+		"particle": "cyclicmagic:blocks/conveyor_medium_corner"
+	}
+}
