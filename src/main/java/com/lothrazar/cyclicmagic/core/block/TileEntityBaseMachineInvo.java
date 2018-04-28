@@ -145,10 +145,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   protected void initEnergy(int fcost, int maxStored) {
+    initEnergy(fcost, maxStored, true);
+  }
+
+  protected void initEnergy(int fcost, int maxStored, boolean canImportPower) {
     this.energyCost = fcost;
     this.hasEnergy = true;
-    this.energyStorage = new EnergyStore(1000 * 64);
+    this.energyStorage = new EnergyStore(1000 * 64, canImportPower);
   }
+
 
   public int getEnergyMax() {
     if (energyStorage == null) {
@@ -242,7 +247,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         IEnergyStorage handlerFrom = teConnected.getCapability(CapabilityEnergy.ENERGY, sideOpp);
         if (handlerFrom != null && handlerTo != null) {
           //true means simulate the extract. then if it worked go for real
-          int drain = handlerFrom.extractEnergy(EnergyStore.MAX_INPUT, true);
+          int drain = handlerFrom.extractEnergy(EnergyStore.MAX_TRANSFER, true);
           if (drain > 0) {
             int filled = handlerTo.receiveEnergy(drain, false);
             handlerFrom.extractEnergy(filled, false);

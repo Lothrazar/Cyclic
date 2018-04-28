@@ -45,7 +45,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
   private static final int PER_TICK = TileEntityPeatGenerator.PER_TICK / 2;
-  private static final int CAPACITY = 60 * Fluid.BUCKET_VOLUME;
+  private static final int CAPACITY = 64 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
     REDSTONE, TIMER;
