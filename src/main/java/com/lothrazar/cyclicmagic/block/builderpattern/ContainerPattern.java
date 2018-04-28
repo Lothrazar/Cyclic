@@ -45,7 +45,7 @@ public class ContainerPattern extends ContainerBaseMachine {
     setScreenSize(ScreenSize.LARGE);
     int s = 0;
     int row = 0, col = 0;
-    for (int i = 0; i < tile.getSizeInventory() - 1; i++) { //so going from 0-9
+    for (int i = 0; i < tile.getSizeInventory(); i++) { //so going from 0-9
       row = i / GuiPattern.GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GuiPattern.GUI_ROWS; // and %3 will go 012 012 012
       addSlotToContainer(new Slot(tile, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));

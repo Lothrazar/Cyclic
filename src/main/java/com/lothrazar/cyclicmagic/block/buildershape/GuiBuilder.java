@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.buildershape;
 
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -230,7 +230,7 @@ public class GuiBuilder extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {
+    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }

@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.beaconpotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion.Fields;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -48,7 +47,6 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     if (TileEntityBeaconPotion.doesConsumePotions) {
       this.progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), TileEntityBeaconPotion.MAX_POTION);
     }
-    this.setScreenSize(ScreenSize.LARGE);
   }
 
   @Override

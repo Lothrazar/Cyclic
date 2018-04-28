@@ -169,7 +169,7 @@ public class GuiPattern extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
-    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
+    for (int i = 0; i < tile.getSizeInventory(); i++) {
       row = i / GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GUI_ROWS; // and %3 will go 012 012 012
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

@@ -51,7 +51,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   public static final int FILTER_SIZE = 8;
   private static final int TICKS_TEXT_CACHED = 7;
   private static final int TIMER_SIDE_INPUT = 15;
-  public static final int INVENTORY_SIZE = 0;
 
   public static enum LockType {
     FILTER, EVERYTHING, NOTHING;
@@ -70,7 +69,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
 
   public TileEntityItemCableSort() {
     super(1);
-    this.setSlotsForInsert(1);
+    this.setSlotsForInsert(0);
     for (EnumFacing f : EnumFacing.values()) {
       mapIncoming.put(f, 0);
       allowEverything.put(f, 0);

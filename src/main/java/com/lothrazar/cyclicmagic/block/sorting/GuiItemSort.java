@@ -77,10 +77,10 @@ public class GuiItemSort extends GuiBaseContainer {
     int fs = TileEntityItemCableSort.FILTER_SIZE;
 
     for (int col = 0; col < EnumFacing.values().length; col++) {
-      y = guiTop+col * Const.SQ + ContainerItemSort.SLOTY;
+      y = guiTop + col * Const.SQ + ContainerItemSort.SLOTY - 1;
       for (int row = 0; row < fs; row++) {
         StackWrapper wrap = te.getStackWrapper(slotNum);
-        x =  guiLeft+ ContainerItemSort.SLOTX_START + row % fs * Const.SQ + Const.SQ;//Const.PAD + Const.SQ * row;
+        x = guiLeft + ContainerItemSort.SLOTX_START + row % fs * Const.SQ + Const.SQ - 1;//Const.PAD + Const.SQ * row;
 
         wrap.setX(x);
         wrap.setY(y);
