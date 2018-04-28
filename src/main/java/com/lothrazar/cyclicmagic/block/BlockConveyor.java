@@ -67,6 +67,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   public BlockConveyor(SpeedType t) {
     super(Material.IRON);//, MapColor.GRASS
+
     this.setSoundType(SoundType.SLIME);
     type = t;
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
