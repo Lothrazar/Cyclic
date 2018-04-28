@@ -97,9 +97,9 @@ public class GuiVacuum extends GuiBaseContainer {
     for (int k = te.getWrapperCount() / 2; k < te.getWrapperCount(); k++) {
       x = this.guiLeft + Const.PAD + (k - 1) * Const.SQ - 1;
       y = this.guiTop + 2 * Const.SQ - 2;
-      Gui.drawModalRectWithCustomSizedTexture(
-          x, y,
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      //      Gui.drawModalRectWithCustomSizedTexture(
+      //          x, y,
+      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       StackWrapper wrap = te.getStackWrapper(slotNum);
       wrap.setX(x);
       wrap.setY(y);

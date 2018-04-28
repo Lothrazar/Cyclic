@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -36,20 +35,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMinerSmart extends ContainerBaseMachine {
 
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 26;
-  public static final int SLOTY = 50;
-  public static final int SLOTID_EQUIP = TileEntityControlledMiner.TOOLSLOT_INDEX;
   public static final int SLOTEQUIP_X = 120;
   public static final int SLOTEQUIP_Y = 40;
 
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     super(te);
-    //    this.setScreenSize(ScreenSize.LARGE);
-    for (int i = 0; i < SLOTID_EQUIP; i++) {
-      addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
-    }
-    addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
+
+    addSlotToContainer(new SlotSingleStack(tile, TileEntityControlledMiner.TOOLSLOT_INDEX, SLOTEQUIP_X, SLOTEQUIP_Y));
     bindPlayerInventory(inventoryPlayer);
   }
 

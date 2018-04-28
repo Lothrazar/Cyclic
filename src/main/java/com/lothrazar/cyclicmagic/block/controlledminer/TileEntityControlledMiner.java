@@ -29,7 +29,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
@@ -47,6 +49,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -55,25 +58,16 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
 
-
-  //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
-  //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
-  // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  private static final String NBT_REDST = "redstone";
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   private static final String NBTHEIGHT = "h";
-  private static final String NBT_SIZE = "size";
   private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
-  private static final int INVENTORY_SIZE = 5;
-  public static final int TOOLSLOT_INDEX = 4;
-  public static final int WHITELIST_START_INDEX = 0;
-  public static final int WHITELIST_END_INDEX = 3;
+  public static final int TOOLSLOT_INDEX = 0;
   public final static int TIMER_FULL = 100;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
@@ -86,13 +80,14 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
+  private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(4, new StackWrapper());
 
   public static enum Fields {
     HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER;
   }
 
   public TileEntityControlledMiner() {
-    super(INVENTORY_SIZE);
+    super(1);
     this.initEnergy(BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
@@ -213,25 +208,25 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     //else check blacklist
     ItemStack itemStack;
     if (this.blacklistIfZero == 0) {
-      for (int i = WHITELIST_START_INDEX; i <= WHITELIST_END_INDEX; i++) {
-        if (inv.get(i).isEmpty()) {
-          continue;
-        }
-        itemStack = inv.get(i);
-        if (itemStack.getItem() == Item.getItemFromBlock(target)) {
-          return false;
+      for (StackWrapper wrap : this.stacksWrapped) {
+        if (wrap.isEmpty() == false) {
+          itemStack = wrap.getStack().copy();
+          if (itemStack.getItem() == Item.getItemFromBlock(target)) {
+            return false;
+          }
         }
       }
+      //was not found in blacklist -> valid
       return true;//blacklist means default trie
     }
     else {//check it as a WHITELIST
       int countEmpty = 0;
-      for (int i = WHITELIST_START_INDEX; i <= WHITELIST_END_INDEX; i++) {
-        if (inv.get(i).isEmpty()) {
+      for (StackWrapper wrap : this.stacksWrapped) {
+        if (wrap.isEmpty() == false) {
           countEmpty++;
           continue;
         }
-        itemStack = inv.get(i);
+        itemStack = wrap.getStack().copy();
         //its a whitelist, so if its found in the list, its good to go right away
         if (itemStack.getItem() == Item.getItemFromBlock(target)
             || Block.getBlockFromItem(itemStack.getItem()) == target
@@ -245,8 +240,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
       }
       //wait, if whitelist is empty then it doesnt matter
-      int listSize = WHITELIST_END_INDEX - WHITELIST_START_INDEX + 1;//3 - 0 + 1 = 4
-      if (listSize == countEmpty) {
+      if (this.getWrapperCount() == countEmpty) {
         return true;
       }
       return false;//check as blacklist
@@ -296,42 +290,44 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    writeStackWrappers(stacksWrapped, tags);
+    tags.setInteger(NBT_REDST, this.needsRedstone);
     if (uuid != null) {
-      tagCompound.setString(NBTPLAYERID, uuid.toString());
+      tags.setString(NBTPLAYERID, uuid.toString());
     }
     if (targetPos != null) {
-      tagCompound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
+      tags.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
     }
-    tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
-    tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
-    tagCompound.setInteger(NBTHEIGHT, height);
-    tagCompound.setInteger(NBT_SIZE, size);
-    tagCompound.setInteger(NBT_LIST, this.blacklistIfZero);
-    tagCompound.setInteger(NBT_RENDER, renderParticles);
-    return super.writeToNBT(tagCompound);
+    tags.setBoolean(NBTMINING, isCurrentlyMining);
+    tags.setFloat(NBTDAMAGE, curBlockDamage);
+    tags.setInteger(NBTHEIGHT, height);
+    tags.setInteger(NBT_SIZE, size);
+    tags.setInteger(NBT_LIST, this.blacklistIfZero);
+    tags.setInteger(NBT_RENDER, renderParticles);
+    return super.writeToNBT(tags);
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    this.size = tagCompound.getInteger(NBT_SIZE);
-    if (tagCompound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    readStackWrappers(stacksWrapped, tags);
+    this.needsRedstone = tags.getInteger(NBT_REDST);
+    this.size = tags.getInteger(NBT_SIZE);
+    if (tags.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tags.getString(NBTPLAYERID));
     }
-    if (tagCompound.hasKey(NBTTARGET)) {
-      int[] coords = tagCompound.getIntArray(NBTTARGET);
+    if (tags.hasKey(NBTTARGET)) {
+      int[] coords = tags.getIntArray(NBTTARGET);
       if (coords.length >= 3) {
         targetPos = new BlockPos(coords[0], coords[1], coords[2]);
       }
     }
-    isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
-    curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
-    height = tagCompound.getInteger(NBTHEIGHT);
-    blacklistIfZero = tagCompound.getInteger(NBT_LIST);
-    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
+    isCurrentlyMining = tags.getBoolean(NBTMINING);
+    curBlockDamage = tags.getFloat(NBTDAMAGE);
+    height = tags.getInteger(NBTHEIGHT);
+    blacklistIfZero = tags.getInteger(NBT_LIST);
+    this.renderParticles = tags.getInteger(NBT_RENDER);
   }
 
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -472,5 +468,20 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+
+  @Override
+  public StackWrapper getStackWrapper(int i) {
+    return stacksWrapped.get(i);
+  }
+
+  @Override
+  public void setStackWrapper(int i, StackWrapper stack) {
+    stacksWrapped.set(i, stack);
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.size();
   }
 }

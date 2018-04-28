@@ -382,6 +382,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   public void renderStackWrappers(ITileStackWrapper te) {
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    for (int i = 0; i < te.getWrapperCount(); i++) {
+      //set its position for mouseclick later
+      StackWrapper wrap = te.getStackWrapper(i);
+      Gui.drawModalRectWithCustomSizedTexture(
+          wrap.getX(), wrap.getY(),
+          0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
     for (int i = 0; i < te.getWrapperCount(); i++) {
       //set its position for mouseclick later
       StackWrapper wrap = te.getStackWrapper(i);
@@ -389,6 +397,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         GlStateManager.pushMatrix();
         RenderHelper.enableGUIStandardItemLighting();
         mc.getRenderItem().renderItemAndEffectIntoGUI(wrap.getStack(), wrap.getX() + 1, wrap.getY() + 1);
+
         //keep this render quantity for later
         //          mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, s, x + 1, y + 1, "1");
         GlStateManager.popMatrix();

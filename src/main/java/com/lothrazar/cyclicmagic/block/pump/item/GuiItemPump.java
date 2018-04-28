@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -53,10 +52,10 @@ public class GuiItemPump extends GuiBaseContainer {
     for (int j = 1; j < 10; j++) {
       x = this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1;
       y = this.guiTop + ContainerItemPump.SLOTY - 1;
-      Gui.drawModalRectWithCustomSizedTexture(
-          x,
-          y,
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      //      Gui.drawModalRectWithCustomSizedTexture(
+      //          x,
+      //          y,
+      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       StackWrapper wrap = te.getStackWrapper(slotNum);
       wrap.setX(x);
       wrap.setY(y);
