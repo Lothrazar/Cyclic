@@ -30,7 +30,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -74,7 +73,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       tank = new FluidTankBase(fluidTankSize);
     }
     if (powerPerTick > 0) {
-      energyStorage = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
+      initEnergy(0, TRANSFER_ENERGY_PER_TICK);
     }
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);

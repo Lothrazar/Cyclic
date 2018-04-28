@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.energy.peat.generator;
 
-import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -47,7 +46,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   //total energy made per item is PER_TICK * TIMER_FULL
   private static final int CAPACITY = PER_TICK * 100;
   //output slower than we generate
-  private static final int TRANSFER_ENERGY_PER_TICK = PER_TICK / 2;
+  private static final int TRANSFER_ENERGY_PER_TICK = PER_TICK * 4;
 
   public static enum Fields {
     TIMER;
@@ -56,8 +55,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForInsert(SLOT_INPUT);
-    this.initEnergy();
-    energyStorage = new EnergyStore(CAPACITY);
+    this.initEnergy(0, CAPACITY);
     timer = 0;
   }
 

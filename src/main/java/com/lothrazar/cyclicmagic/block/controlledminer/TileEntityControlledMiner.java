@@ -88,12 +88,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private UUID uuid;
 
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUELDISPLAY;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER;
   }
 
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
-    this.initEnergyWithCost(BlockMinerSmart.FUEL_COST);
+    this.initEnergy(BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
 

@@ -70,7 +70,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.initEnergyWithCost(BlockCrafter.FUEL_COST);
+    this.initEnergy(BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(0, 9);
     this.setSlotsForExtract(19, 28);
 

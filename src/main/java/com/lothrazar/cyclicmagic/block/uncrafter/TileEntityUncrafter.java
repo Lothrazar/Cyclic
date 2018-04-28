@@ -60,7 +60,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 1);
     timer = TIMER_FULL;
-    this.initEnergyWithCost(BlockUncrafting.FUEL_COST);
+    this.initEnergy(BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(SLOT_UNCRAFTME);
     this.setSlotsForExtract(1, this.getSizeInventory() - 1);
   }

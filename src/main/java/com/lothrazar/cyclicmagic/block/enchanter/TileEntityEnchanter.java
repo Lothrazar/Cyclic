@@ -53,7 +53,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
 
   public TileEntityEnchanter() {
     super(2);
-    this.initEnergyWithCost(BlockEnchanter.FUEL_COST);
+    this.initEnergy(BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank = new FluidTankBase(TANK_FULL);

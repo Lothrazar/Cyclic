@@ -55,23 +55,19 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
 
   protected static final int SPEED_FUELED = 8;
-
   private static final int MAX_SPEED = 10;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
   public static final String NBT_REDST = "redstone";
   public static final String NBT_SIZE = "size";
-
   public static final String NBTPLAYERID = "uuid";
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
   protected NonNullList<ItemStack> inv;
-
   private int energyCost = 0;
-
   protected int speed = 1;
   protected int timer;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
@@ -84,7 +80,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
     invHandler = new InvWrapperRestricted(this);
-
   }
 
   protected void setSlotsForExtract(int slot) {
@@ -141,17 +136,21 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-  protected void initEnergyWithCost(int fcost) {
-    initEnergy();
-    this.energyCost = fcost;
-  }
-
   protected void initEnergy() {
-    this.hasEnergy = true;
-    this.energyStorage = new EnergyStore();
+    initEnergy(0);
   }
 
-  public int getFuelMax() {
+  protected void initEnergy(int fcost) {
+    initEnergy(0, EnergyStore.DEFAULT_CAPACITY);
+  }
+
+  protected void initEnergy(int fcost, int maxStored) {
+    this.energyCost = fcost;
+    this.hasEnergy = true;
+    this.energyStorage = new EnergyStore(1000 * 64);
+  }
+
+  public int getEnergyMax() {
     if (energyStorage == null) {
       return 0;
     }
@@ -166,16 +165,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.energyStorage.getEnergyStored();
   }
 
-  protected void setFuelCurrent(int f) {
-
+  public void setEnergyCurrent(int f) {
     this.energyStorage.setEnergyStored(f);
   }
 
   public double getPercentFormatted() {
-    if (this.getFuelMax() == 0) {
+    if (this.getEnergyMax() == 0) {
       return 0;
     }
-    double percent = ((float) this.getEnergyCurrent() / (float) this.getFuelMax());
+    double percent = ((float) this.getEnergyCurrent() / (float) this.getEnergyMax());
     double pctOneDecimal = Math.floor(percent * 1000) / 10;
     return pctOneDecimal;
   }
@@ -438,26 +436,23 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       }
     }
   }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
     timer = compound.getInteger(NBT_TIMER);
     speed = compound.getInteger(NBT_SPEED);
-
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
     super.readFromNBT(compound);
   }
 
-
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
     compound.setInteger(NBT_SPEED, speed);
-
     compound.setInteger(NBT_TIMER, timer);
-
     if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
@@ -571,7 +566,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    */
   protected boolean isInventoryFull() {
     for (int i = 0; i < this.inv.size(); i++) {
-
       //if its empty or it is below max count, then it has room -> not full
       if (this.inv.get(i).isEmpty()
           || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()) {
@@ -591,7 +585,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    */
   protected boolean isInventoryEmpty() {
     for (int i = 0; i < this.inv.size(); i++) {
-
       // something is non-empty: false right away
       if (this.inv.get(i).isEmpty() == false) {
         return false;
@@ -642,11 +635,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void writeStackWrappers(NonNullList<StackWrapper> stacksWrapped, NBTTagCompound compound) {
     NBTTagList invList = new NBTTagList();
     for (int i = 0; i < stacksWrapped.size(); i++) {
-        NBTTagCompound stackTag = new NBTTagCompound();
-        stackTag.setByte("Slot", (byte) i);
-        stacksWrapped.get(i).writeToNBT(stackTag);
-        invList.appendTag(stackTag);
-
+      NBTTagCompound stackTag = new NBTTagCompound();
+      stackTag.setByte("Slot", (byte) i);
+      stacksWrapped.get(i).writeToNBT(stackTag);
+      invList.appendTag(stackTag);
     }
     compound.setTag("ghostSlots", invList);
   }

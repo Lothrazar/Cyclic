@@ -62,7 +62,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityHarvester() {
     super(3 * 9);
-    this.initEnergyWithCost(BlockHarvester.FUEL_COST);
+    this.initEnergy(BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(0, this.getSizeInventory());
   }
@@ -179,7 +179,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       case FUEL:
         return this.getEnergyCurrent();
       case FUELMAX:
-        return this.getFuelMax();
+        return this.getEnergyMax();
       case HARVESTMODE:
         return this.normalModeIfZero;
     }
@@ -202,7 +202,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.renderParticles = value % 2;
       break;
       case FUEL:
-        this.setFuelCurrent(value);
+        this.setEnergyCurrent(value);
       break;
       case FUELMAX:
       break;

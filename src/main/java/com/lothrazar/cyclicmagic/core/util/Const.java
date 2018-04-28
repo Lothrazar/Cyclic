@@ -30,6 +30,7 @@ public class Const {
   public static class Res {
 
     public static final String folder = "textures/gui/";
+    public static final ResourceLocation SLOT_LARGE = new ResourceLocation(Const.MODID, folder + "slot_large.png");//26x
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
     public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
     public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");

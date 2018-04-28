@@ -25,11 +25,10 @@ package com.lothrazar.cyclicmagic.block.controlledminer;
 
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
@@ -40,59 +39,43 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
 
-  private int xHeightTextbox = 100;
-  private int yHeightTxtbox = 38;
-  private ButtonTileEntityField btnHeightDown;
-  private ButtonTileEntityField btnHeightUp;
   private GuiButtonToggleSize btnSize;
   private ButtonTileEntityField btnWhitelist;
 
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
-    setScreenSize(ScreenSize.LARGE);
+    //    setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
+    energyBar.setHeight(50).setY(12);
+    tile.setEnergyCurrent(50000);
   }
 
   @Override
   public void initGui() {
     super.initGui();
     //first the main top left type button
-    int id = 2;
-    int yOffset = 16;
-    int bSize = 14;
-    btnHeightDown = new ButtonTileEntityField(
-        id++,
-        this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox + yOffset,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), -1, bSize, bSize);
-    btnHeightDown.setTooltip("button.height.down");
-    btnHeightDown.displayString = "-";
-    this.buttonList.add(btnHeightDown);
-    this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL, TileEntityControlledMiner.Fields.HEIGHT.ordinal(), 1);
-    btnHeightUp = new ButtonTileEntityField(
-        id++, this.guiLeft + xHeightTextbox,
-        this.guiTop + yHeightTxtbox - yOffset - Const.PAD / 2,
-        tile.getPos(), TileEntityControlledMiner.Fields.HEIGHT.ordinal(), +1, bSize, bSize);
-    btnHeightUp.setTooltip("button.height.up");
-    btnHeightUp.displayString = "+";
-    this.buttonList.add(btnHeightUp);
-    this.registerButtonDisableTrigger(btnHeightUp, ButtonTriggerType.EQUAL, TileEntityControlledMiner.Fields.HEIGHT.ordinal(), TileEntityControlledMiner.maxHeight);
-    int x = this.guiLeft + ContainerMinerSmart.SLOTX_START + 24;
-    int y = this.guiTop + ContainerMinerSmart.SLOTY - 24;
+    int id = 2, x, y;
+
     btnWhitelist = new ButtonTileEntityField(id++,
-        x, y,
-        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1, bSize, bSize);
-    btnWhitelist.width = 50;
-    btnWhitelist.height = 20;
+        guiLeft + 4, guiTop + Const.PAD + 40,
+        tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1);
+    btnWhitelist.width = 18;
     this.buttonList.add(btnWhitelist);
     x = this.guiLeft + Const.PAD * 4;
     y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
+
+    x = this.guiLeft + 38;
+    y = this.guiTop + 15;
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
+        TileEntityControlledMiner.Fields.HEIGHT.ordinal(), true);
+    sliderDelay.setTooltip("button.miner.height");
+    this.addButton(sliderDelay);
   }
 
   @Override
@@ -103,7 +86,10 @@ public class GuiMinerSmart extends GuiBaseContainer {
     for (int k = 0; k < ContainerMinerSmart.SLOTID_EQUIP; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMinerSmart.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 1, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
+    //tool slot
+    int size = 26;
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 5, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 5, u, v, size, size, size, size);
     //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
 //, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
@@ -111,18 +97,11 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityControlledMiner.Fields.SIZE.ordinal()));
-    btnWhitelist.displayString = UtilChat.lang("button.miner.whitelist." + tile.getField(Fields.LISTTYPE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //    String s = UtilChat.lang("tile.block_miner_smart.blacklist");
-    //    int x = ContainerMinerSmart.SLOTX_START - 2, 
-    //    this.fontRendererObj.drawString(s, x, y, 4210752);
-    int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
-    int y = ContainerMinerSmart.SLOTEQUIP_Y - 14;
-    this.drawString("tile.block_miner_smart.tool", x, y);
-    String display = "" + this.tile.getField(TileEntityControlledMiner.Fields.HEIGHT.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
-    this.drawString(display, x, yHeightTxtbox);
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityControlledMiner.Fields.SIZE.ordinal()));
+    int filterType = tile.getField(Fields.LISTTYPE.ordinal());
+    btnWhitelist.setTooltip(UtilChat.lang("button.miner.whitelist." + filterType));
+    btnWhitelist.setTextureIndex(11 + filterType);
+
   }
 }

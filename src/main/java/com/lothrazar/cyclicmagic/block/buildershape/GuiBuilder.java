@@ -67,7 +67,7 @@ public class GuiBuilder extends GuiBaseContainer {
     //first the main top left type button
     TileEntityStructureBuilder.Fields fld;
     int id = 1;
-    float maxOffset = 16F;
+    int maxOffset = 16;
     int width = 102;
     int h = 10;
     int x = this.guiLeft + 24;

@@ -56,7 +56,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
 
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
-    this.initEnergyWithCost(BlockDisenchanter.FUEL_COST);
+    this.initEnergy(BlockDisenchanter.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
     this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
   }

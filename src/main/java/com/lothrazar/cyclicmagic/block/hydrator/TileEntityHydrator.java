@@ -61,7 +61,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergyWithCost(BlockHydrator.FUEL_COST);
+    this.initEnergy(BlockHydrator.FUEL_COST);
   }
 
   private int needsRedstone = 1;
@@ -177,7 +177,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       case FUEL:
         return this.getEnergyCurrent();
       case FUELMAX:
-        return this.getFuelMax();
+        return this.getEnergyMax();
     }
     return -1;
   }
@@ -198,7 +198,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
         this.recipeIsLocked = value % 2;
       break;
       case FUEL:
-        this.setFuelCurrent(value);
+        this.setEnergyCurrent(value);
       break;
       case FUELMAX:
       break;

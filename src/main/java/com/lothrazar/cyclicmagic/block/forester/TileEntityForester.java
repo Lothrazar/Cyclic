@@ -81,7 +81,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityForester() {
     super(18);
-    this.initEnergyWithCost(BlockForester.FUEL_COST);
+    this.initEnergy(BlockForester.FUEL_COST);
     this.setSlotsForInsert(0, 18);
   }
 

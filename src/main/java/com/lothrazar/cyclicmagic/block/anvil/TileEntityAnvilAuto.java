@@ -58,7 +58,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     super(2);
     tank = new FluidTankBase(TANK_FULL);
     tank.setFluidAllowed(FluidRegistry.LAVA);
-    this.initEnergyWithCost(BlockAnvilAuto.FUEL_COST);
+    this.initEnergy(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
   }

@@ -30,15 +30,10 @@ public class EnergyStore extends EnergyStorage {
   public static final int DEFAULT_CAPACITY = 1000000;
   public static final int MAX_INPUT = 5000;
 
-  public EnergyStore() {
-    super(DEFAULT_CAPACITY);
-    this.maxReceive = MAX_INPUT;
-    this.maxExtract = MAX_INPUT;
-  }
-
   public EnergyStore(int cap) {
     super(cap);
     this.maxReceive = MAX_INPUT;
+    this.maxExtract = MAX_INPUT;
   }
 
   public void setEnergyStored(int en) {

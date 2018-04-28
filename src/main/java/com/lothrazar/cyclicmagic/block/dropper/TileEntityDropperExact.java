@@ -45,7 +45,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
 
   public TileEntityDropperExact() {
     super(9);
-    this.initEnergyWithCost(BlockDropperExact.FUEL_COST);
+    this.initEnergy(BlockDropperExact.FUEL_COST);
     this.setSlotsForExtract(0, 8);
     this.setSlotsForInsert(0, 8);
     timer = delay;

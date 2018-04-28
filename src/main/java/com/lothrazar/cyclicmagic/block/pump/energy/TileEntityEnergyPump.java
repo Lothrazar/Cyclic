@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.pump.energy;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -45,26 +44,23 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     REDSTONE;
   }
 
-  private EnergyStore pumpEnergyStore;
   private int needsRedstone = 0;
 
   public TileEntityEnergyPump() {
     super(0);
-    pumpEnergyStore = new EnergyStore(TRANSFER_ENERGY_PER_TICK);
+    this.initEnergy(0, TRANSFER_ENERGY_PER_TICK);
   }
 
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
-    CapabilityEnergy.ENERGY.readNBT(pumpEnergyStore, null, compound.getTag("powercable"));
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
     compound.setInteger(NBT_REDST, needsRedstone);
-    compound.setTag("powercable", CapabilityEnergy.ENERGY.writeNBT(pumpEnergyStore, null));
     return compound;
   }
 
@@ -161,14 +157,6 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  @Override
-  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
-    if (capability == CapabilityEnergy.ENERGY) {
-      return CapabilityEnergy.ENERGY.cast(this.pumpEnergyStore);
-    }
-    return super.getCapability(capability, facing);
   }
 
   @Override

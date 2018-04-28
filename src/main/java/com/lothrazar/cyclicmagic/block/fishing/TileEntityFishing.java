@@ -71,7 +71,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
 
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
-    this.initEnergyWithCost(BlockFishing.FUEL_COST);
+    this.initEnergy(BlockFishing.FUEL_COST);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     this.setSlotsForInsert(SLOT_TOOL);
