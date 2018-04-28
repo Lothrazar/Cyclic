@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/tank/tank_top",
+        "up": "cyclicmagic:blocks/tank/tank_top",
+        "north": "cyclicmagic:blocks/tank/tank_side",
+        "east": "cyclicmagic:blocks/tank/flip_tank_side",
+        "south": "cyclicmagic:blocks/tank/tank_side",
+        "west": "cyclicmagic:blocks/tank/flip_tank_side"
+    }
+}

@@ -36,10 +36,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
+public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
 
   @Override
-  public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+  public void render(TileEntityFluidTank te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     FluidStack fluidStack = te.getCurrentFluidStack();
     if (fluidStack == null) {
       return;

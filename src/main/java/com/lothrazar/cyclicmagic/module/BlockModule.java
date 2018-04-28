@@ -115,9 +115,9 @@ import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclicmagic.block.sprinkler.TileSprinkler;
-import com.lothrazar.cyclicmagic.block.tank.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.block.tank.ItemBlockBucket;
-import com.lothrazar.cyclicmagic.block.tank.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
+import com.lothrazar.cyclicmagic.block.tank.ItemBlockFluidTank;
+import com.lothrazar.cyclicmagic.block.tank.TileEntityFluidTank;
 import com.lothrazar.cyclicmagic.block.trash.BlockTrash;
 import com.lothrazar.cyclicmagic.block.trash.TileEntityTrash;
 import com.lothrazar.cyclicmagic.block.uncrafter.BlockUncrafting;
@@ -489,9 +489,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
     }
     if (enableBucketBlocks) {
       //tank
-      BlockBucketStorage block_storeempty = new BlockBucketStorage();
-      BlockRegistry.registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", null);
-      GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
+      BlockFluidTank block_storeempty = new BlockFluidTank();
+      BlockRegistry.registerBlock(block_storeempty, new ItemBlockFluidTank(block_storeempty), "block_storeempty", null);
+      GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, block_storeempty, null, null);
     }
     if (fluidPlacer) {
