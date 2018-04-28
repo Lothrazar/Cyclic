@@ -1045,7 +1045,7 @@ item.peat_biomass.tooltip=用于制造泥炭田
 item.peat_biomass.guide=将不同的四种植物放入水中，然后使用碳搅拌棒右键以制作
 
 item.peat_wet.name=湿润泥炭
-item.peat_wet.tooltip=新鲜的泥炭，可以烘干成泥炭燃料
+item.peat_wet.tooltip=新鲜的泥炭，可以被烘干成泥炭燃料
 item.peat_wet.guide=可以将其变成泥炭燃料来产生能量
 
 item.peat_fuel.name=泥炭燃料
