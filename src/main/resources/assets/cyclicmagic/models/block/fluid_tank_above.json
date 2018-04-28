@@ -4,9 +4,9 @@
         "particle": "blocks/anvil_base",
         "down": "cyclicmagic:blocks/tank/tank_top",
         "up": "cyclicmagic:blocks/tank/tank_nothing",
-        "north": "cyclicmagic:blocks/tank/tank_side_above",
-        "east": "cyclicmagic:blocks/tank/flip_tank_side_above",
-        "south": "cyclicmagic:blocks/tank/tank_side_above",
-        "west": "cyclicmagic:blocks/tank/flip_tank_side_above"
+        "north": "cyclicmagic:blocks/tank/tank_base",
+        "east": "cyclicmagic:blocks/tank/tank_base_flip",
+        "south": "cyclicmagic:blocks/tank/tank_base",
+        "west": "cyclicmagic:blocks/tank/tank_base_flip"
     }
 }

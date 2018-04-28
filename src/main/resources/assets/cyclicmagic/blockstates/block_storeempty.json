@@ -1,5 +1,7 @@
 {
     "variants": {
+		"normal": { "model": "cyclicmagic:fluid_tank" },
+		"inventory": { "model": "cyclicmagic:fluid_tank" },
 		"above=false,below=false": { "model": "cyclicmagic:fluid_tank" },
 		"above=true,below=false":  { "model": "cyclicmagic:fluid_tank_above" },
 		"above=false,below=true":  { "model": "cyclicmagic:fluid_tank_below" },
