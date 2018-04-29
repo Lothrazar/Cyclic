@@ -276,10 +276,18 @@ public class BlockModule extends BaseModule implements IHasConfig {
       //other speeds
       BlockConveyor plate_push_fast = new BlockConveyor(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
+      BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE, plate_push_fast);
+      BlockRegistry.registerBlock(plate_push_fast_corner, "plate_push_fast_corner", GuideCategory.BLOCKPLATE);
+
       BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
+      BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL, plate_push_slow);
+      BlockRegistry.registerBlock(plate_push_slow_corner, "plate_push_slow_corner", GuideCategory.BLOCKPLATE);
+
       BlockConveyor plate_push_slowest = new BlockConveyor(SpeedType.TINY);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
+      BlockConveyorCorner plate_push_slowest_corner = new BlockConveyorCorner(SpeedType.TINY, plate_push_slowest);
+      BlockRegistry.registerBlock(plate_push_slowest_corner, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE);
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
