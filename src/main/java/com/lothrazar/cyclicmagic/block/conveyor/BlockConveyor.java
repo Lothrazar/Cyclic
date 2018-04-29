@@ -67,13 +67,13 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected SpeedType type;
   protected float power;
   private SoundEvent sound;
-  private BlockConveyorCorner corner;
+  protected BlockConveyorCorner corner;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
-    super(Material.IRON);
+    super(Material.ROCK);
     type = t;
     switch (type) {
       case LARGE:
@@ -253,17 +253,15 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
    */
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    if (corner == null) {
-      return;
-    }
+
     IBlockState north = world.getBlockState(pos.offset(EnumFacing.NORTH));
     IBlockState south = world.getBlockState(pos.offset(EnumFacing.SOUTH));
     IBlockState west = world.getBlockState(pos.offset(EnumFacing.WEST));
     IBlockState east = world.getBlockState(pos.offset(EnumFacing.EAST));
-    boolean isNorth = north.getBlock() == this;
-    boolean isSouth = south.getBlock() == this;
-    boolean isWest = west.getBlock() == this;
-    boolean isEast = east.getBlock() == this;
+    boolean isNorth = north.getBlock() instanceof BlockConveyor;
+    boolean isSouth = south.getBlock() instanceof BlockConveyor;
+    boolean isWest = west.getBlock() instanceof BlockConveyor;
+    boolean isEast = east.getBlock() instanceof BlockConveyor;
     if (isNorth && isWest) {
       if (west.getValue(PROPERTYFACING) == EnumFacing.EAST)
         world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))

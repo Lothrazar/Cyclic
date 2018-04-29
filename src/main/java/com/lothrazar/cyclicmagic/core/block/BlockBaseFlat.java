@@ -40,7 +40,7 @@ public abstract class BlockBaseFlat extends BlockBase {
 
   public BlockBaseFlat(Material materialIn) {
     super(materialIn);
-    this.setHardness(2.0F).setResistance(2.0F);//of course can/will be overwritten in most cases, but at least have a nonzero default
+    this.setHardness(1.0F).setResistance(2.0F);//of course can/will be overwritten in most cases, but at least have a nonzero default
   }
 
   /**
