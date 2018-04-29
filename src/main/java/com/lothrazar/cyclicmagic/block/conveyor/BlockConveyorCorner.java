@@ -1,35 +1,28 @@
 package com.lothrazar.cyclicmagic.block.conveyor;
 
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockConveyorCorner extends BlockConveyor {
 
   public static final PropertyBool FLIPPED = PropertyBool.create("flipped");
-  private BlockConveyor parent;
 
-  public BlockConveyorCorner(SpeedType t, BlockConveyor parent) {
+  public BlockConveyorCorner(SpeedType t) {
     super(t);
-
-    this.parent = parent;
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this, 2), parent, parent, Blocks.IRON_BARS);
+    return null;
   }
 
   @Override
@@ -49,14 +42,18 @@ public class BlockConveyorCorner extends BlockConveyor {
   }
 
   @Override
-  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-    //use HIT xyz to fix facing direction as well?!?!?
-    IBlockState here = worldIn.getBlockState(pos);
-
-      worldIn.setBlockState(pos, here.cycleProperty(FLIPPED));
-
-    return true;
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
   }
+
+  //  @Override
+  //  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+  //    //use HIT xyz to fix facing direction as well?!?!?
+  //        IBlockState here = worldIn.getBlockState(pos);
+  //    
+  //          worldIn.setBlockState(pos, here.cycleProperty(FLIPPED));
+  //
+  //    return true;
+  //  }
 
   @Override
   public int getMetaFromState(IBlockState state) {

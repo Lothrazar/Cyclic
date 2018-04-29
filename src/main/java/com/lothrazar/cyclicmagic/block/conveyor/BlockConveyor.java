@@ -38,6 +38,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -66,16 +67,14 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected SpeedType type;
   protected float power;
   private SoundEvent sound;
+  private BlockConveyorCorner corner;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
-    super(Material.IRON);//, MapColor.GRASS
-
-    this.setSoundType(SoundType.SLIME);
+    super(Material.IRON);
     type = t;
-    sound = SoundEvents.BLOCK_ANVIL_BREAK;
     switch (type) {
       case LARGE:
         this.power = 0.32F;
@@ -92,6 +91,13 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       default:
       break;
     }
+  }
+
+  public BlockConveyor(BlockConveyorCorner corner) {
+    this(corner.type);
+    this.corner = corner;
+    this.setSoundType(SoundType.METAL);
+    sound = SoundEvents.BLOCK_ANVIL_BREAK;
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
 
@@ -111,7 +117,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   protected void tickMovement(BlockPos pos, Entity entity, EnumFacing face) {
     if (keepEntityGrounded) {
-
       entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
     }
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
@@ -164,7 +169,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "slimeball",
+            'x', Items.CLAY_BALL,
             'b', "dyeRed");
       break;
       case MEDIUM:
@@ -173,7 +178,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "slimeball",
+            'x', Items.CLAY_BALL,
             'b', "dyePurple");
       break;
       case SMALL:
@@ -182,7 +187,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "slimeball",
+            'x', Items.CLAY_BALL,
             'b', "dyeMagenta");
       break;
       case TINY:
@@ -191,7 +196,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
             "bxb",
             "sbs",
             's', "ingotIron",
-            'x', "slimeball",
+            'x', Items.CLAY_BALL,
             'b', "dyeLightBlue");
       break;
       default:
@@ -219,7 +224,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   }
 
   @Override
-  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
     return state;
   }
 
@@ -232,13 +237,68 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
    * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the IBlockstate
    */
   @Override
-  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    //  ModCyclic.logger.error("getStateForPlacement");
     // find the quadrant the player is facing
     EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
 
-  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-    return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
+  /**
+   * Called by ItemBlocks after a block is set in the world, to allow post-place logic
+   * 
+   * called AFTER getStateForPlacement
+   * 
+   * used to override straight pieces into corners
+   */
+  @Override
+  public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    if (corner == null) {
+      return;
+    }
+    IBlockState north = world.getBlockState(pos.offset(EnumFacing.NORTH));
+    IBlockState south = world.getBlockState(pos.offset(EnumFacing.SOUTH));
+    IBlockState west = world.getBlockState(pos.offset(EnumFacing.WEST));
+    IBlockState east = world.getBlockState(pos.offset(EnumFacing.EAST));
+    boolean isNorth = north.getBlock() == this;
+    boolean isSouth = south.getBlock() == this;
+    boolean isWest = west.getBlock() == this;
+    boolean isEast = east.getBlock() == this;
+    if (isNorth && isWest) {
+      if (west.getValue(PROPERTYFACING) == EnumFacing.EAST)
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, true));
+      else
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, false));
+    }
+    else if (isNorth && isEast) {
+      if (east.getValue(PROPERTYFACING) == EnumFacing.WEST)
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, false));
+      else
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, true));
+    }
+    else if (isSouth && isEast) {
+      if (south.getValue(PROPERTYFACING) == EnumFacing.NORTH)
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, false));
+      else
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, true));
+    }
+    else if (isSouth && isWest) {
+      if (west.getValue(PROPERTYFACING) == EnumFacing.WEST)
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, true));
+      else
+        world.setBlockState(pos, corner.getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
+            .withProperty(BlockConveyorCorner.FLIPPED, false));
+    }
   }
+  //  @Override
+  //  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+  //    return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
+  //  }
 }

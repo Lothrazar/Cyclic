@@ -814,6 +814,10 @@ tile.plate_push_slow.guide=A simple conveyor belt that pushes entities around.  
 tile.plate_push_slow.name=Slow Slime Conveyor
 tile.plate_push_slowest.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
 tile.plate_push_slowest.name=Slowest Slime Conveyor
+
+
+
+
 tile.plate_vector.copied=Plate data copied into block
 tile.plate_vector.gui.angle=Pitch
 tile.plate_vector.gui.power=Strength
