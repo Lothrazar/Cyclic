@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -56,15 +56,15 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private static final int RECIPE_OUTPUT = 8;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
-  private final static float ANGLE = 1;
+  protected final static float ANGLE = 1;
   private static final float powerCorrection = 0.02F;
 
   public static enum SpeedType {
     TINY, SMALL, MEDIUM, LARGE;
   }
 
-  private SpeedType type;
-  private float power;
+  protected SpeedType type;
+  protected float power;
   private SoundEvent sound;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;

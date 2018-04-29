@@ -24,8 +24,6 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockConveyor;
-import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
@@ -60,6 +58,9 @@ import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
 import com.lothrazar.cyclicmagic.block.collector.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
@@ -270,6 +271,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(SpeedType.MEDIUM);
       BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
+      BlockConveyorCorner plate_push_corner = new BlockConveyorCorner(SpeedType.MEDIUM, plate_push);
+      BlockRegistry.registerBlock(plate_push_corner, "plate_push_corner", GuideCategory.BLOCKPLATE);
       //other speeds
       BlockConveyor plate_push_fast = new BlockConveyor(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
