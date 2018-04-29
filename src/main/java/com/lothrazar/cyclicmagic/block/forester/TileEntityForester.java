@@ -110,10 +110,10 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (!isRunning()) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
+    this.spawnParticlesAbove();
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);

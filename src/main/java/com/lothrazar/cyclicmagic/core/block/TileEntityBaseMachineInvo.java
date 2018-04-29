@@ -132,7 +132,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-    return index != this.energyCost && //override to inv handler: do not extract fuel
+    return index != this.getEnergyCost() && //override to inv handler: do not extract fuel
         this.invHandler.canExtract(index);
   }
 
@@ -141,7 +141,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   protected void initEnergy(int fcost) {
-    initEnergy(0, EnergyStore.DEFAULT_CAPACITY);
+    initEnergy(fcost, EnergyStore.DEFAULT_CAPACITY);
   }
 
   protected void initEnergy(int fcost, int maxStored) {
@@ -188,7 +188,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public void consumeEnergy() {
-    if (this.energyCost > 0) {//only drain on server //not anymore bitches && world.isRemote == false
+    if (this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
       if (this.getEnergyCurrent() >= this.getEnergyCost()) {
         //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
         //            + " and total was " + this.getFuelCurrent());
@@ -203,7 +203,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean isRunning() {
-    if (this.energyCost > 0) {
+    if (this.getEnergyCost() > 0) {
       // update from power cables/batteries next door
       this.updateIncomingEnergy();
     }
@@ -215,7 +215,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public boolean updateEnergyIsBurning() {
-    if (this.energyCost > 0) {
+    if (this.getEnergyCost() > 0) {
       if (this.hasEnoughEnergy()) {
         this.consumeEnergy();
       }
@@ -268,7 +268,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public boolean hasEnoughEnergy() {
-    if (this.energyCost == 0) {
+    if (this.getEnergyCost() == 0) {
       return true;
     }
     //    if (this.world.isRemote == false)
@@ -516,7 +516,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @Override
   public int getSpeed() {
-    if (this.energyCost == 0) {
+    if (this.getEnergyCost() == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value
     }
     else {
