@@ -228,6 +228,9 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING });
   }
 
+  /**
+   * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the IBlockstate
+   */
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     // find the quadrant the player is facing

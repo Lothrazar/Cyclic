@@ -6,7 +6,9 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -21,12 +23,13 @@ public class BlockConveyorCorner extends BlockConveyor {
 
   public BlockConveyorCorner(SpeedType t, BlockConveyor parent) {
     super(t);
+
     this.parent = parent;
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this, 2), parent, parent);
+    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this, 2), parent, parent, Blocks.IRON_BARS);
   }
 
   @Override
@@ -76,5 +79,15 @@ public class BlockConveyorCorner extends BlockConveyor {
       meta -= 10;
     }
     return super.getStateFromMeta(meta).withProperty(FLIPPED, flipped);
+  }
+
+  /**
+   * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the IBlockstate
+   */
+  @Override
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    //flip on sneak
+    return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer)
+        .withProperty(FLIPPED, placer.isSneaking());
   }
 }
