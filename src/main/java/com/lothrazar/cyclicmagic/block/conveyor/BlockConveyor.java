@@ -53,7 +53,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
-  private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+  protected static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private static final int RECIPE_OUTPUT = 8;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   protected final static float ANGLE = 1;
@@ -106,8 +106,12 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    EnumFacing face = getFacingFromState(state);
+    tickMovement(pos, entity, getFacingFromState(state));
+  }
+
+  protected void tickMovement(BlockPos pos, Entity entity, EnumFacing face) {
     if (keepEntityGrounded) {
+
       entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
     }
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
