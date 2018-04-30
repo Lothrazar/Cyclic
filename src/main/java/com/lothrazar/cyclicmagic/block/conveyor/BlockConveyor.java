@@ -56,7 +56,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   protected static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private static final int RECIPE_OUTPUT = 8;
-  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.1875D, 1D);
   protected final static float ANGLE = 1;
   private static final float powerCorrection = 0.02F;
 
@@ -107,6 +107,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+
     return AABB;
   }
 
