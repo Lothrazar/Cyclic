@@ -22,12 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -42,9 +43,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemWarpSurface extends BaseTool implements IHasRecipe {
+
   public ItemWarpSurface() {
     super(32);
   }
+
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     World world = entity.getEntityWorld();
@@ -58,6 +61,7 @@ public class ItemWarpSurface extends BaseTool implements IHasRecipe {
     UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     return false;
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -71,6 +75,7 @@ public class ItemWarpSurface extends BaseTool implements IHasRecipe {
     UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

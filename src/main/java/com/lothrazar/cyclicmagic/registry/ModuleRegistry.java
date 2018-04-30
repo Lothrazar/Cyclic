@@ -22,62 +22,59 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.module.BlockModule;
 import com.lothrazar.cyclicmagic.module.CommandModule;
-import com.lothrazar.cyclicmagic.module.DispenserBehaviorModule;
 import com.lothrazar.cyclicmagic.module.EnchantModule;
-import com.lothrazar.cyclicmagic.module.EntityMinecartModule;
-import com.lothrazar.cyclicmagic.module.EnvironmentTweaksModule;
-import com.lothrazar.cyclicmagic.module.FluidsModule;
-import com.lothrazar.cyclicmagic.module.FragileTorchesModule;
-import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
-import com.lothrazar.cyclicmagic.module.GearModule;
-import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.ItemPotionModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
-import com.lothrazar.cyclicmagic.module.MobChangesModule;
-import com.lothrazar.cyclicmagic.module.MountedTweaksModule;
-import com.lothrazar.cyclicmagic.module.PlantsModule;
-import com.lothrazar.cyclicmagic.module.PlayerAbilitiesModule;
-import com.lothrazar.cyclicmagic.module.RecipeChangerModule;
-import com.lothrazar.cyclicmagic.module.StackSizeModule;
-import com.lothrazar.cyclicmagic.module.TextInfoModule;
-import com.lothrazar.cyclicmagic.module.VillagerCreateModule;
 import com.lothrazar.cyclicmagic.module.WorldModule;
+import com.lothrazar.cyclicmagic.playerupgrade.PlayerAbilitiesModule;
+import com.lothrazar.cyclicmagic.tweak.EnvironmentTweaksModule;
+import com.lothrazar.cyclicmagic.tweak.FragileTorchesModule;
+import com.lothrazar.cyclicmagic.tweak.FuelAdditionModule;
+import com.lothrazar.cyclicmagic.tweak.MobChangesModule;
+import com.lothrazar.cyclicmagic.tweak.MountedTweaksModule;
+import com.lothrazar.cyclicmagic.tweak.StackSizeModule;
+import com.lothrazar.cyclicmagic.tweak.TextInfoModule;
+import com.lothrazar.cyclicmagic.tweak.dispenser.DispenserBehaviorModule;
+import com.lothrazar.cyclicmagic.tweak.recipe.RecipeChangerModule;
+import com.lothrazar.cyclicmagic.villager.VillagerCreateModule;
 
 public class ModuleRegistry {
+
   public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
+
   public static void init() {
     modules = new ArrayList<ICyclicModule>();
   }
+
   public static void register(ICyclicModule m) {
     modules.add(m);
     if (m instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) m);
     }
   }
+
   public static void registerAll() {
     register(new BlockModule());
     register(new CommandModule());
     register(new ItemModule());
     register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
-    register(new GearModule());
     register(new EnchantModule());
     register(new PlayerAbilitiesModule());
     register(new TextInfoModule());
     register(new FragileTorchesModule());
     register(new FuelAdditionModule());
-    register(new GuiTerrariaButtonsModule());
     register(new KeyInventoryShiftModule());
     register(new LootTableModule());
-    register(new PlantsModule());
     register(new MobChangesModule());
     register(new MountedTweaksModule());
     register(new RecipeChangerModule());
@@ -85,7 +82,5 @@ public class ModuleRegistry {
     register(new StackSizeModule());
     register(new VillagerCreateModule());
     register(new WorldModule());
-    register(new EntityMinecartModule());
-    register(new FluidsModule());
   }
 }

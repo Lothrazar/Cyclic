@@ -22,16 +22,17 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.spell;
+
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,15 +42,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer {
+
   final static int max = 32;// max search range
   private PlaceType type;
+
   public static enum PlaceType {
     PLACE, UP, DOWN, LEFT, RIGHT;
   }
+
   public SpellRangeBuild(int id, String n, PlaceType t) {
     super.init(id, n);
     this.type = t;
   }
+
   @Override
   public boolean cast(World world, EntityPlayer p, ItemStack wand, BlockPos pos, EnumFacing side) {
     if (world.isRemote) {
@@ -71,6 +76,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     }
     return true;
   }
+
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);

@@ -22,12 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.food.ItemAppleStep;
-import com.lothrazar.cyclicmagic.item.food.ItemHeartContainer;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
+import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
@@ -39,10 +40,12 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilityRegistry {
+
   public static void register() {
     CapabilityManager.INSTANCE.register(IPlayerExtendedProperties.class, new Storage(),
         InstancePlayerExtendedProperties.class);
   }
+
   public static IPlayerExtendedProperties getPlayerProperties(EntityPlayer player) {
     IPlayerExtendedProperties c = player.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (c == null) {
@@ -50,36 +53,65 @@ public class CapabilityRegistry {
     }
     return c;
   }
+
   public interface IPlayerExtendedProperties {
+
     boolean isSleeping();
+
     void setSleeping(boolean value);
+
     boolean hasInventoryCrafting();
+
     void setInventoryCrafting(boolean value);
+
     boolean hasInventoryExtended();
+
     void setInventoryExtended(boolean value);
+
     int getMaxHealth();
+
     void setMaxHealth(int value);
+
     NBTTagCompound getDataAsNBT();
+
     void setDataFromNBT(NBTTagCompound nbt);
+
     String getTODO();
+
     void setTODO(String value);
+
     //for ItemFoodChorusCorrupted; save persistently here so entityData doesnt forget
     boolean getChorusOn();
+
     void setChorusOn(boolean f);
+
     BlockPos getChorusStart();
+
     void setChorusStart(BlockPos s);
+
     int getChorusDim();
+
     void setChorusDim(int d);
+
     int getChorusTimer();
+
     void setChorusTimer(int d);
+
     boolean isStepHeightOn();
+
     void setStepHeightOn(boolean b);
+
     boolean doForceStepOff();
+
     void setForceStepOff(boolean b);
+
     int getFlyingTimer();
+
     void setFlyingTimer(int d);
   }
+
   public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
+
     private static final String MHEALTH = "mhealth";
     private static final String NBT_TODO = "todo";
     private static final String HAS_INVENTORY_EXTENDED = "hasInventoryExtended";
@@ -104,30 +136,37 @@ public class CapabilityRegistry {
     private int chorusDim = 0;
     private int chorusSeconds = 0;
     private int flyingSeconds = 0;
+
     @Override
     public boolean isSleeping() {
       return isSleeping;
     }
+
     @Override
     public void setSleeping(boolean value) {
       this.isSleeping = value;
     }
+
     @Override
     public boolean hasInventoryCrafting() {
       return hasInventoryCrafting;
     }
+
     @Override
     public void setInventoryCrafting(boolean value) {
       hasInventoryCrafting = value;
     }
+
     @Override
     public boolean hasInventoryExtended() {
       return hasInventoryExtended;
     }
+
     @Override
     public void setInventoryExtended(boolean value) {
       hasInventoryExtended = value;
     }
+
     @Override
     public NBTTagCompound getDataAsNBT() {
       NBTTagCompound tags = new NBTTagCompound();
@@ -145,6 +184,7 @@ public class CapabilityRegistry {
       tags.setInteger(KEY_FLYING, this.flyingSeconds);
       return tags;
     }
+
     @Override
     public void setDataFromNBT(NBTTagCompound nbt) {
       NBTTagCompound tags;
@@ -172,84 +212,105 @@ public class CapabilityRegistry {
           this.setChorusStart(new BlockPos(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2])));
       }
     }
+
     @Override
     public String getTODO() {
       return todo;
     }
+
     @Override
     public void setTODO(String value) {
       todo = value;
     }
+
     @Override
     public int getMaxHealth() {
       return health;
     }
+
     @Override
     public void setMaxHealth(int value) {
       health = value;
     }
+
     @Override
     public boolean getChorusOn() {
       return this.isChorusSpectator;
     }
+
     @Override
     public void setChorusOn(boolean f) {
       this.isChorusSpectator = f;
     }
+
     @Override
     public BlockPos getChorusStart() {
       return this.chorusStart;
     }
+
     @Override
     public void setChorusStart(BlockPos s) {
       this.chorusStart = s;
     }
+
     @Override
     public int getChorusDim() {
       return this.chorusDim;
     }
+
     @Override
     public void setChorusDim(int d) {
       this.chorusDim = d;
     }
+
     @Override
     public int getChorusTimer() {
       return this.chorusSeconds;
     }
+
     @Override
     public void setChorusTimer(int d) {
       this.chorusSeconds = d;
     }
+
     @Override
     public boolean isStepHeightOn() {
       return this.isStepOn;
     }
+
     @Override
     public void setStepHeightOn(boolean b) {
       this.isStepOn = b;
     }
+
     @Override
     public boolean doForceStepOff() {
       return this.foreStepHeightOff;
     }
+
     @Override
     public void setForceStepOff(boolean b) {
       this.foreStepHeightOff = b;
     }
+
     @Override
     public int getFlyingTimer() {
       return this.flyingSeconds;
     }
+
     @Override
     public void setFlyingTimer(int d) {
       this.flyingSeconds = d;
     }
   }
+
   public static class Storage implements IStorage<IPlayerExtendedProperties> {
+
     @Override
     public NBTTagCompound writeNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side) {
       return instance.getDataAsNBT();
     }
+
     @Override
     public void readNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side, NBTBase nbt) {
       try {
@@ -261,6 +322,7 @@ public class CapabilityRegistry {
       }
     }
   }
+
   public static void syncServerDataToClient(EntityPlayerMP p) {
     if (p == null) {
       return;

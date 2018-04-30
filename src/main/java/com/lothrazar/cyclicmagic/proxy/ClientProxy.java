@@ -22,44 +22,45 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.proxy;
+
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.component.wandblaze.EntityBlazeBolt.FactoryFire;
-import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.component.wandfishing.EntityFishingBolt.FactoryFish;
-import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.component.wandice.EntitySnowballBolt.FactorySnow;
-import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.component.wandlightning.EntityLightningballBolt.FactoryLightning;
-import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile;
-import com.lothrazar.cyclicmagic.component.wandmissile.EntityHomingProjectile.FactoryMissile;
-import com.lothrazar.cyclicmagic.component.wandshears.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.component.wandshears.EntityShearingBolt.FactoryShear;
-import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.component.wandspawner.EntityDungeonEye.FactoryDungeon;
-import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.component.wandtorch.EntityTorchBolt.FactoryTorch;
-import com.lothrazar.cyclicmagic.entity.EntityEnderEyeUnbreakable;
-import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
-import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
-import com.lothrazar.cyclicmagic.entity.RenderCyclicMinecart;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite.FactoryDyn;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty.FactoryBallEmpty;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull.FactoryBall;
-import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile.FactoryDynMining;
-import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile.FactoryDynSafe;
+import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynMining;
+import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynSafe;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.item.magic.EntityEnderEyeUnbreakable;
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamite;
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteBlockSafe;
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteMining;
+import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamite.FactoryDyn;
+import com.lothrazar.cyclicmagic.item.magic.energy.EntityHomingProjectile;
+import com.lothrazar.cyclicmagic.item.magic.energy.EntityHomingProjectile.FactoryMissile;
+import com.lothrazar.cyclicmagic.item.magic.fire.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.item.magic.fire.EntityBlazeBolt.FactoryFire;
+import com.lothrazar.cyclicmagic.item.magic.fishing.EntityFishingBolt;
+import com.lothrazar.cyclicmagic.item.magic.fishing.EntityFishingBolt.FactoryFish;
+import com.lothrazar.cyclicmagic.item.magic.ice.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.item.magic.ice.EntitySnowballBolt.FactorySnow;
+import com.lothrazar.cyclicmagic.item.magic.lightning.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.item.magic.lightning.EntityLightningballBolt.FactoryLightning;
+import com.lothrazar.cyclicmagic.item.magic.locate.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.item.magic.locate.EntityDungeonEye.FactoryDungeon;
+import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetFull;
+import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetEmpty.FactoryBallEmpty;
+import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetFull.FactoryBall;
+import com.lothrazar.cyclicmagic.item.magic.shears.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.item.magic.shears.EntityShearingBolt.FactoryShear;
+import com.lothrazar.cyclicmagic.item.magic.torch.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.item.magic.torch.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartTurret;
+import com.lothrazar.cyclicmagic.item.minecart.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.RenderCyclicMinecart;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -76,7 +77,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -88,6 +88,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
+
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
@@ -95,28 +96,28 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
+
   @Override
   public void preInit() {
     //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
     registerEntities();
-    // TODO: refactor cable
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/fluid.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemCable.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/item.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableBundle.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/bundle.png")));
-    //    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCablePower.class, new CableRenderer(new ResourceLocation(Const.MODID, "textures/tile/energy.png")));
   }
+
   @Override
   public void init() {
     registerKeys();
   }
+
   @Override
   public World getClientWorld() {
     return FMLClientHandler.instance().getClient().world;
   }
+
   @Override
   public EntityPlayer getClientPlayer() {
     return Minecraft.getMinecraft().player;
   }
+
   private void registerKeys() {
     if (KeyInventoryShiftModule.enableInvoKeys) {
       keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
@@ -133,6 +134,7 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }
+
   private void registerEntities() {
     //minecarts
     //http://wiki.mcjty.eu/modding/index.php/Mobs-1.9
@@ -156,6 +158,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public EnumFacing getSideMouseover(int max) {
@@ -167,6 +170,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverSingle() {
@@ -176,6 +180,7 @@ public class ClientProxy extends CommonProxy {
     }
     return mouseOver.getBlockPos();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverExact(int max) {
@@ -188,6 +193,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockPos getBlockMouseoverOffset(int max) {
@@ -207,6 +213,7 @@ public class ClientProxy extends CommonProxy {
     }
     return null;
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
@@ -221,11 +228,13 @@ public class ClientProxy extends CommonProxy {
       }
     }
   }
+
   //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
   @Override
   public IThreadListener getThreadFromContext(MessageContext ctx) {
     return (ctx.side.isClient() ? Minecraft.getMinecraft() : super.getThreadFromContext(ctx));
   }
+
   @Override
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
     // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
@@ -236,6 +245,7 @@ public class ClientProxy extends CommonProxy {
     // Solution is to double-check side before returning the player:
     return (ctx.side.isClient() ? getClientPlayer() : super.getPlayerEntity(ctx));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void renderItemOnScreen(ItemStack current, int x, int y) {
@@ -249,9 +259,11 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(current, x, y);
     RenderHelper.disableStandardItemLighting();
   }
+
   /**
    * In a GUI we already have the context of the itemrender and font
    */
+  @Override
   public void renderItemOnGui(ItemStack stack, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {
     if (stack == null) {
       return;
@@ -259,6 +271,7 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(stack, x, y);
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }
+
   @Override
   public void closeSpectatorGui() {
     try {
@@ -269,29 +282,34 @@ public class ClientProxy extends CommonProxy {
       ModCyclic.logger.error(e.getMessage());
     }
   }
-  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };//was field_78774_b
-  public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k" };//was field_78779_k
+
+  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };
+
   /**
    * INSPIRED by universallp
    * 
    * This function was is part of VanillaAutomation which is licenced under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/ github.com/UniversalLP/VanillaAutomation
    */
+  @Override
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
     Minecraft mc = Minecraft.getMinecraft();
     try {
-      if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
-        GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
-        NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
-        ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
-        boolean isFlying = player.capabilities.isFlying;
-        boolean allowFlying = player.capabilities.allowFlying;
-        controller.setGameType(type);
-        player.capabilities.isFlying = isFlying;
-        player.capabilities.allowFlying = allowFlying;
-        mc.playerController = controller;
+      if (player == mc.player) {
+        if (mc.playerController instanceof ReachPlayerController) {
+          ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
+        }
+        else {
+          NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
+          //copy values from existing controller to custom one. since there is no setReachDistance in vanilla
+          ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
+          controller.setGameType(mc.playerController.getCurrentGameType());
+          player.capabilities.isFlying = player.capabilities.isFlying;
+          player.capabilities.allowFlying = player.capabilities.allowFlying;
+          mc.playerController = controller;
+          controller.setReachDistance(currentReach);
+        }
       }
-      ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
     }
     catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
@@ -299,21 +317,26 @@ public class ClientProxy extends CommonProxy {
       ModCyclic.logger.error("Error setting reach : " + e.getMessage());
     }
   }
+
   /**
    * From the open source project:/github.com/UniversalLP/VanillaAutomation who in turn got it from from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {
+
     //in vanilla code, it has a getBlockReachDistance but there is no variable to reflect over
     //instead it just returns 5 or 4.5 hardcoded. thanks mojang...
     private float distance = 0F;
+
     public ReachPlayerController(Minecraft mcIn, NetHandlerPlayClient netHandler) {
       super(mcIn, netHandler);
     }
+
     @Override
     public float getBlockReachDistance() {
       return distance;
     }
+
     public void setReachDistance(float f) {
       distance = f;
     }

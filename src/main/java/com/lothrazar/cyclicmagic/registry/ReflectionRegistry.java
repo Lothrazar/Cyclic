@@ -22,15 +22,18 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
+
 import java.lang.reflect.Field;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.AbstractHorse;
 
 public class ReflectionRegistry {
+
   //  public static Field fieldCareer;// = UtilReflection.getPrivateField("careerId", "field_175563_bv", merchant);
   public static IAttribute horseJumpStrength = null;
+
   public static void register() {
     for (Field f : AbstractHorse.class.getDeclaredFields()) {
       try {

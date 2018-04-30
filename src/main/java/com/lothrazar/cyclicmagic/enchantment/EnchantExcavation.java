@@ -22,13 +22,15 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -45,14 +47,17 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantExcavation extends EnchantBase implements IHasConfig {
+
   public EnchantExcavation() {
     super("excavation", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
+
   @Override
   public int getMaxLevel() {
     return 3;
   }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
     World world = event.getWorld();
@@ -77,9 +82,11 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     //starts at 1 for current one
     this.harvestSurrounding(world, player, pos, block, 1, level);
   }
+
   private int getHarvestMax(int level) {
     return levelToMaxBreak[level];
   }
+
   /**
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    */
@@ -108,6 +115,7 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
   }
+
   private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
     List<BlockPos> list = new ArrayList<BlockPos>();
     // TODO: DIAGONAL! 
@@ -120,7 +128,9 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     }
     return list;
   }
+
   int[] levelToMaxBreak;
+
   @Override
   public void syncConfig(Configuration config) {
     // level starts at 1 so just ignore index 0 of array always, 0 means non enchanted

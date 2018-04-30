@@ -22,17 +22,19 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -52,18 +54,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EnchantLaunch extends EnchantBase {
+
   private static final float LAUNCH_POWER = 1.05F;
   private static final int ROTATIONPITCH = 70;
   private static final int COOLDOWN = 3 * 20;
   private static final String NBT_USES = "launchuses";
+
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(COOLDOWN + "")));
   }
+
   @Override
   public int getMaxLevel() {
     return 5;
   }
+
   @Override
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
@@ -73,10 +79,12 @@ public class EnchantLaunch extends EnchantBase {
             && ((ItemArmor) stack.getItem()).armorType == EntityEquipmentSlot.FEET;
     return yes;
   }
+
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
     return this.canApply(stack);
   }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
@@ -93,6 +101,7 @@ public class EnchantLaunch extends EnchantBase {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
@@ -116,7 +125,7 @@ public class EnchantLaunch extends EnchantBase {
       float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
       UtilEntity.launch(player, angle, LAUNCH_POWER);
       UtilParticle.spawnParticle(player.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, player.getPosition());
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
       UtilItemStack.damageItem(player, feet);
       uses++;
       if (uses >= level) { // level is maxuses

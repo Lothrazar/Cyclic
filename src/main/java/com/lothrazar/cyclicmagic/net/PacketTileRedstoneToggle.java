@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -34,11 +35,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<PacketTileRedstoneToggle, IMessage> {
+
   private BlockPos pos;
+
   public PacketTileRedstoneToggle() {}
+
   public PacketTileRedstoneToggle(BlockPos p) {
     pos = p;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -47,6 +52,7 @@ public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<Packe
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -55,6 +61,7 @@ public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<Packe
     tags.setInteger("z", pos.getZ());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileRedstoneToggle message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

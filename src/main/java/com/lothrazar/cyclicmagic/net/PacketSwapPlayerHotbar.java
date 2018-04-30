@@ -22,9 +22,10 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
+
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -36,21 +37,27 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSwapPlayerHotbar implements IMessage, IMessageHandler<PacketSwapPlayerHotbar, IMessage> {
+
   public PacketSwapPlayerHotbar() {}
+
   private int row;
   private boolean armor = false;
+
   public PacketSwapPlayerHotbar(int isdown) {
     row = isdown;
   }
+
   public PacketSwapPlayerHotbar(boolean doArmor) {
     this.armor = doArmor;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     row = tags.getInteger("row");
     armor = tags.getBoolean("armor");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -58,6 +65,7 @@ public class PacketSwapPlayerHotbar implements IMessage, IMessageHandler<PacketS
     tags.setBoolean("armor", armor);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketSwapPlayerHotbar message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;

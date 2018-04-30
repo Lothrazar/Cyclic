@@ -22,7 +22,8 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -31,14 +32,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 
 public class CommandPing extends BaseCommand implements ICommand {
+
   public static final String name = "ping";
+
   public CommandPing(boolean op) {
     super(name, op);
   }
+
   @Override
   public String getUsage(ICommandSender sender) {
     return "/" + getName() + " <nether>";
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     //  if (sender instanceof EntityPlayer == false) { return; }

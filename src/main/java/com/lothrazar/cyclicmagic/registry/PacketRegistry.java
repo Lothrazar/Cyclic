@@ -22,39 +22,32 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellBuildSize;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellFromServer;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketWandGui;
-import com.lothrazar.cyclicmagic.component.enderbook.PacketDeleteWaypoint;
-import com.lothrazar.cyclicmagic.component.enderbook.PacketNewButton;
-import com.lothrazar.cyclicmagic.component.enderbook.PacketWarpButton;
-import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToClient;
-import com.lothrazar.cyclicmagic.component.merchant.PacketSyncVillagerToServer;
-import com.lothrazar.cyclicmagic.component.merchant.PacketVillagerTrade;
-import com.lothrazar.cyclicmagic.component.password.PacketTilePassword;
-import com.lothrazar.cyclicmagic.component.pattern.PacketTilePatternSwap;
-import com.lothrazar.cyclicmagic.component.playerext.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.component.playerext.PacketOpenFakeWorkbench;
-import com.lothrazar.cyclicmagic.component.playerext.PacketOpenNormalInventory;
-import com.lothrazar.cyclicmagic.component.playerext.PacketSyncExtendedInventory;
-import com.lothrazar.cyclicmagic.component.pylonexp.PacketTilePylon;
-import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketDepositContainerToPlayer;
-import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketDepositPlayerToNearby;
-import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketQuickStack;
-import com.lothrazar.cyclicmagic.component.terrariabuttons.PacketRestockContainerToPlayer;
-import com.lothrazar.cyclicmagic.component.vector.PacketTileVector;
-import com.lothrazar.cyclicmagic.fluid.PacketFluidSync;
-import com.lothrazar.cyclicmagic.net.PacketChestSack;
-import com.lothrazar.cyclicmagic.net.PacketGuiShortOverride;
+
+import com.lothrazar.cyclicmagic.block.builderpattern.PacketTilePatternSwap;
+import com.lothrazar.cyclicmagic.block.exppylon.PacketTilePylon;
+import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
+import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
+import com.lothrazar.cyclicmagic.core.liquid.PacketFluidSync;
+import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketWandGui;
+import com.lothrazar.cyclicmagic.item.enderbook.PacketDeleteWaypoint;
+import com.lothrazar.cyclicmagic.item.enderbook.PacketNewButton;
+import com.lothrazar.cyclicmagic.item.enderbook.PacketWarpButton;
+import com.lothrazar.cyclicmagic.item.merchant.PacketSyncVillagerToClient;
+import com.lothrazar.cyclicmagic.item.merchant.PacketSyncVillagerToServer;
+import com.lothrazar.cyclicmagic.item.merchant.PacketVillagerTrade;
+import com.lothrazar.cyclicmagic.item.random.PacketRandomize;
+import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclicmagic.net.PacketRandomize;
 import com.lothrazar.cyclicmagic.net.PacketScythe;
 import com.lothrazar.cyclicmagic.net.PacketSleepClient;
 import com.lothrazar.cyclicmagic.net.PacketSound;
@@ -63,16 +56,21 @@ import com.lothrazar.cyclicmagic.net.PacketSwapPlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
-import com.lothrazar.cyclicmagic.net.PacketTileFuelDisplay;
+import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketRegistry {
+
   public static void register(SimpleNetworkWrapper network) {
     int packetID = 0;
     network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);
@@ -88,10 +86,10 @@ public class PacketRegistry {
     network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketDeleteWaypoint.class, PacketDeleteWaypoint.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketDepositPlayerToNearby.class, PacketDepositPlayerToNearby.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketDepositContainerToPlayer.class, PacketDepositContainerToPlayer.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketQuickStack.class, PacketQuickStack.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketRestockContainerToPlayer.class, PacketRestockContainerToPlayer.class, packetID++, Side.SERVER);
+    packetID++;
+    packetID++;
+    packetID++;
+    packetID++;
     network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
@@ -125,9 +123,10 @@ public class PacketRegistry {
     network.registerMessage(PacketSwapPlayerHotbar.class, PacketSwapPlayerHotbar.class, packetID++, Side.SERVER);
     //    network.registerMessage(PacketTileFacingToggle.class, PacketTileFacingToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSetField.class, PacketTileSetField.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileFuelDisplay.class, PacketTileFuelDisplay.class, packetID++, Side.SERVER);
+    packetID++;
     network.registerMessage(PacketGuiShortOverride.class, PacketGuiShortOverride.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileTextbox.class, PacketTileTextbox.class, packetID++, Side.SERVER);
     network.registerMessage(PacketScythe.class, PacketScythe.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileStackWrapped.class, PacketTileStackWrapped.class, packetID++, Side.SERVER);
   }
 }

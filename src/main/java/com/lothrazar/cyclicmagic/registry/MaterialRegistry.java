@@ -22,7 +22,8 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.data.Const;
+
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -32,6 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class MaterialRegistry { // thanks for help:
+
   private static final int diamondDurability = 33;
   private static final int ironDurability = 15;
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
@@ -45,12 +47,14 @@ public class MaterialRegistry { // thanks for help:
   public static ArmorMaterial powerArmorMaterial;
   public static ToolMaterial powerToolMaterial;
   public static ArmorMaterial glowingArmorMaterial;
+
   public static void register() {
     registerPurpleMaterial();
     registerEmeraldMaterial();
     registerSandstoneMaterials();
     registerGlowingMaterials();
   }
+
   private static void registerGlowingMaterials() {
     ArmorMaterial mimicArmor = ArmorMaterial.IRON;
     MaterialRegistry.glowingArmorMaterial = EnumHelper.addArmorMaterial(GLOWING, Const.MODRES + GLOWING,
@@ -66,6 +70,7 @@ public class MaterialRegistry { // thanks for help:
         mimicArmor.getToughness() + 1);
     MaterialRegistry.glowingArmorMaterial.repairMaterial = new ItemStack(Blocks.GLOWSTONE);
   }
+
   private static void registerPurpleMaterial() {
     ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
     MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
@@ -89,6 +94,7 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.GOLD.getEnchantability() * 2);
     MaterialRegistry.powerToolMaterial.setRepairItem(MaterialRegistry.powerArmorMaterial.repairMaterial);
   }
+
   private static void registerEmeraldMaterial() {
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
         diamondDurability + 30, //was -2 affects DURABILITY 
@@ -112,6 +118,7 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }
+
   private static void registerSandstoneMaterials() {
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",
         ToolMaterial.STONE.getHarvestLevel(),

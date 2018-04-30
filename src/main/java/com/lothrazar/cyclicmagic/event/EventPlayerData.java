@@ -22,11 +22,12 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
@@ -41,13 +42,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class EventPlayerData {
+
   // send from both events to avoid NULL player; known issue due to threading race conditions
   // https://github.com/MinecraftForge/MinecraftForge/issues/1583
   // player data storage based on API source code example:
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   @SubscribeEvent
+  //  @SideOnly(Side.SERVER) // no dont do this. breaks hearts in SSP
   public void onSpawn(PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayerMP && event.player.getEntityWorld().isRemote == false) {
+    if (event.player instanceof EntityPlayerMP &&
+        event.player != null &&
+        event.player.isDead == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
@@ -55,9 +60,13 @@ public class EventPlayerData {
       }
     }
   }
+
   @SubscribeEvent
+  //  @SideOnly(Side.SERVER)// no dont do this. breaks hearts in SSP
   public void onJoinWorld(EntityJoinWorldEvent event) {
-    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().getEntityWorld().isRemote == false) {
+    if (event.getEntity() instanceof EntityPlayerMP &&
+        event.getEntity() != null &&
+        event.getEntity().isDead == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
@@ -65,6 +74,7 @@ public class EventPlayerData {
       }
     }
   }
+
   private void setDefaultHealth(EntityPlayerMP p) {
     IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(p);
     //    UtilChat.sendStatusMessage(p,"Setting your maximum health to "+src.getMaxHealth());
@@ -72,6 +82,7 @@ public class EventPlayerData {
       UtilEntity.setMaxHealth(p, src.getMaxHealth());
     }
   }
+
   /**
    * 
    * TODO
@@ -88,16 +99,21 @@ public class EventPlayerData {
       event.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new PlayerCapInstance());
     }
   }
+
   class PlayerCapInstance implements ICapabilitySerializable<NBTTagCompound> {
+
     IPlayerExtendedProperties inst = ModCyclic.CAPABILITYSTORAGE.getDefaultInstance();
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
       return capability == ModCyclic.CAPABILITYSTORAGE;
     }
+
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
       return capability == ModCyclic.CAPABILITYSTORAGE ? ModCyclic.CAPABILITYSTORAGE.<T> cast(inst) : null;
     }
+
     @Override
     public NBTTagCompound serializeNBT() {
       NBTBase ret = ModCyclic.CAPABILITYSTORAGE.getStorage().writeNBT(ModCyclic.CAPABILITYSTORAGE, inst, null);
@@ -106,6 +122,7 @@ public class EventPlayerData {
       }
       return null;
     }
+
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
       ModCyclic.CAPABILITYSTORAGE.getStorage().readNBT(ModCyclic.CAPABILITYSTORAGE, inst, null, nbt);

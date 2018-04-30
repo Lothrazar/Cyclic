@@ -22,20 +22,21 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.net.PacketSleepClient;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
@@ -66,17 +67,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig, IHasClickToggle {
+
   // thank you for the examples forge. player data storage based on API source
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   private static final String NBT_STATUS = "cyclic_spawn";
   private static int seconds;
   public static boolean doPotions;
+
   public ItemSleepingMat() {
     super(100);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
+    if (player.isRiding()) {
+      player.dismountRidingEntity();
+    }
     if (!world.isRemote) {
       EntityPlayerMP mp = (EntityPlayerMP) player;
       //      final EntityPlayer.SleepResult result = player.trySleep(player.getPosition());
@@ -99,6 +106,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     }
     return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
   }
+
   public void onSleepSuccess(World world, EnumHand hand, ItemStack stack, EntityPlayerMP player, final IPlayerExtendedProperties sleep) {
     sleep.setSleeping(true);
     if (doPotions) {
@@ -125,6 +133,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
       player.setSpawnPoint(player.getPosition(), true);//true means it wont check for bed block
     }
   }
+
   /**
    * hack in the vanilla sleep test, or at least something similar
    * 
@@ -146,6 +155,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     }
     return EntityPlayer.SleepResult.OK;
   }
+
   @SubscribeEvent
   public void onBedCheck(SleepingLocationCheckEvent event) {
     EntityPlayer p = event.getEntityPlayer();
@@ -161,6 +171,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
       }
     }
   }
+
   @SubscribeEvent
   public void handleSleepInBed(PlayerSleepInBedEvent event) {
     EntityPlayer p = event.getEntityPlayer();
@@ -169,6 +180,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
       event.setResult(EntityPlayer.SleepResult.OK);
     }
   }
+
   @SubscribeEvent
   public void onWakeUp(PlayerWakeUpEvent evt) {
     EntityPlayer p = evt.getEntityPlayer();
@@ -177,17 +189,20 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
       sleep.setSleeping(false);
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, false, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         "leather");
   }
+
   public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing fac) {
     mp.renderOffsetX = -1.8F * fac.getFrontOffsetX();
     mp.renderOffsetZ = -1.8F * fac.getFrontOffsetZ();
@@ -205,12 +220,14 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
       e.printStackTrace();
     }
   }
+
   @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
+
   @Override
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
@@ -219,6 +236,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     }
     return tags.getInteger(NBT_STATUS) == 1;
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
@@ -226,6 +244,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.sleeping_mat.tooltip.info") + UtilChat.lang("item.sleeping_mat.tooltip." + onoff));
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

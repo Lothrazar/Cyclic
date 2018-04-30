@@ -22,11 +22,12 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
+
 import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.lothrazar.cyclicmagic.component.screen.ScreenTESR;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.screen.ScreenTESR;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class GuiTextFieldMulti extends Gui {
+
   private static final int LINE_HEIGHT = 8;
   private final int id;
   private final FontRenderer fontRenderer;
@@ -75,6 +77,7 @@ public class GuiTextFieldMulti extends Gui {
   private GuiPageButtonList.GuiResponder guiResponder;
   /** Called to check if the text is valid */
   private Predicate<String> validator = Predicates.<String> alwaysTrue();
+
   public GuiTextFieldMulti(int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
     this.id = componentId;
     this.fontRenderer = fontrendererObj;
@@ -83,18 +86,21 @@ public class GuiTextFieldMulti extends Gui {
     this.width = par5Width;
     this.height = par6Height;
   }
+
   /**
    * Sets the GuiResponder associated with this text box.
    */
   public void setGuiResponder(GuiPageButtonList.GuiResponder guiResponderIn) {
     this.guiResponder = guiResponderIn;
   }
+
   /**
    * Increments the cursor counter
    */
   public void updateCursorCounter() {
     ++this.cursorCounter;
   }
+
   /**
    * Sets the text of the textbox, and moves the cursor to the end.
    */
@@ -109,12 +115,14 @@ public class GuiTextFieldMulti extends Gui {
       this.setCursorPositionEnd();
     }
   }
+
   /**
    * Returns the contents of the textbox
    */
   public String getText() {
     return this.text;
   }
+
   /**
    * returns the text between the cursor and selectionEnd
    */
@@ -123,9 +131,11 @@ public class GuiTextFieldMulti extends Gui {
     int j = this.cursorPosition < this.selectionEnd ? this.selectionEnd : this.cursorPosition;
     return this.text.substring(i, j);
   }
+
   public void setValidator(Predicate<String> theValidator) {
     this.validator = theValidator;
   }
+
   /**
    * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
    */
@@ -156,6 +166,7 @@ public class GuiTextFieldMulti extends Gui {
       this.setResponderEntryValue(this.id, this.text);
     }
   }
+
   /**
    * Notifies this text box's {@linkplain GuiPageButtonList.GuiResponder responder} that the text has changed.
    */
@@ -164,6 +175,7 @@ public class GuiTextFieldMulti extends Gui {
       this.guiResponder.setEntryValue(idIn, textIn);
     }
   }
+
   /**
    * Deletes the given number of words from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
    */
@@ -177,6 +189,7 @@ public class GuiTextFieldMulti extends Gui {
       }
     }
   }
+
   /**
    * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
    */
@@ -206,21 +219,25 @@ public class GuiTextFieldMulti extends Gui {
       }
     }
   }
+
   public int getId() {
     return this.id;
   }
+
   /**
    * Gets the starting index of the word at the specified number of words away from the cursor position.
    */
   public int getNthWordFromCursor(int numWords) {
     return this.getNthWordFromPos(numWords, this.getCursorPosition());
   }
+
   /**
    * Gets the starting index of the word at a distance of the specified number of words away from the given position.
    */
   public int getNthWordFromPos(int n, int pos) {
     return this.getNthWordFromPosWS(n, pos, true);
   }
+
   /**
    * Like getNthWordFromPos (which wraps this), but adds option for skipping consecutive spaces
    */
@@ -252,12 +269,14 @@ public class GuiTextFieldMulti extends Gui {
     }
     return i;
   }
+
   /**
    * Moves the text cursor by a specified number of characters and clears the selection
    */
   public void moveCursorBy(int num) {
     this.setCursorPosition(this.selectionEnd + num);
   }
+
   /**
    * Sets the current position of the cursor.
    */
@@ -269,18 +288,21 @@ public class GuiTextFieldMulti extends Gui {
     this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, this.text.length());
     this.setSelectionPos(this.cursorPosition);
   }
+
   /**
    * Moves the cursor to the very start of this text box.
    */
   public void setCursorPositionZero() {
     this.setCursorPosition(0);
   }
+
   /**
    * Moves the cursor to the very end of this text box.
    */
   public void setCursorPositionEnd() {
     this.setCursorPosition(this.text.length());
   }
+
   /**
    * Call this method from your GuiScreen to process the keys into the textbox
    */
@@ -393,6 +415,7 @@ public class GuiTextFieldMulti extends Gui {
       }
     }
   }
+
   /**
    * Called when mouse is clicked, regardless as to whether it is over this button or not.
    */
@@ -414,6 +437,7 @@ public class GuiTextFieldMulti extends Gui {
       return false;
     }
   }
+
   /**
    * Draws the textbox
    */
@@ -465,6 +489,7 @@ public class GuiTextFieldMulti extends Gui {
       Gui.drawRect(hPosCursor, vPosCursor - 1, hPosCursor + 1, vPosCursor + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
     }
   }
+
   /**
    * Sets the maximum length for the text in this text box. If the current text is longer than this length, the current text will be trimmed.
    */
@@ -474,30 +499,35 @@ public class GuiTextFieldMulti extends Gui {
       this.text = this.text.substring(0, length);
     }
   }
+
   /**
    * returns the maximum number of character that can be contained in this textbox
    */
   public int getMaxStringLength() {
     return this.maxStringLength;
   }
+
   /**
    * returns the current position of the cursor
    */
   public int getCursorPosition() {
     return this.cursorPosition;
   }
+
   /**
    * Sets the color to use when drawing this text box's text. A different color is used if this text box is disabled.
    */
   public void setTextColor(int color) {
     this.enabledColor = color;
   }
+
   /**
    * Sets the color to use for text in this text box when this text box is disabled.
    */
   public void setDisabledTextColour(int color) {
     this.disabledColor = color;
   }
+
   /**
    * Sets focus to this gui element
    */
@@ -510,30 +540,35 @@ public class GuiTextFieldMulti extends Gui {
       Minecraft.getMinecraft().currentScreen.setFocused(isFocusedIn);
     }
   }
+
   /**
    * Getter for the focused field
    */
   public boolean isFocused() {
     return this.isFocused;
   }
+
   /**
    * Sets whether this text box is enabled. Disabled text boxes cannot be typed in.
    */
   public void setEnabled(boolean enabled) {
     this.isEnabled = enabled;
   }
+
   /**
    * the side of the selection that is not the cursor, may be the same as the cursor
    */
   public int getSelectionEnd() {
     return this.selectionEnd;
   }
+
   /**
    * returns the width of the textbox depending on if background drawing is enabled
    */
   public int getWidth() {
     return this.width;// this.getEnableBackgroundDrawing() ? this.width - 8 : this.width;
   }
+
   /**
    * Sets the position of the selection anchor (the selection anchor and the cursor position mark the edges of the selection). If the anchor is set beyond the bounds of the current text, it will be
    * put back inside.
@@ -566,18 +601,21 @@ public class GuiTextFieldMulti extends Gui {
       this.lineScrollOffset = MathHelper.clamp(this.lineScrollOffset, 0, i);
     }
   }
+
   /**
    * Sets whether this text box loses focus when something other than it is clicked.
    */
   public void setCanLoseFocus(boolean canLoseFocusIn) {
     this.canLoseFocus = canLoseFocusIn;
   }
+
   /**
    * returns true if this textbox is visible
    */
   public boolean getVisible() {
     return this.visible;
   }
+
   /**
    * Sets whether or not this textbox is visible
    */

@@ -22,9 +22,11 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.util.UtilReflection;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.UtilReflection;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,19 +39,23 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantQuickdraw extends EnchantBase {
+
   public EnchantQuickdraw() {
     super("quickdraw", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
+
   @Override
   public boolean canApply(ItemStack stack) {
     return stack.getItem() instanceof ItemBow
         || stack.getItem() == Items.BOOK;
   }
+
   @Override
   public int getMaxLevel() {
     return 1;
   }
+
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
@@ -65,6 +71,7 @@ public class EnchantQuickdraw extends EnchantBase {
       }
     }
   }
+
   private void tickHeldBow(EntityPlayer player) {
     //     player.updateActiveHand();//BUT its protected bahhhh
     UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "func_184608_ct");

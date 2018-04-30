@@ -22,11 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -39,15 +41,19 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantVenom extends EnchantBase {
+
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
+
   public EnchantVenom() {
     super("venom", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(durationTicksPerLevel + "")));
   }
+
   @Override
   public int getMaxLevel() {
     return 2;
   }
+
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     if (event.getTarget() instanceof EntityLivingBase == false) {

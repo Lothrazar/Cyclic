@@ -22,9 +22,10 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilSound;
+
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,10 +35,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
 public class CommandWorldHome extends BaseCommand implements ICommand {
+
   public static final String name = "worldhome";
+
   public CommandWorldHome(boolean op) {
     super(name, op);
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
     if (ic instanceof EntityPlayer == false) {

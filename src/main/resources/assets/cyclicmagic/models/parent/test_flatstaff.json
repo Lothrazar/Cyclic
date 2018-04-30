@@ -1,0 +1,45 @@
+{
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"textures": {
+		"1": "blocks/obsidian",
+		"2": "blocks/anvil_base"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [7, 0, 7],
+			"to": [9, 16, 9],
+			"rotation": {
+				"angle": 0,
+				"axis": "x",
+				"origin": [8, 6, 8]
+			},
+			"faces": {
+				"north": {"uv": [7, 5, 9, 15], "texture": "#2"},
+				"east": {"uv": [6, 4, 8, 14], "texture": "#2"},
+				"south": {"uv": [2, 3, 4, 13], "texture": "#2"},
+				"west": {"uv": [7, 2, 9, 12], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#2"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#2"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [6, 2, 6],
+			"to": [10, 3, 10],
+			"rotation": {
+				"angle": 0,
+				"axis": "x",
+				"origin": [8, 6, 8]
+			},
+			"faces": {
+				"north": {"uv": [7, 5, 9, 15], "texture": "#1"},
+				"east": {"uv": [6, 4, 8, 14], "texture": "#1"},
+				"south": {"uv": [2, 3, 4, 13], "texture": "#1"},
+				"west": {"uv": [7, 2, 9, 12], "texture": "#1"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#1"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#1"}
+			}
+		}
+	]
+}

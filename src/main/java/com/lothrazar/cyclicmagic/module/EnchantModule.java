@@ -22,10 +22,12 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
-import com.lothrazar.cyclicmagic.enchantment.EnchantBase;
 import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchantment.EnchantExcavation;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
@@ -37,21 +39,10 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchantment.EnchantWaterwalking;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
-import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
-  public static EnchantLaunch launch;
-  public static EnchantMagnet magnet;
-  public static EnchantVenom venom;
-  public static EnchantLifeLeech lifeleech;
-  public static EnchantAutoSmelt autosmelt;
-  public static EnchantXpBoost xpboost;
-  public static EnchantReach reach;
-  public static EnchantBeheading beheading;
-  public static EnchantQuickdraw quickdraw;
-  public static EnchantWaterwalking waterwalk;
-  private static EnchantExcavation excavation;
+
   private boolean enablexpboost;
   private boolean enableLaunch;
   private boolean enableMagnet;
@@ -64,59 +55,60 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enablewaterwalk;
   private boolean enableExcavate;
   private boolean enableMultishot;
-  private EnchantMultishot multishot;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
     if (enablewaterwalk) {
-      waterwalk = new EnchantWaterwalking();
+      EnchantWaterwalking waterwalk = new EnchantWaterwalking();
       EnchantRegistry.register(waterwalk);
     }
     if (enablereach) {
-      reach = new EnchantReach();
-      EnchantRegistry.register(reach);
+      EnchantRegistry.reach = new EnchantReach();
+      EnchantRegistry.register(EnchantRegistry.reach);
     }
     if (enablexpboost) {
-      xpboost = new EnchantXpBoost();
+      EnchantXpBoost xpboost = new EnchantXpBoost();
       EnchantRegistry.register(xpboost);
     }
     if (enableautosmelt) {
-      autosmelt = new EnchantAutoSmelt();
+      EnchantAutoSmelt autosmelt = new EnchantAutoSmelt();
       EnchantRegistry.register(autosmelt);
     }
     if (enableLaunch) {
-      launch = new EnchantLaunch();
+      EnchantLaunch launch = new EnchantLaunch();
       EnchantRegistry.register(launch);
     }
     if (enableMagnet) {
-      magnet = new EnchantMagnet();
+      EnchantMagnet magnet = new EnchantMagnet();
       EnchantRegistry.register(magnet);
     }
     if (enableVenom) {
-      venom = new EnchantVenom();
+      EnchantVenom venom = new EnchantVenom();
       EnchantRegistry.register(venom);
     }
     if (enableLifeleech) {
-      lifeleech = new EnchantLifeLeech();
+      EnchantBase lifeleech = new EnchantLifeLeech();
       EnchantRegistry.register(lifeleech);
     }
     if (enablebeheading) {
-      beheading = new EnchantBeheading();
+      EnchantBase beheading = new EnchantBeheading();
       EnchantRegistry.register(beheading);
     }
     if (enableQuickdraw) {
-      quickdraw = new EnchantQuickdraw();
+      EnchantBase quickdraw = new EnchantQuickdraw();
       EnchantRegistry.register(quickdraw);
     }
     if (enableExcavate) {
-      excavation = new EnchantExcavation();
+      EnchantBase excavation = new EnchantExcavation();
       EnchantRegistry.register(excavation);
     }
     if (enableMultishot) {
-      multishot = new EnchantMultishot();
+      EnchantMultishot multishot = new EnchantMultishot();
       EnchantRegistry.register(multishot);
     }
   }
+
   @Override
   public void syncConfig(Configuration c) {
     enableMultishot = c.getBoolean("EnchantMultishot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

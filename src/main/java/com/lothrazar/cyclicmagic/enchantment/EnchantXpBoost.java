@@ -22,10 +22,12 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchantment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.util.UtilExperience;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.UtilExperience;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,15 +42,19 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantXpBoost extends EnchantBase {
+
   private static final int XP_PER_LVL = 8;
+
   public EnchantXpBoost() {
     super("expboost", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(XP_PER_LVL + "")));
   }
+
   @Override
   public int getMaxLevel() {
     return 3;
   }
+
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource() == null) {
@@ -66,6 +72,7 @@ public class EnchantXpBoost extends EnchantBase {
       dropExp(world, pos, XP_PER_LVL * level);
     }
   }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
     World world = event.getWorld();
@@ -84,6 +91,7 @@ public class EnchantXpBoost extends EnchantBase {
     UtilExperience.incrementExp(player, bonus);
     //    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
   }
+
   private void dropExp(World world, BlockPos pos, int xp) {
     if (world.isRemote == false) {
       EntityXPOrb orb = new EntityXPOrb(world);

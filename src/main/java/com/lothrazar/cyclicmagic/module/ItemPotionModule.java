@@ -22,8 +22,9 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionModule extends BaseEventModule implements IHasConfig {
+
   public boolean cancelPotionInventoryShift;
   public static boolean enableEnder;
   public static boolean enableMagnet;
@@ -48,11 +50,13 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   public static boolean enableBlindness;
   public static boolean enableSaturation;
   public static boolean enableFrostw;
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
     event.setCanceled(cancelPotionInventoryShift);
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;

@@ -22,17 +22,18 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilShape;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -55,12 +56,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
+
   private static final int HEIGHT = 3;
   private static final int RADIUS = 4;
+
   public static enum ActionType {
     WATER, LAVA, GENERIC;
+
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
+
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT) + 1;
@@ -70,6 +75,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
     }
+
     public static ActionType getAction(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
@@ -79,15 +85,19 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
         return WATER;
       }
     }
+
     public static String getName(ItemStack wand) {
       return "wand.liquid." + ActionType.getAction(wand).toString().toLowerCase();
     }
+
     public static void setTimeout(ItemStack wand) {
       UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
     }
+
     public static int getTimeout(ItemStack wand) {
       return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
     }
+
     public static void tickTimeout(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int t = tags.getInteger(NBTTIMEOUT);
@@ -96,9 +106,11 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
       }
     }
   }
+
   public ItemWaterRemoval() {
     super(2000);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack stack = playerIn.getHeldItem(hand);
@@ -113,7 +125,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
     }
     if (success > 0) {
       UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(hand), success);
-      UtilSound.playSound(playerIn, SoundRegistry.pschew_fire);
+      UtilSound.playSound(playerIn, SoundRegistry.liquid_evaporate);
       playerIn.swingArm(hand);
       //mimic what BlockSponge does : set block with status 2 so dont notify, then later notify them all at once
       //this prevents insta-fillins from neighbours as remvoed
@@ -123,6 +135,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
+
   private boolean isValidForMode(ItemStack held, IBlockState state) {
     switch (ActionType.getAction(held)) {
       case GENERIC:
@@ -134,6 +147,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
     }
     return false;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
@@ -144,6 +158,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
         'c', Blocks.SPONGE,
         'i', "dyeBlue");
   }
+
   //toggling modes
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
@@ -156,19 +171,21 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS, 0.1F);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
+
   @Override
   public void onUpdate(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);

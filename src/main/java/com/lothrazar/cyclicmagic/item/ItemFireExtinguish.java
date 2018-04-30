@@ -22,12 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
+
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -43,12 +44,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
+
   private static final int DURABILITY = 256;
   private static final int COOLDOWN = 10;
   private static final int RADIUS = 4;
+
   public ItemFireExtinguish() {
     super(DURABILITY);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
@@ -62,6 +66,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
       super.onUse(stack, player, world, hand);
     return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
   }
+
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
@@ -70,6 +75,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
+
   private boolean spreadWaterFromCenter(World world, EntityPlayer player, BlockPos posCenter) {
     int count = 0;
     for (BlockPos pos : UtilWorld.findBlocks(world, posCenter, Blocks.FIRE, RADIUS)) {
@@ -85,6 +91,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
     }
     return success;
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

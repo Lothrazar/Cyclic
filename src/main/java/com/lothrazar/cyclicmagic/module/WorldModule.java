@@ -22,21 +22,18 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.component.ore.BlockDimensionOre;
-import com.lothrazar.cyclicmagic.component.ore.WorldGenNewOre;
+import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.ore.WorldGenNewOre;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.registry.BlockOreRegistry;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
 import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -48,19 +45,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class WorldModule extends BaseEventModule implements IHasConfig {
+
   final static int weightOre = 0;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
   public static boolean oreSpawns = true;
   public static boolean pigmenEnrage = true;
-  private static boolean emeraldHeight = true;
-  private static boolean goldRiver;
-  private static boolean oreSingletons;
+
   public WorldModule() {
     BlockOreRegistry.register();
   }
+
   public static List<BlockDimensionOre> ores = new ArrayList<BlockDimensionOre>();
   public static boolean enableModCompatOres;
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
@@ -76,15 +74,9 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     oreSpawns = prop.getBoolean();
     prop = config.get(category, "PigmenEnrage", false, "If true, mining Nether ore has a 20% chance of enraging a nearby PigZombie within 16 blocks");
     pigmenEnrage = prop.getBoolean();
-    prop = config.get(category, "Emerald Ore Boost", true, "Vanilla emerald ore now can spawn at any height, not only below the ground [still only in the Extreme Hills biomes as normal]");
-    prop.setRequiresMcRestart(true);
-    emeraldHeight = prop.getBoolean();
-    prop = config.get(category, "Gold Rivers", true, "Vanilla gold ore can spawn in and river biomes at any height");
-    prop.setRequiresMcRestart(true);
-    goldRiver = prop.getBoolean();
-    prop = config.get(category, "Ore Singletons", true, "Vanilla ores of all kinds can rarely spawn at all world heights, but only in veins of size one.  Great for amplified terrain.");
-    prop.setRequiresMcRestart(true);
-    oreSingletons = prop.getBoolean();
+
+ 
+
     //NEW ORES start here
     Configuration oreConf;
     ConfigRegistry.oreConfig.load();
@@ -105,6 +97,7 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     }
     ConfigRegistry.oreConfig.save();
   }
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -129,24 +122,13 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   @Override
   public void onInit() {
     //syncConfig comes AFTER pre init then init. which is why the configs require a restart 
     GameRegistry.registerWorldGenerator(new WorldGenNewOre(), weightOre);
-    if (emeraldHeight) {
-      GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weightOre);
-    }
-    if (goldRiver) {
-      GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weightOre);
-    }
-    if (oreSingletons) {
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.IRON_ORE, 68), weightOre);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.GOLD_ORE, 34), weightOre);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weightOre);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weightOre);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weightOre);
-    }
   }
+
   /**
    * TODO: move this to BlockDimensionOre
    * 

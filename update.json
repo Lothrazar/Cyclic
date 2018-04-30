@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.14.5",
-    "1.12.2-recommended": "1.14.5"
+    "1.12.2-latest": "1.15.0",
+    "1.12.2-recommended": "1.14.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -258,7 +258,16 @@
   	,"1.14.2":"Apple Sprouts no longer drop treasure apples.  GUI Screens will now auto-close when their block is destroyed.  Fixed item model and localization issue in the 'cyclic_ores.cfg' blocks.  Emerald Carrot fixes: Fixed spawn tooltip, fixed spawn exploit, and it now remembers the taming owner when converted to a Zombie Horse.  Fixed a player movement conflict with the Bounce Potion effect while flying with Elytra.  "
   	,"1.14.3":"Fixed visibility and homing vector of Spirit Seeker missiles.  Fixed errored ores sometimes generating in nether, it now correctly respects config file.  Fixed stone minecart starting non-empty.  "
   	,"1.14.4":"Updated zh_CN.lang (thanks to sandtechnology and Aemande123 on github).  Added some error handling to Energy Cables.  Peat Generator now auto-outputs power similar to other generators (slower than extractor).  Fixed Precise Dropper working with hoppers and pipes.  Harvester now compatible with Natura berry bushes.  Fixed rendering bug with Pharos Beacon.  Fixed the Automated User trying to use invalid items that have stack size zero.  Automated User now works on Apricorn trees from Pixelmon.  Added config options to disable the projectile ability of the endgame swords.  Cable transfer rates added to config file.  Fixed the Forester not planting saplings when there is a roof overhead (it can now plant regardless if sky is visible or not).  "
-  	,"1.14.5":""
+  	,"1.14.5":"Updated texture of Dark Fire and Apple Sprout while growing (by the amazing Ithronyar).  Fixed magnet enchant not having its effect when enchanted on armor.  Fixed a (hard to replicate) crash if game or chunk loads slowly and animations attempt to happen while tile entity is still null.  Very slight change to Redstone Clock recipe.  Fixed Precise Dropper crashing servers.  Added config SackHoldingBlacklist to block containers from being picked up.  "
+  	,"1.14.6":"Fixed a bug related to Automated User and the Lightwell from Astral Sorcery.  New config 'AutoUserTargetBlacklist' in case anyone needs to blacklist a target block (in world) from being acted upon by the Automated User; default is empty.  Updated ru_RU.lang (thanks to kellixon on github).  "
+ 	,"1.14.7":"Updated 3D model and textures for Hydrator (thanks to Ithronyar).  Fluid buckets no longer listed in Cyclic creative tab (was causing crashes in some versions of JEI in some modpacks).  Fixed null blocks generating in the nether with certain config settings (will change to air blocks with this update). "
+  	,"1.14.8":"Fixed a whitelist bug with the Controlled Miner.  Sleeping mat now correctly dismounts for you if you try to sleep on the saddle.  Updates to zh_CN.lang (thanks to Minecraftbegin2snow on github).  Fixed Structure Builder not saving height data on world reload.  New Item used to craft Darkflame Hex and new animated dark fireball texture by Ithronyar (no other item uses yet, so it shares the same config).  Emerald Carrot retextured and renamed as Infected Carrot - new recipe, same effect.  Ender Book no longer rounds off stored coordinates to integers, so it will teleport you more precisely (such as the center of the block).  Fixed a small glitch where Auto Crafter fuel slot would not consuming items when fuel is at zero.  Added a small optimization to network traffic on player join (Thanks to darkh4x).  "
+  	,"1.14.9":"Fixed a dupe bug with certain items that have durability (see issue tracker for details).  Almost all custom sound effects have been totally remade and improved from scratch thanks to Ithronyar.  Update zh_CN.lang thanks to sandtechnology.   Merchant Almanac is less picky and now lets you use it directly on a villager instead of only on a nearby block.  Item Extraction Cable has a new button texture  "
+	
+	
+	,"1.15.0":"Default drop list for Magic Bean hugely nerfed, and default value of MagicBeanGrownDropSeed is now false (existing configs unchanged).  Updated some textures.  Removed bucket slot for hydrator.   REMOVED some legacy worldgen features/configs (GoldRivers, OreSingletons Emerald Ore Boost).  Removed config feature 'TerrariaInventoryButtons' (was disabled by default anyway).  Many blocks now consume energy that did not previously (Auto Fisher, Hydrator, Dropper... disable and tweak in config as normal).  Peat Generator no longer accepts power as input, is output only.   TANK connected block textures.  Slime Conveyors renamed to Conveyor Belts, along with new block models that have corner pieces.  "
+  
+  
   }
 }
 

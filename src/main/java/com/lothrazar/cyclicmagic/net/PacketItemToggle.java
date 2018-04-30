@@ -22,7 +22,8 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
+
+import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -34,22 +35,28 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemToggle, IMessage> {
+
   private int slot;
+
   public PacketItemToggle() {}
+
   public PacketItemToggle(int itemSlot) {
     slot = itemSlot;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     slot = tags.getInteger("slot");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("slot", slot);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketItemToggle message, MessageContext ctx) {
     if (ctx.side.isServer()) {

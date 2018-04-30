@@ -22,8 +22,9 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
+import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.item.ItemPistonWand;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,15 +39,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBlock, IMessage> {
+
   private BlockPos pos;
   private ItemPistonWand.ActionType type;
   private EnumFacing side;
+
   public PacketMoveBlock() {}
+
   public PacketMoveBlock(BlockPos mouseover, ItemPistonWand.ActionType t, EnumFacing s) {
     pos = mouseover;
     type = t;
     side = s;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -59,6 +64,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     int s = tags.getInteger("s");
     side = EnumFacing.values()[s];
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -69,6 +75,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     tags.setInteger("s", side.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(final PacketMoveBlock message, final MessageContext ctx) {
     MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -79,6 +86,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
       //only java 8
       //s.addScheduledTask(() -> handle(message, ctx));
       s.addScheduledTask(new Runnable() {
+
         public void run() {
           handle(message, ctx);
         }
@@ -86,6 +94,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     }
     return null;
   }
+
   @SuppressWarnings("unused")
   private void handle(PacketMoveBlock message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {

@@ -22,13 +22,14 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.module;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -43,9 +44,11 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LootTableModule extends BaseEventModule implements IHasConfig {
+
   private static final String LOOTPOOLNAME = "main";
   private Set<ResourceLocation> chests;
   private boolean enableChestLoot;
+
   public LootTableModule() {
     chests = new HashSet<ResourceLocation>();
     //anything but the starter chest
@@ -60,6 +63,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     chests.add(LootTableList.CHESTS_STRONGHOLD_LIBRARY);
     chests.add(LootTableList.CHESTS_VILLAGE_BLACKSMITH);
   }
+
   @SubscribeEvent
   public void onLootTableLoad(LootTableLoadEvent event) {
     LootPool main = event.getTable().getPool(LOOTPOOLNAME);
@@ -76,6 +80,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       onLootChestTableLoad(main, event);
     }
   }
+
   private void onLootChestTableLoad(LootPool main, LootTableLoadEvent event) {
     if (event.getName() == LootTableList.CHESTS_SPAWN_BONUS_CHEST) {
       fillBonusChest(main);
@@ -90,9 +95,11 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       fillGenericChest(main);
     }
   }
+
   private void fillEndCityChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.endCityChest);
   }
+
   private void fillPoolFromMap(LootPool main, Map<Item, Integer> map) {
     synchronized (map) {
       for (Map.Entry<Item, Integer> entry : map.entrySet()) {
@@ -100,15 +107,19 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       }
     }
   }
+
   private void fillGenericChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.genericChest);
   }
+
   private void fillIglooChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.iglooChest);
   }
+
   private void fillBonusChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.bonusChest);
   }
+
   //  @SuppressWarnings("unused")
   //  private void addLoot(LootPool main, Item item) {
   //    addLoot(main, item, LootTableRegistry.lootChanceDefault);
@@ -118,6 +129,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enableChestLoot = config.getBoolean("ChestLoot", Const.ConfigCategory.worldGen, true, "If true, then enabled items and blocks from this mod can appear in loot chests");

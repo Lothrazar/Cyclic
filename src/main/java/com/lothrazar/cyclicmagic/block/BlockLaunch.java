@@ -22,12 +22,13 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block;
+
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFlat;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -44,17 +45,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
+
   private final static float ANGLE = 90;
   private final static int RECIPE_OUT = 6;
+
   public static enum LaunchType {
     SMALL, MEDIUM, LARGE;
   }
+
   public static boolean sneakPlayerAvoid;
   private LaunchType type;
   private float power;
   private SoundEvent sound;
+
   public BlockLaunch(LaunchType t, SoundEvent s) {
-    super(Material.IRON);//same as BlockSlime 
+    super(Material.IRON);
     this.setSoundType(SoundType.SLIME);
     sound = s;
     type = t;
@@ -72,9 +77,11 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
       break;
     }
   }
+
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
@@ -83,12 +90,14 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
     UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    int fakePower = (int) Math.round(this.power * 10); //  String.format("%.1f", this.power))
+    int fakePower = Math.round(this.power * 10); //  String.format("%.1f", this.power))
     tooltip.add(UtilChat.lang("tile.plate_launch.tooltip" + fakePower));
   }
+
   @Override
   public IRecipe addRecipe() {
     switch (type) {

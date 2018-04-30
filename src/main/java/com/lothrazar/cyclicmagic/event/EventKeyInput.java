@@ -22,27 +22,28 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftLeft;
-import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
-import com.lothrazar.cyclicmagic.component.playerext.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.component.playerext.PacketOpenFakeWorkbench;
-import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.base.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -60,6 +61,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventKeyInput {
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
@@ -78,14 +80,15 @@ public class EventKeyInput {
     if (event.getDwheel() < 0) {
       ModCyclic.network.sendToServer(new PacketSpellShiftRight());
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode);
     }
     else if (event.getDwheel() > 0) {
       ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
       event.setCanceled(true);
-      UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode);
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
@@ -124,6 +127,7 @@ public class EventKeyInput {
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
@@ -157,6 +161,7 @@ public class EventKeyInput {
       thePlayer.closeScreen();
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseInputEvent.Pre event) {
@@ -193,6 +198,7 @@ public class EventKeyInput {
       // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410
     }
   }
+
   @SideOnly(Side.CLIENT)
   private boolean isGuiKeyDown(KeyBinding keybinding) {
     if (keybinding == null) {

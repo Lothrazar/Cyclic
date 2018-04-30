@@ -22,9 +22,10 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,20 +33,25 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandTodoList extends BaseCommand implements ICommand {
+
   public static final String name = "todo";
+
   public CommandTodoList(boolean op) {
     super(name, op);
   }
+
   private static final String MODE_ADD = "add";
   private static final String MODE_REMOVE = "delete";
   private static final String MODE_SET = "set";
   private static final String MODE_GET = "get";
   //private static final String	NBT_KEY			= Const.MODID + "_todo";
   public static boolean PERSIST_DEATH;
+
   @Override
   public String getUsage(ICommandSender s) {
     return "/" + getName() + " <" + MODE_GET + "|" + MODE_SET + "|" + MODE_ADD + "|" + MODE_REMOVE + "> <text>";
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender icommandsender, String[] args) {
     if (icommandsender instanceof EntityPlayer == false) {
@@ -87,6 +93,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
     }
     setTodoForPlayer(player, todoCurrent);
   }
+
   private void setTodoForPlayer(EntityPlayer player, String todoCurrent) {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     props.setTODO(todoCurrent);
@@ -94,6 +101,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
       CapabilityRegistry.syncServerDataToClient((EntityPlayerMP) player);
     }
   }
+
   public static String getTodoForPlayer(EntityPlayer player) {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     return props.getTODO();

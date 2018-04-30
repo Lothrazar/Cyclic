@@ -22,32 +22,33 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic;
+
 import java.io.File;
+import com.lothrazar.cyclicmagic.core.log.ModLogger;
+import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
-import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.InterModCommsRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
 import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -66,6 +67,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles,crafttweaker", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
+
   @Instance(value = Const.MODID)
   public static ModCyclic instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
@@ -79,7 +81,7 @@ public class ModCyclic {
   static {
     FluidRegistry.enableUniversalBucket();//https://github.com/BluSunrize/ImmersiveEngineering/blob/c76e51998756a54c22dd40ac1877313bf95e8520/src/main/java/blusunrize/immersiveengineering/ImmersiveEngineering.java
   }
-  public static String test = "@TEST@";
+
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
@@ -112,6 +114,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.class);
     MinecraftForge.EVENT_BUS.register(VillagerProfRegistry.class);
   }
+
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
@@ -124,6 +127,7 @@ public class ModCyclic {
     PermissionRegistry.register();
     InterModCommsRegistry.register();
   }
+
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
@@ -136,6 +140,7 @@ public class ModCyclic {
       UtilString.unitTests();
     }
   }
+
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {

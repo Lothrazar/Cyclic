@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -42,18 +43,23 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  *
  */
 public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileSetField, IMessage> {
+
   private BlockPos pos;
   private int field;
   private int value;
+
   public PacketTileSetField() {}
+
   public PacketTileSetField(BlockPos p, int f) {
     this(p, f, 1);
   }
+
   public PacketTileSetField(BlockPos p, int f, int val) {
     pos = p;
     this.field = f;
     value = val;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -64,6 +70,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
     value = tags.getInteger("v");
     pos = new BlockPos(x, y, z);
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -74,6 +81,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
     tags.setInteger("v", value);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileSetField message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;

@@ -22,9 +22,10 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLiving;
@@ -38,15 +39,19 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
 public class CommandSearchTrades extends BaseCommand implements ICommand {
+
   // https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
   public static final String name = "searchtrade";
+
   public CommandSearchTrades(boolean op) {
     super(name, op);
   }
+
   @Override
   public String getUsage(ICommandSender ic) {
     return "/" + getName() + " <item name> <qty>";
   }
+
   @Override
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
     if (ic instanceof EntityPlayer == false) {
@@ -123,9 +128,7 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
         if (match) {
           m = disabled + UtilChat.blockPosToString(v_entity.getPosition()) + " " + sell.getCount() + " " + sell.getDisplayName() + " :: " + buy.getCount() + " " + buy.getDisplayName();
           messages.add(m);
-          /*
-           * ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)). getPosition() ,EnumParticleTypes.CRIT_MAGIC.getParticleID());
-           */
+          /* ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)). getPosition() ,EnumParticleTypes.CRIT_MAGIC.getParticleID()); */
         }
       }
     }

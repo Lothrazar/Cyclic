@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
+
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import io.netty.buffer.ByteBuf;
@@ -35,17 +36,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTileSizeToggle, IMessage> {
+
   //this is used by multiple because of interface ITileSizeToggle
   private BlockPos pos;
   private int type;
+
   public static enum ActionType {
     SIZE, PREVIEW;
   }
+
   public PacketTileSizeToggle() {}
+
   public PacketTileSizeToggle(BlockPos p, ActionType t) {
     pos = p;
     type = t.ordinal();
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
@@ -55,6 +61,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
     pos = new BlockPos(x, y, z);
     type = tags.getInteger("t");
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
@@ -64,6 +71,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
     tags.setInteger("t", type);
     ByteBufUtils.writeTag(buf, tags);
   }
+
   @Override
   public IMessage onMessage(PacketTileSizeToggle message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().player;
