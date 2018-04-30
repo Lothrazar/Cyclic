@@ -60,12 +60,16 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 /**
  * 
- * @author insomniaKitten
+ * @author of blockstate & model is insomniaKitten
  *
  */
 @SuppressWarnings("deprecation")
 public abstract class BlockCableBase extends BlockBaseHasTile {
 
+  private static final double SML = 0.375D;
+  private static final double LRG = 0.625D;
+  private static final double SML_SEL = 0.1;//0.375D;
+  private static final double LRG_SEL = 0.9;// 0.625D;
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -78,15 +82,25 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .put(EnumFacing.WEST, PropertyEnum.create("west", EnumConnectType.class))
           .put(EnumFacing.EAST, PropertyEnum.create("east", EnumConnectType.class))
           .build());
-  public static final AxisAlignedBB AABB_NONE = new AxisAlignedBB(0.375D, 0.375D, 0.375D, 0.625D, 0.625D, 0.625D);
+  public static final AxisAlignedBB AABB_NONE = new AxisAlignedBB(SML, SML, SML, LRG, LRG, LRG);
   public static final Map<EnumFacing, AxisAlignedBB> AABB_SIDES = Maps.newEnumMap(
       new ImmutableMap.Builder<EnumFacing, AxisAlignedBB>()
-          .put(EnumFacing.DOWN, new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D))
-          .put(EnumFacing.UP, new AxisAlignedBB(0.375D, 0.625D, 0.375D, 0.625D, 1.0D, 0.625D))
-          .put(EnumFacing.NORTH, new AxisAlignedBB(0.375D, 0.375D, 0.0D, 0.625D, 0.625D, 0.375D))
-          .put(EnumFacing.SOUTH, new AxisAlignedBB(0.375D, 0.375D, 0.625D, 0.625D, 0.625D, 1.0D))
-          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, 0.375D, 0.375D, 0.375D, 0.625D, 0.625D))
-          .put(EnumFacing.EAST, new AxisAlignedBB(0.625D, 0.375D, 0.375D, 1.0D, 0.625D, 0.625D))
+          .put(EnumFacing.DOWN, new AxisAlignedBB(SML, 0.0D, SML, LRG, SML, LRG))
+          .put(EnumFacing.UP, new AxisAlignedBB(SML, LRG, SML, LRG, 1.0D, LRG))
+          .put(EnumFacing.NORTH, new AxisAlignedBB(SML, SML, 0.0D, LRG, LRG, SML))
+          .put(EnumFacing.SOUTH, new AxisAlignedBB(SML, SML, LRG, LRG, LRG, 1.0D))
+          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, SML, SML, SML, LRG, LRG))
+          .put(EnumFacing.EAST, new AxisAlignedBB(LRG, SML, SML, 1.0D, LRG, LRG))
+          .build());
+
+  public static final Map<EnumFacing, AxisAlignedBB> AABB_SELECTION = Maps.newEnumMap(
+      new ImmutableMap.Builder<EnumFacing, AxisAlignedBB>()
+          .put(EnumFacing.DOWN, new AxisAlignedBB(SML_SEL, 0.0D, SML_SEL, LRG_SEL, SML_SEL, LRG_SEL))
+          .put(EnumFacing.UP, new AxisAlignedBB(SML_SEL, LRG_SEL, SML_SEL, LRG_SEL, 1.0D, LRG_SEL))
+          .put(EnumFacing.NORTH, new AxisAlignedBB(SML_SEL, SML_SEL, 0.0D, LRG_SEL, LRG_SEL, SML_SEL))
+          .put(EnumFacing.SOUTH, new AxisAlignedBB(SML_SEL, SML_SEL, LRG_SEL, LRG_SEL, LRG_SEL, 1.0D))
+          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, SML_SEL, SML_SEL, SML_SEL, LRG_SEL, LRG_SEL))
+          .put(EnumFacing.EAST, new AxisAlignedBB(LRG_SEL, SML_SEL, SML_SEL, 1.0D, LRG_SEL, LRG_SEL))
           .build());
 
   public enum EnumConnectType implements IStringSerializable {
@@ -120,17 +134,19 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     System.out.println("WAT " + side);
     if (te != null) {
       if (player.getHeldItem(hand).getItem() == Items.STICK) {
+        UtilChat.addChatMessage(player, "TO  at side " + side);
         te.toggleBlacklist(side);
         boolean theNew = te.getBlacklist(side);
         UtilChat.sendStatusMessage(player, "TOGGLED" + theNew + " at side " + side);
         world.setBlockState(pos, state.withProperty(PROPERTIES.get(side), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
+        return true;
       }
       else if (world.isRemote == false && hand == EnumHand.MAIN_HAND) {
         UtilChat.sendStatusMessage(player, te.getLabelTextOrEmpty());
       }
     }
     // otherwise return true if it is a fluid handler to prevent in world placement    
-    return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+    return false;// super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
 
   @Override
@@ -240,7 +256,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
       if (state.getValue(PROPERTIES.get(side)).isHollow() == false) {
-        box = box.union(AABB_SIDES.get(side).offset(pos));
+        box = box.union(AABB_SELECTION.get(side).offset(pos));
       }
     }
     return box;

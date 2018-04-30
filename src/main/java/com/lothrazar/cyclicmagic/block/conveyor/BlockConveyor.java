@@ -254,7 +254,10 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
    */
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-
+    if (placer.isSneaking()) {
+      //skip and place as normal 
+      return;
+    }
     IBlockState north = world.getBlockState(pos.offset(EnumFacing.NORTH));
     IBlockState south = world.getBlockState(pos.offset(EnumFacing.SOUTH));
     IBlockState west = world.getBlockState(pos.offset(EnumFacing.WEST));
