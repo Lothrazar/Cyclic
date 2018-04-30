@@ -15,7 +15,7 @@
 				"east": { "texture": "#side", "uv": [ 14, 13, 16, 16 ] },
 				"south": { "texture": "#side", "uv": [ 0, 13, 16, 16 ] },
 				"up": { "texture": "#top", "uv": [ 16, 0, 0, 2 ] },
-				"down": { "texture": "#top", "uv": [ 2, 0, 16, 2 ] }
+				"down": { "texture": "#bottom", "uv": [ 2, 0, 16, 2 ] }
 			}
 		},
 
@@ -27,7 +27,7 @@
 				"east": { "texture": "#side", "uv": [ 0, 13, 14, 16 ] },
 				"west": { "texture": "#side", "uv": [ 2, 13, 16, 16 ] },
 				"up": { "texture": "#top", "uv": [ 2, 0, 16, 2 ], "rotation": 90 },
-				"down": { "texture": "#top", "uv": [ 2, 0, 16, 2 ] }
+				"down": { "texture": "#bottom", "uv": [ 2, 0, 16, 2 ] }
 			}
 		},
 
@@ -45,7 +45,7 @@
 
 		{
 			"name": "BottomPlate",
-			"from": [ 2, 0, 2 ], 
+			"from": [ 0, 0, 2 ], 
 			"to": [ 16, 1, 16 ], 
 			"faces": {
 				"down": { "texture": "#bottom", "uv": [ 2, 2, 16, 16 ] }

@@ -54,7 +54,7 @@
 			"faces": {
 				"north": { "texture": "#end", "uv": [ 2, 15, 14, 16 ] },
 				"south": { "texture": "#end", "uv": [ 2, 15, 14, 16 ] },
-				"down": { "texture": "#top", "uv": [ 2, 0, 14, 16 ] }
+				"down": { "texture": "#bottom", "uv": [ 2, 0, 14, 16 ] }
 			}
 		}
 	],
