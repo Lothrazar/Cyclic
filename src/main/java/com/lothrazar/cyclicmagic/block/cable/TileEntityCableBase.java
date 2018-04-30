@@ -119,6 +119,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       mapIncomingItems.put(f, compound.getInteger(f.getName() + "_incoming"));
       mapIncomingFluid.put(f, compound.getInteger(f.getName() + "_incfluid"));
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
+      mapBlacklist.put(f, compound.getBoolean(f.getName() + "_blocked"));
     }
 
   }
@@ -132,6 +133,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       compound.setInteger(f.getName() + "_incoming", mapIncomingItems.get(f));
       compound.setInteger(f.getName() + "_incfluid", mapIncomingFluid.get(f));
       compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
+      compound.setBoolean(f.getName() + "_blocked", mapBlacklist.get(f));
     }
 
     return compound;
@@ -425,15 +427,16 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
   }
 
-  public Map<EnumFacing, Boolean> getBlacklist() {
-    return mapBlacklist;
-  }
+  //  public Map<EnumFacing, Boolean> getBlacklist() {
+  //    return mapBlacklist;
+  //  }
 
-  public boolean getBlacklist(EnumFacing side) {
+  public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }
 
-  public void toggleBlacklist(EnumFacing side) {
+  public void toggleBlacklist(final EnumFacing side) {
+
     mapBlacklist.put(side, !mapBlacklist.get(side));
   }
 }

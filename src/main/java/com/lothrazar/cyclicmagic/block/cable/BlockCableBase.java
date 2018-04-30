@@ -39,6 +39,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -89,7 +90,11 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .build());
 
   public enum EnumConnectType implements IStringSerializable {
-    NONE, CABLE, INVENTORY;
+    NONE, CABLE, INVENTORY, BLOCKED;
+
+    public boolean isHollow() {
+      return this == NONE || this == BLOCKED;
+    }
 
     @Override
     public String getName() {
@@ -106,14 +111,23 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     setLightOpacity(0);
   }
 
+  @Override
   public abstract TileEntity createTileEntity(World world, IBlockState state);
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
-    if (te != null && world.isRemote == false) {
-      String msg = te.getLabelTextOrEmpty();
-      UtilChat.sendStatusMessage(player, msg);
+    System.out.println("WAT " + side);
+    if (te != null) {
+      if (player.getHeldItem(hand).getItem() == Items.STICK) {
+        te.toggleBlacklist(side);
+        boolean theNew = te.getBlacklist(side);
+        UtilChat.sendStatusMessage(player, "TOGGLED" + theNew + " at side " + side);
+        world.setBlockState(pos, state.withProperty(PROPERTIES.get(side), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
+      }
+      else if (world.isRemote == false && hand == EnumHand.MAIN_HAND) {
+        UtilChat.sendStatusMessage(player, te.getLabelTextOrEmpty());
+      }
     }
     // otherwise return true if it is a fluid handler to prevent in world placement    
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
@@ -141,14 +155,25 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
     BlockPos pos = new BlockPos(origin);
+    TileEntityCableBase cableHere = (TileEntityCableBase) world.getTileEntity(pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      pos = origin.offset(side);
       PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
+      if (cableHere.getBlacklist(side)) {
+        //im blocked off, so i cant connect to you
+        state = state.withProperty(property, EnumConnectType.BLOCKED);
+        continue;
+      }
+
+      pos = origin.offset(side);
       state = state.withProperty(property, EnumConnectType.NONE);
       TileEntity tileTarget = world.getTileEntity(pos);
       TileEntityCableBase tileCable = null;
       if (tileTarget != null && tileTarget instanceof TileEntityCableBase) {
         tileCable = (TileEntityCableBase) tileTarget;
+      }
+      if (tileCable != null && tileCable.getBlacklist(side.getOpposite())) {
+        //you are blocked on your facing side, so i wont push out to you
+        continue;
       }
       if (this.powerTransport) {
         if (tileCable != null && tileCable.isEnergyPipe()) {
@@ -181,6 +206,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
         }
       }
     }
+    //state = state.withProperty(PROPERTIES.get(EnumFacing.DOWN), EnumConnectType.BLOCKED);
     return super.getActualState(state, world, origin);
   }
 
@@ -201,7 +227,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_NONE);
     if (!isActualState) state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NONE) {
+      if (state.getValue(PROPERTIES.get(side)).isHollow() == false) {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_SIDES.get(side));
       }
     }
@@ -213,7 +239,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     AxisAlignedBB box = AABB_NONE.offset(pos);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NONE) {
+      if (state.getValue(PROPERTIES.get(side)).isHollow() == false) {
         box = box.union(AABB_SIDES.get(side).offset(pos));
       }
     }
