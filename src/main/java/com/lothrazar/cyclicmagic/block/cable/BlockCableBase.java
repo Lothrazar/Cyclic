@@ -68,8 +68,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   private static final double SML = 0.375D;
   private static final double LRG = 0.625D;
-  private static final double SML_SEL = 0.1;//0.375D;
-  private static final double LRG_SEL = 0.9;// 0.625D;
+
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -93,15 +92,15 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .put(EnumFacing.EAST, new AxisAlignedBB(LRG, SML, SML, 1.0D, LRG, LRG))
           .build());
 
-  public static final Map<EnumFacing, AxisAlignedBB> AABB_SELECTION = Maps.newEnumMap(
-      new ImmutableMap.Builder<EnumFacing, AxisAlignedBB>()
-          .put(EnumFacing.DOWN, new AxisAlignedBB(SML_SEL, 0.0D, SML_SEL, LRG_SEL, SML_SEL, LRG_SEL))
-          .put(EnumFacing.UP, new AxisAlignedBB(SML_SEL, LRG_SEL, SML_SEL, LRG_SEL, 1.0D, LRG_SEL))
-          .put(EnumFacing.NORTH, new AxisAlignedBB(SML_SEL, SML_SEL, 0.0D, LRG_SEL, LRG_SEL, SML_SEL))
-          .put(EnumFacing.SOUTH, new AxisAlignedBB(SML_SEL, SML_SEL, LRG_SEL, LRG_SEL, LRG_SEL, 1.0D))
-          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, SML_SEL, SML_SEL, SML_SEL, LRG_SEL, LRG_SEL))
-          .put(EnumFacing.EAST, new AxisAlignedBB(LRG_SEL, SML_SEL, SML_SEL, 1.0D, LRG_SEL, LRG_SEL))
-          .build());
+  //  public static final Map<EnumFacing, AxisAlignedBB> AABB_SELECTION = Maps.newEnumMap(
+  //      new ImmutableMap.Builder<EnumFacing, AxisAlignedBB>()
+  //          .put(EnumFacing.DOWN, new AxisAlignedBB(SML_SEL, 0.0D, SML_SEL, LRG_SEL, SML_SEL, LRG_SEL))
+  //          .put(EnumFacing.UP, new AxisAlignedBB(SML_SEL, LRG_SEL, SML_SEL, LRG_SEL, 1.0D, LRG_SEL))
+  //          .put(EnumFacing.NORTH, new AxisAlignedBB(SML_SEL, SML_SEL, 0.0D, LRG_SEL, LRG_SEL, SML_SEL))
+  //          .put(EnumFacing.SOUTH, new AxisAlignedBB(SML_SEL, SML_SEL, LRG_SEL, LRG_SEL, LRG_SEL, 1.0D))
+  //          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, SML_SEL, SML_SEL, SML_SEL, LRG_SEL, LRG_SEL))
+  //          .put(EnumFacing.EAST, new AxisAlignedBB(LRG_SEL, SML_SEL, SML_SEL, 1.0D, LRG_SEL, LRG_SEL))
+  //          .build());
 
   public enum EnumConnectType implements IStringSerializable {
     NONE, CABLE, INVENTORY, BLOCKED;
@@ -252,11 +251,12 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+    // return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
     AxisAlignedBB box = AABB_NONE.offset(pos);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
       if (state.getValue(PROPERTIES.get(side)).isHollow() == false) {
-        box = box.union(AABB_SELECTION.get(side).offset(pos));
+        box = box.union(AABB_SIDES.get(side).offset(pos));
       }
     }
     return box;
@@ -272,7 +272,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     List<AxisAlignedBB> boxes = Lists.newArrayList(AABB_NONE);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {
-      if (state.getValue(PROPERTIES.get(side)) != EnumConnectType.NONE) {
+      if (state.getValue(PROPERTIES.get(side)).isHollow() == false) {
         boxes.add(AABB_SIDES.get(side));
       }
     }
@@ -286,7 +286,8 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
       RayTraceResult result = box.calculateIntercept(a, b);
       if (result != null) {
         Vec3d vec = result.hitVec.addVector(x, y, z);
-        results.add(new RayTraceResult(vec, result.sideHit, pos));
+        results.add(new RayTraceResult(vec,
+            result.sideHit, pos));
       }
     }
     RayTraceResult ret = null;
