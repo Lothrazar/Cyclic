@@ -58,6 +58,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   //TODO: timer to slow down item rate
   private static int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
+
   private int labelTimer = 0;
   private String labelText = "";
   private boolean itemTransport = false;
@@ -66,9 +67,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private Map<EnumFacing, Integer> mapIncomingFluid = Maps.newHashMap();
   protected Map<EnumFacing, Integer> mapIncomingItems = Maps.newHashMap();
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
+  private Map<EnumFacing, Boolean> mapBlacklist = Maps.newHashMap();
 
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize);
+
     if (fluidTankSize > 0) {
       tank = new FluidTankBase(fluidTankSize);
     }
@@ -77,12 +80,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
-    }
-    for (EnumFacing f : EnumFacing.values()) {
       mapIncomingItems.put(f, 0);
-    }
-    for (EnumFacing f : EnumFacing.values()) {
       mapIncomingEnergy.put(f, 0);
+      mapBlacklist.put(f, false);
     }
   }
 
@@ -423,5 +423,17 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   public static void syncConfig(Configuration config) {
     TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
     TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
+  }
+
+  public Map<EnumFacing, Boolean> getBlacklist() {
+    return mapBlacklist;
+  }
+
+  public boolean getBlacklist(EnumFacing side) {
+    return mapBlacklist.get(side);
+  }
+
+  public void toggleBlacklist(EnumFacing side) {
+    mapBlacklist.put(side, !mapBlacklist.get(side));
   }
 }
