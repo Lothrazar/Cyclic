@@ -1,7 +1,8 @@
 {
 	"textures": {
 		"top": "cyclicmagic:blocks/conveyor_bottom",
-		"side": "cyclicmagic:blocks/conveyor_side"
+		"side": "cyclicmagic:blocks/conveyor_side",
+		"bottom": "cyclicmagic:blocks/conveyor_bottom"
 	},
 
 	"elements": [
@@ -59,6 +60,15 @@
 				"west": { "texture": "#top", "uv": [ 14, 0, 16, 2 ] },
 				"up": { "texture": "#top", "uv": [ 14, 14, 16, 16 ] },
 				"down": { "texture": "#top", "uv": [ 14, 14, 16, 16 ] }
+			}
+		},
+
+		{
+			"name": "BottomPlate",
+			"from": [ 2, 0, 2 ], 
+			"to": [ 16, 1, 16 ], 
+			"faces": {
+				"down": { "texture": "#bottom", "uv": [ 2, 2, 16, 16 ] }
 			}
 		}
 	]
