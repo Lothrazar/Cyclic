@@ -92,16 +92,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .put(EnumFacing.EAST, new AxisAlignedBB(LRG, SML, SML, 1.0D, LRG, LRG))
           .build());
 
-  //  public static final Map<EnumFacing, AxisAlignedBB> AABB_SELECTION = Maps.newEnumMap(
-  //      new ImmutableMap.Builder<EnumFacing, AxisAlignedBB>()
-  //          .put(EnumFacing.DOWN, new AxisAlignedBB(SML_SEL, 0.0D, SML_SEL, LRG_SEL, SML_SEL, LRG_SEL))
-  //          .put(EnumFacing.UP, new AxisAlignedBB(SML_SEL, LRG_SEL, SML_SEL, LRG_SEL, 1.0D, LRG_SEL))
-  //          .put(EnumFacing.NORTH, new AxisAlignedBB(SML_SEL, SML_SEL, 0.0D, LRG_SEL, LRG_SEL, SML_SEL))
-  //          .put(EnumFacing.SOUTH, new AxisAlignedBB(SML_SEL, SML_SEL, LRG_SEL, LRG_SEL, LRG_SEL, 1.0D))
-  //          .put(EnumFacing.WEST, new AxisAlignedBB(0.0D, SML_SEL, SML_SEL, SML_SEL, LRG_SEL, LRG_SEL))
-  //          .put(EnumFacing.EAST, new AxisAlignedBB(LRG_SEL, SML_SEL, SML_SEL, 1.0D, LRG_SEL, LRG_SEL))
-  //          .build());
-
   public enum EnumConnectType implements IStringSerializable {
     NONE, CABLE, INVENTORY, BLOCKED;
 
@@ -130,14 +120,13 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
-    System.out.println("WAT " + side);
+
     if (te != null) {
       if (player.getHeldItem(hand).getItem() == Items.STICK) {
-        UtilChat.addChatMessage(player, "TO  at side " + side);
         te.toggleBlacklist(side);
         boolean theNew = te.getBlacklist(side);
-        UtilChat.sendStatusMessage(player, "TOGGLED" + theNew + " at side " + side);
         world.setBlockState(pos, state.withProperty(PROPERTIES.get(side), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
+        UtilChat.sendStatusMessage(player, "cable.block.toggled." + side.name().toLowerCase());
         return true;
       }
       else if (world.isRemote == false && hand == EnumHand.MAIN_HAND) {
@@ -251,7 +240,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-    // return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
+
     AxisAlignedBB box = AABB_NONE.offset(pos);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {

@@ -7,6 +7,6 @@
         "north": "cyclicmagic:blocks/tank/tank_base",
         "east": "cyclicmagic:blocks/tank/tank_base_flip",
         "south": "cyclicmagic:blocks/tank/tank_base",
-        "west": "cyclicmagic:blocks/tank/tank_base_flip"
+        "west": "cyclicmagic:blocks/tank/tank_base_flip_hack"
     }
 }

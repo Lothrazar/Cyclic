@@ -267,14 +267,17 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     EnumFacing f;
     for (int i : shuffledFaces) {
       f = EnumFacing.values()[i];
-      if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false) {
+      if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false
+          && this.getBlacklist(f) == false) {
         moveItems(f);
       }
-      if (this.isFluidPipe() && this.isFluidIncomingFromFace(f) == false) {
+      if (this.isFluidPipe() && this.isFluidIncomingFromFace(f) == false
+          && this.getBlacklist(f) == false) {
         //ok, fluid is not incoming from here. so lets output some
         moveFluid(f);
       }
-      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(f) == false) {
+      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(f) == false
+          && this.getBlacklist(f) == false) {
         moveEnergy(f);
       }
     }
