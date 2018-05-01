@@ -1012,11 +1012,11 @@ tile.fluid_placer.guide=Fill this with a bucket or fluid cables.  Places fluid i
 
 tile.fluid_pipe.name=Fluid Cable
 tile.fluid_pipe.tooltip=Use an Extraction cable to transfer liquids
-tile.fluid_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow
+tile.fluid_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  Disable output on any face of a cable by hitting with a redstone torch.  You need an Extraction cable to start the flow.
 
 tile.bundled_pipe.name=Bundled Cable
 tile.bundled_pipe.tooltip=Transfer items, fluids, and energy
-tile.bundled_pipe.guide=Just like the other three cables, you need something to start the flow such as a hopper or a pump.  Then this will cary your items, fluids, and power around the connected network until they find a home.
+tile.bundled_pipe.guide=Just like the other three cables, you need something to start the flow such as a hopper or a pump.  Then this will cary your items, fluids, and power around the connected network until they find a home.  Disable output on any face of a cable by hitting with a redstone torch.  
 
 tile.energy_pump.name=Energy Extraction Cable
 tile.energy_pump.tooltip=Extract power into cables or machines
@@ -1024,7 +1024,7 @@ tile.energy_pump.guide=Transfer energy out of machines.  Can be used with cables
 
 tile.energy_pipe.name=Energy Cable
 tile.energy_pipe.tooltip=Connect to an Extraction Cable to transfer power
-tile.energy_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.  
+tile.energy_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  Disable output on any face of a cable by hitting with a redstone torch.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.  
 
 cyclic.redstone.on=Restone: On
 cyclic.redstone.off=Restone: Off
@@ -1036,7 +1036,7 @@ tile.item_pump.guide=Pump items out of anything into any inventory or the Item C
 
 tile.item_pipe.name=Item Cable
 tile.item_pipe.tooltip=Use an Extraction cable to transfer items
-tile.item_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  You need an Extraction cable to start the flow
+tile.item_pipe.guide=Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  Disable output on any face of a cable by hitting with a redstone torch.  You need an Extraction cable to start the flow
 
 tile.item_pipe_sort.name=Item Sorter
 tile.item_pipe_sort.tooltip=Sorting machine for use with cables and hoppers
@@ -1090,7 +1090,8 @@ dropper.delay=Delay
 dropper.offset=Offset
 dropper.count=Count
 
-
+cable.block.toggled.false=Restored cable connection 
+cable.block.toggled.true=Blocked cable connection 
 
 
 

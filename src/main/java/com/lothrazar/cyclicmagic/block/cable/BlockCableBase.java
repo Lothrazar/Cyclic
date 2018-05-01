@@ -39,8 +39,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -122,11 +123,11 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
 
     if (te != null) {
-      if (player.getHeldItem(hand).getItem() == Items.STICK) {
+      if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH)) {
         te.toggleBlacklist(side);
         boolean theNew = te.getBlacklist(side);
         world.setBlockState(pos, state.withProperty(PROPERTIES.get(side), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
-        UtilChat.sendStatusMessage(player, "cable.block.toggled." + side.name().toLowerCase());
+        UtilChat.sendStatusMessage(player, UtilChat.lang("cable.block.toggled." + theNew) + side.name().toLowerCase());
         return true;
       }
       else if (world.isRemote == false && hand == EnumHand.MAIN_HAND) {

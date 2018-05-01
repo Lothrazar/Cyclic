@@ -50,9 +50,18 @@ public class BlockConveyorCorner extends BlockConveyor {
   }
 
   //  @Override
-  //  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+  //  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  //    TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
+  //    if (te != null) {
+  //      if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH)) {
+  //        this.rotateBlock(world, pos, EnumFacing.UP);
+  //        return true;
+  //      }
+  //    }
+  //    // otherwise return true if it is a fluid handler to prevent in world placement    
+  //    return false;// super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   //  }
-  // 
+
   @Override
   public int getMetaFromState(IBlockState state) {
     int meta = (state.getValue(FLIPPED) ? 10 : 0);

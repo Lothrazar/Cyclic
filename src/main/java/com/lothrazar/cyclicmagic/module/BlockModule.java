@@ -43,7 +43,6 @@ import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
-import com.lothrazar.cyclicmagic.block.cable.CableBlocker;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
@@ -539,10 +538,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
-      //wrenchywrench
-      CableBlocker cb = new CableBlocker();
-      ItemRegistry.register(cb, "cable_blocker");
-      //      ModCyclic.instance.events.register(cb);
     }
     BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");

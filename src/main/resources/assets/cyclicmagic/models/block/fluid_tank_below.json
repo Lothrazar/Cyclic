@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_directional",
     "textures": {
-        "particle": "blocks/anvil_open",
+        "particle": "blocks/anvil_base",
         "down": "cyclicmagic:blocks/tank/tank_nothing",
         "up": "cyclicmagic:blocks/tank/tank_top",
         "north": "cyclicmagic:blocks/tank/tank_open",
