@@ -10,12 +10,12 @@
 	"elements": [
 		{
 			"name": "RailW",
-			"from": [0, 4, -3],
-			"to": [2, 7, 21],
+			"from": [0, 9, -4],
+			"to": [2, 12, 20],
 			"rotation": {
-				"angle": -45,
+				"angle": 45,
 				"axis": "x",
-				"origin": [1, 5.5, 5]
+				"origin": [1, 10.5, 4]
 			},
 			"faces": {
 				"north": {
@@ -31,12 +31,12 @@
 		},
 		{
 			"name": "RailE",
-			"from": [14, 4, -3],
-			"to": [16, 7, 21],
+			"from": [14, 9, -4],
+			"to": [16, 12, 20],
 			"rotation": {
-				"angle": -45,
+				"angle": 45,
 				"axis": "x",
-				"origin": [15, 5.5, 5]
+				"origin": [15, 10.5, 4]
 			},
 			"faces": {
 				"north": {"uv": [0, 13, 2, 16], "texture": "#end"},
@@ -55,12 +55,12 @@
 		},
 		{
 			"name": "Middle",
-			"from": [2, 5, -2],
-			"to": [14, 6, 21],
+			"from": [2, 10, -3],
+			"to": [14, 11, 20],
 			"rotation": {
-				"angle": -45,
+				"angle": 45,
 				"axis": "x",
-				"origin": [8, 5.5, 6]
+				"origin": [8, 10.5, 5]
 			},
 			"faces": {
 				"north": {"uv": [14, 0, 2, 1], "texture": "#top"},
@@ -70,12 +70,12 @@
 		},
 		{
 			"name": "MiddleBasePlate",
-			"from": [2, 5, -2],
-			"to": [14, 6, 21],
+			"from": [2, 10, -3],
+			"to": [14, 11, 20],
 			"rotation": {
-				"angle": -45,
+				"angle": 45,
 				"axis": "x",
-				"origin": [8, 5.5, 6]
+				"origin": [8, 10.5, 5]
 			},
 			"faces": {
 				"north": {"uv": [2, 15, 14, 16], "texture": "#end"},

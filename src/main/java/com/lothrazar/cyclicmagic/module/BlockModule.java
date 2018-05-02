@@ -275,7 +275,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockConveyor plate_push = new BlockConveyor(plate_push_corner);
       BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
       plate_push_corner.setDrop(plate_push);
-      BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(SpeedType.MEDIUM);
+      BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(plate_push);
       BlockRegistry.registerBlock(plate_push_med_angle, "plate_push_med_angle", GuideCategory.BLOCKPLATE);
       //other speeds
       BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE);

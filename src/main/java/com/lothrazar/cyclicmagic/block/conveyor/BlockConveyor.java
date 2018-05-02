@@ -124,17 +124,17 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       return;
     }
     //for example when you have these layering down stairs, and then they speed up when going down one block ledge
-    UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
+    UtilEntity.launchDirection(entity, power, face); //this.playClickOnSound(worldIn, pos);
     if (doCorrections) {
       if (face == EnumFacing.NORTH || face == EnumFacing.SOUTH) {
         //then since +Z is south, and +X is east: so
         double xDiff = (pos.getX() + 0.5) - entity.posX;
         if (Math.abs(xDiff) > 0.09) {//max is .5
           if (xDiff < 0) {
-            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.WEST);
+            UtilEntity.launchDirection(entity, powerCorrection, EnumFacing.WEST);
           }
           else {
-            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.EAST);
+            UtilEntity.launchDirection(entity, powerCorrection, EnumFacing.EAST);
           }
         }
       }
@@ -144,10 +144,10 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
         //??NOPE  &&  ((int) entity.posZ) == entity.getPosition().getZ()
         if (Math.abs(diff) > 0.09) {//max is .5
           if (diff < 0) {
-            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.NORTH);
+            UtilEntity.launchDirection(entity, powerCorrection, EnumFacing.NORTH);
           }
           else {
-            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.SOUTH);
+            UtilEntity.launchDirection(entity, powerCorrection, EnumFacing.SOUTH);
           }
         }
       }

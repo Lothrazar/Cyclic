@@ -149,7 +149,7 @@ public class UtilEntity {
    * @param power
    * @param facing
    */
-  public static void launchDirection(Entity entity, float rotationPitch, float power, EnumFacing facing) {
+  public static void launchDirection(Entity entity, float power, EnumFacing facing) {
     double velX = 0;
     double velZ = 0;
     double velY = 0;
