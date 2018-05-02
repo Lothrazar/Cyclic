@@ -67,7 +67,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected SpeedType type;
   protected float power;
   private SoundEvent sound;
-  protected BlockConveyorCorner corner;
+  protected BlockConveyor corner;
   public static boolean doCorrections = true;
   public static boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
@@ -93,7 +93,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     }
   }
 
-  public BlockConveyor(BlockConveyorCorner corner) {
+  public BlockConveyor(BlockConveyor corner) {
     this(corner.type);
     this.corner = corner;
     this.setSoundType(SoundType.METAL);

@@ -60,6 +60,7 @@ import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
@@ -274,6 +275,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockConveyor plate_push = new BlockConveyor(plate_push_corner);
       BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
       plate_push_corner.setDrop(plate_push);
+      BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(SpeedType.MEDIUM);
+      BlockRegistry.registerBlock(plate_push_med_angle, "plate_push_med_angle", GuideCategory.BLOCKPLATE);
       //other speeds
       BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast_corner, "plate_push_fast_corner", GuideCategory.BLOCKPLATE);
