@@ -74,13 +74,12 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     double heightInc = 0.125D;
     double sideInc = 0.125D;
-    //  ModCyclic.logger.error("colllll " + pos);
+    double edge = 1 - sideInc;
+    double height = heightInc;
     switch (this.getFacingFromState(state)) {
       case DOWN:
       break;
       case WEST:
-        double edge = 1 - sideInc;
-        double height = heightInc;
         while (edge > 0) {
           //          ModCyclic.logger.error("test " + edge + " at height " + height);
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, edge, height + heightInc, 1));
@@ -90,6 +89,13 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         }
       break;
       case NORTH:
+
+        while (edge > 0) {
+          //          ModCyclic.logger.error("test " + edge + " at height " + height);
+          addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, 1, height + heightInc, edge));
+          height += heightInc;
+          edge -= sideInc;
+        }
       break;
       case SOUTH:
       break;
