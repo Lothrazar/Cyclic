@@ -51,16 +51,6 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     this.keepEntityGrounded = false;
   }
 
-  //  @Override
-  //  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-  //    return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.1D, 0.9D);//AABB;
-  //  }
-  //
-  //  @Override
-  //  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-  //    this.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, p_185477_7_);
-  //    return new AxisAlignedBB(0.125D, 0.0D, 0.125D, 0.875D, 0.01D, 0.875D);
-  //  }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return Block.FULL_BLOCK_AABB;
@@ -73,8 +63,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-    double heightInc = 0.125D;
-    double sideInc = 0.125D;
+    final double heightInc = 0.125D / 2;
+    final double sideInc = heightInc;
     double edge = 1 - sideInc;
     double height = heightInc;
     switch (this.getFacingFromState(state)) {
@@ -131,20 +121,5 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return Item.getItemFromBlock(drop);
   }
-  //
-  //  @Override
-  //  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-  //    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
-  //      return;
-  //    }
-  //    //    UtilEntity.launchDirection(entity, power, EnumFacing.UP);
-  //    //    UtilEntity.launch(entity, 90, power);
-  //
-  //    //    super.onEntityCollidedWithBlock(worldIn, pos, state, entity);
-  //    tickMovement(pos, entity, getFacingFromState(state));
-  //    // entity.setNoGravity(false);
-  //    //    worldIn.grav
-  //    //entity.addVelocity(0, power * 2, 0);//*2 works for pink anyway
-  //    ModCyclic.logger.error("!launch collide ");
-  //  }
+
 }
