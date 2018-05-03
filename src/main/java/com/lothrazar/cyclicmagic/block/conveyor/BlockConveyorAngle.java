@@ -79,6 +79,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     double height = heightInc;
     switch (this.getFacingFromState(state)) {
       case DOWN:
+      case UP:
       break;
       case WEST:
         while (edge > 0) {
@@ -101,15 +102,20 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       case NORTH:
 
         while (edge > 0) {
-          //          ModCyclic.logger.error("test " + edge + " at height " + height);
+
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, 1, height + heightInc, edge));
           height += heightInc;
           edge -= sideInc;
         }
       break;
       case SOUTH:
-      break;
-      case UP:
+        edge = sideInc;
+        while (edge < 1) {
+
+          addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 1, 1, height + heightInc, edge));
+          height += heightInc;
+          edge += sideInc;
+        }
       break;
     }
  
