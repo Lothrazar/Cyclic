@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -81,11 +82,20 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       break;
       case WEST:
         while (edge > 0) {
-          //          ModCyclic.logger.error("test " + edge + " at height " + height);
+          ModCyclic.logger.error("WEST " + edge + " at height " + height);
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, edge, height + heightInc, 1));
           height += heightInc;
           edge -= sideInc;
 
+        }
+      break;
+      case EAST:
+        edge = sideInc;
+        while (edge < 1) {
+
+          addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(1, height, 0, edge, height + heightInc, 1));
+          height += heightInc;
+          edge += sideInc;
         }
       break;
       case NORTH:
@@ -100,8 +110,6 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       case SOUTH:
       break;
       case UP:
-      break;
-      case EAST:
       break;
     }
  
