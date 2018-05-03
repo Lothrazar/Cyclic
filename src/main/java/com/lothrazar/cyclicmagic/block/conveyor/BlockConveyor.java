@@ -69,7 +69,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   private SoundEvent sound;
   protected BlockConveyor corner;
   public static boolean doCorrections = true;
-  public static boolean keepEntityGrounded = true;
+  protected boolean keepEntityGrounded = true;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
@@ -113,16 +113,16 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+      return;
+    }
     tickMovement(pos, entity, getFacingFromState(state));
   }
 
   protected void tickMovement(BlockPos pos, Entity entity, EnumFacing face) {
-    if (keepEntityGrounded) {
+    // if (keepEntityGrounded) {
       entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
-    }
-    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
-      return;
-    }
+    // }
     //for example when you have these layering down stairs, and then they speed up when going down one block ledge
     UtilEntity.launchDirection(entity, power, face); //this.playClickOnSound(worldIn, pos);
     if (doCorrections) {
