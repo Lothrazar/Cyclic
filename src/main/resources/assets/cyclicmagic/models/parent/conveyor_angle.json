@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"top": "cyclicmagic:blocks/conveyor_bottom",
-		"side": "cyclicmagic:blocks/conveyor_side",
-		"end": "cyclicmagic:blocks/conveyor_end",
-		"bottom": "cyclicmagic:blocks/conveyor_bottom",
-		"particle": "cyclicmagic:blocks/conveyor_bottom"
+		"top": "cyclicmagic:blocks/conveyor/conveyor_bottom",
+		"side": "cyclicmagic:blocks/conveyor/conveyor_side",
+		"end": "cyclicmagic:blocks/conveyor/conveyor_end",
+		"bottom": "cyclicmagic:blocks/conveyor/conveyor_bottom",
+		"particle": "cyclicmagic:blocks/conveyor/conveyor_bottom"
 	},
 	"elements": [
 		{

@@ -1,8 +1,8 @@
 {
 	"textures": {
-		"top": "cyclicmagic:blocks/conveyor_bottom",
-		"side": "cyclicmagic:blocks/conveyor_side",
-		"bottom": "cyclicmagic:blocks/conveyor_bottom"
+		"top": "cyclicmagic:blocks/conveyor/conveyor_bottom",
+		"side": "cyclicmagic:blocks/conveyor/conveyor_side",
+		"bottom": "cyclicmagic:blocks/conveyor/conveyor_bottom"
 	},
 
 	"elements": [

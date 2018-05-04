@@ -2,7 +2,7 @@
 	"parent": "cyclicmagic:parent/conveyor_corner_r",
 
 	"textures": {
-		"top": "cyclicmagic:blocks/conveyor_medium_corner",
-		"particle": "cyclicmagic:blocks/conveyor_medium_corner"
+		"top": "cyclicmagic:blocks/conveyor/conveyor_medium_corner",
+		"particle": "cyclicmagic:blocks/conveyor/conveyor_medium_corner"
 	}
 }
