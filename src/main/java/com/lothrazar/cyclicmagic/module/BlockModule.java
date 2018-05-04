@@ -207,6 +207,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableBeans;
   private boolean enableMilk;
   private boolean enablePoison;
+  private boolean dispenserPowered;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -545,13 +546,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
-    BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+    if (dispenserPowered) {
+      BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+    }
   }
 
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
