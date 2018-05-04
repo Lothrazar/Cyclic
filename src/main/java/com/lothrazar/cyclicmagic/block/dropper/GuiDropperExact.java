@@ -53,14 +53,12 @@ public class GuiDropperExact extends GuiBaseContainer {
         TileEntityDropperExact.Fields.DELAY.ordinal(), true);
     sliderDelay.setTooltip("dropper.delay");
     this.addButton(sliderDelay);
-
     y += 18;
     //offset
     GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 16,
         TileEntityDropperExact.Fields.OFFSET.ordinal(), true);
     sliderOffset.setTooltip("dropper.offset");
     this.addButton(sliderOffset);
-
     y += 18;
     //stack size
     GuiSliderInteger sliderCount = new GuiSliderInteger(tile, id++, x, y, width, h, 1, 64,

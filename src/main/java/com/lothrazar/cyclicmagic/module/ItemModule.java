@@ -232,12 +232,12 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean evokerFang;
   private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
-
   private boolean enableEmeraldGear;
   private boolean enableSandstoneTools;
   private boolean enablePurpleGear;
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
+
   @Override
   public void onPreInit() {
     if (goldMinecart) {

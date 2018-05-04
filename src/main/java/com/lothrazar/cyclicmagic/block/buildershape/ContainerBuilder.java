@@ -64,7 +64,6 @@ public class ContainerBuilder extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory() - 1, false)) {
         return ItemStack.EMPTY;
       }

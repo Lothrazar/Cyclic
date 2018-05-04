@@ -60,7 +60,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     super.initGui();
     //first the main top left type button
     int id = 2, x, y;
-
     btnWhitelist = new ButtonTileEntityField(id++,
         guiLeft + 4, guiTop + Const.PAD + 40,
         tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1);
@@ -71,7 +70,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
-
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
@@ -106,6 +104,5 @@ public class GuiMinerSmart extends GuiBaseContainer {
     int filterType = tile.getField(Fields.LISTTYPE.ordinal());
     btnWhitelist.setTooltip(UtilChat.lang("button.miner.whitelist." + filterType));
     btnWhitelist.setTextureIndex(11 + filterType);
-
   }
 }

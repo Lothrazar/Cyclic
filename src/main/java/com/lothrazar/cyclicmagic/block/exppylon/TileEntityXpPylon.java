@@ -90,7 +90,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     if (this.isRunning() == false) {
       return;
     }
-
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
@@ -204,9 +203,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_COLLECT, this.collect);
-
     tags.setInteger(NBT_REDST, this.needsRedstone);
-
     return super.writeToNBT(tags);
   }
 
@@ -216,7 +213,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     timer = tags.getInteger(NBT_TIMER);
     collect = tags.getInteger(NBT_COLLECT);
     needsRedstone = tags.getInteger(NBT_REDST);
-
   }
 
   @Override
@@ -274,7 +270,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   //    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
   //    this.tank.setFluid(fluid);
   //  }
-
 
   @Override
   public void toggleNeedsRedstone() {

@@ -52,7 +52,6 @@ public class GuiDisenchanter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-
     int u = 0, v = 0;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

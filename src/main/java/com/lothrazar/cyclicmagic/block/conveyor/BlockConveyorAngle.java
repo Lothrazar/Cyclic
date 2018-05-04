@@ -72,26 +72,21 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       break;
       case WEST:
         while (edge > 0) {
-
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, edge, height + heightInc, 1));
           height += heightInc;
           edge -= sideInc;
-
         }
       break;
       case EAST:
         edge = sideInc;
         while (edge < 1) {
-
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(1, height, 0, edge, height + heightInc, 1));
           height += heightInc;
           edge += sideInc;
         }
       break;
       case NORTH:
-
         while (edge > 0) {
-
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 0, 1, height + heightInc, edge));
           height += heightInc;
           edge -= sideInc;
@@ -100,16 +95,13 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       case SOUTH:
         edge = sideInc;
         while (edge < 1) {
-
           addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, height, 1, 1, height + heightInc, edge));
           height += heightInc;
           edge += sideInc;
         }
       break;
     }
- 
   }
-
 
   @Override
   public IRecipe addRecipe() {
@@ -120,5 +112,4 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return Item.getItemFromBlock(drop);
   }
-
 }

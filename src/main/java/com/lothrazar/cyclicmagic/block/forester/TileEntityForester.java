@@ -129,9 +129,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-
-      return isSaplingValid(stack);
-
+    return isSaplingValid(stack);
   }
 
   private void updatePlantSaplings() {

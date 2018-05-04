@@ -43,7 +43,6 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         Items.APPLE,
         "blockLapis");
-
   }
 
   @SubscribeEvent

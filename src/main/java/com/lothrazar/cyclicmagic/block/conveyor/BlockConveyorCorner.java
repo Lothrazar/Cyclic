@@ -61,7 +61,6 @@ public class BlockConveyorCorner extends BlockConveyor {
   //    // otherwise return true if it is a fluid handler to prevent in world placement    
   //    return false;// super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   //  }
-
   @Override
   public int getMetaFromState(IBlockState state) {
     int meta = (state.getValue(FLIPPED) ? 10 : 0);

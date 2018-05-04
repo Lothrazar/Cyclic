@@ -58,7 +58,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   //TODO: timer to slow down item rate
   private static int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
-
   private int labelTimer = 0;
   private String labelText = "";
   private boolean itemTransport = false;
@@ -71,7 +70,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
 
   public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
     super(invoSize);
-
     if (fluidTankSize > 0) {
       tank = new FluidTankBase(fluidTankSize);
     }
@@ -121,7 +119,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       mapIncomingEnergy.put(f, compound.getInteger(f.getName() + "_incenergy"));
       mapBlacklist.put(f, compound.getBoolean(f.getName() + "_blocked"));
     }
-
   }
 
   @Override
@@ -135,7 +132,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       compound.setInteger(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
       compound.setBoolean(f.getName() + "_blocked", mapBlacklist.get(f));
     }
-
     return compound;
   }
 
@@ -433,13 +429,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   //  public Map<EnumFacing, Boolean> getBlacklist() {
   //    return mapBlacklist;
   //  }
-
   public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }
 
   public void toggleBlacklist(final EnumFacing side) {
-
     mapBlacklist.put(side, !mapBlacklist.get(side));
   }
 }

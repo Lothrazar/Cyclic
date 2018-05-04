@@ -61,27 +61,14 @@ public class GuiItemSort extends GuiBaseContainer {
         getScreenSize().width(), getScreenSize().height(),
         getScreenSize().width(), getScreenSize().height());
     //set locations
-    
-    /*    int fs = TileEntityItemCableSort.FILTER_SIZE;
-    int slot = 1;
-    int y = SLOTY;
-    for (int col = 0; col < EnumFacing.values().length; col++) {
-      y = col * Const.SQ;
-      for (int row = 0; row < fs; row++) {
-        addSlotToContainer(new SlotSingleStack(tile, slot,
-            SLOTX_START + row % fs * Const.SQ + Const.SQ,
-            SLOTY + y));
-        slot++;
-      }
-    }*/
+    /* int fs = TileEntityItemCableSort.FILTER_SIZE; int slot = 1; int y = SLOTY; for (int col = 0; col < EnumFacing.values().length; col++) { y = col * Const.SQ; for (int row = 0; row < fs; row++) {
+     * addSlotToContainer(new SlotSingleStack(tile, slot, SLOTX_START + row % fs * Const.SQ + Const.SQ, SLOTY + y)); slot++; } } */
     int fs = TileEntityItemCableSort.FILTER_SIZE;
-
     for (int col = 0; col < EnumFacing.values().length; col++) {
       y = guiTop + col * Const.SQ + ContainerItemSort.SLOTY - 1;
       for (int row = 0; row < fs; row++) {
         StackWrapper wrap = te.getStackWrapper(slotNum);
         x = guiLeft + ContainerItemSort.SLOTX_START + row % fs * Const.SQ + Const.SQ - 1;//Const.PAD + Const.SQ * row;
-
         wrap.setX(x);
         wrap.setY(y);
         slotNum++;

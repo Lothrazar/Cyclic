@@ -51,6 +51,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockFishing extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
   public static int FUEL_COST;
+
   public BlockFishing() {
     super(Material.ROCK);
     this.setHardness(3F);

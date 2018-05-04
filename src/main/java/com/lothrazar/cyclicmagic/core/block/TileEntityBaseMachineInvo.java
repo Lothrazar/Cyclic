@@ -154,7 +154,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.energyStorage = new EnergyStore(1000 * 64, canImportPower);
   }
 
-
   public int getEnergyMax() {
     if (energyStorage == null) {
       return 0;

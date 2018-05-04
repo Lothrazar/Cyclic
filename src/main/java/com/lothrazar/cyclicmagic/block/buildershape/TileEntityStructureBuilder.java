@@ -201,7 +201,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.needsRedstone;
         case RENDERPARTICLES:
           return this.renderParticles;
-
         case ROTATIONS:
           return this.rotations;
         case OX:
@@ -246,7 +245,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         case RENDERPARTICLES:
           this.renderParticles = value;
         break;
-
         case ROTATIONS:
           this.rotations = Math.max(0, value);
         break;

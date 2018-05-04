@@ -77,7 +77,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
@@ -105,7 +104,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
-
     tags.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tags);
   }
@@ -114,7 +112,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
-
     this.needsRedstone = tags.getInteger(NBT_REDST);
   }
 
@@ -123,14 +120,11 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
     return Fields.values().length;
   }
 
-
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
       case TIMER:
         return timer;
-
       case REDSTONE:
         return needsRedstone;
     }
@@ -143,7 +137,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
       case TIMER:
         this.timer = value;
       break;
-
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;

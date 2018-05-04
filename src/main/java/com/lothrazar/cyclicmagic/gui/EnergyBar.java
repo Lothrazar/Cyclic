@@ -11,7 +11,7 @@ public class EnergyBar {
   private int height = 60;//inner
   private int border = 1;
   private GuiBaseContainer parent;
-  
+
   public EnergyBar(GuiBaseContainer p) {
     parent = p;
   }
@@ -62,8 +62,7 @@ public class EnergyBar {
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
-     return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + getWidth()
+    return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + getWidth()
         && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + getHeight();
   }
-
 }

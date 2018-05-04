@@ -66,8 +66,8 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
 
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
   public static ArrayList<RecipeHydrate> recipesShapeless = new ArrayList<RecipeHydrate>();
-
   public static int FUEL_COST = 0;
+
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);

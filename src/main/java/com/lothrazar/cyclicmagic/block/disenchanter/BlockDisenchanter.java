@@ -50,6 +50,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
   public static int FUEL_COST;
+
   public BlockDisenchanter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_DISENCH);
     this.setHardness(3F);

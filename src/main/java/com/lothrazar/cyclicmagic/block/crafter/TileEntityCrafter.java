@@ -73,7 +73,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     this.initEnergy(BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(0, 9);
     this.setSlotsForExtract(19, 28);
-
   }
 
   @Override
@@ -90,7 +89,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.updateTimerIsZero() == false) {
       return;
     }
-    
     //so now we do not burn fuel if timer is stuck at zero with no craft action
     if (this.getEnergyCurrent() >= this.getEnergyCost()) {
       findRecipe();
@@ -194,6 +192,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     }
   }
+
   private void setRecipeInput() {
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
@@ -202,7 +201,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
-
 
   @Override
   public int getField(int id) {
@@ -224,7 +222,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       case TIMER:
         this.timer = value;
       break;
-
     }
   }
 
@@ -256,5 +253,4 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
   }
-
 }

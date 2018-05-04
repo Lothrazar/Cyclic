@@ -150,7 +150,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-
     compound.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(compound);
   }
@@ -160,7 +159,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     this.recipeIsLocked = compound.getInteger("rlock");
-
   }
 
   @Override
@@ -253,5 +251,4 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return false;
     }
   }
-
 }

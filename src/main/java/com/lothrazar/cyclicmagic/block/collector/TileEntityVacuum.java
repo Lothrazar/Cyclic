@@ -64,7 +64,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     super(ROWS * COLS);
     this.setSetRenderGlobally(true);
     this.setSlotsForExtract(0, ROWS * COLS);
-
   }
 
   @Override

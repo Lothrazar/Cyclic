@@ -250,7 +250,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       for (int i = 0; i < te.getWrapperCount(); i++) {
         wrap = te.getStackWrapper(i);
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-
           //      this.hoveredSlot = slot;
           final int normalOverlay = -1130706433;
           GlStateManager.disableLighting();
@@ -280,7 +279,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
         break;// cant hover on 2 at once
       }
     }
-
   }
 
   public void drawProgressBar() {
@@ -397,7 +395,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
         GlStateManager.pushMatrix();
         RenderHelper.enableGUIStandardItemLighting();
         mc.getRenderItem().renderItemAndEffectIntoGUI(wrap.getStack(), wrap.getX() + 1, wrap.getY() + 1);
-
         //keep this render quantity for later
         //          mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, s, x + 1, y + 1, "1");
         GlStateManager.popMatrix();

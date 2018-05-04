@@ -40,7 +40,6 @@ public class GuiFisher extends GuiBaseContainer {
 
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
-
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityFishing.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);

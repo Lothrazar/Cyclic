@@ -107,7 +107,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-
     return AABB;
   }
 
@@ -121,7 +120,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   protected void tickMovement(BlockPos pos, Entity entity, EnumFacing face) {
     // if (keepEntityGrounded) {
-      entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
+    entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
     // }
     //for example when you have these layering down stairs, and then they speed up when going down one block ledge
     UtilEntity.launchDirection(entity, power, face); //this.playClickOnSound(worldIn, pos);

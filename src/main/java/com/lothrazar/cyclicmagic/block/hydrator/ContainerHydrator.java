@@ -57,7 +57,6 @@ public class ContainerHydrator extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-
     bindPlayerInventory(inventoryPlayer);
   }
 

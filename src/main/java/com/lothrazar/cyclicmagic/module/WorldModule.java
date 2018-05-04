@@ -74,9 +74,6 @@ public class WorldModule extends BaseEventModule implements IHasConfig {
     oreSpawns = prop.getBoolean();
     prop = config.get(category, "PigmenEnrage", false, "If true, mining Nether ore has a 20% chance of enraging a nearby PigZombie within 16 blocks");
     pigmenEnrage = prop.getBoolean();
-
- 
-
     //NEW ORES start here
     Configuration oreConf;
     ConfigRegistry.oreConfig.load();

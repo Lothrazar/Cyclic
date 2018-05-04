@@ -64,7 +64,6 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
     boolean previousOn = data.isStepHeightOn();
     data.setStepHeightOn(!previousOn);
     if (previousOn) {
-
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.step_height_down, SoundCategory.PLAYERS, 1.0F);
       data.setForceStepOff(true);
     }

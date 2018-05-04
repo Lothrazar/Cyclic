@@ -70,7 +70,6 @@ public class ContainerUser extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }

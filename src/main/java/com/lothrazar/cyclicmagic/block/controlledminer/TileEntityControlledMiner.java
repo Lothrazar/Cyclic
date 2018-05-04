@@ -357,7 +357,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return blacklistIfZero;
       case RENDERPARTICLES:
         return this.renderParticles;
-
       case TIMER:
         return this.timer;
     }
@@ -385,11 +384,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
-
       case TIMER:
         this.timer = value;
       break;
-
     }
   }
 

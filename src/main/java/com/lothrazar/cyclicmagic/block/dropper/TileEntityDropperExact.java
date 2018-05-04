@@ -60,7 +60,6 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       return;
     }
     //TODO: not like this. find list of slots that are NONEMPTY and then pick one
-
     if (this.updateTimerIsZero()) {
       this.updateCurrentSlot();
       if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {

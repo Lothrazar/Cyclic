@@ -178,13 +178,11 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     blockPointer = compound.getInteger("blockPointer");
-
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-
     compound.setInteger("blockPointer", blockPointer);
     return super.writeToNBT(compound);
   }
@@ -210,7 +208,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-
     }
     return -1;
   }
@@ -224,10 +221,8 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
       case TIMER:
         this.timer = value;
       break;
-
     }
   }
-
   //  private int getCurrentFluid() {
   //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
   //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {

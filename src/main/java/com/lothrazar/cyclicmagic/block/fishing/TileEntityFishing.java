@@ -56,7 +56,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
 
   // currently only used by the thermal fishing rod
   private static final int ENERGY_PER_FISH = 100;
-
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 1;
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster

@@ -56,7 +56,6 @@ public abstract class BlockBaseFlat extends BlockBase {
     return false;
   }
 
-
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
@@ -72,5 +71,4 @@ public abstract class BlockBaseFlat extends BlockBase {
   public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
     return BlockFaceShape.UNDEFINED;
   }
-
 }

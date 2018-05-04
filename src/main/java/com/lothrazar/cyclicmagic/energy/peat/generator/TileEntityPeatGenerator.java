@@ -152,5 +152,4 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
         timer = value;
     }
   }
-
 }

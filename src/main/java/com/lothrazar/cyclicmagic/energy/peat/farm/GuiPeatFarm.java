@@ -80,7 +80,6 @@ public class GuiPeatFarm extends GuiBaseContainer {
     //      return;
     //    }
     final int currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();// tile.getField(TileEntityPeatFarm.Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
-
     h -= 2;// inner texture is 2 smaller, one for each border
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID_WATER);
     float percent = ((float) currentFluid / (TileEntityPeatFarm.TANK_FULL));

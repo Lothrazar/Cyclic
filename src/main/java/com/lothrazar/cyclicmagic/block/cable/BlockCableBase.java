@@ -69,7 +69,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   private static final double SML = 0.375D;
   private static final double LRG = 0.625D;
-
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -121,7 +120,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
-
     if (te != null) {
       if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH)) {
         te.toggleBlacklist(side);
@@ -168,7 +166,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
         state = state.withProperty(property, EnumConnectType.BLOCKED);
         continue;
       }
-
       pos = origin.offset(side);
       state = state.withProperty(property, EnumConnectType.NONE);
       TileEntity tileTarget = world.getTileEntity(pos);
@@ -241,7 +238,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   @SideOnly(Side.CLIENT)
   public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-
     AxisAlignedBB box = AABB_NONE.offset(pos);
     state = state.getActualState(world, pos);
     for (EnumFacing side : EnumFacing.VALUES) {

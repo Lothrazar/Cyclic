@@ -40,7 +40,6 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
 
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     super(te);
-
     addSlotToContainer(new SlotSingleStack(tile, TileEntityControlledMiner.TOOLSLOT_INDEX, SLOTEQUIP_X, SLOTEQUIP_Y));
     bindPlayerInventory(inventoryPlayer);
   }

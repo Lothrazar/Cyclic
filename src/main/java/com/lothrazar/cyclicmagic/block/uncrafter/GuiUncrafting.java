@@ -44,7 +44,6 @@ public class GuiUncrafting extends GuiBaseContainer {
 
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
-
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);

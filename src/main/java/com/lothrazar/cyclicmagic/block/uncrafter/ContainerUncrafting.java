@@ -60,7 +60,6 @@ public class ContainerUncrafting extends ContainerBaseMachine {
         slot++;
       }
     }
-    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

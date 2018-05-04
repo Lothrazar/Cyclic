@@ -40,7 +40,6 @@ public class GuiHydrator extends GuiBaseContainer {
 
   public GuiHydrator(InventoryPlayer inventoryPlayer, TileEntityHydrator tileEntity) {
     super(new ContainerHydrator(inventoryPlayer, tileEntity), tileEntity);
-
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(70).setY(16).setWidth(14);
@@ -92,7 +91,6 @@ public class GuiHydrator extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-
     this.drawFluidBar();
   }
 

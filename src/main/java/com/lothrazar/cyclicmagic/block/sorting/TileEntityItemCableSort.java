@@ -96,7 +96,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     int start = row * FILTER_SIZE;
     int end = (row + 1) * FILTER_SIZE - 1;
     List<ItemStack> validForSide = new ArrayList<>();
-
     for (int i = start; i < end; i++) {
       if (this.stacksWrapped.get(i).isEmpty() == false) {
         validForSide.add(stacksWrapped.get(i).getStack());

@@ -145,5 +145,4 @@ public class ContainerBaseMachine extends ContainerBase {
     return player.getDistanceSq(this.tile.getPos().getX(), this.tile.getPos().getY(), this.tile.getPos().getZ()) <= 32
         && this.tile.isValid() && this.tile.getWorld().getTileEntity(this.tile.getPos()) == tile;
   }
-
 }

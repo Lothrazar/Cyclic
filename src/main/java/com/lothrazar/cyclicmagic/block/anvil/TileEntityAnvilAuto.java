@@ -53,7 +53,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
   private int timer = 0;
   private int needsRedstone = 0;
 
-
   public TileEntityAnvilAuto() {
     super(2);
     tank = new FluidTankBase(TANK_FULL);
@@ -118,7 +117,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
-
     tags.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tags);
   }
@@ -127,7 +125,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
-
     this.needsRedstone = tags.getInteger(NBT_REDST);
   }
 
@@ -159,7 +156,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     switch (Fields.values()[id]) {
       case TIMER:
         return timer;
-
       case REDSTONE:
         return needsRedstone;
     }

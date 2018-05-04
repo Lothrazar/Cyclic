@@ -82,7 +82,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
-    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -101,7 +100,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-
       else if (!this.mergeItemStack(stackInSlot, 0, TileEntityCrafter.SIZE_INPUT, true)) {
         return ItemStack.EMPTY;
       }
