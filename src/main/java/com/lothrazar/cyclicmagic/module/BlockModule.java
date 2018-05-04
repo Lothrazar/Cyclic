@@ -283,6 +283,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockConveyor plate_push_fast = new BlockConveyor(plate_push_fast_corner);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       plate_push_fast_corner.setDrop(plate_push_fast);
+      BlockConveyorAngle plate_push_fast_angle = new BlockConveyorAngle(plate_push_fast);
+      BlockRegistry.registerBlock(plate_push_fast_angle, "plate_push_fast_angle", GuideCategory.BLOCKPLATE);
 
       BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL);
       BlockRegistry.registerBlock(plate_push_slow_corner, "plate_push_slow_corner", GuideCategory.BLOCKPLATE);
@@ -290,11 +292,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       plate_push_slow_corner.setDrop(plate_push_slow);
 
+      BlockConveyorAngle plate_push_slow_angle = new BlockConveyorAngle(plate_push_slow);
+      BlockRegistry.registerBlock(plate_push_slow_angle, "plate_push_slow_angle", GuideCategory.BLOCKPLATE);
       BlockConveyorCorner plate_push_slowest_corner = new BlockConveyorCorner(SpeedType.TINY);
       BlockRegistry.registerBlock(plate_push_slowest_corner, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE);
       BlockConveyor plate_push_slowest = new BlockConveyor(plate_push_slowest_corner);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       plate_push_slowest_corner.setDrop(plate_push_slowest);
+
+      BlockConveyorAngle plate_push_slowest_angle = new BlockConveyorAngle(plate_push_slowest);
+      BlockRegistry.registerBlock(plate_push_slowest_angle, "plate_push_slowest_angle", GuideCategory.BLOCKPLATE);
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();

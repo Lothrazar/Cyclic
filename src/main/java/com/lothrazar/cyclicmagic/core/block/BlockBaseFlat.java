@@ -73,12 +73,4 @@ public abstract class BlockBaseFlat extends BlockBase {
     return BlockFaceShape.UNDEFINED;
   }
 
-
-
-  //  @Override
-  //  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-  //    return state;
-  //  }
-  //
-  // 
 }

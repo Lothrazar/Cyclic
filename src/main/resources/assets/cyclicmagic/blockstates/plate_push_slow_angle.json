@@ -1,0 +1,9 @@
+{
+    "variants": {
+		"normal": { "model": "cyclicmagic:conveyor_slow_angle" },
+        "facing=north": { "model": "cyclicmagic:conveyor_slow_angle" },
+        "facing=east":  { "model": "cyclicmagic:conveyor_slow_angle" ,"y":90},
+        "facing=south": { "model": "cyclicmagic:conveyor_slow_angle" ,"y":180},
+        "facing=west":  { "model": "cyclicmagic:conveyor_slow_angle" ,"y":270}
+    }
+}

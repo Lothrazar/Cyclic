@@ -1,5 +1,5 @@
 {
-	"parent": "cyclicmagic:block/conveyor_corner_l",
+	"parent": "cyclicmagic:parent/conveyor_corner_l",
 
 	"textures": {
 		"top": "cyclicmagic:blocks/conveyor_fast_corner",

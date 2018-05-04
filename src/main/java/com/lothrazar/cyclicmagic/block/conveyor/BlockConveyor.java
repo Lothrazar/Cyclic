@@ -83,10 +83,10 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
         this.power = 0.16F;
       break;
       case SMALL:
-        this.power = 0.08F;
+        this.power = 0.10F;
       break;
       case TINY:
-        this.power = 0.04F;
+        this.power = 0.08F;
       break;
       default:
       break;
