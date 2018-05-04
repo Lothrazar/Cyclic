@@ -29,13 +29,10 @@ import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
@@ -95,7 +92,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    if (this.getCurrentFluid() < 0) {
+    if (this.getCurrentFluidStackAmount() < 0) {
       this.setCurrentFluid(0);
     }
     this.timer--;
@@ -133,23 +130,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineFluid implements I
     return Fields.values().length;
   }
 
-  public int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-
-  @Override
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
-  }
 
   @Override
   public int getField(int id) {

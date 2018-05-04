@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.hydrator;
 
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator.Fields;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -97,7 +98,7 @@ public class GuiHydrator extends GuiBaseContainer {
   private void drawFluidBar() {
     //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
     int u = 0, v = 0;
-    int currentFluid = tile.getField(Fields.FLUID.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
+    int currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int x = this.guiLeft + 98, y = this.guiTop + 16;

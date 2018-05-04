@@ -25,8 +25,7 @@ package com.lothrazar.cyclicmagic.energy.peat.generator;
 
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import net.minecraft.item.Item;
+import com.lothrazar.cyclicmagic.energy.peat.ItemPeatFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -67,13 +66,15 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     this.tryOutputPower();
     // only if burning peat 
     if (timer > 0) {
-      int actuallyGained = this.energyStorage.receiveEnergy(PER_TICK, true);
+      int capacity = energyStorage.getMaxEnergyStored() - energyStorage.getEnergyStored();
+      int actuallyGained = Math.min(PER_TICK, capacity);
+      // this.energyStorage.receiveEnergy(PER_TICK, true);
       if (actuallyGained == PER_TICK) {
+        timer--;
         this.spawnParticlesAbove();
         // either we have room to eat everything that generated, or we didnt.
         //if we did, burn some fuel. if not, wait for more room in battery
-        this.energyStorage.receiveEnergy(PER_TICK, false);
-        timer--;
+        energyStorage.setEnergyStored(energyStorage.getEnergyStored() + actuallyGained);
       }
     }
     if (timer == 0) {
@@ -123,7 +124,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   }
 
   private boolean isValidFuel(ItemStack peat) {
-    return peat.getItem().equals(Item.getByNameOrId(Const.MODRES + "peat_fuel"));
+    return peat.getItem() instanceof ItemPeatFuel;//TODO: NBT tag for fuel having?
   }
 
   @Override

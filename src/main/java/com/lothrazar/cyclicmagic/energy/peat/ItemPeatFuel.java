@@ -23,21 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.energy.peat;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import net.minecraft.item.crafting.IRecipe;
 
-public class ItemPeatFuel extends BaseItem implements IHasRecipe {
+public class ItemPeatFuel extends BaseItem {
 
-  boolean isBaked = false;
-
-  public ItemPeatFuel(boolean baked) {
-    this.isBaked = baked;
+  public ItemPeatFuel() {
   }
 
-  @Override
-  public IRecipe addRecipe() {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }

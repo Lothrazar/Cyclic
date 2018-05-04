@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.anvil;
 
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -36,7 +37,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
 
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(10).setX(156);
@@ -60,7 +61,8 @@ public class GuiAnvilAuto extends GuiBaseContainer {
 
   private void drawFluidBar() {
     int u = 0, v = 0;
-    int currentFluid = ((TileEntityAnvilAuto) tile).getCurrentFluidStackAmount();
+    //    int currentFluid = ((TileEntityAnvilAuto) tile).getCurrentFluidStackAmount();
+    int currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
     this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
     int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
     int fuelWidth = 16;

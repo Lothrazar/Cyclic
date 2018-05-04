@@ -82,7 +82,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerHydrator.class, RECIPE_CATEGORY_HYDRATOR,
         0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
         4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
-        9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     // Start Custom recipe type: Hydrator
     registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);

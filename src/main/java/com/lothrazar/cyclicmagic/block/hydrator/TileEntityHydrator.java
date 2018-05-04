@@ -33,12 +33,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
@@ -47,7 +43,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public final static int TIMER_FULL = 40;
 
   public static enum Fields {
-    REDSTONE, TIMER, FLUID, RECIPELOCKED, FUEL, FUELMAX;
+    REDSTONE, TIMER, RECIPELOCKED;
   }
 
   private int recipeIsLocked = 0;
@@ -85,7 +81,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return;
     }
     //ignore timer when filling up water
-    if (this.getCurrentFluid() == 0) {
+    if (this.getCurrentFluidStackAmount() == 0) {
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
@@ -126,7 +122,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public boolean tryProcessRecipe() {
     RecipeHydrate rec = findMatchingRecipe();
-    if (rec != null && this.getCurrentFluid() >= rec.getFluidCost()) {
+    if (rec != null && this.getCurrentFluidStackAmount() >= rec.getFluidCost()) {
       if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
         //only create the output if cost was successfully paid
         this.sendOutputItem(rec.getRecipeOutput());
@@ -168,14 +164,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FLUID:
-        //        return this.getCurrentFluid();
+
       case RECIPELOCKED:
         return this.recipeIsLocked;
-      case FUEL:
-        return this.getEnergyCurrent();
-      case FUELMAX:
-        return this.getEnergyMax();
+
     }
     return -1;
   }
@@ -189,36 +181,12 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       case TIMER:
         this.timer = value;
       break;
-      case FLUID:
-      //        this.setCurrentFluid(value);
-      break;
+
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
       break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
-      case FUELMAX:
-      break;
-    }
-  }
 
-  private int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
     }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-
-  @Override
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
   }
 
   @Override

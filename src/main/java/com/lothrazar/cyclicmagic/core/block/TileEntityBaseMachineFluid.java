@@ -59,22 +59,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     return tank.getCapacity();
   }
 
-  public final int getCurrentFluidStackAmount() {
-    FluidStack fluid = getCurrentFluidStack();
-    if (fluid == null) {
-      return 0;
-    }
-    return fluid.amount;
-  }
-
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
-  }
-
   @Override
   public IFluidTankProperties[] getTankProperties() {
     FluidTankInfo info = tank.getInfo();
@@ -174,5 +158,21 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     fluid.amount = amt;
     // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
+  }
+
+  public final int getCurrentFluidStackAmount() {
+    FluidStack fluid = getCurrentFluidStack();
+    if (fluid == null) {
+      return 0;
+    }
+    return fluid.amount;
+  }
+
+  public FluidStack getCurrentFluidStack() {
+    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
+      return null;
+    }
+    return fluidHandler.getTankProperties()[0].getContents();
   }
 }

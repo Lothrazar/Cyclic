@@ -28,7 +28,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -36,7 +35,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -52,17 +50,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
+public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
   public static ArrayList<RecipeHydrate> recipesShapeless = new ArrayList<RecipeHydrate>();
@@ -186,13 +180,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
       return (int) (15 * fill);
     }
     return 0;
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHydrator.class, new HydratorTESR(0, 4));
   }
 
   /**

@@ -90,6 +90,7 @@ import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.ItemBlockHydrator;
+import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
@@ -140,7 +141,6 @@ import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
-import com.lothrazar.cyclicmagic.energy.peat.ItemCarbonCatalyst;
 import com.lothrazar.cyclicmagic.energy.peat.ItemPeatFuel;
 import com.lothrazar.cyclicmagic.energy.peat.farm.BlockPeatFarm;
 import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
@@ -152,6 +152,7 @@ import com.lothrazar.cyclicmagic.item.magic.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -421,15 +422,21 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
     if (enablePeat) {
-      //peat
-      ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
-      ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
-      ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-      Item peat_wet = new ItemPeatFuel(false);
-      ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
-      Item peat_fuel = new ItemPeatFuel(true);
+      //peat 
+      ItemBiomass peat_biomass = new ItemBiomass();
+      ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
+      Item peat_fuel = new ItemPeatFuel();
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
-      GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
+
+      BlockHydrator.addRecipe(new RecipeHydrate(
+          new ItemStack[] {
+              new ItemStack(Items.WHEAT_SEEDS),
+              new ItemStack(Blocks.RED_MUSHROOM),
+              new ItemStack(Blocks.LEAVES),
+              new ItemStack(Blocks.VINE) },
+          new ItemStack(peat_biomass)));
+
+      ///GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
       BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
