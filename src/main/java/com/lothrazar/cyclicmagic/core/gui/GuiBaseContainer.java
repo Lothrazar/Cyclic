@@ -205,31 +205,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     if (this.energyBar != null && tile != null
         && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
-      this.drawEnergyBar();
-    }
-  }
+      energyBar.draw(tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP));
 
-  private void drawEnergyBar() {
-    int u = 0, v = 0;
-    IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    //must store fuelXY for tooltip?
-    int outerLength = energyBar.getHeight() + 2 * energyBar.getBorder();
-    int outerWidth = energyBar.getWidth() + 2 * energyBar.getBorder();
-    //draw the outer container
-    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + energyBar.getX(),
-        this.guiTop + energyBar.getY(), u, v,
-        outerWidth, outerLength,
-        outerWidth, outerLength);
-    //draw the inner actual thing
-    this.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + energyBar.getX() + energyBar.getBorder(),
-        this.guiTop + energyBar.getY() + energyBar.getBorder(), u, v,
-        energyBar.getWidth(), (int) (energyBar.getHeight() * percent),
-        energyBar.getWidth(), energyBar.getHeight());
+    }
   }
 
   private String getFuelAmtDisplay() {

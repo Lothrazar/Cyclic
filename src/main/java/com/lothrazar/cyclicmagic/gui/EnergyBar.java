@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import net.minecraft.client.gui.Gui;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyBar {
 
@@ -66,4 +69,25 @@ public class EnergyBar {
         && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + getHeight();
   }
 
+  public void draw(IEnergyStorage energy) {
+    int u = 0, v = 0;
+    float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
+    //must store fuelXY for tooltip?
+    int outerLength = this.getHeight() + 2 * this.getBorder();
+    int outerWidth = this.getWidth() + 2 * this.getBorder();
+    //draw the outer container
+    parent.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
+    Gui.drawModalRectWithCustomSizedTexture(
+        parent.getGuiLeft() + this.getX(),
+        parent.getGuiTop() + this.getY(), u, v,
+        outerWidth, outerLength,
+        outerWidth, outerLength);
+    //draw the inner actual thing
+    parent.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
+    Gui.drawModalRectWithCustomSizedTexture(
+        parent.getGuiLeft() + this.getX() + this.getBorder(),
+        parent.getGuiTop() + this.getY() + this.getBorder(), u, v,
+        this.getWidth(), (int) (this.getHeight() * percent),
+        this.getWidth(), this.getHeight());
+  }
 }

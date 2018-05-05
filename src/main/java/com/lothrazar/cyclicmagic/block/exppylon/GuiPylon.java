@@ -144,7 +144,7 @@ public class GuiPylon extends GuiBaseContainer {
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    fluidBar.drawFluidTank(
+    fluidBar.draw(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_EXP);
   }

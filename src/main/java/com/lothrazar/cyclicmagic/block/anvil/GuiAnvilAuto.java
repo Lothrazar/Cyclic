@@ -60,7 +60,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
         this.guiTop + ContainerAnvilAuto.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
-    fluidBar.drawFluidTank(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
+    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_LAVA);
 
   }
