@@ -28,11 +28,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
@@ -64,6 +66,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ArrayList<ButtonTriggerWrapper> buttonWrappers = new ArrayList<ButtonTriggerWrapper>();
   public ProgressBar progressBar = null;
   public EnergyBar energyBar = null;
+  public FluidBar fluidBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
   protected int fuelX, fuelY, fuelXE, fuelYE;
@@ -272,7 +275,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (tile instanceof ITileStackWrapper) {
       ITileStackWrapper te = (ITileStackWrapper) tile;
       StackWrapper wrap;
-      //  if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled())
+
       for (int i = 0; i < te.getWrapperCount(); i++) {
         wrap = te.getStackWrapper(i);
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
@@ -294,6 +297,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
     if (energyBar != null && energyBar.isMouseover(mouseX, mouseY)) {
       this.renderEnergyTooltip(mouseX, mouseY);
+    }
+    if (fluidBar != null && fluidBar.isMouseover(mouseX, mouseY)) {
+      int has = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
+      drawHoveringText(Arrays.asList(has + "/" + fluidBar.getCapacity()), mouseX, mouseY, fontRenderer);
     }
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {

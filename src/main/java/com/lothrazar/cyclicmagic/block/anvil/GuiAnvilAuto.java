@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,6 +42,8 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(10).setX(156);
+    this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
+    fluidBar.setCapacity(TileEntityAnvilAuto.TANK_FULL);
   }
 
   @Override
@@ -57,10 +60,8 @@ public class GuiAnvilAuto extends GuiBaseContainer {
         this.guiTop + ContainerAnvilAuto.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
-    drawFluidTank(
-        ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        TileEntityAnvilAuto.TANK_FULL,
-        Const.Res.FLUID_LAVA, this.guiLeft + this.xSize / 2 - 8 - 1, this.guiTop + 16, 2);
+    fluidBar.drawFluidTank(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
+        Const.Res.FLUID_LAVA);
 
   }
 

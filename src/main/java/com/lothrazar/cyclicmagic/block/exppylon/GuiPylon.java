@@ -147,27 +147,6 @@ public class GuiPylon extends GuiBaseContainer {
         Const.Res.FLUID_EXP, this.guiLeft + 120, this.guiTop + 40, 2);
   }
 
-  //  private void drawFluidBar() {
-  //    //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
-  //    int u = 0, v = 0;
-  //    int currentFluid = tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
-  //    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
-  //    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-  //    int x = this.guiLeft + 120, y = this.guiTop + 40;
-  //    Gui.drawModalRectWithCustomSizedTexture(
-  //        x, y, u, v,
-  //        pngWidth / f, h,
-  //        pngWidth / f, h);
-  //    h -= 2;// inner texture is 2 smaller, one for each border
-  //    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_EXP);
-  //    float percent = ((float) currentFluid / ((float) TileEntityXpPylon.TANK_FULL));
-  //    int hpct = (int) (h * percent);
-  //    Gui.drawModalRectWithCustomSizedTexture(
-  //        x + 1, y + 1 + h - hpct,
-  //        u, v,
-  //        16, hpct,
-  //        16, h);
-  //  }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
