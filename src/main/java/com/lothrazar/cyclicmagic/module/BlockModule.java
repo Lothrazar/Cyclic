@@ -139,6 +139,9 @@ import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.energy.BlockBattery;
+import com.lothrazar.cyclicmagic.energy.TileEntityBattery;
+import com.lothrazar.cyclicmagic.energy.TileEntityBatteryInfinite;
 import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.energy.peat.ItemPeatFuel;
@@ -443,7 +446,14 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+      //TODO BATT CONF  
+      BlockRegistry.registerBlock(new BlockBattery(false), "battery", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockBattery(true), "battery_creative", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
+      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "cheater_battery_te");
+      // regular battery
     }
+
     if (btrash) {
       BlockTrash trash = new BlockTrash();
       BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
