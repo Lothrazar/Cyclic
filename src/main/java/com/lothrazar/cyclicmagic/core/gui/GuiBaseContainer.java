@@ -47,6 +47,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
@@ -204,6 +205,31 @@ public abstract class GuiBaseContainer extends GuiContainer {
         && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
       this.drawEnergyBar();
     }
+  }
+
+  public void drawFluidTank(int currentFluid,
+      int tankFull, ResourceLocation fluid,
+      int x, int y, int f) {
+    int pngWidth = 36, pngHeight = 124;
+    int u = 0, v = 0;
+    int h = pngHeight / f;
+    // currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
+    //int pngWidth = 36, pngHeight = 124, f = 2, height = pngHeight / f;//f is scale factor. original is too big
+    //int x = this.guiLeft + 98, y = this.guiTop + 16;
+    Gui.drawModalRectWithCustomSizedTexture(
+        x, y, u, v,
+        pngWidth / f, h,
+        pngWidth / f, h);
+    h -= 2;// inner texture is 2 smaller, one for each border
+    this.mc.getTextureManager().bindTexture(fluid);
+    float percent = ((float) currentFluid / ((float) tankFull));
+    int hpct = (int) (h * percent);
+    Gui.drawModalRectWithCustomSizedTexture(
+        x + 1, y + 1 + h - hpct,
+        u, v,
+        16, hpct,
+        16, h);
   }
 
   private void drawEnergyBar() {

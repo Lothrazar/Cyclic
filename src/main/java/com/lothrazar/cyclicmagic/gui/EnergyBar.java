@@ -65,4 +65,5 @@ public class EnergyBar {
     return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + getWidth()
         && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + getHeight();
   }
+
 }
