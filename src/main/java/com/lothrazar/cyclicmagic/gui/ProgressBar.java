@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 
 public class ProgressBar {
@@ -57,5 +58,25 @@ public class ProgressBar {
 
   public ResourceLocation getProgressAsset() {
     return asset;
+  }
+
+  public void draw() {
+    int u = 0, v = 0;
+    parent.mc.getTextureManager().bindTexture(this.getProgressCtrAsset());
+    Gui.drawModalRectWithCustomSizedTexture(
+        parent.getGuiLeft() + xOffset,
+        parent.getGuiTop() + yOffset, u, v,
+        ProgressBar.WIDTH, ProgressBar.HEIGHT,
+        ProgressBar.WIDTH, ProgressBar.HEIGHT);
+    if (getProgressCurrent() > 0) {
+      parent.mc.getTextureManager().bindTexture(getProgressAsset());
+      float percent = ((float) getProgressCurrent()) / ((float) maxValue);
+      Gui.drawModalRectWithCustomSizedTexture(
+          parent.getGuiLeft() + xOffset,
+          parent.getGuiTop() + yOffset,
+          u, v,
+          (int) (ProgressBar.WIDTH * percent),
+          ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
+    }
   }
 }

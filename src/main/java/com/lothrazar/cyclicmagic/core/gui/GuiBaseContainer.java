@@ -201,7 +201,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         getScreenSize().width(), getScreenSize().height(),
         getScreenSize().width(), getScreenSize().height());
     if (this.progressBar != null) {
-      drawProgressBar();
+      progressBar.draw();
     }
     if (this.energyBar != null && tile != null
         && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
@@ -266,25 +266,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
 
-  public void drawProgressBar() {
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(progressBar.getProgressCtrAsset());
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + progressBar.xOffset,
-        this.guiTop + progressBar.yOffset, u, v,
-        ProgressBar.WIDTH, ProgressBar.HEIGHT,
-        ProgressBar.WIDTH, ProgressBar.HEIGHT);
-    if (progressBar.getProgressCurrent() > 0) {
-      this.mc.getTextureManager().bindTexture(progressBar.getProgressAsset());
-      float percent = ((float) progressBar.getProgressCurrent()) / ((float) progressBar.maxValue);
-      Gui.drawModalRectWithCustomSizedTexture(
-          this.guiLeft + progressBar.xOffset,
-          this.guiTop + progressBar.yOffset,
-          u, v,
-          (int) (ProgressBar.WIDTH * percent),
-          ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
-    }
-  }
 
   @Override
   protected <T extends GuiButton> T addButton(T buttonIn) {
