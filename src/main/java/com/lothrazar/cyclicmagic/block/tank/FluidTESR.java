@@ -68,15 +68,15 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
       float alph = 1.0F;
       // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
       // T/B for top and bottom
-      float T = 15.5F / 16F;
-      float B = 0.5F / 16F;
+      float T = 15.9F / 16F;
+      float B = 0.1F / 16F;
       int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, posY, 1).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, 1).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(1, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
       buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
       tess.draw();
       //BOTTOM SIDE

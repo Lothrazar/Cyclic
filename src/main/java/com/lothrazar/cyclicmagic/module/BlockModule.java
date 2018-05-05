@@ -436,9 +436,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
               new ItemStack(Blocks.VINE) },
           new ItemStack(peat_biomass)));
 
-      ///GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
-      BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
-      BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeat(null), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeat(peat_fuel), "peat_baked", GuideCategory.BLOCKMACHINE);
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
       BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);

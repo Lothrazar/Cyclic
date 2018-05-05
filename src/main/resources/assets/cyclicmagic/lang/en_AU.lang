@@ -462,8 +462,8 @@ item.tool_randomize.guide=This will mixup the blocks in the nearby area, to help
 item.tool_randomize.name=Block Randomizer
 item.tool_randomize.tooltip=Randomize selected blocks.  Left click to resize.
 item.tool_rotate.guide=Attempts to rotate the targeted block while respecting the same material type.  So it will turn a log to a different angle, but will not turn oak planks into spruce planks.  This can be used to get vanilla only blocks that are otherwise un-obainable blocks, like smooth stone double slabs with the flat side, extra smooth sandstone, and a log with bark on all six sides.
-item.tool_rotate.name=Block Rotator
-item.tool_rotate.tooltip=Rotates blocks if they are able such as logs, stairs, and slabs.
+item.tool_rotate.name=Wooden Wrench
+item.tool_rotate.tooltip=Rotates simple blocks/machines if they are able
 item.tool_spawn_inspect.empty=Nothing can spawn here
 item.tool_spawn_inspect.guide=Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.
 item.tool_spawn_inspect.name=Spawn Detector
@@ -1060,13 +1060,9 @@ tile.item_pipe_sort.nothing=Output nothing here, ignoring this filter
 peat.plantmatter.dry=Use on a water source with plants floating in it to make biomass
 peat.plantmatter.more=Needs four unique plant types, detected: 
 
-item.peat_carbon.name=Carbon Catalyst
-item.peat_carbon.tooltip=Used to create Biomass
-item.peat_carbon.guide=Put four plant types into water and then stir with this to create Biomass
-
 item.peat_biomass.name=Biomass
 item.peat_biomass.tooltip=Used to create Peat Bog
-item.peat_biomass.guide=Put four plant types into water and then stir with a Carbon Catalyst to create this
+item.peat_biomass.guide=Created using plant matter in the Hydrator
 
 item.peat_wet.name=Soaked Peat
 item.peat_wet.tooltip=Fresh peat can be dried into fuel

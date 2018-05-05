@@ -47,19 +47,21 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
 
   private static final double CHANCE_BAKE_PCT = 0.05;
   private boolean isBaked;
+  private Item drop;
 
-  public BlockPeat(boolean baked) {
+  public BlockPeat(Item drop) {
     super(Material.GROUND);
     this.setSoundType(SoundType.GROUND);
     this.setHarvestLevel(Const.ToolStrings.shovel, 2);
     this.setTickRandomly(true);
-    isBaked = baked;
+    isBaked = drop != null;
+    this.drop = drop;
   }
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     if (this.isBaked) {
-      return Item.getByNameOrId(Const.MODRES + "peat_wet");
+      return drop;
     }
     return super.getItemDropped(state, rand, fortune);
   }
