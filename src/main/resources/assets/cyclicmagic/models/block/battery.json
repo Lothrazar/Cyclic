@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/battery_top",
+        "up": "cyclicmagic:blocks/battery_top",
+        "north": "cyclicmagic:blocks/battery_top",
+        "east": "cyclicmagic:blocks/battery_top",
+        "south": "cyclicmagic:blocks/battery_top",
+        "west": "cyclicmagic:blocks/battery_top"
+    }
+}

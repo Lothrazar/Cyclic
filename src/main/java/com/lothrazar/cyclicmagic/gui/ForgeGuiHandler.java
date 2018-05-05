@@ -116,6 +116,9 @@ import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.energy.battery.ContainerBattery;
+import com.lothrazar.cyclicmagic.energy.battery.GuiBattery;
+import com.lothrazar.cyclicmagic.energy.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.energy.peat.farm.ContainerPeatFarm;
 import com.lothrazar.cyclicmagic.energy.peat.farm.GuiPeatFarm;
 import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
@@ -192,6 +195,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DROPPER = 35;
   public static final int GUI_INDEX_FLUIDPUMP = 36;
   public static final int GUI_INDEX_ENERGYPUMP = 37;
+  public static final int GUI_INDEX_BATTERY = 38;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -387,6 +391,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerEnergyPump(player.inventory, (TileEntityEnergyPump) te);
         }
       break;
+      case GUI_INDEX_BATTERY:
+        if (te instanceof TileEntityBattery) {
+          return new ContainerBattery(player.inventory, (TileEntityBattery) te);
+        }
+      break;
     }
     return null;
   }
@@ -575,6 +584,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ENERGYPUMP:
           if (te instanceof TileEntityEnergyPump) {
             return new GuiEnergyPump(player.inventory, (TileEntityEnergyPump) te);
+          }
+        break;
+        case GUI_INDEX_BATTERY:
+          if (te instanceof TileEntityBattery) {
+            return new GuiBattery(player.inventory, (TileEntityBattery) te);
           }
         break;
       }
