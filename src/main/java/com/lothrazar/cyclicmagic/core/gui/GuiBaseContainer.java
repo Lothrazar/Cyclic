@@ -57,6 +57,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class GuiBaseContainer extends GuiContainer {
 
   public final static int FONTCOLOR = 4210752;
+  final static int stackWrapperColor = -1130706433;
   public TileEntityBaseMachineInvo tile;
   private Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
@@ -224,29 +225,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    if (tile instanceof ITileStackWrapper) {
-      ITileStackWrapper te = (ITileStackWrapper) tile;
-      StackWrapper wrap;
-
-      for (int i = 0; i < te.getWrapperCount(); i++) {
-        wrap = te.getStackWrapper(i);
-        if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-          //      this.hoveredSlot = slot;
-          final int normalOverlay = -1130706433;
-          GlStateManager.disableLighting();
-          GlStateManager.disableDepth();
-          int j1 = wrap.getX() + 1;
-          int k1 = wrap.getY() + 1;
-          GlStateManager.colorMask(true, true, true, false);
-          this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, normalOverlay, normalOverlay);
-          GlStateManager.colorMask(true, true, true, true);
-          GlStateManager.enableLighting();
-          GlStateManager.enableDepth();
-          if (wrap.isEmpty() == false)
-            this.renderToolTip(wrap.getStack(), mouseX, mouseY);
-        }
-      }
-    }
+    drawStackWrappers(mouseX, mouseY);
     if (energyBar != null && energyBar.isMouseover(mouseX, mouseY)) {
       this.renderEnergyTooltip(mouseX, mouseY);
     }
@@ -254,6 +233,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
       int has = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
       drawHoveringText(Arrays.asList(has + "/" + fluidBar.getCapacity()), mouseX, mouseY, fontRenderer);
     }
+    drawButtonTooltips(mouseX, mouseY);
+  }
+
+  private void drawButtonTooltips(int mouseX, int mouseY) {
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
@@ -262,6 +245,32 @@ public abstract class GuiBaseContainer extends GuiContainer {
           drawHoveringText(btn.getTooltips(), mouseX, mouseY);
         }
         break;// cant hover on 2 at once
+      }
+    }
+  }
+
+  private void drawStackWrappers(int mouseX, int mouseY) {
+    if (tile instanceof ITileStackWrapper) {
+      ITileStackWrapper te = (ITileStackWrapper) tile;
+      StackWrapper wrap;
+
+      for (int i = 0; i < te.getWrapperCount(); i++) {
+        wrap = te.getStackWrapper(i);
+        if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+          //      this.hoveredSlot = slot;
+
+          GlStateManager.disableLighting();
+          GlStateManager.disableDepth();
+          int j1 = wrap.getX() + 1;
+          int k1 = wrap.getY() + 1;
+          GlStateManager.colorMask(true, true, true, false);
+          this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, stackWrapperColor, stackWrapperColor);
+          GlStateManager.colorMask(true, true, true, true);
+          GlStateManager.enableLighting();
+          GlStateManager.enableDepth();
+          if (wrap.isEmpty() == false)
+            this.renderToolTip(wrap.getStack(), mouseX, mouseY);
+        }
       }
     }
   }

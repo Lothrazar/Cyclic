@@ -30,13 +30,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class ProgressBar {
 
-  public static final int WIDTH = 156;
-  public static final int HEIGHT = 7;
-  public int xOffset;
-  public int yOffset;
-  public int fieldId;
-  public int maxValue;
-  public ResourceLocation asset = Const.Res.PROGRESS;
+  private static final int WIDTH = 156;
+  private static final int HEIGHT = 7;
+  private int xOffset;
+  private int yOffset;
+  private int fieldId;
+  private int maxValue;
+  private ResourceLocation asset = Const.Res.PROGRESS;
   private GuiBaseContainer parent;
 
   public ProgressBar(GuiBaseContainer p, int x, int y, int f, int max) {
@@ -44,7 +44,7 @@ public class ProgressBar {
     this.xOffset = x;
     this.yOffset = y;
     this.fieldId = f;
-    this.maxValue = max;
+    this.setMaxValue(max);
   }
 
   public int getProgressCurrent() {
@@ -70,7 +70,7 @@ public class ProgressBar {
         ProgressBar.WIDTH, ProgressBar.HEIGHT);
     if (getProgressCurrent() > 0) {
       parent.mc.getTextureManager().bindTexture(getProgressAsset());
-      float percent = ((float) getProgressCurrent()) / ((float) maxValue);
+      float percent = ((float) getProgressCurrent()) / ((float) getMaxValue());
       Gui.drawModalRectWithCustomSizedTexture(
           parent.getGuiLeft() + xOffset,
           parent.getGuiTop() + yOffset,
@@ -78,5 +78,13 @@ public class ProgressBar {
           (int) (ProgressBar.WIDTH * percent),
           ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
     }
+  }
+
+  public int getMaxValue() {
+    return maxValue;
+  }
+
+  public void setMaxValue(int maxValue) {
+    this.maxValue = maxValue;
   }
 }

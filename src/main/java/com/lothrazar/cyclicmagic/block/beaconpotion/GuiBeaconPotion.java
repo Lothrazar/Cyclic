@@ -84,7 +84,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     if (progressBar != null) {
-      progressBar.maxValue = tile.getField(Fields.FUELMAX.ordinal());
+      progressBar.setMaxValue(tile.getField(Fields.FUELMAX.ordinal()));
     }
   }
 
