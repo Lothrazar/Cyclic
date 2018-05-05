@@ -214,7 +214,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int u = 0, v = 0;
     int h = pngHeight / f;
     // currentFluid = ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount();
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
+    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     //int pngWidth = 36, pngHeight = 124, f = 2, height = pngHeight / f;//f is scale factor. original is too big
     //int x = this.guiLeft + 98, y = this.guiTop + 16;
     Gui.drawModalRectWithCustomSizedTexture(
