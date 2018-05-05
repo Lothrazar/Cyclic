@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -44,6 +45,8 @@ public class GuiHydrator extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityHydrator.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(70).setY(16).setWidth(14);
+    this.fluidBar = new FluidBar(this, 98, 16);
+    fluidBar.setCapacity(TileEntityHydrator.TANK_FULL);
   }
 
   @Override
@@ -92,10 +95,9 @@ public class GuiHydrator extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    drawFluidTank(
+    fluidBar.drawFluidTank(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        TileEntityHydrator.TANK_FULL,
-        Const.Res.FLUID_WATER, this.guiLeft + 98, this.guiTop + 16, 2);
+        Const.Res.FLUID_WATER);
 
   }
 

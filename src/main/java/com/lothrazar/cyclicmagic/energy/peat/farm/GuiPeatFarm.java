@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -37,6 +38,8 @@ public class GuiPeatFarm extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(152);
+    this.fluidBar = new FluidBar(this, 120, 16);
+    fluidBar.setCapacity(TileEntityPeatFarm.TANK_FULL);
   }
 
   @Override
@@ -60,10 +63,9 @@ public class GuiPeatFarm extends GuiBaseContainer {
     //DRAW ENERGY BAR
     fuelX = this.guiLeft + 152;
     fuelY = this.guiTop + 17;
-    drawFluidTank(
+    fluidBar.drawFluidTank(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        TileEntityPeatFarm.TANK_FULL,
-        Const.Res.FLUID_WATER, this.guiLeft + 120, this.guiTop + 16, 2);
+        Const.Res.FLUID_WATER);
   }
 
   //  private void drawFluidBar() {

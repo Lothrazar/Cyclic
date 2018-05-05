@@ -23,10 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchanter;
 
+import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -43,6 +45,8 @@ public class GuiEnchanter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(152);
+    this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
+    fluidBar.setCapacity(TileEntityAnvilAuto.TANK_FULL);
   }
 
   @Override
@@ -59,33 +63,9 @@ public class GuiEnchanter extends GuiBaseContainer {
         this.guiTop + ContainerEnchanter.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
-    drawFluidTank(
+    fluidBar.drawFluidTank(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        TileEntityEnchanter.TANK_FULL,
-        Const.Res.FLUID_EXP, this.guiLeft + this.xSize / 2 - 8 - 1, this.guiTop + 16, 2);
+        Const.Res.FLUID_EXP);
   }
-  //
-  //  private void drawFluidBar() {
-  //    //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
-  //    int u = 0, v = 0;
-  //    int currentFluid = tile.getCurrentFluidStackAmount();
-  //    //    int currentFluid = tile.getField(TileEntityEnchanter.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
-  //    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
-  //    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-  //    int fuelWidth = 16;
-  //    int x = this.guiLeft + this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
-  //    Gui.drawModalRectWithCustomSizedTexture(
-  //        x, y, u, v,
-  //        pngWidth / f, h,
-  //        pngWidth / f, h);
-  //    h -= 2;// inner texture is 2 smaller, one for each border
-  //    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_EXP);
-  //    float percent = ((float) currentFluid / ((float) TileEntityEnchanter.TANK_FULL));
-  //    int hpct = (int) (h * percent);
-  //    Gui.drawModalRectWithCustomSizedTexture(
-  //        x + 1, y + 1 + h - hpct,
-  //        u, v,
-  //        fuelWidth, hpct,
-  //        fuelWidth, h);
-  //  }
+
 }

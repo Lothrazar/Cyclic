@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -53,6 +54,8 @@ public class GuiPylon extends GuiBaseContainer {
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.fluidBar = new FluidBar(this, 120, 40);
+    fluidBar.setCapacity(TileEntityXpPylon.TANK_FULL);
   }
 
   @Override
@@ -141,10 +144,9 @@ public class GuiPylon extends GuiBaseContainer {
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    drawFluidTank(
+    fluidBar.drawFluidTank(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        TileEntityXpPylon.TANK_FULL,
-        Const.Res.FLUID_EXP, this.guiLeft + 120, this.guiTop + 40, 2);
+        Const.Res.FLUID_EXP);
   }
 
 
@@ -153,7 +155,7 @@ public class GuiPylon extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
+    //    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
     int expHas = fluidHas / TileEntityXpPylon.FLUID_PER_EXP;
     int expFull = TileEntityXpPylon.TANK_FULL / TileEntityXpPylon.FLUID_PER_EXP;
     this.drawString("EXP: " + expHas + " / " + expFull, this.xSize / 2 - 20, 118);
