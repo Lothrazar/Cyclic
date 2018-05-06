@@ -61,7 +61,7 @@ public class GuiFan extends GuiBaseContainer {
     int y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
-        field, true);
+        field);
     sliderDelay.setTooltip("button.fan.range.tooltip");
     this.addButton(sliderDelay);
     //    
@@ -70,7 +70,7 @@ public class GuiFan extends GuiBaseContainer {
     y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
     GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
-        field, true);
+        field);
     sliderOffset.setTooltip("button.fan.speed.tooltip");
     this.addButton(sliderOffset);
 

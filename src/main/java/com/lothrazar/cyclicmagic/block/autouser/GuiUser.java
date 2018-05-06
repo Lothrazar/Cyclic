@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.block.autouser;
 
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
@@ -43,14 +43,13 @@ public class GuiUser extends GuiBaseContainer {
   private ButtonTileEntityField actionBtn;
   private GuiButtonToggleSize btnSize;
   private ButtonTileEntityField yOffsetBtn;
-  private ButtonTileEntityField btnSpeed;
 
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
+    this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), 1);
     //    this.setUsesEnergy();
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(50).setX(156).setY(6);
@@ -62,11 +61,11 @@ public class GuiUser extends GuiBaseContainer {
     int btnId = 3;
     btnSize = new GuiButtonToggleSize(btnId++,
         this.guiLeft + 24 + Const.PAD,
-        this.guiTop + Const.PAD + 18, this.tile.getPos());
+        this.guiTop + 36, this.tile.getPos());
     this.addButton(btnSize);
     actionBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
-        this.guiTop + Const.PAD * 6, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());
+        btnSize.y + 22, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());
     actionBtn.width = 44;
     actionBtn.setTooltip("tile.block_user.action");
     this.addButton(actionBtn);
@@ -76,22 +75,34 @@ public class GuiUser extends GuiBaseContainer {
     yOffsetBtn.width = Const.SQ;
     yOffsetBtn.setTooltip("tile.block_user.yoffset");
     this.addButton(yOffsetBtn);
-    btnSpeed = new ButtonTileEntityField(btnId++,
-        this.guiLeft + 88,
-        this.guiTop + Const.PAD * 8, this.tile.getPos(), Fields.SPEED.ordinal());
-    btnSpeed.width = btnSpeed.height = 14;
-    btnSpeed.displayString = "+";
-    btnSpeed.setTooltip("tile.block_user.speed.tooltip");
-    this.registerButtonDisableTrigger(btnSpeed, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), TileEntityUser.MAX_SPEED);
-    this.addButton(btnSpeed);
-    ButtonTileEntityField btnSpeedD = new ButtonTileEntityField(btnId++,
-        this.guiLeft + 88,
-        btnSpeed.y + 28, this.tile.getPos(), Fields.SPEED.ordinal(), -1);
-    btnSpeedD.width = btnSpeedD.height = btnSpeed.width;
-    btnSpeedD.displayString = "-";
-    btnSpeedD.setTooltip("tile.block_user.speed.tooltip");
-    this.addButton(btnSpeedD);
-    this.registerButtonDisableTrigger(btnSpeedD, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), 1);
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, btnId++,
+        this.guiLeft + 28,
+        this.guiTop + 22, 122, 10, 1, TileEntityUser.MAX_SPEED,
+        Fields.SPEED.ordinal());
+    sliderDelay.setTooltip("tile.block_user.speed.tooltip");
+    this.addButton(sliderDelay);
+    //    btnSpeed = new ButtonTileEntityField(btnId++,
+    //        this.guiLeft + 88,
+    //        this.guiTop + Const.PAD * 8, this.tile.getPos(), Fields.SPEED.ordinal());
+    //    btnSpeed.width = btnSpeed.height = 14;
+    //    btnSpeed.displayString = "+";
+    //    btnSpeed.setTooltip("tile.block_user.speed.tooltip");
+    //    
+    //    
+    //    
+    //    this.registerButtonDisableTrigger(btnSpeed, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), TileEntityUser.MAX_SPEED);
+    //    this.addButton(btnSpeed);
+    //    ButtonTileEntityField btnSpeedD = new ButtonTileEntityField(btnId++,
+    //        this.guiLeft + 88,
+    //        btnSpeed.y + 28, this.tile.getPos(), Fields.SPEED.ordinal(), -1);
+    //    btnSpeedD.width = btnSpeedD.height = btnSpeed.width;
+    //    btnSpeedD.displayString = "-";
+    //    btnSpeedD.setTooltip("tile.block_user.speed.tooltip");
+    //    this.addButton(btnSpeedD);
+    //    
+    //    
+    //    
+    //    this.registerButtonDisableTrigger(btnSpeedD, ButtonTriggerType.EQUAL, Fields.SPEED.ordinal(), 1);
   }
 
   @Override
@@ -127,7 +138,8 @@ public class GuiUser extends GuiBaseContainer {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
-    this.drawFieldAt(btnSpeed.x - this.guiLeft + 5, btnSpeed.y - this.guiTop + 18, Fields.SPEED.ordinal());
+    //    this.drawFieldAt(btnSpeed.x - this.guiLeft + 5, btnSpeed.y - this.guiTop + 18, Fields.SPEED.ordinal());
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    progressBar.setMaxValue(tile.getField(Fields.SPEED.ordinal()));
   }
 }

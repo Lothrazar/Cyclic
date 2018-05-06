@@ -73,7 +73,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
-        TileEntityControlledMiner.Fields.HEIGHT.ordinal(), true);
+        TileEntityControlledMiner.Fields.HEIGHT.ordinal());
     sliderDelay.setTooltip("button.miner.height");
     this.addButton(sliderDelay);
   }

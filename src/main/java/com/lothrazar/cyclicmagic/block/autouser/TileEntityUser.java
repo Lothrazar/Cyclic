@@ -87,7 +87,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
-  public final static int TIMER_FULL = 120;
+  //  public final static int TIMER_FULL = 120;
   public static final int MAX_SPEED = 200;
   public static int maxHeight = 10;
   private int rightClickIfZero = 0;
@@ -99,6 +99,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
+  private int tickDelay;
   private static List<String> blacklistAll;
 
   public static enum Fields {
@@ -107,8 +108,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   public TileEntityUser() {
     super(9);
-    timer = TIMER_FULL;
-    speed = SPEED_FUELED;
+    timer = tickDelay;
     this.initEnergy(BlockUser.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2));
     this.setSlotsForExtract(Arrays.asList(3, 4, 5, 6, 7, 8));
@@ -143,7 +143,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
       tryEquipItem();
       if (triggered) {
-        timer = TIMER_FULL;
+        timer = tickDelay;
         try {
           BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
@@ -406,6 +406,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_SIZE, size);
     compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger("yoff", yOffset);
+    compound.setInteger("tickDelay", tickDelay);
     return super.writeToNBT(compound);
   }
 
@@ -420,13 +421,17 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     size = compound.getInteger(NBT_SIZE);
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
+    tickDelay = compound.getInteger("tickDelay");
+    if (tickDelay < 1) {
+      tickDelay = 1;
+    }
   }
 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
       case SPEED:
-        return getSpeed();
+        return this.tickDelay;
       case TIMER:
         return getTimer();
       case REDSTONE:
@@ -453,13 +458,19 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.yOffset = value;
       break;
       case SPEED:
-        this.setSpeed(value);
+        if (value < 1) {
+          value = 1;
+        }
+        tickDelay = Math.min(value, MAX_SPEED);
+        if (timer > tickDelay) {
+          timer = tickDelay;//progress bar prevent overflow 
+        }
       break;
       case TIMER:
         if (value < 0) {
           value = 0;
         }
-        timer = Math.min(value, TIMER_FULL);
+        timer = value;
       break;
       case REDSTONE:
         this.needsRedstone = value;
@@ -517,15 +528,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   @Override
   public int getSpeed() {
-    return speed;
-  }
-
-  @Override
-  public void setSpeed(int value) {
-    if (value < 1) {
-      value = 1;
-    }
-    speed = Math.min(value, MAX_SPEED);
+    return 1;
   }
 
   private BlockPos getTargetPos() {

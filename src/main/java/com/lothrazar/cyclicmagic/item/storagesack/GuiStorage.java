@@ -32,14 +32,10 @@ import net.minecraft.client.gui.GuiButton;
 
 public class GuiStorage extends GuiBaseContainer {
 
-  //  static final int texture_width = 212;
-  //  static final int texture_height = 220;
   private GuiButtonTooltip buttonToggle;
 
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
-    //    this.xSize = texture_width;
-    //    this.ySize = texture_height;
     this.setScreenSize(ScreenSize.SACK);
   }
 
@@ -61,5 +57,4 @@ public class GuiStorage extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketStorageBag());
     }
   }
-
 }

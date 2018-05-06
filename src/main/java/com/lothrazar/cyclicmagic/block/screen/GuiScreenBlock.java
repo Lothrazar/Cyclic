@@ -68,22 +68,22 @@ public class GuiScreenBlock extends GuiBaseContainer {
     int h = 12;
     id++;
     int y = this.guiTop + txtInput.height + Const.PAD;
-    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal(), false);
+    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderX.setTooltip("screen.red");
     this.addButton(sliderX);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal(), false);
+    GuiSliderInteger sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
     sliderG.setTooltip("screen.green");
     this.addButton(sliderG);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal(), false);
+    GuiSliderInteger sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal(), false);
+    GuiSliderInteger sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal());
     sliderPadding.setTooltip("screen.padding");
     this.addButton(sliderPadding);
     //text box of course
