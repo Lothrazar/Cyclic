@@ -26,9 +26,10 @@ package com.lothrazar.cyclicmagic.block.entitydetector;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,7 +42,7 @@ public class GuiDetector extends GuiBaseContainer {
   private int leftColX;
   private int sizeY;
   private int limitColX;
-  private int[] yRows = new int[3];
+  //  private int[] yRows = new int[3];
   private ButtonTileEntityField greaterLessBtn;
   private ButtonTileEntityField entityBtn;
 
@@ -58,26 +59,38 @@ public class GuiDetector extends GuiBaseContainer {
     int vButtonSpacing = 12;
     sizeY = 58;//save now as reuse for textbox
     leftColX = 176 - 148;
-    limitColX = leftColX + 108;
+    limitColX = leftColX + 126;
     addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
     ButtonTileEntityField btnDown = addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
     this.registerButtonDisableTrigger(btnDown, ButtonTriggerType.EQUAL, Fields.LIMIT.ordinal(), 0);
     int x = leftColX + 40;
-    int y = sizeY - 5;
-    this.greaterLessBtn = addPatternButtonAt(id++, x, y, true, Fields.GREATERTHAN, 60, 20);
-    this.entityBtn = addPatternButtonAt(id++, x, 18, true, Fields.ENTITYTYPE, 60, 20);
-    int xOffset = 18;
-    int yOffset = 12;
-    yRows[0] = 30 + yOffset;
-    addPatternButtonAt(id++, leftColX + xOffset, yRows[0], true, Fields.RANGEX);
-    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[0], false, Fields.RANGEX);
-    yRows[1] = yRows[0] + yOffset;
-    addPatternButtonAt(id++, leftColX + xOffset, yRows[1], true, Fields.RANGEY);
-    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[1], false, Fields.RANGEY);
-    yRows[2] = yRows[1] + yOffset;
-    addPatternButtonAt(id++, leftColX + xOffset, yRows[2], true, Fields.RANGEZ);
-    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
-    //TODO: PREVIEW BUTTON
+    int y = 56;
+    this.greaterLessBtn = addPatternButtonAt(id++, x + 8, y, true, Fields.GREATERTHAN, 60, 20);
+    this.entityBtn = addPatternButtonAt(id++, 8, y, true, Fields.ENTITYTYPE, 60, 20);
+
+    int MIN = 1, MAX = TileEntityDetector.MAX_RANGE;
+
+    GuiSliderInteger sliderDelayx = new GuiSliderInteger(tile, id++,
+        this.guiLeft + 28,
+        this.guiTop + 20, 122, 10, MIN, MAX,
+        Fields.RANGEX.ordinal());
+    sliderDelayx.setTooltip("tile.entity_detector.rangex");
+    this.addButton(sliderDelayx);
+
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++,
+        this.guiLeft + 28,
+        this.guiTop + 32, 122, 10, MIN, MAX,
+        Fields.RANGEY.ordinal());
+    sliderDelay.setTooltip("tile.entity_detector.rangey");
+    this.addButton(sliderDelay);
+
+    GuiSliderInteger sliderDelayz = new GuiSliderInteger(tile, id++,
+        this.guiLeft + 28,
+        this.guiTop + 44, 122, 10, MIN, MAX,
+        Fields.RANGEZ.ordinal());
+    sliderDelayz.setTooltip("tile.entity_detector.rangez");
+    this.addButton(sliderDelayz);
+
   }
 
   private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
@@ -110,10 +123,8 @@ public class GuiDetector extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     //draw all text fields
     drawFieldAt(limitColX + 3, sizeY, Fields.LIMIT);
-    drawFieldAt(leftColX, yRows[0], Fields.RANGEX);
-    drawFieldAt(leftColX, yRows[1], Fields.RANGEY);
-    drawFieldAt(leftColX, yRows[2], Fields.RANGEZ);
-    //update button text
+
+    //    //update button text
     EntityType t = this.tile.getEntityType();
     this.entityBtn.displayString = UtilChat.lang("tile.entity_detector." + t.name().toLowerCase());
     int greater = this.tile.getField(Fields.GREATERTHAN);
