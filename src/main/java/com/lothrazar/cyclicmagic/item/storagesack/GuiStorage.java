@@ -24,25 +24,22 @@
 package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.io.IOException;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 
 public class GuiStorage extends GuiBaseContainer {
 
-  static final int texture_width = 212;
-  static final int texture_height = 220;
+  //  static final int texture_width = 212;
+  //  static final int texture_height = 220;
   private GuiButtonTooltip buttonToggle;
 
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
-    this.xSize = texture_width;
-    this.ySize = texture_height;
+    //    this.xSize = texture_width;
+    //    this.ySize = texture_height;
     this.setScreenSize(ScreenSize.SACK);
   }
 
@@ -63,24 +60,6 @@ public class GuiStorage extends GuiBaseContainer {
       // packet 
       ModCyclic.network.sendToServer(new PacketStorageBag());
     }
-  }
-
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //ITem stack holder to update text
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-
-  @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    this.drawDefaultBackground();//dim the background as normal
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(Const.Res.BACKGROUND_SACK);
-    int thisX = (this.width - this.xSize) / 2;
-    int thisY = (this.height - this.ySize) / 2;
-    int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
   }
 
 }
