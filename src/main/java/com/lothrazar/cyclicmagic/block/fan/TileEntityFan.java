@@ -25,12 +25,12 @@ package com.lothrazar.cyclicmagic.block.fan;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -120,8 +120,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
     EnumFacing face = getCurrentFacing();
-    boolean pushIfFalse = (pushIfZero != 0);
-    float SPEED = this.getSpeedCalc();
+
     switch (face) {
       case NORTH:
         start = start.south();
@@ -136,25 +135,58 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         start = start.east();
       break;
       case DOWN:
-        pushIfFalse = !pushIfFalse;//semi hacky fix
-        //startBlockPos{x=-1149, y=12, z=394}end is BlockPos{x=-1149, y=4, z=394}
-      //   ModCyclic.logger.log("start" + start + "end is " + end.toString());
-      //        start = start.south();
+
       break;
       case UP:
-      // SPEED = SPEED * 5;
-      //        start = start.north();
-      //        end = end.east();
+      default:
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);
     List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
+    int moved = 0;
+
+    boolean doPush = (pushIfZero == 0);
+    int direction = 1;
+    float SPEED = this.getSpeedCalc();
+    for (Entity entity : entitiesFound) {
+      if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+        continue;//sneak avoid feature
+      }
+      moved++;
+      switch (face) {
+        case NORTH:
+          direction = !doPush ? 1 : -1;
+          entity.motionZ += direction * SPEED;
+        break;
+        case SOUTH:
+          direction = doPush ? 1 : -1;
+          entity.motionZ += direction * SPEED;
+        break;
+        case EAST:
+          direction = doPush ? 1 : -1;
+          entity.motionX += direction * SPEED;
+        break;
+        case WEST:
+          direction = !doPush ? 1 : -1;
+          entity.motionX += direction * SPEED;
+        break;
+        case DOWN:
+          direction = !doPush ? 1 : -1;
+          entity.motionY += direction * SPEED;
+        break;
+        case UP:
+          direction = doPush ? 1 : -1;
+          entity.motionY += direction * SPEED;
+        default:
+        break;
+      }
+    }
     // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
-    double z = this.getPos().getZ() + 0.5;
-    UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED, true);
-    return entitiesFound.size();
+    //    double x = this.getPos().getX() + 0.5;
+    //    double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
+    //    double z = this.getPos().getZ() + 0.5;
+    // UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED, vertical);
+    return moved;
   }
 
   private float getSpeedCalc() {

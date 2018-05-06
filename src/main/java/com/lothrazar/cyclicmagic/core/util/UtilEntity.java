@@ -298,7 +298,7 @@ public class UtilEntity {
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
     List<EntityLivingBase> nonPlayer = getLivingHostile(world, range);
-    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed, false);
+    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
   }
 
   public static List<EntityLivingBase> getLivingHostile(World world, AxisAlignedBB range) {
@@ -313,35 +313,33 @@ public class UtilEntity {
   }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
-    return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR, false);
+    return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR);
   }
 
-  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar, boolean lockHorizontal) {
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
     int direction = (towardsPos) ? 1 : -1;//negative to flip the vector and push it away
-    Entity entity;
-    for (Object e : all) {
-      entity = (Entity) e;
+    for (Entity entity : all) {
       if (entity == null) {
         continue;
       } //being paranoid
+      if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+        continue;//sneak avoid feature
+      }
 
-        xDist = Math.abs(x - entity.getPosition().getX());
-        zDist = Math.abs(z - entity.getPosition().getZ());
-
+      xDist = Math.abs(x - entity.getPosition().getX());
+      zDist = Math.abs(z - entity.getPosition().getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
-      if (lockHorizontal || hdist > ENTITY_PULL_DIST) {
+      if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? speedFar : speedClose;
-        if (lockHorizontal) {
-          //          x = z = 0;
-          entity.motionY = -1 * direction * speed;
-          //          ModCyclic.logger.log("add velocity" + y);
-        }
-        else {
-        Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
-        }
+        //        if (lockHorizontal) {
+        //          entity.motionY = -1 * direction * speed;
+        //        }
+        //        else {
+          Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
+        //        }
         moved++;
       } //else its basically on it, no point
     }
