@@ -120,6 +120,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
     EnumFacing face = getCurrentFacing();
+    boolean pushIfFalse = (pushIfZero != 0);
     float SPEED = this.getSpeedCalc();
     switch (face) {
       case NORTH:
@@ -135,6 +136,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         start = start.east();
       break;
       case DOWN:
+        pushIfFalse = !pushIfFalse;//semi hacky fix
         //startBlockPos{x=-1149, y=12, z=394}end is BlockPos{x=-1149, y=4, z=394}
       //   ModCyclic.logger.log("start" + start + "end is " + end.toString());
       //        start = start.south();
@@ -151,8 +153,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
     double z = this.getPos().getZ() + 0.5;
-    boolean pushIfFalse = (pushIfZero != 0);
-    UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
+    UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED, true);
     return entitiesFound.size();
   }
 

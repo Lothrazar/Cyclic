@@ -298,7 +298,7 @@ public class UtilEntity {
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
     List<EntityLivingBase> nonPlayer = getLivingHostile(world, range);
-    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
+    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed, false);
   }
 
   public static List<EntityLivingBase> getLivingHostile(World world, AxisAlignedBB range) {
@@ -313,10 +313,10 @@ public class UtilEntity {
   }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
-    return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR);
+    return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR, false);
   }
 
-  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar) {
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar, boolean lockHorizontal) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
@@ -327,12 +327,21 @@ public class UtilEntity {
       if (entity == null) {
         continue;
       } //being paranoid
-      xDist = Math.abs(x - entity.getPosition().getX());
-      zDist = Math.abs(z - entity.getPosition().getZ());
+
+        xDist = Math.abs(x - entity.getPosition().getX());
+        zDist = Math.abs(z - entity.getPosition().getZ());
+
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
-      if (hdist > ENTITY_PULL_DIST) {
+      if (lockHorizontal || hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? speedFar : speedClose;
+        if (lockHorizontal) {
+          //          x = z = 0;
+          entity.motionY = -1 * direction * speed;
+          //          ModCyclic.logger.log("add velocity" + y);
+        }
+        else {
         Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
+        }
         moved++;
       } //else its basically on it, no point
     }
