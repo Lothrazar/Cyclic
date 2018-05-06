@@ -87,8 +87,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     pushEntities();
   }
 
+  @Override
   public List<BlockPos> getShape() {
-    //UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
   }
 
@@ -103,21 +103,24 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     switch (getCurrentFacing().getAxis()) {
       case X:
         end = end.add(0, 0, 1);//X means EASTorwest. adding +1z means GO 1 south
-      break;
-      case Y:
+        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Z:
         end = end.add(1, 0, 0);
+        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
+      case Y:
+        start = start.add(1, 0, 0);
+        end = end.add(0, 0, 1);
       default:
       break;
     }
-    end = end.add(0, 1, 0);///and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
     //ok now we have basically teh 3d box we wanted
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
     EnumFacing face = getCurrentFacing();
+    float SPEED = this.getSpeedCalc();
     switch (face) {
       case NORTH:
         start = start.south();
@@ -131,7 +134,15 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       case WEST:
         start = start.east();
       break;
-      default:
+      case DOWN:
+        //startBlockPos{x=-1149, y=12, z=394}end is BlockPos{x=-1149, y=4, z=394}
+      //   ModCyclic.logger.log("start" + start + "end is " + end.toString());
+      //        start = start.south();
+      break;
+      case UP:
+      // SPEED = SPEED * 5;
+      //        start = start.north();
+      //        end = end.east();
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);
@@ -140,20 +151,19 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
     double z = this.getPos().getZ() + 0.5;
-    float SPEED = this.getSpeedCalc();
     boolean pushIfFalse = (pushIfZero != 0);
     UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
     return entitiesFound.size();
   }
 
   private float getSpeedCalc() {
-    return ((float) this.speed) / 15F;
+    return (this.speed) / 15F;
   }
 
   private void doParticles() {
     List<BlockPos> shape = getShape();
     for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos, 1);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1);
     }
   }
 
@@ -221,6 +231,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     this.world.markBlockRangeForRenderUpdate(pos, pos);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
