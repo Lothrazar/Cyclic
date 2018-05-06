@@ -27,7 +27,7 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyStore extends EnergyStorage {
 
-  public static final int DEFAULT_CAPACITY = 1000000;
+  public static final int DEFAULT_CAPACITY = 1000 * 64;
   public static final int MAX_TRANSFER = 6400;
 
   public EnergyStore(int cap) {

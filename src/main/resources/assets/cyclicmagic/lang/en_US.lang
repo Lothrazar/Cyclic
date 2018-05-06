@@ -1100,6 +1100,13 @@ dropper.count=Count
 cable.block.toggled.false=Restored cable connection 
 cable.block.toggled.true=Blocked cable connection 
 
+tile.battery.name=Battery
+tile.battery.tooltip=Stores energy (FE)
+tile.battery.guide=Stores one million energy units (FE).  Has a slot to charge up items.
+
+tile.battery_infinite.name=Infinite Battery
+tile.battery_infinite.tooltip=Creative energy source
+tile.battery_infinite.guide=Creative mode infinite energy source (for cheating and testing)
 
 
 
@@ -1159,3 +1166,4 @@ tile.uranium_nether_ore.name=Nether Uranium Ore
 tile.uranium_end_ore.name=End Uranium Ore
 tile.yellorite_nether_ore.name=Nether Yellorite Ore
 tile.yellorite_end_ore.name=End Yellorite Ore
+

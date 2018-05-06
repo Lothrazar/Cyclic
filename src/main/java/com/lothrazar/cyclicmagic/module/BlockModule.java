@@ -448,9 +448,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
       //TODO BATT CONF  
       BlockRegistry.registerBlock(new BlockBattery(false), "battery", GuideCategory.BLOCKMACHINE);
-      BlockRegistry.registerBlock(new BlockBattery(true), "battery_creative", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockBattery(true), "battery_infinite", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
-      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "cheater_battery_te");
+      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
       // regular battery
     }
 
