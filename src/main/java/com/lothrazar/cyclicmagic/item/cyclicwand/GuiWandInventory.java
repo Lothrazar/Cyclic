@@ -41,7 +41,7 @@ public class GuiWandInventory extends GuiBaseContainer {
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
   // slot number, as i '3/9'
   int id = 777;
-  final int padding = 4;
+  final int padding = Const.PAD / 2;
   ContainerWand container;
   private EntityPlayer player;
 
@@ -66,7 +66,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     if (ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {
       b.enabled = false;
     }
-    this.buttonList.add(b);
+    this.addButton(b);
   }
 
   @Override
@@ -94,6 +94,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     super.onGuiClosed();
   }
 
+  @Override
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
     this.drawDefaultBackground();//dim the background as normal
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

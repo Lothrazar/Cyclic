@@ -424,15 +424,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
     }
-    if (anvil) {
-      BlockAnvilAuto block_anvil = new BlockAnvilAuto();
-      BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
-    }
+    Block block_anvil_magma = Blocks.ENCHANTING_TABLE;
     if (anvilMagma) {
-      BlockAnvilMagma block_anvil_magma = new BlockAnvilMagma();
+      block_anvil_magma = new BlockAnvilMagma();
       BlockRegistry.registerBlock(block_anvil_magma, "block_anvil_magma", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + "block_anvil_magma_te");
+    }
+    if (anvil) {
+      BlockAnvilAuto block_anvil = new BlockAnvilAuto(block_anvil_magma);
+      BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
     if (enablePeat) {
       //peat 

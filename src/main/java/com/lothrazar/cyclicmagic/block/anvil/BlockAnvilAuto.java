@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.anvil;
 
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
@@ -30,11 +31,11 @@ import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -52,16 +53,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
-  protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
+  public static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
   public static int FUEL_COST = 0;
+  private Block center;
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
-  public BlockAnvilAuto() {
+  public BlockAnvilAuto(@Nonnull Block center) {
     super(Material.ANVIL);
     this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);
     this.setHardness(3.0F).setResistance(3.0F);
     this.setTranslucent();
+    this.center = center;
   }
 
   @Override
@@ -107,7 +110,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
         " e ",
         "iii",
         'i', "blockIron",
-        'e', Blocks.ENCHANTING_TABLE,
+        'e', center,
         'd', "gemDiamond");
   }
 

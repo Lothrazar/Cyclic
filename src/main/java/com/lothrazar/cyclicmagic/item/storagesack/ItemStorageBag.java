@@ -30,9 +30,9 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer.BagDepositReturn;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer.BagDepositReturn;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
@@ -45,7 +45,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -122,7 +121,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
-    super.addInformation(stack, playerIn, tooltip, advanced);
+    //    super.addInformation(stack, playerIn, tooltip, advanced);
   }
 
   @Override
@@ -164,19 +163,19 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           UtilSound.playSound(player, SoundRegistry.sack_holding);
         }
       }
-      else { //hit something not an invenotry
-        if (StorageActionType.getTimeout(held) > 0) {
-          //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
-          return;
-        }
-        StorageActionType.setTimeout(held);
-        event.setCanceled(true);
-        UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
-        if (!player.getEntityWorld().isRemote) { // server side
-          StorageActionType.toggle(held);
-          UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));
-        }
-      }
+      //      else { //hit something not an invenotry
+      //        if (StorageActionType.getTimeout(held) > 0) {
+      //          //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
+      //          return;
+      //        }
+      //        StorageActionType.setTimeout(held);
+      //        event.setCanceled(true);
+      //        UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
+      //        if (!player.getEntityWorld().isRemote) { // server side
+      //          StorageActionType.toggle(held);
+      //          UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));
+      //        }
+      //      }
     }
   }
 

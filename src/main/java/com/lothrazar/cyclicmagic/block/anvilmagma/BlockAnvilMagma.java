@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.anvilmagma;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
@@ -49,8 +50,6 @@ import net.minecraftforge.fluids.FluidUtil;
 
 public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
-  protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
-
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilMagma() {
     super(Material.ANVIL);
@@ -62,7 +61,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHa
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return Z_AXIS_AABB;
+    return BlockAnvilAuto.Z_AXIS_AABB;
   }
 
   @Override
