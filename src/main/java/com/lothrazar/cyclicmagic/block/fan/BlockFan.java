@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.fan;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.SoundType;
@@ -39,11 +39,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
+public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockFan() {
-    super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_FAN);
+    super(Material.ROCK);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_FAN);
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);

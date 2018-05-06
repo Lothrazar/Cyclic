@@ -17,6 +17,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   public TileEntityBattery() {
     super(1);
     this.initEnergy(0, CAPACITY);
+    this.setSlotsForBoth();
   }
 
   @Override
@@ -35,8 +36,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
         this.energyStorage.extractEnergy(actual, false);
       }
     }
-    //just always output if possible
-    //TODO: redstone toggle!?!?
-    //    this.tryOutputPower(TRANSFER_ENERGY_PER_TICK);
+
   }
 }
