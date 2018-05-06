@@ -24,7 +24,9 @@
 package com.lothrazar.cyclicmagic.energy.battery;
 
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiBattery extends GuiBaseContainer {
@@ -36,5 +38,17 @@ public class GuiBattery extends GuiBaseContainer {
     energyBar.setWidth(16).setY(8).setX(150);
   }
 
-
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.width / 2 - 9,
+        this.guiTop + 34 - 1,
+        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    //DRAW ENERGY BAR
+    //    fuelX = this.guiLeft + getScreenSize().width() - 25;
+    //    fuelY = this.guiTop + 8;
+  }
 }

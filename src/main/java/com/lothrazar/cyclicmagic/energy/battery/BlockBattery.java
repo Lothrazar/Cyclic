@@ -20,7 +20,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     super(Material.ROCK);
     this.isCreative = creat;
     if (isCreative == false)
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
+      this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
   }
 
   @Override
@@ -28,9 +28,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     if (isCreative)
       return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
           new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
-    
-    
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack (this),
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "aaa",
         "aaa",
         "aaa",
@@ -42,6 +40,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     if (isCreative)
       return new TileEntityBatteryInfinite();
     else
-    return new TileEntityBattery();
+      return new TileEntityBattery();
   }
 }
