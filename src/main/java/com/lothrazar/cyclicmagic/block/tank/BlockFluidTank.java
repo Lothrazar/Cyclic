@@ -129,22 +129,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
     }
   }
 
-  //  private Fluid getCurrentFluid(IBlockAccess world, BlockPos pos) {
-  //    TileEntity here = world.getTileEntity(pos);
-  //    //on initial placement, this might be null
-  //    if (here == null || here instanceof TileEntityBucketStorage == false) {
-  //      return null;
-  //    }
-  //    TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-  //    if (container == null) {
-  //      return null;
-  //    }
-  //    FluidStack fs = container.getCurrentFluidStack();
-  //    if (fs == null) {
-  //      return null;
-  //    }
-  //    return fs.getFluid();
-  //  }
+
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
