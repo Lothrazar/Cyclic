@@ -65,7 +65,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
         stack.addEnchantment(Enchantments.RESPIRATION, Enchantments.RESPIRATION.getMaxLevel());
       break;
       case LEGS:
-        stack.addEnchantment(Enchantments.MENDING, Enchantments.MENDING.getMaxLevel());
+        stack.addEnchantment(Enchantments.FIRE_PROTECTION, Enchantments.FIRE_PROTECTION.getMaxLevel());
       break;
     }
     return stack;
