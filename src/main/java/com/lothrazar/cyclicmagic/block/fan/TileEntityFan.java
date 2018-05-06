@@ -190,7 +190,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
 
   private float getSpeedCalc() {
-    return (this.speed) / 15F;
+    return (this.speed) / 35F;
   }
 
   private void doParticles() {
