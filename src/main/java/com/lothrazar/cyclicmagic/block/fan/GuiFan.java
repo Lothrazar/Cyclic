@@ -37,11 +37,7 @@ public class GuiFan extends GuiBaseContainer {
 
   private TileEntityFan tile;
   boolean debugLabels = false;
-  //private ButtonIncrementField btnHeightDown;
-  //  private ButtonIncrementField btnHeightUp;
-  private int xRange = 176 - 25;
-  private int yHeightTxtbox = 38;
-  //  private ButtonFan btnTogglePrt;
+
   private ButtonTileEntityField btnTogglePush;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
