@@ -50,7 +50,6 @@ import net.minecraftforge.fluids.FluidUtil;
 public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
   protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.185D, 0.0D, 0.0D, 0.815D, 1.0D, 1.0D);
-  public static int FUEL_COST = 0;
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilMagma() {
@@ -73,24 +72,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHa
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityAnvilMagma.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 25, 1, 1000, "Lava cost per damage unit");
-
-    //    String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
-//    // @formatter:off
-//   
-//    String[] deflist = new String[] {
-//        "galacticraftcore:battery" 
-//        , "galacticraftcore:oxygen_tank_heavy_full" 
-//        , "galacticraftcore:oxygen_tank_med_full" 
-//        , "galacticraftcore:oil_canister_partial" 
-//        , "galacticraftcore:oxygen_tank_light_full"
-//        ,"pneumaticcraft:*"
-//    };
-//    // @formatter:on
-    //    String[] blacklist = config.getStringList("RepairBlacklist",
-    //        category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles");
-    //    TileEntityAnvilMagma.blacklistBlockIds = NonNullList.from("", blacklist);
+    TileEntityAnvilMagma.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
   }
 
   @Override
@@ -99,9 +81,9 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHa
         "ddd",
         " e ",
         "iii",
-        'i', "blockIron",
-        'e', Blocks.ENCHANTING_TABLE,
-        'd', "gemDiamond");
+        'i', "cobblestone",
+        'e', Blocks.QUARTZ_BLOCK,
+        'd', Blocks.MAGMA);
   }
 
   @Override

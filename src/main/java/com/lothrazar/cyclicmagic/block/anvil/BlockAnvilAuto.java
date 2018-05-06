@@ -84,7 +84,6 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityAnvilAuto.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 25, 1, 1000, "Lava cost per damage unit");
     String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
     // @formatter:off
     String[] deflist = new String[] {
@@ -97,7 +96,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
     };
     // @formatter:on
     String[] blacklist = config.getStringList("RepairBlacklist",
-        category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles");
+        category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles.  Applies to both diamond and magma anvil");
     TileEntityAnvilAuto.blacklistBlockIds = NonNullList.from("", blacklist);
   }
 

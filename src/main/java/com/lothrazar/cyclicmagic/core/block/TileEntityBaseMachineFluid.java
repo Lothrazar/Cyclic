@@ -98,7 +98,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    tank.setFluid(result);
+    // tank.setFluid(result);
     return result;
   }
 

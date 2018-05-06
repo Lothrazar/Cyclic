@@ -37,7 +37,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 3;
+  public static final int TIMER_FULL = 5;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;

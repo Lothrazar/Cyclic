@@ -1,0 +1,7 @@
+{
+   "parent": "cyclicmagic:parent/anvil",
+   "textures": {
+        "particle": "blocks/magma",
+        "body": "blocks/magma"
+    }
+}

@@ -34,10 +34,9 @@ import net.minecraft.util.NonNullList;
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 3;
+  public static final int TIMER_FULL = 1;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  public static int FLUID_COST = 75;
   public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
