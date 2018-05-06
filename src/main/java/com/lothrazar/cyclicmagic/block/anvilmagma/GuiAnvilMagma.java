@@ -21,26 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.anvil;
+package com.lothrazar.cyclicmagic.block.anvilmagma;
 
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAnvilAuto extends GuiBaseContainer {
+public class GuiAnvilMagma extends GuiBaseContainer {
 
-  public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
-    super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
+  public GuiAnvilMagma(InventoryPlayer inventoryPlayer, TileEntityAnvilMagma tileEntity) {
+    super(new ContainerAnvilMagma(inventoryPlayer, tileEntity), tileEntity);
 
-    this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
+    this.fieldRedstoneBtn = TileEntityAnvilMagma.Fields.REDSTONE.ordinal();
 
+    this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
+    fluidBar.setCapacity(TileEntityAnvilMagma.TANK_FULL);
   }
 
   @Override
@@ -50,13 +51,15 @@ public class GuiAnvilAuto extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + 50 - 1,
-        this.guiTop + ContainerAnvilAuto.SLOTY - 1,
+        this.guiTop + ContainerAnvilMagma.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + 110 - 1,
-        this.guiTop + ContainerAnvilAuto.SLOTY - 1,
+        this.guiTop + ContainerAnvilMagma.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
+    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
+        Const.Res.FLUID_LAVA);
 
   }
 

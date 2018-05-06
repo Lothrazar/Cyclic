@@ -56,7 +56,7 @@ public class GuiFan extends GuiBaseContainer {
     super.initGui();
     int id = 2;
     int w = 18, h = 10;
-    int yOffset = 14;
+
     int x = this.guiLeft + 30;
     int y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();

@@ -30,6 +30,8 @@ import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
 import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
@@ -213,6 +215,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableMilk;
   private boolean enablePoison;
   private boolean dispenserPowered;
+  private boolean anvilMagma;
+  private boolean battery;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -425,6 +429,11 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
+    if (anvilMagma) {
+      BlockAnvilMagma block_anvil_magma = new BlockAnvilMagma();
+      BlockRegistry.registerBlock(block_anvil_magma, "block_anvil_magma", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + "block_anvil_magma_te");
+    }
     if (enablePeat) {
       //peat 
       ItemBiomass peat_biomass = new ItemBiomass();
@@ -448,6 +457,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
       //TODO BATT CONF  
+    }
+    if (battery) {
       BlockBattery battery = new BlockBattery(false);
       BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
@@ -573,6 +584,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -596,6 +608,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    anvilMagma = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

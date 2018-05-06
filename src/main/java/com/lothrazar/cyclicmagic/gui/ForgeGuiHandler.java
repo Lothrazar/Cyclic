@@ -26,6 +26,9 @@ package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.anvil.ContainerAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.GuiAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvilmagma.ContainerAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.GuiAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.block.autouser.GuiUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
@@ -196,6 +199,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_FLUIDPUMP = 36;
   public static final int GUI_INDEX_ENERGYPUMP = 37;
   public static final int GUI_INDEX_BATTERY = 38;
+  public static final int GUI_INDEX_ANVILMAGMA = 39;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -396,6 +400,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerBattery(player.inventory, (TileEntityBattery) te);
         }
       break;
+      case GUI_INDEX_ANVILMAGMA:
+        if (te instanceof TileEntityAnvilMagma) {
+          return new ContainerAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
+        }
+      break;
     }
     return null;
   }
@@ -589,6 +598,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_BATTERY:
           if (te instanceof TileEntityBattery) {
             return new GuiBattery(player.inventory, (TileEntityBattery) te);
+          }
+        break;
+        case GUI_INDEX_ANVILMAGMA:
+          if (te instanceof TileEntityAnvilMagma) {
+            return new GuiAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
           }
         break;
       }

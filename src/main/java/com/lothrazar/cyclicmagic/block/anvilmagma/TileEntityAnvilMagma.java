@@ -21,24 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.anvil;
+package com.lothrazar.cyclicmagic.block.anvilmagma;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
-public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
   public static final int TIMER_FULL = 3;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;
-  public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
     TIMER, REDSTONE;
@@ -47,16 +49,17 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   private int timer = 0;
   private int needsRedstone = 0;
 
-  public TileEntityAnvilAuto() {
+  public TileEntityAnvilMagma() {
     super(2);
+    tank = new FluidTankBase(TANK_FULL);
+    tank.setFluidAllowed(FluidRegistry.LAVA);
 
-    this.initEnergy(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
   }
 
   private boolean isBlockAllowed(ItemStack thing) {
-    return UtilString.isInList(blacklistBlockIds, thing.getItem().getRegistryName()) == false;
+    return UtilString.isInList(TileEntityAnvilAuto.blacklistBlockIds, thing.getItem().getRegistryName()) == false;
   }
 
   @Override
@@ -80,23 +83,28 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       }
       return;
     }
-    if (inputStack.isEmpty()) {
+    if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
     this.spawnParticlesAbove();
-    //pay energy each tick
-    if (this.updateEnergyIsBurning() == false) {
-      return;
-    }
 
+    if (this.getCurrentFluidStackAmount() < 0) {
+      this.setCurrentFluid(0);
+    }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
-      if (inputStack.isItemDamaged()) {
+      if (inputStack.isItemDamaged() && this.hasEnoughFluid()) {
         inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay fluid each repair update 
+        //pay fluid each repair update
+        this.drain(FLUID_COST, true);
       }
     }
+  }
+
+  private boolean hasEnoughFluid() {
+    FluidStack contains = this.tank.getFluid();
+    return (contains != null && contains.amount >= FLUID_COST);
   }
 
   @Override

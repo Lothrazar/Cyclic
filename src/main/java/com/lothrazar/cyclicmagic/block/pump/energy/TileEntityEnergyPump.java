@@ -48,7 +48,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
 
   public TileEntityEnergyPump() {
     super(0);
-    this.initEnergy(0, TRANSFER_ENERGY_PER_TICK);
+    this.initEnergy(0, 8 * 1000);
   }
 
   @Override
