@@ -5,36 +5,36 @@
             "from": [ 2, 0, 2 ],
             "to": [ 14, 4, 14 ],
             "faces": {
-                "down":  { "uv": [ 2,  2, 14, 14 ], "texture": "#body", "rotation": 180, "cullface": "down" },
-                "up":    { "uv": [ 2,  2, 14, 14 ], "texture": "#body", "rotation": 180 },
-                "north": { "uv": [ 2, 10, 14, 14 ], "texture": "#body" },
-                "south": { "uv": [ 2, 10, 14, 14 ], "texture": "#body" },
-                "west":  { "uv": [ 2,  2,  6, 14 ], "texture": "#body", "rotation":  90 },
-                "east":  { "uv": [ 6,  2,  2, 14 ], "texture": "#body", "rotation": 270 }
+                "down":  { "uv": [ 2,  2, 14, 14 ], "texture": "#base", "rotation": 180, "cullface": "down" },
+                "up":    { "uv": [ 2,  2, 14, 14 ], "texture": "#base", "rotation": 180 },
+                "north": { "uv": [ 2, 10, 14, 14 ], "texture": "#base" },
+                "south": { "uv": [ 2, 10, 14, 14 ], "texture": "#base" },
+                "west":  { "uv": [ 2,  2,  6, 14 ], "texture": "#base", "rotation":  90 },
+                "east":  { "uv": [ 6,  2,  2, 14 ], "texture": "#base", "rotation": 270 }
             }
         },
         {   "__comment": "Lower narrow portion",
             "from": [ 4, 4, 3 ],
             "to": [ 12, 5, 13 ],
             "faces": {
-                "down":  { "uv": [ 4,  3, 12, 13 ], "texture": "#body", "rotation": 180 },
-                "up":    { "uv": [ 4,  3, 12, 13 ], "texture": "#body", "rotation": 180 },
-                "north": { "uv": [ 4, 11, 12, 12 ], "texture": "#body" },
-                "south": { "uv": [ 4, 11, 12, 12 ], "texture": "#body" },
-                "west":  { "uv": [ 4,  3,  5, 13 ], "texture": "#body", "rotation":  90 },
-                "east":  { "uv": [ 5,  3,  4, 13 ], "texture": "#body", "rotation": 270 }
+                "down":  { "uv": [ 4,  3, 12, 13 ], "texture": "#base", "rotation": 180 },
+                "up":    { "uv": [ 4,  3, 12, 13 ], "texture": "#base", "rotation": 180 },
+                "north": { "uv": [ 4, 11, 12, 12 ], "texture": "#base" },
+                "south": { "uv": [ 4, 11, 12, 12 ], "texture": "#base" },
+                "west":  { "uv": [ 4,  3,  5, 13 ], "texture": "#base", "rotation":  90 },
+                "east":  { "uv": [ 5,  3,  4, 13 ], "texture": "#base", "rotation": 270 }
             }
         },
         {   "__comment": "Wider section beneath top portion",
             "from": [ 6, 5, 4 ],
             "to": [ 10, 10, 12 ],
             "faces": {
-                "down":  { "uv": [ 10, 12,  6,  4 ], "texture": "#body", "rotation": 180 },
-                "up":    { "uv": [ 10, 12,  6,  4 ], "texture": "#body", "rotation": 180 },
-                "north": { "uv": [  6,  6, 10, 11 ], "texture": "#body" },
-                "south": { "uv": [  6,  6, 10, 11 ], "texture": "#body" },
-                "west":  { "uv": [  5,  4, 10, 12 ], "texture": "#body", "rotation":  90 },
-                "east":  { "uv": [ 10,  4,  5, 12 ], "texture": "#body", "rotation": 270 }
+                "down":  { "uv": [ 10, 12,  6,  4 ], "texture": "#pillar", "rotation": 180 },
+                "up":    { "uv": [ 10, 12,  6,  4 ], "texture": "#pillar", "rotation": 180 },
+                "north": { "uv": [  6,  6, 10, 11 ], "texture": "#pillar" },
+                "south": { "uv": [  6,  6, 10, 11 ], "texture": "#pillar" },
+                "west":  { "uv": [  5,  4, 10, 12 ], "texture": "#pillar", "rotation":  90 },
+                "east":  { "uv": [ 10,  4,  5, 12 ], "texture": "#pillar", "rotation": 270 }
             }
         },
         {   "__comment": "Anvil top",
