@@ -44,6 +44,7 @@ public class Const {
     public static final ResourceLocation TABLEFILTER = new ResourceLocation(Const.MODID, folder + "filter.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
+    public static final ResourceLocation BACKGROUND_SACK = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
     //    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
     //    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
     public static final ResourceLocation ENERGY_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_ctr.png");
@@ -61,7 +62,7 @@ public class Const {
   }
 
   public static enum ScreenSize {
-    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;
+    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, SACK;
 
     public int width() {
       switch (this) {
@@ -71,6 +72,10 @@ public class Const {
           return 176;
         case LARGEWIDE:
           return 250;
+        case SACK:
+          return 212;
+        default:
+        break;
       }
       return 0;
     }
@@ -83,6 +88,10 @@ public class Const {
         case LARGE:
         case LARGEWIDE:
           return 212;
+        case SACK:
+          return 220;
+        default:
+        break;
       }
       return 0;
     }
@@ -95,6 +104,8 @@ public class Const {
         case LARGE:
         case LARGEWIDE:
           return 130;
+        case SACK:
+          return 138;
       }
       return 0;
     }
@@ -107,6 +118,10 @@ public class Const {
           return Const.PAD;
         case LARGEWIDE:
           return 48;//currently just merchant
+        case SACK:
+          return 26;
+        default:
+        break;
       }
       return 0;
     }
@@ -121,6 +136,10 @@ public class Const {
           return Res.TABLELARGE;
         case LARGEWIDE:
           return Res.VILLAGER;
+        case SACK:
+          return Res.BACKGROUND_SACK;
+        default:
+        break;
       }
       return null;
     }

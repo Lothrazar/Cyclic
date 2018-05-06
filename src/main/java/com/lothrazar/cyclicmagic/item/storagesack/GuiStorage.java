@@ -29,22 +29,21 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiStorage extends GuiBaseContainer {
 
-  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
-  static final int texture_width = 212;// 176;
-  static final int texture_height = 212;
+  static final int texture_width = 212;
+  static final int texture_height = 220;
   private GuiButtonTooltip buttonToggle;
 
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
     this.xSize = texture_width;
     this.ySize = texture_height;
-
+    this.setScreenSize(ScreenSize.SACK);
   }
 
   @Override
@@ -77,16 +76,11 @@ public class GuiStorage extends GuiBaseContainer {
     //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     this.drawDefaultBackground();//dim the background as normal
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(BACKGROUND);
+    this.mc.getTextureManager().bindTexture(Const.Res.BACKGROUND_SACK);
     int thisX = (this.width - this.xSize) / 2;
     int thisY = (this.height - this.ySize) / 2;
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
   }
 
-  //  @Override
-  //  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-  //    super.drawScreen(mouseX, mouseY, partialTicks);
-  //    this.renderHoveredToolTip(mouseX, mouseY);
-  //  }
 }

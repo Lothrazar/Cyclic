@@ -36,7 +36,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage extends InventoryBase implements IInventory {
 
-  public static final int INV_SIZE = 66; //6*11
+  public static final int INV_SIZE = 7 * 11; //6*11
   //  private ItemStack[] inv = new ItemStack[INV_SIZE];
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
@@ -166,7 +166,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
       // 1.7.2+ change to items.getCompoundTagAt(i)
-      NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
+      NBTTagCompound item = items.getCompoundTagAt(i);
       int slot = item.getInteger("Slot");
       if (slot >= 0 && slot < INV_SIZE) {
         inv.set(slot, UtilNBT.itemFromNBT(item));

@@ -27,12 +27,9 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,7 +40,6 @@ public class ContainerBaseMachine extends ContainerBase {
   public static final int SLOTY_FUEL = Const.PAD;
   private int[] tileMap;
   protected TileEntityBaseMachineInvo tile;
-  private Const.ScreenSize screenSize = ScreenSize.STANDARD;
   private boolean hasTile;
 
   public ContainerBaseMachine() {
@@ -54,37 +50,12 @@ public class ContainerBaseMachine extends ContainerBase {
     this.setTile(t);
   }
 
-  protected void setScreenSize(Const.ScreenSize ss) {
-    this.screenSize = ss;
-  }
-
-  public Const.ScreenSize getScreenSize() {
-    return screenSize;
-  }
-
-  protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 9; j++) {
-        addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-            getScreenSize().playerOffsetX() + j * Const.SQ, /// X
-            getScreenSize().playerOffsetY() + i * Const.SQ// Y
-        ));
-      }
-    }
-    bindPlayerHotbar(inventoryPlayer);
-  }
-
   private void setTile(TileEntityBaseMachineInvo tile) {
     this.hasTile = true;
     this.tile = tile;
     this.tileMap = new int[tile.getFieldOrdinals().length];
   }
 
-  protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
-    for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i, getScreenSize().playerOffsetX() + i * Const.SQ, getScreenSize().playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
-    }
-  }
 
   protected void syncFields() {
     int fieldId;

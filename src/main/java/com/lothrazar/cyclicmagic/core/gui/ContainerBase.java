@@ -23,13 +23,45 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.gui;
 
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 
 public class ContainerBase extends Container {
+
+  private Const.ScreenSize screenSize = ScreenSize.STANDARD;
+
+  protected void setScreenSize(Const.ScreenSize ss) {
+    this.screenSize = ss;
+  }
+
+  public Const.ScreenSize getScreenSize() {
+    return screenSize;
+  }
 
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
     return true;
+  }
+
+  protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 9; j++) {
+        addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
+            getScreenSize().playerOffsetX() + j * Const.SQ, /// X
+            getScreenSize().playerOffsetY() + i * Const.SQ// Y
+        ));
+      }
+    }
+    bindPlayerHotbar(inventoryPlayer);
+  }
+
+  protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
+    for (int i = 0; i < 9; i++) {
+      addSlotToContainer(new Slot(inventoryPlayer, i, getScreenSize().playerOffsetX() + i * Const.SQ, getScreenSize().playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
+    }
   }
 }
