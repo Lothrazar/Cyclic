@@ -44,7 +44,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
     if (fluidStack == null) {
       return;
     }
-    //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+
     GlStateManager.pushMatrix();
     GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
     GL11.glEnable(GL11.GL_CULL_FACE);
@@ -59,7 +59,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
       //so we get range smaller THAN [0,1] -> avoids texture layer fighting
-      double posY = 0.02 + (.95 * ((float) fluidStack.amount / (float) te.getCapacity()));
+      double posY = 0.01 + (.99 * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
