@@ -111,11 +111,13 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     //that is, if item starts on conveyor. it moves
     //still trouble with edge/transition: rounding out from flat to vertical and opposite
     if (entity instanceof EntityLivingBase == false) {
+
       entity.onGround = false;
       // entity.setGlowing(true);
       float yaw = 0;
       //TODO: shreadcode GuiVector
-      switch (getFacingFromState(state)) {
+      EnumFacing face = getFacingFromState(state);
+      switch (face) {
         case DOWN:
         break;
         case EAST:
@@ -135,7 +137,9 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         default:
         break;
       }
-      UtilEntity.setVelocity(entity, 50, yaw, power);
+      //close to 45 degrees
+      UtilEntity.setVelocity(entity, 45, yaw, power * 1.5F);
+      hackOverBump(worldIn, pos, entity, face);
     }
     else {
       super.onEntityCollidedWithBlock(worldIn, pos, state, entity);

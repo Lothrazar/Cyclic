@@ -107,6 +107,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+  //  this.getCollisionBoundingBox(blockState, worldIn, pos)
     return AABB;
   }
 
@@ -115,7 +116,23 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }
-    tickMovement(pos, entity, getFacingFromState(state));
+    EnumFacing face = getFacingFromState(state);
+    tickMovement(pos, entity, face);
+    if (entity instanceof EntityLivingBase == false) {
+      entity.motionY += 0.5;
+    }
+    //hack to get over the bump
+    hackOverBump(worldIn, pos, entity, face);
+  }
+
+  protected void hackOverBump(World worldIn, BlockPos pos, Entity entity, EnumFacing face) {
+    if (entity instanceof EntityLivingBase == false &&
+        worldIn.getBlockState(pos.offset(face)).getBlock() instanceof BlockConveyorAngle ||
+        worldIn.getBlockState(pos.offset(face).up()).getBlock() instanceof BlockConveyorAngle) {
+      //      entity.setGlowing(true);
+      entity.onGround = false;
+      entity.motionY += 0.1;
+    }
   }
 
   protected void tickMovement(BlockPos pos, Entity entity, EnumFacing face) {
@@ -238,7 +255,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
    */
   @Override
   public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-    //  ModCyclic.logger.error("getStateForPlacement");
+
     // find the quadrant the player is facing
     EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
