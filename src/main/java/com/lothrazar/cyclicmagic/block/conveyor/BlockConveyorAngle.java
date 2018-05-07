@@ -28,9 +28,11 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -62,7 +64,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-    final double heightInc = 0.125D / 2;
+    final double heightInc = 0.0125D;
     final double sideInc = heightInc;
     double edge = 1 - sideInc;
     double height = heightInc;
@@ -101,6 +103,44 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         }
       break;
     }
+  }
+  @Override
+  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    // this is a WORKING PARTIAL fix
+    //that is, if item starts on conveyor. it moves
+    //still trouble with edge/transition: rounding out from flat to vertical and opposite
+    if (entity instanceof EntityLivingBase == false) {
+      entity.onGround = false;
+      // entity.setGlowing(true);
+      float yaw = 0;
+
+      //TODO: shreadcode GuiVector
+      switch (getFacingFromState(state)) {
+        case DOWN:
+        break;
+        case EAST:
+          yaw = 270;
+        break;
+        case NORTH:
+          yaw = 180;
+        break;
+        case SOUTH:
+          yaw = 0;
+        break;
+        case UP:
+        break;
+        case WEST:
+          yaw = 90;
+        break;
+        default:
+        break;
+      }
+      UtilEntity.setVelocity(entity, 50, yaw, power);
+    }
+    else {
+      super.onEntityCollidedWithBlock(worldIn, pos, state, entity);
+    }
+    //    tickMovement(pos, entity, getFacingFromState(state));
   }
 
   @Override
