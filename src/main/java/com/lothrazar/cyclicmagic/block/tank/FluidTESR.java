@@ -44,7 +44,6 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
     if (fluidStack == null) {
       return;
     }
-
     GlStateManager.pushMatrix();
     GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
     GL11.glEnable(GL11.GL_CULL_FACE);

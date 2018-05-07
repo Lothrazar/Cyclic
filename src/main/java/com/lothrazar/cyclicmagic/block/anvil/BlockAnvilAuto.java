@@ -113,5 +113,4 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
         'e', center,
         'd', "gemDiamond");
   }
-
 }

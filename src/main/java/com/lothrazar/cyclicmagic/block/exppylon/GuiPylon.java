@@ -149,7 +149,6 @@ public class GuiPylon extends GuiBaseContainer {
         Const.Res.FLUID_EXP);
   }
 
-
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

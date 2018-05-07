@@ -129,7 +129,6 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
     }
   }
 
-
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {

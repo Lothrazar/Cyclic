@@ -53,7 +53,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     super(2);
     tank = new FluidTankBase(TANK_FULL);
     tank.setFluidAllowed(FluidRegistry.LAVA);
-
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
   }
@@ -87,7 +86,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
       return;//no paying cost on empty work
     }
     this.spawnParticlesAbove();
-
     if (this.getCurrentFluidStackAmount() < 0) {
       this.setCurrentFluid(0);
     }
@@ -125,7 +123,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
   public int getFieldCount() {
     return Fields.values().length;
   }
-
 
   @Override
   public int getField(int id) {

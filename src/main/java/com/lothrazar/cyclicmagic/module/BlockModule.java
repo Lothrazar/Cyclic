@@ -441,7 +441,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
       Item peat_fuel = new ItemPeatFuel();
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
-
       BlockHydrator.addRecipe(new RecipeHydrate(
           new ItemStack[] {
               new ItemStack(Items.WHEAT_SEEDS),
@@ -449,7 +448,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
               new ItemStack(Blocks.LEAVES),
               new ItemStack(Blocks.VINE) },
           new ItemStack(peat_biomass)));
-
       BlockRegistry.registerBlock(new BlockPeat(null), "peat_unbaked", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeat(peat_fuel), "peat_baked", GuideCategory.BLOCKMACHINE);
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
@@ -467,7 +465,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockBattery(true), "battery_infinite", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
-
     if (btrash) {
       BlockTrash trash = new BlockTrash();
       BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);

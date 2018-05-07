@@ -50,7 +50,6 @@ public class GuiUser extends GuiBaseContainer {
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), 1);
-
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(50).setX(156).setY(6);
   }
@@ -81,7 +80,6 @@ public class GuiUser extends GuiBaseContainer {
         Fields.SPEED.ordinal());
     sliderDelay.setTooltip("tile.block_user.speed.tooltip");
     this.addButton(sliderDelay);
-
   }
 
   @Override
@@ -117,7 +115,6 @@ public class GuiUser extends GuiBaseContainer {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
-
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     //max value is dynamic in this case
     progressBar.setMaxValue(tile.getField(Fields.SPEED.ordinal()));

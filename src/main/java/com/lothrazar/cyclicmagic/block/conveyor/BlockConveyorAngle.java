@@ -104,6 +104,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       break;
     }
   }
+
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     // this is a WORKING PARTIAL fix
@@ -113,7 +114,6 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       entity.onGround = false;
       // entity.setGlowing(true);
       float yaw = 0;
-
       //TODO: shreadcode GuiVector
       switch (getFacingFromState(state)) {
         case DOWN:

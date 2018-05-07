@@ -13,6 +13,7 @@ public class FluidBar {
   private int capacity;
   private final int w = 36 / 2;
   private final int h = 124 / 2;
+
   public FluidBar(GuiBaseContainer p, int x, int y) {
     parent = p;
     this.setX(x);
@@ -20,16 +21,12 @@ public class FluidBar {
   }
 
   public void draw(int currentFluid, ResourceLocation fluid) {
-
     int u = 0, v = 0;
-
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
-
     Gui.drawModalRectWithCustomSizedTexture(
         parent.getGuiLeft() + getX(), parent.getGuiTop() + getY(), u, v,
         w, h,
         w, h);
-
     parent.mc.getTextureManager().bindTexture(fluid);
     float percent = (currentFluid / ((float) this.getCapacity()));
     int hpct = (int) ((h - 2) * percent);

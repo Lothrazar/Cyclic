@@ -36,11 +36,9 @@ public class GuiAnvilAuto extends GuiBaseContainer {
 
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
-
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
-
   }
 
   @Override
@@ -56,8 +54,5 @@ public class GuiAnvilAuto extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerAnvilAuto.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
-
   }
-
 }

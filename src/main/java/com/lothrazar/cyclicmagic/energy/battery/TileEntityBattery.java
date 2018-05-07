@@ -36,6 +36,5 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
         this.energyStorage.extractEnergy(actual, false);
       }
     }
-
   }
 }

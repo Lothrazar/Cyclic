@@ -56,7 +56,6 @@ public class ContainerBaseMachine extends ContainerBase {
     this.tileMap = new int[tile.getFieldOrdinals().length];
   }
 
-
   protected void syncFields() {
     int fieldId;
     for (int i = 0; i < this.listeners.size(); ++i) {

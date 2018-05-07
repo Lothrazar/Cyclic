@@ -67,30 +67,25 @@ public class GuiDetector extends GuiBaseContainer {
     int y = 56;
     this.greaterLessBtn = addPatternButtonAt(id++, x + 8, y, true, Fields.GREATERTHAN, 60, 20);
     this.entityBtn = addPatternButtonAt(id++, 8, y, true, Fields.ENTITYTYPE, 60, 20);
-
     int MIN = 1, MAX = TileEntityDetector.MAX_RANGE;
-
     GuiSliderInteger sliderDelayx = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 20, 122, 10, MIN, MAX,
         Fields.RANGEX.ordinal());
     sliderDelayx.setTooltip("tile.entity_detector.rangex");
     this.addButton(sliderDelayx);
-
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 32, 122, 10, MIN, MAX,
         Fields.RANGEY.ordinal());
     sliderDelay.setTooltip("tile.entity_detector.rangey");
     this.addButton(sliderDelay);
-
     GuiSliderInteger sliderDelayz = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 44, 122, 10, MIN, MAX,
         Fields.RANGEZ.ordinal());
     sliderDelayz.setTooltip("tile.entity_detector.rangez");
     this.addButton(sliderDelayz);
-
   }
 
   private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
@@ -123,7 +118,6 @@ public class GuiDetector extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     //draw all text fields
     drawFieldAt(limitColX + 3, sizeY, Fields.LIMIT);
-
     //    //update button text
     EntityType t = this.tile.getEntityType();
     this.entityBtn.displayString = UtilChat.lang("tile.entity_detector." + t.name().toLowerCase());

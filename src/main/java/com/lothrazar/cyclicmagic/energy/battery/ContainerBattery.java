@@ -86,5 +86,4 @@ public class ContainerBattery extends ContainerBaseMachine {
     }
     return stack;
   }
-
 }

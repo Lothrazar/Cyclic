@@ -49,7 +49,6 @@ public class ContainerStorage extends ContainerBase {
   public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
     this.setScreenSize(ScreenSize.SACK);
     this.inventory = invoWand;
-
     int x, y = pad, k, l, slot;
     // start the main container area
     for (l = 0; l < rows; ++l) {
@@ -60,7 +59,6 @@ public class ContainerStorage extends ContainerBase {
         this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
       }
     }
-
     int yBase = pad + rows * Const.SQ + 14;
     this.bindPlayerInventory(playerInventory);
     // start the players inventory

@@ -37,9 +37,7 @@ public class GuiAnvilMagma extends GuiBaseContainer {
 
   public GuiAnvilMagma(InventoryPlayer inventoryPlayer, TileEntityAnvilMagma tileEntity) {
     super(new ContainerAnvilMagma(inventoryPlayer, tileEntity), tileEntity);
-
     this.fieldRedstoneBtn = TileEntityAnvilMagma.Fields.REDSTONE.ordinal();
-
     this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
     fluidBar.setCapacity(TileEntityAnvilMagma.TANK_FULL);
   }
@@ -57,10 +55,7 @@ public class GuiAnvilMagma extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerAnvilMagma.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
     fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_LAVA);
-
   }
-
 }

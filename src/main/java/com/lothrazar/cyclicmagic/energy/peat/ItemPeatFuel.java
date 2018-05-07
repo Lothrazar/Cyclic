@@ -27,7 +27,5 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 
 public class ItemPeatFuel extends BaseItem {
 
-  public ItemPeatFuel() {
-  }
-
+  public ItemPeatFuel() {}
 }

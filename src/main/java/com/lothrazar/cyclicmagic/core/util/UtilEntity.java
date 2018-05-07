@@ -328,7 +328,6 @@ public class UtilEntity {
       if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
         continue;//sneak avoid feature
       }
-
       xDist = Math.abs(x - entity.getPosition().getX());
       zDist = Math.abs(z - entity.getPosition().getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
@@ -338,7 +337,7 @@ public class UtilEntity {
         //          entity.motionY = -1 * direction * speed;
         //        }
         //        else {
-          Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
+        Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
         //        }
         moved++;
       } //else its basically on it, no point

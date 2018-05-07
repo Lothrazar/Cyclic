@@ -164,10 +164,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-
       case RECIPELOCKED:
         return this.recipeIsLocked;
-
     }
     return -1;
   }
@@ -181,11 +179,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       case TIMER:
         this.timer = value;
       break;
-
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
       break;
-
     }
   }
 

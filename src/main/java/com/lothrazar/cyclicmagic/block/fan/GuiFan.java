@@ -37,7 +37,6 @@ public class GuiFan extends GuiBaseContainer {
 
   private TileEntityFan tile;
   boolean debugLabels = false;
-
   private ButtonTileEntityField btnTogglePush;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
@@ -52,7 +51,6 @@ public class GuiFan extends GuiBaseContainer {
     super.initGui();
     int id = 2;
     int w = 18, h = 10;
-
     int x = this.guiLeft + 30;
     int y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
@@ -61,7 +59,6 @@ public class GuiFan extends GuiBaseContainer {
     sliderDelay.setTooltip("button.fan.range.tooltip");
     this.addButton(sliderDelay);
     //    
-
     ///////////////// SPEED BUTTONS
     y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
@@ -69,7 +66,6 @@ public class GuiFan extends GuiBaseContainer {
         field);
     sliderOffset.setTooltip("button.fan.speed.tooltip");
     this.addButton(sliderOffset);
-
     //the big push pull toggle button
     w = 70;
     h = 20;

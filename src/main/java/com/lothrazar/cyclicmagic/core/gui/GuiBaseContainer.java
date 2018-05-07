@@ -207,7 +207,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.energyBar != null && tile != null
         && tile.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
       energyBar.draw(tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP));
-
     }
   }
 
@@ -253,12 +252,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (tile instanceof ITileStackWrapper) {
       ITileStackWrapper te = (ITileStackWrapper) tile;
       StackWrapper wrap;
-
       for (int i = 0; i < te.getWrapperCount(); i++) {
         wrap = te.getStackWrapper(i);
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
           //      this.hoveredSlot = slot;
-
           GlStateManager.disableLighting();
           GlStateManager.disableDepth();
           int j1 = wrap.getX() + 1;
@@ -274,7 +271,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
-
 
   @Override
   protected <T extends GuiButton> T addButton(T buttonIn) {

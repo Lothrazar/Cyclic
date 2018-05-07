@@ -62,10 +62,8 @@ public class GuiEnchanter extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerEnchanter.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
     fluidBar.draw(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_EXP);
   }
-
 }

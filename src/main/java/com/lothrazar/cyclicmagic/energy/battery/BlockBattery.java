@@ -85,7 +85,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       lol.setInteger("energy", tags.getInt());//NBTTagInt
       lol.setInteger("energyMAX", handlerHere.getMaxEnergyStored());
       stack.setTagCompound(lol);
-
     }
     ret.add(stack);
     return ret;
@@ -95,13 +94,10 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
       NBTTagCompound tags = stack.getTagCompound();
-
       int energy = tags.getInteger("energy");
-
       //  IEnergyStorage handlerHere =  world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
       TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);
       container.setEnergyCurrent(energy);
-
     }
   }
 }

@@ -67,5 +67,4 @@ public class GuiPeatFarm extends GuiBaseContainer {
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_WATER);
   }
-
 }

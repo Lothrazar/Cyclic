@@ -120,7 +120,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
     //just fix it. root cause seems fine esp with UtilShape used
     EnumFacing face = getCurrentFacing();
-
     switch (face) {
       case NORTH:
         start = start.south();
@@ -135,7 +134,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         start = start.east();
       break;
       case DOWN:
-
       break;
       case UP:
       default:
@@ -144,7 +142,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     AxisAlignedBB region = new AxisAlignedBB(start, end);
     List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
     int moved = 0;
-
     boolean doPush = (pushIfZero == 0);
     int direction = 1;
     float SPEED = this.getSpeedCalc();

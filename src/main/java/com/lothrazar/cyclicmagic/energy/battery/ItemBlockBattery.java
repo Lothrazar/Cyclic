@@ -10,8 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockBattery extends ItemBlock {
-  
-  
+
   public ItemBlockBattery(Block block) {
     super(block);
   }
@@ -19,9 +18,7 @@ public class ItemBlockBattery extends ItemBlock {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack item, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    if (item.getTagCompound() != null && item.getTagCompound() .hasKey("energy")) {
-      
-      
+    if (item.getTagCompound() != null && item.getTagCompound().hasKey("energy")) {
       int energy = item.getTagCompound().getInteger("energy");
       int energyMAX = item.getTagCompound().getInteger("energyMAX");
       //      ModCyclic.logger.log(energy.toString());
@@ -29,7 +26,6 @@ public class ItemBlockBattery extends ItemBlock {
       //      IEnergyStorage energy = CapabilityEnergy.ENERGY.getDefaultInstance();
       //      CapabilityEnergy.ENERGY.readNBT(energy, null, item.getTagCompound());
       //      tooltip.add(energy.getEnergyStored() + "/" + energy.getMaxEnergyStored());
-
     }
     else
       tooltip.add(UtilChat.lang("tile.battery.tooltip"));

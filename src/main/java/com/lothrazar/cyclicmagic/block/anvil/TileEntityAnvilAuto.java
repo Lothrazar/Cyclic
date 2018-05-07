@@ -48,7 +48,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityAnvilAuto() {
     super(2);
-
     this.initEnergy(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
@@ -87,7 +86,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
@@ -116,7 +114,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public int getFieldCount() {
     return Fields.values().length;
   }
-
 
   @Override
   public int getField(int id) {
