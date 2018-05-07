@@ -10,18 +10,11 @@
 	"elements": [
 		{
 			"name": "RailW",
-			"from": [0, 9, -4],
-			"to": [2, 12, 20],
-			"rotation": {
-				"angle": 45,
-				"axis": "x",
-				"origin": [1, 10.5, 4]
-			},
+			"from": [0.25, 10.5, -4],
+			"to": [2, 13.5, 20],
+			"rotation": {"angle": 45, "axis": "x", "origin": [1, 12, 4]},
 			"faces": {
-				"north": {
-					"uv": [14, 13, 16, 16],
-					"texture": "#end"
-				},
+				"north": {"uv": [14, 13, 16, 16], "texture": "#end"},
 				"east": {"uv": [0, 13, 16, 16], "texture": "#side"},
 				"south": {"uv": [0, 13, 2, 16], "texture": "#end"},
 				"west": {"uv": [0, 13, 16, 16], "texture": "#side"},
@@ -31,37 +24,23 @@
 		},
 		{
 			"name": "RailE",
-			"from": [14, 9, -4],
-			"to": [16, 12, 20],
-			"rotation": {
-				"angle": 45,
-				"axis": "x",
-				"origin": [15, 10.5, 4]
-			},
+			"from": [14, 10.5, -4],
+			"to": [15.75, 13.5, 20],
+			"rotation": {"angle": 45, "axis": "x", "origin": [15, 12, 4]},
 			"faces": {
 				"north": {"uv": [0, 13, 2, 16], "texture": "#end"},
 				"east": {"uv": [0, 13, 16, 16], "texture": "#side"},
-				"south": {
-					"uv": [14, 13, 16, 16],
-					"texture": "#end"
-				},
+				"south": {"uv": [14, 13, 16, 16], "texture": "#end"},
 				"west": {"uv": [0, 13, 16, 16], "texture": "#side"},
 				"up": {"uv": [14, 0, 16, 16], "texture": "#top"},
-				"down": {
-					"uv": [14, 0, 16, 16],
-					"texture": "#bottom"
-				}
+				"down": {"uv": [14, 0, 16, 16], "texture": "#bottom"}
 			}
 		},
 		{
 			"name": "Middle",
-			"from": [2, 10, -3],
-			"to": [14, 11, 20],
-			"rotation": {
-				"angle": 45,
-				"axis": "x",
-				"origin": [8, 10.5, 5]
-			},
+			"from": [2, 11.5, -3],
+			"to": [14, 12.5, 20],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 5]},
 			"faces": {
 				"north": {"uv": [14, 0, 2, 1], "texture": "#top"},
 				"south": {"uv": [2, 15, 14, 16], "texture": "#top"},
@@ -70,13 +49,9 @@
 		},
 		{
 			"name": "MiddleBasePlate",
-			"from": [2, 10, -3],
-			"to": [14, 11, 20],
-			"rotation": {
-				"angle": 45,
-				"axis": "x",
-				"origin": [8, 10.5, 5]
-			},
+			"from": [2, 11.5, -3],
+			"to": [14, 12.5, 20],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 5]},
 			"faces": {
 				"north": {"uv": [2, 15, 14, 16], "texture": "#end"},
 				"south": {"uv": [2, 15, 14, 16], "texture": "#end"},

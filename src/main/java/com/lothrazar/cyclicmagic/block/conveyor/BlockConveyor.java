@@ -120,9 +120,9 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     tickMovement(pos, entity, face);
     if (entity instanceof EntityLivingBase == false) {
       entity.motionY += 0.5;
+      hackOverBump(worldIn, pos, entity, face);
     }
     //hack to get over the bump
-    hackOverBump(worldIn, pos, entity, face);
   }
 
   protected void hackOverBump(World worldIn, BlockPos pos, Entity entity, EnumFacing face) {
