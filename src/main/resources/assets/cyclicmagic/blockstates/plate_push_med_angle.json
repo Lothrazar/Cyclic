@@ -1,9 +1,13 @@
 {
     "variants": {
 		"normal": { "model": "cyclicmagic:conveyor_med_angle" },
-        "facing=north": { "model": "cyclicmagic:conveyor_med_angle" },
-        "facing=east":  { "model": "cyclicmagic:conveyor_med_angle" ,"y":90},
-        "facing=south": { "model": "cyclicmagic:conveyor_med_angle" ,"y":180},
-        "facing=west":  { "model": "cyclicmagic:conveyor_med_angle" ,"y":270}
+        "facing=north,flipped=false": { "model": "cyclicmagic:conveyor_medium_angle" },
+        "facing=east,flipped=false":  { "model": "cyclicmagic:conveyor_medium_angle" ,"y":90},
+        "facing=south,flipped=false": { "model": "cyclicmagic:conveyor_medium_angle" ,"y":180},
+        "facing=west,flipped=false":  { "model": "cyclicmagic:conveyor_medium_angle" ,"y":270},
+        "facing=north,flipped=true": { "model": "cyclicmagic:conveyor_medium_angle_down" },
+        "facing=east,flipped=true":  { "model": "cyclicmagic:conveyor_medium_angle_down" ,"y":90},
+        "facing=south,flipped=true": { "model": "cyclicmagic:conveyor_medium_angle_down" ,"y":180},
+        "facing=west,flipped=true":  { "model": "cyclicmagic:conveyor_medium_angle_down" ,"y":270}
     }
 }

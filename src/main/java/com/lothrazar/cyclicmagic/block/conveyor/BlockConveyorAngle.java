@@ -27,11 +27,16 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -42,6 +47,7 @@ import net.minecraft.world.World;
 
 public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
+  public static final PropertyBool FLIPPED = PropertyBool.create("flipped");
   private BlockConveyor drop;
 
   public BlockConveyorAngle(SpeedType type) {
@@ -55,6 +61,35 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     this.drop = drop;
   }
 
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING, FLIPPED });
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    int meta = (state.getValue(FLIPPED) ? 10 : 0);
+    EnumFacing facing = state.getValue(PROPERTYFACING);
+    int facingbits = facing.getHorizontalIndex();
+    return facingbits + meta;
+  }
+
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    boolean flipped = false;
+    if (meta >= 10) {
+      flipped = true;
+      meta -= 10;
+    }
+    return super.getStateFromMeta(meta).withProperty(FLIPPED, flipped);
+  }
+  @Override
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    //flip on sneak
+    ModCyclic.logger.log("State flip" + placer.isSneaking());
+    return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer)
+        .withProperty(FLIPPED, !placer.isSneaking());
+  }
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -111,16 +146,23 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+      return;
+    }
     // this is a WORKING PARTIAL fix
     //that is, if item starts on conveyor. it moves
     //still trouble with edge/transition: rounding out from flat to vertical and opposite
+    EnumFacing face = getFacingFromState(state);
+    if (state.getValue(FLIPPED)) {
+      face = face.getOpposite();
+    }
     if (entity instanceof EntityLivingBase == false) {
 
       entity.onGround = false;
       // entity.setGlowing(true);
       float yaw = 0;
       //TODO: shreadcode GuiVector
-      EnumFacing face = getFacingFromState(state);
+      //      EnumFacing face = getFacingFromState(state);
       switch (face) {
         case DOWN:
         break;
@@ -146,7 +188,9 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       hackOverBump(worldIn, pos, entity, face);
     }
     else {
-      super.onEntityCollidedWithBlock(worldIn, pos, state, entity);
+      //NEW 
+      tickMovement(pos, entity, face);
+      // super.onEntityCollidedWithBlock(worldIn, pos, state, entity);
     }
     //    tickMovement(pos, entity, getFacingFromState(state));
   }

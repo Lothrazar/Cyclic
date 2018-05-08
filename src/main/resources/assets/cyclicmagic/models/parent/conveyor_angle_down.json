@@ -1,4 +1,5 @@
 {
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
 		"top": "cyclicmagic:blocks/conveyor/conveyor_bottom",
 		"side": "cyclicmagic:blocks/conveyor/conveyor_side",
@@ -43,7 +44,7 @@
 			"faces": {
 				"north": {"uv": [14, 0, 2, 1], "texture": "#top"},
 				"south": {"uv": [2, 15, 14, 16], "texture": "#top"},
-				"up": {"uv": [2, 0, 14, 16], "texture": "#top"}
+				"up": {"uv": [2, 0, 14, 16], "texture": "#top", "rotation":180}
 			}
 		},
 		{
