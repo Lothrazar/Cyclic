@@ -296,16 +296,16 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     BlockPos posTarget = new BlockPos(pos);
     IBlockState targetState = null;
     if (isEastUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, eastUp.getValue(PROPERTYFACING));//.withProperty(BlockConveyorCorner.FLIPPED, true);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST);//.withProperty(BlockConveyorCorner.FLIPPED, true);
     }
     if (isWestUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, westUp.getValue(PROPERTYFACING));//.withProperty(BlockConveyorCorner.FLIPPED, true);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.WEST);//.withProperty(BlockConveyorCorner.FLIPPED, true);
     }
     if (isSouthUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, southUp.getValue(PROPERTYFACING));//.withProperty(BlockConveyorCorner.FLIPPED, true);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.SOUTH);//.withProperty(BlockConveyorCorner.FLIPPED, true);
     }
     if (isNorthUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, northUp.getValue(PROPERTYFACING));//.withProperty(BlockConveyorCorner.FLIPPED, true);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.NORTH);//.withProperty(BlockConveyorCorner.FLIPPED, true);
     }
     else if (isNorth && isWest) {
       if (west.getValue(PROPERTYFACING) == EnumFacing.EAST) {
