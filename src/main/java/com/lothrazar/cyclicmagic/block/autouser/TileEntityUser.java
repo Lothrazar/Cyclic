@@ -235,17 +235,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     //  ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
-    EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    if (r != EnumActionResult.SUCCESS) {
+    EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    //ModCyclic.logger.log("rightClick client== " + this.world.isRemote + r.toString());
+    if (result != EnumActionResult.SUCCESS) {
       //if its a throwable item, it happens on this line down below, the process right click
-      r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+      result = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
       if (fakePlayer.get().getHeldItemMainhand().getCount() == 0) {
         //some items from some mods dont handle stack size zero and trigger it to empty, so handle that edge case
         inv.set(toolSlot, ItemStack.EMPTY);
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
       }
       //if throw has happened, success is true
-      if (r != EnumActionResult.SUCCESS) {
+      if (result != EnumActionResult.SUCCESS) {
         ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
         if (res == null || res.getType() != EnumActionResult.SUCCESS) {
           //this item onrightclick would/should/could work for GLASS_BOTTLE...except
@@ -328,6 +329,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             maybeTool.shrink(1 + hack);
           }
           this.tryDumpFakePlayerInvo(false);
+          return success;
         }
       }
       else {//no tank, just open world
