@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
@@ -70,7 +71,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected BlockConveyor corner;
   public static boolean doCorrections = true;
   protected boolean keepEntityGrounded = true;
-  private BlockConveyor angled;
+  protected BlockConveyor angled;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
@@ -94,12 +95,12 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     }
   }
 
-  public BlockConveyor(BlockConveyor corner, BlockConveyor angled) {
+  public BlockConveyor(@Nonnull BlockConveyor corner, @Nonnull BlockConveyor angled) {
     this(corner.type);
     this.corner = corner;
+    this.angled = angled;
     this.setSoundType(SoundType.METAL);
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
-    this.angled = angled;
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
 

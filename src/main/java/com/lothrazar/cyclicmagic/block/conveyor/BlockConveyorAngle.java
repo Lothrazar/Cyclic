@@ -47,6 +47,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public BlockConveyorAngle(SpeedType type) {
     super(type);
     this.keepEntityGrounded = false;
+    angled = this;
+    corner = null;
   }
 
   public void setDrop(BlockConveyor drop) {
