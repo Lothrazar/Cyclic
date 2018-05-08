@@ -47,16 +47,11 @@ public class RecipeZen {
     }
   }
 
+  @Deprecated
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeShapelessRecipe(IItemStack output) {
-    ItemStack out = toStack(output);
-    for (RecipeHydrate rec : BlockHydrator.recipesShapeless) {
-      if (rec.getRecipeOutput().isItemEqual(out)) {
-        BlockHydrator.recipesShapeless.remove(rec);
-        ModCyclic.logger.info("removed hydrator recipe for " + output.getDisplayName());
-      }
-    }
+    removeShapedRecipe(output);
   }
 
   @ZenMethod

@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.hydrator;
 
+import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -30,6 +31,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
@@ -37,72 +39,44 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  private ItemStack[] recipeInput = new ItemStack[4];
+  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
-  /**
-   * typically, size 1x1 is shapeless, and 2x2 is not shapeless
-   */
-  private boolean isShapeless;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
-    this(new ItemStack[] { in, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }, out, true);
-  }
-
-  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
-    this(in, out, false);
-    this.fluidCost = w;
+    this(new ItemStack[] { in }, out, 25);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
-    this(in, out, false);
+    this(in, out, 25);
   }
 
-  public RecipeHydrate(ItemStack[] in, ItemStack out, boolean shapeless) {
-    this.isShapeless = shapeless;
-    if (in.length == 1) {
-      //redirect to shapeless
-      this.isShapeless = true;
-      this.recipeInput = new ItemStack[] { in[0], ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY };
+  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
+    if (in.length > 4 || in.length == 0) {
+      throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    else if (in.length != 4) {
-      throw new IllegalArgumentException("Input array must be length 1 or length 4");
+    ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
+    for (int i = 0; i < in.length; i++) {
+      if (in[i] != null && in[i].isEmpty() == false)
+        recipeInput.set(i, in[i]);
     }
-    else {
-      this.recipeInput = in;
-    }
-    ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
+    this.fluidCost = w;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
   }
 
-  public boolean isShapeless() {
-    return this.isShapeless;
-  }
-
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    ItemStack s0 = inv.getStackInSlot(0);
-    ItemStack s1 = inv.getStackInSlot(1);
-    ItemStack s2 = inv.getStackInSlot(2);
-    ItemStack s3 = inv.getStackInSlot(3);
-    if (this.isShapeless()) {
-      ItemStack theRecipeStack = recipeInput[0];
-      return recipeSlotMatches(s0, theRecipeStack) ||
-          recipeSlotMatches(s1, theRecipeStack) ||
-          recipeSlotMatches(s2, theRecipeStack) ||
-          recipeSlotMatches(s3, theRecipeStack);
-    }
-    else {
-      //hacky lame way but easier to read and debug with all these lines
-      return recipeSlotMatches(s0, recipeInput[0]) &&
-          recipeSlotMatches(s1, recipeInput[1]) &&
-          recipeSlotMatches(s2, recipeInput[2]) &&
-          recipeSlotMatches(s3, recipeInput[3]);
-    }
+    return recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)) &&
+        recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)) &&
+        recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)) &&
+        recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
   }
 
   private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
+    if (sInvo.isEmpty() != sRecipe.isEmpty()) {
+      return false;//empty matching empty
+    }
     return OreDictionary.itemMatches(sInvo, sRecipe, false)
         && sInvo.getCount() >= sRecipe.getCount();
   }
@@ -116,44 +90,47 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     int minimum = (keepOneMinimum) ? 2 : 1;
     //TODO: merge/codeshare between shaped and shapeless!
     int inputStackToPay = -1, inputCountToPay = -1;
-    if (this.isShapeless()) {
-      //find the one input slot has the thing, and decrement THAT ONE only 
-      final ItemStack theRecipe = recipeInput[0];
-      for (int i = 0; i < recipeInput.length; i++) {
-        //its shapeless so only one thing will have the input
-        if (invoSource.getStackInSlot(i).getCount() >= minimum
-            && invoSource.getStackInSlot(i).getCount() >= theRecipe.getCount() + (minimum - 1)) {
-          inputStackToPay = i;
-          //VALIDATE
-          inputCountToPay = theRecipe.getCount();
-          break;
-        }
+    //    if (this.isShapeless()) {
+    //      //find the one input slot has the thing, and decrement THAT ONE only 
+    //      final ItemStack theRecipe = recipeInput[0];
+    //      for (int i = 0; i < recipeInput.length; i++) {
+    //      }
+    //      for (int i = 0; i < recipeInput.length; i++) {
+    //        //its shapeless so only one thing will have the input
+    //        if (invoSource.getStackInSlot(i).getCount() >= minimum
+    //            && invoSource.getStackInSlot(i).getCount() >= theRecipe.getCount() + (minimum - 1)) {
+    //          inputStackToPay = i;
+    //          //VALIDATE
+    //          inputCountToPay = theRecipe.getCount();
+    //          break;
+    //        }
+    //      }
+    //      if (inputStackToPay < 0 || inputCountToPay <= 0) {
+    //        return false;
+    //      }
+    //      invoSource.decrStackSize(inputStackToPay, inputCountToPay);
+    //    }
+    //    else {
+    //first test before we try to pay
+    for (int i = 0; i < recipeInput.size(); i++) {
+      if (recipeInput.get(i).isEmpty()) {
+        continue; //pay zero
       }
-      if (inputStackToPay < 0 || inputCountToPay <= 0) {
-        return false;
+      if (invoSource.getStackInSlot(i).getCount() < recipeInput.get(i).getCount() + (minimum - 1)) {
+        return false;//at least one of the stacks cannot pay
       }
-      invoSource.decrStackSize(inputStackToPay, inputCountToPay);
     }
-    else {
-      //first test before we try to pay
-      for (int i = 0; i < recipeInput.length; i++) {
-        if (invoSource.getStackInSlot(i).getCount() < recipeInput[i].getCount() + (minimum - 1)) {
-          return false;//at least one of the stacks cannot pay
-        }
+    //now actually pay, since they all can
+    for (int i = 0; i < recipeInput.size(); i++) {
+      if (recipeInput.get(i).isEmpty()) {
+        continue; //pay zero
       }
-      //now actually pay, since they all can
-      for (int i = 0; i < recipeInput.length; i++) {
-        invoSource.decrStackSize(i, recipeInput[i].getCount());
-      }
+      invoSource.decrStackSize(i, recipeInput.get(i).getCount());
     }
+    //    }
     //pay fluid last. same for shaped and shapeless
     tank.drain(this.getFluidCost(), true);
     return true;
-  }
-
-  public boolean isSlotEmpty(int slot) {
-    ItemStack inv = recipeInput[slot];
-    return inv == null || inv.isEmpty();
   }
 
   @Override
@@ -171,8 +148,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     return resultItem.copy();
   }
 
-  public ItemStack[] getRecipeInput() {
-    return recipeInput.clone();
+  public List<ItemStack> getRecipeInput() {
+    return recipeInput;
   }
 
   public int getFluidCost() {

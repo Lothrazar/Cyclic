@@ -59,7 +59,6 @@ import net.minecraftforge.fluids.FluidUtil;
 public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
-  public static ArrayList<RecipeHydrate> recipesShapeless = new ArrayList<RecipeHydrate>();
   public static int FUEL_COST = 0;
 
   public BlockHydrator() {
@@ -76,12 +75,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
   }
 
   public static void addRecipe(RecipeHydrate rec) {
-    if (rec.isShapeless()) {
-      recipesShapeless.add(rec);
-    }
-    else {
-      recipesShaped.add(rec);
-    }
+    recipesShaped.add(rec);
   }
 
   private void addAllRecipes() {

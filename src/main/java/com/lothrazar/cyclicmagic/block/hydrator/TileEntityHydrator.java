@@ -112,11 +112,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
         return irecipe;
       }
     }
-    for (RecipeHydrate irecipe : BlockHydrator.recipesShapeless) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
-      }
-    }
     return null;
   }
 
