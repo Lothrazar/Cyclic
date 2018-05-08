@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -83,12 +82,12 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     }
     return super.getStateFromMeta(meta).withProperty(FLIPPED, flipped);
   }
+
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     //flip on sneak
-    ModCyclic.logger.log("State flip" + placer.isSneaking());
     return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer)
-        .withProperty(FLIPPED, !placer.isSneaking());
+        .withProperty(FLIPPED, false);//default false which means up
   }
 
   @Override
@@ -157,12 +156,11 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
       face = face.getOpposite();
     }
     if (entity instanceof EntityLivingBase == false) {
-
       entity.onGround = false;
-      // entity.setGlowing(true);
+
       float yaw = 0;
       //TODO: shreadcode GuiVector
-      //      EnumFacing face = getFacingFromState(state);
+
       switch (face) {
         case DOWN:
         break;
@@ -190,9 +188,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     else {
       //NEW 
       tickMovement(pos, entity, face);
-      // super.onEntityCollidedWithBlock(worldIn, pos, state, entity);
     }
-    //    tickMovement(pos, entity, getFacingFromState(state));
   }
 
   @Override

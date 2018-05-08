@@ -263,6 +263,11 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
 
+  @Override
+  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    return false;
+  }
+
   /**
    * Called by ItemBlocks after a block is set in the world, to allow post-place logic
    * 
@@ -295,17 +300,35 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     boolean isEastUp = eastUp.getBlock() instanceof BlockConveyor;
     BlockPos posTarget = new BlockPos(pos);
     IBlockState targetState = null;
+    // auto place angle ramps
+    boolean flip = false;
     if (isEastUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST);//.withProperty(BlockConveyorCorner.FLIPPED, true);
+      flip = eastUp.getValue(PROPERTYFACING) == EnumFacing.WEST;
+      if (eastUp.getBlock() instanceof BlockConveyorAngle)
+        flip = flip || eastUp.getValue(BlockConveyorAngle.FLIPPED);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST)
+          .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
-    if (isWestUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.WEST);//.withProperty(BlockConveyorCorner.FLIPPED, true);
+    else if (isWestUp) {
+      flip = westUp.getValue(PROPERTYFACING) == EnumFacing.EAST;
+      if (westUp.getBlock() instanceof BlockConveyorAngle)
+        flip = flip || westUp.getValue(BlockConveyorAngle.FLIPPED);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.WEST)
+          .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
-    if (isSouthUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.SOUTH);//.withProperty(BlockConveyorCorner.FLIPPED, true);
+    else if (isSouthUp) {
+      flip = southUp.getValue(PROPERTYFACING) == EnumFacing.NORTH;
+      if (southUp.getBlock() instanceof BlockConveyorAngle)
+        flip = flip || southUp.getValue(BlockConveyorAngle.FLIPPED);
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.SOUTH)
+          .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
-    if (isNorthUp) {
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.NORTH);//.withProperty(BlockConveyorCorner.FLIPPED, true);
+    else if (isNorthUp) {
+      if (northUp.getBlock() instanceof BlockConveyorAngle)
+        flip = flip || northUp.getValue(BlockConveyorAngle.FLIPPED);
+      flip = northUp.getValue(PROPERTYFACING) == EnumFacing.SOUTH;
+      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.NORTH)
+          .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
     else if (isNorth && isWest) {
       if (west.getValue(PROPERTYFACING) == EnumFacing.EAST) {
@@ -316,7 +339,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
         targetState = corner.getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
-    }
+    } //auto place corners
     else if (isNorth && isEast) {
       if (east.getValue(PROPERTYFACING) == EnumFacing.WEST) {
         targetState = corner.getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
@@ -347,10 +370,31 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
     }
-    //
+    //straight up
+    else if (isSouth) {
+      targetState = this.getDefaultState().withProperty(PROPERTYFACING, getFacingDir(south));
+    }
+    else if (isNorth) {
+      targetState = this.getDefaultState().withProperty(PROPERTYFACING, getFacingDir(north));
+    }
+    else if (isWest) {
+      targetState = this.getDefaultState().withProperty(PROPERTYFACING, getFacingDir(west));
+    }
+    else if (isEast) {
+      targetState = this.getDefaultState().withProperty(PROPERTYFACING, getFacingDir(east));
+    }
+    //fire away
     if (targetState != null) {
       world.setBlockState(posTarget, targetState);
     }
+  }
+
+  private EnumFacing getFacingDir(IBlockState st) {
+    EnumFacing f = st.getValue(PROPERTYFACING);
+    if (st.getBlock() instanceof BlockConveyorAngle) {
+      f = f.getOpposite();
+    }
+    return f;
   }
   //  @Override
   //  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
