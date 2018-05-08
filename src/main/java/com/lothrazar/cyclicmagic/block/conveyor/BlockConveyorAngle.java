@@ -27,14 +27,12 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -46,11 +44,15 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   private BlockConveyor drop;
 
-  public BlockConveyorAngle(BlockConveyor drop) {
-    super(drop.type);
-    this.drop = drop;
+  public BlockConveyorAngle(SpeedType type) {
+    super(type);
     this.keepEntityGrounded = false;
   }
+
+  public void setDrop(BlockConveyor drop) {
+    this.drop = drop;
+  }
+
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -149,7 +151,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), new ItemStack(drop));
+    return null;//RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), new ItemStack(drop));
   }
 
   @Override

@@ -806,7 +806,6 @@ tile.plate_launch_small.guide=Launch entites up into the air.  Works on both liv
 tile.plate_launch_small.name=Soft Slime Plate
 
 tile.plate_push.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
-tile.plate_push_angle.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
 tile.plate_push.name=Conveyor Belt
 tile.plate_push.tooltip=Pushes all entities.  Speed: 
 tile.plate_push_corner.name=Conveyor Belt Corner
@@ -814,28 +813,32 @@ tile.plate_push_med_angle.name=Conveyor Belt Ramp
 
 
 tile.plate_push_fast.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
-tile.plate_push_fast_angle.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
+
 tile.plate_push_fast.name=Fast Conveyor Belt
 tile.plate_push_fast_corner.name=Fast Conveyor Belt Corner
 tile.plate_push_fast_angle.name=Fast Conveyor Belt Ramp
 
 tile.plate_push_slow.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
-tile.plate_push_slow_angle.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
+ 
 tile.plate_push_slow.name=Slow Conveyor Belt
 tile.plate_push_slow_corner.name=Slow Conveyor Belt Corner
 tile.plate_push_slow_angle.name=Slow Conveyor Belt Ramp
 
 tile.plate_push_slowest.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
-tile.plate_push_slowest_angle.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.
+ 
 tile.plate_push_slowest.name=Slowest Conveyor Belt
 tile.plate_push_slowest_corner.name=Slowest Conveyor Belt Corner
 tile.plate_push_slowest_angle.name=Slowest Conveyor Belt Ramp
  
 
-tile.plate_push_slow_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected.
-tile.plate_push_fast_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected.
-tile.plate_push_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected.
-tile.plate_push_slowest_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected.
+tile.plate_push_slow_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected, similar to rails.
+tile.plate_push_fast_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected, similar to rails.
+tile.plate_push_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected, similar to rails.
+tile.plate_push_slowest_corner.guide=Corner Belts appear on placement when it detects that nearby conveyor belts can be connected, similar to rails.
+tile.plate_push_med_angle.guide=Angled Belts appear on placement when it detects that conveyor belts above can be connected diagonally, similar to rails.
+tile.plate_push_slow_angle.guide=Angled Belts appear on placement when it detects that conveyor belts above can be connected diagonally, similar to rails.
+tile.plate_push_slowest_angle.guide=Angled Belts appear on placement when it detects that conveyor belts above can be connected diagonally, similar to rails.
+tile.plate_push_fast_angle.guide=Angled Belts appear on placement when it detects that conveyor belts above can be connected diagonally, similar to rails.
 
 
 tile.plate_vector.copied=Plate data copied into block
