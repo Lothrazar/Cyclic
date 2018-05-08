@@ -35,7 +35,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -75,10 +74,12 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
     return NULL_AABB;
   }
 
+  @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
 
+  @Override
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
@@ -86,18 +87,19 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
   /**
    * Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
    */
+  @Override
   public boolean canSpawnInBlock() {
     return true;
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "sbs",
         "bxb",
         "sbs",
-        's', "ingotIron",
-        'b', new ItemStack(Items.COAL),
+        's', "nuggetIron",
+        'b', "plankWood",
         'x', "dyePurple");
   }
 
@@ -119,6 +121,7 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IHasCon
   /**
    * adding this stops fences from connecting
    */
+  @Override
   public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
     return BlockFaceShape.UNDEFINED;
   }
