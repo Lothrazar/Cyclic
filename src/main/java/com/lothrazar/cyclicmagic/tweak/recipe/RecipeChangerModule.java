@@ -36,7 +36,6 @@ import net.minecraftforge.common.config.Configuration;
 public class RecipeChangerModule extends BaseModule implements IHasConfig {
 
   private boolean playerSkull;
-  private boolean mushroomBlocks;
   private boolean simpleDispenser;
   private boolean repeaterSimple;
   private boolean minecartsSimple;
@@ -47,13 +46,13 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean glowstoneBlockToDust;
   private boolean netherwartBlockReverse;
 
+  @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
     playerSkull = config.get(category, "Player Skulls",
         true, "Create a player skull by combining wither, skeleton, zombie, and creeper skulls").getBoolean();
-    mushroomBlocks = config.get(category, "Mushroom Blocks",
-        true, "Create mushroom blocks from items").getBoolean();
+
     simpleDispenser = config.get(category, "Simple Dispenser",
         true, "Craft a dispenser with string instead of a bow").getBoolean();
     repeaterSimple = config.get(category, "Simple Repeater",
@@ -88,9 +87,6 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     }
     if (playerSkull) {
       playerSkull();
-    }
-    if (mushroomBlocks) {
-      mushroomBlocks();
     }
     if (simpleDispenser) {
       simpleDispenser();
@@ -149,13 +145,6 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         new ItemStack(Items.SKULL, 1, Const.skull_skeleton),
         new ItemStack(Items.SKULL, 1, Const.skull_zombie),
         new ItemStack(Items.SKULL, 1, Const.skull_creeper));
-  }
-
-  private void mushroomBlocks() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
-        "mm", "mm", 'm', Blocks.RED_MUSHROOM);
-    RecipeRegistry.addShapedRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
-        "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
   }
 
   private void repeaterSimple() {

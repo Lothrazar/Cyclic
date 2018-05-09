@@ -165,6 +165,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockModule extends BaseModule implements IHasConfig {
 
@@ -456,12 +457,21 @@ public class BlockModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
       Item peat_fuel = new ItemPeatFuel();
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
-      BlockHydrator.addRecipe(new RecipeHydrate(
+      //
+      RecipeHydrate.addRecipe(new RecipeHydrate(
           new ItemStack[] {
               new ItemStack(Items.WHEAT_SEEDS),
-              new ItemStack(Blocks.RED_MUSHROOM),
+              new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE),
               new ItemStack(Blocks.LEAVES),
               new ItemStack(Blocks.VINE) },
+          new ItemStack(peat_biomass)));
+      //sapling one
+      RecipeHydrate.addRecipe(new RecipeHydrate(
+          new ItemStack[] {
+              new ItemStack(Items.REEDS),
+              new ItemStack(Blocks.TALLGRASS, 1, 1),
+              new ItemStack(Blocks.DEADBUSH),
+              new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE) },
           new ItemStack(peat_biomass)));
       BlockRegistry.registerBlock(new BlockPeat(null), "peat_unbaked", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeat(peat_fuel), "peat_baked", GuideCategory.BLOCKMACHINE);

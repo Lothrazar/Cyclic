@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
@@ -57,12 +56,9 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
     guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
     guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
     List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-    ModCyclic.logger.log("JEI start with " + recipeWrapper.size() + " and " + recipeWrapper.getOut());
-    ModCyclic.logger.log("ingredients.getInputs(ItemStack.class) wtf " + ingredients.getInputs(ItemStack.class).size());
+
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
-      //        if (i < ingredients.getInputs(ItemStack.class).size())//
-      //        List<ItemStack> input = ingredients.getInputs(ItemStack.class).get(i);// was get i wtf
 
       if (input != null && input.isEmpty() == false)
         guiItemStacks.set(i, input.get(0));

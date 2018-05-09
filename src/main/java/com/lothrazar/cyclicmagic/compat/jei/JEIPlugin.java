@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.compat.jei;
 
 import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
-import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
@@ -73,7 +72,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     // Start Custom recipe type: Hydrator
     registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipes(RecipeHydrate.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
     // End Custom recipe type: Hydrator
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {

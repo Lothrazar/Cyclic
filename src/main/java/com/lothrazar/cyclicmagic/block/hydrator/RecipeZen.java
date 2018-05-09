@@ -39,9 +39,9 @@ public class RecipeZen {
   @ZenMethod
   public static void removeShapedRecipe(IItemStack output) {
     ItemStack out = toStack(output);
-    for (RecipeHydrate rec : BlockHydrator.recipesShaped) {
+    for (RecipeHydrate rec : RecipeHydrate.recipesShaped) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        BlockHydrator.recipesShaped.remove(rec);
+        RecipeHydrate.recipesShaped.remove(rec);
         ModCyclic.logger.info("removed hydrator recipe for " + output.getDisplayName());
       }
     }
@@ -56,7 +56,7 @@ public class RecipeZen {
 
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs, int water) {
-    BlockHydrator.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
+    RecipeHydrate.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
   }
 
   /**
