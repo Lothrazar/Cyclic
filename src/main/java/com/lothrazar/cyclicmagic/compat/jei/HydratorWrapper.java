@@ -26,7 +26,7 @@ public class HydratorWrapper implements IRecipeWrapper {
     for (ItemStack wtf : src.getRecipeInput()) {
       ing.add(wtf.copy());
     }
-    ingredients.setInputs(ItemStack.class,  ing);
+    ingredients.setInputs(ItemStack.class, ing);
     ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
   }
 

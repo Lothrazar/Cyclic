@@ -44,7 +44,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
   public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
-
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
@@ -211,11 +210,9 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
     }, new ItemStack(Items.LAVA_BUCKET)));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM)
     }, new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK)));

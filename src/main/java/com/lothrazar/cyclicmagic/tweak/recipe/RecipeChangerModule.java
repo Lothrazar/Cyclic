@@ -52,7 +52,6 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     config.setCategoryComment(category, "New and altered recipes");
     playerSkull = config.get(category, "Player Skulls",
         true, "Create a player skull by combining wither, skeleton, zombie, and creeper skulls").getBoolean();
-
     simpleDispenser = config.get(category, "Simple Dispenser",
         true, "Craft a dispenser with string instead of a bow").getBoolean();
     repeaterSimple = config.get(category, "Simple Repeater",

@@ -157,10 +157,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     }
     if (entity instanceof EntityLivingBase == false) {
       entity.onGround = false;
-
       float yaw = 0;
       //TODO: shreadcode GuiVector
-
       switch (face) {
         case DOWN:
         break;

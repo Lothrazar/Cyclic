@@ -56,10 +56,8 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
     guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
     guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
     List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
-
       if (input != null && input.isEmpty() == false)
         guiItemStacks.set(i, input.get(0));
     }

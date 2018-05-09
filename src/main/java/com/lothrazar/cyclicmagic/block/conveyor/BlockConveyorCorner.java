@@ -49,7 +49,6 @@ public class BlockConveyorCorner extends BlockConveyor {
     }
   }
 
-
   @Override
   public int getMetaFromState(IBlockState state) {
     int meta = (state.getValue(FLIPPED) ? 10 : 0);
