@@ -115,8 +115,8 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe {
         'd', "ingotGold",
         'c', new ItemStack(Items.GHAST_TEAR),
         'r', "dyeBlue",
-        'b', Blocks.RED_MUSHROOM_BLOCK,
-        'x', Blocks.BROWN_MUSHROOM_BLOCK);
+        'b', new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+        'x', new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK));
   }
 
   @Override
