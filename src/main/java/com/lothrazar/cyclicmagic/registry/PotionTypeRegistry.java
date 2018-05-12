@@ -62,6 +62,7 @@ public class PotionTypeRegistry {
   private static PotionTypeCyclic potionTypeSat;
   private static PotionTypeCyclic potionTypeIce;
   private static PotionTypeCyclic potionTypeButter;
+  private static PotionTypeCyclic potionTypeButterII;
   private static final int SHORT = 1800;
   private static final int NORMAL = 3600;
 
@@ -70,6 +71,9 @@ public class PotionTypeRegistry {
     if (ItemPotionModule.enableButter) {
       potionTypeButter = addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Items.GOLD_INGOT));
       potions.add(potionTypeButter);
+      potionTypeButterII = addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, SHORT, Const.Potions.II), "butter2", Item.getItemFromBlock(Blocks.HARDENED_CLAY));
+      potionTypeButterII.base = potionTypeButter;
+      potions.add(potionTypeButterII);
     }
     if (ItemPotionModule.enableSlowfall) {
       potionTypeSlowfall = addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()));

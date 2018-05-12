@@ -943,10 +943,16 @@ splash_potion.effect.slowfall=Splash Potion of Slowfall
 lingering_potion.effect.slowfall=Lingering Potion of Slowfall
 tipped_arrow.effect.slowfall=Arrow of Slowfall
 
+potion.butter=Butterfingers
 potion.effect.butter=Potion of Butterfingers
 splash_potion.effect.butter=Splash Potion of Butterfingers
 lingering_potion.effect.butter=Lingering Potion of Butterfingers
 tipped_arrow.effect.butter=Arrow of Butterfingers
+
+potion.effect.butter2=Potion of Butterfingers II
+splash_potion.effect.butter2=Splash Potion of Butterfingers II
+lingering_potion.effect.butter2=Lingering Potion of Butterfingers II
+tipped_arrow.effect.butter2=Arrow of Butterfingers II
 
 potion.effect.waterwalk=Potion of Waterwalk
 splash_potion.effect.waterwalk=Splash Potion of Waterwalk

@@ -2,25 +2,35 @@ package com.lothrazar.cyclicmagic.potion;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class PotionDropItems extends PotionBase {
 
+  private static final double DROP_CHANCE = 0.009;
+
   public PotionDropItems() {
-    super("butter", false, 0xFFFF66);
+    super("butter", false, 0xe5e500);
   }
 
   @Override
   public void tick(EntityLivingBase entity) {
+    PotionEffect pot = entity.getActivePotionEffect(PotionEffectRegistry.DROPS);
     World world = entity.getEntityWorld();
-    if (this.isMoving(entity) && world.rand.nextDouble() < 0.06) {
-      ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId()));
+    if (this.isMoving(entity) && world.rand.nextDouble() < DROP_CHANCE) {
+      ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId(), pot.getAmplifier()));
     }
   }
 
+  /**
+   * Only makes sense client side.
+   * 
+   * @param entity
+   * @return isMoving
+   */
   private boolean isMoving(EntityLivingBase entity) {
-    // return entity.prevPosX != entity.posX || entity.prevPosZ != entity.posZ;
     return (Math.abs(entity.motionX) > 0) || (Math.abs(entity.motionZ) > 0);
   }
 }

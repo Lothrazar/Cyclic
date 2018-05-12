@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
@@ -42,24 +43,29 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketEntityDropRandom, IMessage> {
 
+  private static final float DROP_HEIGHT = 0.99F;
   private int entityId;
+  private int level;
 
   public PacketEntityDropRandom() {}
 
-  public PacketEntityDropRandom(int itemSlot) {
+  public PacketEntityDropRandom(int itemSlot, int level) {
     entityId = itemSlot;
+    this.level = level;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     entityId = tags.getInteger("entityId");
+    level = tags.getInteger("level");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("entityId", entityId);
+    tags.setInteger("level", level);
     ByteBufUtils.writeTag(buf, tags);
   }
 
@@ -71,19 +77,24 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
       Entity entityTarget = world.getEntityByID(message.entityId);
       if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
         EntityLivingBase entity = (EntityLivingBase) entityTarget;
+        List<EntityEquipmentSlot> slots = null;
+        if (message.level == Const.Potions.I) {
+          slots = Arrays.asList(EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND);
+        }
+        else {// if (message.level == Const.Potions.II) {
+          slots = Arrays.asList(EntityEquipmentSlot.values());
+        }
         ItemStack stack;
-        List<EntityEquipmentSlot> slots = Arrays.asList(EntityEquipmentSlot.values());
         Collections.shuffle(slots);
         for (EntityEquipmentSlot slot : slots) {
           stack = entity.getItemStackFromSlot(slot);
           if (stack.isEmpty() == false) {
             //    ModCyclic.logger.log("DROP SLOT " + slot + " on world isREmote==" + world.isRemote);
-            entity.entityDropItem(stack.copy(), 0.9F);
-            if (entity instanceof EntityPlayer) {
-              UtilChat.sendStatusMessage((EntityPlayer) entity, "potion.butter.oops");
-            }
-
+            entity.entityDropItem(stack.copy(), DROP_HEIGHT);
             entity.setItemStackToSlot(slot, ItemStack.EMPTY);
+            if (entity instanceof EntityPlayer) {
+              UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");
+            }
             break;
           }
         }
