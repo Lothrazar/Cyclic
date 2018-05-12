@@ -95,6 +95,11 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
 
   @Override
+  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    return side == EnumFacing.DOWN;//super.isSideSolid(base_state, world, pos, side);
+  }
+
+  @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(ACTIVATED, (meta & 8) > 0);
   }
