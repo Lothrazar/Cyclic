@@ -24,16 +24,17 @@
 package com.lothrazar.cyclicmagic.core.registry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
+import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -74,6 +75,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class RecipeRegistry {
 
+  private static Map<String, Boolean> usedRecipeNames = new HashMap<String, Boolean>();
   public static List<IRecipe> recipes = new ArrayList<IRecipe>();
 
   public static void register(IRecipe recipeHydrate) {
@@ -84,11 +86,13 @@ public class RecipeRegistry {
 
     public static ResourceLocation buildName(ItemStack output) {
       ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
+      int limit = 999;
       int index = 0;
-      while (CraftingManager.REGISTRY.containsKey(firstTry)) { // REGISTRY
+      while (usedRecipeNames.containsKey(firstTry.toString()) || index > limit) {
         index++;
         firstTry = new ResourceLocation(Const.MODID, firstTry.getResourcePath() + "_" + index);
       }
+      usedRecipeNames.put(firstTry.toString(), true);
       return firstTry;
     }
 
@@ -182,6 +186,9 @@ public class RecipeRegistry {
   }
 
   public static IRecipe addShapedOreRecipe(ItemStack output, Object... recipeComponents) {
+    if (output.isEmpty()) {
+      throw new IllegalArgumentException("cannot add recipe for air");
+    }
     ResourceLocation location = Util1pt12.buildName(output);
     IRecipe recipe = new ShapedOreRecipe(location, output, recipeComponents);
     add(recipe, Util1pt12.buildName(output));

@@ -37,10 +37,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -54,6 +56,11 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     this.keepEntityGrounded = false;
     angled = this;
     corner = null;
+  }
+
+  @Override
+  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    return new ItemStack(drop);
   }
 
   public void setDrop(BlockConveyor drop) {

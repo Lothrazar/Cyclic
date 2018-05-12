@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -40,9 +41,11 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
           new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        "aaa",
-        "aaa",
-        "aaa",
+        "cbc",
+        "bab",
+        "cbc",
+        'c', Items.CLAY_BALL,
+        'b', Blocks.GLASS,
         'a', "blockRedstone");
   }
 

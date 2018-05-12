@@ -24,12 +24,12 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.item.BaseCharm;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -63,9 +63,10 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
     if (player.isCollidedHorizontally) {
       World world = player.getEntityWorld();
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
+      stack.damageItem(1, player);
       if (world.isRemote && //setting fall distance on clientside wont work
           player instanceof EntityPlayer && player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-        ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
+        UtilSound.playSound(player, SoundEvents.BLOCK_LADDER_STEP);
       }
     }
   }

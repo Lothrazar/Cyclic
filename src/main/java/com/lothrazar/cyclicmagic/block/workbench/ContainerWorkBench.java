@@ -64,7 +64,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     int cols = TileEntityWorkbench.COLS;
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2) - 20;//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

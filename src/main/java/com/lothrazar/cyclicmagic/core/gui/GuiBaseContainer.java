@@ -69,7 +69,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public FluidBar fluidBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
-  protected int fuelX, fuelY, fuelXE, fuelYE;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);

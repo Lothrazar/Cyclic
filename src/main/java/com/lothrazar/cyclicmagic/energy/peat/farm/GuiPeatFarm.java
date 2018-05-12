@@ -60,9 +60,6 @@ public class GuiPeatFarm extends GuiBaseContainer {
           this.guiTop + ContainerPeatFarm.SLOTY - 1 + Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    //DRAW ENERGY BAR
-    fuelX = this.guiLeft + 152;
-    fuelY = this.guiTop + 17;
     fluidBar.draw(
         ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
         Const.Res.FLUID_WATER);

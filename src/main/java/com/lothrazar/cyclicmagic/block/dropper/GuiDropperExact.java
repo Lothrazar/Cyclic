@@ -82,8 +82,5 @@ public class GuiDropperExact extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    //DRAW ENERGY BAR
-    fuelX = this.guiLeft + 156;
-    fuelY = this.guiTop + 17;
   }
 }

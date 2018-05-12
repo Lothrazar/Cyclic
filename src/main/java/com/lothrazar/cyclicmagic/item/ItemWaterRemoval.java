@@ -108,7 +108,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
   }
 
   public ItemWaterRemoval() {
-    super(2000);
+    super(9000);
   }
 
   @Override
