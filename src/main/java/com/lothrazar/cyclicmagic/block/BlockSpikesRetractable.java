@@ -39,6 +39,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -79,6 +80,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
 
   public BlockSpikesRetractable(boolean doesPlayer) {
     super(Material.IRON);
+
     setHardness(1.5F);
     setResistance(10F);
     this.setTranslucent();
@@ -98,6 +100,17 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;//super.isSideSolid(base_state, world, pos, side);
   }
+
+  @Override
+  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
+    return BlockFaceShape.UNDEFINED;
+  }
+  //  @Override
+  //  private boolean canPlaceOn(World worldIn, BlockPos pos)
+  //  {
+  //      IBlockState state = worldIn.getBlockState(pos);
+  //      return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
+  //  }
 
   @Override
   public IBlockState getStateFromMeta(int meta) {

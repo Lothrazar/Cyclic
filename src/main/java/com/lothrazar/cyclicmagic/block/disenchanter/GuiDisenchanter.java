@@ -89,9 +89,6 @@ public class GuiDisenchanter extends GuiBaseContainer {
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    //DRAW ENERGY BAR
-    fuelX = this.guiLeft + 154;
-    fuelY = this.guiTop + 17;
   }
 
   @SideOnly(Side.CLIENT)
