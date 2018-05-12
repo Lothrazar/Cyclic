@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.net;
+package com.lothrazar.cyclicmagic.item.buildswap;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -34,9 +34,8 @@ import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import com.lothrazar.cyclicmagic.item.ItemBuildSwapper;
-import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.ActionType;
-import com.lothrazar.cyclicmagic.item.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.ActionType;
+import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -111,6 +110,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         // s.addScheduledTask(() -> handle(message, ctx));
         s.addScheduledTask(new Runnable() {
 
+          @Override
           public void run() {
             handle(message, ctx);
           }

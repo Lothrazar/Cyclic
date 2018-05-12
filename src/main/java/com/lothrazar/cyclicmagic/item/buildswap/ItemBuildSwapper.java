@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.buildswap;
 
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -35,7 +35,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
-import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
