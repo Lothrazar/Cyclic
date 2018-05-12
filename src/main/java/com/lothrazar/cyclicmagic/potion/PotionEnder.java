@@ -37,8 +37,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionEnder extends PotionBase {
 
-  public PotionEnder(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionEnder() {
+    super("ender", true, 0x0B4D42);
   }
 
   @SubscribeEvent

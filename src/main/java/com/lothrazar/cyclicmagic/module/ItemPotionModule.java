@@ -50,6 +50,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   public static boolean enableBlindness;
   public static boolean enableSaturation;
   public static boolean enableFrostw;
+  public static boolean enableButter;
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -79,5 +80,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     enableBlindness = config.getBoolean("PotionBlindness", category, true, Const.ConfigCategory.contentDefaultText);
     enableSaturation = config.getBoolean("PotionSaturation", category, true, Const.ConfigCategory.contentDefaultText);
     enableFrostw = config.getBoolean("PotionFrostWalker", category, true, Const.ConfigCategory.contentDefaultText);
+    enableButter = config.getBoolean("PotionButterDropItems", category, true, Const.ConfigCategory.contentDefaultText);
   }
 }

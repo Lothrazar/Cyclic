@@ -33,8 +33,8 @@ import net.minecraft.world.World;
 
 public class PotionSnow extends PotionBase {
 
-  public PotionSnow(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionSnow() {
+    super("snow", true, 0x8EBFFF);
   }
 
   @Override

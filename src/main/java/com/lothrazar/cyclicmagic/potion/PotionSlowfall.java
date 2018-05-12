@@ -30,8 +30,8 @@ public class PotionSlowfall extends PotionBase {
 
   public static final float slowfallSpeed = 0.41F;
 
-  public PotionSlowfall(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionSlowfall() {
+    super("slowfall", true, 0xF46F20);
   }
 
   @Override

@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionBounce;
+import com.lothrazar.cyclicmagic.potion.PotionDropItems;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
 import com.lothrazar.cyclicmagic.potion.PotionFrostWalker;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
@@ -49,14 +50,15 @@ public class PotionEffectRegistry {
     NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
   }
 
-  public static final PotionBase SLOWFALL = new PotionSlowfall("slowfall", true, 0xF46F20);
-  public static final PotionBase MAGNET = new PotionMagnet("magnet", true, 0x224BAF);
-  public static final PotionBase ENDER = new PotionEnder("ender", true, 0x0B4D42);
-  public static final PotionBase WATERWALK = new PotionWaterwalk("waterwalk", true, 0x7FB8A4);
-  public static final PotionBase SNOW = new PotionSnow("snow", true, 0x8EBFFF);
-  public static final PotionBase SWIMSPEED = new PotionSwimSpeed("swimspeed", true, 0xB477FF);
-  public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0x91E459);
-  public static final PotionBase FROSTW = new PotionFrostWalker("frostwalker", true, 0x42f4d7);
+  public static final PotionBase SLOWFALL = new PotionSlowfall();
+  public static final PotionBase MAGNET = new PotionMagnet();
+  public static final PotionBase ENDER = new PotionEnder();
+  public static final PotionBase WATERWALK = new PotionWaterwalk();
+  public static final PotionBase SNOW = new PotionSnow();
+  public static final PotionBase SWIMSPEED = new PotionSwimSpeed();
+  public static final PotionBase BOUNCE = new PotionBounce();
+  public static final PotionBase FROSTW = new PotionFrostWalker();
+  public static final PotionBase DROPS = new PotionDropItems();
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
 
   private static void register() {
@@ -68,14 +70,15 @@ public class PotionEffectRegistry {
      * 
      * Once you've created and registered the Potions and PotionTypes, use PotionHelper.addMix to add the brewing recipes (e.g. Awkward to Regular X, Regular X to Long X and Regular X to Strong X).
      * For more advanced brewing recipes, you can use Forge's BrewingRecipeRegistry. */
-    PotionEffectRegistry.registerPotionEffect(MAGNET);
-    PotionEffectRegistry.registerPotionEffect(ENDER);
-    PotionEffectRegistry.registerPotionEffect(WATERWALK);
-    PotionEffectRegistry.registerPotionEffect(SLOWFALL);
-    PotionEffectRegistry.registerPotionEffect(SNOW);
-    PotionEffectRegistry.registerPotionEffect(SWIMSPEED);
-    PotionEffectRegistry.registerPotionEffect(BOUNCE);
-    PotionEffectRegistry.registerPotionEffect(FROSTW);
+    registerPotionEffect(MAGNET);
+    registerPotionEffect(ENDER);
+    registerPotionEffect(WATERWALK);
+    registerPotionEffect(SLOWFALL);
+    registerPotionEffect(SNOW);
+    registerPotionEffect(SWIMSPEED);
+    registerPotionEffect(BOUNCE);
+    registerPotionEffect(FROSTW);
+    registerPotionEffect(DROPS);
   }
 
   private static void registerPotionEffect(PotionBase effect) {

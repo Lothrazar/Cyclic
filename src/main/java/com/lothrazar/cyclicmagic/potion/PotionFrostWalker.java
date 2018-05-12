@@ -28,8 +28,8 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class PotionFrostWalker extends PotionBase {
 
-  public PotionFrostWalker(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionFrostWalker() {
+    super("frostwalker", true, 0x42f4d7);
   }
 
   @Override

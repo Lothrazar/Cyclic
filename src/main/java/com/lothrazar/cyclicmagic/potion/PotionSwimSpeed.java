@@ -30,8 +30,8 @@ public class PotionSwimSpeed extends PotionBase {
 
   private static final float speedfactor = 0.08F;
 
-  public PotionSwimSpeed(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionSwimSpeed() {
+    super("swimspeed", true, 0xB477FF);
   }
 
   @Override

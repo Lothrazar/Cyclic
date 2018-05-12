@@ -31,8 +31,8 @@ import net.minecraft.world.World;
 
 public class PotionWaterwalk extends PotionBase {
 
-  public PotionWaterwalk(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionWaterwalk() {
+    super("waterwalk", true, 0x7FB8A4);
   }
 
   @Override

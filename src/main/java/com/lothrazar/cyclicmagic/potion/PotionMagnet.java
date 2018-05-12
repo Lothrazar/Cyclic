@@ -31,8 +31,8 @@ public class PotionMagnet extends PotionBase {
   private final static int ITEM_HRADIUS = 20;
   private final static int ITEM_VRADIUS = 4;
 
-  public PotionMagnet(String name, boolean b, int potionColor) {
-    super(name, b, potionColor);
+  public PotionMagnet() {
+    super("magnet", true, 0x224BAF);
   }
 
   @Override
