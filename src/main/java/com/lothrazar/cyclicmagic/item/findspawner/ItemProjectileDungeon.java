@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item.findspawner;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
@@ -31,12 +32,10 @@ import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
@@ -79,21 +78,32 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
-    if (blockpos != null) {
-      EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
-      doThrow(world, player, hand, entityendereye, 0.5F);
-      entityendereye.moveTowards(blockpos);
-    }
-    else {
-      // not found, so play different sound
-      UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
-      if (world.isRemote) {
-        UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
-      }
-    }
     player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
+    EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
+    doThrow(world, player, hand, entityendereye, 0.5F);
+    //    ModCyclic.logger.log("entityendereye spawned wit hid " + entityendereye.getEntityId());
+    Runnable r = new Runnable() {
+
+      @Override
+      public void run() {
+        ModCyclic.logger.log(entityendereye.getEntityId() + "is my id  && isRemote==" + entityendereye.world.isRemote);
+        BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
+        if (blockpos == null) {
+          entityendereye.kill();
+          //          world.removeEntity(entityendereye);
+          //UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
+          if (world.isRemote) {
+            UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
+          }
+        }
+        else {
+          entityendereye.moveTowards(blockpos);
+        }
+      }
+    };
+    Thread t = new Thread(r);
+    t.start(); // starts thread in background.
   }
 
   @Override

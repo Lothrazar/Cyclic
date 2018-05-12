@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.core.entity.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -51,6 +52,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
   private double targetX;
   private double targetY;
   private double targetZ;
+  private boolean isLost = true;
 
   public EntityDungeonEye(World worldIn) {
     super(worldIn);
@@ -65,14 +67,24 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
   }
 
   public void moveTowards(BlockPos pos) {
-    this.targetX = (double) pos.getX();
+    this.targetX = pos.getX();
     this.targetY = pos.getY();
-    this.targetZ = (double) pos.getZ();
-    this.setThrowableHeading(this.targetX, this.targetY, this.targetZ, (float) (this.getGravityVelocity()), 0.01F);
+    this.targetZ = pos.getZ();
+    this.isLost = false;
+    this.setThrowableHeading(this.targetX, this.targetY, this.targetZ, (this.getGravityVelocity()), 0.01F);
   }
 
+  public void kill() {
+    this.world.playEvent(2003, new BlockPos(this), 0);
+    this.playSound(SoundEvents.ENTITY_ENDEREYE_DEATH, 1.0F, 1.0F);
+    this.setDead();
+  }
   @Override
   public void onUpdate() {
+    if (isLost) {
+      //when thread is done, it will make me unlost, or remove me
+      return;
+    }
     if (!this.world.isRemote) {
       this.lastTickPosX = this.posX;
       this.lastTickPosY = this.posY;
@@ -87,14 +99,14 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       float distance = (float) Math.sqrt(distX * distX + distZ * distZ);
       float distLine = (float) Math.sqrt(distX * distX + distZ * distZ + distY * distY);
       float atan = (float) MathHelper.atan2(this.targetZ - this.posZ, this.targetX - this.posX);
-      double horizFactor = (double) f + (double) (distance - f) * HORIZ;
+      double horizFactor = f + (distance - f) * HORIZ;
       if (distLine < 1.0F) {
         horizFactor *= 0.8D;
         this.motionY *= 0.8D;
         this.setDead();
       }
-      this.motionX = Math.cos((double) atan) * horizFactor;
-      this.motionZ = Math.sin((double) atan) * horizFactor;
+      this.motionX = Math.cos(atan) * horizFactor;
+      this.motionZ = Math.sin(atan) * horizFactor;
       this.motionY = (14 * distY) / distLine * VERT;
       if (distX < DISTLIMIT && distZ < DISTLIMIT) {//if we are right in line, stop swaggerin
         motionX = 0;
@@ -151,7 +163,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
     int particleCount = (this.ticksExisted < 100) ? 30 : 14;
     float f3 = 0.25F;
     for (int i = 0; i < particleCount; ++i) {
-      this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * (double) f3 - 0.5D, this.posZ - this.motionZ * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
+      this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * f3 - 0.5D, this.posZ - this.motionZ * f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
     }
   }
 
