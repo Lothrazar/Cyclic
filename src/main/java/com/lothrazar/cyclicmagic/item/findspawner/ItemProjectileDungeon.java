@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.item.findspawner;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
@@ -87,7 +86,9 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
       @Override
       public void run() {
-        ModCyclic.logger.log(entityendereye.getEntityId() + "is my id  && isRemote==" + entityendereye.world.isRemote);
+        if (entityendereye == null || entityendereye.isDead) {
+          return;//something happened!
+        }
         BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
         if (blockpos == null) {
           entityendereye.kill();
