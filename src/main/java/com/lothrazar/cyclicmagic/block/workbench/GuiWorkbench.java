@@ -43,15 +43,17 @@ public class GuiWorkbench extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 136 - 1,
-        this.guiTop + 35 - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
+    int size = 26;
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 131,
+        this.guiTop + 30, u, v, size, size, size, size);
     int xPrefix = Const.PAD, yPrefix = 27;
     int rows = TileEntityWorkbench.ROWS;
     int cols = TileEntityWorkbench.COLS;
     //grid
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     rows = cols = 3;
-    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2) - 20;//calculate exact center
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
