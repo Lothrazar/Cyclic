@@ -3,8 +3,6 @@ package com.lothrazar.cyclicmagic.potion;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PotionDropItems extends PotionBase {
@@ -16,16 +14,9 @@ public class PotionDropItems extends PotionBase {
   @Override
   public void tick(EntityLivingBase entity) {
     World world = entity.getEntityWorld();
-    BlockPos here = entity.getPosition();
-    if (entity instanceof EntityPlayer && world.isRemote) {
 
-
-      ModCyclic.logger.log("butter on player ! clientside!"
-          + "?entity.isMoving(entity)  " + isMoving(entity));
-    }
-    if (this.isMoving(entity) && world.rand.nextDouble() < 0.1) {
+    if (this.isMoving(entity) && world.rand.nextDouble() < 0.06) {
       ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId()));
-      //NET PACKET
 
     }
   }

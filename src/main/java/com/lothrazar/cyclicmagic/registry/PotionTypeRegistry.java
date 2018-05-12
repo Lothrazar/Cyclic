@@ -68,7 +68,7 @@ public class PotionTypeRegistry {
   //  private static final int LONG = 9600;
   public static void register() {
     if (ItemPotionModule.enableButter) {
-      potionTypeButter = addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Blocks.HARDENED_CLAY));
+      potionTypeButter = addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Items.GOLD_INGOT));
       potions.add(potionTypeButter);
     }
     if (ItemPotionModule.enableSlowfall) {

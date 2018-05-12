@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -80,6 +81,9 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
             ModCyclic.logger.log("DROP SLOT " + slot + " on world isREmote==" + world.isRemote);
             //if (world.isRemote == false) {
             entity.entityDropItem(stack.copy(), 0.9F);
+            if (entity instanceof EntityPlayer) {
+              UtilChat.sendStatusMessage((EntityPlayer) entity, "potion.butter.oops");
+            }
             //}
             entity.setItemStackToSlot(slot, ItemStack.EMPTY);
             break;

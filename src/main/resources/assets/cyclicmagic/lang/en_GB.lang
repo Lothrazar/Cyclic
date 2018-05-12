@@ -937,10 +937,16 @@ potion.potency.4=V
 potion.potency.3=IV
 potion.potency.2=III
 
+potion.butter.oops=Butterfingers!  Dropped something when you moved.
 potion.effect.slowfall=Potion of Slowfall
 splash_potion.effect.slowfall=Splash Potion of Slowfall
 lingering_potion.effect.slowfall=Lingering Potion of Slowfall
 tipped_arrow.effect.slowfall=Arrow of Slowfall
+
+potion.effect.butter=Potion of Butterfingers
+splash_potion.effect.butter=Splash Potion of Butterfingers
+lingering_potion.effect.butter=Lingering Potion of Butterfingers
+tipped_arrow.effect.butter=Arrow of Butterfingers
 
 potion.effect.waterwalk=Potion of Waterwalk
 splash_potion.effect.waterwalk=Splash Potion of Waterwalk
