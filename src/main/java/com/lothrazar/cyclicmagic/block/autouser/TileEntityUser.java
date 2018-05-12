@@ -124,7 +124,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (isRunning() == false) {
       return;
     }
-    this.shiftAllUp(7);
+    this.shiftAllUp(6);
     this.spawnParticlesAbove();
     if (this.updateEnergyIsBurning() == false) {
       return;
