@@ -129,7 +129,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         }
       }
       else if (playerStart <= iSlot && iSlot <= playerEnd) {
-        if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
+        if (!this.mergeItemStack(stackInSlot, topStart, topEnd + 1, false)) {
           return ItemStack.EMPTY;
         }
       }
