@@ -33,7 +33,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -72,14 +71,17 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
     return NULL_AABB;
   }
 
+  @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
 
+  @Override
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
   }
 
+  @Override
   public boolean canSpawnInBlock() {
     return true;
   }
@@ -88,10 +90,11 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
         "sbs",
-        "b b",
+        "bdb",
         "sbs",
+        'd', "gemDiamond",
         's', "dyeBlue",
-        'b', new ItemStack(Blocks.NETHER_WART_BLOCK));
+        'b', "glowstone");
   }
 
   @Override
@@ -105,6 +108,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
   /**
    * adding this stops fences from connecting
    */
+  @Override
   public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
     return BlockFaceShape.UNDEFINED;
   }

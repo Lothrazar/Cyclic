@@ -115,9 +115,16 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     if (isBaked) {
       return null;// on recipe for this 
     }
+    RecipeRegistry.addShapedRecipe(new ItemStack(this, 16),
+        "pcp",
+        "cbc",
+        "pcp",
+        'b', new ItemStack(Item.getByNameOrId(Const.MODRES + "peat_biomass")),
+        'c', "dirt",
+        'p', new ItemStack(Item.getByNameOrId(Const.MODRES + "peat_fuel")));
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
         "pcp",
-        "ccc",
+        "c c",
         "pcp",
         'c', "dirt",
         'p', new ItemStack(Item.getByNameOrId(Const.MODRES + "peat_biomass")));

@@ -36,7 +36,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -382,7 +381,6 @@ public class UtilEntity {
     }
     if (worldIn.isRemote && //setting fall distance on clientside wont work
         entity instanceof EntityPlayer && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-      UtilSound.playSound(entity, SoundEvents.BLOCK_LADDER_STEP);
       ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
     }
   }

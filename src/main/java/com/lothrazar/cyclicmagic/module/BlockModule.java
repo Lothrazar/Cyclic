@@ -464,7 +464,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
               new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE),
               new ItemStack(Blocks.LEAVES),
               new ItemStack(Blocks.VINE) },
-          new ItemStack(peat_biomass)));
+          new ItemStack(peat_biomass, 8)));
       //sapling one
       RecipeHydrate.addRecipe(new RecipeHydrate(
           new ItemStack[] {
@@ -472,15 +472,18 @@ public class BlockModule extends BaseModule implements IHasConfig {
               new ItemStack(Blocks.TALLGRASS, 1, 1),
               new ItemStack(Blocks.DEADBUSH),
               new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE) },
-          new ItemStack(peat_biomass)));
-      BlockRegistry.registerBlock(new BlockPeat(null), "peat_unbaked", GuideCategory.BLOCKMACHINE);
+          new ItemStack(peat_biomass, 8)));
+      BlockPeat bog = new BlockPeat(null);
+      BlockRegistry.registerBlock(bog, "peat_unbaked", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeat(peat_fuel), "peat_baked", GuideCategory.BLOCKMACHINE);
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
       BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
-      //TODO BATT CONF  
+      //
+
+
     }
     if (battery) {
       BlockBattery battery = new BlockBattery(false);

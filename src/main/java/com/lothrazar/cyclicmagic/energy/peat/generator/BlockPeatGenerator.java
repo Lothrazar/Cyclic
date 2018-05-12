@@ -57,9 +57,9 @@ public class BlockPeatGenerator extends BlockBaseHasTile implements IHasRecipe {
         "pip",
         "cbc",
         "pip",
-        'p', peat_fuel, //Item.getByNameOrId(Const.MODRES + "peat_fuel"),
+        'p', peat_fuel,
         'i', new ItemStack(Blocks.PISTON),
-        'b', "blockIron",
+        'b', "ingotIron",
         'c', "blockCoal");
   }
 }

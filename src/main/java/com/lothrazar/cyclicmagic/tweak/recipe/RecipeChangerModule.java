@@ -105,6 +105,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     if (netherwartBlockReverse) {
       netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
+
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
   }
 

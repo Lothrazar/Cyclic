@@ -1170,3 +1170,4 @@ tile.uranium_end_ore.name=End Uranium Ore
 tile.yellorite_nether_ore.name=Nether Yellorite Ore
 tile.yellorite_end_ore.name=End Yellorite Ore
 
+tile.fire_dark.guide=Does not destroy blocks or harm players.  Spawned by Duskflame Hex
