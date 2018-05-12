@@ -21,25 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.item.snowmagic;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.item.BaseItemRapidScepter;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 
-public class EventPotionTick {
+public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasRecipe {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
-    }
+  public ItemProjectileSnow() {
+    super(1000);
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        " sc",
+        " rs",
+        "i  ",
+        'c', Blocks.ICE,
+        's', Blocks.SNOW,
+        'r', "dustRedstone",
+        'i', "ingotIron");
+  }
+
+  @Override
+  public EntitySnowballBolt createBullet(World world, EntityPlayer player, float dmg) {
+    EntitySnowballBolt s = new EntitySnowballBolt(world, player);
+    s.setDamage(dmg);
+    return s;
+  }
+
+  @Override
+  public SoundEvent getSound() {
+    return SoundRegistry.frost_staff_launch;
   }
 }

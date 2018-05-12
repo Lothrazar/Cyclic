@@ -21,25 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
-public class EventPotionTick {
+public class PotionWaterwalk extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
+  public PotionWaterwalk() {
+    super("waterwalk", true, 0x7FB8A4);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entityLiving) {
+    tickLiquidWalk(entityLiving, Blocks.WATER);
+  }
+
+  private void tickLiquidWalk(EntityLivingBase entityLiving, Block liquid) {
+    World world = entityLiving.getEntityWorld();
+    if (world.getBlockState(entityLiving.getPosition().down()).getBlock() == liquid && world.isAirBlock(entityLiving.getPosition()) && entityLiving.motionY < 0) {
+      if (entityLiving instanceof EntityPlayer) {
+        EntityPlayer p = (EntityPlayer) entityLiving;
+        if (p.isSneaking())
+          return;// let them slip down into it
       }
+      entityLiving.motionY = 0;// stop falling
+      entityLiving.onGround = true; // act as if on solid ground
+      entityLiving.setAIMoveSpeed(0.1F);// walking and not sprinting is this
     }
   }
 }

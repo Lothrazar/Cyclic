@@ -21,25 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventPotionTick {
+public class PotionSwimSpeed extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
+  private static final float speedfactor = 0.08F;
+
+  public PotionSwimSpeed() {
+    super("swimspeed", true, 0xB477FF);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entity) {
+    if (entity.isInWater()) {
+      UtilEntity.speedupEntityIfMoving(entity, speedfactor);
     }
   }
 }

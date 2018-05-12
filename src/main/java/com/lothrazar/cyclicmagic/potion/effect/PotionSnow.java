@@ -21,25 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class EventPotionTick {
+public class PotionSnow extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
+  public PotionSnow() {
+    super("snow", true, 0x8EBFFF);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entity) {
+    World world = entity.getEntityWorld();
+    BlockPos here = entity.getPosition();
+    BlockPos below = here.down();
+    if (world.isAirBlock(here) && world.isSideSolid(below, EnumFacing.UP)) {
+      world.setBlockState(here, Blocks.SNOW_LAYER.getDefaultState());
     }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
+    if (world.rand.nextDouble() < 0.1) {
+      UtilParticle.spawnParticle(world, EnumParticleTypes.SNOWBALL, here);
     }
   }
 }

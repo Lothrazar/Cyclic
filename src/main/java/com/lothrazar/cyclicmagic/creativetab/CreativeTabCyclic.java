@@ -29,7 +29,7 @@ import java.util.Iterator;
 import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
-import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
+import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;

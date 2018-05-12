@@ -21,25 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
 
-public class EventPotionTick {
+public class PotionSlowfall extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
+  public static final float slowfallSpeed = 0.41F;
+
+  public PotionSlowfall() {
+    super("slowfall", true, 0xF46F20);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entityLiving) {
+    if (entityLiving instanceof EntityPlayer) {
+      EntityPlayer p = (EntityPlayer) entityLiving;
+      if (p.isSneaking()) {
+        return;
       }
+    }
+    // else: so we are either a non-sneaking player, or a non player
+    // entity
+    // a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
+    // flattens out at -0.078
+    if (entityLiving.motionY < 0) {
+      entityLiving.motionY *= slowfallSpeed;
+      entityLiving.fallDistance = 0f; // for no fall damage
     }
   }
 }

@@ -21,54 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.equipbauble;
+package com.lothrazar.cyclicmagic.item.fishing;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseCharm;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 
-public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
+public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe {
 
-  private final static int seconds = 30;
-  private final static int fallDistanceLimit = 6;
-  private final static int durability = 64;
-  private final static Potion potion = PotionEffectRegistry.SLOWFALL;
-
-  public ItemCharmSlowfall() {
-    super(durability);
+  public ItemProjectileFishing() {
+    super();
+    this.setMaxDamage(300);
+    this.setMaxStackSize(1);
   }
 
   @Override
-  public void onTick(ItemStack stack, EntityPlayer living) {
-    if (!this.canTick(stack)) {
-      return;
-    }
-    if (living.fallDistance >= fallDistanceLimit && !living.isPotionActive(potion)) {
-      living.addPotionEffect(new PotionEffect(potion, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-      super.damageCharm(living, stack);
-      UtilSound.playSound(living, living.getPosition(), SoundEvents.ITEM_ELYTRA_FLYING, living.getSoundCategory());
-      UtilParticle.spawnParticle(living.getEntityWorld(), EnumParticleTypes.SUSPENDED, living.getPosition());
-    }
-    if (living.isPotionActive(potion)) { //hacky / workaround for a reported issue being stuck at 0:00
-      if (living.getActivePotionEffect(potion).getDuration() < 1) {
-        living.removePotionEffect(potion);
-      }
-    }
+  public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
+    return new EntityFishingBolt(world, x, y, z);
   }
 
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.RABBIT_FOOT);
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "ggg",
+        "qfg",
+        "fqg",
+        'q', "gemQuartz",
+        'f', Items.FISHING_ROD,
+        'g', "gunpowder");
+  }
+
+  @Override
+  public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+    this.doThrow(world, player, hand, new EntityFishingBolt(world, player));
+    UtilItemStack.damageItem(player, held);
+  }
+
+  @Override
+  public SoundEvent getSound() {
+    // TODO Auto-generated method stub
+    return SoundEvents.ENTITY_EGG_THROW;
   }
 }

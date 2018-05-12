@@ -21,41 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.core.entity;
+package com.lothrazar.cyclicmagic.item.lightningmagic;
 
-import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
-import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteMining;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.core.entity.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class RenderProjectile<T extends Entity> extends RenderSnowball<T> {
+public class EntityLightningballBolt extends EntityThrowableDispensable {
 
-  public RenderProjectile(RenderManager renderManagerIn, Item itemIn, RenderItem itemRendererIn) {
-    super(renderManagerIn, itemIn, itemRendererIn);
+  public EntityLightningballBolt(World worldIn) {
+    super(worldIn);
   }
 
-  public static class FactoryDynMining implements IRenderFactory<EntityDynamiteMining> {
-
-    @Override
-    public Render<? super EntityDynamiteMining> createRenderFor(RenderManager rm) {
-      return new RenderProjectile<EntityDynamiteMining>(rm, EntityDynamiteMining.renderSnowball, Minecraft.getMinecraft().getRenderItem());
-    }
+  public EntityLightningballBolt(World worldIn, EntityLivingBase ent) {
+    super(worldIn, ent);
   }
 
-  public static class FactoryDynSafe implements IRenderFactory<EntityDynamiteBlockSafe> {
+  public EntityLightningballBolt(World worldIn, double x, double y, double z) {
+    super(worldIn, x, y, z);
+  }
+
+  @Override
+  protected void processImpact(RayTraceResult mop) {
+    World world = getEntityWorld();
+    EntityLightningBolt ball = new EntityLightningBolt(world, this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ(), false);
+    world.spawnEntity(ball);
+    this.setDead();
+  }
+
+  public static class FactoryLightning implements IRenderFactory<EntityLightningballBolt> {
 
     @Override
-    public Render<? super EntityDynamiteBlockSafe> createRenderFor(RenderManager rm) {
-      return new RenderProjectile<EntityDynamiteBlockSafe>(rm, EntityDynamiteBlockSafe.renderSnowball, Minecraft.getMinecraft().getRenderItem());
+    public Render<? super EntityLightningballBolt> createRenderFor(RenderManager rm) {
+      return new RenderBall<EntityLightningballBolt>(rm, "lightning");
     }
   }
 }

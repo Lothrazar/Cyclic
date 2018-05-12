@@ -21,25 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.item.dynamite;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
+import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.item.Item;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 
-public class EventPotionTick {
+public class EntityDynamiteBlockSafe extends EntityThrowableDispensable {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
+  public static Item renderSnowball;
+  private float explosionLevel;
+
+  public EntityDynamiteBlockSafe(World worldIn) {
+    super(worldIn);
+    this.explosionLevel = EntityDynamite.EX_ENDCRYSTAL;
+  }
+
+  public EntityDynamiteBlockSafe(World worldIn, int explos) {
+    super(worldIn);
+    this.explosionLevel = explos;
+  }
+
+  public EntityDynamiteBlockSafe(World worldIn, EntityLivingBase ent, int strength) {
+    super(worldIn, ent);
+    this.explosionLevel = strength;
+  }
+
+  public EntityDynamiteBlockSafe(World worldIn, int strength, double x, double y, double z) {
+    super(worldIn, x, y, z);
+    this.explosionLevel = strength;
+  }
+
+  @Override
+  protected void processImpact(RayTraceResult mop) {
+    if (this.inWater == false) {
+      ExplosionBlockSafe explosion = new ExplosionBlockSafe(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
+      explosion.doExplosionA();
+      explosion.doExplosionB(false);
     }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
-    }
+    this.setDead();
   }
 }

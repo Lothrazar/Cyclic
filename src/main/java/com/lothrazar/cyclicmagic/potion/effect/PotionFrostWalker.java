@@ -21,25 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
+import net.minecraft.enchantment.EnchantmentFrostWalker;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventPotionTick {
+public class PotionFrostWalker extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
-    }
+  public PotionFrostWalker() {
+    super("frostwalker", true, 0x42f4d7);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entityLiving) {
+    EnchantmentFrostWalker.freezeNearby(entityLiving, entityLiving.world, entityLiving.getPosition(), 1);
   }
 }

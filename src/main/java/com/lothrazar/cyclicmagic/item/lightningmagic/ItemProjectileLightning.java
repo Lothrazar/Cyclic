@@ -21,25 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.item.lightningmagic;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 
-public class EventPotionTick {
+public class ItemProjectileLightning extends BaseItemChargeScepter implements IHasRecipe {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
-    }
+  public ItemProjectileLightning() {
+    super(200);
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        " qg",
+        "leq",
+        "el ",
+        'e', "enderpearl",
+        'l', "dyeLime",
+        'q', "glowstone",
+        'g', new ItemStack(Items.GHAST_TEAR));
+  }
+
+  @Override
+  public EntityLightningballBolt createBullet(World world, EntityPlayer player, float dmg) {
+    EntityLightningballBolt s = new EntityLightningballBolt(world, player);
+    return s;
+  }
+
+  @Override
+  public SoundEvent getSound() {
+    return SoundRegistry.lightning_staff_launch;
   }
 }
