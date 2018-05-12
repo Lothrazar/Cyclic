@@ -80,7 +80,6 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
 
   public BlockSpikesRetractable(boolean doesPlayer) {
     super(Material.IRON);
-
     setHardness(1.5F);
     setResistance(10F);
     this.setTranslucent();

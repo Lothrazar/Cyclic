@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.core.util;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.ItemScythe.ScytheType;
+import com.lothrazar.cyclicmagic.item.scythe.ItemScythe.ScytheType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockLeaves;

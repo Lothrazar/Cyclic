@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.scythe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
-import com.lothrazar.cyclicmagic.net.PacketScythe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
