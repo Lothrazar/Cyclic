@@ -46,6 +46,7 @@ import com.lothrazar.cyclicmagic.item.scythe.PacketScythe;
 import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
+import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -116,7 +117,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncVillagerToServer.class, PacketSyncVillagerToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketVillagerTrade.class, PacketVillagerTrade.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSleepClient.class, PacketSleepClient.class, packetID++, Side.CLIENT);
-    packetID++;
+    network.registerMessage(PacketEntityDropRandom.class, PacketEntityDropRandom.class, packetID++, Side.SERVER);
     network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);

@@ -1,13 +1,9 @@
 package com.lothrazar.cyclicmagic.potion;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -28,21 +24,9 @@ public class PotionDropItems extends PotionBase {
           + "?entity.isMoving(entity)  " + isMoving(entity));
     }
     if (this.isMoving(entity) && world.rand.nextDouble() < 0.1) {
+      ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId()));
       //NET PACKET
-      ItemStack stack;
-      List<EntityEquipmentSlot> slots = Arrays.asList(EntityEquipmentSlot.values());
-      Collections.shuffle(slots);
-      for (EntityEquipmentSlot slot : slots) {
-        stack = entity.getItemStackFromSlot(slot);
-        if (stack.isEmpty() == false) {
-          ModCyclic.logger.log("DROP SLOT " + slot + " on world isREmote==" + world.isRemote);
-          //if (world.isRemote == false) {
-          entity.entityDropItem(stack.copy(), 0.9F);
-          //}
-          entity.setItemStackToSlot(slot, ItemStack.EMPTY);
-          break;
-        }
-      }
+
     }
   }
 
