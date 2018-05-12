@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.gui.button;
 
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.base.GuiButtonTexture;
+import com.lothrazar.cyclicmagic.core.gui.GuiButtonTexture;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle.ActionType;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;

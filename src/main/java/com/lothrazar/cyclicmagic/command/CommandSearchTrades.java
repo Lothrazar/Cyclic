@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLiving;

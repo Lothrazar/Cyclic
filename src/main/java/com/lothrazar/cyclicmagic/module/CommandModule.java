@@ -39,7 +39,7 @@ import com.lothrazar.cyclicmagic.command.CommandTodoList;
 import com.lothrazar.cyclicmagic.command.CommandVillageInfo;
 import com.lothrazar.cyclicmagic.command.CommandWorldHome;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;

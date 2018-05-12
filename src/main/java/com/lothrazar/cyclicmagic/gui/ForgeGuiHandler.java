@@ -23,122 +23,128 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
 
-import com.lothrazar.cyclicmagic.component.anvil.ContainerAnvilAuto;
-import com.lothrazar.cyclicmagic.component.anvil.GuiAnvilAuto;
-import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
-import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
-import com.lothrazar.cyclicmagic.component.autouser.GuiUser;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.component.beaconpotion.ContainerBeaconPotion;
-import com.lothrazar.cyclicmagic.component.beaconpotion.GuiBeaconPotion;
-import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion;
-import com.lothrazar.cyclicmagic.component.builder.ContainerBuilder;
-import com.lothrazar.cyclicmagic.component.builder.GuiBuilder;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
-import com.lothrazar.cyclicmagic.component.clock.ContainerClock;
-import com.lothrazar.cyclicmagic.component.clock.GuiClock;
-import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
-import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
-import com.lothrazar.cyclicmagic.component.controlledminer.GuiMinerSmart;
-import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
-import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
-import com.lothrazar.cyclicmagic.component.crafter.GuiCrafter;
-import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
-import com.lothrazar.cyclicmagic.component.cyclicwand.ContainerWand;
-import com.lothrazar.cyclicmagic.component.cyclicwand.GuiWandInventory;
-import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
-import com.lothrazar.cyclicmagic.component.disenchanter.ContainerDisenchanter;
-import com.lothrazar.cyclicmagic.component.disenchanter.GuiDisenchanter;
-import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
-import com.lothrazar.cyclicmagic.component.dropper.ContainerDropperExact;
-import com.lothrazar.cyclicmagic.component.dropper.GuiDropperExact;
-import com.lothrazar.cyclicmagic.component.dropper.TileEntityDropperExact;
-import com.lothrazar.cyclicmagic.component.enchanter.ContainerEnchanter;
-import com.lothrazar.cyclicmagic.component.enchanter.GuiEnchanter;
-import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
-import com.lothrazar.cyclicmagic.component.enderbook.GuiEnderBook;
-import com.lothrazar.cyclicmagic.component.entitydetector.ContainerDetector;
-import com.lothrazar.cyclicmagic.component.entitydetector.GuiDetector;
-import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
-import com.lothrazar.cyclicmagic.component.fan.ContainerFan;
-import com.lothrazar.cyclicmagic.component.fan.GuiFan;
-import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
-import com.lothrazar.cyclicmagic.component.fisher.ContainerFisher;
-import com.lothrazar.cyclicmagic.component.fisher.GuiFisher;
-import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
-import com.lothrazar.cyclicmagic.component.forester.ContainerForester;
-import com.lothrazar.cyclicmagic.component.forester.GuiForester;
-import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
-import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
-import com.lothrazar.cyclicmagic.component.harvester.GuiHarvester;
-import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
-import com.lothrazar.cyclicmagic.component.hydrator.ContainerHydrator;
-import com.lothrazar.cyclicmagic.component.hydrator.GuiHydrator;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
-import com.lothrazar.cyclicmagic.component.itemsort.ContainerItemSort;
-import com.lothrazar.cyclicmagic.component.itemsort.GuiItemSort;
-import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
-import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
-import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
-import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
-import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
-import com.lothrazar.cyclicmagic.component.miner.ContainerBlockMiner;
-import com.lothrazar.cyclicmagic.component.miner.GuiBlockMiner;
-import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
-import com.lothrazar.cyclicmagic.component.password.ContainerPassword;
-import com.lothrazar.cyclicmagic.component.password.GuiPassword;
-import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
-import com.lothrazar.cyclicmagic.component.pattern.ContainerPattern;
-import com.lothrazar.cyclicmagic.component.pattern.GuiPattern;
-import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
-import com.lothrazar.cyclicmagic.component.peat.farm.ContainerPeatFarm;
-import com.lothrazar.cyclicmagic.component.peat.farm.GuiPeatFarm;
-import com.lothrazar.cyclicmagic.component.peat.farm.TileEntityPeatFarm;
-import com.lothrazar.cyclicmagic.component.peat.generator.ContainerPeatGenerator;
-import com.lothrazar.cyclicmagic.component.peat.generator.GuiPeatGenerator;
-import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
-import com.lothrazar.cyclicmagic.component.placer.ContainerPlacer;
-import com.lothrazar.cyclicmagic.component.placer.GuiPlacer;
-import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
-import com.lothrazar.cyclicmagic.component.playerext.crafting.ContainerPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.component.playerext.crafting.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.component.playerext.storage.ContainerPlayerExtended;
-import com.lothrazar.cyclicmagic.component.playerext.storage.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.component.playerext.storage.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.component.pump.energy.ContainerEnergyPump;
-import com.lothrazar.cyclicmagic.component.pump.energy.GuiEnergyPump;
-import com.lothrazar.cyclicmagic.component.pump.energy.TileEntityEnergyPump;
-import com.lothrazar.cyclicmagic.component.pump.fluid.ContainerFluidPump;
-import com.lothrazar.cyclicmagic.component.pump.fluid.GuiFluidPump;
-import com.lothrazar.cyclicmagic.component.pump.fluid.TileEntityFluidPump;
-import com.lothrazar.cyclicmagic.component.pump.item.ContainerItemPump;
-import com.lothrazar.cyclicmagic.component.pump.item.GuiItemPump;
-import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump;
-import com.lothrazar.cyclicmagic.component.pylonexp.ContainerPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.GuiPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.component.screen.ContainerScreen;
-import com.lothrazar.cyclicmagic.component.screen.GuiScreenBlock;
-import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen;
-import com.lothrazar.cyclicmagic.component.storagesack.ContainerStorage;
-import com.lothrazar.cyclicmagic.component.storagesack.GuiStorage;
-import com.lothrazar.cyclicmagic.component.storagesack.InventoryStorage;
-import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
-import com.lothrazar.cyclicmagic.component.uncrafter.ContainerUncrafting;
-import com.lothrazar.cyclicmagic.component.uncrafter.GuiUncrafting;
-import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
-import com.lothrazar.cyclicmagic.component.vacuum.ContainerVacuum;
-import com.lothrazar.cyclicmagic.component.vacuum.GuiVacuum;
-import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
-import com.lothrazar.cyclicmagic.component.vector.ContainerVector;
-import com.lothrazar.cyclicmagic.component.vector.GuiVector;
-import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
-import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
-import com.lothrazar.cyclicmagic.component.workbench.GuiWorkbench;
-import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilPlayer;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.block.anvil.ContainerAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.GuiAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvilmagma.ContainerAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.GuiAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
+import com.lothrazar.cyclicmagic.block.autouser.ContainerUser;
+import com.lothrazar.cyclicmagic.block.autouser.GuiUser;
+import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.beaconpotion.ContainerBeaconPotion;
+import com.lothrazar.cyclicmagic.block.beaconpotion.GuiBeaconPotion;
+import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
+import com.lothrazar.cyclicmagic.block.builderpattern.ContainerPattern;
+import com.lothrazar.cyclicmagic.block.builderpattern.GuiPattern;
+import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.block.buildershape.ContainerBuilder;
+import com.lothrazar.cyclicmagic.block.buildershape.GuiBuilder;
+import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
+import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
+import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
+import com.lothrazar.cyclicmagic.block.collector.ContainerVacuum;
+import com.lothrazar.cyclicmagic.block.collector.GuiVacuum;
+import com.lothrazar.cyclicmagic.block.collector.TileEntityVacuum;
+import com.lothrazar.cyclicmagic.block.controlledminer.ContainerMinerSmart;
+import com.lothrazar.cyclicmagic.block.controlledminer.GuiMinerSmart;
+import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
+import com.lothrazar.cyclicmagic.block.crafter.GuiCrafter;
+import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.disenchanter.ContainerDisenchanter;
+import com.lothrazar.cyclicmagic.block.disenchanter.GuiDisenchanter;
+import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.block.dropper.ContainerDropperExact;
+import com.lothrazar.cyclicmagic.block.dropper.GuiDropperExact;
+import com.lothrazar.cyclicmagic.block.dropper.TileEntityDropperExact;
+import com.lothrazar.cyclicmagic.block.enchanter.ContainerEnchanter;
+import com.lothrazar.cyclicmagic.block.enchanter.GuiEnchanter;
+import com.lothrazar.cyclicmagic.block.enchanter.TileEntityEnchanter;
+import com.lothrazar.cyclicmagic.block.entitydetector.ContainerDetector;
+import com.lothrazar.cyclicmagic.block.entitydetector.GuiDetector;
+import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.exppylon.ContainerPylon;
+import com.lothrazar.cyclicmagic.block.exppylon.GuiPylon;
+import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.block.fan.ContainerFan;
+import com.lothrazar.cyclicmagic.block.fan.GuiFan;
+import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.fishing.ContainerFisher;
+import com.lothrazar.cyclicmagic.block.fishing.GuiFisher;
+import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
+import com.lothrazar.cyclicmagic.block.forester.ContainerForester;
+import com.lothrazar.cyclicmagic.block.forester.GuiForester;
+import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
+import com.lothrazar.cyclicmagic.block.harvester.ContainerHarvester;
+import com.lothrazar.cyclicmagic.block.harvester.GuiHarvester;
+import com.lothrazar.cyclicmagic.block.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
+import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
+import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.block.miner.ContainerBlockMiner;
+import com.lothrazar.cyclicmagic.block.miner.GuiBlockMiner;
+import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.block.password.ContainerPassword;
+import com.lothrazar.cyclicmagic.block.password.GuiPassword;
+import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
+import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
+import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.pump.energy.ContainerEnergyPump;
+import com.lothrazar.cyclicmagic.block.pump.energy.GuiEnergyPump;
+import com.lothrazar.cyclicmagic.block.pump.energy.TileEntityEnergyPump;
+import com.lothrazar.cyclicmagic.block.pump.fluid.ContainerFluidPump;
+import com.lothrazar.cyclicmagic.block.pump.fluid.GuiFluidPump;
+import com.lothrazar.cyclicmagic.block.pump.fluid.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.block.pump.item.ContainerItemPump;
+import com.lothrazar.cyclicmagic.block.pump.item.GuiItemPump;
+import com.lothrazar.cyclicmagic.block.pump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.screen.ContainerScreen;
+import com.lothrazar.cyclicmagic.block.screen.GuiScreenBlock;
+import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
+import com.lothrazar.cyclicmagic.block.sorting.ContainerItemSort;
+import com.lothrazar.cyclicmagic.block.sorting.GuiItemSort;
+import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.block.uncrafter.ContainerUncrafting;
+import com.lothrazar.cyclicmagic.block.uncrafter.GuiUncrafting;
+import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
+import com.lothrazar.cyclicmagic.block.vector.ContainerVector;
+import com.lothrazar.cyclicmagic.block.vector.GuiVector;
+import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
+import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
+import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.energy.battery.ContainerBattery;
+import com.lothrazar.cyclicmagic.energy.battery.GuiBattery;
+import com.lothrazar.cyclicmagic.energy.battery.TileEntityBattery;
+import com.lothrazar.cyclicmagic.energy.peat.farm.ContainerPeatFarm;
+import com.lothrazar.cyclicmagic.energy.peat.farm.GuiPeatFarm;
+import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.energy.peat.generator.ContainerPeatGenerator;
+import com.lothrazar.cyclicmagic.energy.peat.generator.GuiPeatGenerator;
+import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
+import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
+import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
+import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.item.enderbook.GuiEnderBook;
+import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.item.merchant.GuiMerchantBetter;
+import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantBetter;
+import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
+import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
+import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;
+import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
@@ -192,6 +198,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DROPPER = 35;
   public static final int GUI_INDEX_FLUIDPUMP = 36;
   public static final int GUI_INDEX_ENERGYPUMP = 37;
+  public static final int GUI_INDEX_BATTERY = 38;
+  public static final int GUI_INDEX_ANVILMAGMA = 39;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -387,6 +395,16 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerEnergyPump(player.inventory, (TileEntityEnergyPump) te);
         }
       break;
+      case GUI_INDEX_BATTERY:
+        if (te instanceof TileEntityBattery) {
+          return new ContainerBattery(player.inventory, (TileEntityBattery) te);
+        }
+      break;
+      case GUI_INDEX_ANVILMAGMA:
+        if (te instanceof TileEntityAnvilMagma) {
+          return new ContainerAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
+        }
+      break;
     }
     return null;
   }
@@ -575,6 +593,16 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ENERGYPUMP:
           if (te instanceof TileEntityEnergyPump) {
             return new GuiEnergyPump(player.inventory, (TileEntityEnergyPump) te);
+          }
+        break;
+        case GUI_INDEX_BATTERY:
+          if (te instanceof TileEntityBattery) {
+            return new GuiBattery(player.inventory, (TileEntityBattery) te);
+          }
+        break;
+        case GUI_INDEX_ANVILMAGMA:
+          if (te instanceof TileEntityAnvilMagma) {
+            return new GuiAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
           }
         break;
       }

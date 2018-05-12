@@ -1,9 +1,5 @@
 {
     "variants": {
-		"normal": { "model": "cyclicmagic:plate_launch_small" },
-        "facing=north": { "model": "cyclicmagic:plate_launch_small" },
-        "facing=east":  { "model": "cyclicmagic:plate_launch_small" ,"y":90},
-        "facing=south": { "model": "cyclicmagic:plate_launch_small" ,"y":180},
-        "facing=west":  { "model": "cyclicmagic:plate_launch_small" ,"y":270}
+		"normal": { "model": "cyclicmagic:plate_launch_small" }
 	}
 }

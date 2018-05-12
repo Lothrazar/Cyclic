@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;

@@ -11,7 +11,7 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.14.9",
+    "1.12.2-latest": "1.15.0",
     "1.12.2-recommended": "1.14.9"
   },
   "1.9.4":{
@@ -263,6 +263,10 @@
  	,"1.14.7":"Updated 3D model and textures for Hydrator (thanks to Ithronyar).  Fluid buckets no longer listed in Cyclic creative tab (was causing crashes in some versions of JEI in some modpacks).  Fixed null blocks generating in the nether with certain config settings (will change to air blocks with this update). "
   	,"1.14.8":"Fixed a whitelist bug with the Controlled Miner.  Sleeping mat now correctly dismounts for you if you try to sleep on the saddle.  Updates to zh_CN.lang (thanks to Minecraftbegin2snow on github).  Fixed Structure Builder not saving height data on world reload.  New Item used to craft Darkflame Hex and new animated dark fireball texture by Ithronyar (no other item uses yet, so it shares the same config).  Emerald Carrot retextured and renamed as Infected Carrot - new recipe, same effect.  Ender Book no longer rounds off stored coordinates to integers, so it will teleport you more precisely (such as the center of the block).  Fixed a small glitch where Auto Crafter fuel slot would not consuming items when fuel is at zero.  Added a small optimization to network traffic on player join (Thanks to darkh4x).  "
   	,"1.14.9":"Fixed a dupe bug with certain items that have durability (see issue tracker for details).  Almost all custom sound effects have been totally remade and improved from scratch thanks to Ithronyar.  Update zh_CN.lang thanks to sandtechnology.   Merchant Almanac is less picky and now lets you use it directly on a villager instead of only on a nearby block.  Item Extraction Cable has a new button texture  "
+
+	,"1.15.0":"Fixed chaos reaper crafting recipe.  Fixed a fluid dupe bug.  Fixed a mod compatibility crash with FTB Utilities through forge permissions API.  Default drop list for Magic Bean hugely nerfed, and default value of MagicBeanGrownDropSeed is now false (existing configs unchanged).  Updated some textures.  Removed bucket slot for hydrator.   Removed some legacy worldgen features/configs (GoldRivers, OreSingletons Emerald Ore Boost).  Removed config feature 'TerrariaInventoryButtons' (was disabled by default anyway).  Many blocks now consume energy that did not previously (Auto Fisher, Hydrator, Dropper... disable and tweak in config as normal).  Peat Generator no longer accepts power as input, is output only.  Fluid Tank now has connected block textures vertically.  Slime Conveyors renamed to Conveyor Belts, along with new block models that have corner pieces and ramps.   Missing config added for dropper_exact.   Config 'SageAndDruidVillagers' removed, instead one config per villager.   Peat fuel no longer has to be dried in a furnace, it generates power right away.  Removed the Carbon Catalyst item, and Biomass is now created in a Hydrator recipe.   Block Rotator renamed to Wooden Wrench.  Added tooltips to fluid bar components in GUI screens.  Added Battery blocks.  Fan blocks can now face all six directions including up/down; not just horizontal.  Fan GUI now uses slider controls.  Powered anvil no longer consumes lava.  New Magma Anvil repairs items using lava.  Sack of Storage renamed to Storage Bag; added a GUI button to toggle deposit mode and removed the unintuitive left-click toggle; also increased storage bag capacity by one row, so from 66 slots to 77.  Automated User: Speed control has been changed to instead be a Tick Delay between uses.  New item magnet texture and tweaked recipe.  Fixed logspam error about cube_all.  Hydrator will now allow input recipes of size 2 and 3 when using its crafttweaker zenscript support (before only worked with 1 input or 4 inputs).   "
+  
+  
   }
 }
 
