@@ -49,9 +49,25 @@ public class BlockRegistry {
     registerBlock(b, new ItemBlock(b), name, cat);
   }
 
-  public static void registerBlock(@Nonnull Block b, @Nonnull ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
+  public static void registerBlock(Block b, String name, @Nullable GuideCategory cat, boolean inCreativeTab) {
+    registerBlock(b, new ItemBlock(b), name, cat, inCreativeTab);
+  }
+
+
+  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name) {
+    BlockRegistry.registerBlock(b, ib, name, GuideCategory.BLOCK, true);
+  }
+
+  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
+    BlockRegistry.registerBlock(b, ib, name, cat, true);
+  }
+
+  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat, boolean inCreativeTab) {
+    if (inCreativeTab) {
     b.setCreativeTab(ModCyclic.TAB);
+    }
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
+
     b.setUnlocalizedName(name);
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
