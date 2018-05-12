@@ -61,7 +61,6 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
       return;
     }
     if (player.isCollidedHorizontally) {
-
       World world = player.getEntityWorld();
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
       stack.damageItem(1, player);

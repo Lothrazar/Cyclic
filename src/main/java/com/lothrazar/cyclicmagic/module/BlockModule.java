@@ -482,8 +482,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
       //
-
-
     }
     if (battery) {
       BlockBattery battery = new BlockBattery(false);

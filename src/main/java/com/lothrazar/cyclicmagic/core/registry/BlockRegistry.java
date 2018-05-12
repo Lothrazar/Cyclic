@@ -53,7 +53,6 @@ public class BlockRegistry {
     registerBlock(b, new ItemBlock(b), name, cat, inCreativeTab);
   }
 
-
   public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name) {
     BlockRegistry.registerBlock(b, ib, name, GuideCategory.BLOCK, true);
   }
@@ -64,10 +63,9 @@ public class BlockRegistry {
 
   public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat, boolean inCreativeTab) {
     if (inCreativeTab) {
-    b.setCreativeTab(ModCyclic.TAB);
+      b.setCreativeTab(ModCyclic.TAB);
     }
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
-
     b.setUnlocalizedName(name);
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);

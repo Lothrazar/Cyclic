@@ -116,9 +116,9 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    //    ModCyclic.logger.error("HEYY " + iSlot);
+    //   ModCyclic.logger.error("HEYY " + iSlot);
     ItemStack stack = ItemStack.EMPTY;
-    Slot slot = (Slot) this.inventorySlots.get(iSlot);
+    Slot slot = this.inventorySlots.get(iSlot);
     int playerStart = 40, playerEnd = 66, topStart = 4, topEnd = 39, hotbarStart = 67, hotbarEnd = 75, armorStart = 0, armorEnd = 3;
     if (slot != null && slot.getHasStack()) {
       ItemStack stackInSlot = slot.getStack();
@@ -167,7 +167,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     ItemStack itemstack1;
     if (par1ItemStack.isStackable()) {
       while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
-        slot = (Slot) this.inventorySlots.get(k);
+        slot = this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
         if (!itemstack1.isEmpty() && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
           int l = itemstack1.getCount() + par1ItemStack.getCount();
@@ -202,7 +202,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         k = par2;
       }
       while (!par4 && k < par3 || par4 && k >= par2) {
-        slot = (Slot) this.inventorySlots.get(k);
+        slot = this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
         if (itemstack1 == null || itemstack1.isEmpty()) {
           // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);

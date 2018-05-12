@@ -207,7 +207,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
         " rs",
         "t r",
         't', "gemDiamond",
-        'r', "glowstone",//why is this not blockGlowstone?
+        'r', "glowstone", //why is this not blockGlowstone?
         's', "slimeball",
         'q', "blockQuartz");
   }

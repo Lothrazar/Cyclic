@@ -89,6 +89,7 @@ public class BlockConveyorCorner extends BlockConveyor {
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     return new ItemStack(drop);
   }
+
   public void setDrop(BlockConveyor drop) {
     this.drop = drop;
   }
