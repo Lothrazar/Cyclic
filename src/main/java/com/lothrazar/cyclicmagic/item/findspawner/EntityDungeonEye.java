@@ -79,6 +79,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
     this.playSound(SoundEvents.ENTITY_ENDEREYE_DEATH, 1.0F, 1.0F);
     this.setDead();
   }
+
   @Override
   public void onUpdate() {
     if (isLost) {
