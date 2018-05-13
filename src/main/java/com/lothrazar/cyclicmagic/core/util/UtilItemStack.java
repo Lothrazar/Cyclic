@@ -152,6 +152,9 @@ public class UtilItemStack {
   }
 
   public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
+    if (pos == null || worldObj == null || stack == null) {
+      return null;
+    }
     EntityItem entityItem = new EntityItem(worldObj, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
     if (worldObj.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
