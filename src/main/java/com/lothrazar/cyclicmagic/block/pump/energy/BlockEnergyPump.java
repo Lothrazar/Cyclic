@@ -42,8 +42,8 @@ public class BlockEnergyPump extends BlockBaseFacingOmni implements ITileEntityP
     this.setHardness(3F);
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
-    // this.setTranslucent();
-    setLightOpacity(0);
+    this.setTranslucent();
+    //  setLightOpacity(0);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENERGYPUMP);
     this.placeType = PlacementType.SIDE_BLOCK;
   }

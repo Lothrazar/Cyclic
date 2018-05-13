@@ -23,6 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.energy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
@@ -88,13 +91,8 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
       importHandlr = importFromTile.getCapability(CapabilityEnergy.ENERGY, importFromSide.getOpposite());
       // ModCyclic.logger.error("importFromTile  "+importFromTile.getBlockType().getLocalizedName());
     }
-    EnumFacing exportToSide = importFromSide.getOpposite();
-    TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
-    if (exportToTile != null) {
-      exportHandler = exportToTile.getCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite());
-      //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
-    }
-    //first pull in power
+    //ALL EXCEPT THIS SIDE
+    //IMPORT
     if (importHandlr != null && importHandlr.canExtract()) {
       int drain = importHandlr.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
       if (drain > 0) {
@@ -105,24 +103,44 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
         //    ModCyclic.logger.error("pump take IN  " + filled + "i am holding" + this.pumpEnergyStore.getEnergyStored());
       }
     }
-    if (exportHandler != null && exportHandler.canReceive()) {
-      int drain = myEnergy.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
-      if (drain > 0) {
-        //now push it into output, but find out what was ACTUALLY taken
-        int filled = exportHandler.receiveEnergy(drain, false);
-        //now actually drain that much  
-        myEnergy.extractEnergy(filled, false);
-        if (importFromTile instanceof TileEntityCableBase) {
-          //TODO: not so compatible with other fluid systems. itl do i guess
-          TileEntityCableBase cable = (TileEntityCableBase) importFromTile;
-          //  ModCyclic.logger.error("pump EXPORT  " + filled);
-          if (cable.isEnergyPipe()) {
-            // ModCyclic.logger.error("cable receive from   "+ side);
-            cable.updateIncomingEnergyFace(importFromSide); // .getOpposite()
+    //EXPORT
+    List<EnumFacing> sidesOut = outputSides();
+    for (EnumFacing exportToSide : sidesOut) {
+      TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
+      if (exportToTile != null) {
+        exportHandler = exportToTile.getCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite());
+        //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
+      }
+      if (exportHandler != null && exportHandler.canReceive()) {
+        int drain = myEnergy.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+        if (drain > 0) {
+          //now push it into output, but find out what was ACTUALLY taken
+          int filled = exportHandler.receiveEnergy(drain, false);
+          //now actually drain that much  
+          myEnergy.extractEnergy(filled, false);
+          if (importFromTile instanceof TileEntityCableBase) {
+            //TODO: not so compatible with other fluid systems. itl do i guess
+            TileEntityCableBase cable = (TileEntityCableBase) importFromTile;
+            //  ModCyclic.logger.error("pump EXPORT  " + filled);
+            if (cable.isEnergyPipe()) {
+              // ModCyclic.logger.error("cable receive from   "+ side);
+              cable.updateIncomingEnergyFace(importFromSide); // .getOpposite()
+            }
           }
+          break;//found a side that works, all done
         }
       }
     }
+  }
+
+  private List<EnumFacing> outputSides() {
+    EnumFacing in = this.getCurrentFacing();
+    List<EnumFacing> sidesOut = new ArrayList<>();
+    for (EnumFacing s : EnumFacing.values())
+      if (s != in)
+        sidesOut.add(s);
+    Collections.shuffle(sidesOut);
+    return sidesOut;
   }
 
   @Override
