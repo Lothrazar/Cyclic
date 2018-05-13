@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
 import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
+import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
 import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
@@ -219,6 +220,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean dispenserPowered;
   private boolean anvilMagma;
   private boolean battery;
+  private boolean etarget;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -238,7 +240,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
-    BlockRegistry.registerBlock(new BlockArrowTarget(), "sprotargetut", GuideCategory.BLOCK);
+    if (etarget) {
+    BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+    }
     if (enableMilk) {
       FluidsRegistry.registerMilk();
     }
@@ -610,6 +615,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
