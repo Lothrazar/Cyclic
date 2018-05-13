@@ -1,14 +1,16 @@
 package com.lothrazar.cyclicmagic.block.arrowtarget;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -19,7 +21,6 @@ import net.minecraft.world.World;
 public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
 
   public static final PropertyBool POWERED = BlockLever.POWERED;//PropertyBool.create("powered");
-
   private static final int REDSTONE_MAX = 16;
 
   public BlockArrowTarget() {
@@ -71,25 +72,25 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    return null;
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "iii",
+        "sos",
+        "iii",
+        'i', "nuggetIron",
+        'o', Blocks.OBSERVER,
+        's', Blocks.STONE_BUTTON);
   }
 
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
     super.onEntityCollidedWithBlock(world, pos, state, entity);
     //ignore vertical sides.
-    //DETECT horizontal side
     double x = entity.posX - pos.getX();
-    //    double y = entity.posY - pos.getY();
     double z = entity.posZ - pos.getZ();
     double xDist = x - 0.5;
     double zDist = z - 0.5;
-    // ModCyclic.logger.log(entity.posX + "," + entity.posY + "," + entity.posZ);
     if (!world.isRemote && Math.abs(zDist) < 1 && Math.abs(xDist) < 1) {// distanceToCenter < 1
-      //      ModCyclic.logger.log("entity.motionZ  " + entity.motionZ);
-      //      ModCyclic.logger.log("isCollidedVertically: " + entity.isCollidedVertically);
-      //      ModCyclic.logger.log("onGround: " + entity.onGround);
-      //(y - 0.5) * (y - 0.5) +
+      //DETECT which horizontal side
       EnumFacing side = null;
       if (x > 0.99) {
         side = EnumFacing.EAST;
@@ -112,16 +113,8 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
       }
       double y = entity.posY - pos.getY();
       double vertDistance = y - 0.5;
-      ModCyclic.logger.log("horizDistance  " + horizDistance);
-      ModCyclic.logger.log("vertDistance  " + vertDistance);
-      //IF NORTH AND SOUTH
-      //x is horixontal
-      //      xDist = x - 0.5;
-      //      zDist = z - 0.5;
       double distanceToCenter = Math.sqrt(horizDistance * horizDistance + vertDistance * vertDistance);
-      //" relative xz : " + x + " , " + z + 
       int redstone = REDSTONE_MAX - Math.min((int) (distanceToCenter * 26), REDSTONE_MAX);
-      ModCyclic.logger.log(side + " :::" + world.isRemote + " distance " + distanceToCenter +"=>"+redstone);
       if (world.getTileEntity(pos) instanceof TileEntityArrowTarget) {
         TileEntityArrowTarget target = ((TileEntityArrowTarget) world.getTileEntity(pos));
         target.setPower(redstone);

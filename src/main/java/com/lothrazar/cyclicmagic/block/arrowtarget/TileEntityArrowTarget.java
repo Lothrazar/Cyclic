@@ -71,33 +71,12 @@ public class TileEntityArrowTarget extends TileEntityBaseMachineInvo implements 
     if (this.isValid() == false) {
       return;
     }
-    //    if (this.timer > 0) {
-    //      this.timer--;
-    //    }
-    //    if (this.timer == 0) {
-    //      this.power = 0;
-    //    }
-    //    if (this.power == 0) {
-    //      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockArrowTarget.POWERED, false));
-    //      return;
-    //    }
     this.timer--;
     if (timer < 0) {
       timer = 0;
     }
     boolean poweredNow = timer > 0;
     boolean prevPowered = world.getBlockState(pos).getValue(BlockArrowTarget.POWERED);
-    //    if (timer < timeOff) {
-    //      powered = false;
-    //    }
-    //    else if (timer < timeOff + timeOn) {
-    //      //we are in the ON section
-    //      powered = true;
-    //    }
-    //    else {
-    //      timer = 0;
-    //      powered = false;
-    //    }
     if (prevPowered != poweredNow) {
       world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockArrowTarget.POWERED, poweredNow));
       //super weird hotfix for down state not updating
