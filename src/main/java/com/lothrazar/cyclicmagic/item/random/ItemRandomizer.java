@@ -160,13 +160,13 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " gi",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "pgi",
         " ig",
-        "o  ",
+        "o p",
+        'p', "dyePurple",
         'i', "ingotIron",
         'g', "dustRedstone",
         'o', "obsidian");
-    return null;
   }
 }

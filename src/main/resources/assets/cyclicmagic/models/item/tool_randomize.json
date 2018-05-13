@@ -43,7 +43,7 @@
 		},
 		{
 			"name": "Sa",
-			"from": [6, 16, 6],
+			"from": [6, 15, 6],
 			"to": [7, 20, 7],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -57,7 +57,7 @@
 		},
 		{
 			"name": "Sb",
-			"from": [6, 16, 6],
+			"from": [6, 15, 6],
 			"to": [7, 20, 7],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -71,7 +71,7 @@
 		},
 		{
 			"name": "Na",
-			"from": [9, 16, 6],
+			"from": [9, 15, 6],
 			"to": [10, 20, 7],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -85,7 +85,7 @@
 		},
 		{
 			"name": "Nb",
-			"from": [9, 16, 6],
+			"from": [9, 15, 6],
 			"to": [10, 20, 7],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -99,7 +99,7 @@
 		},
 		{
 			"name": "Ea",
-			"from": [9, 16, 9],
+			"from": [9, 15, 9],
 			"to": [10, 20, 10],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -113,7 +113,7 @@
 		},
 		{
 			"name": "Eb",
-			"from": [9, 16, 9],
+			"from": [9, 15, 9],
 			"to": [10, 20, 10],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -127,7 +127,7 @@
 		},
 		{
 			"name": "Wa",
-			"from": [6, 16, 9],
+			"from": [6, 15, 9],
 			"to": [7, 20, 10],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
@@ -141,7 +141,7 @@
 		},
 		{
 			"name": "Wb",
-			"from": [6, 16, 9],
+			"from": [6, 15, 9],
 			"to": [7, 20, 10],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
