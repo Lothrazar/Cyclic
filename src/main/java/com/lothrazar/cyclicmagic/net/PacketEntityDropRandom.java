@@ -23,11 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,7 +33,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -45,61 +45,72 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
 
   private static final float DROP_HEIGHT = 0.99F;
   private int entityId;
-  private int level;
+  private int slot;
+  private ItemStack stack;
 
   public PacketEntityDropRandom() {}
 
-  public PacketEntityDropRandom(int itemSlot, int level) {
+  public PacketEntityDropRandom(int itemSlot, int level, ItemStack st) {
     entityId = itemSlot;
-    this.level = level;
+    this.slot = level;
+    stack = st;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     entityId = tags.getInteger("entityId");
-    level = tags.getInteger("level");
+    slot = tags.getInteger("level");
+    stack = new ItemStack(tags.getCompoundTag("stack"));
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("entityId", entityId);
-    tags.setInteger("level", level);
+    tags.setInteger("level", slot);
+    tags.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
     ByteBufUtils.writeTag(buf, tags);
   }
 
   @Override
   public IMessage onMessage(PacketEntityDropRandom message, MessageContext ctx) {
     if (ctx.side.isServer()) {
-      EntityPlayer player = ctx.getServerHandler().player;
-      World world = player.getEntityWorld();
-      Entity entityTarget = world.getEntityByID(message.entityId);
-      if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
-        EntityLivingBase entity = (EntityLivingBase) entityTarget;
-        List<EntityEquipmentSlot> slots = null;
-        if (message.level == Const.Potions.I) {
-          slots = Arrays.asList(EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND);
+      MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
+      s.addScheduledTask(new Runnable() {
+
+        @Override
+        public void run() {
+          handle(message, ctx);
         }
-        else {// if (message.level == Const.Potions.II) {
-          slots = Arrays.asList(EntityEquipmentSlot.values());
-        }
-        ItemStack stack;
-        Collections.shuffle(slots);
-        for (EntityEquipmentSlot slot : slots) {
-          stack = entity.getItemStackFromSlot(slot);
-          if (stack.isEmpty() == false) {
-            //    ModCyclic.logger.log("DROP SLOT " + slot + " on world isREmote==" + world.isRemote);
-            entity.entityDropItem(stack.copy(), DROP_HEIGHT);
-            entity.setItemStackToSlot(slot, ItemStack.EMPTY);
-            if (entity instanceof EntityPlayer) {
-              UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");
-            }
-            break;
-          }
-        }
-      }
+      });
     }
     return null;
+  }
+
+  private void handle(PacketEntityDropRandom message, MessageContext ctx) {
+    EntityPlayer player = ctx.getServerHandler().player;
+    World world = player.getEntityWorld();
+    ModCyclic.logger.log("packet entityid" + message.entityId);
+    Entity entityTarget = world.getEntityByID(message.entityId);
+    if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
+      EntityLivingBase entity = (EntityLivingBase) entityTarget;
+
+      //      if (entity.getName() == "darkphan")
+      //        ModCyclic.logger.log("entity drop" + entity.getName() + "_" + message.level);
+      EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
+      //      ItemStack stack = entity.getItemStackFromSlot(slot);
+      ModCyclic.logger.log(entity.getName() + "!PACKET!!!DROP SLOT " + slot + " " + message.stack.getDisplayName());
+
+      UtilItemStack.dropItemStackInWorld(world, entity.getPosition().up(5), message.stack);
+      //entity.entityDropItem(message.stack.copy(), DROP_HEIGHT);
+      entity.setItemStackToSlot(slot, ItemStack.EMPTY);
+      if (entity instanceof EntityPlayer) {
+        UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");
+      }
+    }
+    else {
+      ModCyclic.logger.log("NOT FOUND packet entityid" + message.entityId);
+    }
   }
 }
