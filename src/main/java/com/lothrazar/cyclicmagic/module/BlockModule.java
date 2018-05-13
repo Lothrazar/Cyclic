@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
+import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
 import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
@@ -237,6 +238,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    BlockRegistry.registerBlock(new BlockArrowTarget(), "sprotargetut", GuideCategory.BLOCK);
     if (enableMilk) {
       FluidsRegistry.registerMilk();
     }
