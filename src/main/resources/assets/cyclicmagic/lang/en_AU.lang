@@ -1183,3 +1183,7 @@ tile.yellorite_nether_ore.name=Nether Yellorite Ore
 tile.yellorite_end_ore.name=End Yellorite Ore
 
 tile.fire_dark.guide=Does not destroy blocks or harm players.  Spawned by Duskflame Hex
+
+tile.target.name=Bullseye Target
+tile.target.tooltip=Emits redstone based on where the arrow lands
+tile.target.guide=Emits redstone based on where the arrow lands.  Only works on the side, not top or bottom.
