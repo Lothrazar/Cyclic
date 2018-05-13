@@ -122,6 +122,7 @@ public class UtilScythe {
         ,"minecraft:yellow_flower"
         ,"minecraft:brown_mushroom"
         ,"minecraft:red_mushroom"
+        ,"ferdinandsflowers:block_cff_*"
         );
    
     /* @formatter:on */
@@ -240,7 +241,7 @@ public class UtilScythe {
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
-      ModCyclic.logger.log("SCYTHE IGNORED " + blockId);
+      ModCyclic.logger.log("SCYTHE could not clip " + blockId);
     }
     return false;
   }
