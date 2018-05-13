@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"elements": [
 		{
-			"name": "cubeOuter",
-			"from": [6, 7, 0],
-			"to": [10, 9, 6],
+			"name": "cubeOuterH",
+			"from": [6, 7.25, 0],
+			"to": [10, 8.75, 6],
 			"faces": {
 				"east": {"uv": [10, 6, 16, 10], "texture": "#texture", "tintindex": 0},
 				"west": {"uv": [0, 6, 6, 10], "texture": "#texture", "tintindex": 0},
@@ -13,9 +13,9 @@
 			}
 		},
 		{
-			"name": "cubeOuter",
-			"from": [7, 6, 0],
-			"to": [9, 10, 6],
+			"name": "cubeOuterV",
+			"from": [7.25, 6, 0],
+			"to": [8.75, 10, 6],
 			"faces": {
 				"east": {"uv": [10, 6, 16, 10], "texture": "#texture", "tintindex": 0},
 				"west": {"uv": [0, 6, 6, 10], "texture": "#texture", "tintindex": 0},
