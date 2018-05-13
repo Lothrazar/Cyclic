@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 
 public class BlockArrowTarget extends BlockBase implements IHasRecipe {
 
+  private static final int REDSTONE_MAX = 16;
+
   public BlockArrowTarget() {
     super(Material.ROCK);
   }
@@ -68,7 +70,8 @@ public class BlockArrowTarget extends BlockBase implements IHasRecipe {
       //      zDist = z - 0.5;
       double distanceToCenter = Math.sqrt(horizDistance * horizDistance + vertDistance * vertDistance);
       //" relative xz : " + x + " , " + z + 
-      ModCyclic.logger.log(side + " :::" + world.isRemote + " distance " + distanceToCenter);
+      int redstone = REDSTONE_MAX - Math.min((int) (distanceToCenter * 26), REDSTONE_MAX);
+      ModCyclic.logger.log(side + " :::" + world.isRemote + " distance " + distanceToCenter +"=>"+redstone);
     }
   }
 }
