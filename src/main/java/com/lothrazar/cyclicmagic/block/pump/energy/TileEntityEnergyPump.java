@@ -23,8 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.energy;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
@@ -104,7 +102,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
       }
     }
     //EXPORT
-    List<EnumFacing> sidesOut = outputSides();
+    List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
       TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
       if (exportToTile != null) {
@@ -133,15 +131,6 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     }
   }
 
-  private List<EnumFacing> outputSides() {
-    EnumFacing in = this.getCurrentFacing();
-    List<EnumFacing> sidesOut = new ArrayList<>();
-    for (EnumFacing s : EnumFacing.values())
-      if (s != in)
-        sidesOut.add(s);
-    Collections.shuffle(sidesOut);
-    return sidesOut;
-  }
 
   @Override
   public int getField(int id) {

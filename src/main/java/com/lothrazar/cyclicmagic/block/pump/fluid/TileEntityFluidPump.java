@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.pump.fluid;
 
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
@@ -72,18 +73,23 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     }
     //    BlockPos posSide;
     EnumFacing importFromSide = this.getCurrentFacing();
-    EnumFacing exportToSide = importFromSide.getOpposite();
+    //EnumFacing exportToSide = importFromSide.getOpposite();
     // IMPORT
     //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
     //      posSide = pos.offset(importFromSide);
     UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, TRANSFER_PER_TICK);
     //eXPORT: now try to DEPOSIT fluid next door
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
-    if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
-      //TODO: not so compatible with other fluid systems. itl do i guess
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
-      if (cable.isFluidPipe())
-        cable.updateIncomingFluidFace(exportToSide.getOpposite());
+    List<EnumFacing> sidesOut = getSidesNotFacing();
+    for (EnumFacing exportToSide : sidesOut) {
+      boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
+      //  boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
+      if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
+        //TODO: not so compatible with other fluid systems. itl do i guess
+        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
+        if (cable.isFluidPipe())
+          cable.updateIncomingFluidFace(exportToSide.getOpposite());
+      }
+      break;
     }
   }
 
