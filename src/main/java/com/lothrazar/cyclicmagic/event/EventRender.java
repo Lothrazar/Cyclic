@@ -23,8 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -32,19 +30,13 @@ import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.core.util.UtilTextureRender;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
-import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.ActionType;
-import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
-import com.lothrazar.cyclicmagic.item.buildswap.PacketSwapBlock;
+import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
@@ -83,25 +75,17 @@ public class EventRender {
     Minecraft mc = Minecraft.getMinecraft();
     EntityPlayerSP p = mc.player;
     ItemStack heldItem = p.getHeldItemMainhand();
-    if (heldItem == null) {
-      return;
-    }
-    if (heldItem.getItem() instanceof ItemBuildSwapper) {
+
+    //any item can render outlines
+    if (heldItem.getItem() instanceof IRenderOutline) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
-        IBlockState state = p.world.getBlockState(mouseOver.getBlockPos());
-        Block block = state.getBlock();
-        if (block != null && block.getMaterial(state) != Material.AIR) {
-          ItemBuildSwapper wandInstance = (ItemBuildSwapper) heldItem.getItem();
-          IBlockState matched = null;
-          if (wandInstance.getWandType() == WandType.MATCH) {
-            matched = p.getEntityWorld().getBlockState(mouseOver.getBlockPos());
-          }
-          List<BlockPos> places = PacketSwapBlock.getSelectedBlocks(p.getEntityWorld(), mouseOver.getBlockPos(),
-              ActionType.values()[ActionType.get(heldItem)], wandInstance.getWandType(),
-              mouseOver.sideHit, matched);
-          Set<BlockPos> coordinates = new HashSet<BlockPos>(places);
-          UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, 75, 0, 130);
+        IRenderOutline wandInstance = (IRenderOutline) heldItem.getItem();
+        Set<BlockPos> coordinates = wandInstance.renderOutline(p.getEntityWorld(), heldItem, mouseOver);
+
+        if (coordinates != null && coordinates.size() > 0) {
+          int[] rgb = wandInstance.getRgb();
+          UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, rgb[0], rgb[1], rgb[2]);
         }
       }
     }
