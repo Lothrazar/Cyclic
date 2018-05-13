@@ -172,24 +172,28 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     EnumFacing importFromSide = this.getCurrentFacing();
-    EnumFacing exportToSide = importFromSide.getOpposite();
-    BlockPos posTarget = pos.offset(exportToSide);
-    TileEntity tileTarget = world.getTileEntity(posTarget);
-    //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
-    if (tileTarget == null ||
-        tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide.getOpposite()) == false) {
-      return;
-    }
-    ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, exportToSide.getOpposite(), stackToExport);
-    if (pulled.getCount() != stackToExport.getCount()) {
-      this.setInventorySlotContents(SLOT_TRANSFER, pulled);
-      //one or more was put in
-      outputSuccess = true;
-    }
-    if (outputSuccess && world.getTileEntity(pos.offset(importFromSide)) instanceof TileEntityCableBase) {
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(importFromSide));
-      if (cable.isItemPipe())
-        cable.updateIncomingItemFace(importFromSide.getOpposite());
+    //    EnumFacing exportToSide = importFromSide.getOpposite();
+    List<EnumFacing> sidesOut = getSidesNotFacing();
+    for (EnumFacing exportToSide : sidesOut) {
+      BlockPos posTarget = pos.offset(exportToSide);
+      TileEntity tileTarget = world.getTileEntity(posTarget);
+      //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
+      if (tileTarget == null ||
+          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide.getOpposite()) == false) {
+        continue;
+      }
+      ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, exportToSide.getOpposite(), stackToExport);
+      if (pulled.getCount() != stackToExport.getCount()) {
+        this.setInventorySlotContents(SLOT_TRANSFER, pulled);
+        //one or more was put in
+        outputSuccess = true;
+        break;
+      }
+      if (outputSuccess && world.getTileEntity(pos.offset(importFromSide)) instanceof TileEntityCableBase) {
+        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(importFromSide));
+        if (cable.isItemPipe())
+          cable.updateIncomingItemFace(importFromSide.getOpposite());
+      }
     }
   }
 

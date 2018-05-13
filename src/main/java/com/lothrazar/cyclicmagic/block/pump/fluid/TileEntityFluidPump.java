@@ -89,7 +89,9 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
         if (cable.isFluidPipe())
           cable.updateIncomingFluidFace(exportToSide.getOpposite());
       }
-      break;
+      if (outputSuccess) {
+        break;
+      }
     }
   }
 
