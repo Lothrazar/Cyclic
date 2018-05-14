@@ -48,6 +48,7 @@ import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
+import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
@@ -244,6 +245,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
     if (moon) {
       BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);

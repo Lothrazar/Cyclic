@@ -1,0 +1,6 @@
+{
+    "parent": "cyclicmagic:parent/button_large",
+    "textures": {
+        "texture": "blocks/coal_block"
+    }
+}
