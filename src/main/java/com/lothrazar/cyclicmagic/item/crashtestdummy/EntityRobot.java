@@ -6,7 +6,6 @@ import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
@@ -14,11 +13,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityVindicator;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -32,8 +26,8 @@ public class EntityRobot extends EntityMob {
 
   public static final String NAME = "robot";
   // public static ConfigSpawnEntity config = new ConfigSpawnEntity(EntityFallenHero.class, EnumCreatureType.CREATURE);
-  public static boolean avoidCreepers;
-  public static boolean temptWithGold;
+  public static boolean avoidCreepers = true;
+  public static boolean temptWithGold = true;
   //TODO CONFIG
   public static boolean renderDebugHitboxes = true;
 
@@ -59,18 +53,23 @@ public class EntityRobot extends EntityMob {
     // STAND STILL
     // WANDER
     // CHASE PLAYER
+
+
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-    this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityZombie.class, true));
-    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySkeleton.class, true));
-    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySpider.class, true));
-    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVindicator.class, true));
-    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySilverfish.class, true));
+    //    this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityZombie.class, true));
+    //    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySkeleton.class, true));
+    //    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySpider.class, true));
+    //    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVindicator.class, true));
+    //    this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntitySilverfish.class, true));
   }
+
+  @Override
+  public void onUpdate() {}
   @Override
   protected void applyEntityAttributes() {
     super.applyEntityAttributes();
     this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
-    //    this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.33000000417232513D);
+    this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.33000000417232513D);
     //ConfigSpawnEntity.syncInstance(this, config.settings);
     IAttributeInstance ai = this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE);
     if (ai == null) {
@@ -91,23 +90,18 @@ public class EntityRobot extends EntityMob {
     if (rand.nextDouble() < 0.4) {
       setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.GOLDEN_BOOTS));
     }
-    if (rand.nextDouble() < 0.5) {
-      setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
-    }
-    else {
-      setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_SWORD));
-    }
+
     if (rand.nextDouble() < 0.5) {
       setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
     }
-    if (rand.nextDouble() < 0.5) {
-      setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.GOLDEN_AXE));
-    }
+    //    if (rand.nextDouble() < 0.5) {
+    //      setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.GOLDEN_AXE));
+    //    }
     return super.onInitialSpawn(di, livingData);
   }
   @Override
   public ResourceLocation getLootTable() {
-    return new ResourceLocation(Const.MODID, "entity/hero");
+    return new ResourceLocation(Const.MODID, "entity/robot");
   }
   @Override
   public boolean isPreventingPlayerRest(EntityPlayer playerIn) {

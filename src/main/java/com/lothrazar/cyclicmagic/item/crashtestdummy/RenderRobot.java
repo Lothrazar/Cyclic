@@ -13,7 +13,8 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 //import teamroots.emberroot.util.RenderUtil;
 
 public class RenderRobot extends RenderBiped<EntityRobot> {
-  private static final ResourceLocation texture = new ResourceLocation(Const.MODID, "textures/entity/hero.png");
+
+  private static final ResourceLocation texture = new ResourceLocation(Const.MODID, "textures/entity/robot.png");
   public RenderRobot(RenderManager renderManagerIn) {
     super(renderManagerIn, new ModelZombie(), 0.5F);
     LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
@@ -28,6 +29,7 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
   @Override
   public void doRender(EntityRobot entity, double x, double y, double z, float entityYaw, float partialTicks) {
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    //toggle on right click?
     if (EntityRobot.renderDebugHitboxes)
       RenderUtil.renderEntityBoundingBox(entity, x, y, z);
   }

@@ -62,6 +62,7 @@ import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
@@ -248,6 +249,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
     EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
+    ItemRegistry.register(new ItemCrashSpawner(), "robot_spawner", GuideCategory.TRANSPORT);
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
