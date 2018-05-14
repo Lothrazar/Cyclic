@@ -140,7 +140,12 @@ public class UtilScythe {
         ,"thebetweenlands:*_ivy" 
         ,"thebetweenlands:algae" 
         ,"thebetweenlands:hanger"
+        ,"thebetweenlands:nettle"
         ,"thebetweenlands:*_iris"
+        ,"thebetweenlands:*_kelp"
+        ,"thebetweenlands:fallen_leaves"
+        ,"thebetweenlands:swamp_reed_*"
+        ,"thebetweenlands:*_mushroom"
         ,"natura:*_vines"
      
         );
