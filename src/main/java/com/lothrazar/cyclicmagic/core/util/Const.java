@@ -244,6 +244,7 @@ public class Const {
    * defined in vanilla VluidRegistry where Fluid LAVA is registered (tile.lava)
    */
   public static final int LAVA_TEMPERATURE = 1300;
+  public static final int REDSTONE_MAX = 16;
 
   public static class HorseMeta {
 

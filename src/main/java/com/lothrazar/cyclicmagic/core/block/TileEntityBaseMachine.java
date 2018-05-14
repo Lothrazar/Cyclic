@@ -46,7 +46,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
    * @return
    */
   public boolean isValid() {
-    return !this.isInvalid() && this.getWorld().isBlockLoaded(this.getPos());
+    return world != null && !this.isInvalid() && this.getWorld().isBlockLoaded(this.getPos());
   }
 
   public boolean isRunning() {

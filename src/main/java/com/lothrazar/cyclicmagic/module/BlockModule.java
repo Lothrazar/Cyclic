@@ -102,6 +102,8 @@ import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
+import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
@@ -221,6 +223,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean anvilMagma;
   private boolean battery;
   private boolean etarget;
+  private boolean moon;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -240,9 +243,13 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (moon) {
+      BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
+    }
     if (etarget) {
-    BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+      BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
     }
     if (enableMilk) {
       FluidsRegistry.registerMilk();
@@ -615,6 +622,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

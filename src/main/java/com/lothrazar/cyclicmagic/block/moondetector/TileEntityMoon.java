@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.arrowtarget;
+package com.lothrazar.cyclicmagic.block.moondetector;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,29 +32,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class TileEntityArrowTarget extends TileEntityBaseMachineInvo implements ITickable {
-
-  public static final int TIMER_MAX = 10;
+public class TileEntityMoon extends TileEntityBaseMachineInvo implements ITickable {
 
   public static enum Fields {
-    TIMER, POWER;
+    POWER;
   }
 
   private int power;
 
-  public TileEntityArrowTarget() {
+  public TileEntityMoon() {
     super(0);
-    timer = 0;
     power = 0;
   }
 
   public int getPower() {
     return this.power;
-  }
-
-  public void setPower(int redstone) {
-    this.timer = TIMER_MAX;
-    power = redstone;
   }
 
   @Override
@@ -64,25 +57,26 @@ public class TileEntityArrowTarget extends TileEntityBaseMachineInvo implements 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
     //oldState.getBlock() instanceof BlockRedstoneClock &&
-    return !(newSate.getBlock() instanceof BlockArrowTarget);// : oldState != newSate;
+    return !(newSate.getBlock() instanceof BlockMoonDetector);
   }
 
   @Override
   public void update() {
-    if (this.isValid() == false) {
-      return;
-    }
-    this.timer--;
-    if (timer < 0) {
-      timer = 0;
-    }
-    boolean poweredNow = timer > 0;
-    boolean prevPowered = world.getBlockState(pos).getValue(BlockArrowTarget.POWERED);
-    if (prevPowered != poweredNow) {
-      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockArrowTarget.POWERED, poweredNow));
-      //super weird hotfix for down state not updating
-      //all other directions read update, but not down apparently!
-      world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
+    //    
+    if (this.isValid() && !world.isRemote && this.world.getTotalWorldTime() % 20L == 0L) {
+      //https://minecraft.gamepedia.com/Moon
+      //0,4,8,12,16 // both ways
+      int prevPowered = this.power;
+      //[0, 7] inclusive, so bump that up
+      power = world.provider.getMoonPhase(world.getWorldTime()) * 2 + 1;
+      if (prevPowered != power) {
+        ModCyclic.logger.log(" CHANGE TO " + power);
+        //save my state 
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockMoonDetector.POWER, power));
+        //all other directions read update, but not down apparently!   
+        world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
+        //        world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock(), true);
+      }
     }
   }
 
@@ -91,8 +85,6 @@ public class TileEntityArrowTarget extends TileEntityBaseMachineInvo implements 
     switch (Fields.values()[id]) {
       case POWER:
         return power;
-      case TIMER:
-        return timer;
     }
     return 0;
   }
@@ -102,9 +94,6 @@ public class TileEntityArrowTarget extends TileEntityBaseMachineInvo implements 
     switch (Fields.values()[id]) {
       case POWER:
         power = MathHelper.clamp(value, 0, 16);
-      break;
-      case TIMER:
-        timer = MathHelper.clamp(value, 0, TIMER_MAX);
       break;
     }
   }

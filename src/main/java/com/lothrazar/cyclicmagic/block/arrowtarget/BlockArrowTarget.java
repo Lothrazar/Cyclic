@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.block.arrowtarget;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
 
   public static final PropertyBool POWERED = BlockLever.POWERED;//PropertyBool.create("powered");
-  private static final int REDSTONE_MAX = 16;
+
 
   public BlockArrowTarget() {
     super(Material.ROCK);
@@ -114,7 +115,7 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
       double y = entity.posY - pos.getY();
       double vertDistance = y - 0.5;
       double distanceToCenter = Math.sqrt(horizDistance * horizDistance + vertDistance * vertDistance);
-      int redstone = REDSTONE_MAX - Math.min((int) (distanceToCenter * 26), REDSTONE_MAX);
+      int redstone = Const.REDSTONE_MAX - Math.min((int) (distanceToCenter * 26), Const.REDSTONE_MAX);
       if (world.getTileEntity(pos) instanceof TileEntityArrowTarget) {
         TileEntityArrowTarget target = ((TileEntityArrowTarget) world.getTileEntity(pos));
         target.setPower(redstone);
