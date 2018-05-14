@@ -123,6 +123,26 @@ public class UtilScythe {
         ,"minecraft:brown_mushroom"
         ,"minecraft:red_mushroom"
         ,"ferdinandsflowers:block_cff_*"
+        ,"extraplanets:*_flowers"
+        ,"primal:dry_grass_root"
+        ,"primal:nether_root"
+        ,"twilightforest:*_plant" 
+        ,"tconstruct:*_grass_tall"
+        ,"thebetweenlands:*_flower"
+        ,"thebetweenlands:*_tallgrass"
+        ,"thebetweenlands:*_stalk"
+        ,"thebetweenlands:moss"
+        ,"thebetweenlands:cattail"
+        ,"thebetweenlands:*_cattail" 
+        ,"thebetweenlands:*_plant" 
+        ,"thebetweenlands:*_coral" 
+        ,"thebetweenlands:*_bush" 
+        ,"thebetweenlands:*_ivy" 
+        ,"thebetweenlands:algae" 
+        ,"thebetweenlands:hanger"
+        ,"thebetweenlands:*_iris"
+        ,"natura:*_vines"
+     
         );
    
     /* @formatter:on */
