@@ -19,9 +19,10 @@ import net.minecraft.world.World;
 
 public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
 
-  //BlockDaylightDetector
   protected static final AxisAlignedBB DAYLIGHT_DETECTOR_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D);
   public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
+
+  //https://minecraft.gamepedia.com/Moon
   public BlockMoonDetector() {
     super(Material.ROCK);
   }
@@ -50,19 +51,14 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
   public int getMetaFromState(IBlockState state) {
     return state.getValue(POWER).intValue();
   }
+
   @Override
   public boolean canProvidePower(IBlockState state) {
     return true;
   }
 
   private int getPower(IBlockState blockState) {
-    //https://minecraft.gamepedia.com/Moon
     return blockState.getValue(POWER).intValue();
-    //    if (world.getTileEntity(pos) instanceof TileEntityMoon) 
-    //      TileEntityMoon target = ((TileEntityMoon) world.getTileEntity(pos));
-    //      return target.getPower();
-    //    }
-    //    return 0;
   }
 
   @Override
@@ -79,10 +75,10 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "iii",
-        "sos",
+        "gog",
         "iii",
         'i', "nuggetGold",
-        'o', Blocks.OBSERVER,
-        's', Blocks.STONE_BUTTON);
+        'o', Blocks.DAYLIGHT_DETECTOR,
+        'g', "paneGlassColorless");
   }
 }

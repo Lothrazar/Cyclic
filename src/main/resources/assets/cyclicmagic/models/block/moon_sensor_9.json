@@ -1,0 +1,8 @@
+{
+	"parent": "cyclicmagic:parent/sensor",
+    "textures": {
+        "particle": "cyclicmagic:blocks/moon/moon_sensor_side",
+        "top": "cyclicmagic:blocks/moon/moon_sensor_top_9",
+        "side": "cyclicmagic:blocks/moon/moon_sensor_side"
+    }
+}

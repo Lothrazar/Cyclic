@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.moondetector;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,7 +55,6 @@ public class TileEntityMoon extends TileEntityBaseMachineInvo implements ITickab
 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-    //oldState.getBlock() instanceof BlockRedstoneClock &&
     return !(newSate.getBlock() instanceof BlockMoonDetector);
   }
 
@@ -65,17 +63,15 @@ public class TileEntityMoon extends TileEntityBaseMachineInvo implements ITickab
     //    
     if (this.isValid() && !world.isRemote && this.world.getTotalWorldTime() % 20L == 0L) {
       //https://minecraft.gamepedia.com/Moon
-      //0,4,8,12,16 // both ways
       int prevPowered = this.power;
       //[0, 7] inclusive, so bump that up
       power = world.provider.getMoonPhase(world.getWorldTime()) * 2 + 1;
       if (prevPowered != power) {
-        ModCyclic.logger.log(" CHANGE TO " + power);
+        //     ModCyclic.logger.log(" CHANGE TO " + power);
         //save my state 
         world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockMoonDetector.POWER, power));
         //all other directions read update, but not down apparently!   
         world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
-        //        world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock(), true);
       }
     }
   }
