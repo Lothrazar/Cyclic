@@ -1,5 +1,5 @@
 {
-    "parent": "block/button",
+    "parent": "cyclicmagic:parent/button",
     "textures": {
         "texture": "blocks/coal_block"
     }

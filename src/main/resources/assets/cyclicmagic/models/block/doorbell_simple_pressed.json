@@ -1,5 +1,5 @@
 {
-    "parent": "block/button_pressed",
+    "parent": "cyclicmagic:parent/button_pressed",
     "textures": {
         "texture": "blocks/redstone_block"
     }
