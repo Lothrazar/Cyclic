@@ -2,9 +2,12 @@ package com.lothrazar.cyclicmagic.item.crashtestdummy;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -13,6 +16,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
@@ -22,7 +27,6 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
   public ItemCrashSpawner() {
     super(50);
-
   }
 
   @Override
@@ -51,26 +55,53 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
       return;
     }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
-    int health = charge * 10;
-    if (!world.isRemote) {
+    if (charge > 12 && !world.isRemote) {
       BlockPos pos = entity.getPosition();//look location???
       EntityRobot robot = new EntityRobot(world);
-      robot.setMaxHealth(health);//NO(T WORKIN
       robot.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
       world.spawnEntity(robot);
+      stack.damageItem(1, player);
+      player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     }
-    UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".health" + health);
-    stack.damageItem(1, player);
-
-    //    player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
-    //    UtilSound.playSound(player, player.getPosition(), SoundRegistry.machine_launch, SoundCategory.PLAYERS);
-    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
 
   @Override
   public IRecipe addRecipe() {
-    // TODO Auto-generated method stub
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "gze",
+        " bz",
+        "b g",
+        'b', Items.BONE,
+        'z', Items.ROTTEN_FLESH,
+        'e', Items.SPIDER_EYE,
+        'g', Items.GUNPOWDER);
+  }
+
+  @SubscribeEvent
+  public void onEntityInteractEvent(EntityInteract event) {
+    if (event.getEntity() instanceof EntityPlayer == false) {
+      return;
+    }
+    EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
+    if (event.getTarget() instanceof EntityRobot) {
+      EntityRobot bot = ((EntityRobot) event.getTarget());
+      ItemStack held = event.getItemStack().copy();
+      if (held.getItem() == this) {
+        bot.setDead();
+      }
+      else {
+        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+          if (slot.getSlotType() == EntityEquipmentSlot.Type.ARMOR &&
+              held.getItem().isValidArmor(held, slot, bot)) {
+            UtilItemStack.dropItemStackInWorld(entityPlayer.world, bot.getPosition(), bot.getItemStackFromSlot(slot).copy());
+            bot.setItemStackToSlot(slot, held);
+            entityPlayer.setHeldItem(event.getHand(), ItemStack.EMPTY);
+            bot.setDropChance(slot, 100);
+            break;
+          }
+        }
+      }
+    }
   }
 }

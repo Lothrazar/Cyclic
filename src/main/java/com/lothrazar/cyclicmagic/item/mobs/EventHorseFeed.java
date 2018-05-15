@@ -37,8 +37,8 @@ public class EventHorseFeed {
       return;
     }
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
-    ItemStack held = entityPlayer.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
+    ItemStack held = event.getItemStack();
+    if (held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
         && event.getTarget() instanceof AbstractHorse) {
       ItemHorseUpgrade.onHorseInteract((AbstractHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
       event.setCanceled(true);// stop the GUI inventory opening && horse mounting

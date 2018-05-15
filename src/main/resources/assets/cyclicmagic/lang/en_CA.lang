@@ -1191,3 +1191,13 @@ tile.target.guide=Emits redstone based on where the arrow lands.  Only works on 
 tile.moon_sensor.name=Moon Phase Sensor
 tile.moon_sensor.tooltip=Emits signal based on current moons phase
 tile.moon_sensor.guide=Emits signal based on current moons phase.  Power ranges along 1,3,5,7,9,11,13,15 and back down again.  Stays powered during the day, and changes every night as the moon shifts phases.  
+
+entity.robot.name=Target Dummy
+
+tile.button_large.name=Large Button
+tile.button_large.tooltip=A pressure plate sized button
+tile.button_large.guide=A pressure plate sized button
+
+tile.doorbell_simple.name=Doorbell
+tile.doorbell_simple.tooltip=Makes sound
+tile.doorbell_simple.guide=Plays single sound on click

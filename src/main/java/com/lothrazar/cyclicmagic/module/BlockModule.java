@@ -226,6 +226,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean battery;
   private boolean etarget;
   private boolean moon;
+  private boolean buttonLarge;
+  private boolean doorbell;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -245,8 +247,12 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (buttonLarge) {
     BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
+    }
+    if (doorbell) {
     BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
+    }
     if (moon) {
       BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
@@ -626,6 +632,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    buttonLarge = config.getBoolean("button_;arge", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

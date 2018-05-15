@@ -1,18 +1,25 @@
 package com.lothrazar.cyclicmagic.block.buttonflat;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockButtonLarge extends BlockButton implements IHasRecipe {
 
@@ -35,19 +42,25 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe {
     super(false);
   }
 
-
-
   @Override
-  protected void playClickSound(EntityPlayer player, World worldIn, BlockPos pos) {
-    //    UtilSound.playSound(player, SoundRegistry.heart_container);
+  protected void playClickSound(@Nullable EntityPlayer player, World worldIn, BlockPos pos) {
+    worldIn.playSound(player, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
   }
 
   @Override
-  protected void playReleaseSound(World worldIn, BlockPos pos) {}
+  protected void playReleaseSound(World worldIn, BlockPos pos) {
+    worldIn.playSound((EntityPlayer) null, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundCategory.BLOCKS, 0.3F, 0.5F);
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+  }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.WOODEN_BUTTON, "nuggetIron");
+    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.WOODEN_BUTTON, Blocks.STONE_PRESSURE_PLATE, "nuggetIron");
   }
 
   @Override
