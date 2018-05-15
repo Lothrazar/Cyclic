@@ -4,15 +4,13 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,47 +21,47 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
   //
   private static final int COOLDOWN = 20 * 5;
-  private static final int TICKS_USING = 53000;//bow has 72000
+  //  private static final int TICKS_USING = 53000;//bow has 72000
 
   public ItemCrashSpawner() {
-    super(50);
+    super(25);
   }
+  //
+  //  @Override
+  //  public int getMaxItemUseDuration(ItemStack stack) {
+  //    return TICKS_USING;//bow has 72000
+  //  }
+  //
+  //  @Override
+  //  public EnumAction getItemUseAction(ItemStack stack) {
+  //    return EnumAction.BOW;//make it use cooldown
+  //  }
+  //
+  //  @Override
+  //  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
+  //    if (hand != EnumHand.MAIN_HAND) {
+  //      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
+  //    }
+  //    player.setActiveHand(hand);
+  //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
+  //  }
 
   @Override
-  public int getMaxItemUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
-  }
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = player.getHeldItem(hand);
+    BlockPos pos = posIn.offset(side);
 
-  @Override
-  public EnumAction getItemUseAction(ItemStack stack) {
-    return EnumAction.BOW;//make it use cooldown
-  }
+    //    int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
+    if (!world.isRemote) {
 
-  @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-    if (hand != EnumHand.MAIN_HAND) {
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
-    }
-    player.setActiveHand(hand);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
-  }
-
-  @Override
-  public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
-    EntityPlayer player = (EntityPlayer) entity;
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-      return;
-    }
-    int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
-    if (charge > 12 && !world.isRemote) {
-      BlockPos pos = entity.getPosition();//look location???
       EntityRobot robot = new EntityRobot(world);
       robot.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
       world.spawnEntity(robot);
-      stack.damageItem(1, player);
-      player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
+
+
     }
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
+    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
   }
 
   @Override

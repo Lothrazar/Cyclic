@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item.crashtestdummy;
 
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.RenderUtil;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -30,8 +29,8 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
   public void doRender(EntityRobot entity, double x, double y, double z, float entityYaw, float partialTicks) {
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
     //toggle on right click?
-    if (EntityRobot.renderDebugHitboxes)
-      RenderUtil.renderEntityBoundingBox(entity, x, y, z);
+    //    if (EntityRobot.renderDebugHitboxes)
+    //      RenderUtil.renderEntityBoundingBox(entity, x, y, z);
   }
   @Override
   protected ResourceLocation getEntityTexture(EntityRobot entity) {

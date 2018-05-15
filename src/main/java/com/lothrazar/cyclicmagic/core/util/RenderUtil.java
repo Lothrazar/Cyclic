@@ -28,6 +28,7 @@ public final class RenderUtil {
       double depth = (bb.maxZ - bb.minZ) / 2;
       GlStateManager.color(1, 1, 1, 1);
       tes.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+
       tes.pos(-width, 0, 0).endVertex();
       tes.pos(width, 0, 0).endVertex();
       tes.pos(width, height, 0).endVertex();
