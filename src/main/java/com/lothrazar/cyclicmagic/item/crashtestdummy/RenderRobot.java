@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-//import teamroots.emberroot.Const;
-//import teamroots.emberroot.util.RenderUtil;
 
 public class RenderRobot extends RenderBiped<EntityRobot> {
 

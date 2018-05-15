@@ -1204,3 +1204,8 @@ tile.button_large.guide=A pressure plate sized button
 tile.doorbell_simple.name=Doorbell
 tile.doorbell_simple.tooltip=Makes sound
 tile.doorbell_simple.guide=Plays single sound on click
+
+item.fire_starter.name=Fire Starter
+item.fire_starter.tooltip=Use flint to start a fire on signal
+item.fire_starter.guide=Use flint to start a fire on redsotne signal.  Can face any direction.  Chance to consume flint.  
+
