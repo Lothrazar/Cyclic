@@ -22,6 +22,7 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
   public ItemCrashSpawner() {
     super(50);
+
   }
 
   @Override
@@ -50,22 +51,17 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
       return;
     }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
+    int health = charge * 10;
     if (!world.isRemote) {
       BlockPos pos = entity.getPosition();//look location???
       EntityRobot robot = new EntityRobot(world);
-      robot.setPosition(pos.getX(), pos.getY(), pos.getZ());
+      robot.setMaxHealth(health);//NO(T WORKIN
+      robot.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
       world.spawnEntity(robot);
     }
-    UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".health" + charge);
+    UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".health" + health);
     stack.damageItem(1, player);
-    //bow konws how to say , how charged up am i, ok heres your power
-    //    float power = Math.min(MAX_POWER, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
-    //    Vec3d vec = player.getLookVec().normalize();
-    //    int rev = (ActionType.isForward(stack)) ? 1 : -1;
-    //    power *= rev;//flip it the other way if we are going backwards
-    //    player.addVelocity(vec.x * power,
-    //        vec.y * power / VERTICAL_FACTOR,
-    //        vec.z * power);
+
     //    player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
     //    UtilSound.playSound(player, player.getPosition(), SoundRegistry.machine_launch, SoundCategory.PLAYERS);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
