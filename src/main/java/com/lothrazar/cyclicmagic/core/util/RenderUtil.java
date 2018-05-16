@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public final class RenderUtil {
 
-  public static void renderEntityText(EntityLiving entity, double x, double y, double z, String custom) {
+  public static void renderEntityText(EntityLiving entity, double x, double y, double z, String custom, float time) {
     AxisAlignedBB bb = entity.getEntityBoundingBox();
     if (bb != null) {
 
@@ -24,9 +24,9 @@ public final class RenderUtil {
 
       GlStateManager.pushMatrix();
 
-      float s = 0.2F;
+      float s = 0.1F;
       GlStateManager.rotate(180, 1, 0, 0);
-      GlStateManager.translate(-2, -3.5F, -.5F);
+      GlStateManager.translate(-.5F, -3.5F + time / 100, -.5F);
       GlStateManager.scale(s, s, s);
       Minecraft.getMinecraft().fontRenderer.drawString(custom, 0, 0, 0xFFFFFF);
       GlStateManager.popMatrix();

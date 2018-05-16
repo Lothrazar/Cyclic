@@ -73,11 +73,11 @@ public class EntityRobot extends EntityCreature {
 
   @Override
   public void onLivingUpdate() {
-    this.updateArmSwingProgress();
-    float f = this.getBrightness();
-    if (f > 0.5F) {
-      this.idleTime += 2;
-    }
+    // this.updateArmSwingProgress();
+    //    float f = this.getBrightness();
+    //    if (f > 0.5F) {
+    //      this.idleTime += 2;
+    //    }
     if (getTimer() > 0) {
       setTimer(getTimer() - 1);
     }
