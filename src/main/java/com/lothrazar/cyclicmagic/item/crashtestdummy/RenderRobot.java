@@ -1,14 +1,21 @@
 package com.lothrazar.cyclicmagic.item.crashtestdummy;
 
+import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.RenderUtil;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot.DmgTracker;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelZombie;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RenderRobot extends RenderBiped<EntityRobot> {
 
@@ -29,8 +36,40 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
     //toggle on right click?
     //    if (EntityRobot.renderDebugHitboxes)
-    if (entity.getTimer() > 0 && entity.getMessage() != "")
-      RenderUtil.renderEntityText(entity, x, y, z, entity.getMessage(), entity.getTimer());
+    for (DmgTracker tr : entity.trackers) {
+      if (tr.timer > 0 && tr.message != "")
+        renderEntityText(entity, x, y, z, tr.message, tr.timer);
+  }
+  }
+
+  @SideOnly(Side.CLIENT)
+  public static void renderEntityText(EntityLiving entity, double x, double y, double z, String custom, float time) {
+    AxisAlignedBB bb = entity.getEntityBoundingBox();
+    if (bb != null) {
+      GL11.glDisable(GL11.GL_LIGHTING);
+      GL11.glDisable(GL11.GL_CULL_FACE);
+      GL11.glPushMatrix();
+      GL11.glTranslatef((float) x, (float) y, (float) z);
+      GL11.glPushMatrix();
+      GL11.glRotatef(-entity.renderYawOffset, 0, 1, 0);
+      GlStateManager.pushMatrix();
+      float s = 0.05F; //scale size
+      float step = 1.105F;//movement speed
+
+      float pct = (EntityRobot.MAX_TIMER - time) / EntityRobot.MAX_TIMER;
+
+      float ystart = -2.2F;
+      y = ystart - pct * step;
+      GlStateManager.rotate(180, 1, 0, 0);
+      GlStateManager.translate(-.5F, y, -.5F);
+      GlStateManager.scale(s, s, s);
+      Minecraft.getMinecraft().fontRenderer.drawString(custom, 0, 0, 0xFFFFFF);
+      GlStateManager.popMatrix();
+      GL11.glPopMatrix();
+      GL11.glPopMatrix();
+      GL11.glEnable(GL11.GL_TEXTURE_2D);
+      GL11.glEnable(GL11.GL_LIGHTING);
+    }
   }
   @Override
   protected ResourceLocation getEntityTexture(EntityRobot entity) {

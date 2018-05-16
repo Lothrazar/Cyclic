@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.item.crashtestdummy;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.net.PacketEntitySyncToClient;
@@ -14,19 +17,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-//import teamroots.emberroot.Const;
 import net.minecraft.world.WorldServer;
 
 public class EntityRobot extends EntityCreature {
 
+  public static final int MAX_TIMER = 100;
   public static final String NAME = "robot";
-  // public static ConfigSpawnEntity config = new ConfigSpawnEntity(EntityFallenHero.class, EnumCreatureType.CREATURE);
   public static boolean avoidCreepers = true;
   public static boolean temptWithGold = true;
-  //TODO CONFIG
-  public static boolean renderDebugHitboxes = true;
-  private int timer = 0;
-  private String message;
+  List<DmgTracker> trackers = new ArrayList<DmgTracker>();
 
   public EntityRobot(World worldIn) {
     super(worldIn);
@@ -36,19 +35,18 @@ public class EntityRobot extends EntityCreature {
   @Override
   public boolean attackEntityFrom(DamageSource source, float amount) {
     boolean success = super.attackEntityFrom(source, amount);
-    if (success && source.getTrueSource() instanceof EntityPlayer) {
-
+    if (success && source.getTrueSource() instanceof EntityPlayer
+        && world instanceof WorldServer) {
       String m = amount + "  [ " + this.getHealth() + " / " + this.getMaxHealth() + " ]";
-      // UtilChat.addChatMessage(((EntityPlayer) source.getTrueSource()), m);
-      setMessage(m);
+      trackers.add(new DmgTracker(MAX_TIMER, amount + ""));
+      //    UtilChat.addChatMessage(((EntityPlayer) source.getTrueSource()), m);
       //arg server only
-      EntityTracker et = ((WorldServer) this.world).getEntityTracker();
+      EntityTracker et = ((WorldServer) world).getEntityTracker();
       et.sendToTracking(this,
           ModCyclic.network.getPacketFrom(new PacketEntitySyncToClient(
-              this.getEntityId(), amount + "")));
-
+              getEntityId(), trackers)));
     }
-    return success;
+    return false;
   }
 
   @Override
@@ -60,30 +58,45 @@ public class EntityRobot extends EntityCreature {
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger("tmr", getTimer());
-    compound.setString("strMsg", getMessage());
+    int i = 0;
+    for (DmgTracker t : trackers) {
+      compound.setInteger("tmr" + i, t.timer);
+      compound.setString("strMsg" + i, t.message);
+      i++;
+    }
+    compound.setInteger("SAVED", i);
     return super.writeToNBT(compound);
   }
 
   @Override
   public void readFromNBT(NBTTagCompound compound) {
-    setTimer(compound.getInteger("tmr"));
-    setMessage(compound.getString("strMsg"));
+    int saved = compound.getInteger("SAVED");
+    for (int i = 0; i < saved; i++) {
+      if (compound.hasKey("tmr" + i)) {
+        int timer = compound.getInteger("tmr" + i);
+        if (timer > 0) {
+          trackers.add(new DmgTracker(timer, compound.getString("strMsg" + i)));
+        }
+      }
+    }
+    //    setMessage(compound.getString("strMsg"));
   }
 
   @Override
   public void onLivingUpdate() {
+    // remove old
+    for (Iterator<DmgTracker> iterator = trackers.iterator(); iterator.hasNext();) {
+      DmgTracker dmg = iterator.next();
+      dmg.timer--;
+      if (dmg.timer < 0) {
+        iterator.remove();
+      }
+    }
     // this.updateArmSwingProgress();
     //    float f = this.getBrightness();
     //    if (f > 0.5F) {
     //      this.idleTime += 2;
     //    }
-    if (getTimer() > 0) {
-      setTimer(getTimer() - 1);
-    }
-    if (getTimer() == 0) {
-      setMessage("");
-    }
     super.onLivingUpdate();
   }
 
@@ -107,20 +120,18 @@ public class EntityRobot extends EntityCreature {
     return new ResourceLocation(Const.MODID, "entity/robot");
   }
 
-  public int getTimer() {
-    return timer;
+  public static class DmgTracker {
+
+    public int timer = 0;
+    public String message;
+
+    public DmgTracker(int t, String m) {
+      timer = t;
+      message = m;
+    }
   }
 
-  public void setTimer(int timer) {
-    this.timer = timer;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-    timer = 100;
+  public void setTrackers(List<DmgTracker> trackers) {
+    this.trackers = trackers;
   }
 }

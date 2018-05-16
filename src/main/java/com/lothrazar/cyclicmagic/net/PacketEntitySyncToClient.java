@@ -23,8 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot.DmgTracker;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,28 +41,43 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketEntitySyncToClient implements IMessage, IMessageHandler<PacketEntitySyncToClient, IMessage> {
 
   private int entityId;
-  private String msg;
+  private List<DmgTracker> trackers;
 
   public PacketEntitySyncToClient() {}
 
-  public PacketEntitySyncToClient(int entityid, String st) {
+  public PacketEntitySyncToClient(int entityid, List<DmgTracker> trackers) {
     entityId = entityid;
-    msg = st;
+    this.trackers = trackers;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
-    NBTTagCompound tags = ByteBufUtils.readTag(buf);
-    entityId = tags.getInteger("entityId");
-    msg = tags.getString("msg");
+    NBTTagCompound compound = ByteBufUtils.readTag(buf);
+    entityId = compound.getInteger("entityId");
+    trackers = new ArrayList<DmgTracker>();
+    int saved = compound.getInteger("SAVED");
+    for (int i = 0; i < saved; i++) {
+      if (compound.hasKey("tmr" + i)) {
+        int timer = compound.getInteger("tmr" + i);
+        if (timer > 0) {
+          trackers.add(new EntityRobot.DmgTracker(timer, compound.getString("strMsg" + i)));
+        }
+      }
+    }
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
-    NBTTagCompound tags = new NBTTagCompound();
-    tags.setInteger("entityId", entityId);
-    tags.setString("msg", msg);
-    ByteBufUtils.writeTag(buf, tags);
+    NBTTagCompound compound = new NBTTagCompound();
+    compound.setInteger("entityId", entityId);
+    int i = 0;
+    for (DmgTracker t : trackers) {
+      compound.setInteger("tmr" + i, t.timer);
+      compound.setString("strMsg" + i, t.message);
+      i++;
+    }
+    compound.setInteger("SAVED", i);
+    ByteBufUtils.writeTag(buf, compound);
   }
 
   @Override
@@ -82,7 +100,7 @@ public class PacketEntitySyncToClient implements IMessage, IMessageHandler<Packe
 
     Entity entityTarget = ModCyclic.proxy.getPlayerEntity(ctx).world.getEntityByID(message.entityId);
     if (entityTarget instanceof EntityRobot) {
-      ((EntityRobot) entityTarget).setMessage(message.msg);
+      ((EntityRobot) entityTarget).setTrackers(message.trackers);
     }
 
   }
