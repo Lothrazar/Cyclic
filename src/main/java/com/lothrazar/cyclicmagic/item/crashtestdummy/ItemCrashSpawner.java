@@ -75,6 +75,15 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
         'e', Items.SPIDER_EYE,
         'g', Items.GUNPOWDER);
   }
+  //  @SubscribeEvent
+  //  public static void startTracking(PlayerEvent.StartTracking event) {
+  //    if (event.getTarget() instanceof EntityRobot) {
+  //      EntityRobot entity = (EntityRobot) event.getTarget();
+  //      System.out.println("StartTracking" + entity.world.isRemote);
+  //
+  //      
+  //    }
+  //  }
 
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

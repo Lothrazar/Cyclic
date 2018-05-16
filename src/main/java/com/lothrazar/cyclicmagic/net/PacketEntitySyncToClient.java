@@ -24,58 +24,49 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketEntityDropRandom, IMessage> {
+public class PacketEntitySyncToClient implements IMessage, IMessageHandler<PacketEntitySyncToClient, IMessage> {
 
   private int entityId;
-  private int slot;
-  private ItemStack stack;
+  private String msg;
 
-  public PacketEntityDropRandom() {}
+  public PacketEntitySyncToClient() {}
 
-  public PacketEntityDropRandom(int entityid, int level, ItemStack st) {
+  public PacketEntitySyncToClient(int entityid, String st) {
     entityId = entityid;
-    this.slot = level;
-    stack = st;
+    msg = st;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     entityId = tags.getInteger("entityId");
-    slot = tags.getInteger("level");
-    stack = new ItemStack(tags.getCompoundTag("stack"));
+    msg = tags.getString("msg");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("entityId", entityId);
-    tags.setInteger("level", slot);
-    tags.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
+    tags.setString("msg", msg);
     ByteBufUtils.writeTag(buf, tags);
   }
 
   @Override
-  public IMessage onMessage(PacketEntityDropRandom message, MessageContext ctx) {
-    if (ctx.side.isServer()) {
+  public IMessage onMessage(PacketEntitySyncToClient message, MessageContext ctx) {
+    if (ctx.side.isClient()) {
       MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
+
       s.addScheduledTask(new Runnable() {
 
         @Override
@@ -87,28 +78,12 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     return null;
   }
 
-  private void handle(PacketEntityDropRandom message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().player;
-    World world = player.getEntityWorld();
-    ModCyclic.logger.log("packet entityid" + message.entityId);
-    Entity entityTarget = world.getEntityByID(message.entityId);
-    if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
-      EntityLivingBase entity = (EntityLivingBase) entityTarget;
+  private void handle(PacketEntitySyncToClient message, MessageContext ctx) {
 
-
-      EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
-
-      ModCyclic.logger.log(entity.getName() + "!PACKET!!!DROP SLOT " + slot + " " + message.stack.getDisplayName());
-
-      UtilItemStack.dropItemStackInWorld(world, entity.getPosition().up(5), message.stack);
-
-      entity.setItemStackToSlot(slot, ItemStack.EMPTY);
-      if (entity instanceof EntityPlayer) {
-        UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");
-      }
+    Entity entityTarget = ModCyclic.proxy.getPlayerEntity(ctx).world.getEntityByID(message.entityId);
+    if (entityTarget instanceof EntityRobot) {
+      ((EntityRobot) entityTarget).setMessage(message.msg);
     }
-    else {
-      ModCyclic.logger.log("NOT FOUND packet entityid" + message.entityId);
-    }
+
   }
 }

@@ -14,7 +14,7 @@ public final class RenderUtil {
   public static void renderEntityText(EntityLiving entity, double x, double y, double z, String custom) {
     AxisAlignedBB bb = entity.getEntityBoundingBox();
     if (bb != null) {
-      //   GL11.glDisable(GL11.GL_TEXTURE_2D);
+
       GL11.glDisable(GL11.GL_LIGHTING);
       GL11.glDisable(GL11.GL_CULL_FACE);
       GL11.glPushMatrix();
@@ -23,8 +23,7 @@ public final class RenderUtil {
       GL11.glRotatef(-entity.renderYawOffset, 0, 1, 0);
 
       GlStateManager.pushMatrix();
-      // GlStateManager.enableTexture2D();
-      float size = 1f;
+
       float s = 0.2F;
       GlStateManager.rotate(180, 1, 0, 0);
       GlStateManager.translate(-2, -3.5F, -.5F);
@@ -35,7 +34,7 @@ public final class RenderUtil {
       GL11.glPopMatrix();
       GL11.glEnable(GL11.GL_TEXTURE_2D);
       GL11.glEnable(GL11.GL_LIGHTING);
-      // GL11.glEnable(GL11.GL_CULL_FACE);
+
     }
   }
 }

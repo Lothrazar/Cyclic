@@ -29,7 +29,8 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
     //toggle on right click?
     //    if (EntityRobot.renderDebugHitboxes)
-    RenderUtil.renderEntityText(entity, x, y, z, "123");
+    if (entity.getTimer() > 0 && entity.getMessage() != "")
+      RenderUtil.renderEntityText(entity, x, y, z, entity.getMessage());
   }
   @Override
   protected ResourceLocation getEntityTexture(EntityRobot entity) {
