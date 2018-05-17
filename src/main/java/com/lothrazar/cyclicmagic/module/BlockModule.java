@@ -248,10 +248,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     super.onPreInit();
     if (buttonLarge) {
-    BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     }
     if (doorbell) {
-    BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
     }
     if (moon) {
       BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
