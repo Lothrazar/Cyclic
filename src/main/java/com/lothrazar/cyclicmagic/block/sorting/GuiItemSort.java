@@ -74,7 +74,7 @@ public class GuiItemSort extends GuiBaseContainer {
         slotNum++;
       }
     }
-    this.renderStackWrappers(te);
+    this.renderStackWrappers(te, false);
   }
 
   @SideOnly(Side.CLIENT)

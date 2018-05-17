@@ -350,6 +350,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
 
   public void renderStackWrappers(ITileStackWrapper te) {
+    renderStackWrappers(te, true);
+  }
+
+  public void renderStackWrappers(ITileStackWrapper te, boolean background) {
+    if (background) {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int i = 0; i < te.getWrapperCount(); i++) {
       //set its position for mouseclick later
@@ -357,6 +362,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       Gui.drawModalRectWithCustomSizedTexture(
           wrap.getX(), wrap.getY(),
           0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
     }
     for (int i = 0; i < te.getWrapperCount(); i++) {
       //set its position for mouseclick later
