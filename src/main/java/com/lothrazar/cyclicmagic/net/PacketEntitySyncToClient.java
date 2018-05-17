@@ -31,8 +31,6 @@ import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot.DmgTracker;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -83,9 +81,7 @@ public class PacketEntitySyncToClient implements IMessage, IMessageHandler<Packe
   @Override
   public IMessage onMessage(PacketEntitySyncToClient message, MessageContext ctx) {
     if (ctx.side.isClient()) {
-      MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
-
-      s.addScheduledTask(new Runnable() {
+      ModCyclic.proxy.getThreadFromContext(ctx).addScheduledTask(new Runnable() {
 
         @Override
         public void run() {
