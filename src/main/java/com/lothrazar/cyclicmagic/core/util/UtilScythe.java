@@ -124,8 +124,12 @@ public class UtilScythe {
         ,"minecraft:red_mushroom"
         ,"ferdinandsflowers:block_cff_*"
         ,"extraplanets:*_flowers"
+        ,"primal:cineris_grass"
+        ,"primal:cineris_bloom"
+        ,"primal:sinuous_weed"
         ,"primal:dry_grass_root"
         ,"primal:nether_root"
+        ,"primal:corypha_stalk"
         ,"twilightforest:*_plant" 
         ,"tconstruct:*_grass_tall"
         ,"thebetweenlands:*_flower"
@@ -147,7 +151,7 @@ public class UtilScythe {
         ,"thebetweenlands:swamp_reed_*"
         ,"thebetweenlands:*_mushroom"
         ,"natura:*_vines"
-     
+     ,"nex:plant_thornstalk"
         );
    
     /* @formatter:on */
