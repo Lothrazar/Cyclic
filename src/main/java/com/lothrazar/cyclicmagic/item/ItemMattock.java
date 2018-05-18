@@ -146,7 +146,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
         stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
         if (stack.getCount() == 0 && stack == player.getHeldItemMainhand()) {
           ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
-          player.setHeldItem(EnumHand.MAIN_HAND, null);
+          player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
         }
         Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, posCurrent, Minecraft.getMinecraft().objectMouseOver.sideHit));
       }

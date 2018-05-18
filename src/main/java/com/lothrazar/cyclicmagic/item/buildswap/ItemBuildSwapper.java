@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.buildswap;
 
-import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -178,18 +177,12 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
     ItemStack stack = player.getHeldItem(hand);
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
-    try {
-      if (worldObj.isRemote) {
-        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
-      }
-      player.swingArm(hand);
-      player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    if (worldObj.isRemote) {
+      ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)],
+          this.getWandType(), hand));
     }
-    catch (ConcurrentModificationException e) {
-      ModCyclic.logger.error("ConcurrentModificationException");
-      ModCyclic.logger.error(e.getMessage());// message is null??
-      ModCyclic.logger.error(e.getStackTrace().toString());
-    }
+    player.swingArm(hand);
+    player.getCooldownTracker().setCooldown(this, COOLDOWN);
     return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
 
@@ -261,7 +254,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   @Override
   public int[] getRgb() {
     if (this.getWandType() == WandType.MATCH) {
-    return new int[] { 75, 0, 130 };
+      return new int[] { 75, 0, 130 };
     }
     else
       return new int[] { 28, 00, 132 };
