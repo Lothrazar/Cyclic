@@ -1,0 +1,11 @@
+{
+ 	"parent": "cyclicmagic:parent/machine_east",
+    "textures": {
+        "0": "blocks/dispenser_front_vertical",
+        "1": "blocks/cauldron_inner",
+        "2": "blocks/furnace_top",
+        "3": "blocks/obsidian",
+        "4": "blocks/netherrack",
+        "particle": "blocks/iron_block"
+    }
+}
