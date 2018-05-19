@@ -86,6 +86,8 @@ import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.BlockFan;
 import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.fluidplacer.BlockFluidPlacer;
@@ -247,6 +249,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
     if (buttonLarge) {
       BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     }

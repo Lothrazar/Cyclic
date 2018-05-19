@@ -71,6 +71,9 @@ import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.ContainerFan;
 import com.lothrazar.cyclicmagic.block.fan.GuiFan;
 import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.firestarter.ContainerFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.GuiFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclicmagic.block.fishing.GuiFisher;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
@@ -200,6 +203,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ENERGYPUMP = 37;
   public static final int GUI_INDEX_BATTERY = 38;
   public static final int GUI_INDEX_ANVILMAGMA = 39;
+  public static final int GUI_INDEX_FIREST = 40;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -405,6 +409,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
         }
       break;
+      case GUI_INDEX_FIREST:
+        if (te instanceof TileEntityFireStarter) {
+          return new ContainerFireStarter(player.inventory, (TileEntityFireStarter) te);
+        }
+      break;
     }
     return null;
   }
@@ -603,6 +612,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ANVILMAGMA:
           if (te instanceof TileEntityAnvilMagma) {
             return new GuiAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
+          }
+        break;
+        case GUI_INDEX_FIREST:
+          if (te instanceof TileEntityFireStarter) {
+            return new GuiFireStarter(player.inventory, (TileEntityFireStarter) te);
           }
         break;
       }
