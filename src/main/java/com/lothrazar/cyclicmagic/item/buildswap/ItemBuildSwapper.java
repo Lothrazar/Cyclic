@@ -23,8 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.buildswap;
 
-import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
@@ -35,7 +36,11 @@ import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
+import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,6 +53,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -58,7 +64,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
+public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRecipe {
 
   private static final int durability = 1000;
   private static final int COOLDOWN = 5;
@@ -171,18 +177,12 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
     ItemStack stack = player.getHeldItem(hand);
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
-    try {
-      if (worldObj.isRemote) {
-        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
-      }
-      player.swingArm(hand);
-      player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    if (worldObj.isRemote) {
+      ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)],
+          this.getWandType(), hand));
     }
-    catch (ConcurrentModificationException e) {
-      ModCyclic.logger.error("ConcurrentModificationException");
-      ModCyclic.logger.error(e.getMessage());// message is null??
-      ModCyclic.logger.error(e.getStackTrace().toString());
-    }
+    player.swingArm(hand);
+    player.getCooldownTracker().setCooldown(this, COOLDOWN);
     return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
 
@@ -230,5 +230,33 @@ public class ItemBuildSwapper extends BaseTool implements IHasRecipe {
 
   public void setWandType(WandType wandType) {
     this.wandType = wandType;
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public Set<BlockPos> renderOutline(World world, ItemStack heldItem, RayTraceResult mouseOver) {
+    IBlockState state = world.getBlockState(mouseOver.getBlockPos());
+    Block block = state.getBlock();
+    if (block != null && block.getMaterial(state) != Material.AIR) {
+      IBlockState matched = null;
+      if (this.getWandType() == WandType.MATCH) {
+        matched = world.getBlockState(mouseOver.getBlockPos());
+      }
+      List<BlockPos> places = PacketSwapBlock.getSelectedBlocks(world, mouseOver.getBlockPos(),
+          ActionType.values()[ActionType.get(heldItem)], this.getWandType(),
+          mouseOver.sideHit, matched);
+      return new HashSet<BlockPos>(places);
+      //      UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, 75, 0, 130);
+    }
+    return null;
+  }
+
+  @Override
+  public int[] getRgb() {
+    if (this.getWandType() == WandType.MATCH) {
+      return new int[] { 75, 0, 130 };
+    }
+    else
+      return new int[] { 28, 00, 132 };
   }
 }

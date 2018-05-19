@@ -61,7 +61,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
   private static final float POWER_UPSCALE = 5.18F;
   private static final float MAX_POWER = 6.7F;
   private static final float VERTICAL_FACTOR = 2.88F;
-  private static final int TICKS_USING = 53000;
+  private static final int TICKS_USING = 53000;//bow has 72000
 
   public enum ActionType {
     FORWARD, REVERSE;
@@ -192,7 +192,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
 
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING;
   }
 
   @Override

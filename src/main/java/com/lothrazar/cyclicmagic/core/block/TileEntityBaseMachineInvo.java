@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.block;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -681,5 +682,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         }
       }
     }
+  }
+
+  protected List<EnumFacing> getSidesNotFacing() {
+    EnumFacing in = this.getCurrentFacing();
+    List<EnumFacing> sidesOut = new ArrayList<>();
+    for (EnumFacing s : EnumFacing.values())
+      if (s != in)
+        sidesOut.add(s);
+    Collections.shuffle(sidesOut);
+    return sidesOut;
   }
 }

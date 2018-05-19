@@ -122,6 +122,36 @@ public class UtilScythe {
         ,"minecraft:yellow_flower"
         ,"minecraft:brown_mushroom"
         ,"minecraft:red_mushroom"
+        ,"ferdinandsflowers:block_cff_*"
+        ,"extraplanets:*_flowers"
+        ,"primal:cineris_grass"
+        ,"primal:cineris_bloom"
+        ,"primal:sinuous_weed"
+        ,"primal:dry_grass_root"
+        ,"primal:nether_root"
+        ,"primal:corypha_stalk"
+        ,"twilightforest:*_plant" 
+        ,"tconstruct:*_grass_tall"
+        ,"thebetweenlands:*_flower"
+        ,"thebetweenlands:*_tallgrass"
+        ,"thebetweenlands:*_stalk"
+        ,"thebetweenlands:moss"
+        ,"thebetweenlands:cattail"
+        ,"thebetweenlands:*_cattail" 
+        ,"thebetweenlands:*_plant" 
+        ,"thebetweenlands:*_coral" 
+        ,"thebetweenlands:*_bush" 
+        ,"thebetweenlands:*_ivy" 
+        ,"thebetweenlands:algae" 
+        ,"thebetweenlands:hanger"
+        ,"thebetweenlands:nettle"
+        ,"thebetweenlands:*_iris"
+        ,"thebetweenlands:*_kelp"
+        ,"thebetweenlands:fallen_leaves"
+        ,"thebetweenlands:swamp_reed_*"
+        ,"thebetweenlands:*_mushroom"
+        ,"natura:*_vines"
+     ,"nex:plant_thornstalk"
         );
    
     /* @formatter:on */
@@ -240,7 +270,7 @@ public class UtilScythe {
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
-      ModCyclic.logger.log("SCYTHE IGNORED " + blockId);
+      ModCyclic.logger.log("SCYTHE could not clip " + blockId);
     }
     return false;
   }

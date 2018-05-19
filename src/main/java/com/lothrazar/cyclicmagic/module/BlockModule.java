@@ -33,6 +33,8 @@ import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
+import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
+import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
 import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
@@ -45,6 +47,8 @@ import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
+import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
@@ -100,6 +104,8 @@ import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
+import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
@@ -218,6 +224,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean dispenserPowered;
   private boolean anvilMagma;
   private boolean battery;
+  private boolean etarget;
+  private boolean moon;
+  private boolean buttonLarge;
+  private boolean doorbell;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -237,6 +247,20 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (buttonLarge) {
+      BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
+    }
+    if (doorbell) {
+      BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
+    }
+    if (moon) {
+      BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
+    }
+    if (etarget) {
+      BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+    }
     if (enableMilk) {
       FluidsRegistry.registerMilk();
     }
@@ -608,6 +632,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    buttonLarge = config.getBoolean("button_;arge", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

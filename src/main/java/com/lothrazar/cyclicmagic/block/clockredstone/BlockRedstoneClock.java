@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.block.clockredstone;
 
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import net.minecraft.block.BlockLever;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -49,7 +49,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
 
   private static final int PARTICLE_DENSITY = 2;
-  public static final PropertyBool POWERED = net.minecraft.block.BlockLever.POWERED;//PropertyBool.create("powered");
+  public static final PropertyBool POWERED = BlockLever.POWERED;//PropertyBool.create("powered");
 
   public BlockRedstoneClock() {
     super(Material.IRON);
@@ -92,10 +92,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (world.getTileEntity(pos) instanceof TileEntityClock) {
       TileEntityClock clock = ((TileEntityClock) world.getTileEntity(pos));
-      if (-pos.getX() == 1024)
-        if (side == EnumFacing.UP || side == EnumFacing.DOWN) {
-        ModCyclic.logger.info("POWER " + side + clock.getPowerForSide(side));
-        }
+
       return clock.getPowerForSide(side);
     }
     return 0;

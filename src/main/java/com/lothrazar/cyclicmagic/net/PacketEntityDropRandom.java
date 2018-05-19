@@ -43,15 +43,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketEntityDropRandom, IMessage> {
 
-  private static final float DROP_HEIGHT = 0.99F;
   private int entityId;
   private int slot;
   private ItemStack stack;
 
   public PacketEntityDropRandom() {}
 
-  public PacketEntityDropRandom(int itemSlot, int level, ItemStack st) {
-    entityId = itemSlot;
+  public PacketEntityDropRandom(int entityid, int level, ItemStack st) {
+    entityId = entityid;
     this.slot = level;
     stack = st;
   }
@@ -96,14 +95,13 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
       EntityLivingBase entity = (EntityLivingBase) entityTarget;
 
-      //      if (entity.getName() == "darkphan")
-      //        ModCyclic.logger.log("entity drop" + entity.getName() + "_" + message.level);
+
       EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
-      //      ItemStack stack = entity.getItemStackFromSlot(slot);
+
       ModCyclic.logger.log(entity.getName() + "!PACKET!!!DROP SLOT " + slot + " " + message.stack.getDisplayName());
 
       UtilItemStack.dropItemStackInWorld(world, entity.getPosition().up(5), message.stack);
-      //entity.entityDropItem(message.stack.copy(), DROP_HEIGHT);
+
       entity.setItemStackToSlot(slot, ItemStack.EMPTY);
       if (entity instanceof EntityPlayer) {
         UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");

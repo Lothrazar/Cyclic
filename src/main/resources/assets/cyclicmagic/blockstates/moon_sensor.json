@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "power=0":  { "model": "cyclicmagic:moon_sensor_1" },
+        "power=1":  { "model": "cyclicmagic:moon_sensor_1" },
+        "power=3":  { "model": "cyclicmagic:moon_sensor_3" },
+        "power=5":  { "model": "cyclicmagic:moon_sensor_5" },
+        "power=7":  { "model": "cyclicmagic:moon_sensor_7" },
+        "power=9":  { "model": "cyclicmagic:moon_sensor_9" },
+        "power=11":  { "model": "cyclicmagic:moon_sensor_11" },
+        "power=13":  { "model": "cyclicmagic:moon_sensor_13" },
+        "power=15":  { "model": "cyclicmagic:moon_sensor_15" }
+    }
+}

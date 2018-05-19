@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=up,powered=false":    { "model": "cyclicmagic:doorbell_simple" },
+        "facing=down,powered=false":  { "model": "cyclicmagic:doorbell_simple", "x": 180 },
+        "facing=east,powered=false":  { "model": "cyclicmagic:doorbell_simple", "x": 90, "y": 90 },
+        "facing=west,powered=false":  { "model": "cyclicmagic:doorbell_simple", "x": 90, "y": 270 },
+        "facing=south,powered=false": { "model": "cyclicmagic:doorbell_simple", "x": 90, "y": 180 },
+        "facing=north,powered=false": { "model": "cyclicmagic:doorbell_simple", "x": 90 },
+        "facing=up,powered=true":     { "model": "cyclicmagic:doorbell_simple_pressed" },
+        "facing=down,powered=true":   { "model": "cyclicmagic:doorbell_simple_pressed", "x": 180 },
+        "facing=east,powered=true":   { "model": "cyclicmagic:doorbell_simple_pressed", "x": 90, "y": 90 },
+        "facing=west,powered=true":   { "model": "cyclicmagic:doorbell_simple_pressed", "x": 90, "y": 270 },
+        "facing=south,powered=true":  { "model": "cyclicmagic:doorbell_simple_pressed", "x": 90, "y": 180 },
+        "facing=north,powered=true":  { "model": "cyclicmagic:doorbell_simple_pressed", "x": 90 }
+    }
+}

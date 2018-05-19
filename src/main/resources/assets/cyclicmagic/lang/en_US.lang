@@ -1183,3 +1183,29 @@ tile.yellorite_nether_ore.name=Nether Yellorite Ore
 tile.yellorite_end_ore.name=End Yellorite Ore
 
 tile.fire_dark.guide=Does not destroy blocks or harm players.  Spawned by Duskflame Hex
+
+tile.target.name=Bullseye Target
+tile.target.tooltip=Emits redstone based on where the arrow lands
+tile.target.guide=Emits redstone based on where the arrow lands.  Only works on the side, not top or bottom.
+
+tile.moon_sensor.name=Moon Phase Sensor
+tile.moon_sensor.tooltip=Emits signal based on current moons phase
+tile.moon_sensor.guide=Emits signal based on current moons phase.  Power ranges along 1,3,5,7,9,11,13,15 and back down again.  Stays powered during the day, and changes every night as the moon shifts phases.  
+
+item.robot_spawner.name=Target Dummy Spawner
+item.robot_spawner.tooltip=[EXPERIMENTAL FEATURE] Spawn a Target Dummy Spawner that measures damage done by a player
+item.robot_spawner.guide=Spawn a Target Dummy Spawner that measures damage done by a player.  Can be given armor that will affect damage taken, and drop on death.  Has no movement or attacks.  Can be killed, or removed instantly by using the spawner on it again.  
+entity.robot.name=Target Dummy
+
+tile.button_large.name=Large Button
+tile.button_large.tooltip=A pressure plate sized button
+tile.button_large.guide=A pressure plate sized button
+
+tile.doorbell_simple.name=Doorbell
+tile.doorbell_simple.tooltip=Makes sound
+tile.doorbell_simple.guide=Plays single sound on click
+
+item.fire_starter.name=Fire Starter
+item.fire_starter.tooltip=Use flint to start a fire on signal
+item.fire_starter.guide=Use flint to start a fire on redsotne signal.  Can face any direction.  Chance to consume flint.  
+

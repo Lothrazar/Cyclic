@@ -45,13 +45,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemWaterToIce extends BaseTool implements IHasRecipe {
+public class ItemIceWand extends BaseTool implements IHasRecipe {
 
   private static final int DURABILITY = 256;
   //  private static final int COOLDOWN = 10;
   private static final int RADIUS = 2;
 
-  public ItemWaterToIce() {
+  public ItemIceWand() {
     super(DURABILITY);
   }
 
@@ -101,11 +101,11 @@ public class ItemWaterToIce extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "wdw",
-        "iwi",
+        "idi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
         'd', "ingotBrickNether",
-        'o', "obsidian",
+        'o', "ingotGold",
         'i', new ItemStack(Blocks.ICE));
   }
 }

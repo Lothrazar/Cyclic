@@ -64,7 +64,7 @@ public class EventExtendedInventory {
 
   @SubscribeEvent
   public void playerSave(PlayerEvent.SaveToFile event) {
-    UtilPlayerInventoryFilestorage.savePlayerItems(event.getEntityPlayer(), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+    UtilPlayerInventoryFilestorage.savePlayerItems(event.getEntityPlayer(), event.getPlayerDirectory());
   }
 
   @SubscribeEvent

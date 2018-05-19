@@ -47,6 +47,7 @@ import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
+import com.lothrazar.cyclicmagic.net.PacketEntitySyncToClient;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -109,7 +110,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
     packetID++;
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
-    packetID++;
+    network.registerMessage(PacketEntitySyncToClient.class, PacketEntitySyncToClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
     network.registerMessage(PacketPlayerFalldamage.class, PacketPlayerFalldamage.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerFlying.class, PacketSyncPlayerFlying.class, packetID++, Side.CLIENT);

@@ -23,7 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.random;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
@@ -31,6 +33,7 @@ import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,6 +45,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -49,7 +53,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRandomizer extends BaseTool implements IHasRecipe {
+public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasRecipe {
 
   private static final int durability = 5000;
   private static final int cooldown = 15;
@@ -160,13 +164,24 @@ public class ItemRandomizer extends BaseTool implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " gi",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "pgi",
         " ig",
-        "o  ",
+        "o p",
+        'p', "dyePurple",
         'i', "ingotIron",
         'g', "dustRedstone",
         'o', "obsidian");
-    return null;
+  }
+
+  @Override
+  public Set<BlockPos> renderOutline(World world, ItemStack heldItem, RayTraceResult mouseOver) {
+    List<BlockPos> places = PacketRandomize.getPlaces(mouseOver.getBlockPos(), mouseOver.sideHit, ActionType.values()[ActionType.get(heldItem)]);
+    return new HashSet<BlockPos>(places);
+  }
+
+  @Override
+  public int[] getRgb() {
+    return new int[] { 177, 7, 7 };
   }
 }

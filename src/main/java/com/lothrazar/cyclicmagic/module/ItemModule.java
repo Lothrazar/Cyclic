@@ -58,9 +58,11 @@ import com.lothrazar.cyclicmagic.item.ItemWandHypno;
 import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
-import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
+import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
@@ -153,10 +155,15 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ItemModule extends BaseModule implements IHasConfig {
 
+  public static int intColor(int r, int g, int b) {
+    return (r * 65536 + g * 256 + b);
+  }
   private boolean goldMinecart;
   private boolean stoneMinecart;
   private boolean chestMinecart;
@@ -240,6 +247,11 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void onPreInit() {
+    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
+    EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
+    ItemCrashSpawner spawner = new ItemCrashSpawner();
+    ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
+    ModCyclic.instance.events.register(spawner);
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
@@ -389,7 +401,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(water_spreader, "water_spreader");
     }
     if (enableFreezer) {
-      ItemWaterToIce water_freezer = new ItemWaterToIce();
+      ItemIceWand water_freezer = new ItemIceWand();
       ItemRegistry.register(water_freezer, "water_freezer");
     }
     if (enableFireKiller) {

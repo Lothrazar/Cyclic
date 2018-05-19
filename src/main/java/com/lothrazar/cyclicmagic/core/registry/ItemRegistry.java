@@ -35,6 +35,8 @@ import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
+import com.lothrazar.cyclicmagic.item.crashtestdummy.RenderRobot;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -49,6 +51,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -111,6 +114,11 @@ public class ItemRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
+    
+    RenderingRegistry.registerEntityRenderingHandler(EntityRobot.class, new RenderRobot.Factory());
+    
+    
+    
     final IStateMapper STATE_MAPPER = new StateMapperBase() {
 
       @Override

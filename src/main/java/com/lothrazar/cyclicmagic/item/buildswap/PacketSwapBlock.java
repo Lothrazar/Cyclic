@@ -42,13 +42,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -60,14 +58,17 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   private ItemBuildSwapper.ActionType actionType;
   private ItemBuildSwapper.WandType wandType;
   private EnumFacing side;
+  private EnumHand hand;
 
   public PacketSwapBlock() {}
 
-  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemBuildSwapper.ActionType t, ItemBuildSwapper.WandType w) {
+  public PacketSwapBlock(BlockPos mouseover, EnumFacing s,
+      ItemBuildSwapper.ActionType t, ItemBuildSwapper.WandType w, EnumHand hand) {
     pos = mouseover;
     actionType = t;
     wandType = w;
     side = s;
+    this.hand = hand;
   }
 
   @Override
@@ -83,6 +84,8 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     actionType = ItemBuildSwapper.ActionType.values()[t];
     int w = tags.getInteger("w");
     wandType = ItemBuildSwapper.WandType.values()[w];
+    int hnd = tags.getInteger("hand");
+    hand = EnumHand.values()[hnd];
   }
 
   @Override
@@ -94,28 +97,20 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     tags.setInteger("t", actionType.ordinal());
     tags.setInteger("w", wandType.ordinal());
     tags.setInteger("s", side.ordinal());
+    tags.setInteger("hand", hand.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
 
   @Override
   public IMessage onMessage(final PacketSwapBlock message, final MessageContext ctx) {
-    if (ctx.side.isServer() && message != null && message.pos != null) {
-      MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
-      // MinecraftServer.getServer().//doesnt exist anymore
-      if (s == null) {//this is never happening. ill keep it just in case
-        handle(message, ctx);
-      }
-      else {
-        //ONLY JAVA 8
-        // s.addScheduledTask(() -> handle(message, ctx));
-        s.addScheduledTask(new Runnable() {
+    if (ctx.side.isServer() && message.pos != null) {
+      ModCyclic.proxy.getThreadFromContext(ctx).addScheduledTask(new Runnable() {
 
-          @Override
-          public void run() {
-            handle(message, ctx);
-          }
-        });
-      }
+        @Override
+        public void run() {
+          handle(message, ctx);
+        }
+      });
     }
     return null;
   }
@@ -125,7 +120,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     World world = player.getEntityWorld();
     //we already have center, now go around
     //      message.pos.offset(message.side.rotateAround(axis))
-    IBlockState replaced;
+    IBlockState replacedBlockState;
     IBlockState newToPlace;
     IBlockState matched = null;
     if (message.wandType == WandType.MATCH) {
@@ -154,9 +149,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (world.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }
-          replaced = world.getBlockState(curPos);
-          Block replacedBlock = replaced.getBlock();
-          if (world.isAirBlock(curPos) || replaced == null) {
+          replacedBlockState = world.getBlockState(curPos);
+          Block replacedBlock = replacedBlockState.getBlock();
+          if (world.isAirBlock(curPos) || replacedBlockState == null) {
             continue;
           }
           //TODO: CLEANUP/REFACTOR THIS
@@ -171,12 +166,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (isInBlacklist) {
             continue;
           }
-          if (UtilItemStack.getBlockHardness(replaced, world, curPos) < 0) {
+          if (UtilItemStack.getBlockHardness(replacedBlockState, world, curPos) < 0) {
             continue;//since we know -1 is unbreakable
           }
           newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
           //wait, do they match? are they the same? do not replace myself
-          if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
+          if (UtilWorld.doBlockStatesMatch(replacedBlockState, newToPlace)) {
             continue;
           }
           //break it and drop the whatever
@@ -188,10 +183,10 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           world.setBlockToAir(curPos);
           boolean success = false;
           boolean ENABLEFANCY = false;//TODO: fix this. doing this makes player set HELD ITEM which is the tool/scepter to NULL. WTF
-          ItemStack backup = player.getHeldItem(EnumHand.MAIN_HAND);
-          if (ENABLEFANCY && cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
+          ItemStack itemStackHeld = player.getHeldItem(message.hand);
+          if (ENABLEFANCY && cur.onItemUse(player, world, curPos, message.hand, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
             //then it owrked i guess eh
-            player.setHeldItem(EnumHand.MAIN_HAND, backup);
+            player.setHeldItem(EnumHand.MAIN_HAND, itemStackHeld);
             success = true;
             if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
               player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
@@ -204,19 +199,17 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             }
           }
           if (success) {//same old success method
-            //            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
-            replacedBlock.dropBlockAsItem(world, curPos, replaced, 0);//zero is fortune level
-            //damage once per block 
-            //TODO: CLEANUP?REFACTOR THIS
-            ItemStack held = player.getHeldItemMainhand();
-            if (held != ItemStack.EMPTY && held.getItem() instanceof ItemBuildSwapper) {
+            //     UtilSound.playSoundPlaceBlock(world, curPos, newToPlace.getBlock());//fffk doesnt work
+            //do the BREAK particles
+            world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
+
+            //always break with PLAYER CONTEXT in mind
+            replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
+            //     replacedBlock.onBlockDestroyedByPlayer(world, curPos, replaced);
+
+            ItemStack held = player.getHeldItem(message.hand);
+            if (!held.isEmpty() && held.getItem() instanceof ItemBuildSwapper) {
               UtilItemStack.damageItem(player, held);
-            }
-            else {
-              held = player.getHeldItemOffhand();
-              if (held != ItemStack.EMPTY && held.getItem() instanceof ItemBuildSwapper) {
-                UtilItemStack.damageItem(player, held);
-              }
             }
           }
         } // close off the for loop   

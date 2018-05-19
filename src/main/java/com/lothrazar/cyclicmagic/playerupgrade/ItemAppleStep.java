@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -99,8 +100,12 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
         }
       }
       else if (data.doForceStepOff()) {
+        data.setForceStepOff(false);
+
         //otherwise, dont automatically force it off. only force it off the once if player is toggling FROM on TO off with my feature
-        player.stepHeight = 0.5F;
+        // EntityLivingBase default constructor uses 0.6 as default, so slabs + path block for example
+        player.stepHeight = 0.6F;
+        ModCyclic.logger.log(player.stepHeight + "disabled step height" + player.world.isRemote);
       }
       //else leave it alone (allows other mods to turn it on without me disrupting)
     }
