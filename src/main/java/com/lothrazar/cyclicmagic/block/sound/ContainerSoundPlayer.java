@@ -8,10 +8,7 @@ public class ContainerSoundPlayer extends ContainerBaseMachine {
   public ContainerSoundPlayer(InventoryPlayer inventoryPlayer, TileEntitySoundPlayer te) {
     super(te);
     //    this.setScreenSize(ScreenSize.LARGE);
-    //    for (int i = 0; i < tile.getSizeInventory(); i++) {
-    //      addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
-    //    }
-    bindPlayerInventory(inventoryPlayer);
+    this.bindPlayerHotbar(inventoryPlayer);
   }
 
 }

@@ -11,7 +11,7 @@ public class ContainerFireStarter extends ContainerBaseMachine {
     //    for (int i = 0; i < tile.getSizeInventory(); i++) {
     //      addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     //    }
-    this.bindPlayerHotbar(inventoryPlayer);
+    bindPlayerInventory(inventoryPlayer);
   }
 
 }

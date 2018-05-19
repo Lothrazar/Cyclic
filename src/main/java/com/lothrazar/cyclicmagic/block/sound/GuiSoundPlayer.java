@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.lwjgl.input.Mouse;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,8 +19,10 @@ public class GuiSoundPlayer extends GuiBaseContainer {
 
   private GuiSoundList soundList;
   private ArrayList<ResourceLocation> allSounds;
+
   public GuiSoundPlayer(InventoryPlayer inventoryPlayer, TileEntitySoundPlayer tile) {
     super(new ContainerSoundPlayer(inventoryPlayer, tile), tile);
+    this.setScreenSize(ScreenSize.STANDARDPLAIN);
     allSounds = new ArrayList<>();
     allSounds.addAll(SoundEvent.REGISTRY.getKeys());
     allSounds.sort(Comparator.comparing(ResourceLocation::toString));
@@ -27,7 +31,7 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    soundList = new GuiSoundList(240, 112, guiTop + 22, guiTop + 134, guiLeft + 8, 14);
+    soundList = new GuiSoundList(160, 112, guiTop + 22, guiTop + 134, guiLeft + 8, 14);
     soundList.setSounds(allSounds);
   }
 
@@ -36,7 +40,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     super.handleMouseInput();
     int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
     int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-
     soundList.handleMouseInput(mouseX, mouseY);
   }
 
@@ -44,6 +47,13 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     soundList.drawScreen(mouseX, mouseY, partialTicks);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    ResourceLocation selectedIndex = soundList.getSelection();
+    ModCyclic.logger.log("SEL" + selectedIndex);
   }
 
   // SOUND LIST: from this using MIT license authored by @ EdgarAllen
@@ -114,6 +124,12 @@ public class GuiSoundPlayer extends GuiBaseContainer {
 
     void clearSelection() {
       selectedIndicies.clear();
+    }
+
+    public ResourceLocation getSelection() {
+      if (selectedIndex >= 0 && selectedIndex < sounds.size())
+        return this.sounds.get(selectedIndex);
+      return null;
     }
 
     void selectRange(int start, int end) {
