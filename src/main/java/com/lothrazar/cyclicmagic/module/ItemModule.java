@@ -58,7 +58,7 @@ import com.lothrazar.cyclicmagic.item.ItemWandHypno;
 import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
-import com.lothrazar.cyclicmagic.item.ItemWaterToIce;
+import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
@@ -401,7 +401,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(water_spreader, "water_spreader");
     }
     if (enableFreezer) {
-      ItemWaterToIce water_freezer = new ItemWaterToIce();
+      ItemIceWand water_freezer = new ItemIceWand();
       ItemRegistry.register(water_freezer, "water_freezer");
     }
     if (enableFireKiller) {
