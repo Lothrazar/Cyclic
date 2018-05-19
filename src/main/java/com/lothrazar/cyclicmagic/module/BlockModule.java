@@ -126,6 +126,8 @@ import com.lothrazar.cyclicmagic.block.screen.BlockScreen;
 import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclicmagic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
@@ -234,6 +236,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean doorbell;
   private boolean fire_starter;
   private boolean void_anvil;
+  private boolean sound_player;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -253,9 +256,13 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (sound_player) {
+      BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
+    }
     if (fire_starter) {
-    BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
+      BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
     }
     if (void_anvil) {
       BlockRegistry.registerBlock(new BlockVoidAnvil(), "void_anvil", GuideCategory.BLOCK);
@@ -646,6 +653,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

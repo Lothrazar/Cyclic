@@ -110,6 +110,9 @@ import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.block.sorting.ContainerItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.GuiItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.block.sound.ContainerSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.GuiSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer;
 import com.lothrazar.cyclicmagic.block.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.GuiUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
@@ -208,6 +211,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ANVILMAGMA = 39;
   public static final int GUI_INDEX_FIREST = 40;
   public static final int GUI_INDEX_VOID = 41;
+  public static final int GUI_INDEX_SOUNDPL = 42;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -423,6 +427,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
         }
       break;
+      case GUI_INDEX_SOUNDPL:
+        if (te instanceof TileEntitySoundPlayer) {
+          return new ContainerSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
+        }
+      break;
     }
     return null;
   }
@@ -631,6 +640,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_VOID:
           if (te instanceof TileEntityVoidAnvil) {
             return new GuiVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
+          }
+        break;
+        case GUI_INDEX_SOUNDPL:
+          if (te instanceof TileEntitySoundPlayer) {
+            return new GuiSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
           }
         break;
       }
