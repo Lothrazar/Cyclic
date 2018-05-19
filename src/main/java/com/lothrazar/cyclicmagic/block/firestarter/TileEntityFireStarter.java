@@ -17,6 +17,7 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
     super(1);
     timer = delay;
     this.setSlotsForInsert(0);
+    this.initEnergy(BlockFireStarter.FUEL_COST, 8000);
   }
 
   public static enum Fields {
@@ -28,12 +29,16 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
     if (this.isRunning() == false) {
       return;
     }
+    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
+    if (!world.isAirBlock(target)) {
+      return; //dont drain power or tick down if blocked
+    }
+    if (this.updateEnergyIsBurning() == false) {
+      return;
+    }
     if (this.updateTimerIsZero()) {
-      BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
-      if (world.isAirBlock(target)) {
-        world.setBlockState(target, Blocks.FIRE.getDefaultState());
-        timer = delay;
-      }
+      world.setBlockState(target, Blocks.FIRE.getDefaultState());
+      timer = delay;
     }
   }
 
