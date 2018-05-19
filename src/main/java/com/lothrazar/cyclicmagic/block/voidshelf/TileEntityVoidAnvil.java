@@ -23,6 +23,7 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityVoidAnvil() {
     super(2);
+    this.initEnergy(BlockVoidAnvil.FUEL_COST);
     this.setSlotsForInsert(SLOT_INPUT);
     this.setSlotsForExtract(SLOT_OUT);
   }
@@ -86,6 +87,9 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       }
     }
     else {
+      if (this.updateEnergyIsBurning() == false) {
+        return;
+      }
       // non empty
       EnchantmentHelper.setEnchantments(Maps.<Enchantment, Integer> newLinkedHashMap(), input);
       if (this.getStackInSlot(SLOT_OUT).isEmpty()) {

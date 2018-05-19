@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.block.voidshelf;
 import com.lothrazar.cyclicmagic.block.anvil.ContainerAnvilAuto;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -10,7 +11,8 @@ public class GuiVoidAnvil extends GuiBaseContainer {
 
   public GuiVoidAnvil(InventoryPlayer inventoryPlayer, TileEntityVoidAnvil tile) {
     super(new ContainerVoidAnvil(inventoryPlayer, tile), tile);
-
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
   }
 
   @Override
