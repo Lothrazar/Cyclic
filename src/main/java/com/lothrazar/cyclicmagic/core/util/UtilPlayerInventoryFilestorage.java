@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import javax.annotation.Nonnull;
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
@@ -54,25 +55,27 @@ public class UtilPlayerInventoryFilestorage {
   public static void playerSetupOnLoad(PlayerEvent.LoadFromFile event) {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
-    File playerFile = getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
+    File playerFile = getPlayerFile(event.getPlayerDirectory(), event.getEntityPlayer());
     if (!playerFile.exists()) {
+      //file does not exist, create new
       File fileNew = event.getPlayerFile(ext);
+      //and copy in the basocs
       if (fileNew.exists()) {
         try {
           Files.copy(fileNew, playerFile);
           fileNew.delete();
-          File fb = event.getPlayerFile(extback);
-          if (fb.exists())
-            fb.delete();
+          //          File fb = event.getPlayerFile(extback);
+          //          if (fb.exists())
+          //            fb.delete();
         }
         catch (IOException e) {}
       }
     }
-    loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+    loadPlayerInventory(event.getEntityPlayer(), playerFile);//, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString())
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
 
-  public static void clearPlayerInventory(EntityPlayer player) {
+  private static void clearPlayerInventory(EntityPlayer player) {
     playerItems.remove(player.getDisplayNameString());
   }
 
@@ -97,7 +100,7 @@ public class UtilPlayerInventoryFilestorage {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
 
-  public static void loadPlayerInventory(EntityPlayer player, File file1, File file2) {
+  public static void loadPlayerInventory(EntityPlayer player, File file1) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
@@ -113,25 +116,25 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
-          ModCyclic.logger.error("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
-          if (file2 != null && file2.exists()) {
-            try {
-              FileInputStream fileinputstream = new FileInputStream(file2);
-              data = CompressedStreamTools.readCompressed(fileinputstream);
-              fileinputstream.close();
-              save = true;
-            }
-            catch (Exception e) {
-              e.printStackTrace();
-            }
-          }
+          ModCyclic.logger.error("Data not found for " + player.getDisplayNameString());//+ ". Trying to load backup data."
+          //          if (file2 != null && file2.exists()) {
+          //            try {
+          //              FileInputStream fileinputstream = new FileInputStream(file2);
+          //              data = CompressedStreamTools.readCompressed(fileinputstream);
+          //              fileinputstream.close();
+          //              save = true;
+          //            }
+          //            catch (Exception e) {
+          //              e.printStackTrace();
+          //            }
+          //          }
         }
         if (data != null) {
           InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);
           inventory.readNBT(data);
           playerItems.put(player.getDisplayNameString(), inventory);
           if (save)
-            savePlayerItems(player, file1, file2);
+            savePlayerItems(player, file1);
         }
       }
       catch (Exception e) {
@@ -141,33 +144,38 @@ public class UtilPlayerInventoryFilestorage {
     }
   }
 
-  public static void savePlayerItems(EntityPlayer player, File file1, File file2) {
+  public static void savePlayerItems(@Nonnull EntityPlayer player, File playerDirectory) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
-        if (file1 != null && file1.exists()) {
-          try {
-            Files.copy(file1, file2);
-          }
-          catch (Exception e) {
-            ModCyclic.logger.error("Could not backup old file for player " + player.getDisplayNameString());
-          }
-        }
+        File fileToSave = getPlayerFile(playerDirectory, player);
+        //        if (file1 != null && file1.exists()) {
+        //          try {
+        //            Files.copy(file1, file2);
+        //          }
+        //          catch (Exception e) {
+        //            ModCyclic.logger.error("Could not backup old file for player " + player.getDisplayNameString());
+        //          }
+        //        }
         try {
-          if (file1 != null) {
+          if (fileToSave != null) {
             InventoryPlayerExtended inventory = getPlayerInventory(player);
             NBTTagCompound data = new NBTTagCompound();
             inventory.saveNBT(data);
-            FileOutputStream fileoutputstream = new FileOutputStream(file1);
+            FileOutputStream fileoutputstream = new FileOutputStream(fileToSave);
             CompressedStreamTools.writeCompressed(data, fileoutputstream);
             fileoutputstream.close();
+            ModCyclic.logger.error("Successs saved for player " + player.getDisplayNameString());
+          }
+          else {
+            ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString());
           }
         }
         catch (Exception e) {
           ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString());
           e.printStackTrace();
-          if (file1.exists()) {
+          if (fileToSave.exists()) {
             try {
-              file1.delete();
+              fileToSave.delete();
             }
             catch (Exception e2) {}
           }
@@ -181,15 +189,15 @@ public class UtilPlayerInventoryFilestorage {
   }
 
   public static final String ext = "invo";
-  public static final String extback = "backup";
+  //  public static final String extback = "backup";
   public static final String regex = "[^a-zA-Z0-9_]";
 
-  public static File getPlayerFile(String suffix, File playerDirectory, String playername) {
+  private static File getPlayerFile(File playerDirectory, EntityPlayer player) {
     // some other mods/servers/plugins add things like "[Owner] > " prefix to player names
     //which are invalid filename chars.   https://github.com/PrinceOfAmber/Cyclic/issues/188
     //mojang username rules https://help.mojang.com/customer/en/portal/articles/928638-minecraft-usernames
-    String playernameFiltered = playername.replaceAll(regex, "");
-    return new File(playerDirectory, "_" + playernameFiltered + "." + suffix);
+    String playernameFiltered = player.getDisplayNameString().replaceAll(regex, "");
+    return new File(playerDirectory, "_" + playernameFiltered + "." + ext);
   }
 
   public static void syncItems(EntityPlayer player) {
