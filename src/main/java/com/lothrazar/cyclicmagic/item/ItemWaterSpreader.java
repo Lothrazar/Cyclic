@@ -49,7 +49,7 @@ import net.minecraft.world.World;
 
 public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
 
-  private static final int DURABILITY = 256;
+  private static final int DURABILITY = 256 * 8;
   private static final int COOLDOWN = 10;
   private static final int RADIUS = 1;
 
@@ -104,12 +104,11 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "wdw",
+        "w w",
         "iwi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
-        'd', "gemDiamond",
-        'o', "obsidian",
-        'i', new ItemStack(Blocks.ICE));
+        'o', "ingotGold",
+        'i', "blockLapis");
   }
 }

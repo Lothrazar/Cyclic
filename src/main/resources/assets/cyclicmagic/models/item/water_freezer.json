@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"2": "blocks/nether_brick",
+		"0": "blocks/ice",
 		"1": "blocks/gold_block",
-		"0": "blocks/ice"
+		"2": "blocks/nether_brick"
 	},
 	"elements": [
 		{
@@ -36,8 +36,8 @@
 		},
 		{
 			"name": "handle",
-			"from": [6, 4, 6],
-			"to": [10, 5, 10],
+			"from": [6.25, 4, 6],
+			"to": [9.75, 5, 10],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
 				"north": {"uv": [7, 5, 9, 15], "texture": "#1"},
