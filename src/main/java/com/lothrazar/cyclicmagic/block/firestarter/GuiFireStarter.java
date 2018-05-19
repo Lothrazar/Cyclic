@@ -7,6 +7,7 @@ public class GuiFireStarter extends GuiBaseContainer {
 
   public GuiFireStarter(InventoryPlayer inventoryPlayer, TileEntityFireStarter tile) {
     super(new ContainerFireStarter(inventoryPlayer, tile), tile);
+    this.fieldRedstoneBtn = TileEntityFireStarter.Fields.REDSTONE.ordinal();
 
   }
 }
