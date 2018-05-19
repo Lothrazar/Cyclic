@@ -12,6 +12,7 @@ public class GuiFireStarter extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityFireStarter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setX(this.xSize - 26);
+
   }
 
   @Override
@@ -27,4 +28,5 @@ public class GuiFireStarter extends GuiBaseContainer {
     this.addButton(sliderOffset);
     y += 18;
   }
+
 }

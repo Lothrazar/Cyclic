@@ -1,12 +1,9 @@
 package com.lothrazar.cyclicmagic.block.sound;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 
 public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
@@ -26,7 +23,7 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
       return;
     }
     if (this.updateTimerIsZero()) {
-      UtilSound.playSound(world, pos, SoundEvents.AMBIENT_CAVE, SoundCategory.BLOCKS);
+      //  UtilSound.playSound(world, pos, SoundEvents.AMBIENT_CAVE, SoundCategory.BLOCKS);
     }
   }
 
