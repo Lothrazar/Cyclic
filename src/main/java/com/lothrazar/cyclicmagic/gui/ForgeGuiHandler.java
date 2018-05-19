@@ -116,6 +116,9 @@ import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.block.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.block.vector.GuiVector;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.voidshelf.ContainerVoidAnvil;
+import com.lothrazar.cyclicmagic.block.voidshelf.GuiVoidAnvil;
+import com.lothrazar.cyclicmagic.block.voidshelf.TileEntityVoidAnvil;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
@@ -204,6 +207,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_BATTERY = 38;
   public static final int GUI_INDEX_ANVILMAGMA = 39;
   public static final int GUI_INDEX_FIREST = 40;
+  public static final int GUI_INDEX_VOID = 41;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -414,6 +418,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerFireStarter(player.inventory, (TileEntityFireStarter) te);
         }
       break;
+      case GUI_INDEX_VOID:
+        if (te instanceof TileEntityVoidAnvil) {
+          return new ContainerVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
+        }
+      break;
     }
     return null;
   }
@@ -617,6 +626,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_FIREST:
           if (te instanceof TileEntityFireStarter) {
             return new GuiFireStarter(player.inventory, (TileEntityFireStarter) te);
+          }
+        break;
+        case GUI_INDEX_VOID:
+          if (te instanceof TileEntityVoidAnvil) {
+            return new GuiVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
           }
         break;
       }

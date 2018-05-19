@@ -138,6 +138,8 @@ import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.voidshelf.BlockVoidAnvil;
+import com.lothrazar.cyclicmagic.block.voidshelf.TileEntityVoidAnvil;
 import com.lothrazar.cyclicmagic.block.wireless.BlockRedstoneWireless;
 import com.lothrazar.cyclicmagic.block.wireless.ItemBlockWireless;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessRec;
@@ -230,6 +232,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean moon;
   private boolean buttonLarge;
   private boolean doorbell;
+  private boolean fire_starter;
+  private boolean void_anvil;
 
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -249,8 +253,14 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (fire_starter) {
     BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
+    }
+    if (void_anvil) {
+      BlockRegistry.registerBlock(new BlockVoidAnvil(), "void_anvil", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, "void_anvil_te");
+    }
     if (buttonLarge) {
       BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     }
@@ -636,6 +646,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     buttonLarge = config.getBoolean("button_;arge", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
