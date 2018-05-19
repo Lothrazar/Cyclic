@@ -70,6 +70,7 @@ public class EntityRobot extends EntityCreature {
 
   @Override
   public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
     int saved = compound.getInteger("SAVED");
     for (int i = 0; i < saved; i++) {
       if (compound.hasKey("tmr" + i)) {
@@ -79,7 +80,6 @@ public class EntityRobot extends EntityCreature {
         }
       }
     }
-    //    setMessage(compound.getString("strMsg"));
   }
 
   @Override
