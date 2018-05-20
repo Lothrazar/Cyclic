@@ -6,8 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer.Fields;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -31,8 +33,12 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    //TODO: TIMER SLIDER!?
     soundList = new GuiSoundList(160, 112, guiTop + 22, guiTop + 134, guiLeft + 8, 14);
     soundList.setSounds(allSounds);
+    int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
+    soundList.selectIndex(sel);
+    ModCyclic.logger.log("on init selected is" + sel);
   }
 
   @Override
@@ -53,7 +59,8 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   public void updateScreen() {
     super.updateScreen();
     ResourceLocation selectedIndex = soundList.getSelection();
-    ModCyclic.logger.log("SEL" + selectedIndex);
+    //  ModCyclic.logger.log("SEL" + selectedIndex + soundList.getSelectionIndex());
+    ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.SOUNDINDEX.ordinal(), soundList.getSelectionIndex()));
   }
 
   // SOUND LIST: from this using MIT license authored by @ EdgarAllen
@@ -117,13 +124,20 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     }
 
     void selectIndex(int index) {
-      removeSelection(index);
-      selectedIndicies.add(index);
-      selectedIndex = index;
+      if (index >= 0 && index < sounds.size()) {
+        removeSelection(index);
+        selectedIndicies.add(index);
+        selectedIndex = index;
+      }
+      //else out of bounds, maybe mod was removed or something
     }
 
     void clearSelection() {
       selectedIndicies.clear();
+    }
+
+    public int getSelectionIndex() {
+      return selectedIndex;
     }
 
     public ResourceLocation getSelection() {

@@ -1,15 +1,25 @@
 package com.lothrazar.cyclicmagic.block.sound;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 
 public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
+  private static final int TIMER_MAX = 100;//TODO: SLIDER
   private int needsRedstone = 0;
+  private int soundIndex = -1;
+
   public static enum Fields {
-    REDSTONE, TIMER
+    REDSTONE, TIMER, SOUNDINDEX;
   }
 
   public TileEntitySoundPlayer() {
@@ -23,24 +33,24 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
       return;
     }
     if (this.updateTimerIsZero()) {
-      //  UtilSound.playSound(world, pos, SoundEvents.AMBIENT_CAVE, SoundCategory.BLOCKS);
+      if (soundIndex >= 0 && soundIndex < SoundEvent.REGISTRY.getKeys().size()) {
+        ArrayList<ResourceLocation> allSounds = new ArrayList<>();
+        allSounds.addAll(SoundEvent.REGISTRY.getKeys());
+        allSounds.sort(Comparator.comparing(ResourceLocation::toString));
+        ResourceLocation sound = allSounds.get(soundIndex);
+        ModCyclic.logger.log("SEL" + sound);
+        if (sound != null && SoundEvent.REGISTRY.getObject(sound) != null) {
+          UtilSound.playSound(world, pos, SoundEvent.REGISTRY.getObject(sound), SoundCategory.BLOCKS);
+          timer = TIMER_MAX;
+        }
+      }
+
     }
   }
 
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
-  }
-
-  @Override
-  public int getField(int id) {
-    switch (Fields.values()[id]) {
-      case TIMER:
-        return timer;
-      case REDSTONE:
-        return this.needsRedstone;
-    }
-    return -1;
   }
 
   @Override
@@ -55,6 +65,21 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
   }
 
   @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.needsRedstone;
+      case SOUNDINDEX:
+        return this.soundIndex;
+      default:
+      break;
+    }
+    return -1;
+  }
+
+  @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
       case TIMER:
@@ -63,7 +88,8 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
       case REDSTONE:
         this.needsRedstone = value;
       break;
-      default:
+      case SOUNDINDEX:
+        this.soundIndex = value;
       break;
     }
   }
