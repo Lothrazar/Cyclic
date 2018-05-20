@@ -34,6 +34,7 @@ import net.minecraft.world.World;
 
 public class BlockFireFrost extends BlockFireBase {
 
+  private static final int FIRESECONDS = 3;
 
   public BlockFireFrost() {
     super();
@@ -44,8 +45,12 @@ public class BlockFireFrost extends BlockFireBase {
     if (!worldIn.isRemote && entityIn instanceof EntityLivingBase) {
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(MobEffects.SLOWNESS)) {
-        //        e.setFire(FIRESECONDS);
+        if (worldIn.rand.nextDouble() < 0.35) {
+          e.setFire(FIRESECONDS);
+        }
+        //        MobEffects.
         //        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 10, Const.Potions.I));
+        e.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, Const.TICKS_PER_SEC * 10, Const.Potions.II));
         e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 10, Const.Potions.II));
       }
     }

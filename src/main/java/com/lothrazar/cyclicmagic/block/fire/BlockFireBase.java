@@ -42,7 +42,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockFireBase extends BlockFire {
 
   //  private static final int FIRESECONDS = 10;
-
   public BlockFireBase() {
     super();
     this.setHardness(0.0F).setLightLevel(1.0F);
@@ -55,6 +54,15 @@ public class BlockFireBase extends BlockFire {
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
+
+  //  @Override
+  //  protected boolean canDie(World worldIn, BlockPos pos) {
+  //    if (worldIn.getBlockState(pos.down()) == Blocks.NETHERRACK) {
+  //      return false;
+  //    }
+  //doesnt work that way aww
+  //    return super.canDie(worldIn, pos);
+  //  }
 
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
