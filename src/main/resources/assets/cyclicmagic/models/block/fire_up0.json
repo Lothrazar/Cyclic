@@ -1,5 +1,5 @@
 {
-    "parent": "cyclicmagic:block/fire_up",
+    "parent": "block/fire_up",
     "textures": {
         "particle": "cyclicmagic:blocks/fire_layer_0",
         "fire": "cyclicmagic:blocks/fire_layer_0"
