@@ -1,7 +1,7 @@
 {
     "parent": "block/fire_up",
     "textures": {
-        "particle": "cyclicmagic:blocks/fire_layer_1",
-        "fire": "cyclicmagic:blocks/fire_layer_1"
+        "particle": "cyclicmagic:blocks/fire/fire_frost_layer_1",
+        "fire": "cyclicmagic:blocks/fire/fire_frost_layer_1"
     }
 }
