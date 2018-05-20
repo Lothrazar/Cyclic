@@ -37,11 +37,13 @@ public class BlockFireStarter extends BlockBaseFacingInventory implements IHasCo
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "bsb",
+        "gbg",
+        "ooo",
         'o', "cobblestone",
         'g', "nuggetIron",
         's', Blocks.DISPENSER,
-        'r', "blockRedstone",
         'b', Items.FLINT);
   }
 }

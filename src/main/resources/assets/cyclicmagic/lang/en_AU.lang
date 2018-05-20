@@ -1217,4 +1217,8 @@ fire_starter.offset.tooltip=Range
 
 fire_starter.firetype.button=Fire Type
 
+tile.fire_frost.name=Frost Fire
+tile.fire_frost.tooltip=Low intermittent damage; slowness and weakness
+tile.fire_frost.guide=Low intermittent damage; slowness and weakness
+
 
