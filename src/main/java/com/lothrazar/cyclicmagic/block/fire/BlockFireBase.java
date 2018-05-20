@@ -21,21 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.firemagic;
+package com.lothrazar.cyclicmagic.block.fire;
 
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -44,11 +39,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFireSafe extends BlockFire {
+public class BlockFireBase extends BlockFire {
 
-  private static final int FIRESECONDS = 10;
+  //  private static final int FIRESECONDS = 10;
 
-  public BlockFireSafe() {
+  public BlockFireBase() {
     super();
     this.setHardness(0.0F).setLightLevel(1.0F);
     this.enableStats = false;
@@ -69,8 +64,8 @@ public class BlockFireSafe extends BlockFire {
       }
       Block block = worldIn.getBlockState(pos.down()).getBlock();
       boolean flag = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
-      int intAge = ((Integer) state.getValue(AGE)).intValue();
-      if (!flag && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + (float) intAge * 0.03F) {
+      int intAge = state.getValue(AGE).intValue();
+      if (!flag && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + intAge * 0.03F) {
         worldIn.setBlockToAir(pos);
       }
       else {
@@ -175,18 +170,18 @@ public class BlockFireSafe extends BlockFire {
       }
     }
   }
-
-  @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
-        && !(entityIn instanceof EntityPlayer)) {
-      EntityLivingBase e = ((EntityLivingBase) entityIn);
-      if (!e.isPotionActive(PotionEffectRegistry.SNOW)
-          && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
-        e.setFire(FIRESECONDS);
-        //e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
-      }
-    }
-    super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
-  }
+  //
+  //  @Override
+  //  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+  //    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
+  //        && !(entityIn instanceof EntityPlayer)) {
+  //      EntityLivingBase e = ((EntityLivingBase) entityIn);
+  //      if (!e.isPotionActive(PotionEffectRegistry.SNOW)
+  //          && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
+  //        e.setFire(FIRESECONDS);
+  //        //e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
+  //      }
+  //    }
+  //    super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+  //  }
 }

@@ -86,6 +86,7 @@ import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.BlockFan;
 import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
@@ -166,7 +167,6 @@ import com.lothrazar.cyclicmagic.energy.peat.generator.BlockPeatGenerator;
 import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
-import com.lothrazar.cyclicmagic.item.firemagic.BlockFireSafe;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -256,6 +256,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    //fire is a dependency block like liquids, used by many places
+    //TODO maybe a Fire REgistry LUL?
+    BlockFireSafe fire = new BlockFireSafe();
+    BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
@@ -301,8 +305,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockAppleCrop apple = new BlockAppleCrop();
       BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
     }
-    BlockFireSafe fire = new BlockFireSafe();
-    BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
