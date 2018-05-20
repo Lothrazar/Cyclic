@@ -110,12 +110,12 @@ public class GuiUser extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     this.drawString("tile.block_user.input", 12, 82);
     this.drawString("tile.block_user.output", 122, 64);
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     yOffsetBtn.displayString = tile.getField(Fields.Y_OFFSET.ordinal()) + "";
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     //max value is dynamic in this case
     progressBar.setMaxValue(tile.getField(Fields.SPEED.ordinal()));
   }

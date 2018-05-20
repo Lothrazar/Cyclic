@@ -34,6 +34,7 @@ import net.minecraft.world.World;
 
 public class BlockFireFrost extends BlockFireBase {
 
+  private static final double FIRE_CHANCE = 0.35;
   private static final int FIRESECONDS = 3;
 
   public BlockFireFrost() {
@@ -45,7 +46,7 @@ public class BlockFireFrost extends BlockFireBase {
     if (!worldIn.isRemote && entityIn instanceof EntityLivingBase) {
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(MobEffects.SLOWNESS)) {
-        if (worldIn.rand.nextDouble() < 0.35) {
+        if (worldIn.rand.nextDouble() < FIRE_CHANCE) {
           e.setFire(FIRESECONDS);
         }
         //        MobEffects.

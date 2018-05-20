@@ -18,6 +18,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class BlockFireStarter extends BlockBaseFacingInventory implements IHasConfig, IHasRecipe {
 
+
   public static int FUEL_COST = 0;
   public BlockFireStarter() {
     super(Material.ROCK, ForgeGuiHandler.GUI_INDEX_FIREST);
@@ -26,7 +27,7 @@ public class BlockFireStarter extends BlockBaseFacingInventory implements IHasCo
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 250, 0, 500000, Const.ConfigText.fuelCost);
   }
 
   @Override
