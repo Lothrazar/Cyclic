@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.block.voidshelf;
+package com.lothrazar.cyclicmagic.block.anvilvoid;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
@@ -13,6 +14,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
@@ -20,7 +24,7 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasConfig, IHas
 
   public static int FUEL_COST = 0;
   public BlockVoidAnvil() {
-    super(Material.ROCK);
+    super(Material.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_VOID);
     this.setTranslucent();
 
@@ -37,12 +41,20 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasConfig, IHas
   }
 
   @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return BlockAnvilAuto.Z_AXIS_AABB;
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', "cobblestone",
-        'g', "nuggetIron",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ror",
+        "gbg",
+        "gsg",
+        'o', "obsidian",
+        'g', "nuggetGold",
         's', Blocks.ANVIL,
-        'r', "blockRedstone",
+        'r', "dustRedstone",
         'b', Items.FLINT);
   }
 }

@@ -107,8 +107,9 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ddd",
-        " e ",
+        "rer",
         "iii",
+        'r', "dustRedstone",
         'i', "blockIron",
         'e', center,
         'd', "gemDiamond");

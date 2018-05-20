@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.voidshelf;
+package com.lothrazar.cyclicmagic.block.anvilvoid;
 
 import java.util.Map;
 import com.google.common.collect.Maps;

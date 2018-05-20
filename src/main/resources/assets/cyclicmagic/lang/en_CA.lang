@@ -1221,4 +1221,7 @@ tile.fire_frost.name=Frost Fire
 tile.fire_frost.tooltip=Low intermittent damage; slowness and weakness
 tile.fire_frost.guide=Low intermittent damage; slowness and weakness
 
+tile.void_anvil.name=Void Anvil
+tile.void_anvil.tooltip=Delete enchantments off anything
+tile.void_anvil.guide=Delete enchantments off anything
 

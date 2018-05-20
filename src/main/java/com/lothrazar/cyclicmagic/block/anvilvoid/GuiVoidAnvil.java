@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.voidshelf;
+package com.lothrazar.cyclicmagic.block.anvilvoid;
 
 import com.lothrazar.cyclicmagic.block.anvil.ContainerAnvilAuto;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
