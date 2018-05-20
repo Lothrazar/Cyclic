@@ -86,6 +86,7 @@ import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.BlockFan;
 import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.fire.BlockFireFrost;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
@@ -257,9 +258,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     super.onPreInit();
     //fire is a dependency block like liquids, used by many places
-    //TODO maybe a Fire REgistry LUL?
-    BlockFireSafe fire = new BlockFireSafe();
-    BlockRegistry.registerBlock(fire, "fire_dark", null);
+    //TODO maybe a Fire REgistry LUL? 
+    BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
+    BlockRegistry.registerBlock(new BlockFireFrost(), "fire_frost", null);
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
