@@ -14,6 +14,7 @@ public interface IRenderOutline {
    * @return
    */
   public int[] getRgb();
+
   /**
    * any item can render outlines. See EventRender.class
    * 

@@ -150,10 +150,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     this.markDirty();
   }
 
-  //  @Override
-  //  protected EnumFacing getCurrentFacing() {
-  //    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
-  //  }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
@@ -179,6 +175,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

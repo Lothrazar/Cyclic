@@ -75,14 +75,12 @@ public class EventRender {
     Minecraft mc = Minecraft.getMinecraft();
     EntityPlayerSP p = mc.player;
     ItemStack heldItem = p.getHeldItemMainhand();
-
     //any item can render outlines
     if (heldItem.getItem() instanceof IRenderOutline) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
         IRenderOutline wandInstance = (IRenderOutline) heldItem.getItem();
         Set<BlockPos> coordinates = wandInstance.renderOutline(p.getEntityWorld(), heldItem, mouseOver);
-
         if (coordinates != null && coordinates.size() > 0) {
           int[] rgb = wandInstance.getRgb();
           UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, rgb[0], rgb[1], rgb[2]);

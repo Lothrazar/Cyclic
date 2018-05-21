@@ -1,6 +1,6 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "cyclicmagic:blocks/fire_layer_0"
+        "layer0": "cyclicmagic:blocks/fire/fire_dark_layer_0"
     }
 }

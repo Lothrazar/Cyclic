@@ -40,6 +40,7 @@ public class Const {
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
     public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
+    public static final ResourceLocation PLAINWIDE = new ResourceLocation(Const.MODID, folder + "plain_wide.png");
     public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
     public static final ResourceLocation TABLEFILTER = new ResourceLocation(Const.MODID, folder + "filter.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
@@ -62,7 +63,7 @@ public class Const {
   }
 
   public static enum ScreenSize {
-    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, SACK;
+    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, SACK, PLAINWIDE;
 
     public int width() {
       switch (this) {
@@ -72,6 +73,7 @@ public class Const {
           return 176;
         case LARGEWIDE:
           return 250;
+        case PLAINWIDE:
         case SACK:
           return 212;
         default:
@@ -89,6 +91,7 @@ public class Const {
         case LARGEWIDE:
           return 212;
         case SACK:
+        case PLAINWIDE:
           return 220;
         default:
         break;
@@ -104,6 +107,7 @@ public class Const {
         case LARGE:
         case LARGEWIDE:
           return 130;
+        case PLAINWIDE:
         case SACK:
           return 138;
       }
@@ -118,6 +122,7 @@ public class Const {
           return Const.PAD;
         case LARGEWIDE:
           return 48;//currently just merchant
+        case PLAINWIDE:
         case SACK:
           return 26;
         default:
@@ -132,6 +137,8 @@ public class Const {
           return Res.TABLEDEFAULT;
         case STANDARDPLAIN:
           return Res.TABLEPLAIN;
+        case PLAINWIDE:
+          return Res.PLAINWIDE;
         case LARGE:
           return Res.TABLELARGE;
         case LARGEWIDE:

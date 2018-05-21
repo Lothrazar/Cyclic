@@ -23,7 +23,6 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
 
   public static final PropertyBool POWERED = BlockLever.POWERED;//PropertyBool.create("powered");
 
-
   public BlockArrowTarget() {
     super(Material.ROCK);
   }

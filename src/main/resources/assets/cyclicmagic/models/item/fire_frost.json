@@ -1,0 +1,6 @@
+{
+    "parent": "builtin/generated",
+    "textures": {
+        "layer0": "cyclicmagic:blocks/fire/fire_frost_layer_0"
+    }
+}

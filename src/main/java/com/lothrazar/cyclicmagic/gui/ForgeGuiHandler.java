@@ -29,6 +29,9 @@ import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.ContainerAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.GuiAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilvoid.ContainerVoidAnvil;
+import com.lothrazar.cyclicmagic.block.anvilvoid.GuiVoidAnvil;
+import com.lothrazar.cyclicmagic.block.anvilvoid.TileEntityVoidAnvil;
 import com.lothrazar.cyclicmagic.block.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.block.autouser.GuiUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
@@ -71,6 +74,9 @@ import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.ContainerFan;
 import com.lothrazar.cyclicmagic.block.fan.GuiFan;
 import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.firestarter.ContainerFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.GuiFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclicmagic.block.fishing.GuiFisher;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
@@ -107,6 +113,9 @@ import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.block.sorting.ContainerItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.GuiItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.block.sound.ContainerSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.GuiSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer;
 import com.lothrazar.cyclicmagic.block.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.GuiUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
@@ -200,6 +209,9 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_ENERGYPUMP = 37;
   public static final int GUI_INDEX_BATTERY = 38;
   public static final int GUI_INDEX_ANVILMAGMA = 39;
+  public static final int GUI_INDEX_FIREST = 40;
+  public static final int GUI_INDEX_VOID = 41;
+  public static final int GUI_INDEX_SOUNDPL = 42;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -405,6 +417,21 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
         }
       break;
+      case GUI_INDEX_FIREST:
+        if (te instanceof TileEntityFireStarter) {
+          return new ContainerFireStarter(player.inventory, (TileEntityFireStarter) te);
+        }
+      break;
+      case GUI_INDEX_VOID:
+        if (te instanceof TileEntityVoidAnvil) {
+          return new ContainerVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
+        }
+      break;
+      case GUI_INDEX_SOUNDPL:
+        if (te instanceof TileEntitySoundPlayer) {
+          return new ContainerSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
+        }
+      break;
     }
     return null;
   }
@@ -603,6 +630,21 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_ANVILMAGMA:
           if (te instanceof TileEntityAnvilMagma) {
             return new GuiAnvilMagma(player.inventory, (TileEntityAnvilMagma) te);
+          }
+        break;
+        case GUI_INDEX_FIREST:
+          if (te instanceof TileEntityFireStarter) {
+            return new GuiFireStarter(player.inventory, (TileEntityFireStarter) te);
+          }
+        break;
+        case GUI_INDEX_VOID:
+          if (te instanceof TileEntityVoidAnvil) {
+            return new GuiVoidAnvil(player.inventory, (TileEntityVoidAnvil) te);
+          }
+        break;
+        case GUI_INDEX_SOUNDPL:
+          if (te instanceof TileEntitySoundPlayer) {
+            return new GuiSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
           }
         break;
       }

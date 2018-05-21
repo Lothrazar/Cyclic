@@ -114,11 +114,7 @@ public class ItemRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
-    
     RenderingRegistry.registerEntityRenderingHandler(EntityRobot.class, new RenderRobot.Factory());
-    
-    
-    
     final IStateMapper STATE_MAPPER = new StateMapperBase() {
 
       @Override

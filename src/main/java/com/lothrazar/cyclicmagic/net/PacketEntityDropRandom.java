@@ -94,14 +94,9 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     Entity entityTarget = world.getEntityByID(message.entityId);
     if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
       EntityLivingBase entity = (EntityLivingBase) entityTarget;
-
-
       EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
-
       ModCyclic.logger.log(entity.getName() + "!PACKET!!!DROP SLOT " + slot + " " + message.stack.getDisplayName());
-
       UtilItemStack.dropItemStackInWorld(world, entity.getPosition().up(5), message.stack);
-
       entity.setItemStackToSlot(slot, ItemStack.EMPTY);
       if (entity instanceof EntityPlayer) {
         UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");

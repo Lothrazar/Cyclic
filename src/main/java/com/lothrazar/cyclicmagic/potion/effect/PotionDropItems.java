@@ -27,7 +27,6 @@ public class PotionDropItems extends PotionBase {
     PotionEffect pot = entity.getActivePotionEffect(PotionEffectRegistry.DROPS);
     World world = entity.getEntityWorld();
     List<EntityEquipmentSlot> slots = null;
-
     if (pot != null && this.isMoving(entity)) {//&& world.rand.nextDouble() < 0.5
       if (pot.getAmplifier() == Const.Potions.I) {
         slots = Arrays.asList(EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND);

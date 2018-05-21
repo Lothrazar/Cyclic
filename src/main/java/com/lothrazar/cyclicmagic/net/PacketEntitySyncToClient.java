@@ -93,11 +93,9 @@ public class PacketEntitySyncToClient implements IMessage, IMessageHandler<Packe
   }
 
   private void handle(PacketEntitySyncToClient message, MessageContext ctx) {
-
     Entity entityTarget = ModCyclic.proxy.getPlayerEntity(ctx).world.getEntityByID(message.entityId);
     if (entityTarget instanceof EntityRobot) {
       ((EntityRobot) entityTarget).setTrackers(message.trackers);
     }
-
   }
 }

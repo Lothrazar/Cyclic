@@ -78,10 +78,11 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IHasConfig, IHa
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "ddd",
-        " e ",
+        "geg",
         "iii",
+        'g', "blockGold",
         'i', "cobblestone",
-        'e', Blocks.QUARTZ_BLOCK,
+        'e', Blocks.ANVIL,
         'd', Blocks.MAGMA);
   }
 
