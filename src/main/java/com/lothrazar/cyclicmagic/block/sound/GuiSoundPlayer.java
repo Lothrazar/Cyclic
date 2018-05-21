@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.block.sound;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -14,31 +13,31 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GuiSoundPlayer extends GuiBaseContainer {
 
   private GuiSoundList soundList;
-  private ArrayList<ResourceLocation> allSounds;
+  private List<ResourceLocation> allSounds;
 
   public GuiSoundPlayer(InventoryPlayer inventoryPlayer, TileEntitySoundPlayer tile) {
     super(new ContainerSoundPlayer(inventoryPlayer, tile), tile);
     this.setScreenSize(ScreenSize.STANDARDPLAIN);
-    allSounds = new ArrayList<>();
-    allSounds.addAll(SoundEvent.REGISTRY.getKeys());
-    allSounds.sort(Comparator.comparing(ResourceLocation::toString));
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.allSounds = TileEntitySoundPlayer.getSoundList();
   }
+
 
   @Override
   public void initGui() {
     super.initGui();
     //TODO: TIMER SLIDER!?
-    soundList = new GuiSoundList(160, 112, guiTop + 22, guiTop + 134, guiLeft + 8, 14);
+    soundList = new GuiSoundList(160, 112, guiTop + 26, guiTop + 134, guiLeft + 8, 14);
     soundList.setSounds(allSounds);
     int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
     soundList.selectIndex(sel);
     ModCyclic.logger.log("on init selected is" + sel);
+
   }
 
   @Override

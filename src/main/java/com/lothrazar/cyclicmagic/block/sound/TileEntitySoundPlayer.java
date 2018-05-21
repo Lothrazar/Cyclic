@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block.sound;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import com.lothrazar.cyclicmagic.ModCyclic;
+import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -23,28 +23,41 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
   }
 
   public TileEntitySoundPlayer() {
-    super(1);
-    // TODO Auto-generated constructor stub
+    super(0);
+  }
+
+  public static List<ResourceLocation> getSoundList() {
+    //    minecraft:record
+    List<ResourceLocation> allSounds = new ArrayList<>();
+    for (ResourceLocation r : SoundEvent.REGISTRY.getKeys()) {
+      if (!r.toString().contains("minecraft:record"))
+        allSounds.add(r);
+    }
+    //    allSounds.addAll(SoundEvent.REGISTRY.getKeys());
+    allSounds.sort(Comparator.comparing(ResourceLocation::toString));
+    return allSounds;
   }
 
   @Override
   public void update() {
+    if (isPowered() == false && this.onlyRunIfPowered()) {
+      //i need signal to run. i dont have signal. set timer zero so pulse triggers right away
+      timer = 0;
+    }
     if (this.isRunning() == false) {
       return;
     }
     if (this.updateTimerIsZero()) {
       if (soundIndex >= 0 && soundIndex < SoundEvent.REGISTRY.getKeys().size()) {
-        ArrayList<ResourceLocation> allSounds = new ArrayList<>();
-        allSounds.addAll(SoundEvent.REGISTRY.getKeys());
-        allSounds.sort(Comparator.comparing(ResourceLocation::toString));
+        List<ResourceLocation> allSounds = getSoundList();
+        //
         ResourceLocation sound = allSounds.get(soundIndex);
-        ModCyclic.logger.log("SEL" + sound);
+        //        ModCyclic.logger.log("SEL" + sound);
         if (sound != null && SoundEvent.REGISTRY.getObject(sound) != null) {
           UtilSound.playSound(world, pos, SoundEvent.REGISTRY.getObject(sound), SoundCategory.BLOCKS);
           timer = TIMER_MAX;
         }
       }
-
     }
   }
 

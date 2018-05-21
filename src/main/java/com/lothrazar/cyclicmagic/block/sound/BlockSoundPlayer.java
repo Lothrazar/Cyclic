@@ -17,6 +17,7 @@ public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe {
 
   public BlockSoundPlayer() {
     super(Material.ROCK);
+
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_SOUNDPL);
 
   }
@@ -35,4 +36,14 @@ public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe {
         'r', "blockRedstone",
         'b', Items.FLINT);
   }
+
+  //  @Override
+  //  public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+  //    boolean powered = worldIn.isBlockPowered(pos);
+  //    ModCyclic.logger.log("nbr changed and powerd=" + powered);
+  //    if (powered) {
+  //      TileEntitySoundPlayer te = (TileEntitySoundPlayer) worldIn.getTileEntity(pos);
+  //      te.triggerSoundIfSet();
+  //    }
+  //  }
 }
