@@ -13,5 +13,4 @@ public class ContainerFireStarter extends ContainerBaseMachine {
     //    }
     bindPlayerInventory(inventoryPlayer);
   }
-
 }

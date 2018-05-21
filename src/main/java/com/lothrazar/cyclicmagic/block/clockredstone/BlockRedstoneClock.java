@@ -92,7 +92,6 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   private int getPower(IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (world.getTileEntity(pos) instanceof TileEntityClock) {
       TileEntityClock clock = ((TileEntityClock) world.getTileEntity(pos));
-
       return clock.getPowerForSide(side);
     }
     return 0;

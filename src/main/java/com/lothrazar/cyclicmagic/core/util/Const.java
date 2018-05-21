@@ -102,7 +102,6 @@ public class Const {
     public int playerOffsetY() {
       switch (this) {
         case STANDARD:
-
         case STANDARDPLAIN:
           return 84;
         case LARGE:

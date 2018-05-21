@@ -61,7 +61,6 @@ public class SoundRegistry {
   public static SoundEvent dcoin;
   public static SoundEvent doorbell;
 
-
   public static void register() {
     //old sounds kept - lothrazar originals
     sack_holding = registerSound("basey");

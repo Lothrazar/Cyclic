@@ -11,5 +11,4 @@ public class ContainerSoundPlayer extends ContainerBaseMachine {
     this.setScreenSize(ScreenSize.PLAINWIDE);
     this.bindPlayerHotbar(inventoryPlayer);
   }
-
 }

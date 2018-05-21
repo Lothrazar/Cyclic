@@ -63,7 +63,6 @@ public class BlockFireBase extends BlockFire {
   //doesnt work that way aww
   //    return super.canDie(worldIn, pos);
   //  }
-
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     if (worldIn.getGameRules().getBoolean("doFireTick")) {

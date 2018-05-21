@@ -20,9 +20,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderRobot extends RenderBiped<EntityRobot> {
 
   private static final ResourceLocation texture = new ResourceLocation(Const.MODID, "textures/entity/robot.png");
+
   public RenderRobot(RenderManager renderManagerIn) {
     super(renderManagerIn, new ModelZombie(), 0.5F);
     LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
+
       @Override
       protected void initArmor() {
         this.modelLeggings = new ModelZombie(0.5F, true);
@@ -31,6 +33,7 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
     };
     this.addLayer(layerbipedarmor);
   }
+
   @Override
   public void doRender(EntityRobot entity, double x, double y, double z, float entityYaw, float partialTicks) {
     super.doRender(entity, x, y, z, entityYaw, partialTicks);
@@ -39,7 +42,7 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
     for (DmgTracker tr : entity.trackers) {
       if (tr.timer > 0 && tr.message != "")
         renderEntityText(entity, x, y, z, tr.message, tr.timer);
-  }
+    }
   }
 
   @SideOnly(Side.CLIENT)
@@ -55,9 +58,7 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
       GlStateManager.pushMatrix();
       float s = 0.05F; //scale size
       float step = 1.105F;//movement speed
-
       float pct = (EntityRobot.MAX_TIMER - time) / EntityRobot.MAX_TIMER;
-
       float ystart = -2.2F;
       y = ystart - pct * step;
       GlStateManager.rotate(180, 1, 0, 0);
@@ -71,12 +72,14 @@ public class RenderRobot extends RenderBiped<EntityRobot> {
       GL11.glEnable(GL11.GL_LIGHTING);
     }
   }
+
   @Override
   protected ResourceLocation getEntityTexture(EntityRobot entity) {
     return texture;
   }
 
   public static class Factory implements IRenderFactory<EntityRobot> {
+
     @Override
     public Render<? super EntityRobot> createRenderFor(RenderManager manager) {
       return new RenderRobot(manager);

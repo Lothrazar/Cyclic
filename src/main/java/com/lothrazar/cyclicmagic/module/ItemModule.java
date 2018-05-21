@@ -43,6 +43,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
 import com.lothrazar.cyclicmagic.item.ItemFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
+import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
 import com.lothrazar.cyclicmagic.item.ItemMattock;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
@@ -58,7 +59,6 @@ import com.lothrazar.cyclicmagic.item.ItemWandHypno;
 import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
-import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
@@ -164,6 +164,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   public static int intColor(int r, int g, int b) {
     return (r * 65536 + g * 256 + b);
   }
+
   private boolean goldMinecart;
   private boolean stoneMinecart;
   private boolean chestMinecart;

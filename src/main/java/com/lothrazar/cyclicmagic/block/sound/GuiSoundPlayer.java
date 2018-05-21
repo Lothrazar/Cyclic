@@ -27,7 +27,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     this.allSounds = TileEntitySoundPlayer.getSoundList();
   }
 
-
   @Override
   public void initGui() {
     super.initGui();
@@ -37,7 +36,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
     soundList.selectIndex(sel);
     ModCyclic.logger.log("on init selected is" + sel);
-
   }
 
   @Override

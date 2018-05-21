@@ -50,15 +50,11 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
     BlockPos pos = posIn.offset(side);
-
     //    int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     if (!world.isRemote) {
-
       EntityRobot robot = new EntityRobot(world);
       robot.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
       world.spawnEntity(robot);
-
-
     }
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
     return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);

@@ -69,7 +69,6 @@ public class BlockShears extends BlockBase implements IHasRecipe {
 
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-
     if (entity instanceof IShearable) {
       IShearable sheep = (IShearable) entity;
       ItemStack fake = new ItemStack(Items.SHEARS);

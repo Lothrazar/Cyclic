@@ -75,7 +75,6 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-
     EnumFacing enumfacing = state.getValue(FACING);
     boolean flag = state.getValue(POWERED).booleanValue();
     switch (enumfacing) {
@@ -94,6 +93,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
         return flag ? AABB_DOWN_ON : AABB_DOWN_OFF;
     }
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.STONE_BUTTON, Blocks.NOTEBLOCK);

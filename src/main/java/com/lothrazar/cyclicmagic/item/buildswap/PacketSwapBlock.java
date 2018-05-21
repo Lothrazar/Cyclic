@@ -202,11 +202,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //     UtilSound.playSoundPlaceBlock(world, curPos, newToPlace.getBlock());//fffk doesnt work
             //do the BREAK particles
             world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
-
             //always break with PLAYER CONTEXT in mind
             replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
             //     replacedBlock.onBlockDestroyedByPlayer(world, curPos, replaced);
-
             ItemStack held = player.getHeldItem(message.hand);
             if (!held.isEmpty() && held.getItem() instanceof ItemBuildSwapper) {
               UtilItemStack.damageItem(player, held);

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 public class ContainerVoidAnvil extends ContainerBaseMachine {
 
   public static final int SLOTY = 34;
+
   public ContainerVoidAnvil(InventoryPlayer inventoryPlayer, TileEntityVoidAnvil te) {
     super(te);
     //    this.setScreenSize(ScreenSize.LARGE);
@@ -48,5 +49,4 @@ public class ContainerVoidAnvil extends ContainerBaseMachine {
     }
     return stack;
   }
-
 }

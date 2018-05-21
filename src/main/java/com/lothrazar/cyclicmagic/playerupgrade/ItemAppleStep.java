@@ -101,7 +101,6 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
       }
       else if (data.doForceStepOff()) {
         data.setForceStepOff(false);
-
         //otherwise, dont automatically force it off. only force it off the once if player is toggling FROM on TO off with my feature
         // EntityLivingBase default constructor uses 0.6 as default, so slabs + path block for example
         player.stepHeight = 0.6F;

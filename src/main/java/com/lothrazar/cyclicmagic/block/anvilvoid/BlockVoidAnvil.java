@@ -23,13 +23,13 @@ import net.minecraftforge.common.config.Configuration;
 public class BlockVoidAnvil extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
   public static int FUEL_COST = 0;
+
   public BlockVoidAnvil() {
     super(Material.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_VOID);
     this.setTranslucent();
-
-
   }
+
   @Override
   public void syncConfig(Configuration config) {
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);

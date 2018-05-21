@@ -131,7 +131,6 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     }
   }
 
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
