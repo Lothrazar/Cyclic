@@ -14,8 +14,8 @@ import net.minecraft.util.SoundEvent;
 
 public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  private static final int TIMER_MAX = 100;//TODO: SLIDER
-  private int needsRedstone = 0;
+  private static final int TIMER_MAX = 100;
+  private int needsRedstone = 1;
   private int soundIndex = -1;
 
   public static enum Fields {
@@ -27,7 +27,7 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
   }
 
   public static List<ResourceLocation> getSoundList() {
-    //    minecraft:record
+    // blacklisted:    minecraft:record
     List<ResourceLocation> allSounds = new ArrayList<>();
     for (ResourceLocation r : SoundEvent.REGISTRY.getKeys()) {
       if (!r.toString().contains("minecraft:record"))

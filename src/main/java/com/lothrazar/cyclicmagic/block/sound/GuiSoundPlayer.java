@@ -22,7 +22,7 @@ public class GuiSoundPlayer extends GuiBaseContainer {
 
   public GuiSoundPlayer(InventoryPlayer inventoryPlayer, TileEntitySoundPlayer tile) {
     super(new ContainerSoundPlayer(inventoryPlayer, tile), tile);
-    this.setScreenSize(ScreenSize.STANDARDPLAIN);
+    this.setScreenSize(ScreenSize.PLAINWIDE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.allSounds = TileEntitySoundPlayer.getSoundList();
   }
@@ -32,7 +32,7 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //TODO: TIMER SLIDER!?
-    soundList = new GuiSoundList(160, 112, guiTop + 26, guiTop + 134, guiLeft + 8, 14);
+    soundList = new GuiSoundList(198, 110, guiTop + 26, guiTop + 132, guiLeft + 8, 14);
     soundList.setSounds(allSounds);
     int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
     soundList.selectIndex(sel);
@@ -57,7 +57,7 @@ public class GuiSoundPlayer extends GuiBaseContainer {
   @Override
   public void updateScreen() {
     super.updateScreen();
-    ResourceLocation selectedIndex = soundList.getSelection();
+    // ResourceLocation selectedIndex = soundList.getSelection();
     //  ModCyclic.logger.log("SEL" + selectedIndex + soundList.getSelectionIndex());
     ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.SOUNDINDEX.ordinal(), soundList.getSelectionIndex()));
   }

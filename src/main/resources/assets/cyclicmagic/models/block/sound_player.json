@@ -1,12 +1,12 @@
 {
     "parent": "block/cube_directional",
     "textures": {
-        "particle": "blocks/anvil_base",
-        "down": "cyclicmagic:blocks/item_pipe_sort_down",
-        "up": "blocks/noteblock",
-        "north": "cyclicmagic:blocks/item_pipe_sort_north",
-        "east": "cyclicmagic:blocks/item_pipe_sort_east",
-        "south": "cyclicmagic:blocks/item_pipe_sort_south",
-        "west": "cyclicmagic:blocks/item_pipe_sort_west"
+        "particle": "cyclicmagic:blocks/sfx",
+        "down": "cyclicmagic:blocks/sfx",
+        "up": "cyclicmagic:blocks/sfx",
+        "north": "cyclicmagic:blocks/sfx",
+        "east":  "cyclicmagic:blocks/sfx",
+        "south": "cyclicmagic:blocks/sfx",
+        "west":  "cyclicmagic:blocks/sfx"
     }
 }
