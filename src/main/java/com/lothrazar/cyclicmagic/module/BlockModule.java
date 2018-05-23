@@ -105,6 +105,7 @@ import com.lothrazar.cyclicmagic.block.hydrator.ItemBlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
+import com.lothrazar.cyclicmagic.block.imbue.TileEntityImbue;
 import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
@@ -270,6 +271,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockImbue imbuer = new BlockImbue();
     ModCyclic.instance.events.register(imbuer);
     BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
