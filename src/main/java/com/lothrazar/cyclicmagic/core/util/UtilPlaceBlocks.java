@@ -88,7 +88,8 @@ public class UtilPlaceBlocks {
   public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack) {
     ItemBlock itemblock = (ItemBlock) stack.getItem();
     EntityPlayer fake = null;
-    if (world.isAirBlock(placePos) || itemblock.canPlaceBlockOnSide(world, placePos.down(), EnumFacing.DOWN, fake, stack)) {
+    //client only hmm || itemblock.canPlaceBlockOnSide(world, placePos.down(), EnumFacing.DOWN, fake, stack)
+    if (world.isAirBlock(placePos)) {
       Block block = itemblock.getBlock();
       //        boolean blockAcross = ;
       IBlockState state = block.getStateForPlacement(world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
