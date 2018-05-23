@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.block;
 
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
@@ -78,7 +79,11 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   }
 
   @Override
-  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, @Nullable EntityLivingBase placer) {
+    ///player can be null! dont forget
+    if (pos == null || placer == null) {
+      return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.UP);
+    }
     EnumFacing fac = null;
     switch (this.placeType) {
       case SIDE_BLOCK:
