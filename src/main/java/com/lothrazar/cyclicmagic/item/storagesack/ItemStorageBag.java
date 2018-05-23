@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.util.List;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
@@ -53,6 +54,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemStorageBag extends BaseItem implements IHasRecipe {
+
+  private static final String GUI_ID = "guiID";
 
   public static enum StorageActionType {
     NOTHING, DEPOSIT, MERGE;
@@ -179,25 +182,28 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
   }
 
-  public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
-    ItemStack wand = player.getHeldItemMainhand();
-    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
-      wand = player.getHeldItemOffhand();
-    }
-    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
-      return null;
-    }
-    return wand;
-  }
-
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    if (!world.isRemote) {
+    ItemStack wand = player.getHeldItem(hand);
+    setIdIfEmpty(wand);
+    if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
+        && hand == EnumHand.MAIN_HAND) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
     return super.onItemRightClick(world, player, hand);
+  }
+
+  private void setIdIfEmpty(ItemStack wand) {
+    if (UtilNBT.getItemStackNBT(wand).hasKey(GUI_ID) == false ||
+        UtilNBT.getItemStackNBT(wand).getString(GUI_ID) == null) {
+      UtilNBT.setItemStackNBTVal(wand, GUI_ID, UUID.randomUUID().toString());
+    }
+  }
+
+  public static String getId(ItemStack wand) {
+    return UtilNBT.getItemStackNBT(wand).getString(GUI_ID);
   }
 
   @Override

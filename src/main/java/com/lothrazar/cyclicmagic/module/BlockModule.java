@@ -258,13 +258,18 @@ public class BlockModule extends BaseModule implements IHasConfig {
    * 
    * 
    */
+  boolean fireDarkUsed = false;
+  boolean fireFrostUsed = false;
   @Override
   public void onPreInit() {
     super.onPreInit();
     //fire is a dependency block like liquids, used by many places
     //janky but its ok
-    boolean fireDarkUsed = false;
-    boolean fireFrostUsed = false;
+    //
+    //    BlockImbuer imbuer = new BlockImbuer();
+    //    ModCyclic.instance.events.register(imbuer);
+    //    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");

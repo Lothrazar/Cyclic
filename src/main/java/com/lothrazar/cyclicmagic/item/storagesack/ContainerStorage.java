@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemModule;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,6 +37,8 @@ import net.minecraft.item.ItemStack;
 public class ContainerStorage extends ContainerBase {
 
   final InventoryStorage inventory;
+  private EntityPlayer player;
+  private String stackId;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
@@ -48,6 +49,8 @@ public class ContainerStorage extends ContainerBase {
 
   public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
     this.setScreenSize(ScreenSize.SACK);
+    this.player = par1Player;
+    this.stackId = ItemStorageBag.getId(player.getHeldItemMainhand());
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
     // start the main container area
@@ -59,29 +62,12 @@ public class ContainerStorage extends ContainerBase {
         this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
       }
     }
-    int yBase = pad + rows * Const.SQ + 14;
     this.bindPlayerInventory(playerInventory);
-    // start the players inventory
-    //    for (l = 0; l < 3; ++l) {
-    //      for (k = 0; k < hotbar; ++k) {
-    //        x = pad + (k + 1) * Const.SQ;
-    //        y = l * Const.SQ + yBase;
-    //        slot = k + l * hotbar + hotbar;
-    //        this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
-    //      }
-    //    }
-    //    // players hotbar
-    //    int yhotbar = yBase + 3 * Const.SQ + pad / 2;
-    //    for (k = 0; k < hotbar; ++k) {
-    //      slot = k;
-    //      x = pad + (k + 1) * Const.SQ;
-    //      this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
-    //    }
   }
 
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-    ItemStack wand = UtilPlayer.getPlayerItemIfHeld(player);
+    ItemStack wand = player.getHeldItemMainhand();
     // this will prevent the player from interacting with the item that
     // opened the inventory:
     if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) {
@@ -92,7 +78,8 @@ public class ContainerStorage extends ContainerBase {
 
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return true;//inventory.isUseableByPlayer(playerIn);
+
+    return ItemStorageBag.getId(player.getHeldItemMainhand()).equals(stackId);
   }
 
   @Override

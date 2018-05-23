@@ -41,9 +41,9 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
 
-  public InventoryStorage(EntityPlayer player, ItemStack wand) {
+  public InventoryStorage(EntityPlayer player) {
     super(INV_SIZE);
-    internalWand = wand;
+    internalWand = player.getHeldItemMainhand();
     inv = readFromNBT(internalWand);
     thePlayer = player;
   }
@@ -205,8 +205,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   public static void decrementSlot(ItemStack stack, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryStorage.readFromNBT(stack);
     invv.get(itemSlot).shrink(1);
-    //    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
-    //    invv[itemSlot].stackSize--;
+
     if (invv.get(itemSlot).getCount() == 0) {
       invv.set(itemSlot, ItemStack.EMPTY);
     }

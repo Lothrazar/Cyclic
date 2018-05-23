@@ -148,7 +148,6 @@ import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
@@ -243,8 +242,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_STORAGE:
-        ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
-        return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
+        return new ContainerStorage(player, player.inventory, new InventoryStorage(player));
       case GUI_INDEX_WAYPOINT:
         return null;
       case GUI_INDEX_BUILDER:
@@ -467,8 +465,7 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_STORAGE:
-          ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
-          return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
+          return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player)));
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
         case GUI_INDEX_BUILDER:
