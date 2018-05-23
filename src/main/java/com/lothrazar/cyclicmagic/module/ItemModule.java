@@ -98,8 +98,6 @@ import com.lothrazar.cyclicmagic.item.equipment.ItemSandstonePickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.item.findspawner.ItemProjectileDungeon;
-import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.item.homingmissile.EntityHomingProjectile;
 import com.lothrazar.cyclicmagic.item.homingmissile.ItemMagicMissile;
 import com.lothrazar.cyclicmagic.item.lightningmagic.EntityLightningballBolt;
@@ -181,7 +179,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enableLapisApple;
   private boolean foodStep;
   private boolean mountInverse;
-  private boolean enableFire;
+  private boolean enableFireCharm;
   private boolean enableSea;
   private boolean enableVoid;
   private boolean enableWater;
@@ -190,7 +188,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean autoTorch;
   private boolean enableSpeed;
   private boolean enableAir;
-  private boolean enableEnderBlaze;
   private boolean enableEnderDungeonFinder;
   private boolean enderSnow;
   private boolean enderWool;
@@ -571,15 +568,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(magic_missile, "wand_missile", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
     }
-    if (enableEnderBlaze) {
-      Item fire_dark_anim = new Item();
-      ItemRegistry.register(fire_dark_anim, "fire_dark_anim");
-      ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
-      ender_blaze.setRepairItem(new ItemStack(fire_dark_anim));
-      ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-      ModCyclic.instance.events.register(ender_blaze);
-    }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
       ItemRegistry.register(ender_dungeon, "ender_dungeon", GuideCategory.ITEMTHROW);
@@ -701,7 +689,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(charm_air);
       LootTableRegistry.registerLoot(charm_air);
     }
-    if (enableFire) {
+    if (enableFireCharm) {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.register(charm_fire, "charm_fire", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_fire);
@@ -824,7 +812,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
     magicNet = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     // enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderSnow = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -836,7 +823,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     enableAir = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpeed = config.getBoolean("SpeedCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     slowfallCharm = config.getBoolean("WingCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableFire = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableFireCharm = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSea = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVoid = config.getBoolean("VoidCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableWater = config.getBoolean("WaterCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

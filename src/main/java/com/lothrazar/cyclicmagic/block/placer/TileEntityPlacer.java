@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -139,11 +140,20 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     }
     if (trigger) {
-      Block stuff = Block.getBlockFromItem(stack.getItem());
-      if (stuff != null && stuff != Blocks.AIR) {
-        if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
-            UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {
-          this.decrStackSize(0, 1);
+      if (stack.getItem() instanceof ItemBlock) {
+        if (UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack)) {
+          //     this.decrStackSize(0, 1);
+          //no no, vanilla itemblock handles decrement for me dont do it here
+          //if this block consumed power, do that here
+        }
+      }
+      else {
+        Block stuff = Block.getBlockFromItem(stack.getItem());
+        if (stuff != null && stuff != Blocks.AIR) {
+          if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
+              UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {
+            this.decrStackSize(0, 1);
+          }
         }
       }
     }

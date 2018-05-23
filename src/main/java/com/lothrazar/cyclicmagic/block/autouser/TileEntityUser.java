@@ -263,15 +263,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
             this.tryDumpStacks(Arrays.asList(is));
           }
-          //          else {
-          //            ItemStack currentHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
-          //            boolean equalsPrevious = ItemStack.areItemStacksEqual(previousHeldCopy, currentHeldCopy);
-          //            //last chance. EX: Pixelmon trees
-          //            // https://github.com/PrinceOfAmber/Cyclic/issues/736
-          //            fakePlayer.get().interactionManager.onBlockClicked(targetPos, EnumFacing.UP);
-          //            //spit out my main hand item ONLY IF i wasnt holding it before ( new aquisition )
-          //            this.tryDumpFakePlayerInvo(!equalsPrevious);
-          //          }
         }
       }
     }

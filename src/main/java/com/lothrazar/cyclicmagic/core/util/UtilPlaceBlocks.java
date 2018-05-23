@@ -37,9 +37,12 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -67,6 +70,40 @@ public class UtilPlaceBlocks {
   public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
       BlockPos placePos, IBlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
+  }
+
+  /**
+   * Thanks ot ItemBlock inspiration and reminder from betterwithmods https://github.com/BetterWithMods/BetterWithMods/issues/940
+   * 
+   * TODO: down the road we want to re-use this with fake-player blocks.
+   * 
+   * also non integer x/y/z implementations are possible
+   * 
+   * 
+   * @param world
+   * @param placePos
+   * @param stack
+   * @return
+   */
+  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack) {
+    ItemBlock itemblock = (ItemBlock) stack.getItem();
+    EntityPlayer fake = null;
+    //client only hmm || itemblock.canPlaceBlockOnSide(world, placePos.down(), EnumFacing.DOWN, fake, stack)
+    if (world.isAirBlock(placePos)) {
+      Block block = itemblock.getBlock();
+      //        boolean blockAcross = ;
+      IBlockState state = block.getStateForPlacement(world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+          stack.getItemDamage(), fake, EnumHand.MAIN_HAND);
+      if (block.canPlaceBlockAt(world, placePos)) {
+        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+            state)) {
+          world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
+          stack.shrink(1);
+          return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
+        }
+      }
+    }
+    return false;
   }
 
   /**
@@ -330,7 +367,7 @@ public class UtilPlaceBlocks {
       return true;
     }
     //now try something else if not done
-    for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
+    for (IProperty prop : clicked.getProperties().keySet()) {
       if (isDone) {
         break;//stop looping right away if we are done
       }

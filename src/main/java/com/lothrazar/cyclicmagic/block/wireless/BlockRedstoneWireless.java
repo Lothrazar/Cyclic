@@ -202,7 +202,10 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       ItemStack stack = new ItemStack(state.getBlock());
       if (t.getTargetPos() != null)
         UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
-      //      saveTileDataToStack(stack, t);
+      UtilItemStack.dropItemStackInWorld(world, pos, stack);
+    }
+    else if (ent != null && ent instanceof TileEntityWirelessRec) {
+      ItemStack stack = new ItemStack(state.getBlock());
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
     }
   }

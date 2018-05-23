@@ -152,6 +152,7 @@ import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -168,6 +169,8 @@ import com.lothrazar.cyclicmagic.energy.peat.generator.BlockPeatGenerator;
 import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -238,7 +241,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean fire_starter;
   private boolean void_anvil;
   private boolean sound_player;
-
+  private boolean enableEnderBlaze;
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
    * 
@@ -254,13 +257,18 @@ public class BlockModule extends BaseModule implements IHasConfig {
    * 
    * 
    */
+  boolean fireDarkUsed = false;
+  boolean fireFrostUsed = false;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
     //fire is a dependency block like liquids, used by many places
-    //TODO maybe a Fire REgistry LUL? 
-    BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
-    BlockRegistry.registerBlock(new BlockFireFrost(), "fire_frost", null);
+    //janky but its ok
+    //
+    //    BlockImbuer imbuer = new BlockImbuer();
+    //    ModCyclic.instance.events.register(imbuer);
+    //    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
@@ -268,6 +276,25 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (fire_starter) {
       BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
+      fireDarkUsed = true;
+      fireFrostUsed = true;
+    }
+    if (enableEnderBlaze) {
+      fireDarkUsed = true;
+      Item fire_dark_anim = new Item();
+      ItemRegistry.register(fire_dark_anim, "fire_dark_anim");
+      ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+      ender_blaze.setRepairItem(new ItemStack(fire_dark_anim));
+      ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
+      ModCyclic.instance.events.register(ender_blaze);
+    }
+    //TODO maybe a Fire REgistry LUL? 
+    if (fireFrostUsed) {
+      BlockRegistry.registerBlock(new BlockFireFrost(), "fire_frost", null);
+    }
+    if (fireDarkUsed) {
+      BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
     }
     if (void_anvil) {
       BlockRegistry.registerBlock(new BlockVoidAnvil(), "void_anvil", GuideCategory.BLOCK);
@@ -656,11 +683,12 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    buttonLarge = config.getBoolean("button_;arge", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    buttonLarge = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
