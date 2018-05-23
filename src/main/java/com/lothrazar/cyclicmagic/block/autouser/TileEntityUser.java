@@ -263,7 +263,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
             this.tryDumpStacks(Arrays.asList(is));
           }
-
         }
       }
     }

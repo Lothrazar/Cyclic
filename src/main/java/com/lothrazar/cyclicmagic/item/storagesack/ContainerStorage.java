@@ -78,7 +78,6 @@ public class ContainerStorage extends ContainerBase {
 
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-
     return ItemStorageBag.getId(player.getHeldItemMainhand()).equals(stackId);
   }
 

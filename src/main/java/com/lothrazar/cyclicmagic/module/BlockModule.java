@@ -241,7 +241,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean fire_starter;
   private boolean void_anvil;
   private boolean sound_player;
-
   private boolean enableEnderBlaze;
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -260,6 +259,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
    */
   boolean fireDarkUsed = false;
   boolean fireFrostUsed = false;
+
   @Override
   public void onPreInit() {
     super.onPreInit();
@@ -269,7 +269,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     //    BlockImbuer imbuer = new BlockImbuer();
     //    ModCyclic.instance.events.register(imbuer);
     //    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
-
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");

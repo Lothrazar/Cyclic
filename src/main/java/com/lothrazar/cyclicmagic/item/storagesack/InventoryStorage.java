@@ -205,7 +205,6 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   public static void decrementSlot(ItemStack stack, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryStorage.readFromNBT(stack);
     invv.get(itemSlot).shrink(1);
-
     if (invv.get(itemSlot).getCount() == 0) {
       invv.set(itemSlot, ItemStack.EMPTY);
     }
