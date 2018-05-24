@@ -25,22 +25,24 @@ package com.lothrazar.cyclicmagic.block.imbue;
 
 import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ImbueTESR extends BaseMachineTESR<TileEntityImbue> {
 
-  public ImbueTESR(int slot) {
-    super(slot);
+  public ImbueTESR() {
+    super();
   }
 
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
-    ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
-    if (stack.isEmpty() == false) {
-      renderItem(te, stack, 1.15F);
-    }
+    //four corners if they exist
+    renderItem(te, te.getStackInSlot(1), 0, 0.5F, 1);
+    // renderItem(te, te.getStackInSlot(2), 1, 0.5F, 1);
+    renderItem(te, te.getStackInSlot(2), 1, 0.5F, 0);
+    // renderItem(te, te.getStackInSlot(4), 0, 0.5F, 0);
+    //and the enchanted item goes here
+    renderItem(te, te.getStackInSlot(0), 0.5F, 0.85F, 0.5F);
   }
 }

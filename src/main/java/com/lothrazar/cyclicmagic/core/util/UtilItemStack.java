@@ -151,14 +151,14 @@ public class UtilItemStack {
     return dropItemStackInWorld(worldObj, pos, new ItemStack(item));
   }
 
-  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
-    if (pos == null || worldObj == null || stack == null) {
+  public static EntityItem dropItemStackInWorld(World world, BlockPos pos, ItemStack stack) {
+    if (pos == null || world == null || stack.isEmpty()) {
       return null;
     }
-    EntityItem entityItem = new EntityItem(worldObj, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
-    if (worldObj.isRemote == false) {
+    EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    if (world.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
-      worldObj.spawnEntity(entityItem);
+      world.spawnEntity(entityItem);
     }
     return entityItem;
   }

@@ -91,7 +91,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
 
   protected void renderItem(TileEntity te, ItemStack stack, float x, float itemHeight, float y, int initialAngle, boolean isSpinning, float scaleFactor) {
     //    GuiHelper.drawTexturedRect(minecraft, texture, x, y, width, height, zLevel, texPosX, texPosY, texWidth, texHeight);
-    if (stack == null || stack.isEmpty()) {
+    if (stack.isEmpty()) {
       return;
     }
     GlStateManager.pushMatrix();
