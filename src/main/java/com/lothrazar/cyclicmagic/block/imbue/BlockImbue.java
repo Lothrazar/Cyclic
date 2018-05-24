@@ -178,7 +178,8 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
     if (getImbueInt(itemStack) == null) {
       return;
     }
-    event.getToolTip().add(UtilChat.lang("imbue.type.") + getImbueInt(itemStack).name().toLowerCase());
+    event.getToolTip().add(UtilChat.lang("imbue.type." + getImbueInt(itemStack).name().toLowerCase()));
+    event.getToolTip().add(UtilChat.lang("imbue.charges") + getImbueCharge(itemStack));
     //TODO CHARGES 
     //    switch (getImbueInt(itemStack)) {
     //      case LEVITATION:
