@@ -79,17 +79,16 @@ public class RecipeImbueZen {
     switch (theFlavor) {
       case EXPLOSION:
       break;
-      case NONE:
-      break;
-      case POTION:
+
+      case LEVITATE:
         //validate its a potion
         Potion effect = Potion.getPotionFromResourceLocation(metadata);
         if (effect == null) {
           ModCyclic.logger.error("Invalid Potion effect " + metadata);
           return;
         }
-        RecipeImbue imb = new RecipeImbue(toStacks(inputs), effect, charges);
-        BlockImbue.addRecipe(imb);
+      //        RecipeImbue imb = new RecipeImbue(toStacks(inputs), effect, charges);
+      //        BlockImbue.addRecipe(imb);
       break;
       case ENTITY:
         //       net.minecraftforge.fml.common.registry.

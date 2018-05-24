@@ -36,15 +36,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
 
   static final String NBT_IMBUE = "CYCLIC_IMBUE";
+  private static final String NBT_IMBUE_CHARGE = "CYCLIC_CHARGE";
 
   enum ImbueFlavor {
     //TODO: maybe instead a potion type with potion meta
-    NONE, POTION, EXPLOSION, ENTITY;
+    NONE, LEVITATE, EXPLOSION, FIRE, ENTITY;
   }
 
   public BlockImbue() {
     super(Material.ROCK);
     this.setTranslucent();
+    RecipeImbue.initAllRecipes();
   }
 
   @Override
@@ -119,7 +121,7 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
     System.out.println(event.getArrow().getEntityData());
     Entity trg = event.getRayTraceResult().entityHit;
     if (trg instanceof EntityLivingBase
-        && event.getArrow().getEntityData().getInteger(NBT_IMBUE) == ImbueFlavor.POTION.ordinal()) {
+        && event.getArrow().getEntityData().getInteger(NBT_IMBUE) == ImbueFlavor.LEVITATE.ordinal()) {
       EntityLivingBase target = (EntityLivingBase) trg;
       target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 100, 1));
     }
@@ -136,12 +138,11 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
         if (source.getHeldItemMainhand().isEmpty() == false
             && getImbueInt(source.getHeldItemMainhand()) != null) {
           switch (getImbueInt(source.getHeldItemMainhand())) {
-            case POTION:
-              arrow.getEntityData().setInteger(NBT_IMBUE, ImbueFlavor.POTION.ordinal());
+            case LEVITATE:
+              arrow.getEntityData().setInteger(NBT_IMBUE, ImbueFlavor.LEVITATE.ordinal());
             //REDUCE CHARGES 
             break;
-            case NONE:
-            break;
+
             default:
             break;
           }
@@ -158,10 +159,17 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
     return ImbueFlavor.values()[val];
   }
 
-  public static void setImbueInt(ItemStack held, ImbueFlavor val) {
-    UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE, val.ordinal());
+  public static void setImbue(ItemStack held, RecipeImbue found) {
+    UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE, found.flavor.ordinal());
   }
 
+  public static void setImbueCharge(ItemStack held, int found) {
+    UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE_CHARGE, found);
+  }
+
+  public static int getImbueCharge(ItemStack held) {
+    return UtilNBT.getItemStackNBT(held).getInteger(BlockImbue.NBT_IMBUE_CHARGE);
+  }
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
