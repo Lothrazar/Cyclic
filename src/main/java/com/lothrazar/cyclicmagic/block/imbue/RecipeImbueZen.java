@@ -90,7 +90,7 @@ public class RecipeImbueZen {
       //        RecipeImbue imb = new RecipeImbue(toStacks(inputs), effect, charges);
       //        BlockImbue.addRecipe(imb);
       break;
-      case ENTITY:
+      case GLOWING:
         //       net.minecraftforge.fml.common.registry.
         EntityEntry entry = net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES.getValue(new ResourceLocation(metadata));
         if (entry == null) {
