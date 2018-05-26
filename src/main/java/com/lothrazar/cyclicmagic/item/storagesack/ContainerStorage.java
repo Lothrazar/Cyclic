@@ -39,6 +39,7 @@ public class ContainerStorage extends ContainerBase {
   final InventoryStorage inventory;
   private EntityPlayer player;
   private String stackId;
+  ItemStack bagReference;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
@@ -50,7 +51,8 @@ public class ContainerStorage extends ContainerBase {
   public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
     this.setScreenSize(ScreenSize.SACK);
     this.player = par1Player;
-    this.stackId = ItemStorageBag.getId(player.getHeldItemMainhand());
+    bagReference = player.getHeldItemMainhand();
+    this.stackId = ItemStorageBag.getId(bagReference);
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
     // start the main container area
@@ -78,7 +80,19 @@ public class ContainerStorage extends ContainerBase {
 
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return ItemStorageBag.getId(player.getHeldItemMainhand()).equals(stackId);
+    if (player.getHeldItemMainhand().isEmpty()) {
+      return false;
+    }
+    if (ItemStorageBag.getId(player.getHeldItemMainhand()).equals(stackId) == false) {
+      return false;
+    }
+    //Check if pouch is in main inventory
+    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+      if (player.inventory.getStackInSlot(i) == bagReference) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
