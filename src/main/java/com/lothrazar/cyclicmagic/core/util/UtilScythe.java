@@ -266,7 +266,6 @@ public class UtilScythe {
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
