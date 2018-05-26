@@ -85,6 +85,7 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
       //s.addScheduledTask(() -> handle(message, ctx));
       s.addScheduledTask(new Runnable() {
 
+        @Override
         public void run() {
           handle(message, ctx);
         }
@@ -98,8 +99,8 @@ public class PacketScythe implements IMessage, IMessageHandler<PacketScythe, IMe
       EntityPlayer player = ctx.getServerHandler().player;
       World world = player.getEntityWorld();
       List<BlockPos> shape = ItemScythe.getShape(message.pos, message.radius);
-      for (BlockPos p : shape) {
-        UtilScythe.harvestSingle(world, p, message.type);
+      for (BlockPos posCurrent : shape) {
+        UtilScythe.harvestSingle(world, player, posCurrent, message.type);
       }
     }
   }

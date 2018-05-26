@@ -31,6 +31,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockMushroom;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -171,7 +172,7 @@ public class UtilScythe {
     }
   }
 
-  public static boolean harvestSingle(World world, BlockPos posCurrent, ScytheType type) {
+  public static boolean harvestSingle(World world, EntityPlayer player, BlockPos posCurrent, ScytheType type) {
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
@@ -254,19 +255,17 @@ public class UtilScythe {
       break;
     }
     if (doBreak) {
-      //break with false so that we can get the drops our own way
-      world.destroyBlock(posCurrent, true);//true==drops; false == no drops. literally just for the sound
-      //blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-      //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
+      //harvest block with player context: better mod compatibility 
+      blockCheck.harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
+      //sometimes this doesnt work and/or doesnt sync ot client, so force it
+      world.destroyBlock(posCurrent, false);
+      //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
       }
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-      //      for (ItemStack drop : drops) {
-      //        UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-      //      }
       return true;
     }
     if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
