@@ -25,6 +25,7 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
   //https://minecraft.gamepedia.com/Moon
   public BlockMoonDetector() {
     super(Material.ROCK);
+    this.setTranslucent();
   }
 
   @Override
