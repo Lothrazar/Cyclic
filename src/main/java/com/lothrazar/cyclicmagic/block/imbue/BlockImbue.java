@@ -174,9 +174,18 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
         break;
         case NONE:
         break;
-        default:
-
+        case INVISIBILITY:
+          target.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 100, 1));
         break;
+        case POISON:
+          target.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1));
+        break;
+        case SLOWNESS:
+          target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 2));
+        break;
+        default:
+        break;
+
       }
     }
   }
