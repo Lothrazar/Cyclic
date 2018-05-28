@@ -70,11 +70,13 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return this.merchantInventory;
   }
 
+  @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
   }
 
+  @Override
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
@@ -89,6 +91,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return UtilEntity.getVillagerCareer(merchant);
   }
 
+  @Override
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.merchantInventory.resetRecipeAndSlots();
     super.onCraftMatrixChanged(inventoryIn);
@@ -98,14 +101,16 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
   }
 
+  @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
     return this.merchant.getCustomer() == playerIn;
   }
 
+  @Override
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
     ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = (Slot) this.inventorySlots.get(index);
+    Slot slot = this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
@@ -136,6 +141,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return itemstack;
   }
 
+  @Override
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
     this.merchant.setCustomer((EntityPlayer) null);
