@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -93,13 +92,18 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
-    sign.signText[0] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN0));
+    TextComponentTranslation t = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN0));
+    //    Style s = new Style();
+    //    s.setColor(TextFormatting.GREEN);
+    //    t.setStyle(s);
+    sign.signText[0] = t;
     sign.signText[1] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN1));
     sign.signText[2] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN2));
     sign.signText[3] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN3));
     // world.markBlockForUpdate(sign.getPos());//so update is refreshed on
-    // client side
+    // client sid```e
     // entityPlayer.swingItem();
+
   }
 
   public static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
@@ -140,13 +144,24 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
   }
 
-  //onItemUse
-  //	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+  //  @Override
+  //  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+  //    ItemStack wand = player.getHeldItem(hand);
+  //    setIdIfEmpty(wand);
+  //    if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
+  //        && hand == EnumHand.MAIN_HAND) {
+  //      BlockPos pos = player.getPosition();
+  //      int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+  //      player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+  //    }
+  //    return super.onItemRightClick(world, player, hand);
+  //  }
+
   @Override
   public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
     TileEntity container = world.getTileEntity(pos);
     boolean isValid = false;
-    boolean consumeItem = false;
+    //    boolean consumeItem = false;
     ItemStack held = entityPlayer.getHeldItem(hand);
     //if(!entityPlayer.isSneaking()) { return EnumActionResult.FAIL; }
     boolean isEmpty = (held.getTagCompound() == null);
@@ -154,11 +169,11 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       TileEntitySign sign = (TileEntitySign) container;
       if (isEmpty) {
         copySign(world, entityPlayer, sign, held);
-        consumeItem = false;
+
       }
       else {
         pasteSign(world, entityPlayer, sign, held);
-        consumeItem = true;
+
       }
       isValid = true;
     }
@@ -166,19 +181,17 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       TileEntityNote noteblock = (TileEntityNote) container;
       if (isEmpty) {
         copyNote(world, entityPlayer, noteblock, held);
-        consumeItem = false;
+
       }
       else {
         pasteNote(world, entityPlayer, noteblock, held);
-        consumeItem = true;
+
       }
       isValid = true;
     }
     if (isValid) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
-      if (consumeItem) {
-        UtilPlayer.decrStackSize(entityPlayer, hand); // on paste, we consume the item
-      }
+
       UtilSound.playSound(entityPlayer, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return EnumActionResult.PASS;
