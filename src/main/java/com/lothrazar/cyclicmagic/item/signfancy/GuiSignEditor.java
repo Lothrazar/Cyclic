@@ -38,7 +38,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,8 +49,7 @@ public class GuiSignEditor extends GuiScreen {
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
-  TextFormatting[] colors = new TextFormatting[4];
-  TextFormatting[] fonts = new TextFormatting[4];
+
   final int maxNameLen = 100;
   private TileEntitySign sign;
 
@@ -59,10 +57,7 @@ public class GuiSignEditor extends GuiScreen {
     this.entityPlayer = entityPlayer;
     bookStack = book;
     this.sign = te;
-    for (int i = 0; i < 4; i++) {
-      colors[i] = TextFormatting.BLACK;
-      colors[i] = TextFormatting.RESET;
-    }
+
   }
 
   public static int buttonIdNew;
@@ -233,10 +228,10 @@ public class GuiSignEditor extends GuiScreen {
     for (GuiTextField txtNew : txtBoxes) {
       int key = txtNew.getId() - 700;
       int ytxt = 28 + key * 20;
-      TextFormatting color = this.colors[key];
-      TextFormatting font = this.fonts[key];
-      drawCenteredString(fontRenderer, getColorChar(color), 124, ytxt, 16777215);
-      drawCenteredString(fontRenderer, getFontChar(font), 138, ytxt, 16777215);
+      //      TextFormatting color = this.colors[key];
+      //      TextFormatting font = this.fonts[key];
+      //      drawCenteredString(fontRenderer, getColorChar(color), 124, ytxt, 16777215);
+      //      drawCenteredString(fontRenderer, getFontChar(font), 138, ytxt, 16777215);
       if (txtNew != null) {
         txtNew.drawTextBox();
       }
@@ -249,33 +244,46 @@ public class GuiSignEditor extends GuiScreen {
     }
   }
 
+  @SuppressWarnings("incomplete-switch")
   @Override
   protected void actionPerformed(GuiButton btn) {
     if (btn.id == 800) {
-      for (GuiTextField txtNew : txtBoxes) {
-        int key = txtNew.getId() - 700;
-        TextComponentString text = new TextComponentString(txtNew.getText());
-        Style style = new Style();
-        style.setColor(this.colors[key]);
 
-
-        text.setStyle(style);
-        this.sign.signText[key] = text;
-      }
+      ModCyclic.logger.log("SAVE TODO ");
       //TODO: save on server also 
       return;
     }
     int row = btn.id / 100;
     int col = btn.id % 100;
+    Style style = this.sign.signText[row].getStyle();
 
     if (col <= 15) {
-      this.colors[row] = TextFormatting.values()[col];
-      ModCyclic.logger.log("saved color" + row + " " + this.colors[row].getFriendlyName());
+
+      style.setColor(TextFormatting.values()[col]);
+
     }
     else {
-      this.fonts[row] = TextFormatting.values()[col];
-      ModCyclic.logger.log("saved FONT " + row + " " + this.fonts[row].getFriendlyName());
+      //convert to the truefalse
+      TextFormatting font = TextFormatting.values()[col];
+      switch (font) {
+        case BOLD:
+          style.setBold(!style.getBold());
+        break;
+        case OBFUSCATED:
+          style.setObfuscated(!style.getObfuscated());
+        break;
+        case STRIKETHROUGH:
+          style.setStrikethrough(!style.getStrikethrough());
+        break;
+        case UNDERLINE:
+          style.setUnderlined(!style.getUnderlined());
+        break;
+        case ITALIC:
+          style.setItalic(!style.getItalic());
+        break;
+      }
     }
+    this.sign.signText[row].setStyle(style);
     //colors are 0-15, fonts are  16-20 
 
     //    if (btn.id == buttonIdNew) {
