@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -38,6 +39,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,7 +51,6 @@ public class GuiSignEditor extends GuiScreen {
   protected ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
-
   final int maxNameLen = 100;
   private TileEntitySign sign;
 
@@ -57,12 +58,10 @@ public class GuiSignEditor extends GuiScreen {
     this.entityPlayer = entityPlayer;
     bookStack = book;
     this.sign = te;
-
   }
 
   public static int buttonIdNew;
   GuiButton buttonNew;
-  //  GuiTextField txtNew;
   final int DELETE_OFFSET = 1000;
 
   // TODO VALIDATOR https://github.com/Vazkii/Quark/blob/91dac31d768fbeed3ec2f33e16db33731209b8cf/src/main/java/vazkii/quark/client/gui/GuiBetterEditSign.java#L219
@@ -82,7 +81,6 @@ public class GuiSignEditor extends GuiScreen {
     txtNew0.setFocused(true);
     txtNew0.setText(sign.signText[0].getUnformattedText());
     txtBoxes.add(txtNew0);
-
     ////////////row 1
     y += rowHeight;
     GuiTextField txtNew1 = new GuiTextField(buttonID++, this.fontRenderer, x, y, w, h);
@@ -108,33 +106,30 @@ public class GuiSignEditor extends GuiScreen {
     addButtonRowForTextbox(3, 90);
     ///////////
     GuiButtonTooltip buttonSave = new GuiButtonTooltip(800, this.width / 4 + w / 2, 150, w, h, "gui.signs.save");
-
     this.addButton(buttonSave);
-
+    //
+    GuiButtonTooltip buttonClose = new GuiButtonTooltip(801, this.width / 4 + w / 2 + w, 150, w, h, "gui.signs.save");
+    this.addButton(buttonClose);
   }
 
   private void addButtonRowForTextbox(int signRowNum, int height) {
     int buttonID = signRowNum * 100;
     int w, h, x = 104, y = height, numchar = 0;
     w = h = 14;
-
     for (TextFormatting color : TextFormatting.values()) {
       if (color.isColor()) {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x + 40, y, w, h,
             //Integer.toHexString(numchar).toUpperCase()
             getColorChar(color));
-
         btn.setTooltip(color + color.getFriendlyName());
         btn.packedFGColour = toHex(color);
         this.addButton(btn);
         numchar++;
         x += w - 1;
-
       }
     }
     x += w * 3 + 2;
     y = height;
-
     for (TextFormatting color : TextFormatting.values()) {
       if (!color.isColor() && color != TextFormatting.RESET) {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x, y, w, h,
@@ -213,25 +208,15 @@ public class GuiSignEditor extends GuiScreen {
     Keyboard.enableRepeatEvents(false);
   }
 
-
   @Override
   public void drawScreen(int x, int y, float par3) {
-
     drawDefaultBackground();
     super.drawScreen(x, y, par3);
     drawCenteredString(fontRenderer, UtilChat.lang("gui.signs.title"), width / 2, 6, 16777215);
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     // no idea why this is sometimes randomly null and only on world start if i
     // open it too quick??
-
- 
     for (GuiTextField txtNew : txtBoxes) {
-      int key = txtNew.getId() - 700;
-      int ytxt = 28 + key * 20;
-      //      TextFormatting color = this.colors[key];
-      //      TextFormatting font = this.fonts[key];
-      //      drawCenteredString(fontRenderer, getColorChar(color), 124, ytxt, 16777215);
-      //      drawCenteredString(fontRenderer, getFontChar(font), 138, ytxt, 16777215);
       if (txtNew != null) {
         txtNew.drawTextBox();
       }
@@ -248,19 +233,25 @@ public class GuiSignEditor extends GuiScreen {
   @Override
   protected void actionPerformed(GuiButton btn) {
     if (btn.id == 800) {
+      syncTextboxesToSign();
+      NBTTagCompound tags = new NBTTagCompound();
+      this.sign.writeToNBT(tags);
+      ModCyclic.logger.log("client Save text " + tags);
 
-      ModCyclic.logger.log("SAVE TODO ");
-      //TODO: save on server also 
+      ModCyclic.network.sendToServer(new PacketTileClientToServer(sign.getPos(), tags));
+
+      return;
+    }
+    else if (btn.id == 801) {
+      this.entityPlayer.closeScreen();
       return;
     }
     int row = btn.id / 100;
     int col = btn.id % 100;
     Style style = this.sign.signText[row].getStyle();
-
+    TextComponentString text = new TextComponentString(this.txtBoxes.get(row).getText());
     if (col <= 15) {
-
       style.setColor(TextFormatting.values()[col]);
-
     }
     else {
       //convert to the truefalse
@@ -283,19 +274,21 @@ public class GuiSignEditor extends GuiScreen {
         break;
       }
     }
-    this.sign.signText[row].setStyle(style);
-    //colors are 0-15, fonts are  16-20 
+    text.setStyle(style);
+    this.sign.signText[row] = text;
+    ModCyclic.logger.log("getUnformattedText " +
+        this.sign.signText[row].getUnformattedText());
+  }
 
-    //    if (btn.id == buttonIdNew) {
-    //      ModCyclic.network.sendToServer(new PacketNewButton(txtNew.getText()));
-    //    }
-    //    else if (btn instanceof ButtonWaypointDelete) {
-    //      ModCyclic.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
-    //    }
-    //    else if (btn instanceof ButtonWaypointTeleport) {
-    //      // moved to btn class
-    //    }
-    //    this.entityPlayer.closeScreen();
+  private void syncTextboxesToSign() {
+    for (GuiTextField txtNew : txtBoxes) {
+      int id = txtNew.getId() - 700;
+      Style style = this.sign.signText[id].getStyle();
+      ModCyclic.logger.log(id + "Save text " + txtNew.getText());
+      TextComponentString text = new TextComponentString(txtNew.getText());
+      text.setStyle(style);
+      this.sign.signText[id] = text;
+    }
   }
 
   @Override
