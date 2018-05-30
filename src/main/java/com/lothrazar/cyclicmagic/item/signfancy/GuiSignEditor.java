@@ -77,6 +77,8 @@ public class GuiSignEditor extends GuiScreen {
   // TODO VALIDATOR https://github.com/Vazkii/Quark/blob/91dac31d768fbeed3ec2f33e16db33731209b8cf/src/main/java/vazkii/quark/client/gui/GuiBetterEditSign.java#L219
   @Override
   public void initGui() {
+    int predictedWidth = 100 + 21 * 14 + 4;
+    int leftover = this.width - predictedWidth;
     Keyboard.enableRepeatEvents(true);
     // great tips here
     // http://www.minecraftforge.net/forum/index.php?topic=29945.0
@@ -84,7 +86,7 @@ public class GuiSignEditor extends GuiScreen {
       bookStack.setTagCompound(new NBTTagCompound());
     }
     int buttonID = 700;
-    int w = 100, h = 20, x = 12, y = 20;
+    int w = 100, h = 20, x = leftover / 2, y = 20;
     //int buttonID = 0, w = 100, h = 20, ypad = 1, x = 8, y = 20;
     GuiTextField txtNew0 = new GuiTextField(buttonID++, this.fontRenderer, x, y, w, h);
     txtNew0.setMaxStringLength(maxNameLen);
@@ -110,22 +112,22 @@ public class GuiSignEditor extends GuiScreen {
     txtNew3.setText(sign.signText[3].getUnformattedText());
     txtBoxes.add(txtNew3);
     //and the button rows
-    addButtonRowForTextbox(0, 24);
-    addButtonRowForTextbox(1, 46);
-    addButtonRowForTextbox(2, 68);
-    addButtonRowForTextbox(3, 90);
+    addButtonRowForTextbox(0, 24, x + w - 16);
+    addButtonRowForTextbox(1, 46, x + w - 16);
+    addButtonRowForTextbox(2, 68, x + w - 16);
+    addButtonRowForTextbox(3, 90, x + w - 16);
     ///////////
-    GuiButtonTooltip buttonSave = new GuiButtonTooltip(800, this.width / 4 + w / 2, 150, w, h, "gui.signs.save");
+    GuiButtonTooltip buttonSave = new GuiButtonTooltip(800, width / 2 - w, 150, w, h, "gui.signs.save");
     this.addButton(buttonSave);
     //
-    GuiButtonTooltip buttonClose = new GuiButtonTooltip(801, this.width / 4 + w / 2 + w, 150, w, h, "gui.signs.cancel");
+    GuiButtonTooltip buttonClose = new GuiButtonTooltip(801, width / 2, 150, w, h, "gui.signs.cancel");
     this.addButton(buttonClose);
   }
 
-  private void addButtonRowForTextbox(int signRowNum, int height) {
+  private void addButtonRowForTextbox(int signRowNum, int height, int leftMost) {
     Map<TextFormatting, GuiButtonTooltip> rowButtons = buttonMaps.get(signRowNum);
     int buttonID = signRowNum * 100;
-    int w, h, x = 104, y = height, numchar = 0;
+    int w, h, x = leftMost, y = height;//leftMost was 104
     w = h = 14;
     for (TextFormatting color : TextFormatting.values()) {
       if (color.isColor()) {
@@ -135,7 +137,7 @@ public class GuiSignEditor extends GuiScreen {
         btn.allowPressedIfDisabled().setTooltip(color + color.getFriendlyName());
         btn.packedFGColour = toHex(color);
         this.addButton(btn);
-        numchar++;
+
         x += w - 1;
         rowButtons.put(color, btn);
       }

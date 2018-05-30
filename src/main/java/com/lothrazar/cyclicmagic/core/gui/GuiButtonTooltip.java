@@ -35,7 +35,7 @@ public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
   private boolean allowPressedIfDisabled = false;
 
   public GuiButtonTooltip(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
-    super(buttonId, x, y, widthIn, heightIn, buttonText);
+    super(buttonId, x, y, widthIn, heightIn, UtilChat.lang(buttonText));
   }
 
   private List<String> tooltip = new ArrayList<String>();
