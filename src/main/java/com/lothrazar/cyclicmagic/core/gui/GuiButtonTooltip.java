@@ -27,9 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
+
+  private boolean allowPressedIfDisabled = false;
 
   public GuiButtonTooltip(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
     super(buttonId, x, y, widthIn, heightIn, buttonText);
@@ -50,6 +53,22 @@ public class GuiButtonTooltip extends GuiButtonExt implements ITooltipButton {
     List<String> remake = new ArrayList<String>();
     remake.add(UtilChat.lang(t));
     tooltip = remake;
+    return this;
+  }
+
+  @Override
+  public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+    if (isAllowPressedIfDisabled())
+      return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+    return super.mousePressed(mc, mouseX, mouseY);
+  }
+
+  public boolean isAllowPressedIfDisabled() {
+    return allowPressedIfDisabled;
+  }
+
+  public GuiButtonTooltip allowPressedIfDisabled() {
+    this.allowPressedIfDisabled = true;
     return this;
   }
 }

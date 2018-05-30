@@ -25,6 +25,9 @@ package com.lothrazar.cyclicmagic.item.signfancy;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
@@ -38,6 +41,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -54,10 +58,16 @@ public class GuiSignEditor extends GuiScreen {
   final int maxNameLen = 100;
   private TileEntitySign sign;
 
+  List<Map<TextFormatting, GuiButtonTooltip>> buttonMaps = new ArrayList<Map<TextFormatting, GuiButtonTooltip>>();
+
   public GuiSignEditor(EntityPlayer entityPlayer, ItemStack book, TileEntitySign te) {
     this.entityPlayer = entityPlayer;
     bookStack = book;
     this.sign = te;
+    buttonMaps.add(new HashMap<TextFormatting, GuiButtonTooltip>());
+    buttonMaps.add(new HashMap<TextFormatting, GuiButtonTooltip>());
+    buttonMaps.add(new HashMap<TextFormatting, GuiButtonTooltip>());
+    buttonMaps.add(new HashMap<TextFormatting, GuiButtonTooltip>());
   }
 
   public static int buttonIdNew;
@@ -108,11 +118,12 @@ public class GuiSignEditor extends GuiScreen {
     GuiButtonTooltip buttonSave = new GuiButtonTooltip(800, this.width / 4 + w / 2, 150, w, h, "gui.signs.save");
     this.addButton(buttonSave);
     //
-    GuiButtonTooltip buttonClose = new GuiButtonTooltip(801, this.width / 4 + w / 2 + w, 150, w, h, "gui.signs.save");
+    GuiButtonTooltip buttonClose = new GuiButtonTooltip(801, this.width / 4 + w / 2 + w, 150, w, h, "gui.signs.cancel");
     this.addButton(buttonClose);
   }
 
   private void addButtonRowForTextbox(int signRowNum, int height) {
+    Map<TextFormatting, GuiButtonTooltip> rowButtons = buttonMaps.get(signRowNum);
     int buttonID = signRowNum * 100;
     int w, h, x = 104, y = height, numchar = 0;
     w = h = 14;
@@ -121,11 +132,12 @@ public class GuiSignEditor extends GuiScreen {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x + 40, y, w, h,
             //Integer.toHexString(numchar).toUpperCase()
             getColorChar(color));
-        btn.setTooltip(color + color.getFriendlyName());
+        btn.allowPressedIfDisabled().setTooltip(color + color.getFriendlyName());
         btn.packedFGColour = toHex(color);
         this.addButton(btn);
         numchar++;
         x += w - 1;
+        rowButtons.put(color, btn);
       }
     }
     x += w * 3 + 2;
@@ -134,9 +146,10 @@ public class GuiSignEditor extends GuiScreen {
       if (!color.isColor() && color != TextFormatting.RESET) {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x, y, w, h,
             getFontChar(color));
-        btn.setTooltip(color + color.getFriendlyName());
+        btn.allowPressedIfDisabled().setTooltip(color + color.getFriendlyName());
         this.addButton(btn);
         x += w;
+        rowButtons.put(color, btn);
       }
     }
   }
@@ -210,6 +223,7 @@ public class GuiSignEditor extends GuiScreen {
 
   @Override
   public void drawScreen(int x, int y, float par3) {
+
     drawDefaultBackground();
     super.drawScreen(x, y, par3);
     drawCenteredString(fontRenderer, UtilChat.lang("gui.signs.title"), width / 2, 6, 16777215);
@@ -227,6 +241,25 @@ public class GuiSignEditor extends GuiScreen {
         drawHoveringText(btn.getTooltips(), x, y, fontRenderer);
       }
     }
+    //
+    for (int row = 0; row < this.sign.signText.length; row++) {
+      ITextComponent text = this.sign.signText[row];
+      Style style = text.getStyle();
+      Map<TextFormatting, GuiButtonTooltip> buttons = this.buttonMaps.get(row);
+      //0-15 are colors
+
+      buttons.get(TextFormatting.ITALIC).enabled = !style.getItalic();
+      buttons.get(TextFormatting.BOLD).enabled = !style.getBold();
+      buttons.get(TextFormatting.OBFUSCATED).enabled = !style.getObfuscated();
+      buttons.get(TextFormatting.STRIKETHROUGH).enabled = !style.getStrikethrough();
+      buttons.get(TextFormatting.UNDERLINE).enabled = !style.getUnderlined();
+      // colors 
+      for (TextFormatting color : TextFormatting.values())
+        if (color.isColor()) {
+          buttons.get(color).enabled = style.getColor() != color;
+        }
+
+    }
   }
 
   @SuppressWarnings("incomplete-switch")
@@ -236,10 +269,10 @@ public class GuiSignEditor extends GuiScreen {
       syncTextboxesToSign();
       NBTTagCompound tags = new NBTTagCompound();
       this.sign.writeToNBT(tags);
-      ModCyclic.logger.log("client Save text " + tags);
 
       ModCyclic.network.sendToServer(new PacketTileClientToServer(sign.getPos(), tags));
 
+      this.entityPlayer.closeScreen();
       return;
     }
     else if (btn.id == 801) {
@@ -276,15 +309,14 @@ public class GuiSignEditor extends GuiScreen {
     }
     text.setStyle(style);
     this.sign.signText[row] = text;
-    ModCyclic.logger.log("getUnformattedText " +
-        this.sign.signText[row].getUnformattedText());
+
   }
 
   private void syncTextboxesToSign() {
     for (GuiTextField txtNew : txtBoxes) {
       int id = txtNew.getId() - 700;
       Style style = this.sign.signText[id].getStyle();
-      ModCyclic.logger.log(id + "Save text " + txtNew.getText());
+
       TextComponentString text = new TextComponentString(txtNew.getText());
       text.setStyle(style);
       this.sign.signText[id] = text;
