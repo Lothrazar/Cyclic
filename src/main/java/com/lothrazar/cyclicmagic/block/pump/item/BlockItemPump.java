@@ -24,38 +24,21 @@
 package com.lothrazar.cyclicmagic.block.pump.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.block.pump.BlockPump;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockItemPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+public class BlockItemPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
 
   public BlockItemPump() {
-    super(Material.WOOD);
-    this.setHardness(3F);
-    this.setResistance(3F);
-    this.setHarvestLevel("pickaxe", 1);
-    this.setTranslucent();
+    super();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
-    this.placeType = PlacementType.SIDE_BLOCK;
-  }
-
-  @Override
-  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-    if (side == EnumFacing.UP || side == EnumFacing.DOWN)
-      return false;//allows, for example, you to open chest that is directly below
-    return true;
   }
 
   @Override

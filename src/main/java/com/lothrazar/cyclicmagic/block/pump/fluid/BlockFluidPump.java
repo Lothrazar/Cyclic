@@ -24,27 +24,21 @@
 package com.lothrazar.cyclicmagic.block.pump.fluid;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.block.pump.BlockPump;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockFluidPump extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+public class BlockFluidPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
 
   public BlockFluidPump() {
-    super(Material.WOOD);
-    this.setHardness(3F);
-    this.setResistance(3F);
-    this.setHarvestLevel("pickaxe", 1);
-    this.setTranslucent();
+    super();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_FLUIDPUMP);
-    this.placeType = PlacementType.SIDE_BLOCK;
   }
 
   @Override
