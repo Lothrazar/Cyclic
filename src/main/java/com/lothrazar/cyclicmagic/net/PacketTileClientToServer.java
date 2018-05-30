@@ -21,32 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.builderpattern;
+package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTilePatternSwap, IMessage> {
+/**
+ * generic packet handler for tile entities. assumes they handle cyclic fields that start over
+ * 
+ * TODO: see if we can reuse this mroe and remove uneccessary classes
+ * 
+ * @author Sam
+ *
+ */
+public class PacketTileClientToServer implements IMessage, IMessageHandler<PacketTileClientToServer, IMessage> {
 
   private BlockPos pos;
-  private int type;
+  private NBTTagCompound tileTags;
 
-  public static enum SwapType {
-    POSITION, RENDER;
-  }
+  public PacketTileClientToServer() {}
 
-  public PacketTilePatternSwap() {}
-
-  public PacketTilePatternSwap(BlockPos p, SwapType t) {
+  public PacketTileClientToServer(BlockPos p, NBTTagCompound f) {
     pos = p;
-    type = t.ordinal();
+    tileTags = f;
   }
 
   @Override
@@ -55,8 +59,8 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     int x = tags.getInteger("x");
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
+    tileTags = tags.getCompoundTag("tags");
     pos = new BlockPos(x, y, z);
-    type = tags.getInteger("t");
   }
 
   @Override
@@ -65,19 +69,20 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
-    tags.setInteger("t", type);
+    tags.setTag("tags", tileTags);
     ByteBufUtils.writeTag(buf, tags);
   }
 
   @Override
-  public IMessage onMessage(PacketTilePatternSwap message, MessageContext ctx) {
-    World world = ModCyclic.proxy.getPlayerEntity(ctx).getEntityWorld();
-    TileEntityPatternBuilder tile = (TileEntityPatternBuilder) world.getTileEntity(message.pos);
+  public IMessage onMessage(PacketTileClientToServer message, MessageContext ctx) {
+    TileEntity tile = ModCyclic.proxy.getPlayerEntity(ctx).getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      if (message.type == SwapType.POSITION.ordinal())
-        tile.swapTargetSource();
-      //      else if (message.type == SwapType.RENDER.ordinal())
-      //        tile.swapShowRender();
+      tile.readFromNBT(message.tileTags);
+      ModCyclic.logger.log("client Save text " + message.tileTags);
+      NBTTagCompound tags = new NBTTagCompound();
+      tile.writeToNBT(tags);
+      ModCyclic.logger.log("unit test " + message.tileTags);
+      tile.markDirty();
     }
     return null;
   }

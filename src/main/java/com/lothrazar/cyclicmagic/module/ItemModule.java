@@ -126,6 +126,7 @@ import com.lothrazar.cyclicmagic.item.random.ItemRandomizer;
 import com.lothrazar.cyclicmagic.item.scythe.ItemScythe;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.item.shears.ItemShearsRanged;
+import com.lothrazar.cyclicmagic.item.signfancy.ItemSignEditor;
 import com.lothrazar.cyclicmagic.item.sleep.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.ItemProjectileSnow;
@@ -790,6 +791,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(glowing_chorus, "glowing_chorus");
       ModCyclic.instance.events.register(glowing_chorus);
     }
+    ItemRegistry.register(new ItemSignEditor(), "sign_editor", GuideCategory.ITEM);
   }
 
   @Override
