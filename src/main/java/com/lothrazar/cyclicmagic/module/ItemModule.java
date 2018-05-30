@@ -243,6 +243,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enablePurpleGear;
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
+  private boolean signEditor;
 
   @Override
   public void onPreInit() {
@@ -791,7 +792,9 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(glowing_chorus, "glowing_chorus");
       ModCyclic.instance.events.register(glowing_chorus);
     }
-    ItemRegistry.register(new ItemSignEditor(), "sign_editor", GuideCategory.ITEM);
+    if (signEditor) {
+      ItemRegistry.register(new ItemSignEditor(), "sign_editor", GuideCategory.ITEM);
+    }
   }
 
   @Override
@@ -803,6 +806,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dropperMinecart = config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -845,7 +849,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     ItemHorseUpgrade.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
     ItemHorseUpgrade.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
     ItemHorseUpgrade.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
-    this.enderEyeReuse = config.getBoolean("item.ender_eye_orb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enderEyeReuse = config.getBoolean("item.ender_eye_orb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     evokerFang = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
