@@ -1,6 +1,7 @@
 {
     "variants": {
 		"normal": { "model": "cyclicmagic:conveyor_slowest_angle" },
+		"inventory": { "model": "cyclicmagic:conveyor_slowest_angle" },
         "facing=north,flipped=false": { "model": "cyclicmagic:conveyor_slowest_angle" },
         "facing=east,flipped=false":  { "model": "cyclicmagic:conveyor_slowest_angle" ,"y":90},
         "facing=south,flipped=false": { "model": "cyclicmagic:conveyor_slowest_angle" ,"y":180},

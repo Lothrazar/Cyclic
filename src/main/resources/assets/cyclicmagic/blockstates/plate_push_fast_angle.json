@@ -1,6 +1,7 @@
 {
     "variants": {
 		"normal": { "model": "cyclicmagic:conveyor_fast_angle" },
+		"inventory": { "model": "cyclicmagic:conveyor_fast_angle" },
         "facing=north,flipped=false": { "model": "cyclicmagic:conveyor_fast_angle" },
         "facing=east,flipped=false":  { "model": "cyclicmagic:conveyor_fast_angle" ,"y":90},
         "facing=south,flipped=false": { "model": "cyclicmagic:conveyor_fast_angle" ,"y":180},

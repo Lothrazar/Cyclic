@@ -59,6 +59,7 @@ import com.lothrazar.cyclicmagic.net.PacketSwapPlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
+import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -108,7 +109,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
-    packetID++;
+    network.registerMessage(PacketTileClientToServer.class, PacketTileClientToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
     network.registerMessage(PacketEntitySyncToClient.class, PacketEntitySyncToClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);

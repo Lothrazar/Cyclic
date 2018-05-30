@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.15.6",
-    "1.12.2-recommended": "1.15.6"
+    "1.12.2-latest": "1.15.7",
+    "1.12.2-recommended": "1.15.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -270,6 +270,7 @@
 	,"1.15.4":"New blocks: SFX Block, Void Anvil, Fire Starter.  "
 	,"1.15.5":"Storage Sack will now auto-close if it leaves your hand for any reason (prevent dupe bugs with another mod and certain special keyboard tricks).  Storage Sack can no longer be opened in the off-hand.  Fixed typo in 'block_large' config.  Disabled blocks fire_frost and fire_dark if content that uses them is disabled.  Fix compatibility with Block Placer and Better With Mods miniblocks.   Fixed Wireless Receiver not dropping as a block when it gets mined.  "
   	,"1.15.6":"Fixed a dupe exploit related to Player Interface from AA.  Brush Scythe now more compatible with special block drops (such as causing plant fibers from Primal Core now drop from grass with scythe).  Fixed hydrator mismatching some ore dict entries (such as Biomass recipe not working).  Fixed block transparency bug with Moon Phase Sensor." 
+  	,"1.15.7":"Fixed a NullPointerException that can happen when using Merchants Almanac.  Fixed a large number of logged errors on startup that say 'Exception loading model for variant...', did not affect gameplay.  Removed 'Editable Signs' config and feature where you could left click to edit - conflicted with Quark and had save issues on server.  Added a new Rainbow Crayon to edit signs, which also has styling selections with 16 colors.   Reduced hitboxes of Extraction cables to reach blocks under and behind them.   "
   }
 }
 

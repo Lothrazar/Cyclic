@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "cyclicmagic:void_anvil" }
+        "normal": { "model": "cyclicmagic:void_anvil" },
+        "inventory": { "model": "cyclicmagic:void_anvil" }
     }
 }

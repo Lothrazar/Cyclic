@@ -23,12 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilFurnace;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -63,7 +61,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean signSkullName;
   private boolean easyEnderChest;
   private boolean fastLadderClimb;
-  private boolean editableSigns;
+
   private boolean nameVillagerTag;
   private boolean passThroughClick;
   private boolean armorStandSwap;
@@ -237,21 +235,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
       }
     }
-    if (editableSigns) {
-      if (pos == null) {
-        return;
-      }
-      TileEntity tile = worldObj.getTileEntity(pos);
-      if (held.isEmpty() && tile instanceof TileEntitySign) {
-        TileEntitySign sign = (TileEntitySign) tile;
-        if (worldObj.isRemote == true) {//this method has    @SideOnly(Side.CLIENT) flag
-          sign.setEditable(true);
-        }
-        sign.setPlayer(entityPlayer);
-        //entityPlayer.openEditSign(sign);//NOPE: this does not cause server sync, must go through network with mod instance
-        event.getEntityPlayer().openGui(ModCyclic.instance, ForgeGuiHandler.VANILLA_SIGN, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
-      }
-    }
+
   }
 
   private final static EntityEquipmentSlot[] armorStandEquipment = {
@@ -296,7 +280,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
         "Allows you to quickly climb ladders by looking up instead of moving forward");
     config.addCustomCategoryComment(category, "Player Abilities and interactions");
-    editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand by punching it (left click)");
+
     signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
         "Use a player skull on a sign to name the skull based on the top line");
     category = Const.ConfigCategory.blocks;

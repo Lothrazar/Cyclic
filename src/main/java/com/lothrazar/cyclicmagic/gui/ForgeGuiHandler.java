@@ -145,6 +145,7 @@ import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.item.signfancy.GuiSignEditor;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;
@@ -211,6 +212,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_FIREST = 40;
   public static final int GUI_INDEX_VOID = 41;
   public static final int GUI_INDEX_SOUNDPL = 42;
+  public static final int GUI_INDEX_SIGNPOST = 43;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -644,6 +646,10 @@ public class ForgeGuiHandler implements IGuiHandler {
             return new GuiSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
           }
         break;
+        case GUI_INDEX_SIGNPOST:
+          return new GuiSignEditor(player,
+              player.getHeldItemMainhand(),
+              (TileEntitySign) te);
       }
     }
     return null;

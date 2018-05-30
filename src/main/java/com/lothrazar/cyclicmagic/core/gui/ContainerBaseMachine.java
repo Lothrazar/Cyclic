@@ -102,12 +102,6 @@ public class ContainerBaseMachine extends ContainerBase {
   }
 
   @Override
-  public void addListener(IContainerListener listener) {
-    super.addListener(listener);
-    listener.sendAllWindowProperties(this, tile);
-  }
-
-  @Override
   public boolean canInteractWith(EntityPlayer player) {
     if (this.hasTile == false) {
       return super.canInteractWith(player);
