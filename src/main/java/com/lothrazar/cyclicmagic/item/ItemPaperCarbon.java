@@ -44,6 +44,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -59,9 +60,11 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   private static final String KEY_SIGN2 = "sign_2";
   private static final String KEY_SIGN3 = "sign_3";
   private static final String KEY_NOTE = "note";
+  private static final String KEY_SIGNNBT = "note";
 
   public ItemPaperCarbon() {
     super();
+    this.setMaxStackSize(1);
   }
 
   private static void setItemStackNBT(ItemStack item, String prop, String value) {
@@ -80,10 +83,10 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
-    setItemStackNBT(held, KEY_SIGN0, sign.signText[0].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN1, sign.signText[1].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN2, sign.signText[2].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN3, sign.signText[3].getUnformattedText());
+    setItemStackNBT(held, KEY_SIGN0, ITextComponent.Serializer.componentToJson(sign.signText[0]));
+    setItemStackNBT(held, KEY_SIGN1, ITextComponent.Serializer.componentToJson(sign.signText[1]));
+    setItemStackNBT(held, KEY_SIGN2, ITextComponent.Serializer.componentToJson(sign.signText[2]));
+    setItemStackNBT(held, KEY_SIGN3, ITextComponent.Serializer.componentToJson(sign.signText[3]));
     held.getTagCompound().setByte(KEY_NOTE, (byte) NOTE_EMPTY);
     // entityPlayer.swingItem();
   }
@@ -92,17 +95,20 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
-    TextComponentTranslation t = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN0));
-    //    Style s = new Style();
-    //    s.setColor(TextFormatting.GREEN);
-    //    t.setStyle(s);
-    sign.signText[0] = t;
+    try {
+      sign.signText[0] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN0));
+      sign.signText[1] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN1));
+      sign.signText[2] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN2));
+      sign.signText[3] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN3));
+      return;
+    }
+    catch (Exception e) {
+      //legacy support below
+    }
+    sign.signText[0] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN0));
     sign.signText[1] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN1));
     sign.signText[2] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN2));
     sign.signText[3] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN3));
-    // world.markBlockForUpdate(sign.getPos());//so update is refreshed on
-    // client sid```e
-    // entityPlayer.swingItem();
 
   }
 
@@ -144,26 +150,14 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
   }
 
-  //  @Override
-  //  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-  //    ItemStack wand = player.getHeldItem(hand);
-  //    setIdIfEmpty(wand);
-  //    if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
-  //        && hand == EnumHand.MAIN_HAND) {
-  //      BlockPos pos = player.getPosition();
-  //      int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-  //      player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
-  //    }
-  //    return super.onItemRightClick(world, player, hand);
-  //  }
 
   @Override
   public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
     TileEntity container = world.getTileEntity(pos);
     boolean isValid = false;
-    //    boolean consumeItem = false;
+
     ItemStack held = entityPlayer.getHeldItem(hand);
-    //if(!entityPlayer.isSneaking()) { return EnumActionResult.FAIL; }
+
     boolean isEmpty = (held.getTagCompound() == null);
     if (container instanceof TileEntitySign) {
       TileEntitySign sign = (TileEntitySign) container;

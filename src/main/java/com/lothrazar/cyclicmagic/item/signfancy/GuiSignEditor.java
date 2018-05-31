@@ -132,7 +132,7 @@ public class GuiSignEditor extends GuiScreen {
     for (TextFormatting color : TextFormatting.values()) {
       if (color.isColor()) {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x + 40, y, w, h,
-            //Integer.toHexString(numchar).toUpperCase()
+
             getColorChar(color));
         btn.allowPressedIfDisabled().setTooltip(color + color.getFriendlyName());
         btn.packedFGColour = toHex(color);
