@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.item.mobs.EventHorseFeed;
 import com.lothrazar.cyclicmagic.playerupgrade.EventExtendedInventory;
 import com.lothrazar.cyclicmagic.potion.EventPotionTick;
+import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EventRegistry {
@@ -45,6 +46,7 @@ public class EventRegistry {
     this.register(new EventPotionTick());
     this.register(new EventRender());
     this.register(new EventHorseFeed());
+    this.register(ClientProxy.particleRenderer);
   }
 
   public void register(Object e) {
