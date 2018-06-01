@@ -25,11 +25,8 @@ package com.lothrazar.cyclicmagic.block.interdiction;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITickable {
 
@@ -42,11 +39,6 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
 
   public TileEntityMagnetAnti() {
     this.timer = TIMER_FULL;
-  }
-
-  @Override
-  public ITextComponent getDisplayName() {
-    return null;
   }
 
   @Override
@@ -80,19 +72,7 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
     if (trigger) {
       UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS, false, SPEED);
       timer = TIMER_FULL;
-      spawnParticles();
     }
   }
 
-  protected void spawnParticles() {
-    if (this.getWorld().isRemote) {
-      double x = this.getPos().getX() + 0.5; //center of the block;
-      double y = this.getPos().getY() + 0.5;
-      double z = this.getPos().getZ() + 0.5;
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 1, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 2, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 3, z);
-    }
-  }
 }
