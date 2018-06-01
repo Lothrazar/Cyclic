@@ -85,12 +85,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
 
-  public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
+  public static boolean onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     if (ahorse.isDead) {
-      return;
+      return false;
     }
     if (player.getCooldownTracker().hasCooldown(held.getItem())) {
-      return;
+      return false;
     }
     World world = player.getEntityWorld();
     boolean success = false;
@@ -209,11 +209,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       if (player.capabilities.isCreativeMode == false) {
         held.shrink(1);
       }
-      player.getCooldownTracker().setCooldown(heldItem, 5);
+      //player.getCooldownTracker().setCooldown(heldItem, 2);
       UtilParticle.spawnParticle(ahorse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, ahorse.getPosition());
       UtilSound.playSound(player, ahorse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       ahorse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
+    return success;
   }
 
   public static enum HorseUpgradeType {
