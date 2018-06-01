@@ -61,6 +61,8 @@ import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
+import com.lothrazar.cyclicmagic.item.cannon.ItemProjectileCannon;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
@@ -244,14 +246,22 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
   private boolean signEditor;
+  private boolean robotSpawner;
+  private boolean lasers;
 
   @Override
   public void onPreInit() {
-    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
-    EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
-    ItemCrashSpawner spawner = new ItemCrashSpawner();
-    ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
-    ModCyclic.instance.events.register(spawner);
+    if (robotSpawner) {
+      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
+      EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
+      ItemCrashSpawner spawner = new ItemCrashSpawner();
+      ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
+      ModCyclic.instance.events.register(spawner);
+    }
+    if (lasers) {
+      ItemRegistry.register(new ItemProjectileCannon(), "laser_cannon", GuideCategory.ITEMTHROW);
+      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityGolemLaser.NAME), EntityGolemLaser.class, EntityGolemLaser.NAME, 1031, ModCyclic.instance, 64, 1, true);
+    }
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
@@ -806,6 +816,8 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

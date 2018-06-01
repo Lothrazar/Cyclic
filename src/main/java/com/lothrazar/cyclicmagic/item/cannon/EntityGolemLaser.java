@@ -33,6 +33,7 @@ public class EntityGolemLaser extends Entity {
   public static final DataParameter<Boolean> dead = EntityDataManager.createKey(EntityGolemLaser.class, DataSerializers.BOOLEAN);
   public static final DataParameter<Integer> lifetime = EntityDataManager.createKey(EntityGolemLaser.class, DataSerializers.VARINT);
   public static final DataParameter<Integer> variant = EntityDataManager.<Integer> createKey(EntityGolemLaser.class, DataSerializers.VARINT);
+  public static final String NAME = "firecannon";
   public BlockPos dest = new BlockPos(0, 0, 0);
   public UUID id = null;
   BlockPos pos = new BlockPos(0, 0, 0);
@@ -189,7 +190,8 @@ public class EntityGolemLaser extends Entity {
   }
 
   private Color getColor() {
-    VariantColors rand = VariantColors.values()[MathHelper.getInt(world.rand, 0, VariantColors.values().length)];
+    VariantColors rand = VariantColors.values()[MathHelper.getInt(world.rand, 0, VariantColors.values().length - 1)];
+    ModCyclic.logger.log(rand.toString());
     switch (rand) {
       case BLUE:
         return new Color(0, 173, 255);
