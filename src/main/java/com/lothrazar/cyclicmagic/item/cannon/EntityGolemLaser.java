@@ -20,7 +20,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -37,8 +36,8 @@ public class EntityGolemLaser extends Entity {
   public BlockPos dest = new BlockPos(0, 0, 0);
   public UUID id = null;
   BlockPos pos = new BlockPos(0, 0, 0);
+  private Color color = new Color(0, 173, 255);
 
-  //private Color colour = null;//new Color(0, 0, 0);
   public EntityGolemLaser(World worldIn) {
     super(worldIn);
     this.setInvisible(true);
@@ -185,31 +184,8 @@ public class EntityGolemLaser extends Entity {
     }
   }
 
-  public static enum VariantColors {
-    RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE;
-  }
-
   private Color getColor() {
-    VariantColors rand = VariantColors.values()[MathHelper.getInt(world.rand, 0, VariantColors.values().length - 1)];
-    ModCyclic.logger.log(rand.toString());
-    switch (rand) {
-      case BLUE:
-        return new Color(0, 173, 255);
-      case GREEN:
-        return new Color(57, 255, 56);
-      case ORANGE:
-        return new Color(255, 64, 16);
-      case PURPLE:
-        return new Color(255, 56, 249);
-      case RED:
-        return new Color(179, 3, 2);
-      case YELLOW:
-        return new Color(227, 225, 2);
-      default:
-        return null;
-    }
-    //    EntityAncientGolem.VariantColors var = EntityAncientGolem.VariantColors.values()[getDataManager().get(variant)];
-    //    return var.getColor();
+    return this.color;
   }
 
   private int getBlue() {

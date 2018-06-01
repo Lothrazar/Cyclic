@@ -35,11 +35,14 @@ import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
+import com.lothrazar.cyclicmagic.item.cannon.RenderEmberPacket;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.RenderRobot;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -115,6 +118,7 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {
     RenderingRegistry.registerEntityRenderingHandler(EntityRobot.class, new RenderRobot.Factory());
+    RenderingRegistry.registerEntityRenderingHandler(EntityGolemLaser.class, new RenderEmberPacket(Minecraft.getMinecraft().getRenderManager()));
     final IStateMapper STATE_MAPPER = new StateMapperBase() {
 
       @Override

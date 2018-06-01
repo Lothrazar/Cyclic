@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.cannon;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.particle.IParticleTracked;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -12,13 +13,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticleGolemLaser extends Particle implements com.lothrazar.cyclicmagic.particle.IParticleTracked {
+public class ParticleGolemLaser extends Particle implements IParticleTracked {
   public float colorR = 0;
   public float colorG = 0;
   public float colorB = 0;
   public float initScale = 0;
   public float initAlpha = 0;
-  public static ResourceLocation texture = new ResourceLocation(Const.MODID, "entity/particle_mote");
+  public static final ResourceLocation texture = new ResourceLocation(Const.MODID, "entity/particle_mote");
   public ParticleGolemLaser(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r, float g, float b, float a, float scale, int lifetime) {
     super(worldIn, x, y, z, 0, 0, 0);
     this.colorR = r;
