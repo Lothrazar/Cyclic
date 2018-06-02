@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -73,7 +74,7 @@ public class ItemFlight extends ItemFood implements IHasRecipe {
   private void setFlying(EntityPlayer player) {
     player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
-    player.capabilities.isFlying = true;
+    //    player.capabilities.isFlying = true;
   }
 
   private void setNonFlying(EntityPlayer player) {
@@ -93,8 +94,13 @@ public class ItemFlight extends ItemFood implements IHasRecipe {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS
     if (flyingTicks > 1) {//it decays at 1 not zero so that we only set flying False once, not constantly. avoids having boolean flag
-      props.setFlyingTimer(props.getFlyingTimer() - 1);
       setFlying(player);
+      //if you are flying but not using it (grounded) dont tick.
+      //this pauses the timer
+      //player.onGround == false ||
+      if (!player.onGround || player.world.getBlockState(player.getPosition().down()).getBlock() == Blocks.AIR) {
+        props.setFlyingTimer(props.getFlyingTimer() - 1);
+      }
     }
     else if (flyingTicks == 1) { //times up! only 1/20 of a second left
       props.setFlyingTimer(0);//skip ahead to zero

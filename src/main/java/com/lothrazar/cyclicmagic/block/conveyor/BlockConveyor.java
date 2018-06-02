@@ -391,13 +391,9 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   private EnumFacing getFacingDir(IBlockState st) {
     EnumFacing f = st.getValue(PROPERTYFACING);
-    if (st.getBlock() instanceof BlockConveyorAngle) {
+    if (st.getBlock() instanceof BlockConveyorAngle && st.getValue(BlockConveyorAngle.FLIPPED)) {
       f = f.getOpposite();
     }
     return f;
   }
-  //  @Override
-  //  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-  //    return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
-  //  }
 }

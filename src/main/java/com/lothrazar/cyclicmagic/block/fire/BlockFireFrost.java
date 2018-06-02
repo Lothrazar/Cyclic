@@ -49,8 +49,6 @@ public class BlockFireFrost extends BlockFireBase {
         if (worldIn.rand.nextDouble() < FIRE_CHANCE) {
           e.setFire(FIRESECONDS);
         }
-        //        MobEffects.
-        //        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, Const.TICKS_PER_SEC * 10, Const.Potions.I));
         e.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, Const.TICKS_PER_SEC * 10, Const.Potions.II));
         e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 10, Const.Potions.II));
       }

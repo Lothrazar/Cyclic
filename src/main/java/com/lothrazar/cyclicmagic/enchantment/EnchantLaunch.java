@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -106,6 +107,9 @@ public class EnchantLaunch extends EnchantBase {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
+    if (player.isRiding() && player.getRidingEntity() instanceof EntityBoat) {
+      return;
+    }
     ItemStack feet = getFirstArmorStackWithEnchant(player);
     if (feet == null || feet.isEmpty() || player.isSneaking()) {
       return;
@@ -131,6 +135,7 @@ public class EnchantLaunch extends EnchantBase {
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
+          ModCyclic.logger.log("jump cooldown set");
           player.getCooldownTracker().setCooldown(feet.getItem(), COOLDOWN);
         }
         uses = 0;

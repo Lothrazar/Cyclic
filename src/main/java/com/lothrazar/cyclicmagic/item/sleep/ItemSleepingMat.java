@@ -96,11 +96,11 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
         }
         else {
           //should never happen... but just in case
-          UtilChat.addChatMessage(player, "tile.bed.noSleep");
+          UtilChat.sendStatusMessage(player, "tile.bed.noSleep");
         }
       }
       else {
-        UtilChat.addChatMessage(player, "tile.bed.noSleep");
+        UtilChat.sendStatusMessage(player, "tile.bed.noSleep");
       }
     }
     return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -116,7 +116,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
     //hack because vanilla/forge has that java.lang.IllegalArgumentException: Cannot get property PropertyDirection error with assuming its a bed when its blocks.air
     ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, true, "sleeping", "field_71083_bS");
     ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, 0, "sleepTimer", "field_71076_b");
-    UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".trying");
+    UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".trying");
     //first set bed location
     player.bedLocation = player.getPosition();
     ModCyclic.network.sendTo(new PacketSleepClient(player.bedLocation), player);

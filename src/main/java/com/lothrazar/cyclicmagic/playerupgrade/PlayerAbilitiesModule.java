@@ -61,7 +61,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean signSkullName;
   private boolean easyEnderChest;
   private boolean fastLadderClimb;
-
   private boolean nameVillagerTag;
   private boolean passThroughClick;
   private boolean armorStandSwap;
@@ -235,7 +234,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
       }
     }
-
   }
 
   private final static EntityEquipmentSlot[] armorStandEquipment = {
@@ -280,7 +278,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
         "Allows you to quickly climb ladders by looking up instead of moving forward");
     config.addCustomCategoryComment(category, "Player Abilities and interactions");
-
     signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
         "Use a player skull on a sign to name the skull based on the top line");
     category = Const.ConfigCategory.blocks;

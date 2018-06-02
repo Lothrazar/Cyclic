@@ -96,6 +96,9 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.STONE_BUTTON, Blocks.NOTEBLOCK);
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "b ",
+        " n",
+        'b', Blocks.WOODEN_BUTTON, 'n', Blocks.NOTEBLOCK);
   }
 }

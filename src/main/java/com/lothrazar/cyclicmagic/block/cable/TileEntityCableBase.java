@@ -280,7 +280,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private void moveItems(EnumFacing f) {
-    //TICK COUNTDOWN
+    if (this.getStackInSlot(0).isEmpty()) {
+      return;
+    }
     ItemStack stackToExport = this.getStackInSlot(0).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(f);
@@ -295,44 +297,41 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       this.setInventorySlotContents(0, leftAfterDeposit);
       outputSuccess = true;
     }
-    tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget instanceof TileEntityCableBase) {
+    if (outputSuccess && tileTarget instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
       TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-      if (outputSuccess && cable.isItemPipe())
+      if (cable.isItemPipe())
         cable.updateIncomingItemFace(f.getOpposite());
     }
   }
 
   private void moveFluid(EnumFacing f) {
-    BlockPos posTarget = pos.offset(f);
+    if (tank.getFluidAmount() <= 0) {
+      return;
+    }
     int toFlow = TRANSFER_FLUID_PER_TICK;
     if (hasAnyIncomingFluidFaces() && toFlow >= tank.getFluidAmount()) {
       toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
     }
+    BlockPos posTarget = pos.offset(f);
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
-    TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget instanceof TileEntityCableBase) {
-      //TODO: not so compatible with other fluid systems. itl do i guess
-      TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-      if (outputSuccess && cable.isFluidPipe())
-        cable.updateIncomingFluidFace(f.getOpposite());
+    if (outputSuccess) {
+      TileEntity tileTarget = world.getTileEntity(posTarget);
+      if (tileTarget instanceof TileEntityCableBase) {
+        //TODO: not so compatible with other fluid systems. itl do i guess
+        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
+        if (cable.isFluidPipe())
+          cable.updateIncomingFluidFace(f.getOpposite());
+      }
     }
-    //          if (outputSuccess && world.getTileEntity(posTarget) instanceof TileEntityFluidCable) {
-    //            //TODO: not so compatible with other fluid systems. itl do i guess
-    //            TileEntityBaseCable cable = (TileEntityBaseCable) world.getTileEntity(posTarget);
-    //            cable.updateIncomingFluidFace(f.getOpposite());
-    //          }
   }
 
-  /**
-   * try to move energy out in this direction
-   * 
-   * @param f
-   */
   private void moveEnergy(EnumFacing f) {
-    BlockPos posTarget = pos.offset(f);
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, f);
+    if (handlerHere.getEnergyStored() == 0) {
+      return;
+    }
+    BlockPos posTarget = pos.offset(f);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
@@ -347,13 +346,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
         int filled = handlerOutput.receiveEnergy(drain, false);
         //now actually drain that much from here
         handlerHere.extractEnergy(filled, false);
-        if (tileTarget instanceof TileEntityCableBase) {
+        if (filled > 0 && tileTarget instanceof TileEntityCableBase) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
           if (cable.isEnergyPipe())
             cable.updateIncomingEnergyFace(f.getOpposite());
         }
-        //              return;// stop now because only pull from one side at a time
       }
     }
   }
