@@ -25,6 +25,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -40,13 +41,35 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
   static final String NBT_IMBUE = "CYCLIC_IMBUE";
   private static final String NBT_IMBUE_CHARGE = "CYCLIC_CHARGE";
 
-  //          MobEffects.GLOWING
-  //          MobEffects.INVISIBILITY 
-  //          MobEffects.POISON
-  //          MobEffects.SLOWNESS
   enum ImbueFlavor {
     //TODO: maybe instead a potion type with potion meta
     NONE, LEVITATE, EXPLOSION, FIRE, INVISIBILITY, POISON, SLOWNESS, GLOWING;
+
+    @Override
+    public String toString() {
+      return this.name().toLowerCase();
+    }
+
+    public TextFormatting getColor() {
+      switch (this) {
+        case EXPLOSION:
+          return TextFormatting.GRAY;
+        case FIRE:
+        case GLOWING:
+          return TextFormatting.YELLOW;
+        case INVISIBILITY:
+          return TextFormatting.BLUE;
+        case LEVITATE:
+          return TextFormatting.AQUA;
+        case POISON:
+          return TextFormatting.DARK_GREEN;
+        case SLOWNESS:
+          return TextFormatting.LIGHT_PURPLE;
+        default:
+        case NONE:
+          return TextFormatting.BLACK;
+      }
+    }
   }
 
   public BlockImbue() {
@@ -81,8 +104,13 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
           if (!te.getStackInSlot(i).isEmpty()) {
             UtilItemStack.dropItemStackInWorld(world, pos, te.getStackInSlot(i));
             te.setInventorySlotContents(i, ItemStack.EMPTY);
-            break;
+            return true;
           }
+        }
+        //if we did not return,  block was empty so display recipes
+        UtilChat.addChatMessage(player, "imbue.recipes");
+        for (RecipeImbue irecipe : BlockImbue.recipes) {
+          UtilChat.addChatMessage(player, irecipe.toString());
         }
       }
     }
@@ -122,9 +150,7 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityImbue.class, new ImbueTESR());
   }
 
-
-
-  public static ImbueFlavor getImbueInt(ItemStack held) {
+  public static ImbueFlavor getImbueType(ItemStack held) {
     if (UtilNBT.getItemStackNBT(held).hasKey(NBT_IMBUE) == false) {
       return null;
     }
@@ -146,8 +172,6 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
 
   @SubscribeEvent
   public void onProjectileImpactEvent(ProjectileImpactEvent.Arrow event) {
-    System.out.println(event.getArrow().getEntityData());
-
     Entity trg = event.getRayTraceResult().entityHit;
     if (trg instanceof EntityLivingBase
         && event.getArrow().getEntityData().hasKey(NBT_IMBUE)) {
@@ -157,7 +181,6 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
       World world = target.world;
       switch (flavor) {
         case GLOWING:
-
         break;
         case EXPLOSION:
           ExplosionBlockSafe explosion = new ExplosionBlockSafe(world,
@@ -185,7 +208,6 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
         break;
         default:
         break;
-
       }
     }
   }
@@ -199,7 +221,7 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
       if (arrow.shootingEntity instanceof EntityPlayer) {
         EntityPlayer source = (EntityPlayer) arrow.shootingEntity;
         ItemStack bow = source.getHeldItemMainhand();
-        ImbueFlavor flavor = getImbueInt(bow);
+        ImbueFlavor flavor = getImbueType(bow);
         int charge = getImbueCharge(bow);
         if (charge > 0 && flavor != null) {
           //
@@ -207,18 +229,32 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
           //reduce charge
           setImbueCharge(bow, charge - 1);
         }
+        else {
+          //remove
+          bow.getTagCompound().removeTag(NBT_IMBUE);
+          bow.getTagCompound().removeTag(NBT_IMBUE_CHARGE);
+        }
       }
     }
   }
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onItemTooltipEvent(ItemTooltipEvent event) {
     ItemStack itemStack = event.getItemStack();
-    if (getImbueInt(itemStack) == null) {
+    ImbueFlavor type = getImbueType(itemStack);
+    if (type == null) {
       return;
     }
-    event.getToolTip().add(UtilChat.lang("imbue.type." + getImbueInt(itemStack).name().toLowerCase()));
-    event.getToolTip().add(UtilChat.lang("imbue.charges") + getImbueCharge(itemStack));
+    int charge = getImbueCharge(itemStack);
+    if (charge <= 0) {
+      itemStack.getTagCompound().removeTag(NBT_IMBUE);
+      itemStack.getTagCompound().removeTag(NBT_IMBUE_CHARGE);
+      return;
+    }
+    event.getToolTip().add(UtilChat.lang("imbue.prefix")
+        + type.getColor() + UtilChat.lang("imbue.type." + type.toString())
+        + TextFormatting.RESET + " [" + charge + "]");
   }
 
   static List<RecipeImbue> recipes = new ArrayList<RecipeImbue>();

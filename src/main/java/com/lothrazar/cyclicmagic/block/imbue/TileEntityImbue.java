@@ -30,7 +30,7 @@ public class TileEntityImbue extends TileEntityBaseMachineInvo implements ITicka
       if (target.getItem() instanceof ItemBow && found != null) {
 
         // wait, does it already HAVE imbue? 
-        ImbueFlavor current = BlockImbue.getImbueInt(target);
+        ImbueFlavor current = BlockImbue.getImbueType(target);
         //f bow has a different kind, OR empty charges
         if (current == null || current != found.flavor
             || BlockImbue.getImbueCharge(target) == 0) {

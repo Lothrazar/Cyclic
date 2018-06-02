@@ -50,9 +50,15 @@ public class RecipeImbue {
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Blocks.TORCH) },
         ImbueFlavor.GLOWING));
+    ////
   }
 
   public boolean matches(ItemStack stackInSlot) {
     return OreDictionary.itemMatches(stackInSlot, recipeInput.get(0), false);
+  }
+
+  @Override
+  public String toString() {
+    return this.recipeInput.get(0).getDisplayName() + " -> [" + this.flavor + "]";
   }
 }
