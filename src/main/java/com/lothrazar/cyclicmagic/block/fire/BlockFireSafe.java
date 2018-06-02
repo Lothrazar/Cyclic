@@ -48,7 +48,6 @@ public class BlockFireSafe extends BlockFireBase {
       if (!e.isPotionActive(PotionEffectRegistry.SNOW)
           && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
         e.setFire(FIRESECONDS);
-        //e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
       }
     }
     super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);

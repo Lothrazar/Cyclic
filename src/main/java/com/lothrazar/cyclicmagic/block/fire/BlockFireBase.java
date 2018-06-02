@@ -41,7 +41,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFireBase extends BlockFire {
 
-  //  private static final int FIRESECONDS = 10;
   public BlockFireBase() {
     super();
     this.setHardness(0.0F).setLightLevel(1.0F);
@@ -55,14 +54,6 @@ public class BlockFireBase extends BlockFire {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
 
-  //  @Override
-  //  protected boolean canDie(World worldIn, BlockPos pos) {
-  //    if (worldIn.getBlockState(pos.down()) == Blocks.NETHERRACK) {
-  //      return false;
-  //    }
-  //doesnt work that way aww
-  //    return super.canDie(worldIn, pos);
-  //  }
   @Override
   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     if (worldIn.getGameRules().getBoolean("doFireTick")) {
@@ -70,9 +61,9 @@ public class BlockFireBase extends BlockFire {
         worldIn.setBlockToAir(pos);
       }
       Block block = worldIn.getBlockState(pos.down()).getBlock();
-      boolean flag = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
+      boolean isBlockBelowFireSource = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
       int intAge = state.getValue(AGE).intValue();
-      if (!flag && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + intAge * 0.03F) {
+      if (!isBlockBelowFireSource && worldIn.isRaining() && this.canDie(worldIn, pos) && rand.nextFloat() < 0.2F + intAge * 0.03F) {
         worldIn.setBlockToAir(pos);
       }
       else {
@@ -80,19 +71,21 @@ public class BlockFireBase extends BlockFire {
           state = state.withProperty(AGE, Integer.valueOf(intAge + rand.nextInt(3) / 2));
           worldIn.setBlockState(pos, state, 4);
         }
-        else if (intAge == 15 && worldIn.rand.nextDouble() < 0.5) {
-          //max age -> then start to burn out and expire
+        else if (!isBlockBelowFireSource && intAge == 15 && worldIn.rand.nextDouble() < 0.5) {
+          //max age -> then start to burn out and expire 
           worldIn.setBlockToAir(pos);
         }
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn) + rand.nextInt(10));
-        if (!flag) {
+        if (!isBlockBelowFireSource) {
           if (!this.canNeighborCatchFire(worldIn, pos)) {
             if (!worldIn.getBlockState(pos.down()).isSideSolid(worldIn, pos.down(), EnumFacing.UP) || intAge > 3) {
+
               worldIn.setBlockToAir(pos);
             }
             return;
           }
           if (!this.canCatchFire(worldIn, pos.down(), EnumFacing.UP) && intAge == 15 && rand.nextInt(4) == 0) {
+
             worldIn.setBlockToAir(pos);
             return;
           }
@@ -177,18 +170,5 @@ public class BlockFireBase extends BlockFire {
       }
     }
   }
-  //
-  //  @Override
-  //  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-  //    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
-  //        && !(entityIn instanceof EntityPlayer)) {
-  //      EntityLivingBase e = ((EntityLivingBase) entityIn);
-  //      if (!e.isPotionActive(PotionEffectRegistry.SNOW)
-  //          && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
-  //        e.setFire(FIRESECONDS);
-  //        //e.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 9, 1));
-  //      }
-  //    }
-  //    super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
-  //  }
+
 }
