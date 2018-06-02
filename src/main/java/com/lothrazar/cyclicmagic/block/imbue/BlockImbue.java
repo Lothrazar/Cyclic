@@ -273,8 +273,8 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
         "sbs",
         "bdb",
         "sbs",
-        'd', "gemEmerald",
-        's', "dyeBlue",
+        'd', "dyeBlue",
+        's', "gemEmerald",
         'b', "glowstone");
   }
 }

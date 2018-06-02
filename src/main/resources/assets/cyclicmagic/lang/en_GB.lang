@@ -1237,8 +1237,8 @@ gui.signs.save=Save
 gui.signs.cancel=Cancel 
 
 tile.imbuer.name=Imbue Station
-tile.imbue.tooltip=Imbue your bow with secret powers
-tile.imbue.guide=Imbue your bow with secret powers.  Place in an ingredient and a bow, and then apply a redstone signal.  Sneak right-click while it is empty to list valid recipes.  
+tile.imbuer.tooltip=Imbue your bow with secret powers
+tile.imbuer.guide=Imbue your bow with secret powers.  Place in an ingredient and a bow, and then apply a redstone signal.  Sneak right-click while it is empty to list valid recipes.  
 imbue.recipes=Imbue Recipes:
 imbue.prefix=Imbued: 
 imbue.type.fire=Flame
