@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.config.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventKeyInput;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
 import com.lothrazar.cyclicmagic.event.EventRender;
-import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
 import com.lothrazar.cyclicmagic.item.mobs.EventHorseFeed;
 import com.lothrazar.cyclicmagic.playerupgrade.EventExtendedInventory;
 import com.lothrazar.cyclicmagic.potion.EventPotionTick;
@@ -39,7 +38,7 @@ public class EventRegistry {
   private ArrayList<Object> events = new ArrayList<Object>();
 
   public void registerCoreEvents() {
-    this.register(new ParticleEventManager());
+    //    this.register(new ParticleEventManager());
     this.register(new EventConfigChanged());
     this.register(new EventExtendedInventory());
     this.register(new EventKeyInput());
