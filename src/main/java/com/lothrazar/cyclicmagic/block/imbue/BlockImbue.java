@@ -2,8 +2,10 @@ package com.lothrazar.cyclicmagic.block.imbue;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
@@ -19,6 +21,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -36,7 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
+public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
 
   static final String NBT_IMBUE = "CYCLIC_IMBUE";
   private static final String NBT_IMBUE_CHARGE = "CYCLIC_CHARGE";
@@ -53,8 +56,9 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
     public TextFormatting getColor() {
       switch (this) {
         case EXPLOSION:
-          return TextFormatting.GRAY;
+          return TextFormatting.GREEN;
         case FIRE:
+          return TextFormatting.GOLD;
         case GLOWING:
           return TextFormatting.YELLOW;
         case INVISIBILITY:
@@ -261,5 +265,16 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR {
 
   public static void addRecipe(RecipeImbue imb) {
     recipes.add(imb);
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
+        "sbs",
+        "bdb",
+        "sbs",
+        'd', "gemEmerald",
+        's', "dyeBlue",
+        'b', "glowstone");
   }
 }
