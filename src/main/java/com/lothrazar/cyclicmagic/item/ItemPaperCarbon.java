@@ -109,7 +109,6 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     sign.signText[1] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN1));
     sign.signText[2] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN2));
     sign.signText[3] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN3));
-
   }
 
   public static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
@@ -150,24 +149,19 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
   }
 
-
   @Override
   public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
     TileEntity container = world.getTileEntity(pos);
     boolean isValid = false;
-
     ItemStack held = entityPlayer.getHeldItem(hand);
-
     boolean isEmpty = (held.getTagCompound() == null);
     if (container instanceof TileEntitySign) {
       TileEntitySign sign = (TileEntitySign) container;
       if (isEmpty) {
         copySign(world, entityPlayer, sign, held);
-
       }
       else {
         pasteSign(world, entityPlayer, sign, held);
-
       }
       isValid = true;
     }
@@ -175,17 +169,14 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       TileEntityNote noteblock = (TileEntityNote) container;
       if (isEmpty) {
         copyNote(world, entityPlayer, noteblock, held);
-
       }
       else {
         pasteNote(world, entityPlayer, noteblock, held);
-
       }
       isValid = true;
     }
     if (isValid) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
-
       UtilSound.playSound(entityPlayer, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return EnumActionResult.PASS;

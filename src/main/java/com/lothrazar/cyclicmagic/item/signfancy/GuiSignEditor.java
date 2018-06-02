@@ -57,7 +57,6 @@ public class GuiSignEditor extends GuiScreen {
   private ItemStack bookStack;
   final int maxNameLen = 100;
   private TileEntitySign sign;
-
   List<Map<TextFormatting, GuiButtonTooltip>> buttonMaps = new ArrayList<Map<TextFormatting, GuiButtonTooltip>>();
 
   public GuiSignEditor(EntityPlayer entityPlayer, ItemStack book, TileEntitySign te) {
@@ -132,12 +131,10 @@ public class GuiSignEditor extends GuiScreen {
     for (TextFormatting color : TextFormatting.values()) {
       if (color.isColor()) {
         GuiButtonTooltip btn = new GuiButtonTooltip(buttonID++, x + 40, y, w, h,
-
             getColorChar(color));
         btn.allowPressedIfDisabled().setTooltip(color + color.getFriendlyName());
         btn.packedFGColour = toHex(color);
         this.addButton(btn);
-
         x += w - 1;
         rowButtons.put(color, btn);
       }
@@ -225,7 +222,6 @@ public class GuiSignEditor extends GuiScreen {
 
   @Override
   public void drawScreen(int x, int y, float par3) {
-
     drawDefaultBackground();
     super.drawScreen(x, y, par3);
     drawCenteredString(fontRenderer, UtilChat.lang("gui.signs.title"), width / 2, 6, 16777215);
@@ -249,7 +245,6 @@ public class GuiSignEditor extends GuiScreen {
       Style style = text.getStyle();
       Map<TextFormatting, GuiButtonTooltip> buttons = this.buttonMaps.get(row);
       //0-15 are colors
-
       buttons.get(TextFormatting.ITALIC).enabled = !style.getItalic();
       buttons.get(TextFormatting.BOLD).enabled = !style.getBold();
       buttons.get(TextFormatting.OBFUSCATED).enabled = !style.getObfuscated();
@@ -260,7 +255,6 @@ public class GuiSignEditor extends GuiScreen {
         if (color.isColor()) {
           buttons.get(color).enabled = style.getColor() != color;
         }
-
     }
   }
 
@@ -271,9 +265,7 @@ public class GuiSignEditor extends GuiScreen {
       syncTextboxesToSign();
       NBTTagCompound tags = new NBTTagCompound();
       this.sign.writeToNBT(tags);
-
       ModCyclic.network.sendToServer(new PacketTileClientToServer(sign.getPos(), tags));
-
       this.entityPlayer.closeScreen();
       return;
     }
@@ -311,14 +303,12 @@ public class GuiSignEditor extends GuiScreen {
     }
     text.setStyle(style);
     this.sign.signText[row] = text;
-
   }
 
   private void syncTextboxesToSign() {
     for (GuiTextField txtNew : txtBoxes) {
       int id = txtNew.getId() - 700;
       Style style = this.sign.signText[id].getStyle();
-
       TextComponentString text = new TextComponentString(txtNew.getText());
       text.setStyle(style);
       this.sign.signText[id] = text;

@@ -21,35 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.fire;
+package com.lothrazar.cyclicmagic.block.imbue;
 
-import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFireSafe extends BlockFireBase {
+@SideOnly(Side.CLIENT)
+public class ImbueTESR extends BaseMachineTESR<TileEntityImbue> {
 
-  private static final int FIRESECONDS = 10;
-
-  public BlockFireSafe() {
+  public ImbueTESR() {
     super();
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-    if (!worldIn.isRemote && entityIn instanceof EntityLivingBase
-        && !(entityIn instanceof EntityPlayer)) {
-      EntityLivingBase e = ((EntityLivingBase) entityIn);
-      if (!e.isPotionActive(PotionEffectRegistry.SNOW)
-          && e.isCreatureType(EnumCreatureType.MONSTER, false)) {
-        e.setFire(FIRESECONDS);
-      }
-    }
-    super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+  public void renderBasic(TileEntityBaseMachineInvo te) {
+    //four corners if they exist
+    renderItem(te, te.getStackInSlot(1), 0, 0.5F, 1);
+    // renderItem(te, te.getStackInSlot(2), 1, 0.5F, 1);
+    renderItem(te, te.getStackInSlot(2), 1, 0.5F, 0);
+    // renderItem(te, te.getStackInSlot(4), 0, 0.5F, 0);
+    //and the enchanted item goes here
+    renderItem(te, te.getStackInSlot(0), 0.5F, 0.85F, 0.5F);
   }
 }
