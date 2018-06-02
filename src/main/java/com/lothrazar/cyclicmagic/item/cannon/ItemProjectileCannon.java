@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser.VariantColors;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -36,6 +37,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
@@ -44,30 +46,12 @@ public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
     super(1000);
   }
 
-  //  public static enum VariantColors {
-  //    RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE;
-  //  }
 
   public void createBullet(World world, EntityPlayer player) {
-    //    Color c = null;
-    //    VariantColors rand = VariantColors.values()[MathHelper.getInt(world.rand, 0, VariantColors.values().length - 1)];
-    //    ModCyclic.logger.log(rand.toString());
-    //    switch (rand) {
-    //      case BLUE:
-    //        c = new Color(0, 173, 255);
-    //      case GREEN:
-    //        c = new Color(57, 255, 56);
-    //      case ORANGE:
-    //        c = new Color(255, 64, 16);
-    //      case PURPLE:
-    //        c = new Color(255, 56, 249);
-    //      case RED:
-    //        c = new Color(179, 3, 2);
-    //      case YELLOW:
-    //        c = new Color(227, 225, 2);
-    //    }//
-    EntityGolemLaser bullet = new EntityGolemLaser(world);
 
+    EntityGolemLaser bullet = new EntityGolemLaser(world);
+    int colorIndex = MathHelper.getInt(world.rand, 0, VariantColors.values().length - 1);
+    bullet.getDataManager().set(EntityGolemLaser.variant, colorIndex);
     float speed = 4.0F;
     bullet.initCustom(player.posX, player.posY + 1.2, player.posZ,
         player.getLookVec().x * 0.5, player.getLookVec().y * 0.5, player.getLookVec().z * 0.5,

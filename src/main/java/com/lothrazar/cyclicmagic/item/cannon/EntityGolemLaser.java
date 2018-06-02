@@ -28,6 +28,39 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityGolemLaser extends Entity {
 
+  public static enum VariantColors {
+    RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE;
+
+    public String nameLower() {
+      return this.name().toLowerCase();
+    }
+
+    /**
+     * r,g,b passed into projectile shot
+     * 
+     * @return
+     */
+    public Color getColor() {
+      switch (this) {
+        case RED:
+          return new Color(179, 3, 2);
+        case ORANGE:
+          return new Color(255, 64, 16);
+        case YELLOW:
+          return new Color(227, 225, 2);
+        case GREEN:
+          return new Color(57, 255, 56);
+        case BLUE:
+          return new Color(0, 173, 255);
+        case PURPLE:
+          return new Color(255, 56, 249);
+        default:
+        break;
+      }
+      return null;//new Color(0, 0, 0);
+    }
+  }
+
   public static final DataParameter<Float> value = EntityDataManager.createKey(EntityGolemLaser.class, DataSerializers.FLOAT);
   public static final DataParameter<Boolean> dead = EntityDataManager.createKey(EntityGolemLaser.class, DataSerializers.BOOLEAN);
   public static final DataParameter<Integer> lifetime = EntityDataManager.createKey(EntityGolemLaser.class, DataSerializers.VARINT);
@@ -36,7 +69,6 @@ public class EntityGolemLaser extends Entity {
   public BlockPos dest = new BlockPos(0, 0, 0);
   public UUID id = null;
   BlockPos pos = new BlockPos(0, 0, 0);
-  private Color color = new Color(0, 173, 255);
 
   public EntityGolemLaser(World worldIn) {
     super(worldIn);
@@ -185,7 +217,8 @@ public class EntityGolemLaser extends Entity {
   }
 
   private Color getColor() {
-    return this.color;
+    VariantColors var = VariantColors.values()[getDataManager().get(variant)];
+    return var.getColor();
   }
 
   private int getBlue() {
