@@ -54,7 +54,7 @@ public class EntityGolemLaser extends Entity {
     this.motionX = vx;
     this.motionY = vy;
     this.motionZ = vz;
-    setSize((float) value / 10.0f, (float) value / 10.0f);
+    // setSize((float) value / 10.0f, (float) value / 10.0f);
     getDataManager().set(EntityGolemLaser.value, (float) value);
     getDataManager().setDirty(EntityGolemLaser.value);
     setSize((float) value / 10.0f, (float) value / 10.0f);

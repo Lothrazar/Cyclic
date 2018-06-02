@@ -66,12 +66,14 @@ public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
     //      case YELLOW:
     //        c = new Color(227, 225, 2);
     //    }//
-    UtilSound.playSound(player, player.getPosition(), SoundRegistry.fireball_staff_launch, SoundCategory.PLAYERS, 0.4F);
-    EntityGolemLaser s = new EntityGolemLaser(world);
+    EntityGolemLaser bullet = new EntityGolemLaser(world);
 
-    s.initCustom(player.posX, player.posY + 1.6, player.posZ, player.getLookVec().x * 0.5, player.getLookVec().y * 0.5, player.getLookVec().z * 0.5, 4.0f, player.getUniqueID());
+    float speed = 4.0F;
+    bullet.initCustom(player.posX, player.posY + 1.2, player.posZ,
+        player.getLookVec().x * 0.5, player.getLookVec().y * 0.5, player.getLookVec().z * 0.5,
+        speed, player.getUniqueID());
     if (world.isRemote == false)
-      world.spawnEntity(s);
+      world.spawnEntity(bullet);
   }
 
   @Override
@@ -88,7 +90,10 @@ public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     this.createBullet(world, player);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
+    UtilSound.playSound(player, player.getPosition(), SoundRegistry.fireball_staff_launch, SoundCategory.PLAYERS, 0.4F);
+    //    UtilItemStack.damageItem(player, player.getHeldItem(hand));
+    super.onUse(player.getHeldItem(hand), player, world, hand);
+    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
   }
 
   @Override
