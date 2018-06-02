@@ -259,19 +259,20 @@ public class BlockModule extends BaseModule implements IHasConfig {
    * 
    * 
    */
+  //fire is a dependency block like liquids, used by many places
   boolean fireDarkUsed = false;
   boolean fireFrostUsed = false;
+  private boolean imbuer;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
-    //fire is a dependency block like liquids, used by many places
-    //janky but its ok
-    //
-    BlockImbue imbuer = new BlockImbue();
-    ModCyclic.instance.events.register(imbuer);
-    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+    if (imbuer) {
+      BlockImbue imbuer = new BlockImbue();
+      ModCyclic.instance.events.register(imbuer);
+      BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+    }
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
@@ -686,6 +687,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
