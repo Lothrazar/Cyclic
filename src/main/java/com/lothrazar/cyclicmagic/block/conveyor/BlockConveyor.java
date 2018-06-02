@@ -396,8 +396,5 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     }
     return f;
   }
-  //  @Override
-  //  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-  //    return this.getStateForPlacement(worldIn, pos, blockFaceClickedOn, hitX, hitY, hitZ, meta, placer);//110 support
-  //  }
+
 }
