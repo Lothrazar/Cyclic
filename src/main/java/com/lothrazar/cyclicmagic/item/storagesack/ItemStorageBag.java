@@ -111,6 +111,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
 
   public ItemStorageBag() {
     this.setMaxStackSize(1);
+
   }
 
   @Override
