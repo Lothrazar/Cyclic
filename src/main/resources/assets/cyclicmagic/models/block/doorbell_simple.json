@@ -1,7 +1,7 @@
 {
     "parent": "cyclicmagic:parent/button",
     "textures": {
-        "texture": "blocks/cobblestone"
+        "texture": "blocks/noteblock"
     }
 	
 	,	"display": {

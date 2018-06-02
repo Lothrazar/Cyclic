@@ -21,39 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.item;
+package com.lothrazar.cyclicmagic.item.signfancy;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.pump.BlockPump;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockItemPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
+public class ItemSignEditor extends BaseItem implements IHasRecipe {
 
-  public BlockItemPump() {
+  public ItemSignEditor() {
     super();
-    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
+    this.setMaxStackSize(1);
   }
 
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityItemPump();
+  public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
+    TileEntity container = world.getTileEntity(pos);
+    ItemStack held = entityPlayer.getHeldItem(hand);
+    if (held.getItem() == this && container instanceof TileEntitySign) {
+      entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_SIGNPOST, world, pos.getX(), pos.getY(), pos.getZ());
+    }
+    return EnumActionResult.PASS;
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "i i",
-        " r ",
-        "ibi",
-        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
-        'i', "nuggetIron",
-        'r', Blocks.DROPPER);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8),
+        " pi",
+        "rcp",
+        "gb ",
+        'c', Items.SIGN,
+        'i', "dyeBlack",
+        'r', "dyeCyan",
+        'g', "dyeMagenta",
+        'b', "dyeYellow",
+        'p', Items.PAPER);
   }
 }

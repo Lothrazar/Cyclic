@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -45,6 +44,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -60,9 +60,11 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   private static final String KEY_SIGN2 = "sign_2";
   private static final String KEY_SIGN3 = "sign_3";
   private static final String KEY_NOTE = "note";
+  private static final String KEY_SIGNNBT = "note";
 
   public ItemPaperCarbon() {
     super();
+    this.setMaxStackSize(1);
   }
 
   private static void setItemStackNBT(ItemStack item, String prop, String value) {
@@ -81,10 +83,10 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
-    setItemStackNBT(held, KEY_SIGN0, sign.signText[0].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN1, sign.signText[1].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN2, sign.signText[2].getUnformattedText());
-    setItemStackNBT(held, KEY_SIGN3, sign.signText[3].getUnformattedText());
+    setItemStackNBT(held, KEY_SIGN0, ITextComponent.Serializer.componentToJson(sign.signText[0]));
+    setItemStackNBT(held, KEY_SIGN1, ITextComponent.Serializer.componentToJson(sign.signText[1]));
+    setItemStackNBT(held, KEY_SIGN2, ITextComponent.Serializer.componentToJson(sign.signText[2]));
+    setItemStackNBT(held, KEY_SIGN3, ITextComponent.Serializer.componentToJson(sign.signText[3]));
     held.getTagCompound().setByte(KEY_NOTE, (byte) NOTE_EMPTY);
     // entityPlayer.swingItem();
   }
@@ -93,13 +95,20 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());
     }
+    try {
+      sign.signText[0] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN0));
+      sign.signText[1] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN1));
+      sign.signText[2] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN2));
+      sign.signText[3] = ITextComponent.Serializer.jsonToComponent(getItemStackNBT(held, KEY_SIGN3));
+      return;
+    }
+    catch (Exception e) {
+      //legacy support below
+    }
     sign.signText[0] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN0));
     sign.signText[1] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN1));
     sign.signText[2] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN2));
     sign.signText[3] = new TextComponentTranslation(getItemStackNBT(held, KEY_SIGN3));
-    // world.markBlockForUpdate(sign.getPos());//so update is refreshed on
-    // client side
-    // entityPlayer.swingItem();
   }
 
   public static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
@@ -140,25 +149,19 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
   }
 
-  //onItemUse
-  //	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
   @Override
   public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
     TileEntity container = world.getTileEntity(pos);
     boolean isValid = false;
-    boolean consumeItem = false;
     ItemStack held = entityPlayer.getHeldItem(hand);
-    //if(!entityPlayer.isSneaking()) { return EnumActionResult.FAIL; }
     boolean isEmpty = (held.getTagCompound() == null);
     if (container instanceof TileEntitySign) {
       TileEntitySign sign = (TileEntitySign) container;
       if (isEmpty) {
         copySign(world, entityPlayer, sign, held);
-        consumeItem = false;
       }
       else {
         pasteSign(world, entityPlayer, sign, held);
-        consumeItem = true;
       }
       isValid = true;
     }
@@ -166,19 +169,14 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
       TileEntityNote noteblock = (TileEntityNote) container;
       if (isEmpty) {
         copyNote(world, entityPlayer, noteblock, held);
-        consumeItem = false;
       }
       else {
         pasteNote(world, entityPlayer, noteblock, held);
-        consumeItem = true;
       }
       isValid = true;
     }
     if (isValid) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
-      if (consumeItem) {
-        UtilPlayer.decrStackSize(entityPlayer, hand); // on paste, we consume the item
-      }
       UtilSound.playSound(entityPlayer, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return EnumActionResult.PASS;

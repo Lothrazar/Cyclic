@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.interdiction;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
@@ -46,7 +45,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
 
-  protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
+  private static final double SIZE = 0.875D;
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(1 - SIZE, 1 - SIZE, 1 - SIZE, SIZE, SIZE, SIZE);
 
   public BlockMagnetAnti() {
     super(Material.IRON);
@@ -63,27 +63,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return BOUNDS;
-  }
-
-  @Nullable
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-    return NULL_AABB;
-  }
-
-  @Override
-  public boolean isFullCube(IBlockState state) {
-    return false;
-  }
-
-  @Override
-  public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-    return true;
-  }
-
-  @Override
-  public boolean canSpawnInBlock() {
-    return true;
+    return AABB;
   }
 
   @Override
@@ -109,7 +89,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
    * adding this stops fences from connecting
    */
   @Override
-  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
+  public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing hand) {
     return BlockFaceShape.UNDEFINED;
   }
 }
