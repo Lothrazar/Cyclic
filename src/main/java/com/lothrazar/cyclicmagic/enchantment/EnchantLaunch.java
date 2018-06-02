@@ -111,7 +111,6 @@ public class EnchantLaunch extends EnchantBase {
       return;
     }
     ItemStack feet = getFirstArmorStackWithEnchant(player);
-
     if (feet == null || feet.isEmpty() || player.isSneaking()) {
       return;
     } //sneak to not double jump

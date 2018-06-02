@@ -74,5 +74,4 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
       timer = TIMER_FULL;
     }
   }
-
 }

@@ -79,13 +79,11 @@ public class BlockFireBase extends BlockFire {
         if (!isBlockBelowFireSource) {
           if (!this.canNeighborCatchFire(worldIn, pos)) {
             if (!worldIn.getBlockState(pos.down()).isSideSolid(worldIn, pos.down(), EnumFacing.UP) || intAge > 3) {
-
               worldIn.setBlockToAir(pos);
             }
             return;
           }
           if (!this.canCatchFire(worldIn, pos.down(), EnumFacing.UP) && intAge == 15 && rand.nextInt(4) == 0) {
-
             worldIn.setBlockToAir(pos);
             return;
           }
@@ -170,5 +168,4 @@ public class BlockFireBase extends BlockFire {
       }
     }
   }
-
 }
