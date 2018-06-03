@@ -1,26 +1,25 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-	    "textures": {
-        "particle": "blocks/anvil_base",
-        "down": "cyclicmagic:blocks/dice/down",
-        "up": "cyclicmagic:blocks/dice/up",
-        "north": "cyclicmagic:blocks/dice/north",
-        "east": "cyclicmagic:blocks/dice/east",
-        "south": "cyclicmagic:blocks/dice/south",
-        "west": "cyclicmagic:blocks/dice/west"
-    },
+	"textures": {
+		"down": "cyclicmagic:blocks/dice/down",
+		"up": "cyclicmagic:blocks/dice/up",
+		"north": "cyclicmagic:blocks/dice/north",
+		"east": "cyclicmagic:blocks/dice/east",
+		"south": "cyclicmagic:blocks/dice/south",
+		"west": "cyclicmagic:blocks/dice/west"
+	},
 	"elements": [
 		{
-			"from": [6, 0, 7],
-			"to": [10, 4, 11],
-			"rotation": {"angle": 45, "axis": "y", "origin": [7, 0, 8]},
+			"from": [1, 1, 1],
+			"to": [15, 15, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 1, 2]},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 4], "texture": "#north"},
-				"east": {"uv": [0, 0, 4, 4], "texture": "#east"},
-				"south": {"uv": [0, 0, 4, 4], "texture": "#south"},
-				"west": {"uv": [0, 0, 4, 4], "texture": "#west"},
-				"up": {"uv": [0, 0, 4, 4], "texture": "#up"},
-				"down": {"uv": [0, 0, 4, 4], "texture": "#down"}
+				"north": {"uv": [0, 0, 14, 14], "texture": "#north"},
+				"east": {"uv": [0, 0, 14, 14], "texture": "#east"},
+				"south": {"uv": [0, 0, 14, 14], "texture": "#south"},
+				"west": {"uv": [0, 0, 14, 14], "texture": "#west"},
+				"up": {"uv": [0, 0, 14, 14], "texture": "#up"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#down"}
 			}
 		}
 	]
