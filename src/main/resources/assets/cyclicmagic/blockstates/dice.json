@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:dice", "y": 180, "uvlock": true  },
-        "facing=south": { "model": "cyclicmagic:dice" },
-        "facing=up":    { "model": "cyclicmagic:dice", "x": 270, "uvlock": true   },
-        "facing=down":  { "model": "cyclicmagic:dice" ,"x": 90 , "uvlock": true },
-        "facing=west":  { "model": "cyclicmagic:dice", "y": 90 , "uvlock": true },
-        "facing=east":  { "model": "cyclicmagic:dice", "y": 270, "uvlock": true  }
+        "facing=north": { "model": "cyclicmagic:dice_one" },
+        "facing=south": { "model": "cyclicmagic:dice_two" },
+        "facing=up":    { "model": "cyclicmagic:dice_three" },
+        "facing=down":  { "model": "cyclicmagic:dice_four" },
+        "facing=west":  { "model": "cyclicmagic:dice_five" },
+        "facing=east":  { "model": "cyclicmagic:dice_six" }
     }
 }

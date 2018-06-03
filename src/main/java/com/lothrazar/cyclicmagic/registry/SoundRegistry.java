@@ -59,7 +59,8 @@ public class SoundRegistry {
   public static SoundEvent tool_mode;
   public static SoundEvent warp;
   public static SoundEvent dcoin;
-  public static SoundEvent doorbell;
+  public static SoundEvent doorbell_mikekoenig;
+  public static SoundEvent dice_mikekoenig;
 
   public static void register() {
     //old sounds kept - lothrazar originals
@@ -93,7 +94,11 @@ public class SoundRegistry {
     // http://soundbible.com/1599-Store-Door-Chime.html
     //    License: Attribution 3.0 
     //    Recorded by Mike Koenig 
-    doorbell = registerSound("doorbell_mikekoenig");
+    doorbell_mikekoenig = registerSound("doorbell_mikekoenig");
+    //http://soundbible.com/182-Shake-And-Roll-Dice.html
+    //    License: Attribution 3.0 
+    //    Recorded by Mike Koenig 
+    dice_mikekoenig = registerSound("dice_mike_koenig");
   }
 
   private static SoundEvent registerSound(String name) {

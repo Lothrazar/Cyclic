@@ -67,7 +67,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
 
   @Override
   protected void playClickSound(EntityPlayer player, World worldIn, BlockPos pos) {
-    UtilSound.playSound(player, pos, SoundRegistry.doorbell, SoundCategory.BLOCKS, 0.5F);
+    UtilSound.playSound(player, pos, SoundRegistry.doorbell_mikekoenig, SoundCategory.BLOCKS, 0.5F);
   }
 
   @Override
