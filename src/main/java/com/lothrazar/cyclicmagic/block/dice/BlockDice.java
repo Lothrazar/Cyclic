@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -31,6 +32,11 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   }
 
   @Override
+  public TileEntity createTileEntity(World worldIn, IBlockState state) {
+    return new TileEntityDice();
+  }
+
+  @Override
   public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, @Nullable EntityLivingBase placer) {
     EnumFacing fac = getRandom(world.rand);
     return this.getDefaultState().withProperty(PROPERTYFACING, fac);
@@ -39,16 +45,24 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //set random blockstate 
-    if (hand == EnumHand.MAIN_HAND) {
-      EnumFacing fac = getRandom(world.rand);
-      world.setBlockState(pos, state.withProperty(PROPERTYFACING, fac));
+    TileEntity tile = world.getTileEntity(pos);
+    if (hand == EnumHand.MAIN_HAND && tile instanceof TileEntityDice) {
+      ((TileEntityDice) tile).startSpinning();
+      //      EnumFacing fac = getRandom(world.rand);
+      //      world.setBlockState(pos, state.withProperty(PROPERTYFACING, fac));
       UtilSound.playSound(player, SoundRegistry.dice_mikekoenig);
       return true;
     }
     return false;
   }
 
-  private EnumFacing getRandom(Random rand) {
+  /**
+   * TODO: util
+   * 
+   * @param rand
+   * @return
+   */
+  public static EnumFacing getRandom(Random rand) {
     int index = MathHelper.getInt(rand, 0, EnumFacing.values().length - 1);
     return EnumFacing.values()[index];
   }

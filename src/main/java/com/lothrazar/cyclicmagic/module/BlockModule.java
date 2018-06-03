@@ -73,6 +73,7 @@ import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.block.dice.BlockDice;
+import com.lothrazar.cyclicmagic.block.dice.TileEntityDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
@@ -264,11 +265,15 @@ public class BlockModule extends BaseModule implements IHasConfig {
   boolean fireDarkUsed = false;
   boolean fireFrostUsed = false;
   private boolean imbuer;
+  private boolean dice;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
-    BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
+    if (dice) {
+      BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityDice.class, "dice_te");
+    }
     if (imbuer) {
       BlockImbue imbuer = new BlockImbue();
       ModCyclic.instance.events.register(imbuer);
@@ -689,6 +694,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    dice = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
