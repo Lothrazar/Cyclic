@@ -72,6 +72,7 @@ import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.dice.BlockDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
@@ -267,6 +268,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     super.onPreInit();
+    BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
     if (imbuer) {
       BlockImbue imbuer = new BlockImbue();
       ModCyclic.instance.events.register(imbuer);
