@@ -1,5 +1,8 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"textures": {
+		"particle":"cyclicmagic:blocks/dice/five"
+	},
 	"elements": [
 		{
 			"from": [1, 1, 1],

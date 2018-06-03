@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +16,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -27,8 +25,8 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   public BlockDice() {
     super(Material.ROCK);
     this.setTranslucent();
-    SoundEvent dice = SoundRegistry.dice_mikekoenig;
-    this.setSoundType(new SoundType(0.1F, 1.0F, dice, dice, dice, dice, dice));
+    //    SoundEvent dice = SoundRegistry.dice_mikekoenig;
+    //    this.setSoundType(new SoundType(0.1F, 1.0F, dice, dice, dice, dice, dice));
   }
 
   @Override
