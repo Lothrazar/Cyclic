@@ -53,7 +53,7 @@ public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
     int colorIndex = MathHelper.getInt(world.rand, 0, VariantColors.values().length - 1);
     bullet.getDataManager().set(EntityGolemLaser.variant, colorIndex);
     float speed = 4.0F;
-    bullet.initCustom(player.posX, player.posY + 1.2, player.posZ,
+    bullet.initCustom(player.posX, player.posY + 1.52, player.posZ,
         player.getLookVec().x * 0.5, player.getLookVec().y * 0.5, player.getLookVec().z * 0.5,
         speed, player.getUniqueID());
     if (world.isRemote == false)

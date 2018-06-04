@@ -199,6 +199,11 @@
             "rotation": [ 0, 0, 25 ],
             "translation": [ 0, 4, 2 ],
             "scale": [ 1.7, 1.7, 1.7 ]
+        },
+		 "gui": {
+            "rotation": [ 15, 0, 45 ],
+            "translation": [ 0, 0, 0],
+            "scale": [ 1.2, 1.2, 1.2]
         }
     }
 }
