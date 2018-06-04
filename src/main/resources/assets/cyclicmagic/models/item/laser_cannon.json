@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures":{
-	   "beam":"cyclicmagic:items/rainbow/portal",
-	   "side":"cyclicmagic:items/rainbow/prismarine_dark",
-	   "top":"cyclicmagic:items/rainbow/prismarine_dark",
-	   "br":"cyclicmagic:items/rainbow/sandstone_top",
-	   "bx":"cyclicmagic:items/rainbow/sandstone_top",
-	   "casing":"cyclicmagic:items/rainbow/shulker_top_orange",
-	   "frame":"cyclicmagic:items/rainbow/shulker_top_white"
+	   "beam":"cyclicmagic:items/rainbow/beam",
+	   "side":"cyclicmagic:items/rainbow/side",
+	   "top":"cyclicmagic:items/rainbow/top",
+	   "br":"cyclicmagic:items/rainbow/smallcart",
+	   "bx":"cyclicmagic:items/rainbow/bigcart",
+	   "casing":"cyclicmagic:items/rainbow/beamcasing",
+	   "frame":"cyclicmagic:items/rainbow/frame"
 	}, 
 	"elements": [
 		{
