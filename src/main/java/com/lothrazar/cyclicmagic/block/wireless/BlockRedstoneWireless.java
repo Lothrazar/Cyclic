@@ -68,6 +68,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
 
   public BlockRedstoneWireless(WirelessType t) {
     super(Material.IRON);
+
     type = t;
   }
 
