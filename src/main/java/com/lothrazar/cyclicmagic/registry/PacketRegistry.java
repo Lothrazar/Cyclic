@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
 import com.lothrazar.cyclicmagic.core.liquid.PacketFluidSync;
 import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.item.buildswap.PacketSwapBlock;
+import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
@@ -102,7 +103,9 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);
-    packetID++;
+    //
+    network.registerMessage(MessageGolemLaserFX.MessageHolder.class, MessageGolemLaserFX.class, packetID++, Side.CLIENT);
+    //
     network.registerMessage(PacketSwapBlock.class, PacketSwapBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);
@@ -132,5 +135,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileTextbox.class, PacketTileTextbox.class, packetID++, Side.SERVER);
     network.registerMessage(PacketScythe.class, PacketScythe.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileStackWrapped.class, PacketTileStackWrapped.class, packetID++, Side.SERVER);
+
   }
 }

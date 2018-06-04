@@ -1,0 +1,7 @@
+{
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+    "parent":"cyclicmagic:parent/dice",
+	"textures": {
+		"all": "cyclicmagic:blocks/dice/six"
+	}
+}

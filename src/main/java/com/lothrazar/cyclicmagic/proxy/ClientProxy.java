@@ -59,6 +59,7 @@ import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.client.Minecraft;
@@ -88,6 +89,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
+
+  public static ParticleRenderer particleRenderer = new ParticleRenderer();
 
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;

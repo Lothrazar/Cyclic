@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
@@ -88,6 +89,7 @@ public class ModCyclic {
     ConfigRegistry.oreConfig = new Configuration(new File(event.getModConfigurationDirectory(), "cyclic_ores.cfg"));
     ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     ConfigRegistry.register(logger);
+    MinecraftForge.EVENT_BUS.register(new ParticleEventManager());
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();

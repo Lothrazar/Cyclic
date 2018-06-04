@@ -1236,6 +1236,14 @@ gui.signs.title=Signpost Customization
 gui.signs.save=Save
 gui.signs.cancel=Cancel 
 
+tile.dice.name=Dice
+tile.dice.tooltip=Randomize on placement and click
+tile.dice.guide=Randomize on placement.  Interact with it in the world to roll again.  
+
+item.laser_cannon.name=Rainbow Cannon
+item.laser_cannon.tooltip=Fire a randomly coloured beam
+item.laser_cannon.guide=Fire a randomly coloured beam
+
 tile.imbuer.name=Imbue Station
 tile.imbuer.tooltip=Imbue your bow with secret powers
 tile.imbuer.guide=Imbue your bow with secret powers.  Place in an ingredient and a bow, and then apply a redstone signal.  Sneak right-click while it is empty to list valid recipes.  
@@ -1248,3 +1256,4 @@ imbue.type.invisibility=Invisibility
 imbue.type.poison=Poison
 imbue.type.slowness=Slowness
 imbue.type.glowing=Glowing
+
