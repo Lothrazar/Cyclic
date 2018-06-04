@@ -29,7 +29,9 @@ import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser.VariantColors;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import net.minecraft.block.BlockPrismarine;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -63,12 +65,13 @@ public class ItemProjectileCannon extends BaseTool implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " cc",
-        "fbc",
-        "ff ",
+        " ct",
+        "bbc",
+        "qb ",
+        't', Items.SHULKER_SHELL,
         'c', Items.FIRE_CHARGE,
-        'b', new ItemStack(Items.BLAZE_POWDER),
-        'f', new ItemStack(Items.FLINT));
+        'b', new ItemStack(Items.DIAMOND),
+        'q', new ItemStack(Blocks.PRISMARINE, 1, BlockPrismarine.DARK_META));
   }
 
   @Override
