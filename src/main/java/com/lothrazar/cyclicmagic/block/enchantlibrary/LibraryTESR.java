@@ -45,7 +45,8 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   @SuppressWarnings("unchecked")
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    for (EnumFacing face : EnumFacing.HORIZONTALS) {
+    EnumFacing face = te.getCurrentFacing();
+    //    for (EnumFacing face : EnumFacing.HORIZONTALS) {
       //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TL), QuadrantEnum.TL, face, x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter);
       renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
@@ -55,7 +56,7 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
         //TODO: we could xyz offset in different ways too
         this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
       }
-    }
+    //    } 
   }
 
   private void renderStack(TileEntityLibrary te, EnchantStack stack, EnumFacing face, QuadrantEnum quad, double x, double y, double z) {
