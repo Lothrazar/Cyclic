@@ -25,8 +25,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   public BlockDice() {
     super(Material.ROCK);
     this.setTranslucent();
-    //    SoundEvent dice = SoundRegistry.dice_mikekoenig;
-    //    this.setSoundType(new SoundType(0.1F, 1.0F, dice, dice, dice, dice, dice));
+
   }
 
   @Override
@@ -46,8 +45,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
     TileEntity tile = world.getTileEntity(pos);
     if (hand == EnumHand.MAIN_HAND && tile instanceof TileEntityDice) {
       ((TileEntityDice) tile).startSpinning();
-      //      EnumFacing fac = getRandom(world.rand);
-      //      world.setBlockState(pos, state.withProperty(PROPERTYFACING, fac));
+
       UtilSound.playSound(player, SoundRegistry.dice_mikekoenig);
       return true;
     }
@@ -68,7 +66,10 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "s s", " i ", "s s",
+        "sts",
+        "tit",
+        "sts",
+        't', "cobblestone",
         'i', "dyeBlack",
         's', "bone");
   }
