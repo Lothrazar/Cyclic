@@ -74,6 +74,21 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
     shootMain(world, player, velocityFactor, damage);
     itemstack.shrink(1);
+    ActionType type = ActionType.getAction(stack);
+    if (type == ActionType.DOUBLE || type == ActionType.TRIPLE) {
+      //try and shoot one more
+      if (!itemstack.isEmpty()) {
+        shootMain(world, player, velocityFactor / 1.2F, damage);
+        itemstack.shrink(1);
+      }
+    }
+    if (type == ActionType.TRIPLE) {
+      //try and shoot THIRD and final
+      if (!itemstack.isEmpty()) {
+        shootMain(world, player, velocityFactor / 1.5F, damage);
+        itemstack.shrink(1);
+      }
+    }
     //    UtilItemStack.damageItem(player, stack, 1);
     //    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     // super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
