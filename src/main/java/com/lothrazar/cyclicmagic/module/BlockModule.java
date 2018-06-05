@@ -277,7 +277,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       Item slingshot_bullet = new Item();
       ItemRegistry.register(slingshot_bullet, "slingshot_bullet");
       ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
-      slingshot_weapon.setRepairItem(new ItemStack(slingshot_bullet));
+      //      slingshot_weapon.setRepairItem(new ItemStack(slingshot_bullet));
       ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
       ModCyclic.instance.events.register(slingshot_weapon);

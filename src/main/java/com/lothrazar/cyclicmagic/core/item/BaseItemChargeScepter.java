@@ -64,7 +64,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   private static final float VELOCITY_MAX = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
-  private static final float MAX_CHARGE = 9.7F;
+  protected static final float MAX_CHARGE = 9.7F;
   private static final int TICKS_USING = 93000;
   private static final int COOLDOWN = 5;
 
@@ -185,9 +185,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
       return;
     }
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-      return;
-    }
+
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];
@@ -220,7 +218,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     player.swingArm(EnumHand.MAIN_HAND);
   }
 
-  private void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
+  protected void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
     EntityThrowable proj = createBullet(world, player, damage);
     this.launchProjectile(world, player, proj, velocityFactor * VELOCITY_MAX);
   }
