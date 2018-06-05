@@ -175,6 +175,8 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
+import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -266,10 +268,20 @@ public class BlockModule extends BaseModule implements IHasConfig {
   boolean fireFrostUsed = false;
   private boolean imbuer;
   private boolean dice;
+  private boolean enableSlingshot;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
+    if (enableSlingshot) {
+      Item slingshot_bullet = new Item();
+      ItemRegistry.register(slingshot_bullet, "slingshot_bullet");
+      ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
+      slingshot_weapon.setRepairItem(new ItemStack(slingshot_bullet));
+      ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
+      ModCyclic.instance.events.register(slingshot_weapon);
+    }
     if (dice) {
       BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityDice.class, "dice_te");
@@ -694,6 +706,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dice = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -54,6 +54,7 @@ import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull.FactoryBall;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt.FactoryShear;
+import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
@@ -160,6 +161,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
+    RenderingRegistry.registerEntityRenderingHandler(EntitySlingshot.class, new EntitySlingshot.FactoryFire());
   }
 
   @SideOnly(Side.CLIENT)

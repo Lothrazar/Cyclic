@@ -217,7 +217,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     UtilItemStack.damageItem(player, stack, shots);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
-    super.onUse(stack, player, world, EnumHand.MAIN_HAND);
+    player.swingArm(EnumHand.MAIN_HAND);
   }
 
   private void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
