@@ -23,12 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.wireless;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +39,7 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
     super(0);
     //.getServer().worldServers[id].loadedTileEntityList
     
-    List<TileEntity> list = this.world.getMinecraftServer().worlds[0].loadedTileEntityList;
+    //List<TileEntity> list = this.world.getMinecraftServer().worlds[0].loadedTileEntityList;
   }
 
   @Override

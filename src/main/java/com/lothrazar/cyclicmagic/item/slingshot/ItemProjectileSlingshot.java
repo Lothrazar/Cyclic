@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -47,8 +48,6 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
   public static final Item bullet = null;
   public ItemProjectileSlingshot() {
     super(1);
-    // TODO: mimic arrow strat instead of durability
-    //OR smart fast multi-repair? 
   }
 
   @Override
@@ -57,15 +56,13 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
       return;
     }
     EntityPlayer player = (EntityPlayer) entity;
-    //    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-    //      return;
-    //    }
+
     ItemStack itemstack = this.findAmmo(player);
     if (itemstack.isEmpty()) {
+      UtilChat.sendStatusMessage(player, "slingshot.ammoempty");
       return; //EMPTY SOUND?> TODO? 
     }
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
-    // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];
     float amountCharged = percentageCharged * MAX_CHARGE;
     float velocityFactor = percentageCharged * 1.5F;//flat upscale
@@ -89,10 +86,7 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
         itemstack.shrink(1);
       }
     }
-    //    UtilItemStack.damageItem(player, stack, 1);
-    //    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
-    // super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
-    //    player.swingArm(EnumHand.MAIN_HAND);
+
   }
 
   protected boolean isAmmo(ItemStack stack) {
@@ -125,18 +119,15 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
 
   @Override
   public IRecipe addRecipe() {
-    //    RecipeRegistry.addShapedOreRecipe(new ItemStack(getRepairItem().getItem(), 4),
-    //        "cb",
-    //        "bc",
-    //        'c', new ItemStack(Items.FIRE_CHARGE),
-    //        'b', "dyeLightBlue");
+    // TODO: bullet recipe
+
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " c ",
-        "fbc",
+        " ss",
+        "fbs",
         "ff ",
-        'c', Items.STRING,
-        'b', new ItemStack(Items.BLAZE_POWDER),
-        'f', new ItemStack(Items.FLINT));
+        's', Items.STRING,
+        'b', new ItemStack(Items.STICK),
+        'f', new ItemStack(Items.LEATHER));
   }
 
   @Override
@@ -144,8 +135,4 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
     return SoundEvents.ENTITY_SNOWBALL_THROW;
   }
 
-  //  @Override
-  //  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-  //    return getRepairItem().isItemEqualIgnoreDurability(toRepair);
-  //  }
 }

@@ -176,6 +176,7 @@ import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
+import com.lothrazar.cyclicmagic.item.slingshot.ItemPebble;
 import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
@@ -274,10 +275,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     super.onPreInit();
     if (enableSlingshot) {
-      Item slingshot_bullet = new Item();
+      ItemPebble slingshot_bullet = new ItemPebble();
       ItemRegistry.register(slingshot_bullet, "slingshot_bullet");
       ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
-      //      slingshot_weapon.setRepairItem(new ItemStack(slingshot_bullet));
+
       ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
       ModCyclic.instance.events.register(slingshot_weapon);
