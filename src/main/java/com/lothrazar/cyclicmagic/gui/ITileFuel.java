@@ -24,22 +24,9 @@
 package com.lothrazar.cyclicmagic.gui;
 public interface ITileFuel {
 
-  public boolean hasEnoughFuel();
+  public boolean hasEnoughEnergy();
 
-  public int getFuelCurrent();
+  public int getEnergyCurrent();
 
   public int getSpeed();
-
-  public void incrementSpeed();
-
-  public void decrementSpeed();
-
-  /**
-   * true means vertical
-   * 
-   * @return
-   */
-  public boolean getFuelDisplay();
-
-  public void toggleFuelDisplay();
 }

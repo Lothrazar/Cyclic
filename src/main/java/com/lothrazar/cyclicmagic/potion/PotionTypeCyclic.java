@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.potion;
 
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;

@@ -25,14 +25,14 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +61,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
   private static final float POWER_UPSCALE = 5.18F;
   private static final float MAX_POWER = 6.7F;
   private static final float VERTICAL_FACTOR = 2.88F;
-  private static final int TICKS_USING = 53000;
+  private static final int TICKS_USING = 53000;//bow has 72000
 
   public enum ActionType {
     FORWARD, REVERSE;
@@ -192,7 +192,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
 
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING;
   }
 
   @Override
@@ -206,9 +206,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
         "rsq",
         " rs",
         "t r",
-        't', "string",
-        'r', "dustGlowstone",
+        't', "gemDiamond",
+        'r', "glowstone", //why is this not blockGlowstone?
         's', "slimeball",
-        'q', "gemQuartz");
+        'q', "blockQuartz");
   }
 }

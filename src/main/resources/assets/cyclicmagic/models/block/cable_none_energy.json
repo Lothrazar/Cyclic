@@ -1,16 +1,8 @@
 {
     "__comment": "Copyright © InsomniaKitten 2017",
+	"parent":"cyclicmagic:parent/cable_none",
     "textures": {
         "particle": "cyclicmagic:blocks/cable_particle",
         "texture": "cyclicmagic:blocks/cable_energy"
-    },
-    "elements": [
-        {
-            "from": [ 6, 6, 6 ],
-            "to": [ 10, 10, 10 ],
-            "faces": {
-                "north": { "uv": [ 6, 6, 10, 10 ], "tintindex": 0, "texture": "#texture" }
-            }
-        }
-    ]
+    } 
 }

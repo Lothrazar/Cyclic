@@ -1,0 +1,16 @@
+{
+    "__comment": "Copyright © InsomniaKitten 2017 and Lothrazar 2018",
+    "textures": {
+        "particle": "cyclicmagic:blocks/cable_particle",
+        "texture": "cyclicmagic:blocks/cable_blocked"
+    },
+    "elements": [
+        {
+            "from": [ 5.4, 5.4, 5.4 ],
+            "to": [ 10.6, 10.6, 10.6 ],
+            "faces": {
+                "north": { "uv": [ 6, 6, 10, 10 ], "tintindex": 0, "texture": "#texture" }
+            }
+        }
+    ]
+}

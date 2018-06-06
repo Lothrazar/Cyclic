@@ -26,17 +26,19 @@ package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.EnchantBase;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -105,6 +107,9 @@ public class EnchantLaunch extends EnchantBase {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer player = Minecraft.getMinecraft().player;
+    if (player.isRiding() && player.getRidingEntity() instanceof EntityBoat) {
+      return;
+    }
     ItemStack feet = getFirstArmorStackWithEnchant(player);
     if (feet == null || feet.isEmpty() || player.isSneaking()) {
       return;
@@ -130,6 +135,7 @@ public class EnchantLaunch extends EnchantBase {
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
+          ModCyclic.logger.log("jump cooldown set");
           player.getCooldownTracker().setCooldown(feet.getItem(), COOLDOWN);
         }
         uses = 0;

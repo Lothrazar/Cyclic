@@ -24,134 +24,164 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockConveyor;
-import com.lothrazar.cyclicmagic.block.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
-import com.lothrazar.cyclicmagic.component.anvil.BlockAnvilAuto;
-import com.lothrazar.cyclicmagic.component.anvil.TileEntityAnvilAuto;
-import com.lothrazar.cyclicmagic.component.apple.BlockAppleCrop;
-import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.component.beacon.BlockBeaconPowered;
-import com.lothrazar.cyclicmagic.component.beacon.TileEntityBeaconPowered;
-import com.lothrazar.cyclicmagic.component.beaconpotion.BlockBeaconPotion;
-import com.lothrazar.cyclicmagic.component.beaconpotion.TileEntityBeaconPotion;
-import com.lothrazar.cyclicmagic.component.builder.BlockStructureBuilder;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
-import com.lothrazar.cyclicmagic.component.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.component.cable.bundle.BlockCableBundle;
-import com.lothrazar.cyclicmagic.component.cable.bundle.TileEntityCableBundle;
-import com.lothrazar.cyclicmagic.component.cable.energy.BlockPowerCable;
-import com.lothrazar.cyclicmagic.component.cable.energy.TileEntityCablePower;
-import com.lothrazar.cyclicmagic.component.cable.fluid.BlockCableFluid;
-import com.lothrazar.cyclicmagic.component.cable.fluid.TileEntityFluidCable;
-import com.lothrazar.cyclicmagic.component.cable.item.BlockCableItem;
-import com.lothrazar.cyclicmagic.component.cable.item.TileEntityItemCable;
-import com.lothrazar.cyclicmagic.component.clock.BlockRedstoneClock;
-import com.lothrazar.cyclicmagic.component.clock.TileEntityClock;
-import com.lothrazar.cyclicmagic.component.controlledminer.BlockMinerSmart;
-import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
-import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
-import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
-import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
-import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
-import com.lothrazar.cyclicmagic.component.dropper.BlockDropperExact;
-import com.lothrazar.cyclicmagic.component.dropper.TileEntityDropperExact;
-import com.lothrazar.cyclicmagic.component.enchanter.BlockEnchanter;
-import com.lothrazar.cyclicmagic.component.enchanter.TileEntityEnchanter;
-import com.lothrazar.cyclicmagic.component.entitydetector.BlockDetector;
-import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
-import com.lothrazar.cyclicmagic.component.fan.BlockFan;
-import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
-import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
-import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
-import com.lothrazar.cyclicmagic.component.fluidplacer.BlockFluidPlacer;
-import com.lothrazar.cyclicmagic.component.fluidplacer.TileEntityFluidPlacer;
-import com.lothrazar.cyclicmagic.component.fluidstorage.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.component.fluidstorage.ItemBlockBucket;
-import com.lothrazar.cyclicmagic.component.fluidstorage.TileEntityBucketStorage;
-import com.lothrazar.cyclicmagic.component.forester.BlockForester;
-import com.lothrazar.cyclicmagic.component.forester.TileEntityForester;
-import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
-import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
-import com.lothrazar.cyclicmagic.component.hydrator.BlockHydrator;
-import com.lothrazar.cyclicmagic.component.hydrator.ItemBlockHydrator;
-import com.lothrazar.cyclicmagic.component.hydrator.TileEntityHydrator;
-import com.lothrazar.cyclicmagic.component.itemsort.BlockItemCableSort;
-import com.lothrazar.cyclicmagic.component.itemsort.TileEntityItemCableSort;
-import com.lothrazar.cyclicmagic.component.library.BlockLibrary;
-import com.lothrazar.cyclicmagic.component.library.BlockLibraryController;
-import com.lothrazar.cyclicmagic.component.library.TileEntityLibrary;
-import com.lothrazar.cyclicmagic.component.magnet.BlockMagnet;
-import com.lothrazar.cyclicmagic.component.magnet.TileEntityMagnet;
-import com.lothrazar.cyclicmagic.component.magnetanti.BlockMagnetAnti;
-import com.lothrazar.cyclicmagic.component.magnetanti.TileEntityMagnetAnti;
-import com.lothrazar.cyclicmagic.component.miner.BlockMiner;
-import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
-import com.lothrazar.cyclicmagic.component.password.BlockPassword;
-import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
-import com.lothrazar.cyclicmagic.component.pattern.BlockPatternBuilder;
-import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
-import com.lothrazar.cyclicmagic.component.peat.BlockPeat;
-import com.lothrazar.cyclicmagic.component.peat.ItemBiomass;
-import com.lothrazar.cyclicmagic.component.peat.ItemCarbonCatalyst;
-import com.lothrazar.cyclicmagic.component.peat.ItemPeatFuel;
-import com.lothrazar.cyclicmagic.component.peat.farm.BlockPeatFarm;
-import com.lothrazar.cyclicmagic.component.peat.farm.TileEntityPeatFarm;
-import com.lothrazar.cyclicmagic.component.peat.generator.BlockPeatGenerator;
-import com.lothrazar.cyclicmagic.component.peat.generator.TileEntityPeatGenerator;
-import com.lothrazar.cyclicmagic.component.placer.BlockPlacer;
-import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
-import com.lothrazar.cyclicmagic.component.pump.energy.BlockEnergyPump;
-import com.lothrazar.cyclicmagic.component.pump.energy.TileEntityEnergyPump;
-import com.lothrazar.cyclicmagic.component.pump.fluid.BlockFluidPump;
-import com.lothrazar.cyclicmagic.component.pump.fluid.TileEntityFluidPump;
-import com.lothrazar.cyclicmagic.component.pump.item.BlockItemPump;
-import com.lothrazar.cyclicmagic.component.pump.item.TileEntityItemPump;
-import com.lothrazar.cyclicmagic.component.pylonexp.BlockXpPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.ItemBlockPylon;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffolding;
-import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingReplace;
-import com.lothrazar.cyclicmagic.component.scaffold.BlockScaffoldingResponsive;
-import com.lothrazar.cyclicmagic.component.scaffold.ItemBlockScaffolding;
-import com.lothrazar.cyclicmagic.component.screen.BlockScreen;
-import com.lothrazar.cyclicmagic.component.screen.TileEntityScreen;
-import com.lothrazar.cyclicmagic.component.sprinkler.BlockSprinkler;
-import com.lothrazar.cyclicmagic.component.sprinkler.TileSprinkler;
-import com.lothrazar.cyclicmagic.component.trash.BlockTrash;
-import com.lothrazar.cyclicmagic.component.trash.TileEntityTrash;
-import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
-import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
-import com.lothrazar.cyclicmagic.component.vacuum.BlockVacuum;
-import com.lothrazar.cyclicmagic.component.vacuum.TileEntityVacuum;
-import com.lothrazar.cyclicmagic.component.vector.BlockVectorPlate;
-import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
-import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
-import com.lothrazar.cyclicmagic.component.wandblaze.BlockFireSafe;
-import com.lothrazar.cyclicmagic.component.wireless.BlockRedstoneWireless;
-import com.lothrazar.cyclicmagic.component.wireless.ItemBlockWireless;
-import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessRec;
-import com.lothrazar.cyclicmagic.component.wireless.TileEntityWirelessTr;
-import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
-import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
+import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
+import com.lothrazar.cyclicmagic.block.anvilvoid.BlockVoidAnvil;
+import com.lothrazar.cyclicmagic.block.anvilvoid.TileEntityVoidAnvil;
+import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
+import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
+import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
+import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
+import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
+import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
+import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
+import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
+import com.lothrazar.cyclicmagic.block.bean.BlockCropMagicBean;
+import com.lothrazar.cyclicmagic.block.bean.ItemMagicBean;
+import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
+import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
+import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
+import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
+import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
+import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
+import com.lothrazar.cyclicmagic.block.cable.fluid.BlockCableFluid;
+import com.lothrazar.cyclicmagic.block.cable.fluid.TileEntityFluidCable;
+import com.lothrazar.cyclicmagic.block.cable.item.BlockCableItem;
+import com.lothrazar.cyclicmagic.block.cable.item.TileEntityItemCable;
+import com.lothrazar.cyclicmagic.block.cable.multi.BlockCableBundle;
+import com.lothrazar.cyclicmagic.block.cable.multi.TileEntityCableBundle;
+import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
+import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
+import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
+import com.lothrazar.cyclicmagic.block.collector.TileEntityVacuum;
+import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
+import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
+import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
+import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
+import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
+import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
+import com.lothrazar.cyclicmagic.block.dropper.TileEntityDropperExact;
+import com.lothrazar.cyclicmagic.block.enchanter.BlockEnchanter;
+import com.lothrazar.cyclicmagic.block.enchanter.TileEntityEnchanter;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.BlockLibrary;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.BlockLibraryController;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.TileEntityLibrary;
+import com.lothrazar.cyclicmagic.block.entitydetector.BlockDetector;
+import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.exppylon.BlockXpPylon;
+import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
+import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.block.fan.BlockFan;
+import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.fire.BlockFireFrost;
+import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
+import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
+import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
+import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
+import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
+import com.lothrazar.cyclicmagic.block.fluidplacer.BlockFluidPlacer;
+import com.lothrazar.cyclicmagic.block.fluidplacer.TileEntityFluidPlacer;
+import com.lothrazar.cyclicmagic.block.forester.BlockForester;
+import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
+import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
+import com.lothrazar.cyclicmagic.block.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.block.hydrator.ItemBlockHydrator;
+import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
+import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
+import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
+import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
+import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
+import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
+import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
+import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
+import com.lothrazar.cyclicmagic.block.password.BlockPassword;
+import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
+import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.pump.energy.BlockEnergyPump;
+import com.lothrazar.cyclicmagic.block.pump.energy.TileEntityEnergyPump;
+import com.lothrazar.cyclicmagic.block.pump.fluid.BlockFluidPump;
+import com.lothrazar.cyclicmagic.block.pump.fluid.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.block.pump.item.BlockItemPump;
+import com.lothrazar.cyclicmagic.block.pump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingReplace;
+import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingResponsive;
+import com.lothrazar.cyclicmagic.block.scaffolding.ItemBlockScaffolding;
+import com.lothrazar.cyclicmagic.block.screen.BlockScreen;
+import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
+import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
+import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
+import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
+import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer;
+import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
+import com.lothrazar.cyclicmagic.block.sprinkler.TileSprinkler;
+import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
+import com.lothrazar.cyclicmagic.block.tank.ItemBlockFluidTank;
+import com.lothrazar.cyclicmagic.block.tank.TileEntityFluidTank;
+import com.lothrazar.cyclicmagic.block.trash.BlockTrash;
+import com.lothrazar.cyclicmagic.block.trash.TileEntityTrash;
+import com.lothrazar.cyclicmagic.block.uncrafter.BlockUncrafting;
+import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
+import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
+import com.lothrazar.cyclicmagic.block.vector.ItemBlockVectorPlate;
+import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.wireless.BlockRedstoneWireless;
+import com.lothrazar.cyclicmagic.block.wireless.ItemBlockWireless;
+import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessRec;
+import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessTr;
+import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
+import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.core.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.energy.battery.BlockBattery;
+import com.lothrazar.cyclicmagic.energy.battery.ItemBlockBattery;
+import com.lothrazar.cyclicmagic.energy.battery.TileEntityBattery;
+import com.lothrazar.cyclicmagic.energy.battery.TileEntityBatteryInfinite;
+import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
+import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
+import com.lothrazar.cyclicmagic.energy.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.energy.peat.farm.BlockPeatFarm;
+import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.energy.peat.generator.BlockPeatGenerator;
+import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockModule extends BaseModule implements IHasConfig {
 
@@ -198,16 +228,111 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableInterdict;
   private boolean vectorPlate;
   private boolean enableApple;
+  private boolean enableBeans;
+  private boolean enableMilk;
+  private boolean enablePoison;
+  private boolean dispenserPowered;
+  private boolean anvilMagma;
+  private boolean battery;
+  private boolean etarget;
+  private boolean moon;
+  private boolean buttonLarge;
+  private boolean doorbell;
+  private boolean fire_starter;
+  private boolean void_anvil;
+  private boolean sound_player;
+  private boolean enableEnderBlaze;
+  /**
+   * - create the object (or just a Feature if none exists) and submit to _______ registry listing
+   * 
+   * - config runs: it syncConfig on listing
+   * 
+   * 
+   * 
+   * - new subInterface from IFCONFIG actually: also needs isEnabled() and preInit(), init(), postInit() - AN ACTUAL MODULE! HOW BOUT DAT!; call it Feature module
+   * 
+   * - onPreInit runs everywhere: loop through _______. check if is enabled and run their preInit Feature phase (doing exactly what this if statement does)
+   * 
+   * 
+   * 
+   * 
+   */
+  boolean fireDarkUsed = false;
+  boolean fireFrostUsed = false;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
+    //fire is a dependency block like liquids, used by many places
+    //janky but its ok
+    //
+    //    BlockImbuer imbuer = new BlockImbuer();
+    //    ModCyclic.instance.events.register(imbuer);
+    //    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+    if (sound_player) {
+      BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
+    }
+    if (fire_starter) {
+      BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
+      fireDarkUsed = true;
+      fireFrostUsed = true;
+    }
+    if (enableEnderBlaze) {
+      fireDarkUsed = true;
+      Item fire_dark_anim = new Item();
+      ItemRegistry.register(fire_dark_anim, "fire_dark_anim");
+      ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+      ender_blaze.setRepairItem(new ItemStack(fire_dark_anim));
+      ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
+      ModCyclic.instance.events.register(ender_blaze);
+    }
+    //TODO maybe a Fire REgistry LUL? 
+    if (fireFrostUsed) {
+      BlockRegistry.registerBlock(new BlockFireFrost(), "fire_frost", null);
+    }
+    if (fireDarkUsed) {
+      BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
+    }
+    if (void_anvil) {
+      BlockRegistry.registerBlock(new BlockVoidAnvil(), "void_anvil", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, "void_anvil_te");
+    }
+    if (buttonLarge) {
+      BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
+    }
+    if (doorbell) {
+      BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
+    }
+    if (moon) {
+      BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
+    }
+    if (etarget) {
+      BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+    }
+    if (enableMilk) {
+      FluidsRegistry.registerMilk();
+    }
+    if (enablePoison) {
+      FluidsRegistry.registerPoison();
+    }
+    if (enableBeans) {
+      BlockCropMagicBean sprout = new BlockCropMagicBean();
+      BlockRegistry.registerBlock(sprout, "sprout", null);
+      ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
+      ItemRegistry.register(sprout_seed, "sprout_seed");
+      LootTableRegistry.registerLoot(sprout_seed);
+      sprout.setSeed(sprout_seed);
+      //      AchievementRegistry.registerItemAchievement(sprout_seed);
+    }
     if (enableApple) {
       BlockAppleCrop apple = new BlockAppleCrop();
       BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
     }
-    BlockFireSafe fire = new BlockFireSafe();
-    BlockRegistry.registerBlock(fire, "fire_dark", null);
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
@@ -230,19 +355,54 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
     }
     if (enableConveyor) {
-      BlockConveyor plate_push = new BlockConveyor(SpeedType.MEDIUM);
+      //corner
+      BlockConveyorCorner plate_push_corner = new BlockConveyorCorner(SpeedType.MEDIUM);
+      BlockRegistry.registerBlock(plate_push_corner, null, "plate_push_corner", GuideCategory.BLOCKPLATE, false);
+      //angle
+      BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(SpeedType.MEDIUM);
+      BlockRegistry.registerBlock(plate_push_med_angle, null, "plate_push_med_angle", GuideCategory.BLOCKPLATE, false);
+      //main
+      BlockConveyor plate_push = new BlockConveyor(plate_push_corner, plate_push_med_angle);
       BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
-      //other speeds
-      BlockConveyor plate_push_fast = new BlockConveyor(SpeedType.LARGE);
+      plate_push_corner.setDrop(plate_push);
+      plate_push_med_angle.setDrop(plate_push);
+      //corner
+      BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE);
+      BlockRegistry.registerBlock(plate_push_fast_corner, null, "plate_push_fast_corner", GuideCategory.BLOCKPLATE, false);
+      //angle
+      BlockConveyorAngle plate_push_fast_angle = new BlockConveyorAngle(SpeedType.LARGE);
+      BlockRegistry.registerBlock(plate_push_fast_angle, null, "plate_push_fast_angle", GuideCategory.BLOCKPLATE, false);
+      //main
+      BlockConveyor plate_push_fast = new BlockConveyor(plate_push_fast_corner, plate_push_fast_angle);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
-      BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
+      plate_push_fast_corner.setDrop(plate_push_fast);
+      plate_push_fast_angle.setDrop(plate_push_fast);
+      //corner
+      BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL);
+      BlockRegistry.registerBlock(plate_push_slow_corner, null, "plate_push_slow_corner", GuideCategory.BLOCKPLATE, false);
+      // angle
+      BlockConveyorAngle plate_push_slow_angle = new BlockConveyorAngle(SpeedType.SMALL);
+      BlockRegistry.registerBlock(plate_push_slow_angle, null, "plate_push_slow_angle", GuideCategory.BLOCKPLATE, false);
+      //main
+      BlockConveyor plate_push_slow = new BlockConveyor(plate_push_slow_corner, plate_push_slow_angle);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
-      BlockConveyor plate_push_slowest = new BlockConveyor(SpeedType.TINY);
+      plate_push_slow_corner.setDrop(plate_push_slow);
+      plate_push_slow_angle.setDrop(plate_push_slow);
+      //corner
+      BlockConveyorCorner plate_push_slowest_corner = new BlockConveyorCorner(SpeedType.TINY);
+      BlockRegistry.registerBlock(plate_push_slowest_corner, null, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE, false);
+      //angle
+      BlockConveyorAngle plate_push_slowest_angle = new BlockConveyorAngle(SpeedType.TINY);
+      BlockRegistry.registerBlock(plate_push_slowest_angle, null, "plate_push_slowest_angle", GuideCategory.BLOCKPLATE, false);
+      //main
+      BlockConveyor plate_push_slowest = new BlockConveyor(plate_push_slowest_corner, plate_push_slowest_angle);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
+      plate_push_slowest_corner.setDrop(plate_push_slowest);
+      plate_push_slowest_angle.setDrop(plate_push_slowest);
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
-      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
+      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector");
       GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
@@ -355,28 +515,56 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
     }
+    Block block_anvil_magma = Blocks.ENCHANTING_TABLE;
+    if (anvilMagma) {
+      block_anvil_magma = new BlockAnvilMagma();
+      BlockRegistry.registerBlock(block_anvil_magma, "block_anvil_magma", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + "block_anvil_magma_te");
+    }
     if (anvil) {
-      BlockAnvilAuto block_anvil = new BlockAnvilAuto();
+      BlockAnvilAuto block_anvil = new BlockAnvilAuto(block_anvil_magma);
       BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
     }
     if (enablePeat) {
-      //peat
-      ModCyclic.instance.events.register(ItemCarbonCatalyst.class);
-      ItemRegistry.register(new ItemCarbonCatalyst(), "peat_carbon", GuideCategory.ITEM);
-      ItemRegistry.register(new ItemBiomass(), "peat_biomass", GuideCategory.ITEM);
-      Item peat_wet = new ItemPeatFuel(false);
-      ItemRegistry.register(peat_wet, "peat_wet", GuideCategory.ITEM);
-      Item peat_fuel = new ItemPeatFuel(true);
+      //peat 
+      ItemBiomass peat_biomass = new ItemBiomass();
+      ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
+      Item peat_fuel = new ItemPeatFuel();
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
-      GameRegistry.addSmelting(new ItemStack(peat_wet), new ItemStack(peat_fuel), 1);
-      BlockRegistry.registerBlock(new BlockPeat(false), "peat_unbaked", GuideCategory.BLOCKMACHINE);
-      BlockRegistry.registerBlock(new BlockPeat(true), "peat_baked", GuideCategory.BLOCKMACHINE);
+      //
+      RecipeHydrate.addRecipe(new RecipeHydrate(
+          new ItemStack[] {
+              new ItemStack(Items.WHEAT_SEEDS),
+              new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE),
+              new ItemStack(Blocks.LEAVES),
+              new ItemStack(Blocks.VINE) },
+          new ItemStack(peat_biomass, 8)));
+      //sapling one
+      RecipeHydrate.addRecipe(new RecipeHydrate(
+          new ItemStack[] {
+              new ItemStack(Items.REEDS),
+              new ItemStack(Blocks.TALLGRASS, 1, 1),
+              new ItemStack(Blocks.DEADBUSH),
+              new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE) },
+          new ItemStack(peat_biomass, 8)));
+      BlockPeat bog = new BlockPeat(null);
+      BlockRegistry.registerBlock(bog, "peat_unbaked", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockPeat(peat_fuel), "peat_baked", GuideCategory.BLOCKMACHINE);
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
       BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+      //
+    }
+    if (battery) {
+      BlockBattery battery = new BlockBattery(false);
+      BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
+      //cheater 
+      BlockRegistry.registerBlock(new BlockBattery(true), "battery_infinite", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
     if (btrash) {
       BlockTrash trash = new BlockTrash();
@@ -451,10 +639,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
     }
     if (enableBucketBlocks) {
       //tank
-      BlockRegistry.block_storeempty = new BlockBucketStorage();
-      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
-      GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, null, null);
+      BlockFluidTank block_storeempty = new BlockFluidTank();
+      BlockRegistry.registerBlock(block_storeempty, new ItemBlockFluidTank(block_storeempty), "block_storeempty", null);
+      GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
+      GuideRegistry.register(GuideCategory.BLOCK, block_storeempty, null, null);
     }
     if (fluidPlacer) {
       //fluid placer
@@ -486,13 +674,28 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
-    BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+    if (dispenserPowered) {
+      BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+    }
   }
 
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    buttonLarge = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
@@ -512,6 +715,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    anvilMagma = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -540,7 +744,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    BlockConveyor.keepEntityGrounded = config.getBoolean("SlimeConveyorKeepEntityGrounded", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will keep entities grounded so they dont get sudden bursts of speed when falling down a block onto a conveyor on a lower level");
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");

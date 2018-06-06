@@ -1,0 +1,5 @@
+
+/summon zombie ~ ~1 ~ {HandItems:[{Count:1,id:diamond_sword},{Count:1,id:shield}],ArmorItems:[{Count:1,id:diamond_boots},{Count:1,id:diamond_leggings},{Count:1,id:diamond_chestplate},{Count:1,id:diamond_helmet}],CustomNameVisible:1,CustomName:"darkphan"}
+
+
+ 

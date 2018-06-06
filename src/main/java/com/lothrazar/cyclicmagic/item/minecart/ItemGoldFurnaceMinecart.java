@@ -24,9 +24,8 @@
 package com.lothrazar.cyclicmagic.item.minecart;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
-import com.lothrazar.cyclicmagic.item.base.BaseItemMinecart;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.item.BaseItemMinecart;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

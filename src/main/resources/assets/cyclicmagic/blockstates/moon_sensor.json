@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "power=0":  { "model": "cyclicmagic:moon_sensor_1" },
+        "power=1":  { "model": "cyclicmagic:moon_sensor_1" },
+        "power=2":  { "model": "cyclicmagic:moon_sensor_3" },
+        "power=3":  { "model": "cyclicmagic:moon_sensor_3" },
+        "power=4":  { "model": "cyclicmagic:moon_sensor_5" },
+        "power=5":  { "model": "cyclicmagic:moon_sensor_5" },
+        "power=6":  { "model": "cyclicmagic:moon_sensor_7" },
+        "power=7":  { "model": "cyclicmagic:moon_sensor_7" },
+        "power=8":  { "model": "cyclicmagic:moon_sensor_9" },
+        "power=9":  { "model": "cyclicmagic:moon_sensor_9" },
+        "power=10":  { "model": "cyclicmagic:moon_sensor_11" },
+        "power=11":  { "model": "cyclicmagic:moon_sensor_11" },
+        "power=12":  { "model": "cyclicmagic:moon_sensor_13" },
+        "power=13":  { "model": "cyclicmagic:moon_sensor_13" },
+        "power=14":  { "model": "cyclicmagic:moon_sensor_15" },
+        "power=15":  { "model": "cyclicmagic:moon_sensor_15" }
+    }
+}

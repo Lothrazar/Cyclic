@@ -24,11 +24,11 @@
 package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.base.BaseTool;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -49,7 +49,7 @@ import net.minecraft.world.World;
 
 public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
 
-  private static final int DURABILITY = 256;
+  private static final int DURABILITY = 256 * 8;
   private static final int COOLDOWN = 10;
   private static final int RADIUS = 1;
 
@@ -104,12 +104,11 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "wdw",
+        "w w",
         "iwi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
-        'd', "gemDiamond",
-        'o', "obsidian",
-        'i', new ItemStack(Blocks.ICE));
+        'o', "ingotGold",
+        'i', "blockLapis");
   }
 }

@@ -1,0 +1,7 @@
+{
+    "parent": "block/fire_side",
+    "textures": {
+        "particle": "cyclicmagic:blocks/fire/fire_dark_layer_1",
+        "fire": "cyclicmagic:blocks/fire/fire_dark_layer_1"
+    }
+}

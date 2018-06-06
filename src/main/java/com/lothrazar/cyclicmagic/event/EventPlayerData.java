@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.Const;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;

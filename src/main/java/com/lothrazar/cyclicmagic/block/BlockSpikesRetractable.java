@@ -27,18 +27,19 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.base.BlockBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.data.Const;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.block.BlockBase;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -93,6 +94,22 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   public static EnumFacing getFacing(IBlockState state) {
     return state.getValue(FACING);
   }
+
+  @Override
+  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    return side == EnumFacing.DOWN;//super.isSideSolid(base_state, world, pos, side);
+  }
+
+  @Override
+  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
+    return BlockFaceShape.UNDEFINED;
+  }
+  //  @Override
+  //  private boolean canPlaceOn(World worldIn, BlockPos pos)
+  //  {
+  //      IBlockState state = worldIn.getBlockState(pos);
+  //      return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
+  //  }
 
   @Override
   public IBlockState getStateFromMeta(int meta) {

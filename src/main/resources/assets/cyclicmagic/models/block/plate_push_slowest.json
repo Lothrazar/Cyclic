@@ -1,6 +1,0 @@
-{
-    "parent": "cyclicmagic:parent/plate_horizontal",
-    "textures": {
-        "0": "cyclicmagic:blocks/plate_push_slowest"
-    }
-}

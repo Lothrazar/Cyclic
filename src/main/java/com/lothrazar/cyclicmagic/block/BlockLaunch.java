@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.block;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.base.BlockBaseFlat;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
+import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -59,7 +59,7 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   private SoundEvent sound;
 
   public BlockLaunch(LaunchType t, SoundEvent s) {
-    super(Material.IRON);//same as BlockSlime 
+    super(Material.IRON);
     this.setSoundType(SoundType.SLIME);
     sound = s;
     type = t;
@@ -94,7 +94,7 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    int fakePower = (int) Math.round(this.power * 10); //  String.format("%.1f", this.power))
+    int fakePower = Math.round(this.power * 10); //  String.format("%.1f", this.power))
     tooltip.add(UtilChat.lang("tile.plate_launch.tooltip" + fakePower));
   }
 
