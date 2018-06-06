@@ -33,6 +33,7 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -40,11 +41,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class EntitySlingshot extends EntityThrowableDispensable {
 
-  //Item.getByNameOrId("cyclicmagic:slingshot_bullet")
-  @GameRegistry.ObjectHolder(Const.MODRES + "slingshot_bullet")
+  @GameRegistry.ObjectHolder(Const.MODRES + "stone_pebble")
   public static final Item bullet = null;
 
-  static final float DAMAGE = 2;
+  static final float DAMAGE_MIN = 1.5F;
+  static final float DAMAGE_MAX = 2.8F;
 
   public static class FactoryFire implements IRenderFactory<EntitySlingshot> {
 
@@ -70,7 +71,8 @@ public class EntitySlingshot extends EntityThrowableDispensable {
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
-      mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), DAMAGE);
+      float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
+      mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
     }
     else {
       // drop as item

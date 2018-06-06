@@ -1257,3 +1257,13 @@ imbue.type.poison=Poison
 imbue.type.slowness=Slowness
 imbue.type.glowing=Glowing
 
+item.stone_pebble.name=Pebble
+item.stone_pebble.tooltip=Tiny stone for a slingshot
+item.stone_pebble.guide=Tiny stone for a slingshot
+slingshot.ammoempty=No pebbles left
+
+item.slingshot_weapon.name=Slingshot
+item.slingshot_weapon.tooltip=Fires pebbles
+item.slingshot_weapon.guide=Charge like a bow.  Shoot with pebbles in your inventory.  Ammo is any item with ore dict matching 'rock'.
+
+

@@ -92,6 +92,9 @@ public class ItemRegistry {
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
     for (Item item : ItemRegistry.itemList) {
       event.getRegistry().register(item);
+      if (item instanceof IHasOreDict) {
+        OreDictionary.registerOre(((IHasOreDict) item).getOreDict(), item);
+      }
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
         if (blockItem instanceof IHasOreDict) {
@@ -107,7 +110,6 @@ public class ItemRegistry {
           }
         }
         if (blockItem instanceof IHasRecipe) {
-          //ModCyclic.logger.info("item to block recipe?? " + blockItem);
           ((IHasRecipe) blockItem).addRecipe();
         }
       }

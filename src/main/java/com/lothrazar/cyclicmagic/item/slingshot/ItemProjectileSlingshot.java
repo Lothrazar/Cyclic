@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilOreDictionary;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -44,7 +45,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IHasRecipe {
 
-  @GameRegistry.ObjectHolder(Const.MODRES + "slingshot_bullet")
+  @GameRegistry.ObjectHolder(Const.MODRES + "stone_pebble")
   public static final Item bullet = null;
   public ItemProjectileSlingshot() {
     super(1);
@@ -90,7 +91,7 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
   }
 
   protected boolean isAmmo(ItemStack stack) {
-    return stack.getItem() == bullet;//TODO: oredict rock?
+    return UtilOreDictionary.doesMatchOreDict(stack, "rock");
   }
 
   private ItemStack findAmmo(EntityPlayer player) {
@@ -113,18 +114,15 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
 
   @Override
   public EntitySlingshot createBullet(World world, EntityPlayer player, float dmg) {
-    EntitySlingshot s = new EntitySlingshot(world, player);
-    return s;
+    return new EntitySlingshot(world, player);
   }
 
   @Override
   public IRecipe addRecipe() {
-    // TODO: bullet recipe
-
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " ss",
-        "fbs",
-        "ff ",
+        " bs",
+        " fb",
+        "b  ",
         's', Items.STRING,
         'b', new ItemStack(Items.STICK),
         'f', new ItemStack(Items.LEATHER));

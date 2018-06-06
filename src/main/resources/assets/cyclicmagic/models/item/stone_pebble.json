@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/slingshot_bullet"
+        "layer0": "cyclicmagic:items/stone_pebble"
     }
 }
