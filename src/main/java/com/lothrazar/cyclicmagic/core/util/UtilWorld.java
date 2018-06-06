@@ -48,8 +48,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -392,6 +394,16 @@ public class UtilWorld {
       }, center, relX, relY, relZ, red, green, blue);
     }
 
+    public static void renderBlockPhantom(World world, BlockPos pos, ItemStack stack, double relX, double relY, double relZ) {
+      if (stack.getItem() instanceof ItemBlock) {
+        BlockPos placePos = pos.up();
+        ItemBlock ib = (ItemBlock) stack.getItem();
+        IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+            stack.getItemDamage(), null, EnumHand.MAIN_HAND);
+        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ);
+      }
+    }
+
     public static void renderBlockPhantom(World world, BlockPos pos, IBlockState state
         , double relX, double relY, double relZ) {
       if (state instanceof IExtendedBlockState) {
@@ -418,6 +430,7 @@ public class UtilWorld {
       blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, worldRenderer, false);
       worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
+      //      GlStateManager.disableBlend();
       RenderHelper.enableStandardItemLighting();
       GlStateManager.popMatrix();
     }
