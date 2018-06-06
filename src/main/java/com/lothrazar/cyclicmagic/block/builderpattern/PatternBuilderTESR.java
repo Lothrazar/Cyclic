@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.builderpattern;
 import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -52,6 +53,8 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
       UtilWorld.RenderShadow.renderBlockList(tile.getSourceFrameOutline(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, .1F, .1F, .1F);
+      UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.DIAMOND_BLOCK.getDefaultState(), x, y + 4, z);
+      UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.REDSTONE_BLOCK.getDefaultState(), x, y + 6, z);
     }
   }
 }

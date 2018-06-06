@@ -35,9 +35,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
@@ -51,6 +54,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class UtilWorld {
 
@@ -135,12 +139,12 @@ public class UtilWorld {
     // function imported
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
     Map<IInventory, BlockPos> found = new HashMap<IInventory, BlockPos>();
-    int xMin = (int) player.getPosition().getX() - RADIUS;
-    int xMax = (int) player.getPosition().getX() + RADIUS;
-    int yMin = (int) player.getPosition().getY() - RADIUS;
-    int yMax = (int) player.getPosition().getY() + RADIUS;
-    int zMin = (int) player.getPosition().getZ() - RADIUS;
-    int zMax = (int) player.getPosition().getZ() + RADIUS;
+    int xMin = player.getPosition().getX() - RADIUS;
+    int xMax = player.getPosition().getX() + RADIUS;
+    int yMin = player.getPosition().getY() - RADIUS;
+    int yMax = player.getPosition().getY() + RADIUS;
+    int zMin = player.getPosition().getZ() - RADIUS;
+    int zMax = player.getPosition().getZ() + RADIUS;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
@@ -208,12 +212,12 @@ public class UtilWorld {
 
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
-    int xMin = (int) start.getX() - RADIUS;
-    int xMax = (int) start.getX() + RADIUS;
-    int yMin = (int) start.getY() - RADIUS;
-    int yMax = (int) start.getY() + RADIUS;
-    int zMin = (int) start.getZ() - RADIUS;
-    int zMax = (int) start.getZ() + RADIUS;
+    int xMin = start.getX() - RADIUS;
+    int xMax = start.getX() + RADIUS;
+    int yMin = start.getY() - RADIUS;
+    int yMax = start.getY() + RADIUS;
+    int zMin = start.getZ() - RADIUS;
+    int zMax = start.getZ() + RADIUS;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
@@ -386,6 +390,36 @@ public class UtilWorld {
           add(p);
         }
       }, center, relX, relY, relZ, red, green, blue);
+    }
+
+    public static void renderBlockPhantom(World world, BlockPos pos, IBlockState state
+        , double relX, double relY, double relZ) {
+      if (state instanceof IExtendedBlockState) {
+        return; //example: fluids
+      }
+      //System.out.println(pos + "   " + state.getBlock());
+      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder worldRenderer = tessellator.getBuffer();
+      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
+      GlStateManager.pushMatrix();
+      //this first translate is to make relative to TE and everything
+      GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
+      
+      RenderHelper.disableStandardItemLighting();
+      //      GlStateManager.blendFunc(770, 771);//solid
+      GlStateManager.blendFunc(770, 775);//transp
+      GlStateManager.enableBlend();
+
+      worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+      //move into frame and then back to zero - so world relative
+      worldRenderer.setTranslation(-.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
+
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, worldRenderer, false);
+      worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
+      tessellator.draw();
+      RenderHelper.enableStandardItemLighting();
+      GlStateManager.popMatrix();
     }
 
     public static void renderBlockList(List<BlockPos> blockPosList, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
