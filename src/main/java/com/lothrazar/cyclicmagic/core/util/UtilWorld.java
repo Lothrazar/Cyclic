@@ -394,43 +394,44 @@ public class UtilWorld {
       }, center, relX, relY, relZ, red, green, blue);
     }
 
-    public static void renderBlockPhantom(World world, BlockPos pos, ItemStack stack, double relX, double relY, double relZ) {
+    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ) {
       if (stack.getItem() instanceof ItemBlock) {
-        BlockPos placePos = pos.up();
         ItemBlock ib = (ItemBlock) stack.getItem();
-        IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+        IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, pos.getX(), pos.getY(), pos.getZ(),
             stack.getItemDamage(), null, EnumHand.MAIN_HAND);
         renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ);
       }
     }
 
-    public static void renderBlockPhantom(World world, BlockPos pos, IBlockState state
-        , double relX, double relY, double relZ) {
+    public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state
+        , final double relX, final double relY, final double relZ) {
       if (state instanceof IExtendedBlockState) {
         return; //example: fluids
       }
       //System.out.println(pos + "   " + state.getBlock());
-      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-      Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldRenderer = tessellator.getBuffer();
-      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
+
       GlStateManager.pushMatrix();
       //this first translate is to make relative to TE and everything
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
       
       RenderHelper.disableStandardItemLighting();
-      //      GlStateManager.blendFunc(770, 771);//solid
-      GlStateManager.blendFunc(770, 775);//transp
+      GlStateManager.blendFunc(770, 775);//transparency forced in oh yeah!
       GlStateManager.enableBlend();
+      GlStateManager.disableCull();
 
+      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder worldRenderer = tessellator.getBuffer();
+      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
       worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
-      worldRenderer.setTranslation(-.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
+      worldRenderer.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
 
-      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, worldRenderer, false);
+      //TODO: pos below is the targetPos, other rel and pos are TE 
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos.up(), worldRenderer, false);
       worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
-      //      GlStateManager.disableBlend();
+
       RenderHelper.enableStandardItemLighting();
       GlStateManager.popMatrix();
     }
