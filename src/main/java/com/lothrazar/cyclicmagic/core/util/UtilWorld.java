@@ -56,7 +56,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class UtilWorld {
 
@@ -405,9 +404,7 @@ public class UtilWorld {
 
     public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state
         , final double relX, final double relY, final double relZ) {
-      if (state instanceof IExtendedBlockState) {
-        return; //example: fluids
-      }
+
       final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
       Tessellator tessellator = Tessellator.getInstance();
@@ -425,10 +422,10 @@ public class UtilWorld {
 
       bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
-      bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
+      bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY() + 1, -.5 - pos.getZ());
 
       //TODO: pos below is the targetPos, other rel and pos are TE 
-      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos.up(), bufferBuilder, false);
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, bufferBuilder, false);
       bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
 
