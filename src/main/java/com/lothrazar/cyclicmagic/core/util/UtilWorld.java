@@ -408,6 +408,10 @@ public class UtilWorld {
       if (state instanceof IExtendedBlockState) {
         return; //example: fluids
       }
+      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
+      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferBuilder = tessellator.getBuffer();
       //System.out.println(pos + "   " + state.getBlock());
 
       GlStateManager.pushMatrix();
@@ -419,10 +423,6 @@ public class UtilWorld {
       GlStateManager.enableBlend();
       GlStateManager.disableCull();
 
-      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-      Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
-      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
       bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
       bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
