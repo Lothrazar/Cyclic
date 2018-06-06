@@ -421,15 +421,15 @@ public class UtilWorld {
 
       final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldRenderer = tessellator.getBuffer();
+      BufferBuilder bufferBuilder = tessellator.getBuffer();
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
-      worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+      bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
-      worldRenderer.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
+      bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
 
       //TODO: pos below is the targetPos, other rel and pos are TE 
-      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos.up(), worldRenderer, false);
-      worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos.up(), bufferBuilder, false);
+      bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
 
       RenderHelper.enableStandardItemLighting();
