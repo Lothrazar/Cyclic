@@ -394,48 +394,43 @@ public class UtilWorld {
       }, center, relX, relY, relZ, red, green, blue);
     }
 
-    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ, BlockPos target) {
+    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ,
+        BlockPos target, boolean isSolid) {
       if (stack.getItem() instanceof ItemBlock) {
         ItemBlock ib = (ItemBlock) stack.getItem();
         IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, pos.getX(), pos.getY(), pos.getZ(),
             stack.getItemDamage(), null, EnumHand.MAIN_HAND);
-        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ, target);
+        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ, target, isSolid);
       }
     }
 
-    public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state
-        , final double relX, final double relY, final double relZ, BlockPos target) {
+    public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state, final double relX, final double relY, final double relZ, BlockPos target, boolean isSolid) {
       int xOffset = target.getX() - pos.getX();
       int yOffset = target.getY() - pos.getY();
       int zOffset = target.getZ() - pos.getZ();
-
       final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
       Tessellator tessellator = Tessellator.getInstance();
       BufferBuilder bufferBuilder = tessellator.getBuffer();
-
       GlStateManager.pushMatrix();
       //this first translate is to make relative to TE and everything
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
-      
       RenderHelper.disableStandardItemLighting();
-      GlStateManager.blendFunc(770, 775);
-      //772 is very very transparent transparency forced in oh yeah!
-      //773 is quite solid
-      //775 is less bright transp
-      GlStateManager.enableBlend();
-      GlStateManager.disableCull();
+
+      if (isSolid == false) {
+        GlStateManager.blendFunc(770, 775);
+        GlStateManager.enableBlend();
+        GlStateManager.disableCull();
+      }
 
       bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
       bufferBuilder.setTranslation(-0.5 - pos.getX() + xOffset, -.5 - pos.getY() + yOffset, -.5 - pos.getZ() + zOffset);
-
       Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       //TODO: pos below is the targetPos, other rel and pos are TE 
       blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, bufferBuilder, false);
       bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
-
       RenderHelper.enableStandardItemLighting();
       GlStateManager.popMatrix();
     }

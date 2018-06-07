@@ -57,7 +57,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.xSize = getScreenSize().width();
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    //    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal(); 
+
     this.energyBar = new EnergyBar(this);
     energyBar.setX(158).setY(4).setHeight(42);
   }
@@ -156,6 +156,7 @@ public class GuiPattern extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRotation.displayString = this.tile.getRotationName();
     btnRender.displayString = tile.getField(Fields.RENDERPARTICLES) + "";
+    btnRender.setTooltip(tile.getName() + ".preview" + tile.getField(Fields.RENDERPARTICLES));
     btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
     btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
     btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";

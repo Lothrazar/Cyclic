@@ -1264,6 +1264,11 @@ slingshot.ammoempty=No pebbles left
 
 item.slingshot_weapon.name=Slingshot
 item.slingshot_weapon.tooltip=Fires pebbles
-item.slingshot_weapon.guide=Charge like a bow.  Shoot with pebbles in your inventory. 
+item.slingshot_weapon.guide=Charge like a bow.  Shoot with pebbles in your inventory.  Ammo is any item with ore dict matching 'rock'.
 
+
+tile.builder_pattern.name.preview0=None
+tile.builder_pattern.name.preview1=Outline
+tile.builder_pattern.name.preview2=Phantom Blocks
+tile.builder_pattern.name.preview3=Solid Blocks
 

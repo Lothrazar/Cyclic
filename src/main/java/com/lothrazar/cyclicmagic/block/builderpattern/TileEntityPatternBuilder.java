@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
@@ -170,7 +169,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
 
   @Override
   public void update() {
-    ModCyclic.logger.log("TOOD:3 state preview: off, outline, REAL is new(maybe phantom AND real ) .REMOVE ITilePreviewToggle ...   also Textbox offsets ");
     // OR maybe projector upgrade
     //and/or new projector block
     if (isRunning() == false) { // it works ONLY if its powered
@@ -433,6 +431,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
   }
 
+  public RenderType getRenderType() {
+    return RenderType.values()[this.renderParticles];
+  }
   @Override
   public int getField(int id) {
     return getField(Fields.values()[id]);
