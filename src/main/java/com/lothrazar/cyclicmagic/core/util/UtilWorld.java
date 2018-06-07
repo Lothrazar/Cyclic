@@ -410,14 +410,13 @@ public class UtilWorld {
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
       Tessellator tessellator = Tessellator.getInstance();
       BufferBuilder bufferBuilder = tessellator.getBuffer();
-      //System.out.println(pos + "   " + state.getBlock());
 
       GlStateManager.pushMatrix();
       //this first translate is to make relative to TE and everything
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
       
       RenderHelper.disableStandardItemLighting();
-      GlStateManager.blendFunc(770, 775);//transparency forced in oh yeah!
+      GlStateManager.blendFunc(770, 772);//transparency forced in oh yeah!
       GlStateManager.enableBlend();
       GlStateManager.disableCull();
 
