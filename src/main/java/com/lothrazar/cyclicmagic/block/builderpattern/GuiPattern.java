@@ -48,6 +48,7 @@ public class GuiPattern extends GuiBaseContainer {
   private ButtonTileEntityField btnFlipZ;
   private ButtonTileEntityField btnFlipY;
   private ButtonTileEntityField btnFlipX;
+  private ButtonTileEntityField btnRender;
 
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
@@ -56,7 +57,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.xSize = getScreenSize().width();
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
+    //    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal(); 
     this.energyBar = new EnergyBar(this);
     energyBar.setX(158).setY(4).setHeight(42);
   }
@@ -65,6 +66,13 @@ public class GuiPattern extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 2;
+    int x = this.guiLeft + Const.PAD / 2;
+    int y = this.guiTop + Const.PAD / 2 + 22;
+    btnRender = new ButtonTileEntityField(id++,
+        x,
+        y, this.tile.getPos(), Fields.RENDERPARTICLES.ordinal());
+    btnRender.width = btnRender.height = 18;
+    this.addButton(btnRender);
     /////redstone button
     //button rotation 
     btnRotation = new ButtonTileEntityField(id++,
@@ -147,6 +155,7 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRotation.displayString = this.tile.getRotationName();
+    btnRender.displayString = tile.getField(Fields.RENDERPARTICLES) + "";
     btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
     btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
     btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";

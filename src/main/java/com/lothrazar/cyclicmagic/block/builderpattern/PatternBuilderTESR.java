@@ -23,11 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.builderpattern;
 
+import java.util.List;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -52,10 +55,26 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
       UtilWorld.RenderShadow.renderBlockPos(tile.getSourceCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, 0F, 0F, 0.5F);
       UtilWorld.RenderShadow.renderBlockPos(tile.getTargetCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, .5F, 0, 0);
       UtilWorld.RenderShadow.renderBlockList(tile.getSourceFrameOutline(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+      //then do target outline
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
-      UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, .1F, .1F, .1F);
     }
-
-    UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), new ItemStack(Blocks.DIAMOND_BLOCK), x, y, z, te.getPos().up());
+    else {
+      List<BlockPos> targetShape = tile.getTargetShape();
+      if (targetShape.size() > 0) {
+        //do target shape
+        //OLD WAY WAS
+        // UtilWorld.RenderShadow.renderBlockList(targetShape, te.getPos(), x, y, z, .1F, .1F, .1F);
+        try {
+          Map<BlockPos, IBlockState> shapeModel = tile.getShapeFancy(tile.getSourceShape(), targetShape);
+          for (Map.Entry<BlockPos, IBlockState> entry : shapeModel.entrySet()) {
+            //
+            UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), entry.getValue(), x, y, z, entry.getKey());
+          }
+        }
+        catch (Exception e) {
+          ModCyclic.logger.error("render blockModel phantom error", e);
+        }
+      }
+    }
   }
 }

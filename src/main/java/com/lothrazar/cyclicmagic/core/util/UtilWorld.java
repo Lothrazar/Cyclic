@@ -419,7 +419,10 @@ public class UtilWorld {
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
       
       RenderHelper.disableStandardItemLighting();
-      GlStateManager.blendFunc(770, 772);//transparency forced in oh yeah!
+      GlStateManager.blendFunc(770, 775);
+      //772 is very very transparent transparency forced in oh yeah!
+      //773 is quite solid
+      //775 is less bright transp
       GlStateManager.enableBlend();
       GlStateManager.disableCull();
 

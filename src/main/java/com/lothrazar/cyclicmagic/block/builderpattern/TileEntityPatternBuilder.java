@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
@@ -74,6 +75,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int rotation = 0;//enum value of Rotation
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
 
+  enum RenderType {
+    OFF, OUTLINE, PHANTOM, SOLID;
+  }
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
   }
@@ -166,6 +170,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
 
   @Override
   public void update() {
+    ModCyclic.logger.log("TOOD:3 state preview: off, outline, REAL is new(maybe phantom AND real ) .REMOVE ITilePreviewToggle ...   also Textbox offsets ");
+    // OR maybe projector upgrade
+    //and/or new projector block
     if (isRunning() == false) { // it works ONLY if its powered
       return;
     }
@@ -241,6 +248,18 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getSourceCenter();
     return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+  }
+
+  public Map<BlockPos, IBlockState> getShapeFancy(List<BlockPos> sourceShape, List<BlockPos> targetShape) {
+    Map<BlockPos, IBlockState> map = new HashMap<BlockPos, IBlockState>();
+    for (int i = 0; i < targetShape.size(); i++) {
+      BlockPos src = sourceShape.get(i);
+      BlockPos targ = targetShape.get(i);
+      if (world.isAirBlock(targ))//dont render on top of thing
+        map.put(targ, world.getBlockState(src));
+    }
+
+    return map;
   }
 
   public List<BlockPos> getTargetShape() {
@@ -397,7 +416,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         this.needsRedstone = value;
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % RenderType.values().length;
       break;
       case ROTATION:
         this.rotation = value % Rotation.values().length;
@@ -457,4 +476,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public List<BlockPos> getShape() {
     return getTargetShape();//special case for this block, not used here
   }
+
+
 }
