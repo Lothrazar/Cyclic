@@ -38,22 +38,22 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
 
   public PacketStorageBag() {}
 
-  private int size;
+  private String type;
 
-  public PacketStorageBag(ItemStorageBag.StorageActionType type) {
-    size = type.ordinal();
+  public PacketStorageBag(String type) {
+    this.type = type;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
-    size = tags.getInteger("size");
+    type = tags.getString("type");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
-    tags.setInteger("size", size);
+    tags.setString("type", type);
     ByteBufUtils.writeTag(buf, tags);
   }
 
@@ -62,8 +62,14 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
     EntityPlayer player = ctx.getServerHandler().player;
     ItemStack stack = player.getHeldItemMainhand();
     if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
-      ItemStorageBag.StorageActionType.toggle(stack);
-      UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
+      if (message.type.equals("action")) {
+        ItemStorageBag.StorageActionType.toggle(stack);
+        UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
+      }
+      else if (message.type.equals("colour")) {
+        //
+        ItemStorageBag.StorageActionType.toggleColor(stack);
+      }
     }
     return null;
   }

@@ -33,6 +33,7 @@ import net.minecraft.client.gui.GuiButton;
 public class GuiStorage extends GuiBaseContainer {
 
   private GuiButtonTooltip buttonToggle;
+  private GuiButtonTooltip buttonColour;
 
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
@@ -48,13 +49,25 @@ public class GuiStorage extends GuiBaseContainer {
     buttonToggle = new GuiButtonTooltip(id++, x, y, 10, 10, "");
     buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
+    buttonColour = new GuiButtonTooltip(id++, x, y + 20, 10, 10, "");
+    buttonColour.setTooltip("item.storage_bag.color");
+    this.addButton(buttonColour);
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {
       // packet 
-      ModCyclic.network.sendToServer(new PacketStorageBag());
+      ModCyclic.network.sendToServer(new PacketStorageBag("action"));
+    }
+    if (button.id == this.buttonColour.id) {
+      // packet 
+      ModCyclic.network.sendToServer(new PacketStorageBag("colour"));
+      //      ItemStack stack = player.getHeldItemMainhand();
+      //      if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
+      //
+      //        ItemStorageBag.StorageActionType.toggleColor(stack);
+      //      }
     }
   }
 }
