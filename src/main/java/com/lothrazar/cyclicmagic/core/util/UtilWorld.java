@@ -41,6 +41,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
@@ -424,6 +425,7 @@ public class UtilWorld {
       //move into frame and then back to zero - so world relative
       bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY() + 1, -.5 - pos.getZ());
 
+      Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       //TODO: pos below is the targetPos, other rel and pos are TE 
       blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, bufferBuilder, false);
       bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
