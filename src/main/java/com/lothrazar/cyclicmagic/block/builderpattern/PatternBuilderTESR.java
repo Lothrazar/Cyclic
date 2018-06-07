@@ -55,9 +55,7 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, .1F, .1F, .1F);
     }
-    //SUPER FAKE TESTING RENDER
-    //    UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.DIAMOND_BLOCK.getDefaultState(), x, y + 3, z);
-    //    UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.EMERALD_BLOCK.getDefaultState(), x, y + 5, z);
-    UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), new ItemStack(Blocks.DIAMOND_BLOCK), x, y, z);
+
+    UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), new ItemStack(Blocks.DIAMOND_BLOCK), x, y, z, te.getPos().up());
   }
 }

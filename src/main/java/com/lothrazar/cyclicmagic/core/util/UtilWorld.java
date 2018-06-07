@@ -394,17 +394,20 @@ public class UtilWorld {
       }, center, relX, relY, relZ, red, green, blue);
     }
 
-    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ) {
+    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ, BlockPos target) {
       if (stack.getItem() instanceof ItemBlock) {
         ItemBlock ib = (ItemBlock) stack.getItem();
         IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, pos.getX(), pos.getY(), pos.getZ(),
             stack.getItemDamage(), null, EnumHand.MAIN_HAND);
-        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ);
+        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ, target);
       }
     }
 
     public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state
-        , final double relX, final double relY, final double relZ) {
+        , final double relX, final double relY, final double relZ, BlockPos target) {
+      int xOffset = target.getX() - pos.getX();
+      int yOffset = target.getY() - pos.getY();
+      int zOffset = target.getZ() - pos.getZ();
 
       final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
@@ -422,7 +425,7 @@ public class UtilWorld {
 
       bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
-      bufferBuilder.setTranslation(-0.5 - pos.getX(), -.5 - pos.getY() + 1, -.5 - pos.getZ());
+      bufferBuilder.setTranslation(-0.5 - pos.getX() + xOffset, -.5 - pos.getY() + yOffset, -.5 - pos.getZ() + zOffset);
 
       Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       //TODO: pos below is the targetPos, other rel and pos are TE 

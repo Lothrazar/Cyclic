@@ -182,7 +182,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = shapeTarget.get(pTarget);//convertPosSrcToTarget(posSrc);
+      BlockPos posTarget = shapeTarget.get(pTarget);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
