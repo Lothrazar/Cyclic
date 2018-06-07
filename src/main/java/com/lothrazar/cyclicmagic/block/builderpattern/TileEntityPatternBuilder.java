@@ -168,6 +168,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   @Override
+  public boolean shouldRenderInPass(int pass) {
+    return pass < 2;
+  }
+
+  @Override
   public void update() {
     // OR maybe projector upgrade
     //and/or new projector block

@@ -422,7 +422,6 @@ public class UtilWorld {
         GlStateManager.enableBlend();
         GlStateManager.disableCull();
       }
-
       bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
       bufferBuilder.setTranslation(-0.5 - pos.getX() + xOffset, -.5 - pos.getY() + yOffset, -.5 - pos.getZ() + zOffset);
