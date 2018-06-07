@@ -239,7 +239,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enablePlayerLauncher;
   private boolean evokerFang;
   private boolean enderEyeReuse;
-  public static ItemStorageBag storage_bag;//ref by ContainerStorage
+  public static ItemStorageBag storage_bag = null;//ref by ContainerStorage
   private boolean enableEmeraldGear;
   private boolean enableSandstoneTools;
   private boolean enablePurpleGear;
@@ -458,7 +458,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
-      // ItemRegistry.registerWithJeiDescription(storage_bag);
+
     }
     if (enableCarbonPaper) {
       ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
@@ -807,6 +807,10 @@ public class ItemModule extends BaseModule implements IHasConfig {
     }
   }
 
+  @Override
+  public void onInit() {
+    ModCyclic.proxy.initColors();
+  }
   @Override
   public void onPostInit() {
     for (BaseItemProjectile item : projectiles) {

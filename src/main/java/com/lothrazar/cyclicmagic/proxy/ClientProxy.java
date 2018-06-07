@@ -59,6 +59,7 @@ import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -73,6 +74,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -346,4 +348,20 @@ public class ClientProxy extends CommonProxy {
       distance = f;
     }
   }
+
+  @Override
+  public void initColors() {
+    if (ItemModule.storage_bag != null) {
+      Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
+          (stack, tintIndex) -> {
+            if (tintIndex == 0) {//layer zero is outline, ignore this 
+              return 0xFFFFFFFF;
+            }
+            //layer 1 is overlay 
+            return EnumDyeColor.RED.getColorValue();
+            //TODO: save nbt into it to swap this out yeaaa
+          }, ItemModule.storage_bag);
+    }
+  }
+
 }
