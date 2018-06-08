@@ -1267,3 +1267,25 @@ item.slingshot_weapon.tooltip=Fires pebbles
 item.slingshot_weapon.guide=Charge like a bow.  Shoot with pebbles in your inventory.  Ammo is any item with ore dict matching 'rock'.
 
 
+tile.builder_pattern.name.preview0=None
+tile.builder_pattern.name.preview1=Outline
+tile.builder_pattern.name.preview2=Phantom Blocks
+tile.builder_pattern.name.preview3=Solid Blocks
+
+colour.red.name=Red
+colour.green.name=Green
+colour.brown.name=Brown
+colour.blue.name=Blue
+colour.purple.name=Purple
+colour.cyan.name=Cyan
+colour.silver.name=Light Gray
+colour.gray.name=Gray
+colour.pink.name=Pink
+colour.lime.name=Lime
+colour.yellow.name=Yellow
+colour.lightBlue.name=Light Blue
+colour.magenta.name=Magenta
+colour.orange.name=Orange
+colour.white.name=White
+colour.black.name=Black
+

@@ -23,10 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.builderpattern;
 
+import java.util.List;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder.RenderType;
 import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,14 +52,35 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
       return;
     }
     TileEntityPatternBuilder tile = ((TileEntityPatternBuilder) te);
-    if (tile.isPreviewVisible()) {
+    RenderType render = tile.getRenderType();
+    if (render == RenderType.OFF) {
+      return;
+    }
+    List<BlockPos> targetShape = tile.getTargetShape();
+    if (render == RenderType.OUTLINE) {
       UtilWorld.RenderShadow.renderBlockPos(tile.getSourceCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, 0F, 0F, 0.5F);
       UtilWorld.RenderShadow.renderBlockPos(tile.getTargetCenter().up(tile.getHeight() / 2), te.getPos(), x, y, z, .5F, 0, 0);
       UtilWorld.RenderShadow.renderBlockList(tile.getSourceFrameOutline(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+      //then do target outline
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
-      UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, .1F, .1F, .1F);
-      UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.DIAMOND_BLOCK.getDefaultState(), x, y + 4, z);
-      UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), Blocks.REDSTONE_BLOCK.getDefaultState(), x, y + 6, z);
+      UtilWorld.RenderShadow.renderBlockList(targetShape, te.getPos(), x, y, z, .1F, .1F, .1F);
+    }
+    else if (targetShape.size() > 0) {
+      boolean isSolid = render == RenderType.SOLID;
+      //do target shape
+      //OLD WAY WAS
+      // UtilWorld.RenderShadow.renderBlockList(targetShape, te.getPos(), x, y, z, .1F, .1F, .1F);
+      try {
+        Map<BlockPos, IBlockState> shapeModel = tile.getShapeFancy(tile.getSourceShape(), targetShape);
+        for (Map.Entry<BlockPos, IBlockState> entry : shapeModel.entrySet()) {
+          //
+          UtilWorld.RenderShadow.renderBlockPhantom(te.getWorld(), te.getPos(), entry.getValue(), x, y, z,
+              entry.getKey(), isSolid);
+        }
+      }
+      catch (Exception e) {
+        ModCyclic.logger.error("render blockModel phantom error", e);
+      }
     }
   }
 }

@@ -74,6 +74,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int rotation = 0;//enum value of Rotation
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
 
+  enum RenderType {
+    OFF, OUTLINE, PHANTOM, SOLID;
+  }
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
   }
@@ -165,7 +168,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   @Override
+  public boolean shouldRenderInPass(int pass) {
+    return pass < 2;
+  }
+
+  @Override
   public void update() {
+    // OR maybe projector upgrade
+    //and/or new projector block
     if (isRunning() == false) { // it works ONLY if its powered
       return;
     }
@@ -182,7 +192,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = shapeTarget.get(pTarget);//convertPosSrcToTarget(posSrc);
+      BlockPos posTarget = shapeTarget.get(pTarget);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
@@ -241,6 +251,18 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getSourceCenter();
     return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+  }
+
+  public Map<BlockPos, IBlockState> getShapeFancy(List<BlockPos> sourceShape, List<BlockPos> targetShape) {
+    Map<BlockPos, IBlockState> map = new HashMap<BlockPos, IBlockState>();
+    for (int i = 0; i < targetShape.size(); i++) {
+      BlockPos src = sourceShape.get(i);
+      BlockPos targ = targetShape.get(i);
+      if (world.isAirBlock(targ))//dont render on top of thing
+        map.put(targ, world.getBlockState(src));
+    }
+
+    return map;
   }
 
   public List<BlockPos> getTargetShape() {
@@ -397,7 +419,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         this.needsRedstone = value;
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % RenderType.values().length;
       break;
       case ROTATION:
         this.rotation = value % Rotation.values().length;
@@ -414,6 +436,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
   }
 
+  public RenderType getRenderType() {
+    return RenderType.values()[this.renderParticles];
+  }
   @Override
   public int getField(int id) {
     return getField(Fields.values()[id]);
@@ -457,4 +482,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public List<BlockPos> getShape() {
     return getTargetShape();//special case for this block, not used here
   }
+
+
 }

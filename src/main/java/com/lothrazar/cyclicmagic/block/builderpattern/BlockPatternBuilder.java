@@ -68,6 +68,7 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
     return new TileEntityPatternBuilder();
   }
 
+  @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
     if (tileentity instanceof IInventory) {

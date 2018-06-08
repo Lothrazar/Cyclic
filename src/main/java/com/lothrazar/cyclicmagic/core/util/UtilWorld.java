@@ -41,6 +41,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
@@ -48,13 +49,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class UtilWorld {
 
@@ -392,31 +394,41 @@ public class UtilWorld {
       }, center, relX, relY, relZ, red, green, blue);
     }
 
-    public static void renderBlockPhantom(World world, BlockPos pos, IBlockState state
-        , double relX, double relY, double relZ) {
-      if (state instanceof IExtendedBlockState) {
-        return; //example: fluids
+    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ,
+        BlockPos target, boolean isSolid) {
+      if (stack.getItem() instanceof ItemBlock) {
+        ItemBlock ib = (ItemBlock) stack.getItem();
+        IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, pos.getX(), pos.getY(), pos.getZ(),
+            stack.getItemDamage(), null, EnumHand.MAIN_HAND);
+        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ, target, isSolid);
       }
-      //System.out.println(pos + "   " + state.getBlock());
+    }
+
+    public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state, final double relX, final double relY, final double relZ, BlockPos target, boolean isSolid) {
+      int xOffset = target.getX() - pos.getX();
+      int yOffset = target.getY() - pos.getY();
+      int zOffset = target.getZ() - pos.getZ();
       final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-      Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldRenderer = tessellator.getBuffer();
       IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferBuilder = tessellator.getBuffer();
       GlStateManager.pushMatrix();
       //this first translate is to make relative to TE and everything
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
-      
       RenderHelper.disableStandardItemLighting();
-      //      GlStateManager.blendFunc(770, 771);//solid
-      GlStateManager.blendFunc(770, 775);//transp
-      GlStateManager.enableBlend();
 
-      worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+      if (isSolid == false) {
+        GlStateManager.blendFunc(770, 775);
+        GlStateManager.enableBlend();
+        GlStateManager.disableCull();
+      }
+      bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
       //move into frame and then back to zero - so world relative
-      worldRenderer.setTranslation(-.5 - pos.getX(), -.5 - pos.getY(), -.5 - pos.getZ());
-
-      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, worldRenderer, false);
-      worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
+      bufferBuilder.setTranslation(-0.5 - pos.getX() + xOffset, -.5 - pos.getY() + yOffset, -.5 - pos.getZ() + zOffset);
+      Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+      //TODO: pos below is the targetPos, other rel and pos are TE 
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, bufferBuilder, false);
+      bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
       tessellator.draw();
       RenderHelper.enableStandardItemLighting();
       GlStateManager.popMatrix();
