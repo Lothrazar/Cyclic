@@ -244,7 +244,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_STORAGE:
-        return new ContainerStorage(player, player.inventory, new InventoryStorage(player));
+        return new ContainerStorage(player, new InventoryStorage(player));
       case GUI_INDEX_WAYPOINT:
         return null;
       case GUI_INDEX_BUILDER:
@@ -467,7 +467,7 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_STORAGE:
-          return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player)));
+          return new GuiStorage(new ContainerStorage(player, new InventoryStorage(player)), player);
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
         case GUI_INDEX_BUILDER:

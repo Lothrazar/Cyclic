@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemModule;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -48,7 +47,7 @@ public class ContainerStorage extends ContainerBase {
   final static int rows = 7;
   final static int cols = 11;
 
-  public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
+  public ContainerStorage(EntityPlayer par1Player, InventoryStorage invoWand) {
     this.setScreenSize(ScreenSize.SACK);
     this.player = par1Player;
     bagReference = player.getHeldItemMainhand();
@@ -64,7 +63,7 @@ public class ContainerStorage extends ContainerBase {
         this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
       }
     }
-    this.bindPlayerInventory(playerInventory);
+    this.bindPlayerInventory(player.inventory);
   }
 
   @Override

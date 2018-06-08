@@ -28,16 +28,20 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 
 public class GuiStorage extends GuiBaseContainer {
 
   private GuiButtonTooltip buttonToggle;
+  private EntityPlayer player;
 
 
-  public GuiStorage(ContainerStorage containerItem) {
+  public GuiStorage(ContainerStorage containerItem, EntityPlayer player) {
     super(containerItem);
+    this.player = player;
     this.setScreenSize(ScreenSize.SACK);
   }
 
@@ -50,11 +54,14 @@ public class GuiStorage extends GuiBaseContainer {
     buttonToggle = new GuiButtonTooltip(75, x, y, 10, 10, "");
     buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
-    int i = 1;
+    int i = 0;
+    int size = 12;
     for (EnumDyeColor color : EnumDyeColor.values()) {
-      GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - 20, y + 10 * i,
-          10, 10, "");
-      buttonColour.setTooltip("item.storage_bag.color." + color.getUnlocalizedName());
+      GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
+          size, size, color.name().substring(0, 1));
+      buttonColour.setTooltip(UtilChat.lang("colour." + color.getUnlocalizedName() + ".name"));
+
+      buttonColour.packedFGColour = color.getColorValue();
       this.addButton(buttonColour);
       i++;
     }
@@ -66,7 +73,7 @@ public class GuiStorage extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketStorageBag());
     }
     else {
-      //color.getDyeDamage()
+      ItemStorageBag.StorageActionType.setColour(player.getHeldItemMainhand(), button.id);
       ModCyclic.network.sendToServer(new PacketColorStack(button.id));
     }
   }
