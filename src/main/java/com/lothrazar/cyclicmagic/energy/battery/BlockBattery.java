@@ -7,6 +7,9 @@ import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,15 +21,35 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
+  public static final PropertyEnum<ModularAmountOverlay> AMOUNT = PropertyEnum.create("amount", ModularAmountOverlay.class);
   private boolean isCreative;
+
+  enum ModularAmountOverlay implements IStringSerializable {
+    AMOUNT_NONE("none"), AMOUNT_EMPTY("empty"), AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_R0("r0"), AMOUNT_R1("r1"), AMOUNT_R2("r2"), AMOUNT_R3("r3"), AMOUNT_R4("r4"), AMOUNT_R5("r5"), AMOUNT_R6("r6"), AMOUNT_R7("r7");
+
+    private final String name;
+
+    ModularAmountOverlay(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
+  }
 
   public BlockBattery(boolean creat) {
     super(Material.ROCK);
@@ -91,6 +114,40 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     }
     ret.add(stack);
     return ret;
+  }
+
+  @Override
+  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    TileEntity tile = world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
+    if (tile instanceof TileEntityBattery) {
+      ModularAmountOverlay p = ModularAmountOverlay.AMOUNT_G3;
+      return state.withProperty(AMOUNT, p);
+      //return state;
+    }
+    return super.getActualState(state, world, pos);
+  }
+
+  @Override
+  protected BlockStateContainer createBlockState() {
+    //  return super.createBlockState();
+    return new BlockStateContainer(this, new IProperty[] { AMOUNT });
+  }
+
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    return getDefaultState();
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    return 0;
+  }
+
+  @Override
+  public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+    return super.canRenderInLayer(state, layer);
+    //     return layer == BlockRenderLayer.SOLID ;
+    // return layer == BlockRenderLayer.CUTOUT;
   }
 
   @Override
