@@ -33,15 +33,15 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
-  public static final PropertyEnum<ModularAmountOverlay> AMOUNT = PropertyEnum.create("amount", ModularAmountOverlay.class);
+  public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
   private boolean isCreative;
 
-  enum ModularAmountOverlay implements IStringSerializable {
-    AMOUNT_NONE("none"), AMOUNT_EMPTY("empty"), AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_R0("r0"), AMOUNT_R1("r1"), AMOUNT_R2("r2"), AMOUNT_R3("r3"), AMOUNT_R4("r4"), AMOUNT_R5("r5"), AMOUNT_R6("r6"), AMOUNT_R7("r7");
+  enum EnergyFlatMap implements IStringSerializable {
+    AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_R0("r0"), AMOUNT_R1("r1"), AMOUNT_R2("r2"), AMOUNT_R3("r3"), AMOUNT_R4("r4"), AMOUNT_R5("r5"), AMOUNT_R6("r6"), AMOUNT_R7("r7");
 
     private final String name;
 
-    ModularAmountOverlay(String name) {
+    EnergyFlatMap(String name) {
       this.name = name;
     }
 
@@ -119,8 +119,42 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
     TileEntity tile = world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
-    if (tile instanceof TileEntityBattery) {
-      ModularAmountOverlay p = ModularAmountOverlay.AMOUNT_G3;
+    if (tile instanceof TileEntityBattery) {//not infinite battery
+      IEnergyStorage handlerHere = tile.getCapability(CapabilityEnergy.ENERGY, null);
+      double percent = (double) handlerHere.getEnergyStored() / (double) handlerHere.getMaxEnergyStored();
+
+
+      EnergyFlatMap p = EnergyFlatMap.AMOUNT_G0;
+      if (percent == 0.0) {
+        p = EnergyFlatMap.AMOUNT_G0;
+      }
+      else if (percent < 1.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G1;
+      }
+      else if (percent < 2.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G2;
+      }
+      else if (percent < 3.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G3;
+      }
+      else if (percent < 4.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G4;
+      }
+      else if (percent < 5.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G5;
+      }
+      else if (percent < 6.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G6;
+      }
+      else if (percent < 7.0 / 8.0) {
+        p = EnergyFlatMap.AMOUNT_G7;
+      }
+      else {//
+        p = EnergyFlatMap.AMOUNT_G7;
+      }
+      System.out.println(percent + " ? " + p);
+      //map [0-100] into [0-8]  
+      //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
       //return state;
     }

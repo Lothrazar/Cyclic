@@ -2,8 +2,7 @@
     "forge_marker": 1,
 	"defaults":{
 		"model": "cyclicmagic:battery"
-	}
-	,
+	},
 	 "variants": {
 	      "normal": { "model": "cyclicmagic:battery" },
 		"amount": {
