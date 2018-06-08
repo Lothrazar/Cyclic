@@ -1,21 +1,21 @@
 {
   "elements": [
     {
-      "from": [ 12, 5, -0.02 ],
+      "from": [ 12, 3, -0.02 ],
       "to": [ 13, 13, 16.1 ],
       "faces": {
         "north": { "uv": [ 8, 0, 9, 8 ], "texture": "#overlaya", "cullface": "north" }
       }
     } ,
     {
-      "from": [ 12, 5, -0.02 ],
-      "to": [ 13, 13, 16.1 ],
+      "from": [ 3, 3, -0.02 ],
+      "to": [ 4, 13, 16.1 ],
       "faces": {
         "south": { "uv": [ 8, 0, 9, 8 ], "texture": "#overlaya", "cullface": "south" }
       }
     } ,
     {
-      "from": [  -0.02, 5, 12 ],
+      "from": [  -0.02, 3, 12 ],
       "to": [ 16.1, 13, 13 ],
       "faces": {
 
@@ -23,8 +23,8 @@
       }
     },
     {
-      "from": [  -0.02, 5, 12 ],
-      "to": [ 16.1, 13, 13 ],
+      "from": [  -0.02, 3, 3 ],
+      "to": [ 16.1, 13, 4 ],
       "faces": {
 
         "west": { "uv": [ 8, 0, 9, 8 ], "texture": "#overlaya", "cullface": "west" }
