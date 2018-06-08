@@ -45,6 +45,7 @@ import com.lothrazar.cyclicmagic.item.merchant.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.item.random.PacketRandomize;
 import com.lothrazar.cyclicmagic.item.scythe.PacketScythe;
 import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
+import com.lothrazar.cyclicmagic.item.storagesack.PacketColorStack;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
@@ -99,7 +100,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
     packetID++;//removed packets from a refactor . KEEP THESE lines so packet ids dont mismatch
-    packetID++;
+    network.registerMessage(PacketColorStack.class, PacketColorStack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);

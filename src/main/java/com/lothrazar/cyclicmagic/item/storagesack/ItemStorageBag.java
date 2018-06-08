@@ -110,22 +110,22 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       wand.setTagCompound(tags);
     }
 
-    public static EnumDyeColor getColour(ItemStack wand) {
+    public static int getColour(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       if (tags.hasKey(NBT_COLOUR) == false) {
-        return EnumDyeColor.BROWN;
+        return EnumDyeColor.BROWN.getColorValue();
       }
-      int type = tags.getInteger(NBT_COLOUR);
-      return EnumDyeColor.byDyeDamage(type);
+      return tags.getInteger(NBT_COLOUR);
     }
-    public static void toggleColor(ItemStack wand) {
+
+    public static void setColour(ItemStack wand, int color) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-      int type = tags.getInteger(NBT_COLOUR);
-      type++;
-      if (type > EnumDyeColor.values().length) {
-        type = EnumDyeColor.BLACK.getDyeDamage();
-      }
-      tags.setInteger(NBT_COLOUR, type);
+//      int type = tags.getInteger(NBT_COLOUR);
+//      type++;
+//      if (type > EnumDyeColor.values().length) {
+//        type = EnumDyeColor.BLACK.getDyeDamage();
+      //      }
+      tags.setInteger(NBT_COLOUR, color);
       wand.setTagCompound(tags);
       // TODO Auto-generated method stub
     }

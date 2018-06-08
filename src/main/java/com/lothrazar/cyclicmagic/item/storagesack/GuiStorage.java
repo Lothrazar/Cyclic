@@ -29,11 +29,12 @@ import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.item.EnumDyeColor;
 
 public class GuiStorage extends GuiBaseContainer {
 
   private GuiButtonTooltip buttonToggle;
-  private GuiButtonTooltip buttonColour;
+
 
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
@@ -46,28 +47,27 @@ public class GuiStorage extends GuiBaseContainer {
     int id = 0;
     int y = this.guiTop;
     int x = this.guiLeft;
-    buttonToggle = new GuiButtonTooltip(id++, x, y, 10, 10, "");
+    buttonToggle = new GuiButtonTooltip(75, x, y, 10, 10, "");
     buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
-    buttonColour = new GuiButtonTooltip(id++, x, y + 20, 10, 10, "");
-    buttonColour.setTooltip("item.storage_bag.color");
-    this.addButton(buttonColour);
+    int i = 1;
+    for (EnumDyeColor color : EnumDyeColor.values()) {
+      GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - 20, y + 10 * i,
+          10, 10, "");
+      buttonColour.setTooltip("item.storage_bag.color." + color.getUnlocalizedName());
+      this.addButton(buttonColour);
+      i++;
+    }
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {
-      // packet 
-      ModCyclic.network.sendToServer(new PacketStorageBag("action"));
+      ModCyclic.network.sendToServer(new PacketStorageBag());
     }
-    if (button.id == this.buttonColour.id) {
-      // packet 
-      ModCyclic.network.sendToServer(new PacketStorageBag("colour"));
-      //      ItemStack stack = player.getHeldItemMainhand();
-      //      if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
-      //
-      //        ItemStorageBag.StorageActionType.toggleColor(stack);
-      //      }
+    else {
+      //color.getDyeDamage()
+      ModCyclic.network.sendToServer(new PacketColorStack(button.id));
     }
   }
 }

@@ -145,7 +145,7 @@ import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
-import com.lothrazar.cyclicmagic.item.signfancy.GuiSignEditor;
+import com.lothrazar.cyclicmagic.item.signcolor.GuiSignEditor;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;

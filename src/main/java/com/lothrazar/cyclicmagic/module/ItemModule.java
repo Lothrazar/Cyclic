@@ -128,7 +128,7 @@ import com.lothrazar.cyclicmagic.item.random.ItemRandomizer;
 import com.lothrazar.cyclicmagic.item.scythe.ItemScythe;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.item.shears.ItemShearsRanged;
-import com.lothrazar.cyclicmagic.item.signfancy.ItemSignEditor;
+import com.lothrazar.cyclicmagic.item.signcolor.ItemSignEditor;
 import com.lothrazar.cyclicmagic.item.sleep.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.ItemProjectileSnow;

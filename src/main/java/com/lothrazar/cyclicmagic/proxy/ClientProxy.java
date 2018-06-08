@@ -358,7 +358,7 @@ public class ClientProxy extends CommonProxy {
               return 0xFFFFFFFF;
             }
             //layer 1 is overlay 
-            return ItemStorageBag.StorageActionType.getColour(stack).getColorValue();
+            return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
 
           }, ItemModule.storage_bag);
     }

@@ -23,8 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,31 +32,36 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorageBag, IMessage> {
+public class PacketColorStack implements IMessage, IMessageHandler<PacketColorStack, IMessage> {
 
-  public PacketStorageBag() {}
+  public PacketColorStack() {}
+
+  private int colour;
+
+  public PacketColorStack(int colour) {
+    this.colour = colour;
+  }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
-    //    type = tags.getString("type");
+    colour = tags.getInteger("colour");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
-    //    tags.setString("type", type); 
+    tags.setInteger("colour", colour);
     ByteBufUtils.writeTag(buf, tags);
   }
 
   @Override
-  public IMessage onMessage(PacketStorageBag message, MessageContext ctx) {
+  public IMessage onMessage(PacketColorStack message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     ItemStack stack = player.getHeldItemMainhand();
     if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
-
-        ItemStorageBag.StorageActionType.toggle(stack);
-        UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
+      //
+      ItemStorageBag.StorageActionType.setColour(stack, message.colour);
 
     }
     return null;
