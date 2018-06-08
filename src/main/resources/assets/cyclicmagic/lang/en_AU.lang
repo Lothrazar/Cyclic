@@ -1238,7 +1238,7 @@ gui.signs.cancel=Cancel
 
 tile.dice.name=Dice
 tile.dice.tooltip=Randomize on placement and click
-tile.dice.guide=Randomize on placement.  Interact with it in the world to roll again.  
+tile.dice.guide=Randomize on placement.  Interact with it in the world to roll again.  Outputs redstone signal using a Comparator
 
 item.laser_cannon.name=Rainbow Cannon
 item.laser_cannon.tooltip=Fire a randomly coloured beam

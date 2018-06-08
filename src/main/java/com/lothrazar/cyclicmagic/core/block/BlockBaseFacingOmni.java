@@ -51,6 +51,11 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
   }
 
   @Override
+  public boolean hasComparatorInputOverride(IBlockState state) {
+    return true;
+  }
+
+  @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.getFront(meta & 7));
   }

@@ -52,6 +52,35 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
     return false;
   }
 
+  @Override
+  public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
+
+    TileEntity tile = world.getTileEntity(pos);
+    if (tile instanceof TileEntityDice) {
+      if (((TileEntityDice) tile).isSpinning()) {
+        return 0;
+      }
+    }
+    EnumFacing fac = blockState.getValue(PROPERTYFACING);
+    int factor = 2;
+    switch (fac) {
+      case NORTH:
+        return 1 * factor;
+      case SOUTH:
+        return 2 * factor;
+      case UP:
+        return 3 * factor;
+      case DOWN:
+        return 4 * factor;
+      case WEST:
+        return 5 * factor;
+      case EAST:
+        return 6 * factor;
+      default:
+        return super.getComparatorInputOverride(blockState, world, pos);
+    }
+  }
+
   /**
    * TODO: util
    * 

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.dice;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -54,13 +55,18 @@ public class TileEntityDice extends TileEntityBaseMachineInvo implements ITickab
   public void update() {
     if (this.timer == 0) {
       this.spinningIfZero = 1;
+      world.updateComparatorOutputLevel(pos, this.blockType);
     }
     else {
       this.timer--;
       //toggle block state
       if (this.timer % TICKS_PER_CHANGE == 0) {
+        this.spinningIfZero = 0;
         EnumFacing fac = BlockDice.getRandom(world.rand);
-        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockDice.PROPERTYFACING, fac));
+        IBlockState stateold = world.getBlockState(pos);
+        IBlockState newstate = stateold.withProperty(BlockDice.PROPERTYFACING, fac);
+        world.setBlockState(pos, newstate);
+        //        world.notifyBlockUpdate(pos, stateold, newstate, 3);
       }
     }
   }
@@ -114,5 +120,9 @@ public class TileEntityDice extends TileEntityBaseMachineInvo implements ITickab
   public void startSpinning() {
     timer = TICKS_MAX_SPINNING;
     spinningIfZero = 0;
+  }
+
+  public boolean isSpinning() {
+    return spinningIfZero == 0;
   }
 }
