@@ -35,12 +35,21 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
 public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
 
   public ItemPowerArmor(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.powerArmorMaterial, 0, armorType);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.getArmorMaterial().getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override

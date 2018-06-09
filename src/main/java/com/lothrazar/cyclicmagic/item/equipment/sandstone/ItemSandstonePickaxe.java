@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.item.equipment.sandstone;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -38,14 +37,14 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
     super(MaterialRegistry.sandstoneToolMaterial);
   }
 
+
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-    if (OreDictionary.itemMatches(new ItemStack(Blocks.SANDSTONE), repair, false)) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
       return true;
     }
     return super.getIsRepairable(toRepair, repair);
   }
-
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ",

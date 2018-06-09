@@ -29,12 +29,21 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
 
   public ItemEmeraldAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
     super(MaterialRegistry.emeraldToolMaterial, 8, -3);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override

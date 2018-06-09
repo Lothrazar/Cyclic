@@ -89,6 +89,10 @@ import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldHoe;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldSword;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickAxe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickHoe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickPickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickSpade;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstonePickaxe;
@@ -142,10 +146,10 @@ import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -248,6 +252,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean signEditor;
   private boolean robotSpawner;
   private boolean lasers;
+  private boolean enableNetherbrickTools;
 
   @Override
   public void onPreInit() {
@@ -352,6 +357,21 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
       ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
       ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
+    }
+    if (enableNetherbrickTools) {
+      Item netherbrick_pickaxe = new ItemNetherbrickPickaxe();
+      ItemRegistry.register(netherbrick_pickaxe, "netherbrick_pickaxe", null);
+      Item netherbrick_axe = new ItemNetherbrickAxe();
+      ItemRegistry.register(netherbrick_axe, "netherbrick_axe", null);
+      Item netherbrick_spade = new ItemNetherbrickSpade();
+      ItemRegistry.register(netherbrick_spade, "netherbrick_spade", null);
+      Item netherbrick_hoe = new ItemNetherbrickHoe();
+      ItemRegistry.register(netherbrick_hoe, "netherbrick_hoe", null);
+      //NETHER CHESTYPE
+      //      LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.);
+      //      LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
+      //      LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
+      GuideRegistry.register(GuideCategory.GEAR, netherbrick_axe, "item.netherbrickgear.title", "item.netherbrickgear.guide");
     }
     if (enableSandstoneTools) {
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
@@ -820,6 +840,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+
     lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -907,5 +928,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     enableSandstoneTools = config.getBoolean("SandstoneTools", Const.ConfigCategory.content, true, "Sandstone tools are between wood and stone. " + Const.ConfigCategory.contentDefaultText);
     enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
     enablePurpleSwords = config.getBoolean("SwordsFrostEnder", Const.ConfigCategory.content, true, "Enable the epic swords. " + Const.ConfigCategory.contentDefaultText);
+    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
+    enableNetherbrickTools = config.getBoolean("NetherbrickTools", Const.ConfigCategory.content, true, "Netherbrick tools have mining level of stone but improved stats. " + Const.ConfigCategory.contentDefaultText);
   }
 }

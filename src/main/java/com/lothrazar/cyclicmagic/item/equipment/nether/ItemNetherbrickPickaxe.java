@@ -21,31 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.equipment.emerald;
+package com.lothrazar.cyclicmagic.item.equipment.nether;
 
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
+public class ItemNetherbrickPickaxe extends ItemPickaxe implements IHasRecipe {
 
-  public ItemEmeraldSword() {
-    super(MaterialRegistry.emeraldToolMaterial);
+  public ItemNetherbrickPickaxe() {
+    super(MaterialRegistry.sandstoneToolMaterial);
   }
 
-  //  @Override
-  //  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-  //    if (OreDictionary.itemMatches(this.material.getRepairItemStack(), repair, false)) {
-  //      return true;
-  //    }
-  //    return super.getIsRepairable(toRepair, repair);
-  //  }
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
+  }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', "gemEmerald", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ",
+        'e', "ingotBrickNether",
+        's', "stickWood");
   }
 }

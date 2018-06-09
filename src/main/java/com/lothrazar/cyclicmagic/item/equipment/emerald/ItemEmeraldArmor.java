@@ -30,11 +30,20 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
 
   public ItemEmeraldArmor(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.emeraldArmorMaterial, 0, armorType);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.getArmorMaterial().getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override

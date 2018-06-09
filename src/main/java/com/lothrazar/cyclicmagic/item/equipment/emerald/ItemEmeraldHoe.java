@@ -29,11 +29,20 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
 
   public ItemEmeraldHoe() {
     super(MaterialRegistry.emeraldToolMaterial);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override

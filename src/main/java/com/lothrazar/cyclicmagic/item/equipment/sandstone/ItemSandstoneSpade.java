@@ -29,11 +29,20 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemSandstoneSpade extends ItemSpade implements IHasRecipe {
 
   public ItemSandstoneSpade() {
     super(MaterialRegistry.sandstoneToolMaterial);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override
