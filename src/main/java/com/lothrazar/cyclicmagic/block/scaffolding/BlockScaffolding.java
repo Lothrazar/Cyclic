@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.block.scaffolding;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

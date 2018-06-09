@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.core.gui;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

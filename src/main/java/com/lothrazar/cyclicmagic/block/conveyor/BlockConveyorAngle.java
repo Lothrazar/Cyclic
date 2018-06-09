@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.conveyor;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;

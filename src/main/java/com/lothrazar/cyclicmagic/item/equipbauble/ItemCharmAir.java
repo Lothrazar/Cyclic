@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.player.EntityPlayer;
