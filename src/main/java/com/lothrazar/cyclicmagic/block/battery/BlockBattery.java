@@ -33,7 +33,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
 
   enum EnergyFlatMap implements IStringSerializable {
-    AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_R0("r0"), AMOUNT_R1("r1"), AMOUNT_R2("r2"), AMOUNT_R3("r3"), AMOUNT_R4("r4"), AMOUNT_R5("r5"), AMOUNT_R6("r6"), AMOUNT_R7("r7");
+    AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_G8("g8"), AMOUNT_G9("g9"), AMOUNT_G10("g10"), AMOUNT_G11("g11"), AMOUNT_G12("g12"), AMOUNT_G13("g13"), AMOUNT_G14("g14"), AMOUNT_G15("g15"), AMOUNT_G16("g16");
 
     private final String name;
 
@@ -96,16 +96,12 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     ItemStack stack = new ItemStack(item);
     if (ent != null && ent.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null);
-      //      NBTTagInt tags = (NBTTagInt) CapabilityEnergy.ENERGY.writeNBT(handlerHere, null);
-      //      NBTTagCompound lol = new NBTTagCompound();
-      
+
       if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
         EnergyStore storage = (EnergyStore)stack.getCapability(CapabilityEnergy.ENERGY, null);
         storage.setEnergyStored(handlerHere.getEnergyStored());
       }
-      //      lol.setInteger("energy", tags.getInt());//NBTTagInt
-      //      lol.setInteger("energyMAX", handlerHere.getMaxEnergyStored());
-      //      stack.setTagCompound(lol);
+
     }
     ret.add(stack);
     return ret;
@@ -123,29 +119,53 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       if (percent == 0.0) {
         p = EnergyFlatMap.AMOUNT_G0;
       }
-      else if (percent < 1.0 / 8.0) {
+      else if (percent < 1.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G1;
       }
-      else if (percent < 2.0 / 8.0) {
+      else if (percent < 2.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G2;
       }
-      else if (percent < 3.0 / 8.0) {
+      else if (percent < 3.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G3;
       }
-      else if (percent < 4.0 / 8.0) {
+      else if (percent < 4.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G4;
       }
-      else if (percent < 5.0 / 8.0) {
+      else if (percent < 5.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G5;
       }
-      else if (percent < 6.0 / 8.0) {
+      else if (percent < 6.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G6;
       }
-      else if (percent < 7.0 / 8.0) {
+      else if (percent < 7.0 / 16.0) {
         p = EnergyFlatMap.AMOUNT_G7;
       }
-      else {
-        p = EnergyFlatMap.AMOUNT_G7;
+      else if (percent < 8.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G8;
+      }
+      else if (percent < 9.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G9;
+      }
+      else if (percent < 10.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G10;
+      }
+      else if (percent < 11.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G11;
+      }
+      else if (percent < 12.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G12;
+      }
+      else if (percent < 13.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G13;
+      }
+      else if (percent < 14.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G14;
+      }
+      else if (percent < 15.0 / 16.0) {
+        p = EnergyFlatMap.AMOUNT_G15;
+      }
+      else { //close enough to full 
+        p = EnergyFlatMap.AMOUNT_G16;
       }
 
       //map [0-100] into [0-8]  
