@@ -21,20 +21,16 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
-  private boolean isCreative;
 
   enum EnergyFlatMap implements IStringSerializable {
     AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_R0("r0"), AMOUNT_R1("r1"), AMOUNT_R2("r2"), AMOUNT_R3("r3"), AMOUNT_R4("r4"), AMOUNT_R5("r5"), AMOUNT_R6("r6"), AMOUNT_R7("r7");
@@ -53,16 +49,12 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   public BlockBattery(boolean creat) {
     super(Material.ROCK);
-    this.isCreative = creat;
-    if (isCreative == false)
-      this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
+    //   this.setTickRandomly(true);
   }
 
   @Override
   public IRecipe addRecipe() {
-    if (isCreative)
-      return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
-          new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "cbc",
         "bab",
@@ -74,10 +66,8 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    if (isCreative)
-      return new TileEntityBatteryInfinite();
-    else
-      return new TileEntityBattery();
+
+    return new TileEntityBattery();
   }
 
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
@@ -118,13 +108,13 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-    TileEntity tile = world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
-    if (tile instanceof TileEntityBattery) {//not infinite battery
+    //?? world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : 
+    TileEntity tile = world.getTileEntity(pos);
+    if (tile instanceof TileEntityBattery) {
       IEnergyStorage handlerHere = tile.getCapability(CapabilityEnergy.ENERGY, null);
       double percent = (double) handlerHere.getEnergyStored() / (double) handlerHere.getMaxEnergyStored();
-
-
       EnergyFlatMap p = EnergyFlatMap.AMOUNT_G0;
+
       if (percent == 0.0) {
         p = EnergyFlatMap.AMOUNT_G0;
       }
@@ -149,10 +139,10 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       else if (percent < 7.0 / 8.0) {
         p = EnergyFlatMap.AMOUNT_G7;
       }
-      else {//
+      else {
         p = EnergyFlatMap.AMOUNT_G7;
       }
-      System.out.println(percent + " ? " + p);
+
       //map [0-100] into [0-8]  
       //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
@@ -177,12 +167,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     return 0;
   }
 
-  @Override
-  public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-    return super.canRenderInLayer(state, layer);
-    //     return layer == BlockRenderLayer.SOLID ;
-    // return layer == BlockRenderLayer.CUTOUT;
-  }
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {

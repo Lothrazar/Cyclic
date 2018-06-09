@@ -8,6 +8,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITickable {
 
+  private static final double PCT_UPDATE_ON_TICK = 0.01;
   //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k
   // int dynamics is 1M
   public static final int PER_TICK = 256;
@@ -25,6 +26,11 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     if (isValid() == false) {
       return;
     }
+    if (world.rand.nextDouble() < PCT_UPDATE_ON_TICK) {
+      //push client updates for energy bar but not every tick 
+      world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+    }
+    //attept to auto export power to nbrs 
     ItemStack toCharge = this.getStackInSlot(0);
     if (toCharge.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage handlerHere = toCharge.getCapability(CapabilityEnergy.ENERGY, null);
