@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -117,18 +116,28 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
-    ModCyclic.logger.info("conv rotate " + axis);
     IBlockState state = world.getBlockState(pos);
     EnumFacing iAmFacing = state.getValue(PROPERTYFACING);
     if (this.isAngle()) {
       if (iAmFacing == EnumFacing.NORTH) {
-        world.setBlockState(pos, dropFlat.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+        if (state.getValue(BlockConveyorAngle.FLIPPED)) {//default is false 
+          world.setBlockState(pos, state.withProperty(BlockConveyorAngle.FLIPPED, false).withProperty(PROPERTYFACING, EnumFacing.EAST));
+        }
+        else {
+          world.setBlockState(pos, dropFlat.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+        }
         return true;
       }
     }
     else if (this.isCorner()) {
+
       if (iAmFacing == EnumFacing.NORTH) {
+        if (state.getValue(BlockConveyorCorner.FLIPPED)) {//default is false 
+          world.setBlockState(pos, state.withProperty(BlockConveyorCorner.FLIPPED, false).withProperty(PROPERTYFACING, EnumFacing.EAST));
+        }
+        else {
         world.setBlockState(pos, getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+        }
         return true;
       }
     }
