@@ -12,7 +12,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k
   // int dynamics is 1M
   public static final int PER_TICK = 256;
-  private static final int CAPACITY = 1000000;
+  public static final int CAPACITY = 1000000;
   //  private static final int TRANSFER_ENERGY_PER_TICK = PER_TICK * 4;
 
   public TileEntityBattery() {
