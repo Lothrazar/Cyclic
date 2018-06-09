@@ -1282,3 +1282,12 @@ colour.orange.name=Orange
 colour.white.name=White
 colour.black.name=Black
 
+item.netherbrick_pickaxe.name=Nether Pickaxe
+item.netherbrick_axe.name=Nether Axe
+item.netherbrick_spade.name=Nether Shovel
+item.netherbrick_hoe.name=Nether Hoe
+
+item.netherbrick_pickaxe.guide=Stone mining level with improved stats
+item.netherbrick_spade.guide=Stone mining level with improved stats
+item.netherbrick_axe.guide=Stone mining level with improved stats
+item.netherbrick_hoe.guide=Stone mining level with improved stats

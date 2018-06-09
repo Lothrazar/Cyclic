@@ -371,7 +371,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       //      LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.);
       //      LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       //      LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
-      GuideRegistry.register(GuideCategory.GEAR, netherbrick_axe, "item.netherbrickgear.title", "item.netherbrickgear.guide");
+      GuideRegistry.register(GuideCategory.GEAR, netherbrick_axe, "item.netherbrick_axe.name", "item.netherbrick_axe.guide");
     }
     if (enableSandstoneTools) {
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
