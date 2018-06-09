@@ -15,6 +15,30 @@ public class ItemBlockBattery extends ItemBlock {
     super(block);
   }
 
+  @Override
+  public boolean showDurabilityBar(ItemStack stack) {
+    return true;
+  }
+
+  /**
+   * Queries the percentage of the 'Durability' bar that should be drawn.
+   *
+   * @param stack
+   *          The current ItemStack
+   * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
+   */
+  @Override
+  public double getDurabilityForDisplay(ItemStack item) {
+    if (item.getTagCompound() != null && item.getTagCompound().hasKey("energy")) {
+      double energy = item.getTagCompound().getInteger("energy");
+      double energyMAX = item.getTagCompound().getInteger("energyMAX");
+      return 1 - energy / energyMAX;
+    }
+    else {
+      return 1;
+    }
+  }
+
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack item, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
@@ -27,8 +51,9 @@ public class ItemBlockBattery extends ItemBlock {
       //      CapabilityEnergy.ENERGY.readNBT(energy, null, item.getTagCompound());
       //      tooltip.add(energy.getEnergyStored() + "/" + energy.getMaxEnergyStored());
     }
-    else
+    else {
       tooltip.add(UtilChat.lang("tile.battery.tooltip"));
+    }
   }
   //ICapabilityProvider doesnt exist/notprovidded
   //oh well http://www.minecraftforge.net/forum/topic/54711-1102-forge-energy-capability-in-item-class/
