@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.equipment;
+package com.lothrazar.cyclicmagic.item.equipment.sandstone;
 
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
@@ -30,16 +30,14 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-public class ItemEmeraldSpade extends ItemSpade implements IHasRecipe {
+public class ItemSandstoneSpade extends ItemSpade implements IHasRecipe {
 
-  public ItemEmeraldSpade() {
-    super(MaterialRegistry.emeraldToolMaterial);
+  public ItemSandstoneSpade() {
+    super(MaterialRegistry.sandstoneToolMaterial);
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ",
-        'e', "gemEmerald",
-        's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }
