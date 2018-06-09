@@ -655,14 +655,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     // TODO share code in base class somehow? with CableBase maybe?
     List<EnumFacing> targetFaces = Arrays.asList(EnumFacing.values());
     Collections.shuffle(targetFaces);
-    for (EnumFacing f : targetFaces) {
-      BlockPos posTarget = pos.offset(f);
-      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, f);
+    for (EnumFacing myFacingDir : targetFaces) {
+      BlockPos posTarget = pos.offset(myFacingDir);
+      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
       TileEntity tileTarget = world.getTileEntity(posTarget);
       if (tileTarget == null) {
         continue;
       }
-      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, f);
+      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, myFacingDir.getOpposite());
       if (handlerHere != null && handlerOutput != null
           && handlerHere.canExtract() && handlerOutput.canReceive()) {
         //first simulate
@@ -676,7 +676,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
             //TODO: not so compatible with other fluid systems. itl do i guess
             TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
             if (cable.isEnergyPipe())
-              cable.updateIncomingEnergyFace(f.getOpposite());
+              cable.updateIncomingEnergyFace(myFacingDir.getOpposite());
           }
           //              return;// stop now because only pull from one side at a time
         }

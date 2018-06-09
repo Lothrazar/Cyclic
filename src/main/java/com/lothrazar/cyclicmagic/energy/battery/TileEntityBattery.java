@@ -33,12 +33,12 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     //attept to auto export power to nbrs 
     ItemStack toCharge = this.getStackInSlot(0);
     if (toCharge.hasCapability(CapabilityEnergy.ENERGY, null)) {
-      IEnergyStorage handlerHere = toCharge.getCapability(CapabilityEnergy.ENERGY, null);
-      if (handlerHere.canReceive() && this.energyStorage.canExtract()) {
-        int canRecieve = handlerHere.receiveEnergy(PER_TICK, true);
+      IEnergyStorage energyItemStack = toCharge.getCapability(CapabilityEnergy.ENERGY, null);
+      if (energyItemStack.canReceive() && this.energyStorage.canExtract()) {
+        int canRecieve = energyItemStack.receiveEnergy(PER_TICK, true);
         int canExtract = this.energyStorage.extractEnergy(PER_TICK, true);
         int actual = Math.min(canRecieve, canExtract);
-        handlerHere.receiveEnergy(actual, false);
+        energyItemStack.receiveEnergy(actual, false);
         this.energyStorage.extractEnergy(actual, false);
       }
     }
