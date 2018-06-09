@@ -36,10 +36,12 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
       IEnergyStorage energyItemStack = toCharge.getCapability(CapabilityEnergy.ENERGY, null);
       if (energyItemStack.canReceive() && this.energyStorage.canExtract()) {
         int canRecieve = energyItemStack.receiveEnergy(PER_TICK, true);
+
         int canExtract = this.energyStorage.extractEnergy(PER_TICK, true);
         int actual = Math.min(canRecieve, canExtract);
-        energyItemStack.receiveEnergy(actual, false);
-        this.energyStorage.extractEnergy(actual, false);
+        int toExtract = energyItemStack.receiveEnergy(actual, false);
+
+        this.energyStorage.extractEnergy(toExtract, false);
       }
     }
   }

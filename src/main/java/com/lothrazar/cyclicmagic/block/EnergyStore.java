@@ -50,4 +50,18 @@ public class EnergyStore extends EnergyStorage {
   public int emptyCapacity() {
     return this.capacity - this.energy;
   }
+
+  @Override
+  public int receiveEnergy(int maxReceive, boolean simulate) {
+    if (!canReceive() ||
+        getMaxEnergyStored() <= getEnergyStored()) {
+      return 0;
+    }
+    int energyReceived = Math.min(getMaxEnergyStored() - getEnergyStored(), Math.min(this.maxReceive, maxReceive));
+    if (!simulate) {
+      int newEnergy = energyReceived + getEnergyStored();
+      setEnergyStored(Math.min(getMaxEnergyStored(), newEnergy));
+    }
+    return energyReceived;
+  }
 }

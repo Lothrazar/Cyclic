@@ -41,14 +41,14 @@ public class ItemBlockBattery extends ItemBlock {
   public double getDurabilityForDisplay(ItemStack item) {
     IEnergyStorage storage = item.getCapability(CapabilityEnergy.ENERGY, null);
     double energy = storage.getEnergyStored();
-    return 1 - energy / TileEntityBattery.CAPACITY;
+    return 1 - energy / storage.getMaxEnergyStored();
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack item, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     IEnergyStorage storage = item.getCapability(CapabilityEnergy.ENERGY, null);
-    tooltip.add(storage.getEnergyStored() + "/" + TileEntityBattery.CAPACITY);
+    tooltip.add(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
     tooltip.add(UtilChat.lang("tile.battery.tooltip"));
   }
 
@@ -83,10 +83,9 @@ public class ItemBlockBattery extends ItemBlock {
 
     //reuse same energy as TileEntity
     public final EnergyStore storage;
-    private int maxPower = 999999;
 
     public EnergyCapabilityProvider(final ItemStack stack) {
-      this.storage = new EnergyStore(maxPower) {
+      this.storage = new EnergyStore(TileEntityBattery.CAPACITY) {
 
         @Override
         public int getEnergyStored() {
