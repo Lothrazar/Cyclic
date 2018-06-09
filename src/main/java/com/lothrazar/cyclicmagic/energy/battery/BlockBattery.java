@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.energy.battery;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.EnergyStore;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -19,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
@@ -96,11 +96,16 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     ItemStack stack = new ItemStack(item);
     if (ent != null && ent.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null);
-      NBTTagInt tags = (NBTTagInt) CapabilityEnergy.ENERGY.writeNBT(handlerHere, null);
-      NBTTagCompound lol = new NBTTagCompound();
-      lol.setInteger("energy", tags.getInt());//NBTTagInt
-      lol.setInteger("energyMAX", handlerHere.getMaxEnergyStored());
-      stack.setTagCompound(lol);
+      //      NBTTagInt tags = (NBTTagInt) CapabilityEnergy.ENERGY.writeNBT(handlerHere, null);
+      //      NBTTagCompound lol = new NBTTagCompound();
+      
+      if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+        EnergyStore storage = (EnergyStore)stack.getCapability(CapabilityEnergy.ENERGY, null);
+        storage.setEnergyStored(handlerHere.getEnergyStored());
+      }
+      //      lol.setInteger("energy", tags.getInt());//NBTTagInt
+      //      lol.setInteger("energyMAX", handlerHere.getMaxEnergyStored());
+      //      stack.setTagCompound(lol);
     }
     ret.add(stack);
     return ret;
@@ -170,9 +175,15 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
+    if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+      TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);
+      container.setEnergyCurrent(storage.getEnergyStored());
+    }
+    else if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
       NBTTagCompound tags = stack.getTagCompound();
-      int energy = tags.getInteger("energy");
+
+      int energy = tags.getInteger(ItemBlockBattery.ENERGY);
       //  IEnergyStorage handlerHere =  world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
       TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);
       container.setEnergyCurrent(energy);

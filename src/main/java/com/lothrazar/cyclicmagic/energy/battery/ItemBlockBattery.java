@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockBattery extends ItemBlock {
 
-  private static final String ENERGY = "energy";
+  public static final String ENERGY = "energy";
 
   public ItemBlockBattery(Block block) {
     super(block);
