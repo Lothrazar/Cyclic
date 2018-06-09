@@ -74,13 +74,16 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       return;
     }
     // if I am using an axe on stone or dirt, doesn't trigger
+    boolean isAnySingleOk = false;//if i am a tool valid on 2 things, and both of 2 blocks are present, we are just ok
     for (String type : stackHarvestingWith.getItem().getToolClasses(stackHarvestingWith)) {
-      if (block.isToolEffective(type, world.getBlockState(pos)) == false) {
-        return;
+      if (block.isToolEffective(type, world.getBlockState(pos))) {
+        isAnySingleOk = true;
       }
     }
     //starts at 1 for current one
-    this.harvestSurrounding(world, player, pos, block, 1, level);
+    if(isAnySingleOk){
+      this.harvestSurrounding(world, player, pos, block, 1, level);
+    }
   }
 
   private int getHarvestMax(int level) {
