@@ -49,22 +49,24 @@ import net.minecraft.world.World;
 public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   public static final PropertyBool FLIPPED = PropertyBool.create("flipped");
-  private BlockConveyor drop;
 
   public BlockConveyorAngle(SpeedType type) {
     super(type);
     this.keepEntityGrounded = false;
-    angled = this;
-    corner = null;
+    setAngled(this);
   }
 
   @Override
+  public boolean isAngle() {
+    return true;
+  }
+  @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-    return new ItemStack(drop);
+    return new ItemStack(dropFlat);
   }
 
   public void setDrop(BlockConveyor drop) {
-    this.drop = drop;
+    this.dropFlat = drop;
   }
 
   @Override
@@ -203,6 +205,6 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return Item.getItemFromBlock(drop);
+    return Item.getItemFromBlock(dropFlat);
   }
 }

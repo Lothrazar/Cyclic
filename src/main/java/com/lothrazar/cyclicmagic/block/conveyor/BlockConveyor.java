@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -68,14 +69,16 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected SpeedType type;
   protected float power;
   private SoundEvent sound;
-  protected BlockConveyor corner;
   public static boolean doCorrections = true;
   protected boolean keepEntityGrounded = true;
-  protected BlockConveyor angled;
+  private BlockConveyor corner;
+  private BlockConveyor angled;
+  protected BlockConveyor dropFlat;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
     super(Material.ROCK);
+    dropFlat = this;
     type = t;
     switch (type) {
       case LARGE:
@@ -97,13 +100,47 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   public BlockConveyor(@Nonnull BlockConveyor corner, @Nonnull BlockConveyor angled) {
     this(corner.type);
-    this.corner = corner;
-    this.angled = angled;
+    this.setCorner(corner);
+    this.setAngled(angled);
     this.setSoundType(SoundType.METAL);
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
 
+  public boolean isAngle() {
+    return false;
+  }
+
+  public boolean isCorner() {
+    return false;
+  }
+
+  @Override
+  public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+    ModCyclic.logger.info("conv rotate " + axis);
+    IBlockState state = world.getBlockState(pos);
+    EnumFacing iAmFacing = state.getValue(PROPERTYFACING);
+    if (this.isAngle()) {
+      if (iAmFacing == EnumFacing.NORTH) {
+        world.setBlockState(pos, dropFlat.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+        return true;
+      }
+    }
+    else if (this.isCorner()) {
+      if (iAmFacing == EnumFacing.NORTH) {
+        world.setBlockState(pos, getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+        return true;
+      }
+    }
+    else { // is flat
+      if (iAmFacing == EnumFacing.NORTH) {
+        world.setBlockState(pos, getCorner().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+      return true;
+    }
+    }
+    return super.rotateBlock(world, pos, axis);
+
+  }
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
@@ -306,67 +343,67 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       flip = eastUp.getValue(PROPERTYFACING) == EnumFacing.WEST;
       if (eastUp.getBlock() instanceof BlockConveyorAngle)
         flip = flip || eastUp.getValue(BlockConveyorAngle.FLIPPED);
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST)
+      targetState = getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST)
           .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
     else if (isWestUp) {
       flip = westUp.getValue(PROPERTYFACING) == EnumFacing.EAST;
       if (westUp.getBlock() instanceof BlockConveyorAngle)
         flip = flip || westUp.getValue(BlockConveyorAngle.FLIPPED);
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.WEST)
+      targetState = getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.WEST)
           .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
     else if (isSouthUp) {
       flip = southUp.getValue(PROPERTYFACING) == EnumFacing.NORTH;
       if (southUp.getBlock() instanceof BlockConveyorAngle)
         flip = flip || southUp.getValue(BlockConveyorAngle.FLIPPED);
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.SOUTH)
+      targetState = getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.SOUTH)
           .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
     else if (isNorthUp) {
       if (northUp.getBlock() instanceof BlockConveyorAngle)
         flip = flip || northUp.getValue(BlockConveyorAngle.FLIPPED);
       flip = northUp.getValue(PROPERTYFACING) == EnumFacing.SOUTH;
-      targetState = angled.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.NORTH)
+      targetState = getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.NORTH)
           .withProperty(BlockConveyorAngle.FLIPPED, flip);
     }
     else if (isNorth && isWest) {
       if (west.getValue(PROPERTYFACING) == EnumFacing.EAST) {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, true);
       }
       else {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
     } //auto place corners
     else if (isNorth && isEast) {
       if (east.getValue(PROPERTYFACING) == EnumFacing.WEST) {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
       else {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, north.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, true);
       }
     }
     else if (isSouth && isEast) {
       if (south.getValue(PROPERTYFACING) == EnumFacing.NORTH) {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
       else {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, east.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, true);
       }
     }
     else if (isSouth && isWest) {
       if (west.getValue(PROPERTYFACING) == EnumFacing.WEST) {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, south.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, true);
       }
       else {
-        targetState = corner.getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
+        targetState = getCorner().getDefaultState().withProperty(PROPERTYFACING, west.getValue(PROPERTYFACING))
             .withProperty(BlockConveyorCorner.FLIPPED, false);
       }
     }
@@ -395,5 +432,21 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       f = f.getOpposite();
     }
     return f;
+  }
+
+  public BlockConveyor getCorner() {
+    return corner;
+  }
+
+  public void setCorner(BlockConveyor corner) {
+    this.corner = corner;
+  }
+
+  public BlockConveyor getAngled() {
+    return angled;
+  }
+
+  public void setAngled(BlockConveyor angled) {
+    this.angled = angled;
   }
 }
