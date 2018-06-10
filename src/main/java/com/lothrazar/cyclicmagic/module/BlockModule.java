@@ -56,7 +56,6 @@ import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
 import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
-import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
 import com.lothrazar.cyclicmagic.block.cable.fluid.BlockCableFluid;
@@ -782,7 +781,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
-    TileEntityCableBase.syncConfig(config);
+    // TileEntityCableBase.syncConfig(config);
     TileEntityItemPump.syncConfig(config);
     TileEntityUser.syncConfig(config);
   }

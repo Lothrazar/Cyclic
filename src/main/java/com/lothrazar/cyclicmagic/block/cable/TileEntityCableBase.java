@@ -32,7 +32,6 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -45,7 +44,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -53,10 +51,10 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
 
   private static final int TIMER_SIDE_INPUT = 15;
-  private static int TRANSFER_FLUID_PER_TICK = 500; //config
+  public static final int TRANSFER_FLUID_PER_TICK = 5000;
   //config
   //TODO: timer to slow down item rate
-  private static int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+  public static final int TRANSFER_ENERGY_PER_TICK = 16 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
   private String labelText = "";
@@ -428,11 +426,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }
     return super.getCapability(capability, facing.getOpposite());
-  }
-
-  public static void syncConfig(Configuration config) {
-    TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
-    TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
   }
 
   public boolean getBlacklist(final EnumFacing side) {

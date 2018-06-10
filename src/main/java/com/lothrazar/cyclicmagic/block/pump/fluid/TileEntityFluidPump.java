@@ -36,10 +36,10 @@ import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
-  private static final int TRANSFER_PER_TICK = 100;
+  private int transferRate = 100;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, TRANSFER_RATE;
   }
 
   private int needsRedstone = 0;
@@ -77,11 +77,11 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     // IMPORT
     //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
     //      posSide = pos.offset(importFromSide);
-    UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, TRANSFER_PER_TICK);
+    UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, transferRate);
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
-      boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
+      boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, transferRate);
       //  boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
       if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
         //TODO: not so compatible with other fluid systems. itl do i guess
@@ -112,6 +112,8 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TRANSFER_RATE:
+        return this.transferRate;
     }
     return 0;
   }
@@ -121,6 +123,9 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case TRANSFER_RATE:
+        transferRate = value;
       break;
     }
   }

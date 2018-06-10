@@ -39,10 +39,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
-  private static final int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+  private int transferRate = 8 * 1000;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, TRANSFER_RATE;
   }
 
   private int needsRedstone = 0;
@@ -92,7 +92,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     //ALL EXCEPT THIS SIDE
     //IMPORT
     if (importHandlr != null && importHandlr.canExtract()) {
-      int drain = importHandlr.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+      int drain = importHandlr.extractEnergy(transferRate, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = myEnergy.receiveEnergy(drain, false);
@@ -110,7 +110,7 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
         //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
       }
       if (exportHandler != null && exportHandler.canReceive()) {
-        int drain = myEnergy.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+        int drain = myEnergy.extractEnergy(transferRate, true);
         if (drain > 0) {
           //now push it into output, but find out what was ACTUALLY taken
           int filled = exportHandler.receiveEnergy(drain, false);
@@ -136,6 +136,8 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TRANSFER_RATE:
+        return this.transferRate;
     }
     return 0;
   }
@@ -145,6 +147,9 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case TRANSFER_RATE:
+        transferRate = value;
       break;
     }
   }
