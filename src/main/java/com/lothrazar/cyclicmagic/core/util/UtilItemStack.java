@@ -50,6 +50,13 @@ public class UtilItemStack {
     }
     IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
     for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
+      //      i thought i needed this, but bug was on other end
+      // https://github.com/BluSunrize/ImmersiveEngineering/issues/3044
+      //      if (tileTarget instanceof IInventory &&
+      //          ((IInventory) tileTarget).isItemValidForSlot(i, stackToExport) == false) {
+      //        continue;
+      //      }
+
       ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
       //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
       if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {
