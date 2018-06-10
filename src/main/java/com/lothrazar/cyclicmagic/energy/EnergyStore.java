@@ -64,4 +64,16 @@ public class EnergyStore extends EnergyStorage {
     }
     return energyReceived;
   }
+
+  @Override
+  public int extractEnergy(int maxExtract, boolean simulate) {
+    if (!canExtract()) {
+      return 0;
+    }
+    int energyExtracted = Math.min(getEnergyStored(), Math.min(this.maxExtract, maxExtract));
+    if (!simulate) {
+      setEnergyStored(getEnergyStored() - energyExtracted);
+    }
+    return energyExtracted;
+  }
 }
