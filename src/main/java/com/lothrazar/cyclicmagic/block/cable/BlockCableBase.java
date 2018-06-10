@@ -29,6 +29,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -42,6 +43,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -69,6 +71,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   private static final double SML = 0.375D;
   private static final double LRG = 0.625D;
+  final static float hitLimit = 0.2F;
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
@@ -117,23 +120,51 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   public abstract TileEntity createTileEntity(World world, IBlockState state);
 
+  public boolean isWrenchItem(ItemStack held) {
+    return held.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
+  }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     TileEntityCableBase te = (TileEntityCableBase) world.getTileEntity(pos);
     if (te != null) {
-      if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH)) {
-        te.toggleBlacklist(side);
-        boolean theNew = te.getBlacklist(side);
-        world.setBlockState(pos, state.withProperty(PROPERTIES.get(side), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
-        UtilChat.sendStatusMessage(player, UtilChat.lang("cable.block.toggled." + theNew) + side.name().toLowerCase());
+      if (isWrenchItem(player.getHeldItem(hand))) {
+        EnumFacing sideToToggle = null;
+        ModCyclic.logger.log(String.format("%f : %f : %f", hitX, hitY, hitZ));
+        if (hitX < hitLimit) {
+          sideToToggle = EnumFacing.WEST;
+        }
+        else if (hitX > 1 - hitLimit) {
+          sideToToggle = EnumFacing.EAST;
+        }
+        else if (hitY < hitLimit) {
+          sideToToggle = EnumFacing.DOWN;
+        }
+        else if (hitY > 1 - hitLimit) {
+          sideToToggle = EnumFacing.UP;
+        }
+        else if (hitZ < hitLimit) {
+          sideToToggle = EnumFacing.NORTH;
+        }
+        else if (hitZ > 1 - hitLimit) {
+          sideToToggle = EnumFacing.SOUTH;
+        }
+        else {
+          sideToToggle = side;
+        }
+        if (sideToToggle != null) {
+          te.toggleBlacklist(sideToToggle);
+          boolean theNew = te.getBlacklist(sideToToggle);
+          world.setBlockState(pos, state.withProperty(PROPERTIES.get(sideToToggle), (theNew) ? EnumConnectType.BLOCKED : EnumConnectType.NONE));
+          UtilChat.sendStatusMessage(player, UtilChat.lang("cable.block.toggled." + theNew) + sideToToggle.name().toLowerCase());
+        }
         return true;
       }
       else if (world.isRemote == false && hand == EnumHand.MAIN_HAND) {
         UtilChat.sendStatusMessage(player, te.getLabelTextOrEmpty());
       }
     }
-    // otherwise return true if it is a fluid handler to prevent in world placement    
-    return false;// super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+    return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
 
   @Override
