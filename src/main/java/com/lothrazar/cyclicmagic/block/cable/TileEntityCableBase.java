@@ -283,6 +283,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.getStackInSlot(0).isEmpty()) {
       return;
     }
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack stackToExport = this.getStackInSlot(0).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(myFacingDir);
@@ -291,7 +292,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return;
     }
     boolean outputSuccess = false;
-    ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, myFacingDir.getOpposite(), stackToExport);
+    ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
     if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
       this.setInventorySlotContents(0, leftAfterDeposit);
@@ -300,12 +301,14 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (outputSuccess && tileTarget instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
       TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-      if (cable.isItemPipe())
-        cable.updateIncomingItemFace(myFacingDir.getOpposite());
+      if (cable.isItemPipe()) {
+        cable.updateIncomingItemFace(themFacingMe);
+      }
     }
   }
 
   private void moveFluid(EnumFacing myFacingDir) {
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     if (tank.getFluidAmount() <= 0) {
       return;
     }
@@ -314,29 +317,32 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
     }
     BlockPos posTarget = pos.offset(myFacingDir);
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, myFacingDir.getOpposite(), tank, toFlow);
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
     if (outputSuccess) {
       TileEntity tileTarget = world.getTileEntity(posTarget);
       if (tileTarget instanceof TileEntityCableBase) {
         //TODO: not so compatible with other fluid systems. itl do i guess
         TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-        if (cable.isFluidPipe())
-          cable.updateIncomingFluidFace(myFacingDir.getOpposite());
+        if (cable.isFluidPipe()) {
+          cable.updateIncomingFluidFace(themFacingMe);
+        }
       }
     }
   }
 
   private void moveEnergy(EnumFacing myFacingDir) {
+
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
     if (handlerHere.getEnergyStored() == 0) {
       return;
     }
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
+    if (tileTarget == null || tileTarget.hasCapability(CapabilityEnergy.ENERGY, themFacingMe) == false) {
       return;
     }
-    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, myFacingDir.getOpposite());
+    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe);
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
@@ -349,8 +355,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
         if (filled > 0 && tileTarget instanceof TileEntityCableBase) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-          if (cable.isEnergyPipe())
-            cable.updateIncomingEnergyFace(myFacingDir.getOpposite());
+          if (cable.isEnergyPipe()) {
+            cable.updateIncomingEnergyFace(themFacingMe);
+          }
         }
       }
     }
@@ -403,6 +410,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
 
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (mapBlacklist.get(facing)) {
+      return false;//announce that capability does not exist on this side. items and all.
+    }
     if (capability == CapabilityEnergy.ENERGY) {
       return this.isEnergyPipe();
     }
@@ -417,7 +427,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }
-    return super.getCapability(capability, facing);
+    return super.getCapability(capability, facing.getOpposite());
   }
 
   public static void syncConfig(Configuration config) {
@@ -425,9 +435,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
   }
 
-  //  public Map<EnumFacing, Boolean> getBlacklist() {
-  //    return mapBlacklist;
-  //  }
   public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }
