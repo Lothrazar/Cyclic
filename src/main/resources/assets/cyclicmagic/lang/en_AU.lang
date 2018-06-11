@@ -1291,3 +1291,5 @@ item.netherbrick_pickaxe.guide=Stone mining level with improved stats
 item.netherbrick_spade.guide=Stone mining level with improved stats
 item.netherbrick_axe.guide=Stone mining level with improved stats
 item.netherbrick_hoe.guide=Stone mining level with improved stats
+
+pump.rate=Transfer Rate

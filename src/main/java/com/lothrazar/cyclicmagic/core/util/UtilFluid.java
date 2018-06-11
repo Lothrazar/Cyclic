@@ -141,7 +141,7 @@ public class UtilFluid {
    * @param amount
    * @return
    */
-  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, int amount) {
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount) {
     try {
       IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
       if (fluidFrom != null) {

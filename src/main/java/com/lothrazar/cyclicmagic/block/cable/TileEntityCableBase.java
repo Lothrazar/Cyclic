@@ -51,7 +51,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
 
   private static final int TIMER_SIDE_INPUT = 15;
-  public static final int TRANSFER_FLUID_PER_TICK = 5000;
+  public static final int TRANSFER_FLUID_PER_TICK = 1000;
   //config
   //TODO: timer to slow down item rate
   public static final int TRANSFER_ENERGY_PER_TICK = 16 * 1000;
@@ -66,32 +66,23 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private Map<EnumFacing, Boolean> mapBlacklist = Maps.newHashMap();
 
-  public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
-    super(invoSize);
-    if (fluidTankSize > 0) {
-      tank = new FluidTankBase(fluidTankSize);
+  public TileEntityCableBase(boolean hasItems, boolean hasFluid, boolean hasEnergy) {
+    super((hasItems) ? 1 : 0);
+    if (hasFluid) {
+      tank = new FluidTankBase(TRANSFER_FLUID_PER_TICK);
     }
-    if (powerPerTick > 0) {
+    if (hasEnergy) {
       initEnergy(0, TRANSFER_ENERGY_PER_TICK);
     }
+    itemTransport = hasItems;
+    fluidTransport = hasFluid;
+    energyTransport = hasEnergy;
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
       mapIncomingItems.put(f, 0);
       mapIncomingEnergy.put(f, 0);
       mapBlacklist.put(f, false);
     }
-  }
-
-  public void setItemTransport() {
-    this.itemTransport = true;
-  }
-
-  public void setFluidTransport() {
-    this.fluidTransport = true;
-  }
-
-  public void setPowerTransport() {
-    this.energyTransport = true;
   }
 
   public boolean isItemPipe() {
@@ -176,7 +167,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private String getIncomingStringsFluid() {
-    String tmpName = this.getCurrentFluidStack().getLocalizedName();
+    String tmpName = this.getCurrentFluidStackAmount() + " " + this.getCurrentFluidStack().getLocalizedName();
     String incoming = getIncomingStringsFromMap(this.mapIncomingFluid);
     if (incoming.isEmpty() == false) {
       tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;

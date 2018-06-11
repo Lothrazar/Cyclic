@@ -41,11 +41,12 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
   // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
   private int transferRate = 8 * 1000;
 
+  private int needsRedstone = 0;
+
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
   }
 
-  private int needsRedstone = 0;
 
   public TileEntityEnergyPump() {
     super(0);
@@ -56,13 +57,17 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
+    transferRate = compound.getInteger("transferRate");
+    if (transferRate == 0) {
+      transferRate = 8 * 1000;//legacy support
+    }
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    super.writeToNBT(compound);
     compound.setInteger(NBT_REDST, needsRedstone);
-    return compound;
+    compound.setInteger("transferRate", this.transferRate);
+    return super.writeToNBT(compound);
   }
 
   @Override

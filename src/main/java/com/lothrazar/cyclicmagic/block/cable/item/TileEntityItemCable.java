@@ -29,8 +29,7 @@ import net.minecraft.util.EnumFacing;
 public class TileEntityItemCable extends TileEntityCableBase {
 
   public TileEntityItemCable() {
-    super(1, 0, 0);
-    this.setItemTransport();
+    super(true, false, false);
     this.setSlotsForBoth();
   }
 

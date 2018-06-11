@@ -36,7 +36,7 @@ import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
-  private int transferRate = 100;
+  private int transferRate = 150;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
@@ -99,11 +99,16 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
+    compound.setInteger("transferRate", this.transferRate);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
+    compound.setInteger("transferRate", this.transferRate);
+    if (transferRate == 0) {
+      transferRate = 150;//legacy support
+    }
     return super.writeToNBT(compound);
   }
 
