@@ -37,7 +37,6 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
     super(MaterialRegistry.sandstoneToolMaterial);
   }
 
-
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
@@ -45,6 +44,7 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
     }
     return super.getIsRepairable(toRepair, repair);
   }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ",

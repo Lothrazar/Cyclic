@@ -56,7 +56,6 @@ public class UtilItemStack {
       //          ((IInventory) tileTarget).isItemValidForSlot(i, stackToExport) == false) {
       //        continue;
       //      }
-
       ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
       //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
       if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {

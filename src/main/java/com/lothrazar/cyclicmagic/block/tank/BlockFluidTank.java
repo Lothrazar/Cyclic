@@ -66,6 +66,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   public static final PropertyBool TANK_ABOVE = PropertyBool.create("above");
   public static final PropertyBool TANK_BELOW = PropertyBool.create("below");
   public static final int heightCheckMax = 16;
+
   public BlockFluidTank() {
     super(Material.GLASS);
     this.setHardness(7F);
@@ -175,7 +176,6 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
     // check the TE
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     int heightCheck = 0;
-
     BlockPos posLoop = new BlockPos(pos);
     //connected tanks: try to move  up again
     while (!success && heightCheck < heightCheckMax) {
@@ -183,7 +183,6 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
       posLoop = posLoop.up();
       success = FluidUtil.interactWithFluidHandler(player, hand, world, posLoop, side);
     }
-
     TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
     if (te != null) {
       if (world.isRemote == false) { //server side

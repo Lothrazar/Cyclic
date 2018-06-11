@@ -320,7 +320,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private void moveEnergy(EnumFacing myFacingDir) {
-
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
     if (handlerHere.getEnergyStored() == 0) {
       return;

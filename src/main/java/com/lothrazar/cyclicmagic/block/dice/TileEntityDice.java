@@ -30,11 +30,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileEntityDice extends TileEntityBaseMachineInvo implements ITickable {
- 
+
   private static final int TICKS_MAX_SPINNING = 45;
   private static final int TICKS_PER_CHANGE = 4;
   private static final String NBT_PART = "is_spinning";
- 
+
   public static enum Fields {
     TIMER, SPINNING;
   }

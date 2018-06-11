@@ -40,13 +40,11 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
 
   // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
   private int transferRate = 8 * 1000;
-
   private int needsRedstone = 0;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
   }
-
 
   public TileEntityEnergyPump() {
     super(0);

@@ -13,12 +13,11 @@ public class ItemPebble extends BaseItem implements IHasRecipe, IHasOreDict {
 
   @Override
   public IRecipe addRecipe() {
- 
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 32),
         "cfc",
         "f f",
         "cfc",
-        'c', "cobblestone" ,
+        'c', "cobblestone",
         'f', new ItemStack(Blocks.DIRT, 1, BlockDirt.DirtType.COARSE_DIRT.getMetadata()));
   }
 

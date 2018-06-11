@@ -185,7 +185,6 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
       return;
     }
-
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     // float power = Math.min(MAX_CHARGE, ItemBow.getArrowVelocity(charge) * POWER_UPSCALE);
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];

@@ -38,7 +38,6 @@ public class GuiStorage extends GuiBaseContainer {
   private GuiButtonTooltip buttonToggle;
   private EntityPlayer player;
 
-
   public GuiStorage(ContainerStorage containerItem, EntityPlayer player) {
     super(containerItem);
     this.player = player;
@@ -60,7 +59,6 @@ public class GuiStorage extends GuiBaseContainer {
       GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
           size, size, color.name().substring(0, 1));
       buttonColour.setTooltip(UtilChat.lang("colour." + color.getUnlocalizedName() + ".name"));
-
       buttonColour.packedFGColour = color.getColorValue();
       this.addButton(buttonColour);
       i++;

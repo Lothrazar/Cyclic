@@ -47,6 +47,7 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
 
   @GameRegistry.ObjectHolder(Const.MODRES + "stone_pebble")
   public static final Item bullet = null;
+
   public ItemProjectileSlingshot() {
     super(1);
   }
@@ -57,7 +58,6 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
       return;
     }
     EntityPlayer player = (EntityPlayer) entity;
-
     ItemStack itemstack = this.findAmmo(player);
     if (itemstack.isEmpty()) {
       UtilChat.sendStatusMessage(player, "slingshot.ammoempty");
@@ -87,7 +87,6 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
         itemstack.shrink(1);
       }
     }
-
   }
 
   protected boolean isAmmo(ItemStack stack) {
@@ -132,5 +131,4 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
   public SoundEvent getSound() {
     return SoundEvents.ENTITY_SNOWBALL_THROW;
   }
-
 }

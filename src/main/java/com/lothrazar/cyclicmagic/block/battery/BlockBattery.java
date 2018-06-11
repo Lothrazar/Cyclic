@@ -66,7 +66,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-
     return new TileEntityBattery();
   }
 
@@ -96,12 +95,10 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     ItemStack stack = new ItemStack(item);
     if (ent != null && ent.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null);
-
       if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-        EnergyStore storage = (EnergyStore)stack.getCapability(CapabilityEnergy.ENERGY, null);
+        EnergyStore storage = (EnergyStore) stack.getCapability(CapabilityEnergy.ENERGY, null);
         storage.setEnergyStored(handlerHere.getEnergyStored());
       }
-
     }
     ret.add(stack);
     return ret;
@@ -115,7 +112,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       IEnergyStorage handlerHere = tile.getCapability(CapabilityEnergy.ENERGY, null);
       double percent = (double) handlerHere.getEnergyStored() / (double) handlerHere.getMaxEnergyStored();
       EnergyFlatMap p = EnergyFlatMap.AMOUNT_G0;
-
       if (percent == 0.0) {
         p = EnergyFlatMap.AMOUNT_G0;
       }
@@ -167,7 +163,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
       else { //close enough to full 
         p = EnergyFlatMap.AMOUNT_G16;
       }
-
       //map [0-100] into [0-8]  
       //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
@@ -192,7 +187,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     return 0;
   }
 
-
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
@@ -202,7 +196,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     }
     else if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
       NBTTagCompound tags = stack.getTagCompound();
-
       int energy = tags.getInteger(ItemBlockBattery.ENERGY);
       //  IEnergyStorage handlerHere =  world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
       TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);

@@ -130,13 +130,12 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       }
     }
     else if (this.isCorner()) {
-
       if (iAmFacing == EnumFacing.NORTH) {
         if (state.getValue(BlockConveyorCorner.FLIPPED)) {//default is false 
           world.setBlockState(pos, state.withProperty(BlockConveyorCorner.FLIPPED, false).withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         else {
-        world.setBlockState(pos, getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+          world.setBlockState(pos, getAngled().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         return true;
       }
@@ -144,12 +143,12 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     else { // is flat
       if (iAmFacing == EnumFacing.NORTH) {
         world.setBlockState(pos, getCorner().getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
-      return true;
-    }
+        return true;
+      }
     }
     return super.rotateBlock(world, pos, axis);
-
   }
+
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }

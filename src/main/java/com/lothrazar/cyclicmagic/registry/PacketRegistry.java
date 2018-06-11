@@ -136,6 +136,5 @@ public class PacketRegistry {
     network.registerMessage(PacketTileTextbox.class, PacketTileTextbox.class, packetID++, Side.SERVER);
     network.registerMessage(PacketScythe.class, PacketScythe.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileStackWrapped.class, PacketTileStackWrapped.class, packetID++, Side.SERVER);
-
   }
 }

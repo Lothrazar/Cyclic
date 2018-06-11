@@ -416,7 +416,6 @@ public class UtilWorld {
       //this first translate is to make relative to TE and everything
       GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
       RenderHelper.disableStandardItemLighting();
-
       if (isSolid == false) {
         GlStateManager.blendFunc(770, 775);
         GlStateManager.enableBlend();

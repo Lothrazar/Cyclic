@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.imbue;
 
-
 import com.lothrazar.cyclicmagic.block.imbue.BlockImbue.ImbueFlavor;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -15,26 +14,21 @@ public class TileEntityImbue extends TileEntityBaseMachineInvo implements ITicka
 
   public TileEntityImbue() {
     super(2);//one slot for bow, 2 for ingredients
-
   }
 
   @Override
   public void update() {
     // TODO apply thing to target
-
     if (this.isPowered()) {
       RecipeImbue found = findMatchingRecipe();
       ItemStack target = this.getStackInSlot(SLOT_TARGET);
       ItemStack fuel = this.getStackInSlot(SLOT_TARGET + 1);
-
       if (target.getItem() instanceof ItemBow && found != null) {
-
         // wait, does it already HAVE imbue? 
         ImbueFlavor current = BlockImbue.getImbueType(target);
         //f bow has a different kind, OR empty charges
         if (current == null || current != found.flavor
             || BlockImbue.getImbueCharge(target) == 0) {
-
           BlockImbue.setImbue(target, found);
           BlockImbue.setImbueCharge(target, 20);
           fuel.shrink(1);
@@ -47,11 +41,9 @@ public class TileEntityImbue extends TileEntityBaseMachineInvo implements ITicka
           UtilItemStack.dropItemStackInWorld(world, pos, target);
           setInventorySlotContents(SLOT_TARGET, ItemStack.EMPTY);
         }
-          //dont overwrite same to same
-
+        //dont overwrite same to same
       }
     }
-
   }
 
   private RecipeImbue findMatchingRecipe() {

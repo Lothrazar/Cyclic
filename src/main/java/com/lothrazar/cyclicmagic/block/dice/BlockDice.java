@@ -25,7 +25,6 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   public BlockDice() {
     super(Material.ROCK);
     this.setTranslucent();
-
   }
 
   @Override
@@ -45,7 +44,6 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
     TileEntity tile = world.getTileEntity(pos);
     if (hand == EnumHand.MAIN_HAND && tile instanceof TileEntityDice) {
       ((TileEntityDice) tile).startSpinning();
-
       UtilSound.playSound(player, SoundRegistry.dice_mikekoenig);
       return true;
     }
@@ -54,7 +52,6 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
 
   @Override
   public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
-
     TileEntity tile = world.getTileEntity(pos);
     if (tile instanceof TileEntityDice) {
       if (((TileEntityDice) tile).isSpinning()) {

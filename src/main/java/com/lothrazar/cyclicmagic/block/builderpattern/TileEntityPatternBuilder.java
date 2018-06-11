@@ -77,6 +77,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   enum RenderType {
     OFF, OUTLINE, PHANTOM, SOLID;
   }
+
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
   }
@@ -261,7 +262,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (world.isAirBlock(targ))//dont render on top of thing
         map.put(targ, world.getBlockState(src));
     }
-
     return map;
   }
 
@@ -439,6 +439,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public RenderType getRenderType() {
     return RenderType.values()[this.renderParticles];
   }
+
   @Override
   public int getField(int id) {
     return getField(Fields.values()[id]);
@@ -482,6 +483,4 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public List<BlockPos> getShape() {
     return getTargetShape();//special case for this block, not used here
   }
-
-
 }

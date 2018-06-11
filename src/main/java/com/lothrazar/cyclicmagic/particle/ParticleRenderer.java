@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.particle;
+
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ParticleRenderer {
+
   ArrayList<Particle> particles = new ArrayList<Particle>();
+
   public void updateParticles() {
     boolean doRemove = false;
     try {
@@ -41,6 +44,7 @@ public class ParticleRenderer {
       e.printStackTrace();
     }
   }
+
   public void renderParticles(EntityPlayer dumbplayer, float partialTicks) {
     float f = ActiveRenderInfo.getRotationX();
     float f1 = ActiveRenderInfo.getRotationZ();
@@ -94,9 +98,9 @@ public class ParticleRenderer {
       GlStateManager.alphaFunc(516, 0.1F);
     }
   }
+
   public void addParticle(Particle particle) {
     particles.add(particle);
   }
   //events
-
 }

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.cannon;
+
 import java.util.Random;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import io.netty.buffer.ByteBuf;
@@ -11,13 +12,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageGolemLaserFX implements IMessage {
+
   public static Random random = new Random();
   public double posX = 0, posY = 0, posZ = 0;
   public double value = 0;
   public int r, g, b;
+
   public MessageGolemLaserFX() {
     super();
   }
+
   public MessageGolemLaserFX(double x, double y, double z, double value, int r, int g, int b) {
     super();
     this.posX = x;
@@ -28,6 +32,7 @@ public class MessageGolemLaserFX implements IMessage {
     this.b = b;
     this.value = value;
   }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     posX = buf.readDouble();
@@ -38,6 +43,7 @@ public class MessageGolemLaserFX implements IMessage {
     g = buf.readInt();
     b = buf.readInt();
   }
+
   @Override
   public void toBytes(ByteBuf buf) {
     buf.writeDouble(posX);
@@ -48,9 +54,12 @@ public class MessageGolemLaserFX implements IMessage {
     buf.writeInt(g);
     buf.writeInt(b);
   }
+
   public static class MessageHolder implements IMessageHandler<MessageGolemLaserFX, IMessage> {
+
     public static Random random = new Random();
     public static int counter = 0;
+
     @SideOnly(Side.CLIENT)
     @Override
     public IMessage onMessage(final MessageGolemLaserFX message, final MessageContext ctx) {
@@ -67,6 +76,7 @@ public class MessageGolemLaserFX implements IMessage {
       }
       return null;
     }
+
     @SideOnly(Side.CLIENT)
     public static void spawnParticleGlow(World world, float x, float y, float z, float vx, float vy, float vz, float r, float g, float b, float a, float scale, int lifetime) {
       counter += random.nextInt(3);

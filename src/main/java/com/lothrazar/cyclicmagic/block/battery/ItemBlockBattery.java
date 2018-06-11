@@ -31,6 +31,7 @@ public class ItemBlockBattery extends ItemBlock {
   public int getRGBDurabilityForDisplay(ItemStack stack) {
     return 0xBC000C;
   }
+
   /**
    * Queries the percentage of the 'Durability' bar that should be drawn.
    *

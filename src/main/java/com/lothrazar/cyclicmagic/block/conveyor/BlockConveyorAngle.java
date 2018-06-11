@@ -60,6 +60,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public boolean isAngle() {
     return true;
   }
+
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     return new ItemStack(dropFlat);

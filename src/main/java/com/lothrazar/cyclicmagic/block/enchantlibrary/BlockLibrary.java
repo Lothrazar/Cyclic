@@ -60,6 +60,7 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityLibrary();
   }
+
   @Override
   public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     // find the quadrant the player is facing
@@ -83,7 +84,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     if (segment == null) {
       return false;//literal edge case
     }
-
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;

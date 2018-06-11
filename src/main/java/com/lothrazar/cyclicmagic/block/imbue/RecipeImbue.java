@@ -18,7 +18,6 @@ public class RecipeImbue {
       throw new IllegalArgumentException("Input array must be length 1");
     }
     recipeInput.set(0, in[0]);
-
     this.flavor = action;
   }
 
@@ -26,27 +25,21 @@ public class RecipeImbue {
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Items.BLAZE_POWDER) },
         ImbueFlavor.FIRE));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Items.SPIDER_EYE) },
         ImbueFlavor.POISON));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Items.FEATHER) },
         ImbueFlavor.LEVITATE));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Blocks.TNT) },
         ImbueFlavor.EXPLOSION));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Blocks.GLASS) },
         ImbueFlavor.INVISIBILITY));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Blocks.SOUL_SAND) },
         ImbueFlavor.SLOWNESS));
-
     BlockImbue.addRecipe(new RecipeImbue(new ItemStack[] {
         new ItemStack(Blocks.TORCH) },
         ImbueFlavor.GLOWING));

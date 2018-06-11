@@ -277,7 +277,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (enableSlingshot) {
       ItemRegistry.register(new ItemPebble(), "stone_pebble");
       ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
-
       ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
       EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
       ModCyclic.instance.events.register(slingshot_weapon);

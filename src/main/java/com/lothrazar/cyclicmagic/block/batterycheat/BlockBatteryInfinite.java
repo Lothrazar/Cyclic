@@ -19,14 +19,12 @@ public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe
 
   @Override
   public IRecipe addRecipe() {
-      return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
-          new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
-
+    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
+        new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
   }
 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBatteryInfinite();
   }
-
 }

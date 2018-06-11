@@ -8,11 +8,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-
 public class EnergyCapabilityItemStack implements ICapabilityProvider {
 
   public static final String NBTENERGY = "energy";
-
   private EnergyStore storage;
 
   public EnergyCapabilityItemStack(final ItemStack stack, int capacity) {

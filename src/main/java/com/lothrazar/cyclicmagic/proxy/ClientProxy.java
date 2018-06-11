@@ -94,7 +94,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ClientProxy extends CommonProxy {
 
   public static ParticleRenderer particleRenderer = new ParticleRenderer();
-
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
@@ -359,9 +358,7 @@ public class ClientProxy extends CommonProxy {
             }
             //layer 1 is overlay 
             return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
-
           }, ItemModule.storage_bag);
     }
   }
-
 }

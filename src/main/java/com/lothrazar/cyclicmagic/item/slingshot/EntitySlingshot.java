@@ -43,7 +43,6 @@ public class EntitySlingshot extends EntityThrowableDispensable {
 
   @GameRegistry.ObjectHolder(Const.MODRES + "stone_pebble")
   public static final Item bullet = null;
-
   static final float DAMAGE_MIN = 1.5F;
   static final float DAMAGE_MAX = 2.8F;
 

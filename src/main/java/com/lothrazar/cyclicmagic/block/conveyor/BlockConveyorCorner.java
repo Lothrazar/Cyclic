@@ -34,6 +34,7 @@ public class BlockConveyorCorner extends BlockConveyor {
   public boolean isCorner() {
     return true;
   }
+
   @Override
   public IRecipe addRecipe() {
     return null;

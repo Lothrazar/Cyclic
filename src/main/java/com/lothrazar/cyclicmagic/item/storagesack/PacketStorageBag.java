@@ -56,10 +56,8 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
     EntityPlayer player = ctx.getServerHandler().player;
     ItemStack stack = player.getHeldItemMainhand();
     if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
-
-        ItemStorageBag.StorageActionType.toggle(stack);
-        UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
-
+      ItemStorageBag.StorageActionType.toggle(stack);
+      UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
     }
     return null;
   }

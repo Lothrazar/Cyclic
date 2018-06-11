@@ -81,7 +81,7 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       }
     }
     //starts at 1 for current one
-    if(isAnySingleOk){
+    if (isAnySingleOk) {
       this.harvestSurrounding(world, player, pos, block, 1, level);
     }
   }

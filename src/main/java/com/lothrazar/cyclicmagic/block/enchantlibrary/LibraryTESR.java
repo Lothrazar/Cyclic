@@ -47,15 +47,15 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     EnumFacing face = te.getCurrentFacing();
     //    for (EnumFacing face : EnumFacing.HORIZONTALS) {
-      //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
-      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TL), QuadrantEnum.TL, face, x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter);
-      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
-      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
-      renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
-      if (doNameplate && te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
-        //TODO: we could xyz offset in different ways too
-        this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
-      }
+    //TODO: loop on storage length. FOR NOW we have fixed size of 4 so do this
+    renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TL), QuadrantEnum.TL, face, x, y, z, destroyStage, leftColumn, topRow, horizDistFromCenter);
+    renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
+    renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
+    renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
+    if (doNameplate && te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
+      //TODO: we could xyz offset in different ways too
+      this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
+    }
     //    } 
   }
 

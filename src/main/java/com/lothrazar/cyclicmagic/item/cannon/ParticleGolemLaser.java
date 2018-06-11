@@ -21,9 +21,9 @@ public class ParticleGolemLaser extends Particle implements IParticleTracked {
   public float initScale = 0;
   public float initAlpha = 0;
   public static final ResourceLocation texture = new ResourceLocation(Const.MODID, "entity/particle_mote");
-
   public static Random random = new Random();
   public static TextureAtlasSprite sprite = null;
+
   public ParticleGolemLaser(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r, float g, float b, float a, float scale, int lifetime) {
     super(worldIn, x, y, z, 0, 0, 0);
     random = worldIn.rand;
@@ -48,7 +48,6 @@ public class ParticleGolemLaser extends Particle implements IParticleTracked {
     this.motionZ = vz * 2.0f;
     this.initAlpha = a;
     this.particleAngle = 2.0f * (float) Math.PI;
-
     if (sprite != null)
       this.setParticleTexture(sprite);
   }
@@ -67,7 +66,6 @@ public class ParticleGolemLaser extends Particle implements IParticleTracked {
   public int getFXLayer() {
     return 1;
   }
-
 
   @Override
   public void onUpdate() {

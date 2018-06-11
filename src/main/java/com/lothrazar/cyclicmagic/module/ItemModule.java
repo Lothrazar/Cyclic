@@ -478,7 +478,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
-
     }
     if (enableCarbonPaper) {
       ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
@@ -831,6 +830,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   public void onInit() {
     ModCyclic.proxy.initColors();
   }
+
   @Override
   public void onPostInit() {
     for (BaseItemProjectile item : projectiles) {
@@ -840,7 +840,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
-
     lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
