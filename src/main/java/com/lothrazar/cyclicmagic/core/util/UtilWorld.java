@@ -35,9 +35,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
@@ -45,8 +49,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -135,12 +141,12 @@ public class UtilWorld {
     // function imported
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
     Map<IInventory, BlockPos> found = new HashMap<IInventory, BlockPos>();
-    int xMin = (int) player.getPosition().getX() - RADIUS;
-    int xMax = (int) player.getPosition().getX() + RADIUS;
-    int yMin = (int) player.getPosition().getY() - RADIUS;
-    int yMax = (int) player.getPosition().getY() + RADIUS;
-    int zMin = (int) player.getPosition().getZ() - RADIUS;
-    int zMax = (int) player.getPosition().getZ() + RADIUS;
+    int xMin = player.getPosition().getX() - RADIUS;
+    int xMax = player.getPosition().getX() + RADIUS;
+    int yMin = player.getPosition().getY() - RADIUS;
+    int yMax = player.getPosition().getY() + RADIUS;
+    int zMin = player.getPosition().getZ() - RADIUS;
+    int zMax = player.getPosition().getZ() + RADIUS;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
@@ -208,12 +214,12 @@ public class UtilWorld {
 
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
-    int xMin = (int) start.getX() - RADIUS;
-    int xMax = (int) start.getX() + RADIUS;
-    int yMin = (int) start.getY() - RADIUS;
-    int yMax = (int) start.getY() + RADIUS;
-    int zMin = (int) start.getZ() - RADIUS;
-    int zMax = (int) start.getZ() + RADIUS;
+    int xMin = start.getX() - RADIUS;
+    int xMax = start.getX() + RADIUS;
+    int yMin = start.getY() - RADIUS;
+    int yMax = start.getY() + RADIUS;
+    int zMin = start.getZ() - RADIUS;
+    int zMax = start.getZ() + RADIUS;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
@@ -386,6 +392,45 @@ public class UtilWorld {
           add(p);
         }
       }, center, relX, relY, relZ, red, green, blue);
+    }
+
+    public static void renderBlockPhantom(World world, final BlockPos pos, ItemStack stack, final double relX, final double relY, final double relZ,
+        BlockPos target, boolean isSolid) {
+      if (stack.getItem() instanceof ItemBlock) {
+        ItemBlock ib = (ItemBlock) stack.getItem();
+        IBlockState stateFromStack = ib.getBlock().getStateForPlacement(world, pos, EnumFacing.DOWN, pos.getX(), pos.getY(), pos.getZ(),
+            stack.getItemDamage(), null, EnumHand.MAIN_HAND);
+        renderBlockPhantom(world, pos, stateFromStack, relX, relY, relZ, target, isSolid);
+      }
+    }
+
+    public static void renderBlockPhantom(World world, final BlockPos pos, IBlockState state, final double relX, final double relY, final double relZ, BlockPos target, boolean isSolid) {
+      int xOffset = target.getX() - pos.getX();
+      int yOffset = target.getY() - pos.getY();
+      int zOffset = target.getZ() - pos.getZ();
+      final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
+      IBakedModel model = blockRenderer.getBlockModelShapes().getModelForState(state);
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferBuilder = tessellator.getBuffer();
+      GlStateManager.pushMatrix();
+      //this first translate is to make relative to TE and everything
+      GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
+      RenderHelper.disableStandardItemLighting();
+      if (isSolid == false) {
+        GlStateManager.blendFunc(770, 775);
+        GlStateManager.enableBlend();
+        GlStateManager.disableCull();
+      }
+      bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+      //move into frame and then back to zero - so world relative
+      bufferBuilder.setTranslation(-0.5 - pos.getX() + xOffset, -.5 - pos.getY() + yOffset, -.5 - pos.getZ() + zOffset);
+      Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+      //TODO: pos below is the targetPos, other rel and pos are TE 
+      blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, bufferBuilder, false);
+      bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
+      tessellator.draw();
+      RenderHelper.enableStandardItemLighting();
+      GlStateManager.popMatrix();
     }
 
     public static void renderBlockList(List<BlockPos> blockPosList, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {

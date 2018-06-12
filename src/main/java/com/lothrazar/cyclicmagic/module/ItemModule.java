@@ -29,11 +29,6 @@ import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.core.registry.EntityProjectileRegistry;
-import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry.ChestType;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideItem;
@@ -61,6 +56,8 @@ import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
+import com.lothrazar.cyclicmagic.item.cannon.ItemProjectileCannon;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
@@ -83,19 +80,23 @@ import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmSpeed;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmVoid;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmWater;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemGloveClimb;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldArmor;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldAxe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldHoe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldPickaxe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldSpade;
-import com.lothrazar.cyclicmagic.item.equipment.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.equipment.ItemGlowingHelmet;
-import com.lothrazar.cyclicmagic.item.equipment.ItemPowerArmor;
-import com.lothrazar.cyclicmagic.item.equipment.ItemPowerSword;
-import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneAxe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneHoe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemSandstonePickaxe;
-import com.lothrazar.cyclicmagic.item.equipment.ItemSandstoneSpade;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerSword;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldArmor;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldAxe;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldHoe;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldPickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldSpade;
+import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldSword;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickAxe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickHoe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickPickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.nether.ItemNetherbrickSpade;
+import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneHoe;
+import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.item.findspawner.ItemProjectileDungeon;
 import com.lothrazar.cyclicmagic.item.homingmissile.EntityHomingProjectile;
@@ -126,7 +127,7 @@ import com.lothrazar.cyclicmagic.item.random.ItemRandomizer;
 import com.lothrazar.cyclicmagic.item.scythe.ItemScythe;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.item.shears.ItemShearsRanged;
-import com.lothrazar.cyclicmagic.item.signfancy.ItemSignEditor;
+import com.lothrazar.cyclicmagic.item.signcolor.ItemSignEditor;
 import com.lothrazar.cyclicmagic.item.sleep.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.ItemProjectileSnow;
@@ -142,7 +143,12 @@ import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemInventoryUnlock;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
 import net.minecraft.block.Block;
@@ -237,21 +243,30 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enablePlayerLauncher;
   private boolean evokerFang;
   private boolean enderEyeReuse;
-  public static ItemStorageBag storage_bag;//ref by ContainerStorage
+  public static ItemStorageBag storage_bag = null;//ref by ContainerStorage
   private boolean enableEmeraldGear;
   private boolean enableSandstoneTools;
   private boolean enablePurpleGear;
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
   private boolean signEditor;
+  private boolean robotSpawner;
+  private boolean lasers;
+  private boolean enableNetherbrickTools;
 
   @Override
   public void onPreInit() {
-    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
-    EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
-    ItemCrashSpawner spawner = new ItemCrashSpawner();
-    ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
-    ModCyclic.instance.events.register(spawner);
+    if (robotSpawner) {
+      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
+      EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
+      ItemCrashSpawner spawner = new ItemCrashSpawner();
+      ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
+      ModCyclic.instance.events.register(spawner);
+    }
+    if (lasers) {
+      ItemRegistry.register(new ItemProjectileCannon(), "laser_cannon", GuideCategory.ITEMTHROW);
+      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityGolemLaser.NAME), EntityGolemLaser.class, EntityGolemLaser.NAME, 1031, ModCyclic.instance, 64, 1, true);
+    }
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
@@ -342,6 +357,21 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
       ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
       ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
+    }
+    if (enableNetherbrickTools) {
+      Item netherbrick_pickaxe = new ItemNetherbrickPickaxe();
+      ItemRegistry.register(netherbrick_pickaxe, "netherbrick_pickaxe", null);
+      Item netherbrick_axe = new ItemNetherbrickAxe();
+      ItemRegistry.register(netherbrick_axe, "netherbrick_axe", null);
+      Item netherbrick_spade = new ItemNetherbrickSpade();
+      ItemRegistry.register(netherbrick_spade, "netherbrick_spade", null);
+      Item netherbrick_hoe = new ItemNetherbrickHoe();
+      ItemRegistry.register(netherbrick_hoe, "netherbrick_hoe", null);
+      //NETHER CHESTYPE
+      //      LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.);
+      //      LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
+      //      LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
+      GuideRegistry.register(GuideCategory.GEAR, netherbrick_axe, "item.netherbrick_axe.name", "item.netherbrick_axe.guide");
     }
     if (enableSandstoneTools) {
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
@@ -448,7 +478,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
-      // ItemRegistry.registerWithJeiDescription(storage_bag);
     }
     if (enableCarbonPaper) {
       ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
@@ -798,6 +827,11 @@ public class ItemModule extends BaseModule implements IHasConfig {
   }
 
   @Override
+  public void onInit() {
+    ModCyclic.proxy.initColors();
+  }
+
+  @Override
   public void onPostInit() {
     for (BaseItemProjectile item : projectiles) {
       BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorProjectileThrowable(item));
@@ -806,6 +840,8 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -891,5 +927,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
     enableSandstoneTools = config.getBoolean("SandstoneTools", Const.ConfigCategory.content, true, "Sandstone tools are between wood and stone. " + Const.ConfigCategory.contentDefaultText);
     enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
     enablePurpleSwords = config.getBoolean("SwordsFrostEnder", Const.ConfigCategory.content, true, "Enable the epic swords. " + Const.ConfigCategory.contentDefaultText);
+    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
+    enableNetherbrickTools = config.getBoolean("NetherbrickTools", Const.ConfigCategory.content, true, "Netherbrick tools have mining level of stone but improved stats. " + Const.ConfigCategory.contentDefaultText);
   }
 }

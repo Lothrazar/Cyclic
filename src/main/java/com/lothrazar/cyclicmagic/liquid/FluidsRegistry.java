@@ -24,14 +24,14 @@
 package com.lothrazar.cyclicmagic.liquid;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.liquid.exp.BlockFluidExp;
 import com.lothrazar.cyclicmagic.liquid.exp.FluidExp;
 import com.lothrazar.cyclicmagic.liquid.milk.BlockFluidMilk;
 import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
 import com.lothrazar.cyclicmagic.liquid.poison.BlockFluidPoison;
 import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Items;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;

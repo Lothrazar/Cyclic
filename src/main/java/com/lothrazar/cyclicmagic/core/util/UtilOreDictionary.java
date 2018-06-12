@@ -29,14 +29,14 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class UtilOreDictionary {
 
-  public static boolean doesMatchOreDict(final ItemStack stackIn, final String oreId) {
-    return doesMatchOreDict(stackIn, oreId, false);
+  public static boolean doesMatchOreDict(final ItemStack stack, final String oreId) {
+    return doesMatchOreDict(stack, oreId, false);
   }
 
-  public static boolean doesMatchOreDict(final ItemStack stackIn, final String oreId, boolean strict) {
+  public static boolean doesMatchOreDict(final ItemStack stack, final String oreId, boolean strict) {
     if (OreDictionary.doesOreNameExist(oreId)) {
       for (ItemStack stackCurrent : OreDictionary.getOres(oreId)) {
-        if (OreDictionary.itemMatches(stackCurrent, stackIn, strict)) {
+        if (OreDictionary.itemMatches(stackCurrent, stack, strict)) {
           return true;
         }
       }
@@ -44,27 +44,27 @@ public class UtilOreDictionary {
     return false;
   }
 
-  public static boolean doesMatchOreDict(final ItemStack stackIn, final List<String> oreIds) {
-    return doesMatchOreDict(stackIn, oreIds.toArray(new String[0]));
+  public static boolean doesMatchOreDict(final ItemStack stack, final List<String> oreIds) {
+    return doesMatchOreDict(stack, oreIds.toArray(new String[0]));
   }
 
-  public static boolean doesMatchOreDict(final ItemStack stackIn, final String[] oreIds) {
-    return doesMatchOreDict(stackIn, oreIds, false);
+  public static boolean doesMatchOreDict(final ItemStack stack, final String[] oreIds) {
+    return doesMatchOreDict(stack, oreIds, false);
   }
 
-  public static boolean doesMatchOreDict(ItemStack stackIn, String[] oreIds, boolean strict) {
+  public static boolean doesMatchOreDict(ItemStack stack, String[] oreIds, boolean strict) {
     for (String oreId : oreIds) {
-      if (doesMatchOreDict(stackIn, oreId, strict)) {
+      if (doesMatchOreDict(stack, oreId, strict)) {
         return true;
       }
     }
     return false;
   }
 
-  public static boolean itemMatchesAllowAir(ItemStack toMatch, ItemStack itemStack) {
-    if (toMatch.isEmpty() || itemStack.isEmpty()) {
+  public static boolean itemMatchesAllowAir(ItemStack toMatch, ItemStack stack) {
+    if (toMatch.isEmpty() || stack.isEmpty()) {
       return true;
     }
-    return OreDictionary.itemMatches(toMatch, itemStack, false);
+    return OreDictionary.itemMatches(toMatch, stack, false);
   }
 }

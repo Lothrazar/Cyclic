@@ -62,7 +62,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
         && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
       // https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
       ItemStack itemStack = event.getItemStack();
-      if (itemStack == null || itemStack.getItem() == null) {
+      if (itemStack.getItem() == null) {
         return;
       }
       if (foodDetails && itemStack.getItem() instanceof ItemFood) {

@@ -28,14 +28,19 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 
 public class GuiStorage extends GuiBaseContainer {
 
   private GuiButtonTooltip buttonToggle;
+  private EntityPlayer player;
 
-  public GuiStorage(ContainerStorage containerItem) {
+  public GuiStorage(ContainerStorage containerItem, EntityPlayer player) {
     super(containerItem);
+    this.player = player;
     this.setScreenSize(ScreenSize.SACK);
   }
 
@@ -45,16 +50,29 @@ public class GuiStorage extends GuiBaseContainer {
     int id = 0;
     int y = this.guiTop;
     int x = this.guiLeft;
-    buttonToggle = new GuiButtonTooltip(id++, x, y, 10, 10, "");
+    buttonToggle = new GuiButtonTooltip(75, x, y, 10, 10, "");
     buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
+    int i = 0;
+    int size = 12;
+    for (EnumDyeColor color : EnumDyeColor.values()) {
+      GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
+          size, size, color.name().substring(0, 1));
+      buttonColour.setTooltip(UtilChat.lang("colour." + color.getUnlocalizedName() + ".name"));
+      buttonColour.packedFGColour = color.getColorValue();
+      this.addButton(buttonColour);
+      i++;
+    }
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {
-      // packet 
       ModCyclic.network.sendToServer(new PacketStorageBag());
+    }
+    else {
+      ItemStorageBag.StorageActionType.setColour(player.getHeldItemMainhand(), button.id);
+      ModCyclic.network.sendToServer(new PacketColorStack(button.id));
     }
   }
 }

@@ -37,6 +37,8 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
 
   public TileEntityWirelessTr() {
     super(0);
+    //.getServer().worldServers[id].loadedTileEntityList
+    //List<TileEntity> list = this.world.getMinecraftServer().worlds[0].loadedTileEntityList;
   }
 
   @Override

@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
 
+import com.lothrazar.cyclicmagic.core.BaseCommand;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

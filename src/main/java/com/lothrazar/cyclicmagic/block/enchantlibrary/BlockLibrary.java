@@ -23,16 +23,16 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -50,7 +50,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe {
 
   public BlockLibrary() {
     super(Material.WOOD);
@@ -62,14 +62,28 @@ public class BlockLibrary extends BlockBaseHasTile implements IBlockHasTESR, IHa
   }
 
   @Override
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    // find the quadrant the player is facing
+    EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
+    return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing.getOpposite());
+  }
+
+  @Override
+  public EnumFacing getFacingFromState(IBlockState state) {
+    return super.getFacingFromState(state).getOpposite();
+  }
+
+  @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
+    if (side != this.getFacingFromState(state)) {
+      return false;
+    }
     TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
     QuadrantEnum segment = QuadrantEnum.getForFace(side, hitX, hitY, hitZ);
     if (segment == null) {
       return false;//literal edge case
     }
-    ModCyclic.logger.log("library block on interact " + world.isRemote);//always false//only client//ffffffuk
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;

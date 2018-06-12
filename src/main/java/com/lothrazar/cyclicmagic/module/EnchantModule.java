@@ -24,21 +24,21 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.EnchantBase;
-import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
-import com.lothrazar.cyclicmagic.enchantment.EnchantBeheading;
-import com.lothrazar.cyclicmagic.enchantment.EnchantExcavation;
-import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
-import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
-import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
-import com.lothrazar.cyclicmagic.enchantment.EnchantMultishot;
-import com.lothrazar.cyclicmagic.enchantment.EnchantQuickdraw;
-import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
-import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
-import com.lothrazar.cyclicmagic.enchantment.EnchantWaterwalking;
-import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
+import com.lothrazar.cyclicmagic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclicmagic.enchant.EnchantBeheading;
+import com.lothrazar.cyclicmagic.enchant.EnchantExcavation;
+import com.lothrazar.cyclicmagic.enchant.EnchantLaunch;
+import com.lothrazar.cyclicmagic.enchant.EnchantLifeLeech;
+import com.lothrazar.cyclicmagic.enchant.EnchantMagnet;
+import com.lothrazar.cyclicmagic.enchant.EnchantMultishot;
+import com.lothrazar.cyclicmagic.enchant.EnchantQuickdraw;
+import com.lothrazar.cyclicmagic.enchant.EnchantReach;
+import com.lothrazar.cyclicmagic.enchant.EnchantVenom;
+import com.lothrazar.cyclicmagic.enchant.EnchantWaterwalking;
+import com.lothrazar.cyclicmagic.enchant.EnchantXpBoost;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {

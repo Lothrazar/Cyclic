@@ -32,7 +32,6 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -45,7 +44,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -53,10 +51,10 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
 
   private static final int TIMER_SIDE_INPUT = 15;
-  private static int TRANSFER_FLUID_PER_TICK = 500; //config
+  public static final int TRANSFER_FLUID_PER_TICK = 1000;
   //config
   //TODO: timer to slow down item rate
-  private static int TRANSFER_ENERGY_PER_TICK = 8 * 1000;
+  public static final int TRANSFER_ENERGY_PER_TICK = 16 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
   private String labelText = "";
@@ -68,32 +66,23 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private Map<EnumFacing, Integer> mapIncomingEnergy = Maps.newHashMap();
   private Map<EnumFacing, Boolean> mapBlacklist = Maps.newHashMap();
 
-  public TileEntityCableBase(int invoSize, int fluidTankSize, int powerPerTick) {
-    super(invoSize);
-    if (fluidTankSize > 0) {
-      tank = new FluidTankBase(fluidTankSize);
+  public TileEntityCableBase(boolean hasItems, boolean hasFluid, boolean hasEnergy) {
+    super((hasItems) ? 1 : 0);
+    if (hasFluid) {
+      tank = new FluidTankBase(TRANSFER_FLUID_PER_TICK);
     }
-    if (powerPerTick > 0) {
+    if (hasEnergy) {
       initEnergy(0, TRANSFER_ENERGY_PER_TICK);
     }
+    itemTransport = hasItems;
+    fluidTransport = hasFluid;
+    energyTransport = hasEnergy;
     for (EnumFacing f : EnumFacing.values()) {
       mapIncomingFluid.put(f, 0);
       mapIncomingItems.put(f, 0);
       mapIncomingEnergy.put(f, 0);
       mapBlacklist.put(f, false);
     }
-  }
-
-  public void setItemTransport() {
-    this.itemTransport = true;
-  }
-
-  public void setFluidTransport() {
-    this.fluidTransport = true;
-  }
-
-  public void setPowerTransport() {
-    this.energyTransport = true;
   }
 
   public boolean isItemPipe() {
@@ -178,7 +167,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private String getIncomingStringsFluid() {
-    String tmpName = this.getCurrentFluidStack().getLocalizedName();
+    String tmpName = this.getCurrentFluidStackAmount() + " " + this.getCurrentFluidStack().getLocalizedName();
     String incoming = getIncomingStringsFromMap(this.mapIncomingFluid);
     if (incoming.isEmpty() == false) {
       tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
@@ -279,19 +268,20 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
   }
 
-  private void moveItems(EnumFacing f) {
+  private void moveItems(EnumFacing myFacingDir) {
     if (this.getStackInSlot(0).isEmpty()) {
       return;
     }
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack stackToExport = this.getStackInSlot(0).copy();
     //ok,  not incoming from here. so lets output some
-    BlockPos posTarget = pos.offset(f);
+    BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
     }
     boolean outputSuccess = false;
-    ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, f.getOpposite(), stackToExport);
+    ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
     if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
       this.setInventorySlotContents(0, leftAfterDeposit);
@@ -300,12 +290,14 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (outputSuccess && tileTarget instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
       TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-      if (cable.isItemPipe())
-        cable.updateIncomingItemFace(f.getOpposite());
+      if (cable.isItemPipe()) {
+        cable.updateIncomingItemFace(themFacingMe);
+      }
     }
   }
 
-  private void moveFluid(EnumFacing f) {
+  private void moveFluid(EnumFacing myFacingDir) {
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     if (tank.getFluidAmount() <= 0) {
       return;
     }
@@ -313,30 +305,32 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (hasAnyIncomingFluidFaces() && toFlow >= tank.getFluidAmount()) {
       toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
     }
-    BlockPos posTarget = pos.offset(f);
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, f.getOpposite(), tank, toFlow);
+    BlockPos posTarget = pos.offset(myFacingDir);
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
     if (outputSuccess) {
       TileEntity tileTarget = world.getTileEntity(posTarget);
       if (tileTarget instanceof TileEntityCableBase) {
         //TODO: not so compatible with other fluid systems. itl do i guess
         TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-        if (cable.isFluidPipe())
-          cable.updateIncomingFluidFace(f.getOpposite());
+        if (cable.isFluidPipe()) {
+          cable.updateIncomingFluidFace(themFacingMe);
+        }
       }
     }
   }
 
-  private void moveEnergy(EnumFacing f) {
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, f);
+  private void moveEnergy(EnumFacing myFacingDir) {
+    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
     if (handlerHere.getEnergyStored() == 0) {
       return;
     }
-    BlockPos posTarget = pos.offset(f);
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
+    BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
+    if (tileTarget == null || tileTarget.hasCapability(CapabilityEnergy.ENERGY, themFacingMe) == false) {
       return;
     }
-    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, f);
+    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe);
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
@@ -349,8 +343,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
         if (filled > 0 && tileTarget instanceof TileEntityCableBase) {
           //TODO: not so compatible with other fluid systems. itl do i guess
           TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-          if (cable.isEnergyPipe())
-            cable.updateIncomingEnergyFace(f.getOpposite());
+          if (cable.isEnergyPipe()) {
+            cable.updateIncomingEnergyFace(themFacingMe);
+          }
         }
       }
     }
@@ -403,6 +398,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
 
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (mapBlacklist.get(facing)) {
+      return false;//announce that capability does not exist on this side. items and all.
+    }
     if (capability == CapabilityEnergy.ENERGY) {
       return this.isEnergyPipe();
     }
@@ -417,17 +415,9 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }
-    return super.getCapability(capability, facing);
+    return super.getCapability(capability, facing.getOpposite());
   }
 
-  public static void syncConfig(Configuration config) {
-    TRANSFER_FLUID_PER_TICK = config.getInt("TRANSFER_FLUID_PER_TICK", Const.ConfigCategory.cables, 500, 1, 99999, "Fluid transfer per tick");
-    TRANSFER_ENERGY_PER_TICK = config.getInt("TRANSFER_ENERGY_PER_TICK", Const.ConfigCategory.cables, 8 * 1000, 1, 99999, "Energy transfer per tick");
-  }
-
-  //  public Map<EnumFacing, Boolean> getBlacklist() {
-  //    return mapBlacklist;
-  //  }
   public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }

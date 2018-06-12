@@ -170,14 +170,17 @@ public class EventKeyInput {
     }
     GuiContainer gui = (GuiContainer) event.getGui();
     boolean rightClickDown = false;
+    //   event 
     try {
-      rightClickDown = Mouse.isButtonDown(1);
+      //if you press and hold the button, eventButton becomes -1 even when buttonDown(1) is true
+      //so event button is on the mouseDown and mouseUp triggers
+      rightClickDown = (Mouse.getEventButton() == 1) && Mouse.isButtonDown(1);
     }
-    catch (Exception e) {//array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
+    catch (Exception e) { //array out of bounds, crazy weird unexpected mouse 
       //EXAMPLE:  mod.chiselsandbits.bitbag.BagGui
       // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410
-      rightClickDown = Mouse.isButtonDown(0);//rare to have a one button mouse. but not impossible i guess.
     }
+    //    System.out.println(" Mouse.getEventButton() " + Mouse.getEventButton());
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {
         int slot = gui.getSlotUnderMouse().slotNumber;

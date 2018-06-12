@@ -35,6 +35,9 @@ import com.lothrazar.cyclicmagic.block.anvilvoid.TileEntityVoidAnvil;
 import com.lothrazar.cyclicmagic.block.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.block.autouser.GuiUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.battery.ContainerBattery;
+import com.lothrazar.cyclicmagic.block.battery.GuiBattery;
+import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.beaconpotion.ContainerBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.GuiBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
@@ -95,6 +98,12 @@ import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.block.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.block.password.GuiPassword;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.peat.farm.ContainerPeatFarm;
+import com.lothrazar.cyclicmagic.block.peat.farm.GuiPeatFarm;
+import com.lothrazar.cyclicmagic.block.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.block.peat.generator.ContainerPeatGenerator;
+import com.lothrazar.cyclicmagic.block.peat.generator.GuiPeatGenerator;
+import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
@@ -128,15 +137,6 @@ import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
-import com.lothrazar.cyclicmagic.energy.battery.ContainerBattery;
-import com.lothrazar.cyclicmagic.energy.battery.GuiBattery;
-import com.lothrazar.cyclicmagic.energy.battery.TileEntityBattery;
-import com.lothrazar.cyclicmagic.energy.peat.farm.ContainerPeatFarm;
-import com.lothrazar.cyclicmagic.energy.peat.farm.GuiPeatFarm;
-import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
-import com.lothrazar.cyclicmagic.energy.peat.generator.ContainerPeatGenerator;
-import com.lothrazar.cyclicmagic.energy.peat.generator.GuiPeatGenerator;
-import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
@@ -145,7 +145,7 @@ import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantBetter;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
-import com.lothrazar.cyclicmagic.item.signfancy.GuiSignEditor;
+import com.lothrazar.cyclicmagic.item.signcolor.GuiSignEditor;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;
@@ -244,7 +244,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_STORAGE:
-        return new ContainerStorage(player, player.inventory, new InventoryStorage(player));
+        return new ContainerStorage(player, new InventoryStorage(player));
       case GUI_INDEX_WAYPOINT:
         return null;
       case GUI_INDEX_BUILDER:
@@ -467,7 +467,7 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_STORAGE:
-          return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player)));
+          return new GuiStorage(new ContainerStorage(player, new InventoryStorage(player)), player);
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
         case GUI_INDEX_BUILDER:
