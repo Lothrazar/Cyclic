@@ -155,10 +155,13 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   public static ImbueFlavor getImbueType(ItemStack held) {
-    if (UtilNBT.getItemStackNBT(held).hasKey(NBT_IMBUE) == false) {
+    if (held.getTagCompound() == null) {
       return null;
     }
-    int val = UtilNBT.getItemStackNBT(held).getInteger(BlockImbue.NBT_IMBUE);
+    if (held.getTagCompound().hasKey(NBT_IMBUE) == false) {
+      return null;
+    }
+    int val = held.getTagCompound().getInteger(BlockImbue.NBT_IMBUE);
     return ImbueFlavor.values()[val];
   }
 
@@ -167,11 +170,15 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   public static void setImbueCharge(ItemStack held, int found) {
+
     UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE_CHARGE, found);
   }
 
   public static int getImbueCharge(ItemStack held) {
-    return UtilNBT.getItemStackNBT(held).getInteger(BlockImbue.NBT_IMBUE_CHARGE);
+    if (held.getTagCompound() == null) {
+      return 0;
+    }
+    return held.getTagCompound().getInteger(BlockImbue.NBT_IMBUE_CHARGE);
   }
 
   @SubscribeEvent
