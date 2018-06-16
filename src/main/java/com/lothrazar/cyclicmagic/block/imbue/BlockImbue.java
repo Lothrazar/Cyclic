@@ -240,10 +240,11 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
           //reduce charge
           setImbueCharge(bow, charge - 1);
         }
-        else {
+        else if (bow.getTagCompound() != null) {
           //remove
           bow.getTagCompound().removeTag(NBT_IMBUE);
           bow.getTagCompound().removeTag(NBT_IMBUE_CHARGE);
+          bow.setTagCompound(null);
         }
       }
     }
