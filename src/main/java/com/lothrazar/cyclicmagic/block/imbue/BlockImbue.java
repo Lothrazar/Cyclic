@@ -155,10 +155,13 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   public static ImbueFlavor getImbueType(ItemStack held) {
-    if (UtilNBT.getItemStackNBT(held).hasKey(NBT_IMBUE) == false) {
+    if (held.getTagCompound() == null) {
       return null;
     }
-    int val = UtilNBT.getItemStackNBT(held).getInteger(BlockImbue.NBT_IMBUE);
+    if (held.getTagCompound().hasKey(NBT_IMBUE) == false) {
+      return null;
+    }
+    int val = held.getTagCompound().getInteger(BlockImbue.NBT_IMBUE);
     return ImbueFlavor.values()[val];
   }
 
@@ -167,11 +170,15 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   public static void setImbueCharge(ItemStack held, int found) {
+
     UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE_CHARGE, found);
   }
 
   public static int getImbueCharge(ItemStack held) {
-    return UtilNBT.getItemStackNBT(held).getInteger(BlockImbue.NBT_IMBUE_CHARGE);
+    if (held.getTagCompound() == null) {
+      return 0;
+    }
+    return held.getTagCompound().getInteger(BlockImbue.NBT_IMBUE_CHARGE);
   }
 
   @SubscribeEvent
@@ -233,10 +240,11 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
           //reduce charge
           setImbueCharge(bow, charge - 1);
         }
-        else {
+        else if (bow.getTagCompound() != null) {
           //remove
           bow.getTagCompound().removeTag(NBT_IMBUE);
           bow.getTagCompound().removeTag(NBT_IMBUE_CHARGE);
+          bow.setTagCompound(null);
         }
       }
     }

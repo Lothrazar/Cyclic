@@ -398,7 +398,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
 
   @Override
   public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (mapBlacklist.get(facing)) {
+    if (mapBlacklist != null && facing != null && mapBlacklist.get(facing)) {
       return false;//announce that capability does not exist on this side. items and all.
     }
     if (capability == CapabilityEnergy.ENERGY) {
