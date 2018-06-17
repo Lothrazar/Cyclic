@@ -575,7 +575,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
           new ItemStack[] {
               new ItemStack(Items.REEDS),
               new ItemStack(Blocks.TALLGRASS, 1, 1),
-              new ItemStack(Blocks.DEADBUSH),
+              new ItemStack(Blocks.LEAVES),
               new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE) },
           new ItemStack(peat_biomass, 8)));
       BlockPeat bog = new BlockPeat(null);
