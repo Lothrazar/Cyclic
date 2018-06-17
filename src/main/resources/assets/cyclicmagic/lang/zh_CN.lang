@@ -1078,19 +1078,19 @@ item.peat_biomass.guide=将植物材料放入水化器以创造它
 
 item.peat_fuel.name=泥炭燃料
 item.peat_fuel.tooltip=在泥炭燃烧发电机中燃烧以产生能量
-item.peat_fuel.guide=从成熟的泥炭田中掉落。在泥炭燃烧发电机中燃烧以产生能量，它共能燃烧200刻，每个刻产生128点能量。每块泥炭共产生25600点能量。
+item.peat_fuel.guide=来源于挖掘湿润的泥炭田。在泥炭燃烧发电机中燃烧以产生能量，它能燃烧200刻，每个刻能产生128点能量。每块泥炭一共能产生25600点能量。
 
 tile.peat_unbaked.name=干燥的泥炭田
 tile.peat_unbaked.tooltip=放置在与水源临近的地方就会慢慢变得湿润
-tile.peat_unbaked.guide=放置在水源附近会慢慢变成湿润的泥炭田，挖掘后掉落泥炭燃料
+tile.peat_unbaked.guide=放置在水源附近就会慢慢地变成湿润的泥炭田。
 
 tile.peat_baked.name=湿润的泥炭田
 tile.peat_baked.tooltip=挖掘后收获泥炭燃料
-tile.peat_baked.guide=干燥的泥炭田充分吸收水分后会变成湿润的泥炭田。挖掘后可以掉落湿润的泥炭燃料
+tile.peat_baked.guide=干燥的泥炭田充分吸收水分后会变成湿润的泥炭田。挖掘后可以掉落泥炭燃料
 
 tile.peat_generator.name=泥炭燃烧发电机
 tile.peat_generator.tooltip=燃烧泥炭，并以128/刻的速度来产生能量
-tile.peat_generator.guide=燃烧泥炭来产生能量。使用生物质团来制造泥炭燃料。
+tile.peat_generator.guide=燃烧泥炭来产生能量。可以使用生物质团来制造泥炭燃料。
 
 tile.peat_farm.name=泥炭农场
 tile.peat_farm.tooltip=放置和收获泥炭田
