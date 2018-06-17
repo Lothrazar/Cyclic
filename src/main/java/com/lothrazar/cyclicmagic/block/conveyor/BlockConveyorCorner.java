@@ -19,16 +19,20 @@ import net.minecraft.world.World;
 public class BlockConveyorCorner extends BlockConveyor {
 
   public static final PropertyBool FLIPPED = PropertyBool.create("flipped");
-  private BlockConveyor drop;
 
   public BlockConveyorCorner(SpeedType t) {
     super(t);
-    corner = this;
+    setCorner(this);
   }
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return Item.getItemFromBlock(drop);
+    return Item.getItemFromBlock(dropFlat);
+  }
+
+  @Override
+  public boolean isCorner() {
+    return true;
   }
 
   @Override
@@ -87,10 +91,10 @@ public class BlockConveyorCorner extends BlockConveyor {
 
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-    return new ItemStack(drop);
+    return new ItemStack(dropFlat);
   }
 
   public void setDrop(BlockConveyor drop) {
-    this.drop = drop;
+    this.dropFlat = drop;
   }
 }

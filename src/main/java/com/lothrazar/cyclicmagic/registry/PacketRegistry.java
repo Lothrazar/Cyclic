@@ -27,9 +27,10 @@ import com.lothrazar.cyclicmagic.block.builderpattern.PacketTilePatternSwap;
 import com.lothrazar.cyclicmagic.block.exppylon.PacketTilePylon;
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
+import com.lothrazar.cyclicmagic.core.gui.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.core.liquid.PacketFluidSync;
-import com.lothrazar.cyclicmagic.core.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.item.buildswap.PacketSwapBlock;
+import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
@@ -44,6 +45,7 @@ import com.lothrazar.cyclicmagic.item.merchant.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.item.random.PacketRandomize;
 import com.lothrazar.cyclicmagic.item.scythe.PacketScythe;
 import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
+import com.lothrazar.cyclicmagic.item.storagesack.PacketColorStack;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
@@ -98,11 +100,13 @@ public class PacketRegistry {
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
     packetID++;//removed packets from a refactor . KEEP THESE lines so packet ids dont mismatch
-    packetID++;
+    network.registerMessage(PacketColorStack.class, PacketColorStack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);
-    packetID++;
+    //
+    network.registerMessage(MessageGolemLaserFX.MessageHolder.class, MessageGolemLaserFX.class, packetID++, Side.CLIENT);
+    //
     network.registerMessage(PacketSwapBlock.class, PacketSwapBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);

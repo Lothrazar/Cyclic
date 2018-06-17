@@ -54,11 +54,15 @@ import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull.FactoryBall;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt.FactoryShear;
+import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
+import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.client.Minecraft;
@@ -89,6 +93,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
+  public static ParticleRenderer particleRenderer = new ParticleRenderer();
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
@@ -157,6 +162,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
+    RenderingRegistry.registerEntityRenderingHandler(EntitySlingshot.class, new EntitySlingshot.FactoryFire());
   }
 
   @SideOnly(Side.CLIENT)
@@ -339,6 +345,20 @@ public class ClientProxy extends CommonProxy {
 
     public void setReachDistance(float f) {
       distance = f;
+    }
+  }
+
+  @Override
+  public void initColors() {
+    if (ItemModule.storage_bag != null) {
+      Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
+          (stack, tintIndex) -> {
+            if (tintIndex == 0) {//layer zero is outline, ignore this 
+              return 0xFFFFFFFF;
+            }
+            //layer 1 is overlay 
+            return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
+          }, ItemModule.storage_bag);
     }
   }
 }

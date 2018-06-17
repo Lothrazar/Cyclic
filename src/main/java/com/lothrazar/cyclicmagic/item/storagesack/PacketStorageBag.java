@@ -38,22 +38,16 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
 
   public PacketStorageBag() {}
 
-  private int size;
-
-  public PacketStorageBag(ItemStorageBag.StorageActionType type) {
-    size = type.ordinal();
-  }
-
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
-    size = tags.getInteger("size");
+    //    type = tags.getString("type");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
-    tags.setInteger("size", size);
+    //    tags.setString("type", type); 
     ByteBufUtils.writeTag(buf, tags);
   }
 

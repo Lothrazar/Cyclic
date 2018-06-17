@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.core.BaseCommand;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import net.minecraft.command.CommandException;

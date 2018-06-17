@@ -25,20 +25,21 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer.BagDepositReturn;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,6 +61,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public static enum StorageActionType {
     NOTHING, DEPOSIT, MERGE;
 
+    private final static String NBT_COLOUR = "COLOUR";
     private final static String NBT = "build";
     private final static String NBTTIMEOUT = "timeout";
 
@@ -106,6 +108,26 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       }
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
+    }
+
+    public static int getColour(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      if (tags.hasKey(NBT_COLOUR) == false) {
+        return EnumDyeColor.BROWN.getColorValue();
+      }
+      return tags.getInteger(NBT_COLOUR);
+    }
+
+    public static void setColour(ItemStack wand, int color) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      //      int type = tags.getInteger(NBT_COLOUR);
+      //      type++;
+      //      if (type > EnumDyeColor.values().length) {
+      //        type = EnumDyeColor.BLACK.getDyeDamage();
+      //      }
+      tags.setInteger(NBT_COLOUR, color);
+      wand.setTagCompound(tags);
+      // TODO Auto-generated method stub
     }
   }
 

@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 public class TileEntityCablePower extends TileEntityCableBase {
 
   public TileEntityCablePower() {
-    super(0, 0, 1);
-    this.setPowerTransport();
+    super(false, false, true);
   }
 }

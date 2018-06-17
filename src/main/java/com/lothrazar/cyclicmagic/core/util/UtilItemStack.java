@@ -50,6 +50,12 @@ public class UtilItemStack {
     }
     IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
     for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
+      //      i thought i needed this, but bug was on other end
+      // https://github.com/BluSunrize/ImmersiveEngineering/issues/3044
+      //      if (tileTarget instanceof IInventory &&
+      //          ((IInventory) tileTarget).isItemValidForSlot(i, stackToExport) == false) {
+      //        continue;
+      //      }
       ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
       //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
       if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {
@@ -151,14 +157,14 @@ public class UtilItemStack {
     return dropItemStackInWorld(worldObj, pos, new ItemStack(item));
   }
 
-  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
-    if (pos == null || worldObj == null || stack == null) {
+  public static EntityItem dropItemStackInWorld(World world, BlockPos pos, ItemStack stack) {
+    if (pos == null || world == null || stack.isEmpty()) {
       return null;
     }
-    EntityItem entityItem = new EntityItem(worldObj, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
-    if (worldObj.isRemote == false) {
+    EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    if (world.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
-      worldObj.spawnEntity(entityItem);
+      world.spawnEntity(entityItem);
     }
     return entityItem;
   }

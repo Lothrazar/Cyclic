@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.block.buttondoorbell;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.state.IBlockState;
@@ -67,7 +67,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
 
   @Override
   protected void playClickSound(EntityPlayer player, World worldIn, BlockPos pos) {
-    UtilSound.playSound(player, pos, SoundRegistry.doorbell, SoundCategory.BLOCKS, 0.5F);
+    UtilSound.playSound(player, pos, SoundRegistry.doorbell_mikekoenig, SoundCategory.BLOCKS, 0.5F);
   }
 
   @Override

@@ -41,6 +41,7 @@ public class MaterialRegistry { // thanks for help:
   private static final String MATERIALNAME = "power";
   private static final String GLOWING = "glowing";
   // thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
+  public static ToolMaterial netherToolMaterial;
   public static ToolMaterial sandstoneToolMaterial;
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
@@ -53,6 +54,7 @@ public class MaterialRegistry { // thanks for help:
     registerEmeraldMaterial();
     registerSandstoneMaterials();
     registerGlowingMaterials();
+    registerNetherMaterials();
   }
 
   private static void registerGlowingMaterials() {
@@ -119,6 +121,9 @@ public class MaterialRegistry { // thanks for help:
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }
 
+  /**
+   * Sandstone is between wood and stone, with stone harvest level
+   */
   private static void registerSandstoneMaterials() {
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",
         ToolMaterial.STONE.getHarvestLevel(),
@@ -127,5 +132,18 @@ public class MaterialRegistry { // thanks for help:
         (ToolMaterial.STONE.getDamageVsEntity() + ToolMaterial.WOOD.getDamageVsEntity()) / 2,
         ToolMaterial.STONE.getEnchantability());
     MaterialRegistry.sandstoneToolMaterial.setRepairItem(new ItemStack(Blocks.SANDSTONE));
+  }
+
+  /**
+   * Netherbrick is between stone and iron, still with stone harvest level
+   */
+  private static void registerNetherMaterials() {
+    MaterialRegistry.netherToolMaterial = EnumHelper.addToolMaterial("nether",
+        ToolMaterial.STONE.getHarvestLevel(),
+        ToolMaterial.STONE.getMaxUses() * 2,
+        ToolMaterial.STONE.getEfficiencyOnProperMaterial() * 2,
+        ToolMaterial.STONE.getDamageVsEntity() * 2,
+        ToolMaterial.GOLD.getEnchantability());
+    MaterialRegistry.netherToolMaterial.setRepairItem(new ItemStack(Items.NETHERBRICK));
   }
 }

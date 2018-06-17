@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 public class TileEntityFluidCable extends TileEntityCableBase {
 
   public TileEntityFluidCable() {
-    super(0, 100, 0);// inventory, fluid
-    this.setFluidTransport();
+    super(false, true, false);
   }
 }

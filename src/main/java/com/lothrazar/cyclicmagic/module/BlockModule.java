@@ -39,6 +39,11 @@ import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
 import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
 import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.battery.BlockBattery;
+import com.lothrazar.cyclicmagic.block.battery.ItemBlockBattery;
+import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
+import com.lothrazar.cyclicmagic.block.batterycheat.BlockBatteryInfinite;
+import com.lothrazar.cyclicmagic.block.batterycheat.TileEntityBatteryInfinite;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
@@ -51,7 +56,6 @@ import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
 import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
-import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
 import com.lothrazar.cyclicmagic.block.cable.fluid.BlockCableFluid;
@@ -72,6 +76,8 @@ import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.dice.BlockDice;
+import com.lothrazar.cyclicmagic.block.dice.TileEntityDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
@@ -104,6 +110,8 @@ import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.ItemBlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
+import com.lothrazar.cyclicmagic.block.imbue.TileEntityImbue;
 import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
@@ -114,6 +122,13 @@ import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.peat.BlockPeat;
+import com.lothrazar.cyclicmagic.block.peat.ItemBiomass;
+import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.block.peat.farm.BlockPeatFarm;
+import com.lothrazar.cyclicmagic.block.peat.farm.TileEntityPeatFarm;
+import com.lothrazar.cyclicmagic.block.peat.generator.BlockPeatGenerator;
+import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.pump.energy.BlockEnergyPump;
@@ -151,27 +166,19 @@ import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.core.registry.EntityProjectileRegistry;
-import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.core.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.energy.battery.BlockBattery;
-import com.lothrazar.cyclicmagic.energy.battery.ItemBlockBattery;
-import com.lothrazar.cyclicmagic.energy.battery.TileEntityBattery;
-import com.lothrazar.cyclicmagic.energy.battery.TileEntityBatteryInfinite;
-import com.lothrazar.cyclicmagic.energy.peat.BlockPeat;
-import com.lothrazar.cyclicmagic.energy.peat.ItemBiomass;
-import com.lothrazar.cyclicmagic.energy.peat.ItemPeatFuel;
-import com.lothrazar.cyclicmagic.energy.peat.farm.BlockPeatFarm;
-import com.lothrazar.cyclicmagic.energy.peat.farm.TileEntityPeatFarm;
-import com.lothrazar.cyclicmagic.energy.peat.generator.BlockPeatGenerator;
-import com.lothrazar.cyclicmagic.energy.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
+import com.lothrazar.cyclicmagic.item.slingshot.ItemPebble;
+import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -257,18 +264,33 @@ public class BlockModule extends BaseModule implements IHasConfig {
    * 
    * 
    */
+  //fire is a dependency block like liquids, used by many places
   boolean fireDarkUsed = false;
   boolean fireFrostUsed = false;
+  private boolean imbuer;
+  private boolean dice;
+  private boolean enableSlingshot;
 
   @Override
   public void onPreInit() {
     super.onPreInit();
-    //fire is a dependency block like liquids, used by many places
-    //janky but its ok
-    //
-    //    BlockImbuer imbuer = new BlockImbuer();
-    //    ModCyclic.instance.events.register(imbuer);
-    //    BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+    if (enableSlingshot) {
+      ItemRegistry.register(new ItemPebble(), "stone_pebble");
+      ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
+      ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
+      EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
+      ModCyclic.instance.events.register(slingshot_weapon);
+    }
+    if (dice) {
+      BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityDice.class, "dice_te");
+    }
+    if (imbuer) {
+      BlockImbue imbuer = new BlockImbue();
+      ModCyclic.instance.events.register(imbuer);
+      BlockRegistry.registerBlock(imbuer, "imbuer", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+    }
     if (sound_player) {
       BlockRegistry.registerBlock(new BlockSoundPlayer(), "sound_player", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, "sound_player_te");
@@ -356,16 +378,18 @@ public class BlockModule extends BaseModule implements IHasConfig {
     }
     if (enableConveyor) {
       //corner
-      BlockConveyorCorner plate_push_corner = new BlockConveyorCorner(SpeedType.MEDIUM);
-      BlockRegistry.registerBlock(plate_push_corner, null, "plate_push_corner", GuideCategory.BLOCKPLATE, false);
+      BlockConveyorCorner plate_push__med_corner = new BlockConveyorCorner(SpeedType.MEDIUM);
+      BlockRegistry.registerBlock(plate_push__med_corner, null, "plate_push_corner", GuideCategory.BLOCKPLATE, false);
       //angle
       BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(SpeedType.MEDIUM);
       BlockRegistry.registerBlock(plate_push_med_angle, null, "plate_push_med_angle", GuideCategory.BLOCKPLATE, false);
       //main
-      BlockConveyor plate_push = new BlockConveyor(plate_push_corner, plate_push_med_angle);
-      BlockRegistry.registerBlock(plate_push, "plate_push", GuideCategory.BLOCKPLATE);
-      plate_push_corner.setDrop(plate_push);
-      plate_push_med_angle.setDrop(plate_push);
+      BlockConveyor plate_push_med = new BlockConveyor(plate_push__med_corner, plate_push_med_angle);
+      BlockRegistry.registerBlock(plate_push_med, "plate_push", GuideCategory.BLOCKPLATE);
+      plate_push__med_corner.setDrop(plate_push_med);
+      plate_push_med_angle.setDrop(plate_push_med);
+      plate_push_med_angle.setCorner(plate_push__med_corner);
+      plate_push__med_corner.setAngled(plate_push_med_angle);
       //corner
       BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE);
       BlockRegistry.registerBlock(plate_push_fast_corner, null, "plate_push_fast_corner", GuideCategory.BLOCKPLATE, false);
@@ -377,6 +401,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       plate_push_fast_corner.setDrop(plate_push_fast);
       plate_push_fast_angle.setDrop(plate_push_fast);
+      plate_push_fast_angle.setCorner(plate_push_fast_corner);
+      plate_push_fast_corner.setAngled(plate_push_fast_angle);
       //corner
       BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL);
       BlockRegistry.registerBlock(plate_push_slow_corner, null, "plate_push_slow_corner", GuideCategory.BLOCKPLATE, false);
@@ -388,6 +414,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       plate_push_slow_corner.setDrop(plate_push_slow);
       plate_push_slow_angle.setDrop(plate_push_slow);
+      plate_push_slow_angle.setCorner(plate_push_slow_corner);
+      plate_push_slow_corner.setAngled(plate_push_slow_corner);
       //corner
       BlockConveyorCorner plate_push_slowest_corner = new BlockConveyorCorner(SpeedType.TINY);
       BlockRegistry.registerBlock(plate_push_slowest_corner, null, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE, false);
@@ -399,6 +427,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       plate_push_slowest_corner.setDrop(plate_push_slowest);
       plate_push_slowest_angle.setDrop(plate_push_slowest);
+      plate_push_slowest_angle.setCorner(plate_push_slowest_corner);
+      plate_push_slowest_corner.setAngled(plate_push_slowest_angle);
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
@@ -563,7 +593,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
       //cheater 
-      BlockRegistry.registerBlock(new BlockBattery(true), "battery_infinite", GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
     if (btrash) {
@@ -683,6 +713,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dice = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     sound_player = config.getBoolean("sound_player", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -747,7 +780,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
-    TileEntityCableBase.syncConfig(config);
+    // TileEntityCableBase.syncConfig(config);
     TileEntityItemPump.syncConfig(config);
     TileEntityUser.syncConfig(config);
   }

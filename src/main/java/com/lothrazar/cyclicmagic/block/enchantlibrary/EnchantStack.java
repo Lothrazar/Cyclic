@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;

@@ -65,7 +65,7 @@ public abstract class BlockBaseHasTile extends BlockBase {
       }
       return true;
     }
-    return false;
+    return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
 
   @Override
