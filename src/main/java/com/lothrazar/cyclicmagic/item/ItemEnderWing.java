@@ -40,7 +40,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -101,10 +100,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
       UtilItemStack.damageItem(player, held);
       UtilSound.playSound(player, SoundRegistry.warp);
       player.getCooldownTracker().setCooldown(this, cooldown);
-      if (world.isRemote == false) {
-        //and for other players on arrival
-        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, target, player.dimension, 32);
-      }
+
     }
     return success;
   }
