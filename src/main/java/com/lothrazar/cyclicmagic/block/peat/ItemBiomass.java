@@ -37,7 +37,7 @@ public class ItemBiomass extends BaseItem implements IHasRecipe {
         "sbs",
         "b b",
         "sbs",
-        'd', "treeLeaves",
+        'b', "treeLeaves",
         's', "vine");
   }
 }
