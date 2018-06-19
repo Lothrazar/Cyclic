@@ -235,16 +235,9 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
         ImbueFlavor flavor = getImbueType(bow);
         int charge = getImbueCharge(bow);
         if (charge > 0 && flavor != null) {
-          //
           arrow.getEntityData().setInteger(NBT_IMBUE, flavor.ordinal());
           //reduce charge
           setImbueCharge(bow, charge - 1);
-        }
-        else if (bow.getTagCompound() != null) {
-          //remove
-          bow.getTagCompound().removeTag(NBT_IMBUE);
-          bow.getTagCompound().removeTag(NBT_IMBUE_CHARGE);
-          bow.setTagCompound(null);
         }
       }
     }

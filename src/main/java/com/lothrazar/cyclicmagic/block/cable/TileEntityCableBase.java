@@ -415,7 +415,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }
-    return super.getCapability(capability, facing.getOpposite());
+    else if (facing == null) {
+      return super.getCapability(capability, null);
+    }
+    else
+      return super.getCapability(capability, facing.getOpposite());
   }
 
   public boolean getBlacklist(final EnumFacing side) {
