@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.15.12",
-    "1.12.2-recommended": "1.15.12"
+    "1.12.2-latest": "1.15.13",
+    "1.12.2-recommended": "1.15.13"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -276,6 +276,7 @@
   	,"1.15.10":"Fixed empty NBT tags getting added to held or crafted items which caused numerous issues.  Fixed a compatibility crash related to cyclic cables and many other mods (Mekanism, Fairy Lights, and others). "
   	,"1.15.11":"Fixed an internal crash that broke bows shooting arrows.  ru_RU.lang updated by kellixon.  "
   	,"1.15.12":"Fixed unpowered cables causing a crash in some cases (possibly WAILA related).  Fixed a NBT data-loss compatibility glitch with bows from other mods (Tinkers, silents gems, etc).  Ender Wing no longer plays its sound doubled-up.  Added an early-game recipe for Biomass that does not require Hydrator.  zh_CN.lang Updated by sandtechnology  "
+  	,"1.15.13":""
   }
 }
 

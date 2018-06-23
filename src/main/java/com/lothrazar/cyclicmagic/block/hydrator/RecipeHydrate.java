@@ -48,6 +48,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
 
+
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in }, out, 25);
   }
@@ -72,13 +73,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    //    if (this.getRecipeOutput().getCount() == 8) {
-    //      ModCyclic.logger.log(" TEST RECIPE = " + this.getRecipeOutput());
-    //      ModCyclic.logger.log(inv.getStackInSlot(0) + " 0= " + recipeInput.get(0) + " ?? " + recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)));// seeds || seeds
-    //      ModCyclic.logger.log(inv.getStackInSlot(1) + " 0= " + recipeInput.get(1) + " ?? " + recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)));// flower || flower
-    //      ModCyclic.logger.log(inv.getStackInSlot(2) + " 2= " + recipeInput.get(2) + " ?? " + recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)));// leaves || leaves
-    //      ModCyclic.logger.log(inv.getStackInSlot(3) + " 3= " + recipeInput.get(3) + " ?? " + recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3)));// vile || vine 
-    //    }
+
+ 
     return recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)) &&
         recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)) &&
         recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)) &&
@@ -86,6 +82,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   }
 
   private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
+
     if (sInvo.isEmpty() != sRecipe.isEmpty()) {
       return false;//empty matching empty
     }

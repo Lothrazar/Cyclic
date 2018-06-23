@@ -42,6 +42,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
 
+  private int needsRedstone = 1;
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED;
   }
@@ -58,9 +59,17 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
     this.initEnergy(BlockHydrator.FUEL_COST);
+
   }
 
-  private int needsRedstone = 1;
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (this.recipeIsLocked == 0) {
+      return true;
+    }
+    return true;
+  }
 
   @Override
   public int[] getFieldOrdinals() {
