@@ -87,7 +87,7 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
         //TODO: not so compatible with other fluid systems. itl do i guess
         TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
         if (cable.isFluidPipe())
-          cable.updateIncomingFluidFace(exportToSide.getOpposite());
+          cable.updateIncomingFluidFace(importFromSide);
       }
       if (outputSuccess) {
         break;

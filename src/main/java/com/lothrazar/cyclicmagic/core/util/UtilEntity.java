@@ -82,8 +82,8 @@ public class UtilEntity {
   public static void teleportWallSafe(EntityLivingBase player, World world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     world.markBlockRangeForRenderUpdate(coords, coords);
-    //CommandTP ?
-    //       ((EntityPlayerMP)p_189863_0_).connection.setPlayerLocation(p_189863_1_.getAmount(), p_189863_2_.getAmount(), p_189863_3_.getAmount(), f, f1, set);
+    world.getChunkFromBlockCoords(coords).setModified(true);
+
     player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
   }
@@ -209,10 +209,10 @@ public class UtilEntity {
     entity.motionZ = 0;
     double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
     double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
-    double velY = -MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
-    if (velY < 0) {
-      velY *= -1;// make it always up never down
-    }
+    double velY = MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
+    //    if (velY < 0) {
+    //      velY *= -1;// make it always up never down
+    //    }
     if (Math.abs(velX) < lowEnough) velX = 0;
     if (Math.abs(velY) < lowEnough) velY = 0;
     if (Math.abs(velZ) < lowEnough) velZ = 0;

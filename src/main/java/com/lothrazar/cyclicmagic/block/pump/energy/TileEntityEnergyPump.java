@@ -119,12 +119,13 @@ public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements I
           int filled = exportHandler.receiveEnergy(drain, false);
           //now actually drain that much  
           myEnergy.extractEnergy(filled, false);
-          if (importFromTile instanceof TileEntityCableBase) {
+
+          if (world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
             //TODO: not so compatible with other fluid systems. itl do i guess
-            TileEntityCableBase cable = (TileEntityCableBase) importFromTile;
+            TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
             //  ModCyclic.logger.error("pump EXPORT  " + filled);
             if (cable.isEnergyPipe()) {
-              // ModCyclic.logger.error("cable receive from   "+ side);
+
               cable.updateIncomingEnergyFace(importFromSide); // .getOpposite()
             }
           }

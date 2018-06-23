@@ -154,9 +154,14 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   }
 
   @Override
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.1875D / 16.0, 1D);
+  }
+
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    //  this.getCollisionBoundingBox(blockState, worldIn, pos)
-    return AABB;
+
+    return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.1875D, 1D);
   }
 
   @Override
@@ -167,7 +172,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     EnumFacing face = getFacingFromState(state);
     tickMovement(pos, entity, face);
     if (entity instanceof EntityLivingBase == false) {
-      entity.motionY += 0.5;
+      // entity.motionY += 0.5;
       hackOverBump(worldIn, pos, entity, face);
     }
     //hack to get over the bump

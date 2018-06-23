@@ -33,21 +33,17 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -150,20 +146,16 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     BookLocation loc = getLocation(book, slot);
     if (player.dimension != loc.dimension) {
-      return false;
+      return false;//button was disabled anyway,... but just in case 
     }
-    UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
-    BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
-    BlockPos start = player.getPosition();
+    //something in vanilla 
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
-      if (success) { // try and force chunk loading
-        player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
-        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);
-        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, dest, player.dimension, 32);
+      if (success) { // try and force chunk loading it it worked 
+        player.getEntityWorld().getChunkFromBlockCoords(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
       }
     }
     return true;

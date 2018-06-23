@@ -133,11 +133,11 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
       keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_RBRACKET, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
-      keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
-      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
-      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
-      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
+    keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
+    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
   }
 
   private void registerEntities() {
