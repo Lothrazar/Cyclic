@@ -114,8 +114,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     final double heightInc = 0.0125D;
     final double sideInc = heightInc;
-    double edge = 1 - sideInc;
-    double height = heightInc;
+    double edge = 1;
+    double height = 0;
     switch (this.getFacingFromState(state)) {
       case DOWN:
       case UP:
