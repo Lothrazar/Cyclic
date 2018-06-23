@@ -92,11 +92,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
         BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
         if (blockpos == null) {
           entityendereye.kill();
-          //          world.removeEntity(entityendereye);
-          //UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
-          if (world.isRemote) {
-            UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
-          }
+          UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
         }
         else {
           entityendereye.moveTowards(blockpos);
