@@ -82,8 +82,8 @@ public class UtilEntity {
   public static void teleportWallSafe(EntityLivingBase player, World world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     world.markBlockRangeForRenderUpdate(coords, coords);
-    //CommandTP ?
-    //       ((EntityPlayerMP)p_189863_0_).connection.setPlayerLocation(p_189863_1_.getAmount(), p_189863_2_.getAmount(), p_189863_3_.getAmount(), f, f1, set);
+    world.getChunkFromBlockCoords(coords).setModified(true);
+
     player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
   }
