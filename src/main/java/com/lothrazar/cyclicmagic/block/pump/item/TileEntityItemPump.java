@@ -187,13 +187,16 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         this.setInventorySlotContents(SLOT_TRANSFER, pulled);
         //one or more was put in
         outputSuccess = true;
-        break;
       }
-      if (outputSuccess && world.getTileEntity(pos.offset(importFromSide)) instanceof TileEntityCableBase) {
-        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(importFromSide));
+ 
+      if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
+        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
+
         if (cable.isItemPipe())
-          cable.updateIncomingItemFace(importFromSide.getOpposite());
+          cable.updateIncomingItemFace(importFromSide);
       }
+      if (outputSuccess)
+        break;
     }
   }
 

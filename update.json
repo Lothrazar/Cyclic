@@ -276,7 +276,7 @@
   	,"1.15.10":"Fixed empty NBT tags getting added to held or crafted items which caused numerous issues.  Fixed a compatibility crash related to cyclic cables and many other mods (Mekanism, Fairy Lights, and others). "
   	,"1.15.11":"Fixed an internal crash that broke bows shooting arrows.  ru_RU.lang updated by kellixon.  "
   	,"1.15.12":"Fixed unpowered cables causing a crash in some cases (possibly WAILA related).  Fixed a NBT data-loss compatibility glitch with bows from other mods (Tinkers, silents gems, etc).  Ender Wing no longer plays its sound doubled-up.  Added an early-game recipe for Biomass that does not require Hydrator.  zh_CN.lang Updated by sandtechnology  "
-  	,"1.15.13":"If a hydrator is set to have its recipe locked, it will no longer accept automated input into empty slots; this allows easier automation for 1x1 and other small recipes.  Fixed some Ender Book crashes if you teleport while flying or while too many sounds are playing; it now plays the default enderman sound instead of custom.  Items now smoothly ride the angled Conveyors and no longer bounce around when going up and down.   "
+  	,"1.15.13":"If a hydrator is set to have its recipe locked, it will no longer accept automated input into empty slots; this allows easier automation for 1x1 and other small recipes.  Fixed some Ender Book crashes if you teleport while flying or while too many sounds are playing; it now plays the default enderman sound instead of custom.  Items now smoothly ride the angled Conveyors and no longer bounce around when going up and down.  Optimized some things when content moves from Extractors to Cables (water, energy, and items).    "
   }
 }
 
