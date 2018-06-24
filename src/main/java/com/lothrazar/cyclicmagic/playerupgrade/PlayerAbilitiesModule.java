@@ -38,6 +38,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
@@ -196,12 +197,13 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     ItemStack held = event.getItemStack();
     if (stardewFurnace) {
       // ignore in creative// left clicking just breaks it anyway
-      if (entityPlayer.capabilities.isCreativeMode) {
+      if (entityPlayer.capabilities.isCreativeMode
+          || pos == null
+          || held.getItem() instanceof ItemPickaxe
+      ) {
         return;
       }
-      if (pos == null) {
-        return;
-      }
+
       int playerSlot = 0;// entityPlayer.inventory.currentItem;
       boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
       if (wasMain) {
