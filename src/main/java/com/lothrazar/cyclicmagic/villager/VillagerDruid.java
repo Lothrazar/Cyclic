@@ -17,6 +17,7 @@ public class VillagerDruid {
 
   public static EntityVillager.ITradeList[][] buildTrades() {
     return new EntityVillager.ITradeList[][] {
+        //villager will buy this stuff for emeralds 
         {
             new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12)), // GROUP 1
             new EmeraldForItems(Items.APPLE, new PriceInfo(3, 6)),
@@ -37,6 +38,7 @@ public class VillagerDruid {
             new EmeraldForItems(Items.FISH, new PriceInfo(9, 12)),
             new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
         }, {
+            //and SELL you this stuff for YOUR emeralds
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.GRASS, 32), new PriceInfo(1, 2)), //GROUP 6
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.FARMLAND, 32), new PriceInfo(1, 2)),
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.DIRT, 32, BlockDirt.DirtType.PODZOL.getMetadata()), new PriceInfo(1, 2)),

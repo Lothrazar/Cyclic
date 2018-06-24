@@ -25,8 +25,10 @@ package com.lothrazar.cyclicmagic.block.applesprout;
 
 import java.util.Random;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBase;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilOreDictionary;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
@@ -48,12 +50,14 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
+public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe, IHasConfig {
 
-  private static final int LIGHT_GROWTH = 5;
+  private static int GROWTH_TICKRATE = 500;
+  private static int LIGHT_GROWTH = 5;
   private static final double BONEMEAL_CHANCE = 0.45D;
   private static final int MAX_AGE = 7;
   private static final PropertyInteger AGE = BlockCarrot.AGE;
@@ -92,7 +96,7 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
 
   @Override
   public int tickRate(World world) {
-    return 11800;
+    return GROWTH_TICKRATE;
   }
 
   @Override
@@ -108,7 +112,7 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
   @Override
   public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
     //needs at least some light. values [0,15] ish
-    return world.getLight(pos) > LIGHT_GROWTH;
+    return world.getLight(pos) >= LIGHT_GROWTH;
   }
 
   @Override
@@ -198,5 +202,11 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe {
     //can only grow/survive if leaves above 
     Block blockAbove = world.getBlockState(pos.up()).getBlock();
     return UtilOreDictionary.doesMatchOreDict(new ItemStack(blockAbove), "treeLeaves");
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    GROWTH_TICKRATE = config.getInt("AppleGrowthTicks", Const.ConfigCategory.blocks, 500, 1, 99999, "Ticks for apple sprout to grow, 1 will grow almost instantly");
+    LIGHT_GROWTH = config.getInt("AppleLightLevel", Const.ConfigCategory.blocks, 5, 0, 15, "Light required for apple to grow");
   }
 }
