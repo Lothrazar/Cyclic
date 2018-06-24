@@ -3,7 +3,6 @@
     "textures": {
 		"0": "cyclicmagic:blocks/cable_energy",
 		"1": "cyclicmagic:blocks/block_screen_side",
-		"particle": "cyclicmagic:blocks/cable_fluid",
-        "particle": "blocks/iron_block"
+		"particle": "cyclicmagic:blocks/cable_fluid"
     }
 }
