@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.villager;
 
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -37,6 +38,12 @@ public class VillagerSage {
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.QUARTZ_BLOCK, 16), new PriceInfo(2, 4)), //GROUP 7
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.OBSIDIAN, 16), new PriceInfo(2, 4)),
             new ListItemForEmeraldsFixed(new ItemStack(Items.FISH, 4, ItemFishFood.FishType.PUFFERFISH.getMetadata()), new PriceInfo(1, 2))
+        }, {
+            // hardcoded in ItemSkull i found
+            //  private static final String[] SKULL_TYPES = new String[] {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new PriceInfo(60, 64)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_creeper), new PriceInfo(60, 64)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_zombie), new PriceInfo(60, 64))
         }
     };
   }

@@ -48,6 +48,8 @@ public class VillagerDruid {
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.WATERLILY, 32), new PriceInfo(1, 2)),
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.SAND, 32, BlockSand.EnumType.RED_SAND.ordinal()), new PriceInfo(1, 3)),
             new ListItemForEmeraldsFixed(new ItemStack(Items.DYE, 16, EnumDyeColor.BLACK.getDyeDamage()), new PriceInfo(1, 3))
+        }, { //GROUP 8
+            new ListItemForEmeraldsFixed(new ItemStack(Items.GHAST_TEAR), new PriceInfo(6, 18))
         }
     };
   }
