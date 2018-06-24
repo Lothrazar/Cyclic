@@ -41,9 +41,9 @@ public class VillagerSage {
         }, {
             // hardcoded in ItemSkull i found
             //  private static final String[] SKULL_TYPES = new String[] {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
-            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new PriceInfo(60, 64)),
-            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_creeper), new PriceInfo(60, 64)),
-            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_zombie), new PriceInfo(60, 64))
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new PriceInfo(28, 32)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_creeper), new PriceInfo(28, 32)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_zombie), new PriceInfo(28, 32))
         }
     };
   }
