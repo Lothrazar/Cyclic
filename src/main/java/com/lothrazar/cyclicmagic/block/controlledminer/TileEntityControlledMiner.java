@@ -222,7 +222,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     else {//check it as a WHITELIST
       int countEmpty = 0;
       for (StackWrapper wrap : this.stacksWrapped) {
-        if (wrap.isEmpty() == false) {
+        if (wrap.isEmpty()) {
           countEmpty++;
           continue;
         }
