@@ -136,16 +136,17 @@ public class EntityGolemLaser extends Entity {
       Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
       RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d, vec3d1);
       if (raytraceresult != null) {
-        if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && this.world.getBlockState(raytraceresult.getBlockPos()).getBlock() == Blocks.PORTAL) {
+        IBlockState hitByTrace = this.world.getBlockState(raytraceresult.getBlockPos());
+        if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && hitByTrace.getBlock() == Blocks.PORTAL) {
           this.setPortal(raytraceresult.getBlockPos());
         }
-        else {
-          //              if(!net.minecraftforge.common.ForgeHooks.onThrowableImpact(this, raytraceresult))
-          //             EmberRootZoo.log("LASER IMPACT YOOOO");
+        else if (raytraceresult.sideHit == null || hitByTrace.isSideSolid(world, pos, raytraceresult.sideHit) ) {
+
           getEntityWorld().removeEntity(this);
           this.setDead();
           return;
         }
+        //else its NON-solid such as tallgrass 
       }
       getDataManager().set(value, getDataManager().get(value) - 0.025f);
       if (getDataManager().get(value) <= 0) {
