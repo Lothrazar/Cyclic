@@ -199,11 +199,9 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       // ignore in creative// left clicking just breaks it anyway
       if (entityPlayer.capabilities.isCreativeMode
           || pos == null
-          || held.getItem() instanceof ItemPickaxe
-      ) {
+          || held.getItem() instanceof ItemPickaxe) {
         return;
       }
-
       int playerSlot = 0;// entityPlayer.inventory.currentItem;
       boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
       if (wasMain) {

@@ -83,7 +83,6 @@ public class UtilEntity {
     BlockPos coords = new BlockPos(x, y, z);
     world.markBlockRangeForRenderUpdate(coords, coords);
     world.getChunkFromBlockCoords(coords).setModified(true);
-
     player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
   }

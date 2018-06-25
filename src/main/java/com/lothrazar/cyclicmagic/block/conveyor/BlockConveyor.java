@@ -160,7 +160,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-
     return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.1875D, 1D);
   }
 

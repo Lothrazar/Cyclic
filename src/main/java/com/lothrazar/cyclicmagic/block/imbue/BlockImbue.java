@@ -170,7 +170,6 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   public static void setImbueCharge(ItemStack held, int found) {
-
     UtilNBT.getItemStackNBT(held).setInteger(BlockImbue.NBT_IMBUE_CHARGE, found);
   }
 

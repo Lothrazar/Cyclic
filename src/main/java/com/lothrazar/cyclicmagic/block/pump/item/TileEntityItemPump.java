@@ -188,10 +188,8 @@ public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITi
         //one or more was put in
         outputSuccess = true;
       }
- 
       if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
         TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
-
         if (cable.isItemPipe())
           cable.updateIncomingItemFace(importFromSide);
       }
