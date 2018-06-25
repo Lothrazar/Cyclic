@@ -33,7 +33,7 @@ import net.minecraft.item.crafting.IRecipe;
 public class ItemNetherbrickSpade extends ItemSpade implements IHasRecipe {
 
   public ItemNetherbrickSpade() {
-    super(MaterialRegistry.sandstoneToolMaterial);
+    super(MaterialRegistry.netherToolMaterial);
   }
 
   @Override
