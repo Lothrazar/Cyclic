@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -47,7 +48,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
-
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in }, out, 25);
@@ -73,8 +73,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-
- 
     return recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)) &&
         recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)) &&
         recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)) &&
@@ -82,7 +80,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   }
 
   private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
-
     if (sInvo.isEmpty() != sRecipe.isEmpty()) {
       return false;//empty matching empty
     }
@@ -224,6 +221,9 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
+    }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {

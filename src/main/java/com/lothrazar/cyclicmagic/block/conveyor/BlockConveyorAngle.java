@@ -190,10 +190,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         default:
         break;
       }
-
       int degree = isGoingDown ? -45 : 45;
       float pwr = isGoingDown ? power : power * 1.5F;
-
       //close to 45 degrees
       UtilEntity.setVelocity(entity, degree, yaw, pwr);
       //  hackOverBump(worldIn, pos, entity, face);

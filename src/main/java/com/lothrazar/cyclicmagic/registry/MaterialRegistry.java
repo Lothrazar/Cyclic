@@ -128,9 +128,9 @@ public class MaterialRegistry { // thanks for help:
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",
         ToolMaterial.STONE.getHarvestLevel(),
         (ToolMaterial.STONE.getMaxUses() + ToolMaterial.WOOD.getMaxUses()) / 2,
-        ToolMaterial.STONE.getEfficiencyOnProperMaterial(),
-        (ToolMaterial.STONE.getDamageVsEntity() + ToolMaterial.WOOD.getDamageVsEntity()) / 2,
-        ToolMaterial.STONE.getEnchantability());
+        (ToolMaterial.STONE.getEfficiencyOnProperMaterial() + ToolMaterial.STONE.getEfficiencyOnProperMaterial()) / 2,
+        (ToolMaterial.STONE.getDamageVsEntity() + ToolMaterial.WOOD.getDamageVsEntity()) / 2.0F,
+        ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.sandstoneToolMaterial.setRepairItem(new ItemStack(Blocks.SANDSTONE));
   }
 
@@ -140,9 +140,10 @@ public class MaterialRegistry { // thanks for help:
   private static void registerNetherMaterials() {
     MaterialRegistry.netherToolMaterial = EnumHelper.addToolMaterial("nether",
         ToolMaterial.STONE.getHarvestLevel(),
-        ToolMaterial.STONE.getMaxUses() * 2,
-        ToolMaterial.STONE.getEfficiencyOnProperMaterial() * 2,
-        ToolMaterial.STONE.getDamageVsEntity() * 2,
+        (ToolMaterial.STONE.getMaxUses() + ToolMaterial.IRON.getMaxUses()) / 2,
+        (ToolMaterial.STONE.getEfficiencyOnProperMaterial() + //halfway in between
+            ToolMaterial.IRON.getEfficiencyOnProperMaterial()) / 2,
+        ToolMaterial.IRON.getDamageVsEntity(),
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.netherToolMaterial.setRepairItem(new ItemStack(Items.NETHERBRICK));
   }

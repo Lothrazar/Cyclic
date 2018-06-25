@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.villager;
 
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.passive.EntityVillager;
@@ -17,6 +18,7 @@ public class VillagerDruid {
 
   public static EntityVillager.ITradeList[][] buildTrades() {
     return new EntityVillager.ITradeList[][] {
+        //villager will buy this stuff for emeralds 
         {
             new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12)), // GROUP 1
             new EmeraldForItems(Items.APPLE, new PriceInfo(3, 6)),
@@ -37,6 +39,7 @@ public class VillagerDruid {
             new EmeraldForItems(Items.FISH, new PriceInfo(9, 12)),
             new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
         }, {
+            //and SELL you this stuff for YOUR emeralds
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.GRASS, 32), new PriceInfo(1, 2)), //GROUP 6
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.FARMLAND, 32), new PriceInfo(1, 2)),
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.DIRT, 32, BlockDirt.DirtType.PODZOL.getMetadata()), new PriceInfo(1, 2)),
@@ -46,6 +49,9 @@ public class VillagerDruid {
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.WATERLILY, 32), new PriceInfo(1, 2)),
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.SAND, 32, BlockSand.EnumType.RED_SAND.ordinal()), new PriceInfo(1, 3)),
             new ListItemForEmeraldsFixed(new ItemStack(Items.DYE, 16, EnumDyeColor.BLACK.getDyeDamage()), new PriceInfo(1, 3))
+        }, { //GROUP 8
+            new ListItemForEmeraldsFixed(new ItemStack(Items.GHAST_TEAR), new PriceInfo(6, 18)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_wither), new PriceInfo(60, 64))
         }
     };
   }

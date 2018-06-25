@@ -34,7 +34,7 @@ public class ItemNetherbrickAxe extends ItemAxe implements IHasRecipe {
 
   public ItemNetherbrickAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-    super(MaterialRegistry.netherToolMaterial, 6, -3.2F);
+    super(MaterialRegistry.netherToolMaterial, 8.0F, -3.1F);
   }
 
   @Override

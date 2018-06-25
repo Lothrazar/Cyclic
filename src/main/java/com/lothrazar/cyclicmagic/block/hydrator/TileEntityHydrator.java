@@ -131,6 +131,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     }
   }
+
   public boolean tryProcessRecipe() {
     RecipeHydrate rec = findMatchingRecipe();
     if (rec != null) {

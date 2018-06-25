@@ -33,7 +33,7 @@ import net.minecraft.item.crafting.IRecipe;
 public class ItemNetherbrickHoe extends ItemHoe implements IHasRecipe {
 
   public ItemNetherbrickHoe() {
-    super(MaterialRegistry.sandstoneToolMaterial);
+    super(MaterialRegistry.netherToolMaterial);
   }
 
   @Override

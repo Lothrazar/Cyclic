@@ -97,10 +97,31 @@
 		"gui": {
 			"rotation": [ 30, -45, 0 ],
 			"translation": [0, 0, 0],
-			"scale": [0.625, 0.625, 0.625]
+			"scale": [0.15, 0.15, 0.15]
+		},
+		  "thirdperson": {
+             "rotation": [ 10, -45, 170 ],
+             "translation": [ 0, 1.5, -2.75 ],
+			"scale": [0.15, 0.15, 0.15]
+        },
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 0, 4, 2 ],
+			"scale": [0.15, 0.15, 0.15]
+        },
+		 "ground" : {
+			"scale": [0.3, 0.3, 0.3]
+        },
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
 		}
-		
-		
 		
 	}
 	

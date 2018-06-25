@@ -244,6 +244,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
         this.timer = value;
       break;
       case EXP:
+        if (this.tank.getFluid() == null) {
+          this.tank.setFluid(new FluidStack(FluidRegistry.getFluid("xpjuice"), 0));
+        }
         this.tank.setFluidAmount(value);
       break;
       case COLLECT:

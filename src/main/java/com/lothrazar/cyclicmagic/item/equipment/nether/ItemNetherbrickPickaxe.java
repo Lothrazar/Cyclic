@@ -34,7 +34,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemNetherbrickPickaxe extends ItemPickaxe implements IHasRecipe {
 
   public ItemNetherbrickPickaxe() {
-    super(MaterialRegistry.sandstoneToolMaterial);
+    super(MaterialRegistry.netherToolMaterial);
   }
 
   @Override
