@@ -24,5 +24,6 @@
             "when": { "facing": "west" },
             "apply": { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
         }
+		
     ]
 }

@@ -75,7 +75,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
-  public static final Map<EnumFacing, PropertyEnum<EnumConnectType>> PROPERTIES = Maps.newEnumMap(
+  protected static final Map<EnumFacing, PropertyEnum<EnumConnectType>> PROPERTIES = Maps.newEnumMap(
       new ImmutableMap.Builder<EnumFacing, PropertyEnum<EnumConnectType>>()
           .put(EnumFacing.DOWN, PropertyEnum.create("down", EnumConnectType.class))
           .put(EnumFacing.UP, PropertyEnum.create("up", EnumConnectType.class))
@@ -239,7 +239,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
         }
       }
     }
-    //state = state.withProperty(PROPERTIES.get(EnumFacing.DOWN), EnumConnectType.BLOCKED);
     return super.getActualState(state, world, origin);
   }
 

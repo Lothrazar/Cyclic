@@ -39,6 +39,7 @@ public class BlockItemPump extends BlockPump implements ITileEntityProvider, IHa
   public BlockItemPump() {
     super();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
+    this.setItemTransport();
   }
 
   @Override
