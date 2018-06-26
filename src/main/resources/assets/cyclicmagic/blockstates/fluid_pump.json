@@ -78,6 +78,11 @@
         {
             "when": {   "east": "cable"   },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 90, "uvlock": true }
+        },
+		
+        {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked" }
         }
 		
     ]

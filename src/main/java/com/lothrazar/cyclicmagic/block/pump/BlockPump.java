@@ -99,7 +99,6 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
       PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
       //      if (cableHere != null && cableHere.getBlacklist(side)) {
       //        //im blocked off, so i cant connect to you
-      //        state = state.withProperty(property, EnumConnectType.BLOCKED);
       //        continue;
       //      }
       pos = origin.offset(side);
@@ -142,6 +141,8 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
             tileTarget.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())) {
           state = state.withProperty(property, EnumConnectType.CABLE);
         }
+        if (side == EnumFacing.NORTH && this.fluidTransport)
+          state = state.withProperty(property, EnumConnectType.BLOCKED);
       }
     }
     return super.getActualState(state, world, origin);
