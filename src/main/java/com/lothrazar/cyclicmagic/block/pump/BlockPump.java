@@ -3,19 +3,33 @@ package com.lothrazar.cyclicmagic.block.pump;
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.block.cable.BlockCableBase.EnumConnectType;
+import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class BlockPump extends BlockBaseFacingOmni {
+
+  public enum EnumConnectType implements IStringSerializable {
+    NONE, CABLE, INVENTORY;
+
+    @Override
+    public String getName() {
+      return this.name().toLowerCase();
+    }
+  }
 
   private static final double SIZE = 0.875D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(1 - SIZE, 1 - SIZE, 1 - SIZE, SIZE, SIZE, SIZE);
@@ -65,9 +79,9 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   @Override
   protected BlockStateContainer createBlockState() {
     BlockStateContainer.Builder builder = new BlockStateContainer.Builder(this);
-    //    for (PropertyEnum<EnumConnectType> property : PROPERTIES.values()) {
-    //      builder.add(property);
-    //    }
+    for (PropertyEnum<EnumConnectType> property : PROPERTIES.values()) {
+      builder.add(property);
+    }
     builder.add(BlockDirectional.FACING);
     return builder.build();
   }
@@ -76,60 +90,60 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
-  //
-  //  @Override
-  //  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
-  //    BlockPos pos = new BlockPos(origin);
-  //    TileEntityCableBase cableHere = null;// (TileEntityCableBase) world.getTileEntity(pos);
-  //    for (EnumFacing side : EnumFacing.VALUES) {
-  //      PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
-  //      if (cableHere != null && cableHere.getBlacklist(side)) {
-  //        //im blocked off, so i cant connect to you
-  //        state = state.withProperty(property, EnumConnectType.BLOCKED);
-  //        continue;
-  //      }
-  //      pos = origin.offset(side);
-  //      state = state.withProperty(property, EnumConnectType.NONE);
-  //      TileEntity tileTarget = world.getTileEntity(pos);
-  //      TileEntityCableBase tileCable = null;
-  //      if (tileTarget != null && tileTarget instanceof TileEntityCableBase) {
-  //        tileCable = (TileEntityCableBase) tileTarget;
-  //      }
-  //      if (tileCable != null && tileCable.getBlacklist(side.getOpposite())) {
-  //        //you are blocked on your facing side, so i wont push out to you
-  //        continue;
-  //      }
-  //      if (this.powerTransport) {
-  //        if (tileCable != null && tileCable.isEnergyPipe()) {
-  //          state = state.withProperty(property, EnumConnectType.CABLE);
-  //        }
-  //        if (tileTarget != null &&
-  //            tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
-  //          state = state.withProperty(property, EnumConnectType.CABLE);
-  //        }
-  //      }
-  //      if (this.itemTransport) {
-  //        if (tileCable != null && tileCable.isItemPipe()) {
-  //          state = state.withProperty(property, EnumConnectType.INVENTORY);
-  //        }
-  //        if (tileTarget != null &&
-  //            tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-  //          state = state.withProperty(property, EnumConnectType.INVENTORY);
-  //        }
-  //      }
-  //      if (this.fluidTransport) {
-  //        if (tileCable != null && tileCable.isFluidPipe()) {
-  //          state = state.withProperty(property, EnumConnectType.CABLE);
-  //        }
-  //        // getFluidHandler uses fluid capability and other things
-  //        // CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
-  //        //        if (world instanceof World && FluidUtil.getFluidHandler((World) world, pos, side.getOpposite()) != null) {
-  //        if (tileTarget != null &&
-  //            tileTarget.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())) {
-  //          state = state.withProperty(property, EnumConnectType.INVENTORY);
-  //        }
-  //      }
-  //    }
-  //    return super.getActualState(state, world, origin);
-  //  }
+
+  @Override
+  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
+    BlockPos pos = new BlockPos(origin);
+    TileEntityCableBase cableHere = null;// (TileEntityCableBase) world.getTileEntity(pos);
+    for (EnumFacing side : EnumFacing.VALUES) {
+      PropertyEnum<EnumConnectType> property = PROPERTIES.get(side);
+      //      if (cableHere != null && cableHere.getBlacklist(side)) {
+      //        //im blocked off, so i cant connect to you
+      //        state = state.withProperty(property, EnumConnectType.BLOCKED);
+      //        continue;
+      //      }
+      pos = origin.offset(side);
+      state = state.withProperty(property, EnumConnectType.NONE);
+      TileEntity tileTarget = world.getTileEntity(pos);
+      TileEntityCableBase tileCable = null;
+      if (tileTarget != null && tileTarget instanceof TileEntityCableBase) {
+        tileCable = (TileEntityCableBase) tileTarget;
+      }
+      if (tileCable != null && tileCable.getBlacklist(side.getOpposite())) {
+        //you are blocked on your facing side, so i wont push out to you
+        continue;
+      }
+      if (this.powerTransport) {
+        if (tileCable != null && tileCable.isEnergyPipe()) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+      }
+      if (this.itemTransport) {
+        if (tileCable != null && tileCable.isItemPipe()) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+      }
+      if (this.fluidTransport) {
+        if (tileCable != null && tileCable.isFluidPipe()) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+        // getFluidHandler uses fluid capability and other things
+        // CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
+        //        if (world instanceof World && FluidUtil.getFluidHandler((World) world, pos, side.getOpposite()) != null) {
+        if (tileTarget != null &&
+            tileTarget.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())) {
+          state = state.withProperty(property, EnumConnectType.CABLE);
+        }
+      }
+    }
+    return super.getActualState(state, world, origin);
+  }
 }

@@ -24,6 +24,57 @@
             "when": { "facing": "west" },
             "apply": { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
         }
+		,
+		
+        {
+            "when": { "OR": [ { "down": "cable" }, { "down": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_fluid", "x": 270, "uvlock": true }
+        },
+      
+        {
+            "when": { "OR": [ { "up": "cable" }, { "up": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_fluid" }
+        },
+       
+        {
+            "when": { "OR": [ { "north": "cable" }, { "north": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid" }
+        },
+        {
+            "when": { "south": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_fluid", "y": 180, "uvlock": true }
+        },
+        
+        {
+            "when": { "OR": [ { "south": "cable" }, { "south": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "west": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_fluid", "y": 270, "uvlock": true }
+        },
+      
+        {
+            "when": { "OR": [ { "west": "cable" }, { "west": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "east": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_fluid", "y": 90, "uvlock": true }
+        },
+      
+        {
+            "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },
+            "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 90, "uvlock": true }
+        }
 		
     ]
 }

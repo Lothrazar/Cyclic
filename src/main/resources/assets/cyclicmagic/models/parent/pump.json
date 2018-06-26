@@ -28,20 +28,19 @@
 		},
 		{
 			"name": "PipeTall",
-			"from": [6, 2, 6],
+			"from": [6, 6, 6],
 			"to": [10, 10, 10],
 			"faces": {
-				"north": {"uv": [6, 6, 10, 14], "texture": "#0"},
-				"east": {"uv": [6, 6, 10, 14], "texture": "#0"},
-				"south": {"uv": [6, 6, 10, 14], "texture": "#0"},
-				"west": {"uv": [6, 6, 10, 14], "texture": "#0"},
+				"north": {"uv": [6, 6, 10, 10], "texture": "#0"},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#0"},
+				"south": {"uv": [6, 6, 10, 10], "texture": "#0"},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#0"},
 				"up": {"uv": [6, 6, 10, 10], "texture": "#0"},
-				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+				"down": {"uv": [6, 6, 10, 10], "texture": "#0"}
 			}
 		}
 	],
 	"display": {
-	
 		"thirdperson": {
 			"rotation": [10, -45, 170],
 			"translation": [0, 1.5, -2.75],
