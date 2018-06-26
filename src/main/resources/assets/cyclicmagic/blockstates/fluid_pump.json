@@ -31,7 +31,7 @@
         },
    
         {
-            "when": { "OR": [ { "down": "cable" }, { "down": "inventory" } ] },
+            "when": {  "down": "cable"   },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "x": 90, "uvlock": true }
         },
         {
@@ -40,7 +40,7 @@
         },
     
         {
-            "when": { "OR": [ { "up": "cable" }, { "up": "inventory" } ] },
+            "when": {  "up": "cable"  },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "x": 270, "uvlock": true }
         },
         {
@@ -49,7 +49,7 @@
         },
       
         {
-            "when": { "OR": [ { "north": "cable" }, { "north": "inventory" } ] },
+            "when": { "north": "cable"  },
             "apply": { "model": "cyclicmagic:cable_side_fluid" }
         },
         {
@@ -58,7 +58,7 @@
         },
        
         {
-            "when": { "OR": [ { "south": "cable" }, { "south": "inventory" } ] },
+            "when": {  "south": "cable"   },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 180, "uvlock": true }
         },
         {
@@ -67,7 +67,7 @@
         },
       
         {
-            "when": { "OR": [ { "west": "cable" }, { "west": "inventory" } ] },
+            "when": {   "west": "cable"   },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 270, "uvlock": true }
         },
         {
@@ -76,7 +76,7 @@
         },
       
         {
-            "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },
+            "when": {   "east": "cable"   },
             "apply": { "model": "cyclicmagic:cable_side_fluid", "y": 90, "uvlock": true }
         }
 		

@@ -23,7 +23,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public abstract class BlockPump extends BlockBaseFacingOmni {
 
   public enum EnumConnectType implements IStringSerializable {
-    NONE, CABLE, INVENTORY;
+    NONE, CABLE, BLOCKED;
 
     @Override
     public String getName() {
