@@ -52,11 +52,13 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -222,6 +224,23 @@ public class EventKeyInput {
     catch (Exception e) {
       //java.lang.IndexOutOfBoundsException  from org.lwjgl.input.Keyboard.isKeyDown(Keyboard.java:407)
       return false;
+    }
+  }
+
+  /**
+   * Witchery Author Tribute
+   */
+  @SubscribeEvent
+  public void onWitchKingReturn(PlayerLoggedInEvent event) {
+    try {
+    if (event.player.getGameProfile().getName().equalsIgnoreCase("Emoniph")) {
+        for (EntityPlayer p : event.player.world.playerEntities) {
+          p.sendMessage(new TextComponentString("The Witch King has returned!"));
+      }
+    }
+    }
+    catch (Exception e) {
+      // no big deal
     }
   }
 }
