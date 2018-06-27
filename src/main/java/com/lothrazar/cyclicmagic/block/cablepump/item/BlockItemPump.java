@@ -21,30 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.fluid;
+package com.lothrazar.cyclicmagic.block.cablepump.item;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import com.lothrazar.cyclicmagic.block.cablepump.BlockPump;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public class ContainerFluidPump extends ContainerBaseMachine {
+public class BlockItemPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
 
-  public ContainerFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
-    super(tileEntity);
-    bindPlayerInventory(inventoryPlayer);
+  public BlockItemPump() {
+    super();
+    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ITEMPUMP);
+    this.setItemTransport();
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
-  public void updateProgressBar(int id, int data) {
-    this.tile.setField(id, data);
+  public TileEntity createNewTileEntity(World worldIn, int meta) {
+    return new TileEntityItemPump();
   }
 
   @Override
-  public void addListener(IContainerListener listener) {
-    super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tile);
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "i i",
+        " r ",
+        "ibi",
+        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        'i', "nuggetIron",
+        'r', Blocks.DROPPER);
   }
 }

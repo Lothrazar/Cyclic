@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.block.pump.TileEntityBasePump;
+import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

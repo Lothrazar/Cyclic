@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.item;
+package com.lothrazar.cyclicmagic.block.cablepump.item;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;

@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.fluid;
+package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.block.pump.TileEntityBasePump;
+import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;

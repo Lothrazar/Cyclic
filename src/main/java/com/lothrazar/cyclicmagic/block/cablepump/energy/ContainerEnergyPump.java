@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -21,40 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.fluid;
+package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
-import com.lothrazar.cyclicmagic.block.pump.BlockPump;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import net.minecraft.entity.player.InventoryPlayer;
 
-public class BlockFluidPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
+public class GuiEnergyPump extends GuiBaseContainer {
 
-  public BlockFluidPump() {
-    super();
-    super.setGuiId(ForgeGuiHandler.GUI_INDEX_FLUIDPUMP);
-    this.setFluidTransport();
+  public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
+    super(new ContainerEnergyPump(inventoryPlayer, tileEntity), tileEntity);
+    this.fieldRedstoneBtn = TileEntityEnergyPump.Fields.REDSTONE.ordinal();
   }
 
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityFluidPump();
-  }
-
-  @Override
-  public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "i i",
-        " r ",
-        "ibi",
-        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
-        'i', "nuggetGold",
-        'r', Blocks.DROPPER);
+  public void initGui() {
+    super.initGui();
+    int id = 1;
+    int width = 164;
+    int h = 20;
+    int x = this.guiLeft + 6;
+    int y = this.guiTop + 28;
+    //not more than the cable can handle
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
+        TileEntityEnergyPump.Fields.TRANSFER_RATE.ordinal());
+    sliderDelay.setTooltip("pump.rate");
+    this.addButton(sliderDelay);
   }
 }

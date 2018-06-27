@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.pump;
+package com.lothrazar.cyclicmagic.block.cablepump;
 
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
