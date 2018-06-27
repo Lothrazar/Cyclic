@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.proxy;
 
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynMining;
 import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynSafe;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
@@ -64,7 +65,6 @@ import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
