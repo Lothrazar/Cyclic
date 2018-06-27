@@ -175,6 +175,9 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     //    EnumFacing exportToSide = importFromSide.getOpposite();
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
+      if (this.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide) == false) {
+        continue;
+      }
       BlockPos posTarget = pos.offset(exportToSide);
       TileEntity tileTarget = world.getTileEntity(posTarget);
       //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());

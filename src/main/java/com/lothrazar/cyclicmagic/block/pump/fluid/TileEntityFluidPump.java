@@ -33,6 +33,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
@@ -81,6 +82,9 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
+      if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, exportToSide) == false) {
+        continue;
+      }
       boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, transferRate);
       //  boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
       if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {

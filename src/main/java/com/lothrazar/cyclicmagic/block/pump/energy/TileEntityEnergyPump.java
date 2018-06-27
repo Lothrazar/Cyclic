@@ -83,14 +83,18 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
     if (this.isRunning() == false) {
       return;
     }
-    IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
     EnumFacing importFromSide = this.getCurrentFacing();
+
+    IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
     TileEntity importFromTile = world.getTileEntity(pos.offset(importFromSide));
     IEnergyStorage exportHandler = null;
     IEnergyStorage importHandlr = null;
-    if (importFromTile != null) {
+    if (importFromTile != null && importFromTile.hasCapability(CapabilityEnergy.ENERGY, importFromSide.getOpposite())) {
       importHandlr = importFromTile.getCapability(CapabilityEnergy.ENERGY, importFromSide.getOpposite());
       // ModCyclic.logger.error("importFromTile  "+importFromTile.getBlockType().getLocalizedName());
+    }
+    else {
+      return; //no tile or no capability
     }
     //ALL EXCEPT THIS SIDE
     //IMPORT
@@ -107,8 +111,11 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
     //EXPORT
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
+      if (this.hasCapability(CapabilityEnergy.ENERGY, exportToSide) == false) {
+        continue;
+      }
       TileEntity exportToTile = world.getTileEntity(pos.offset(exportToSide));
-      if (exportToTile != null) {
+      if (exportToTile != null && importFromTile.hasCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite())) {
         exportHandler = exportToTile.getCapability(CapabilityEnergy.ENERGY, exportToSide.getOpposite());
         //   ModCyclic.logger.error("exportToTile   "+exportToTile.getBlockType().getLocalizedName());
       }
