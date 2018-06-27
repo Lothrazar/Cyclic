@@ -74,6 +74,33 @@
         {
             "when": {   "east": "cable"  },
             "apply": { "model": "cyclicmagic:cable_side_item", "y": 90, "uvlock": true }
+        },
+		
+			  
+     	  
+        {
+            "when": { "east": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "west": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "south": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked" }
+        },
+        {
+            "when": { "up": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "down": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 90, "uvlock": true }
         }
 		
     ]

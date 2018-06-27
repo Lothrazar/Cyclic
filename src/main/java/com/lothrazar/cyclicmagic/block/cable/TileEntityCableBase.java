@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -48,7 +49,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable {
+public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable, IFacingBlacklist {
 
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int TRANSFER_FLUID_PER_TICK = 1000;

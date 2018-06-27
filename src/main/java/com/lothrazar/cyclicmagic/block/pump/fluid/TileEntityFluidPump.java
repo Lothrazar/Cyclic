@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.pump.fluid;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.block.pump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -34,7 +34,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 
-public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
   private int transferRate = 150;
 

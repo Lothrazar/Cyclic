@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.pump.energy;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.pump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,7 +36,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityEnergyPump extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityEnergyPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
   // Thermal does 1k, 4k, 9k, 16k, 25k per tick variants
   private int transferRate = 8 * 1000;

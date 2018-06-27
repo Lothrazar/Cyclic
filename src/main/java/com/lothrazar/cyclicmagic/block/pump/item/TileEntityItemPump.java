@@ -26,8 +26,8 @@ package com.lothrazar.cyclicmagic.block.pump.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.block.pump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -44,7 +44,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityItemPump extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle {
+public class TileEntityItemPump extends TileEntityBasePump implements ITileStackWrapper, ITickable, ITileRedstoneToggle {
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   private static final int SLOT_TRANSFER = 0;
