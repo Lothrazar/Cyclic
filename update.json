@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.15.14",
-    "1.12.2-recommended": "1.15.14"
+    "1.12.2-latest": "1.15.15",
+    "1.12.2-recommended": "1.15.15"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -278,6 +278,7 @@
   	,"1.15.12":"Fixed unpowered cables causing a crash in some cases (possibly WAILA related).  Fixed a NBT data-loss compatibility glitch with bows from other mods (Tinkers, silents gems, etc).  Ender Wing no longer plays its sound doubled-up.  Added an early-game recipe for Biomass that does not require Hydrator.  zh_CN.lang Updated by sandtechnology  "
   	,"1.15.13":"If a hydrator is set to have its recipe locked, it will no longer accept automated input into empty slots; this allows easier automation for 1x1 and other small recipes.  Fixed some Ender Book crashes if you teleport while flying or while too many sounds are playing; it now plays the default enderman sound instead of custom.  Items now smoothly ride the angled Conveyors and no longer bounce around when going up and down.  Optimized some minor flow issues when content moves from Extractors to Cables (water, energy, and items).    "
   	,"1.15.14":"Fixed Controlled Miner Whitelist mode getting stuck and not mining.   Fixed some of the buttons in Experience Pylon not working when it is exactly empty.  Reduced item-model size of Extractor cables.  Added new config file entries AppleGrowthTicks and AppleLightLevel to control apple sprout growth.  Wooden pickaxes are now able to mine furnaces again even if Stardew Furnaces config is enabled.  Added a few endgame sales for sage and druid villager.  Added a recipe for Red Sand in the Hydrator (can be changed with crafttweaker as always).  Projectiles from Rainbow Cannon can now pass through non-solid blocks (such as torches and tallgrass).  Fixed balance of Netherbrick tools, they now sit roughly in between stone and iron.  "
+ 	,"1.15.15":"Extractor cable model is now dynamic just like normal cables, and it has the same block feature using a redstone torch.  "
   }
 }
 

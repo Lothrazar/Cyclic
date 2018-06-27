@@ -39,6 +39,7 @@ public class BlockEnergyPump extends BlockPump implements ITileEntityProvider, I
   public BlockEnergyPump() {
     super();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENERGYPUMP);
+    this.setPowerTransport();
   }
 
   @Override

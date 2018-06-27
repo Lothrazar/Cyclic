@@ -39,6 +39,7 @@ public class BlockFluidPump extends BlockPump implements ITileEntityProvider, IH
   public BlockFluidPump() {
     super();
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_FLUIDPUMP);
+    this.setFluidTransport();
   }
 
   @Override
