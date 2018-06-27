@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.block.pump;
 
 import java.util.Map;
+import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 
 public class TileEntityBasePump extends TileEntityBaseMachineFluid implements IFacingBlacklist {
 
@@ -43,5 +45,14 @@ public class TileEntityBasePump extends TileEntityBaseMachineFluid implements IF
   @Override
   public void toggleBlacklist(final EnumFacing side) {
     mapBlacklist.put(side, !mapBlacklist.get(side));
+  }
+
+  @Override
+  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (mapBlacklist != null && facing != null && mapBlacklist.get(facing)) {
+      return false;//announce that capability does not exist on this side. items and all.
+    }
+
+    return super.hasCapability(capability, facing);
   }
 }
