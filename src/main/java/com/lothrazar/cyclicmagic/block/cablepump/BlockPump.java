@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -52,19 +53,25 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
           .put(EnumFacing.WEST, PropertyEnum.create("west", EnumConnectType.class))
           .put(EnumFacing.EAST, PropertyEnum.create("east", EnumConnectType.class))
           .build());
+  private boolean itemTransport = false;
+  private boolean fluidTransport = false;
+  private boolean powerTransport = false;
+
   public BlockPump() {
     super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(3F);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
+    setSoundType(SoundType.CLOTH);
     this.placeType = PlacementType.SIDE_BLOCK;
   }
 
-  private boolean itemTransport = false;
-  private boolean fluidTransport = false;
-  private boolean powerTransport = false;
 
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
   public void setItemTransport() {
     this.itemTransport = true;
   }
