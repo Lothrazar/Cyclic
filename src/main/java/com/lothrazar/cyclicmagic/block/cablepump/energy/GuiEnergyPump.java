@@ -21,30 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerEnergyPump extends ContainerBaseMachine {
+public class GuiEnergyPump extends GuiBaseContainer {
 
-  public ContainerEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
-    super(tileEntity);
-    bindPlayerInventory(inventoryPlayer);
+  public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
+    super(new ContainerEnergyPump(inventoryPlayer, tileEntity), tileEntity);
+    this.fieldRedstoneBtn = TileEntityEnergyPump.Fields.REDSTONE.ordinal();
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
-  public void updateProgressBar(int id, int data) {
-    this.tile.setField(id, data);
-  }
-
-  @Override
-  public void addListener(IContainerListener listener) {
-    super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tile);
+  public void initGui() {
+    super.initGui();
+    int id = 1;
+    int width = 164;
+    int h = 20;
+    int x = this.guiLeft + 6;
+    int y = this.guiTop + 28;
+    //not more than the cable can handle
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
+        TileEntityEnergyPump.Fields.TRANSFER_RATE.ordinal());
+    sliderDelay.setTooltip("pump.rate");
+    this.addButton(sliderDelay);
   }
 }

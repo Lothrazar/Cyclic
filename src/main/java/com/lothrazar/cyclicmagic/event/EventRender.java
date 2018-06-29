@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
@@ -34,7 +35,6 @@ import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.client.Minecraft;

@@ -21,39 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
-import com.lothrazar.cyclicmagic.block.pump.BlockPump;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnergyPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
+public class ContainerFluidPump extends ContainerBaseMachine {
 
-  public BlockEnergyPump() {
-    super();
-    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENERGYPUMP);
+  public ContainerFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
+    super(tileEntity);
+    bindPlayerInventory(inventoryPlayer);
   }
 
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityEnergyPump();
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    this.tile.setField(id, data);
   }
 
   @Override
-  public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "i i",
-        " r ",
-        "ibi",
-        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
-        'i', "dustRedstone",
-        'r', Blocks.DROPPER);
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

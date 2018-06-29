@@ -29,7 +29,6 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.item.TileEntityItemCable;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -71,11 +70,11 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   private static final double SML = 0.375D;
   private static final double LRG = 0.625D;
-  final static float hitLimit = 0.2F;
+  public final static float hitLimit = 0.2F;
   /**
    * Virtual properties used for the multipart cable model and determining the presence of adjacent inventories
    */
-  public static final Map<EnumFacing, PropertyEnum<EnumConnectType>> PROPERTIES = Maps.newEnumMap(
+  protected static final Map<EnumFacing, PropertyEnum<EnumConnectType>> PROPERTIES = Maps.newEnumMap(
       new ImmutableMap.Builder<EnumFacing, PropertyEnum<EnumConnectType>>()
           .put(EnumFacing.DOWN, PropertyEnum.create("down", EnumConnectType.class))
           .put(EnumFacing.UP, PropertyEnum.create("up", EnumConnectType.class))
@@ -120,7 +119,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   @Override
   public abstract TileEntity createTileEntity(World world, IBlockState state);
 
-  public boolean isWrenchItem(ItemStack held) {
+  public static boolean isWrenchItem(ItemStack held) {
     return held.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
   }
 
@@ -130,7 +129,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     if (te != null) {
       if (isWrenchItem(player.getHeldItem(hand))) {
         EnumFacing sideToToggle = null;
-        ModCyclic.logger.log(String.format("%f : %f : %f", hitX, hitY, hitZ));
+        //ModCyclic.logger.log(String.format("%f : %f : %f", hitX, hitY, hitZ));
         if (hitX < hitLimit) {
           sideToToggle = EnumFacing.WEST;
         }
@@ -239,7 +238,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
         }
       }
     }
-    //state = state.withProperty(PROPERTIES.get(EnumFacing.DOWN), EnumConnectType.BLOCKED);
     return super.getActualState(state, world, origin);
   }
 

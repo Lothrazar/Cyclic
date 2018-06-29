@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.fluid;
+package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -33,8 +33,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
   private int transferRate = 150;
 
@@ -81,6 +82,9 @@ public class TileEntityFluidPump extends TileEntityBaseMachineFluid implements I
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing exportToSide : sidesOut) {
+      if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, exportToSide) == false) {
+        continue;
+      }
       boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, transferRate);
       //  boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
       if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {

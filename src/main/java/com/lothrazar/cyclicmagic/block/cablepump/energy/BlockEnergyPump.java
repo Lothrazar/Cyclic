@@ -21,32 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.pump.energy;
+package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
-import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import net.minecraft.entity.player.InventoryPlayer;
+import com.lothrazar.cyclicmagic.block.cablepump.BlockPump;
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public class GuiEnergyPump extends GuiBaseContainer {
+public class BlockEnergyPump extends BlockPump implements ITileEntityProvider, IHasRecipe {
 
-  public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
-    super(new ContainerEnergyPump(inventoryPlayer, tileEntity), tileEntity);
-    this.fieldRedstoneBtn = TileEntityEnergyPump.Fields.REDSTONE.ordinal();
+  public BlockEnergyPump() {
+    super();
+    super.setGuiId(ForgeGuiHandler.GUI_INDEX_ENERGYPUMP);
+    this.setPowerTransport();
   }
 
   @Override
-  public void initGui() {
-    super.initGui();
-    int id = 1;
-    int width = 164;
-    int h = 20;
-    int x = this.guiLeft + 6;
-    int y = this.guiTop + 28;
-    //not more than the cable can handle
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
-        TileEntityEnergyPump.Fields.TRANSFER_RATE.ordinal());
-    sliderDelay.setTooltip("pump.rate");
-    this.addButton(sliderDelay);
+  public TileEntity createNewTileEntity(World worldIn, int meta) {
+    return new TileEntityEnergyPump();
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "i i",
+        " r ",
+        "ibi",
+        'b', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        'i', "dustRedstone",
+        'r', Blocks.DROPPER);
   }
 }

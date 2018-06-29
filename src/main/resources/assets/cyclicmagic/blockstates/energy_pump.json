@@ -1,10 +1,104 @@
 {
-    "variants": {
-        "facing=up":    { "model": "cyclicmagic:energy_pump"},
-        "facing=down":  { "model": "cyclicmagic:energy_pump", "x":180},
-        "facing=north": { "model": "cyclicmagic:energy_pump", "x":90 },
-        "facing=south": { "model": "cyclicmagic:energy_pump", "x":90, "y":180},
-        "facing=east":  { "model": "cyclicmagic:energy_pump", "x":90, "y":90 },
-        "facing=west":  { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
-    }
+    "multipart": [
+        {
+            "when": { "facing": "up" },
+            "apply": { "model": "cyclicmagic:energy_pump"}
+        },
+        {
+            "when": { "facing": "down" },
+            "apply": { "model": "cyclicmagic:energy_pump", "x":180}
+        },
+        {
+            "when": { "facing": "north" },
+            "apply": { "model": "cyclicmagic:energy_pump", "x":90 }
+        },
+        {
+            "when": { "facing": "south" },
+            "apply": { "model": "cyclicmagic:energy_pump", "x":90, "y":180}
+        },
+        {
+            "when": { "facing": "east" },
+            "apply": { "model": "cyclicmagic:energy_pump", "x":90, "y":90 }
+        },
+        {
+            "when": { "facing": "west" },
+            "apply": { "model": "cyclicmagic:energy_pump", "x":270,"y":90 }
+        }
+		,
+		
+        {
+            "when": {   "down": "cable"   },
+            "apply": { "model": "cyclicmagic:cable_side_energy", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_energy", "x": 270, "uvlock": true }
+        },
+      
+        {
+            "when": {  "up": "cable"   },
+            "apply": { "model": "cyclicmagic:cable_side_energy", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_energy" }
+        },
+       
+        {
+            "when": {   "north": "cable"  },
+            "apply": { "model": "cyclicmagic:cable_side_energy" }
+        },
+        {
+            "when": { "south": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_energy", "y": 180, "uvlock": true }
+        },
+        
+        {
+            "when": {  "south": "cable"  },
+            "apply": { "model": "cyclicmagic:cable_side_energy", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "west": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_energy", "y": 270, "uvlock": true }
+        },
+      
+        {
+            "when": {"west": "cable"  },
+            "apply": { "model": "cyclicmagic:cable_side_energy", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "east": "none" },
+            "apply": { "model": "cyclicmagic:cable_none_energy", "y": 90, "uvlock": true }
+        },
+        {
+            "when": {  "east": "cable"  },
+            "apply": { "model": "cyclicmagic:cable_side_energy", "y": 90, "uvlock": true }
+        },
+      
+	  
+        {
+            "when": { "east": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "west": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "south": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked" }
+        },
+        {
+            "when": { "up": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "down": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 90, "uvlock": true }
+        }
+    ]
 }
