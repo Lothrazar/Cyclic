@@ -15,8 +15,8 @@ public class FluidBar {
   private int x;
   private int y;
   private int capacity;
-  private final int w = 36 / 2;
-  private final int h = 124 / 2;
+  private final int width = 36 / 2;
+  private final int height = 124 / 2;
 
   public FluidBar(GuiBaseContainer p, int x, int y) {
     parent = p;
@@ -29,46 +29,66 @@ public class FluidBar {
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     Gui.drawModalRectWithCustomSizedTexture(
         parent.getGuiLeft() + getX(), parent.getGuiTop() + getY(), u, v,
-        w, h,
-        w, h);
+        width, height,
+        width, height);
     parent.mc.getTextureManager().bindTexture(fluid);
     float percent = (currentFluid / ((float) this.getCapacity()));
-    int hpct = (int) ((h - 2) * percent);
+    int hpct = (int) ((height - 2) * percent);
     Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + getX() + 1, parent.getGuiTop() + getY() + 1 + h - hpct - 2,
+        parent.getGuiLeft() + getX() + 1, parent.getGuiTop() + getY() + 1 + height - hpct - 2,
         u, v,
         16, hpct,
-        16, h);
+        16, height);
   }
 
   public void draw(FluidStack fluid) {
 
     //bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     //  
-    int u = 0, v = 0;
+    int u = 0, v = 0,x=parent.getGuiLeft() + getX(),y=parent.getGuiTop() + getY();
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + getX(), parent.getGuiTop() + getY(), u, v,
-        w, h,
-        w, h);
+       x, y, u, v,
+        width, height,
+        width, height);
     //NOW the fluid part
     if (fluid == null) {
       return;
     }
-    float percent = (((float) fluid.amount) / ((float) this.getCapacity()));
-    int hpct = (int) ((h - 2) * percent);
+    float capacity = this.getCapacity();
+    float amount = fluid.amount;
+    float scale = amount / capacity;
+    int fluidAmount = (int) (scale * height);
+    
+    int yVal = y + height - fluidAmount;
+     
+    
+    // float percent = (((float) fluid.amount) / ((float) this.getCapacity()));
+    //    int hpct = (int) ((height - 2) * percent);
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-    TextureAtlasSprite tex = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
+    TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
     //     
     int size = 16;
     int start = parent.getGuiTop() + getY() + 1;
-    int hgt = start + h - hpct - 2;
+    /// int hgt = start + height - hpct - 2;
    
+    int i = 0;
+    int j = 0;
+    int drawHeight = 0;
+    int drawWidth = 0;
+    for (i = 0; i < width; i += 16) {
+      for (j = 0; j < height; j += 16) {
+        drawWidth = Math.min(width - i, 16);
+        drawHeight = Math.min(height - j, 16);
+        parent.drawTexturedModalRect(x + i, yVal + j, icon, drawWidth, drawHeight);
+      }
+    }
     //    for (int i = 0; i < hgt / size; i++) {
     //      
-    parent.drawTexturedModalRect(parent.getGuiLeft() + getX() + 1, start + 2 * size, tex, size, size);
+    //  parent.drawTexturedModalRect(parent.getGuiLeft() + getX() + 1, start + 2 * size, tex, size, size);
     //    }
    // 
+
     //parent.drawTexturedModalRect(parent.getGuiLeft() + getX() + 1, hgt, tex, size, size);
     //    Gui.drawModalRectWithCustomSizedTexture(
     //        parent.getGuiLeft() + getX() + 1, parent.getGuiTop() + getY() + 1 + h - hpct - 2,
@@ -78,8 +98,8 @@ public class FluidBar {
     ///////////// 
   }
   public boolean isMouseover(int mouseX, int mouseY) {
-    return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + w
-        && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + h;
+    return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + width
+        && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + height;
   }
 
   public int getX() {
