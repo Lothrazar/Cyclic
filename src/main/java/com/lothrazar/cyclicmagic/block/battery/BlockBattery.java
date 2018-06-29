@@ -47,10 +47,9 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     }
   }
 
-  public BlockBattery(boolean creat) {
+  public BlockBattery() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
-    //   this.setTickRandomly(true);
   }
 
   @Override

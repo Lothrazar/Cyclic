@@ -44,6 +44,8 @@ import com.lothrazar.cyclicmagic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.batterycheat.BlockBatteryInfinite;
 import com.lothrazar.cyclicmagic.block.batterycheat.TileEntityBatteryInfinite;
+import com.lothrazar.cyclicmagic.block.batterywireless.BlockBatteryWireless;
+import com.lothrazar.cyclicmagic.block.batterywireless.TileBatteryWireless;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
@@ -589,7 +591,11 @@ public class BlockModule extends BaseModule implements IHasConfig {
       //
     }
     if (battery) {
-      BlockBattery battery = new BlockBattery(false);
+      BlockBatteryWireless batteryw = new BlockBatteryWireless();
+      BlockRegistry.registerBlock(batteryw, "battery_wireless", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileBatteryWireless.class, Const.MODID + "battery_wireless_te");
+      //
+      BlockBattery battery = new BlockBattery();
       BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
       //cheater 

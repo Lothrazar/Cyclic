@@ -1,0 +1,200 @@
+{
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"textures": {
+		"main": "cyclicmagic:blocks/mob_antimagnet_main",
+		"particle": "cyclicmagic:blocks/mob_antimagnet_main",
+		"plate_front": "cyclicmagic:blocks/mob_antimagnet_plate_front",
+		"plate_back": "cyclicmagic:blocks/mob_antimagnet_plate_back"
+	},
+	"elements": [
+		{
+			"name": "Core",
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [5, 5, 11, 11], "texture": "#main"},
+				"east": {"uv": [5, 5, 11, 11], "texture": "#main"},
+				"south": {"uv": [5, 5, 11, 11], "texture": "#main"},
+				"west": {"uv": [5, 5, 11, 11], "texture": "#main"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#main"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarN",
+			"from": [7, 7, 1],
+			"to": [9, 9, 4],
+			"faces": {
+				"east": {"uv": [11, 7, 14, 9], "texture": "#main"},
+				"west": {"uv": [2, 7, 5, 9], "texture": "#main"},
+				"up": {"uv": [7, 2, 9, 5], "texture": "#main"},
+				"down": {"uv": [7, 2, 9, 5], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarE",
+			"from": [12, 7, 7],
+			"to": [15, 9, 9],
+			"faces": {
+				"north": {"uv": [2, 7, 5, 9], "texture": "#main"},
+				"south": {"uv": [11, 7, 14, 9], "texture": "#main"},
+				"up": {"uv": [11, 7, 14, 9], "texture": "#main"},
+				"down": {"uv": [2, 7, 5, 9], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarS",
+			"from": [7, 7, 12],
+			"to": [9, 9, 15],
+			"faces": {
+				"east": {"uv": [2, 7, 5, 9], "texture": "#main"},
+				"west": {"uv": [11, 7, 14, 9], "texture": "#main"},
+				"up": {"uv": [7, 11, 9, 14], "texture": "#main"},
+				"down": {"uv": [7, 11, 9, 14], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarW",
+			"from": [1, 7, 7],
+			"to": [4, 9, 9],
+			"faces": {
+				"north": {"uv": [11, 7, 14, 9], "texture": "#main"},
+				"south": {"uv": [2, 7, 5, 9], "texture": "#main"},
+				"up": {"uv": [2, 7, 5, 9], "texture": "#main"},
+				"down": {"uv": [11, 7, 14, 9], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarUp",
+			"from": [7, 12, 7],
+			"to": [9, 15, 9],
+			"faces": {
+				"north": {"uv": [7, 2, 9, 5], "texture": "#main"},
+				"east": {"uv": [7, 2, 9, 5], "texture": "#main"},
+				"south": {"uv": [7, 2, 9, 5], "texture": "#main"},
+				"west": {"uv": [7, 2, 9, 5], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BarDown",
+			"from": [7, 1, 7],
+			"to": [9, 4, 9],
+			"faces": {
+				"north": {"uv": [7, 11, 9, 14], "texture": "#main"},
+				"east": {"uv": [7, 11, 9, 14], "texture": "#main"},
+				"south": {"uv": [7, 11, 9, 14], "texture": "#main"},
+				"west": {"uv": [7, 11, 9, 14], "texture": "#main"}
+			}
+		},
+		{
+			"name": "MagnetN",
+			"from": [4, 4, 0],
+			"to": [12, 12, 1],
+			"faces": {
+				"north": {"uv": [4, 4, 12, 12], "texture": "#plate_front"},
+				"east": {"uv": [14, 4, 16, 12], "texture": "#main"},
+				"south": {"uv": [4, 4, 12, 12], "texture": "#plate_back"},
+				"west": {"uv": [0, 4, 2, 12], "texture": "#main"},
+				"up": {"uv": [4, 0, 12, 2], "texture": "#main"},
+				"down": {"uv": [4, 0, 12, 2], "texture": "#main"}
+			}
+		},
+		{
+			"name": "MagnetE",
+			"from": [15, 4, 4],
+			"to": [16, 12, 12],
+			"faces": {
+				"north": {"uv": [0, 4, 2, 12], "texture": "#main"},
+				"east": {"uv": [4, 4, 12, 12], "texture": "#plate_front"},
+				"south": {"uv": [14, 4, 16, 12], "texture": "#main"},
+				"west": {"uv": [4, 4, 12, 12], "texture": "#plate_back"},
+				"up": {"uv": [14, 4, 16, 12], "texture": "#main"},
+				"down": {"uv": [0, 4, 2, 12], "texture": "#main"}
+			}
+		},
+		{
+			"name": "MagnetS",
+			"from": [4, 4, 15],
+			"to": [12, 12, 16],
+			"faces": {
+				"north": {"uv": [4, 4, 12, 12], "texture": "#plate_back"},
+				"east": {"uv": [0, 4, 2, 12], "texture": "#main"},
+				"south": {"uv": [4, 4, 12, 12], "texture": "#plate_front"},
+				"west": {"uv": [14, 4, 16, 12], "texture": "#main"},
+				"up": {"uv": [4, 14, 12, 16], "texture": "#main"},
+				"down": {"uv": [4, 14, 12, 16], "texture": "#main"}
+			}
+		},
+		{
+			"name": "MagnetW",
+			"from": [0, 4, 4],
+			"to": [1, 12, 12],
+			"faces": {
+				"north": {"uv": [14, 4, 16, 12], "texture": "#main"},
+				"east": {"uv": [4, 4, 12, 12], "texture": "#plate_back"},
+				"south": {"uv": [0, 4, 2, 12], "texture": "#main"},
+				"west": {"uv": [4, 4, 12, 12], "texture": "#plate_front"},
+				"up": {"uv": [0, 4, 2, 12], "texture": "#main"},
+				"down": {"uv": [14, 4, 16, 12], "texture": "#main"}
+			}
+		},
+		{
+			"name": "MagnetUp",
+			"from": [4, 15, 4],
+			"to": [12, 16, 12],
+			"faces": {
+				"north": {"uv": [4, 0, 12, 2], "texture": "#main"},
+				"east": {"uv": [4, 0, 12, 2], "texture": "#main"},
+				"south": {"uv": [4, 0, 12, 2], "texture": "#main"},
+				"west": {"uv": [4, 0, 12, 2], "texture": "#main"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#plate_front"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#plate_back"}
+			}
+		},
+		{
+			"name": "MagnetDown",
+			"from": [4, 0, 4],
+			"to": [12, 1, 12],
+			"faces": {
+				"north": {"uv": [4, 14, 12, 16], "texture": "#main"},
+				"east": {"uv": [4, 14, 12, 16], "texture": "#main"},
+				"south": {"uv": [4, 14, 12, 16], "texture": "#main"},
+				"west": {"uv": [4, 14, 12, 16], "texture": "#main"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#plate_back"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#plate_front"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"ground": {
+			"rotation": [0, 0, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"fixed": {
+			"rotation": [0, 0, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		}
+	}
+}

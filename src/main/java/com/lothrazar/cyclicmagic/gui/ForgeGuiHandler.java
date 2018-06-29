@@ -38,6 +38,9 @@ import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.battery.ContainerBattery;
 import com.lothrazar.cyclicmagic.block.battery.GuiBattery;
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
+import com.lothrazar.cyclicmagic.block.batterywireless.ContainerBatteryWireless;
+import com.lothrazar.cyclicmagic.block.batterywireless.GuiBatteryWireless;
+import com.lothrazar.cyclicmagic.block.batterywireless.TileBatteryWireless;
 import com.lothrazar.cyclicmagic.block.beaconpotion.ContainerBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.GuiBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
@@ -213,6 +216,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VOID = 41;
   public static final int GUI_INDEX_SOUNDPL = 42;
   public static final int GUI_INDEX_SIGNPOST = 43;
+  public static final int GUI_INDEX_BATTERYWIRELESS = 44;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -432,6 +436,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
         }
       break;
+      case GUI_INDEX_BATTERYWIRELESS:
+        if (te instanceof TileBatteryWireless) {
+          return new ContainerBatteryWireless(player.inventory, (TileBatteryWireless) te);
+        }
+      break;
     }
     return null;
   }
@@ -647,9 +656,16 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_SIGNPOST:
-          return new GuiSignEditor(player,
-              player.getHeldItemMainhand(),
-              (TileEntitySign) te);
+          if (te instanceof TileEntitySign)
+            return new GuiSignEditor(player,
+                player.getHeldItemMainhand(),
+                (TileEntitySign) te);
+        break;
+        case GUI_INDEX_BATTERYWIRELESS:
+          if (te instanceof TileBatteryWireless) {
+            return new GuiBatteryWireless(player.inventory, (TileBatteryWireless) te);
+          }
+        break;
       }
     }
     return null;
