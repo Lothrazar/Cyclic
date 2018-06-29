@@ -208,4 +208,9 @@ public class UtilFluid {
       return false;
     }
   }
+
+  // IF is MIT license so i used this one function 
+  // color from fluid?
+  // https://github.com/Buuz135/Industrial-Foregoing/blob/427307ceb4188bd43c940cfdce1e941a05e24ee4/src/main/java/com/buuz135/industrial/utils/FluidUtils.java
+
 }

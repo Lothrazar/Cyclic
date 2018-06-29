@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.batterywireless;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -35,7 +36,9 @@ public class GuiBatteryWireless extends GuiBaseContainer {
     super(new ContainerBatteryWireless(inventoryPlayer, te), te);
     //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setY(8).setX(150);
+    energyBar.setWidth(16).setY(16).setX(150);
+    this.fluidBar = new FluidBar(this, this.xSize / 2 + 38, 16);
+    fluidBar.setCapacity(TileBatteryWireless.TANK_FULL);
   }
 
   @Override
@@ -47,8 +50,7 @@ public class GuiBatteryWireless extends GuiBaseContainer {
         this.width / 2 - 9,
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //DRAW ENERGY BAR
-    //    fuelX = this.guiLeft + getScreenSize().width() - 25;
-    //    fuelY = this.guiTop + 8;
+
+    fluidBar.draw(((TileBatteryWireless) tile).getCurrentFluidStack());
   }
 }

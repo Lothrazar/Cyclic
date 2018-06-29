@@ -24,13 +24,13 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     this.savePosition(player, pos, hand);
-    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
+    return EnumActionResult.SUCCESS;
   }
 
   private void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
-    UtilNBT.setItemStackBlockPos(held, pos);
     player.swingArm(hand);
+    UtilNBT.setItemStackBlockPos(held, pos);
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
   }
