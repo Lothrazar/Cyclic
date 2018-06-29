@@ -103,6 +103,7 @@ import com.lothrazar.cyclicmagic.item.homingmissile.EntityHomingProjectile;
 import com.lothrazar.cyclicmagic.item.homingmissile.ItemMagicMissile;
 import com.lothrazar.cyclicmagic.item.lightningmagic.EntityLightningballBolt;
 import com.lothrazar.cyclicmagic.item.lightningmagic.ItemProjectileLightning;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
@@ -256,6 +257,9 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void onPreInit() {
+    ItemLocation card_location = new ItemLocation();
+    ItemRegistry.register(card_location, "card_location", GuideCategory.TRANSPORT);
+
     if (robotSpawner) {
       EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
       EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));

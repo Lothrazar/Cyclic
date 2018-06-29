@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.batterywireless;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +20,7 @@ public class TileBatteryWireless extends TileEntityBaseMachineInvo implements IT
   }
 
   private BlockPos getTarget() {
-    return new BlockPos(-1096, 4, 400);
+    return ItemLocation.getPosition(this.getStackInSlot(0));
   }
   @Override
   public void update() {
@@ -27,14 +28,13 @@ public class TileBatteryWireless extends TileEntityBaseMachineInvo implements IT
       return;
     }
     BlockPos target = this.getTarget();
-    if (target != null) {
+    if (target != null) {//&& !this.world.isRemote
       TileEntity tileTarget = world.getTileEntity(target);
       if (tileTarget == null) {
         return;
       }
       if (tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
-        // 
-        //
+
         //drain from ME to Target 
         IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null);
         IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, null);

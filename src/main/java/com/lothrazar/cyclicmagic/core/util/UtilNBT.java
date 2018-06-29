@@ -74,7 +74,8 @@ public class UtilNBT {
   }
 
   public static BlockPos getItemStackBlockPos(ItemStack item) {
-    if (item.getTagCompound() == null
+    if (item.isEmpty()
+        || item.getTagCompound() == null
         || !item.getTagCompound().hasKey("xpos")) {
       return null;
     }
