@@ -45,7 +45,7 @@ public class FluidBar {
 
     //bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     //  
-    int u = 0, v = 0,x=parent.getGuiLeft() + getX(),y=parent.getGuiTop() + getY();
+    final int u = 0, v = 0, x = parent.getGuiLeft() + getX(), y = parent.getGuiTop() + getY();
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     Gui.drawModalRectWithCustomSizedTexture(
        x, y, u, v,
@@ -61,8 +61,8 @@ public class FluidBar {
     int fluidAmount = (int) (scale * height);
     
     int yVal = y + height - fluidAmount;
-     
-    
+    int widthInner = width - 2;
+    int heightInner = height - 2;
     // float percent = (((float) fluid.amount) / ((float) this.getCapacity()));
     //    int hpct = (int) ((height - 2) * percent);
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -71,16 +71,17 @@ public class FluidBar {
     int size = 16;
     int start = parent.getGuiTop() + getY() + 1;
     /// int hgt = start + height - hpct - 2;
-   
+    System.out.println("====");
     int i = 0;
     int j = 0;
     int drawHeight = 0;
     int drawWidth = 0;
-    for (i = 0; i < width; i += 16) {
-      for (j = 0; j < height; j += 16) {
-        drawWidth = Math.min(width - i, 16);
-        drawHeight = Math.min(height - j, 16);
-        parent.drawTexturedModalRect(x + i, yVal + j, icon, drawWidth, drawHeight);
+    for (i = 0; i < widthInner; i += size) {
+      for (j = 0; j < heightInner; j += size) {
+        drawWidth = Math.min(widthInner - i, size);
+        drawHeight = Math.min(heightInner - j, size);
+        System.out.println("i=" + i + "  j=" + j + "  drawWidth=" + drawWidth + "  drawHeight=" + drawHeight);
+        parent.drawTexturedModalRect(x + i + 1, yVal + j + 1, icon, drawWidth, drawHeight);
       }
     }
     //    for (int i = 0; i < hgt / size; i++) {
