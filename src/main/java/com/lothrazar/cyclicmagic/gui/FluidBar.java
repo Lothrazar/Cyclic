@@ -60,43 +60,39 @@ public class FluidBar {
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
     
-    int yVal = y + height - fluidAmount;
-    int widthInner = width - 2;
-    int heightInner = height - 2;
+    //    int yVal = y + height - fluidAmount;
+    //    int widthInner = width - 2;
+    //    int heightInner = height - 2;
+    //    int heightFluid = height - fluidAmount;
     // float percent = (((float) fluid.amount) / ((float) this.getCapacity()));
     //    int hpct = (int) ((height - 2) * percent);
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
-    //     
-    int size = 16;
-    int start = parent.getGuiTop() + getY() + 1;
-    /// int hgt = start + height - hpct - 2;
-    System.out.println("====");
-    int i = 0;
-    int j = 0;
+
+    drawFluid(x + 1, y + height - 2 - fluidAmount + 2, icon, 16, fluidAmount - 1);
+  }
+
+  /**
+   * Thanks to Tiffiter123 on forums http://www.minecraftforge.net/forum/topic/39651-solved-194-render-fluid-in-gui/
+   * 
+   * @param x
+   * @param y
+   * @param icon
+   * @param width
+   * @param height
+   */
+  private void drawFluid(int x, int y, TextureAtlasSprite icon, int width, int height) {
+    int size = width;
+
     int drawHeight = 0;
     int drawWidth = 0;
-    for (i = 0; i < widthInner; i += size) {
-      for (j = 0; j < heightInner; j += size) {
-        drawWidth = Math.min(widthInner - i, size);
-        drawHeight = Math.min(heightInner - j, size);
-        System.out.println("i=" + i + "  j=" + j + "  drawWidth=" + drawWidth + "  drawHeight=" + drawHeight);
-        parent.drawTexturedModalRect(x + i + 1, yVal + j + 1, icon, drawWidth, drawHeight);
+    for (int i = 0; i < width; i += size) {
+      for (int j = 0; j < height; j += size) {
+        drawWidth = Math.min(width - i, size);
+        drawHeight = Math.min(height - j, size);
+        parent.drawTexturedModalRect(x + i, y + j, icon, drawWidth, drawHeight);
       }
     }
-    //    for (int i = 0; i < hgt / size; i++) {
-    //      
-    //  parent.drawTexturedModalRect(parent.getGuiLeft() + getX() + 1, start + 2 * size, tex, size, size);
-    //    }
-   // 
-
-    //parent.drawTexturedModalRect(parent.getGuiLeft() + getX() + 1, hgt, tex, size, size);
-    //    Gui.drawModalRectWithCustomSizedTexture(
-    //        parent.getGuiLeft() + getX() + 1, parent.getGuiTop() + getY() + 1 + h - hpct - 2,
-    //        u, v,
-    //        16, hpct,
-    //        16, h);
-    ///////////// 
   }
   public boolean isMouseover(int mouseX, int mouseY) {
     return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + width
