@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,7 +54,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);

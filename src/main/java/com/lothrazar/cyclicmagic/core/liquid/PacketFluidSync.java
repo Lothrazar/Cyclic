@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.core.liquid;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tank.TileEntityFluidTank;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -77,8 +77,8 @@ public class PacketFluidSync implements IMessage, IMessageHandler<PacketFluidSyn
       EntityPlayer p = ModCyclic.proxy.getPlayerEntity(ctx);
       if (p != null) {
         TileEntity te = p.world.getTileEntity(message.pos);
-        if (te instanceof TileEntityFluidTank) {
-          ((TileEntityFluidTank) te).updateFluidTo(message.fluid);
+        if (te instanceof TileEntityBaseMachineFluid) {
+          ((TileEntityBaseMachineFluid) te).updateFluidTo(message.fluid);
         }
       }
     }
