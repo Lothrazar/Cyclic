@@ -52,20 +52,14 @@ public class FluidBar {
         width, height,
         width, height);
     //NOW the fluid part
-    if (fluid == null) {
+    if (fluid == null || this.getCapacity() == 0 || fluid.amount == 0) {
       return;
     }
     float capacity = this.getCapacity();
     float amount = fluid.amount;
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    
-    //    int yVal = y + height - fluidAmount;
-    //    int widthInner = width - 2;
-    //    int heightInner = height - 2;
-    //    int heightFluid = height - fluidAmount;
-    // float percent = (((float) fluid.amount) / ((float) this.getCapacity()));
-    //    int hpct = (int) ((height - 2) * percent);
+
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
 
