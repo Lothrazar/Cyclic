@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.batterywireless;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -14,6 +15,7 @@ public class TileBatteryWireless extends TileEntityBaseMachineFluid implements I
   public static final int CAPACITY = 1000 * 64;
   //same as cable
   public static final int TRANSFER_ENERGY_PER_TICK = 1000 * 16;
+  public static final int TRANSFER_FLUID_PER_TICK = 500;
   public static final int TANK_FULL = 10000;
 
   public TileBatteryWireless() {
@@ -21,7 +23,6 @@ public class TileBatteryWireless extends TileEntityBaseMachineFluid implements I
     tank = new FluidTankBase(TANK_FULL);
     this.initEnergy(0, CAPACITY);
     this.setSlotsForBoth();
-
   }
 
   private BlockPos getTarget() {
@@ -37,9 +38,8 @@ public class TileBatteryWireless extends TileEntityBaseMachineFluid implements I
     if (target != null && world.isAreaLoaded(target, target.up())
         && world.getTileEntity(target) != null) {//&& !this.world.isRemote
       TileEntity tileTarget = world.getTileEntity(target);
-
       outputEnergy(tileTarget);
-
+      UtilFluid.tryFillPositionFromTank(world, this.getTarget(), null, this.tank, TRANSFER_FLUID_PER_TICK);
     }
   }
 
