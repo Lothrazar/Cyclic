@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.exppylon;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon.Fields;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
@@ -144,9 +143,7 @@ public class GuiPylon extends GuiBaseContainer {
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    fluidBar.draw(
-        ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        Const.Res.FLUID_EXP);
+    fluidBar.draw(tile.getCurrentFluidStack());
   }
 
   @Override

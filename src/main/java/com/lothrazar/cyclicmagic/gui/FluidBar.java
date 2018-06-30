@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidBar {
@@ -24,27 +23,8 @@ public class FluidBar {
     this.setY(y);
   }
 
-  public void draw(int currentFluid, ResourceLocation fluid) {
-    int u = 0, v = 0;
-    parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
-    Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + getX(), parent.getGuiTop() + getY(), u, v,
-        width, height,
-        width, height);
-    parent.mc.getTextureManager().bindTexture(fluid);
-    float percent = (currentFluid / ((float) this.getCapacity()));
-    int hpct = (int) ((height - 2) * percent);
-    Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + getX() + 1, parent.getGuiTop() + getY() + 1 + height - hpct - 2,
-        u, v,
-        16, hpct,
-        16, height);
-  }
-
   public void draw(FluidStack fluid) {
 
-    //bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-    //  
     final int u = 0, v = 0, x = parent.getGuiLeft() + getX(), y = parent.getGuiTop() + getY();
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     Gui.drawModalRectWithCustomSizedTexture(
@@ -63,7 +43,7 @@ public class FluidBar {
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
 
-    drawFluid(x + 1, y + height - 2 - fluidAmount + 2, icon, 16, fluidAmount - 1);
+    drawFluid(x + 1, y + height - fluidAmount + 1, icon, 16, fluidAmount - 2);
   }
 
   /**

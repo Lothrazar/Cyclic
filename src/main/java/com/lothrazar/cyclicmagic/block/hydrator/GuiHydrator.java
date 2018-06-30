@@ -95,8 +95,6 @@ public class GuiHydrator extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    fluidBar.draw(
-        ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        Const.Res.FLUID_WATER);
+    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }
