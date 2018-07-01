@@ -38,9 +38,6 @@ import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.battery.ContainerBattery;
 import com.lothrazar.cyclicmagic.block.battery.GuiBattery;
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
-import com.lothrazar.cyclicmagic.block.batterywireless.ContainerBatteryWireless;
-import com.lothrazar.cyclicmagic.block.batterywireless.GuiBatteryWireless;
-import com.lothrazar.cyclicmagic.block.batterywireless.TileBatteryWireless;
 import com.lothrazar.cyclicmagic.block.beaconpotion.ContainerBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.GuiBeaconPotion;
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
@@ -59,6 +56,9 @@ import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.ContainerItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.GuiItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.cablewireless.ContainerCableWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.GuiCableWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.TileCableWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
@@ -437,8 +437,8 @@ public class ForgeGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_BATTERYWIRELESS:
-        if (te instanceof TileBatteryWireless) {
-          return new ContainerBatteryWireless(player.inventory, (TileBatteryWireless) te);
+        if (te instanceof TileCableWireless) {
+          return new ContainerCableWireless(player.inventory, (TileCableWireless) te);
         }
       break;
     }
@@ -662,8 +662,8 @@ public class ForgeGuiHandler implements IGuiHandler {
                 (TileEntitySign) te);
         break;
         case GUI_INDEX_BATTERYWIRELESS:
-          if (te instanceof TileBatteryWireless) {
-            return new GuiBatteryWireless(player.inventory, (TileBatteryWireless) te);
+          if (te instanceof TileCableWireless) {
+            return new GuiCableWireless(player.inventory, (TileCableWireless) te);
           }
         break;
       }

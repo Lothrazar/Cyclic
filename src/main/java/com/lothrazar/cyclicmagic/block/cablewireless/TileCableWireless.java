@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.batterywireless;
+package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBatteryWireless extends TileEntityBaseMachineFluid implements ITickable {
+public class TileCableWireless extends TileEntityBaseMachineFluid implements ITickable {
 
   public static final int CAPACITY = 1000 * 64;
   //same as cable
@@ -23,7 +23,7 @@ public class TileBatteryWireless extends TileEntityBaseMachineFluid implements I
   private static final int INV_BUFFER_START = 1;
   private static final int INV_BUFFER_SIZE = 3;
 
-  public TileBatteryWireless() {
+  public TileCableWireless() {
     super(INV_BUFFER_SIZE + 1);
     tank = new FluidTankBase(TANK_FULL);
     this.initEnergy(0, CAPACITY);

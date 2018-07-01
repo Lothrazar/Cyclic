@@ -44,8 +44,6 @@ import com.lothrazar.cyclicmagic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.batterycheat.BlockBatteryInfinite;
 import com.lothrazar.cyclicmagic.block.batterycheat.TileEntityBatteryInfinite;
-import com.lothrazar.cyclicmagic.block.batterywireless.BlockBatteryWireless;
-import com.lothrazar.cyclicmagic.block.batterywireless.TileBatteryWireless;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
 import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
@@ -72,6 +70,8 @@ import com.lothrazar.cyclicmagic.block.cablepump.fluid.BlockFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.BlockItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.cablewireless.BlockCableWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.TileCableWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
@@ -272,6 +272,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean imbuer;
   private boolean dice;
   private boolean enableSlingshot;
+  private boolean cableWireless;
+  private boolean batteryInfinite;
 
   @Override
   public void onPreInit() {
@@ -588,19 +590,20 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
-      //
+    }
+    if (cableWireless) {
+      BlockCableWireless batteryw = new BlockCableWireless();
+      BlockRegistry.registerBlock(batteryw, "cable_wireless", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableWireless.class, Const.MODID + "cable_wireless_te");
+    }
+    if (batteryInfinite) {//creative infinite battery
+      BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
     if (battery) {
-      BlockBatteryWireless batteryw = new BlockBatteryWireless();
-      BlockRegistry.registerBlock(batteryw, "battery_wireless", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileBatteryWireless.class, Const.MODID + "battery_wireless_te");
-      //
       BlockBattery battery = new BlockBattery();
       BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
-      //cheater 
-      BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
     if (btrash) {
       BlockTrash trash = new BlockTrash();
@@ -719,6 +722,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dice = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

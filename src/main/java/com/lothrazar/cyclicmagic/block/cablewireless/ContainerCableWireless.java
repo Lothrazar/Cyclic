@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.batterywireless;
+package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -34,9 +34,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerBatteryWireless extends ContainerBaseMachine {
+public class ContainerCableWireless extends ContainerBaseMachine {
 
-  public ContainerBatteryWireless(InventoryPlayer inventoryPlayer, TileBatteryWireless te) {
+  public ContainerCableWireless(InventoryPlayer inventoryPlayer, TileCableWireless te) {
     super(te);
     //card slot
     int x = this.getScreenSize().width() / 2 - 8;

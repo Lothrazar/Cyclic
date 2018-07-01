@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.batterywireless;
+package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -30,15 +30,15 @@ import com.lothrazar.cyclicmagic.gui.FluidBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
-public class GuiBatteryWireless extends GuiBaseContainer {
+public class GuiCableWireless extends GuiBaseContainer {
 
-  public GuiBatteryWireless(InventoryPlayer inventoryPlayer, TileBatteryWireless te) {
-    super(new ContainerBatteryWireless(inventoryPlayer, te), te);
+  public GuiCableWireless(InventoryPlayer inventoryPlayer, TileCableWireless te) {
+    super(new ContainerCableWireless(inventoryPlayer, te), te);
     //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(16).setX(150);
     this.fluidBar = new FluidBar(this, this.xSize / 2 + 38, 16);
-    fluidBar.setCapacity(TileBatteryWireless.TANK_FULL);
+    fluidBar.setCapacity(TileCableWireless.TANK_FULL);
   }
 
   @Override
@@ -51,6 +51,6 @@ public class GuiBatteryWireless extends GuiBaseContainer {
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
-    fluidBar.draw(((TileBatteryWireless) tile).getCurrentFluidStack());
+    fluidBar.draw(((TileCableWireless) tile).getCurrentFluidStack());
   }
 }
