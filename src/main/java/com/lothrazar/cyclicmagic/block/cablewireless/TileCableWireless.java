@@ -14,20 +14,48 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableWireless extends TileEntityBaseMachineFluid implements ITickable {
 
-  public static final int CAPACITY = 1000 * 64;
+  public static final int ENERGY_FULL = 1000 * 64;
   //same as cable
   public static final int TRANSFER_ENERGY_PER_TICK = 1000 * 16;
   public static final int TRANSFER_FLUID_PER_TICK = 500;
   public static final int TANK_FULL = 10000;
   private static final int SLOT_CARD = 0;
-  private static final int INV_BUFFER_START = 1;
-  private static final int INV_BUFFER_SIZE = 3;
+  private static final int SLOT_TRANSFER = 1;
+
+  public static enum Fields {
+    REDSTONE;
+  }
+
+  private int needsRedstone = 0;
 
   public TileCableWireless() {
-    super(INV_BUFFER_SIZE + 1);
+    super(2);
     tank = new FluidTankBase(TANK_FULL);
-    this.initEnergy(0, CAPACITY);
-    this.setSlotsForBoth();
+    this.initEnergy(0, ENERGY_FULL);
+    this.setSlotsForInsert(1);
+  }
+
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+    }
   }
 
   private BlockPos getTarget() {
@@ -36,7 +64,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
 
   @Override
   public void update() {
-    if (isValid() == false) {
+    if (isRunning() == false) {
       return;
     }
     BlockPos target = this.getTarget();
@@ -52,18 +80,13 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
   private void outputItems(TileEntity tileTarget) {
     BlockPos target = this.getTarget();
     ItemStack stackToExport;
-    for (int i = INV_BUFFER_START; i < INV_BUFFER_SIZE; i++) {
-      stackToExport = this.getStackInSlot(i).copy();
-      stackToExport.setCount(1);
-      if (stackToExport.isEmpty() == false) {
-
-        ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, null, stackToExport);
-        if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
-          //then save result
-          this.decrStackSize(i);
-          //          this.setInventorySlotContents(i, leftAfterDeposit);
-          return;
-        }
+    stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
+    stackToExport.setCount(1);
+    if (stackToExport.isEmpty() == false) {
+      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, null, stackToExport);
+      if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+        //then save result
+        this.decrStackSize(SLOT_TRANSFER);
       }
     }
   }

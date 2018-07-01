@@ -34,6 +34,7 @@ public class GuiCableWireless extends GuiBaseContainer {
 
   public GuiCableWireless(InventoryPlayer inventoryPlayer, TileCableWireless te) {
     super(new ContainerCableWireless(inventoryPlayer, te), te);
+    this.fieldRedstoneBtn = TileCableWireless.Fields.REDSTONE.ordinal();
     //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(16).setX(150);
@@ -47,10 +48,14 @@ public class GuiCableWireless extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     Gui.drawModalRectWithCustomSizedTexture(
-        this.width / 2 - 9,
+        this.guiLeft + 15,
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + 103,
+        this.guiTop + 34 - 1,
+        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     fluidBar.draw(((TileCableWireless) tile).getCurrentFluidStack());
   }
 }

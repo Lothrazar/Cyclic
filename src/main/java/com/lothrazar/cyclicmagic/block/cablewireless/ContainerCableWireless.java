@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,17 +38,14 @@ public class ContainerCableWireless extends ContainerBaseMachine {
   public ContainerCableWireless(InventoryPlayer inventoryPlayer, TileCableWireless te) {
     super(te);
     //card slot
-    int x = this.getScreenSize().width() / 2 - 8;
+    int x = 16;
     int y = 34;
     addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
     //other three slots
     x = 104;
-    y = 22;
+
     addSlotToContainer(new SlotCheckTileValid(te, 1, x, y));
-    y += Const.SQ;
-    addSlotToContainer(new SlotCheckTileValid(te, 2, x, y));
-    y += Const.SQ;
-    addSlotToContainer(new SlotCheckTileValid(te, 3, x, y));
+
     bindPlayerInventory(inventoryPlayer);
   }
 
