@@ -19,8 +19,10 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
   public static final int TRANSFER_ENERGY_PER_TICK = 1000 * 16;
   public static final int TRANSFER_FLUID_PER_TICK = 500;
   public static final int TANK_FULL = 10000;
-  private static final int SLOT_CARD = 0;
-  private static final int SLOT_TRANSFER = 1;
+  public static final int SLOT_CARD_ITEM = 0;
+  public static final int SLOT_CARD_FLUID = 1;
+  public static final int SLOT_CARD_ENERGY = 2;
+  private static final int SLOT_TRANSFER = 3;
 
   public static enum Fields {
     REDSTONE;
@@ -29,7 +31,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
   private int needsRedstone = 0;
 
   public TileCableWireless() {
-    super(2);
+    super(4);
     tank = new FluidTankBase(TANK_FULL);
     this.initEnergy(0, ENERGY_FULL);
     this.setSlotsForInsert(1);
@@ -58,8 +60,8 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     }
   }
 
-  private BlockPos getTarget() {
-    return ItemLocation.getPosition(this.getStackInSlot(SLOT_CARD));
+  private BlockPos getTarget(int slot) {
+    return ItemLocation.getPosition(this.getStackInSlot(slot));
   }
 
   @Override
@@ -67,18 +69,21 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     if (isRunning() == false) {
       return;
     }
-    BlockPos target = this.getTarget();
-    if (target != null && world.isAreaLoaded(target, target.up())
-        && world.getTileEntity(target) != null) {//&& !this.world.isRemote
-      TileEntity tileTarget = world.getTileEntity(target);
-      outputEnergy(tileTarget);
-      outputItems(tileTarget);
-      UtilFluid.tryFillPositionFromTank(world, this.getTarget(), null, this.tank, TRANSFER_FLUID_PER_TICK);
-    }
+    outputEnergy();
+    outputItems();
+    outputFluid();
   }
 
-  private void outputItems(TileEntity tileTarget) {
-    BlockPos target = this.getTarget();
+  private boolean isTargetValid(BlockPos target) {
+    return target != null && world.isAreaLoaded(target, target.up());
+  }
+
+  private void outputItems() {
+    BlockPos target = this.getTarget(SLOT_CARD_ITEM);
+    if (!this.isTargetValid(target)) {
+      return;
+    }
+ 
     ItemStack stackToExport;
     stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     stackToExport.setCount(1);
@@ -91,7 +96,20 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     }
   }
 
-  private void outputEnergy(TileEntity tileTarget) {
+  private void outputFluid() {
+    BlockPos target = this.getTarget(SLOT_CARD_FLUID);
+    if (!this.isTargetValid(target)) {
+      return;
+    }
+    UtilFluid.tryFillPositionFromTank(world, target, null, this.tank, TRANSFER_FLUID_PER_TICK);
+  }
+
+  private void outputEnergy() {
+    BlockPos target = this.getTarget(SLOT_CARD_ENERGY);
+    if (!this.isTargetValid(target)) {
+      return;
+    }
+    TileEntity tileTarget = world.getTileEntity(target);
     if (tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
       //drain from ME to Target 
       IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null);
