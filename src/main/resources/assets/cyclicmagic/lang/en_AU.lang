@@ -1301,6 +1301,7 @@ item.card_location.guide=Saves the location of a block
 
 wireless.target=Detect target block
 wireless.empty=Bind a location to a Survey Marker
+wireless.dimension=Cannot cross dimensions
 
 
 tile.cable_wireless.name=Transfer Node

@@ -45,6 +45,7 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
     ItemStack held = player.getHeldItem(hand);
     player.swingArm(hand);
     UtilNBT.setItemStackBlockPos(held, pos);
+    UtilNBT.setItemStackNBTVal(held, "dim", player.dimension);
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
   }

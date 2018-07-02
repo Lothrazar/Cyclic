@@ -37,6 +37,7 @@ import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
 
@@ -89,19 +90,24 @@ public class GuiCableWireless extends GuiBaseContainer {
         button.id == TileCableWireless.SLOT_CARD_FLUID ||
         button.id == TileCableWireless.SLOT_CARD_ENERGY) {
       //TODO: DIMENSION 
+      EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
-        UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "wireless.empty");
+        UtilChat.addChatMessage(player, "wireless.empty");
+      }
+      else if (dim.dimension != player.dimension) {
+        UtilChat.addChatMessage(player, "wireless.dimension");
       }
       else {
         BlockPos target = dim.toBlockPos();
+
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
           Block block = tile.getWorld().getBlockState(target).getBlock();
-          UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), block.getLocalizedName());
+          UtilChat.addChatMessage(player, block.getLocalizedName());
         }
         else {
-          UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "wireless.unloaded");
+          UtilChat.addChatMessage(player, "wireless.unloaded");
         }
       }
     }

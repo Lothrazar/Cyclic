@@ -34,7 +34,7 @@ public class BlockCableWireless extends BlockBaseHasTile implements IHasRecipe {
         "iri",
         'i', Blocks.IRON_BARS,
         'c', Items.COMPARATOR,
-        'r', "dustRedstone",
+        'r', Items.NETHERBRICK,
         'g', "blockGold");
   }
 }
