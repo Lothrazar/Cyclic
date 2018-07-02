@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -88,11 +89,12 @@ public class GuiCableWireless extends GuiBaseContainer {
         button.id == TileCableWireless.SLOT_CARD_FLUID ||
         button.id == TileCableWireless.SLOT_CARD_ENERGY) {
       //TODO: DIMENSION 
-      BlockPos target = ItemLocation.getPosition(tile.getStackInSlot(button.id));
-      if (target == null) {
+      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      if (dim == null) {
         UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "wireless.empty");
       }
       else {
+        BlockPos target = dim.toBlockPos();
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
           Block block = tile.getWorld().getBlockState(target).getBlock();

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -68,7 +69,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     return stack.getItem() instanceof ItemLocation;
   }
 
-  private BlockPos getTarget(int slot) {
+  private BlockPosDim getTarget(int slot) {
     return ItemLocation.getPosition(this.getStackInSlot(slot));
   }
 
@@ -82,16 +83,18 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     outputFluid();
   }
 
-  private boolean isTargetValid(BlockPos target) {
-    return target != null && world.isAreaLoaded(target, target.up());
+  private boolean isTargetValid(BlockPosDim target) {
+    return target != null &&
+        target.dimension == this.getDimension() &&
+        world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 
   private void outputItems() {
-    BlockPos target = this.getTarget(SLOT_CARD_ITEM);
-    if (!this.isTargetValid(target)) {
+    BlockPosDim dim = this.getTarget(SLOT_CARD_ITEM);
+    if (!this.isTargetValid(dim)) {
       return;
     }
- 
+    BlockPos target = dim.toBlockPos();
     ItemStack stackToExport;
     stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     stackToExport.setCount(1);
@@ -105,18 +108,20 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
   }
 
   private void outputFluid() {
-    BlockPos target = this.getTarget(SLOT_CARD_FLUID);
-    if (!this.isTargetValid(target)) {
+    BlockPosDim dim = this.getTarget(SLOT_CARD_FLUID);
+    if (!this.isTargetValid(dim)) {
       return;
     }
+    BlockPos target = dim.toBlockPos();
     UtilFluid.tryFillPositionFromTank(world, target, null, this.tank, TRANSFER_FLUID_PER_TICK);
   }
 
   private void outputEnergy() {
-    BlockPos target = this.getTarget(SLOT_CARD_ENERGY);
-    if (!this.isTargetValid(target)) {
+    BlockPosDim dim = this.getTarget(SLOT_CARD_ENERGY);
+    if (!this.isTargetValid(dim)) {
       return;
     }
+    BlockPos target = dim.toBlockPos();
     TileEntity tileTarget = world.getTileEntity(target);
     if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
       //drain from ME to Target 

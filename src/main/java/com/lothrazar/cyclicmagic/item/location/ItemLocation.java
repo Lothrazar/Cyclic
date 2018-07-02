@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item.location;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
@@ -33,8 +34,9 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    if (stack.hasTagCompound()) {
-      tooltip.add(UtilChat.blockPosToString(getPosition(stack)));
+    BlockPosDim dim = getPosition(stack);
+    if (dim != null) {
+      tooltip.add(dim.toString());
     }
     super.addInformation(stack, player, tooltip, advanced);
   }
@@ -47,8 +49,13 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
         + UtilChat.blockPosToString(pos));
   }
 
-  public static BlockPos getPosition(ItemStack item) {
-    return UtilNBT.getItemStackBlockPos(item);
+  public static BlockPosDim getPosition(ItemStack item) {
+    BlockPos p = UtilNBT.getItemStackBlockPos(item);
+    if (p == null) {
+      return null;
+    }
+    BlockPosDim dim = new BlockPosDim(0, p, UtilNBT.getItemStackNBTVal(item, "dim"), "");
+    return dim;
   }
 
   @Override
