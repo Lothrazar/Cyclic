@@ -85,7 +85,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     //if item matches, then we are fine. check ore dict as well after that if item doesnt match 
     return sInvo.getCount() >= sRecipe.getCount() &&
-        (sInvo.getItem() == sRecipe.getItem() || OreDictionary.itemMatches(sInvo, sRecipe, false));
+        (sInvo.isItemEqual(sRecipe)
+            || OreDictionary.itemMatches(sInvo, sRecipe, false));
   }
 
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
