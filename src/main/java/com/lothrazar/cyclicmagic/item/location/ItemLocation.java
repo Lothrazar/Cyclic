@@ -5,7 +5,9 @@ import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
@@ -51,7 +53,10 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    // TODO Auto-generated method stub
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "o", "s", "r",
+        'o', "dyeLightBlue",
+        's', Items.PAPER,
+        'r', "stick");
   }
 }
