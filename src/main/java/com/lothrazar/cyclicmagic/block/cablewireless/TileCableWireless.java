@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableWireless extends TileEntityBaseMachineFluid implements ITickable {
+public class TileCableWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int ENERGY_FULL = 1000 * 64;
   //same as cable
@@ -81,6 +82,17 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     outputEnergy();
     outputItems();
     outputFluid();
+  }
+
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = (this.needsRedstone == 1) ? 0 : 1;
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 
   private boolean isTargetValid(BlockPosDim target) {

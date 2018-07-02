@@ -61,9 +61,9 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "o", "s", "r",
+        " o ", " s ", " r ",
         'o', "dyeLightBlue",
         's', Items.PAPER,
-        'r', "stick");
+        'r', "stickWood");
   }
 }
