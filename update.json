@@ -280,7 +280,7 @@
   	,"1.15.14":"Fixed Controlled Miner Whitelist mode getting stuck and not mining.   Fixed some of the buttons in Experience Pylon not working when it is exactly empty.  Reduced item-model size of Extractor cables.  Added new config file entries AppleGrowthTicks and AppleLightLevel to control apple sprout growth.  Wooden pickaxes are now able to mine furnaces again even if Stardew Furnaces config is enabled.  Added a few endgame sales for sage and druid villager.  Added a recipe for Red Sand in the Hydrator (can be changed with crafttweaker as always).  Projectiles from Rainbow Cannon can now pass through non-solid blocks (such as torches and tallgrass).  Fixed balance of Netherbrick tools, they now sit roughly in between stone and iron.  "
  	,"1.15.15":"Extractor cable model is now dynamic just like normal cables, and it has the same block feature using a redstone torch.  Extractor cable no longer suffocate you if you get too close.  "
   	,"1.15.16":"Fixed GUI fluid desync in Hydrator (fixed by tommyTT).  Fixed Hydrator recipes ignoring metadata (example: concrete powder turning white).  Spawner Seeker is now careful to not search in unloaded chunks.  Spawner Seeker now has a config entry to disable the multi-threading feature (tradeoff of lag vs possible issues in some servers).   "
-  	,"1.16.0":"Added Wireless Node and GPS Marker.  "
+
+	,"X":"Fixed some blocks with missing breaking particles"
   }
 }
-
