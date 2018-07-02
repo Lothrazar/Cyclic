@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,18 +40,18 @@ public class ContainerCableWireless extends ContainerBaseMachine {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
 
-    //card slot
-    int x = 16;
-    int y = 34;
-    addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
-    //other three slots
-    x = 49;
-    y = 20;
-    addSlotToContainer(new SlotCheckTileValid(te, 3, x, y));
-    y += Const.SQ;
-    addSlotToContainer(new SlotCheckTileValid(te, 2, x, y));
-    y += Const.SQ;
-    addSlotToContainer(new SlotCheckTileValid(te, 1, x, y));
+    int x = 43;
+    int y = 43;
+    addSlotToContainer(new SlotCheckTileValid(te, TileCableWireless.SLOT_TRANSFER, x, y));
+    //other three slots 
+    y = 87;
+    addSlotToContainer(new SlotCheckTileValid(te, TileCableWireless.SLOT_CARD_ITEM, x, y));
+    x += 38;
+
+    addSlotToContainer(new SlotCheckTileValid(te, TileCableWireless.SLOT_CARD_FLUID, x, y));
+    x += 36;
+
+    addSlotToContainer(new SlotCheckTileValid(te, TileCableWireless.SLOT_CARD_ENERGY, x, y));
     bindPlayerInventory(inventoryPlayer);
   }
 

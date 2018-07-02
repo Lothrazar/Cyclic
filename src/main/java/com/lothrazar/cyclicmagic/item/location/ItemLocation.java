@@ -21,18 +21,11 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
   public ItemLocation() {
     this.setMaxStackSize(1);
   }
+
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    this.savePosition(player, pos, hand);
+    savePosition(player, pos, hand);
     return EnumActionResult.SUCCESS;
-  }
-
-  private void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
-    ItemStack held = player.getHeldItem(hand);
-    player.swingArm(hand);
-    UtilNBT.setItemStackBlockPos(held, pos);
-    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
-        + UtilChat.blockPosToString(pos));
   }
 
   @SideOnly(Side.CLIENT)
@@ -43,9 +36,19 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
     }
     super.addInformation(stack, player, tooltip, advanced);
   }
+
+  public static void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
+    player.swingArm(hand);
+    UtilNBT.setItemStackBlockPos(held, pos);
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
+        + UtilChat.blockPosToString(pos));
+  }
+
   public static BlockPos getPosition(ItemStack item) {
     return UtilNBT.getItemStackBlockPos(item);
   }
+
   @Override
   public IRecipe addRecipe() {
     // TODO Auto-generated method stub

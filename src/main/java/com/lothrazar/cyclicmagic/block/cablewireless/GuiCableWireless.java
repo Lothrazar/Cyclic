@@ -50,13 +50,13 @@ public class GuiCableWireless extends GuiBaseContainer {
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
+    colLeft = this.guiLeft + 42;
     colMid = xCenter - 8;
     colRight = xCenter + 28;
-    colLeft = this.guiLeft + 52;
     //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setY(16).setX(colRight);
-    this.fluidBar = new FluidBar(this, colMid, 16);
+    energyBar.setWidth(16).setY(18).setX(colRight);
+    this.fluidBar = new FluidBar(this, colMid, 18);
     fluidBar.setCapacity(TileCableWireless.TANK_FULL);
   }
 
@@ -75,7 +75,7 @@ public class GuiCableWireless extends GuiBaseContainer {
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
-    btnSize = new GuiButtonTooltip(TileCableWireless.ENERGY_FULL,
+    btnSize = new GuiButtonTooltip(TileCableWireless.SLOT_CARD_ENERGY,
         this.guiLeft + colRight,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
@@ -87,6 +87,7 @@ public class GuiCableWireless extends GuiBaseContainer {
     if (button.id == TileCableWireless.SLOT_CARD_ITEM ||
         button.id == TileCableWireless.SLOT_CARD_FLUID ||
         button.id == TileCableWireless.SLOT_CARD_ENERGY) {
+      //TODO: DIMENSION 
       BlockPos target = ItemLocation.getPosition(tile.getStackInSlot(button.id));
       if (target == null) {
         UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "wireless.empty");
@@ -111,7 +112,7 @@ public class GuiCableWireless extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     // item transfer slot 
     x = this.guiLeft + colLeft;
-    y = this.guiTop + 33;
+    y = this.guiTop + 42;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

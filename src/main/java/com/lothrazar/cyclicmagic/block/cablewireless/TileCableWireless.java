@@ -22,7 +22,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
   public static final int SLOT_CARD_ITEM = 0;
   public static final int SLOT_CARD_FLUID = 1;
   public static final int SLOT_CARD_ENERGY = 2;
-  private static final int SLOT_TRANSFER = 3;
+  public static final int SLOT_TRANSFER = 3;
 
   public static enum Fields {
     REDSTONE;
@@ -34,7 +34,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
     super(4);
     tank = new FluidTankBase(TANK_FULL);
     this.initEnergy(0, ENERGY_FULL);
-    this.setSlotsForInsert(1);
+    this.setSlotsForInsert(SLOT_TRANSFER);
   }
 
   @Override
@@ -58,6 +58,14 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
         this.needsRedstone = value % 2;
       break;
     }
+  }
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index == SLOT_TRANSFER) {
+      return true;
+    }
+    return stack.getItem() instanceof ItemLocation;
   }
 
   private BlockPos getTarget(int slot) {
@@ -110,7 +118,7 @@ public class TileCableWireless extends TileEntityBaseMachineFluid implements ITi
       return;
     }
     TileEntity tileTarget = world.getTileEntity(target);
-    if (tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
+    if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
       //drain from ME to Target 
       IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null);
       IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, null);
