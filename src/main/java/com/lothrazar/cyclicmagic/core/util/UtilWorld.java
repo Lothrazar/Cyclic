@@ -189,11 +189,15 @@ public class UtilWorld {
     int zMax = (int) player.posZ + RADIUS;
     int distance = 0, distanceClosest = RADIUS * RADIUS;
     BlockPos posCurrent = null;
+    World world = player.getEntityWorld();
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.getEntityWorld().getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+          if (world.isAreaLoaded(posCurrent, 1) == false) {
+            continue;
+          }
+          if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
             // find closest?
             if (found == null) {
               found = posCurrent;
