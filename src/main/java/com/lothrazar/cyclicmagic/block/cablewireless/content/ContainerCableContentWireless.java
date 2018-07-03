@@ -43,12 +43,10 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
     //other three slots 
     y = 87;
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_CARD_ITEM, x, y));
-    x += 38;
-
+    x += 72;
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_CARD_FLUID, x, y));
-    x += 36;
 
-    addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_CARD_ENERGY, x, y));
+
     bindPlayerInventory(inventoryPlayer);
   }
 

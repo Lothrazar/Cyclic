@@ -35,6 +35,6 @@ public class BlockCableEnergyWireless extends BlockBaseHasTile implements IHasRe
         'i', Blocks.IRON_BARS,
         'c', Items.COMPARATOR,
         'r', Items.NETHERBRICK,
-        'g', "blockGold");
+        'g', "blockRedstone");
   }
 }

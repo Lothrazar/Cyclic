@@ -17,8 +17,7 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
   public static final int TANK_FULL = 10000;
   public static final int SLOT_CARD_ITEM = 0;
   public static final int SLOT_CARD_FLUID = 1;
-  public static final int SLOT_CARD_ENERGY = 2;
-  public static final int SLOT_TRANSFER = 3;
+  public static final int SLOT_TRANSFER = 2;
 
   public static enum Fields {
     REDSTONE;
@@ -27,7 +26,7 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
   private int needsRedstone = 0;
 
   public TileCableContentWireless() {
-    super(4);
+    super(3);
     tank = new FluidTankBase(TANK_FULL);
     this.setSlotsForInsert(SLOT_TRANSFER);
   }

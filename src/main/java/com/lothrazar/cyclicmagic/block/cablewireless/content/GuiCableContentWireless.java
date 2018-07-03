@@ -43,7 +43,7 @@ import net.minecraft.util.math.BlockPos;
 public class GuiCableContentWireless extends GuiBaseContainer {
 
   private int colLeft;
-  private int colMid;
+  //private int colMid;
   private int colRight;
 
   public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
@@ -52,10 +52,10 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
     colLeft = this.guiLeft + 42;
-    colMid = xCenter - 8;
-    colRight = xCenter + 28;
+    // colMid = xCenter - 8;
+    colRight = xCenter + 26;
 
-    this.fluidBar = new FluidBar(this, colMid, 18);
+    this.fluidBar = new FluidBar(this, colRight, 18);
     fluidBar.setCapacity(TileCableContentWireless.TANK_FULL);
   }
 
@@ -70,22 +70,21 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
     btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
-        this.guiLeft + colMid,
-        this.guiTop + y, size, size, "?");
-    btnSize.setTooltip("wireless.target");
-    this.addButton(btnSize);
-    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ENERGY,
         this.guiLeft + colRight,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
+    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ENERGY,
+    //        this.guiLeft + colRight,
+    //        this.guiTop + y, size, size, "?");
+    //    btnSize.setTooltip("wireless.target");
+    //    this.addButton(btnSize);
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == TileCableContentWireless.SLOT_CARD_ITEM ||
-        button.id == TileCableContentWireless.SLOT_CARD_FLUID ||
-        button.id == TileCableContentWireless.SLOT_CARD_ENERGY) {
+        button.id == TileCableContentWireless.SLOT_CARD_FLUID) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
@@ -127,15 +126,15 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colMid;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     x = this.guiLeft + colRight;
     Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    y += Const.SQ;
+    //    x = this.guiLeft + colRight;
+    //    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
+    //        x, y,
+    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    //    y += Const.SQ;
     fluidBar.draw(((TileCableContentWireless) tile).getCurrentFluidStack());
   }
 }

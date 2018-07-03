@@ -34,7 +34,7 @@ public class BlockCableContentWireless extends BlockBaseHasTile implements IHasR
         "iri",
         'i', Blocks.IRON_BARS,
         'c', Items.COMPARATOR,
-        'r', Items.NETHERBRICK,
+        'r', Items.DIAMOND,
         'g', "blockGold");
   }
 }
