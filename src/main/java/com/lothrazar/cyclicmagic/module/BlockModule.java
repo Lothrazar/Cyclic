@@ -70,8 +70,10 @@ import com.lothrazar.cyclicmagic.block.cablepump.fluid.BlockFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.BlockItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
-import com.lothrazar.cyclicmagic.block.cablewireless.BlockCableWireless;
-import com.lothrazar.cyclicmagic.block.cablewireless.TileCableWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.BlockCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.BlockCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
@@ -592,9 +594,14 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
     }
     if (cableWireless) {
-      BlockCableWireless batteryw = new BlockCableWireless();
+      BlockCableContentWireless batteryw = new BlockCableContentWireless();
       BlockRegistry.registerBlock(batteryw, "cable_wireless", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileCableWireless.class, Const.MODID + "cable_wireless_te");
+      GameRegistry.registerTileEntity(TileCableContentWireless.class, Const.MODID + "cable_wireless_te");
+      // energy
+      BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
+      BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
+
     }
     if (batteryInfinite) {//creative infinite battery
       BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);

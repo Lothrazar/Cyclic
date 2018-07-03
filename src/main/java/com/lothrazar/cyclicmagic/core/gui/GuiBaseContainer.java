@@ -67,7 +67,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ProgressBar progressBar = null;
   public EnergyBar energyBar = null;
   public FluidBar fluidBar = null;
-  private GuiButtonToggleRedstone redstoneBtn = null;
+  protected GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {

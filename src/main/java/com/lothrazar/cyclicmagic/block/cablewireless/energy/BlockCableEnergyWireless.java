@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.cablewireless;
+package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
@@ -13,17 +13,17 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockCableWireless extends BlockBaseHasTile implements IHasRecipe {
+public class BlockCableEnergyWireless extends BlockBaseHasTile implements IHasRecipe {
 
-  public BlockCableWireless() {
+  public BlockCableEnergyWireless() {
     super(Material.IRON);
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERYWIRELESS);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_W_ENERGY);
     this.setTranslucent();
   }
 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileCableWireless();
+    return new TileCableEnergyWireless();
   }
 
   @Override

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.cablewireless;
+package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -31,7 +31,6 @@ import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.block.Block;
@@ -41,25 +40,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
 
-public class GuiCableWireless extends GuiBaseContainer {
+public class GuiCableContentWireless extends GuiBaseContainer {
 
   private int colLeft;
   private int colMid;
   private int colRight;
 
-  public GuiCableWireless(InventoryPlayer inventoryPlayer, TileCableWireless te) {
-    super(new ContainerCableWireless(inventoryPlayer, te), te);
+  public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
+    super(new ContainerCableContentWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
-    this.fieldRedstoneBtn = TileCableWireless.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
     colLeft = this.guiLeft + 42;
     colMid = xCenter - 8;
     colRight = xCenter + 28;
-    //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
-    this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setY(18).setX(colRight);
+
     this.fluidBar = new FluidBar(this, colMid, 18);
-    fluidBar.setCapacity(TileCableWireless.TANK_FULL);
+    fluidBar.setCapacity(TileCableContentWireless.TANK_FULL);
   }
 
   @Override
@@ -67,17 +64,17 @@ public class GuiCableWireless extends GuiBaseContainer {
     super.initGui();
     int y = 106;
     int size = Const.SQ;
-    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableWireless.SLOT_CARD_ITEM,
+    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ITEM,
         this.guiLeft + colLeft,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
-    btnSize = new GuiButtonTooltip(TileCableWireless.SLOT_CARD_FLUID,
+    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
         this.guiLeft + colMid,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
-    btnSize = new GuiButtonTooltip(TileCableWireless.SLOT_CARD_ENERGY,
+    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ENERGY,
         this.guiLeft + colRight,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
@@ -86,9 +83,9 @@ public class GuiCableWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id == TileCableWireless.SLOT_CARD_ITEM ||
-        button.id == TileCableWireless.SLOT_CARD_FLUID ||
-        button.id == TileCableWireless.SLOT_CARD_ENERGY) {
+    if (button.id == TileCableContentWireless.SLOT_CARD_ITEM ||
+        button.id == TileCableContentWireless.SLOT_CARD_FLUID ||
+        button.id == TileCableContentWireless.SLOT_CARD_ENERGY) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
@@ -139,6 +136,6 @@ public class GuiCableWireless extends GuiBaseContainer {
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     y += Const.SQ;
-    fluidBar.draw(((TileCableWireless) tile).getCurrentFluidStack());
+    fluidBar.draw(((TileCableContentWireless) tile).getCurrentFluidStack());
   }
 }

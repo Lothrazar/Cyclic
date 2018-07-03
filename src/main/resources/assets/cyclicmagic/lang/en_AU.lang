@@ -1295,9 +1295,12 @@ item.netherbrick_hoe.guide=Stone mining level with improved stats
 pump.rate=Transfer Rate
 
 
+
+
 item.card_location.name=GPS Marker
 item.card_location.tooltip=Saves the location of a block
 item.card_location.guide=Saves the location of a block
+item.location.saved=Saved 
 
 wireless.target=Detect target block
 wireless.empty=Bind a location to a GPS Marker

@@ -56,9 +56,12 @@ import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.ContainerItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.GuiItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
-import com.lothrazar.cyclicmagic.block.cablewireless.ContainerCableWireless;
-import com.lothrazar.cyclicmagic.block.cablewireless.GuiCableWireless;
-import com.lothrazar.cyclicmagic.block.cablewireless.TileCableWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.ContainerCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.GuiCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.ContainerCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.GuiCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
@@ -216,7 +219,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VOID = 41;
   public static final int GUI_INDEX_SOUNDPL = 42;
   public static final int GUI_INDEX_SIGNPOST = 43;
-  public static final int GUI_INDEX_BATTERYWIRELESS = 44;
+  public static final int GUI_INDEX_W_CONTENT = 44;
+  public static final int GUI_INDEX_W_ENERGY = 45;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -436,9 +440,14 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
         }
       break;
-      case GUI_INDEX_BATTERYWIRELESS:
-        if (te instanceof TileCableWireless) {
-          return new ContainerCableWireless(player.inventory, (TileCableWireless) te);
+      case GUI_INDEX_W_CONTENT:
+        if (te instanceof TileCableContentWireless) {
+          return new ContainerCableContentWireless(player.inventory, (TileCableContentWireless) te);
+        }
+      break;
+      case GUI_INDEX_W_ENERGY:
+        if (te instanceof TileCableEnergyWireless) {
+          return new ContainerCableEnergyWireless(player.inventory, (TileCableEnergyWireless) te);
         }
       break;
     }
@@ -661,9 +670,14 @@ public class ForgeGuiHandler implements IGuiHandler {
                 player.getHeldItemMainhand(),
                 (TileEntitySign) te);
         break;
-        case GUI_INDEX_BATTERYWIRELESS:
-          if (te instanceof TileCableWireless) {
-            return new GuiCableWireless(player.inventory, (TileCableWireless) te);
+        case GUI_INDEX_W_CONTENT:
+          if (te instanceof TileCableContentWireless) {
+            return new GuiCableContentWireless(player.inventory, (TileCableContentWireless) te);
+          }
+        break;
+        case GUI_INDEX_W_ENERGY:
+          if (te instanceof TileCableEnergyWireless) {
+            return new GuiCableEnergyWireless(player.inventory, (TileCableEnergyWireless) te);
           }
         break;
       }
