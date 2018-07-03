@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -37,11 +38,11 @@ public class ContainerCableEnergyWireless extends ContainerBaseMachine {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
 
-    int x = 43;
+    int x = 9;
     int y = 87;
     for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
       addSlotToContainer(new SlotCheckTileValid(te, i, x, y));
-      x += 38;
+      x += Const.SQ;
     }
 
     bindPlayerInventory(inventoryPlayer);

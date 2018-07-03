@@ -42,22 +42,15 @@ import net.minecraft.util.math.BlockPos;
 
 public class GuiCableEnergyWireless extends GuiBaseContainer {
 
-  private int colLeft;
-  private int colMid;
-  private int colRight;
 
   public GuiCableEnergyWireless(InventoryPlayer inventoryPlayer, TileCableEnergyWireless te) {
     super(new ContainerCableEnergyWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
-    int xCenter = this.getScreenSize().width() / 2;
-    colLeft = this.guiLeft + 42;
-    colMid = xCenter - 8;
-    colRight = xCenter + 28;
-    //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
-    this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setY(18).setX(colRight);
 
+    int xCenter = this.getScreenSize().width() / 2;
+    this.energyBar = new EnergyBar(this);
+    energyBar.setWidth(16).setY(18).setX(xCenter - 9);
   }
 
   @Override
@@ -68,7 +61,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     GuiButtonTooltip btnSize;
     for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
       btnSize = new GuiButtonTooltip(i,
-          this.guiLeft + i * (size + 8),
+          this.guiLeft + i * (size) + 8,
           this.guiTop + y, size, size, "?");
       btnSize.setTooltip("wireless.target");
       this.addButton(btnSize);
@@ -107,26 +100,14 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    // item transfer slot 
-    x = this.guiLeft + colLeft;
-    y = this.guiTop + 42;
-    Gui.drawModalRectWithCustomSizedTexture(
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     //now draw target location card slots 
-    x = this.guiLeft + colLeft;
+    x = this.guiLeft + 8;
     y = this.guiTop + 86;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colMid;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colRight;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    y += Const.SQ;
+    for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
+      Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
+          x, y,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      x += Const.SQ;
+    }
   }
 }

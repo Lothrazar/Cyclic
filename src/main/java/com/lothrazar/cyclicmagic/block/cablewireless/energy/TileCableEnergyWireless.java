@@ -1,5 +1,9 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -15,19 +19,21 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   public static final int ENERGY_FULL = 1000 * 64;
   //same as cable
-  public static final int TRANSFER_ENERGY_PER_TICK = 1000 * 16;
-
-  public static final int SLOT_COUNT = 8;
+  public static final int TRANSFER_ENERGY_PER_TICK = ENERGY_FULL / 16;
+  public static final int SLOT_COUNT = 9;
 
   public static enum Fields {
     REDSTONE;
   }
 
+  List<Integer> slotList;
   private int needsRedstone = 0;
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
     this.initEnergy(0, ENERGY_FULL);
+    slotList = IntStream.rangeClosed(
+        0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   }
 
   @Override
@@ -55,7 +61,6 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-
     return stack.getItem() instanceof ItemLocation;
   }
 
@@ -68,10 +73,11 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
     if (isRunning() == false) {
       return;
     }
-    for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
-      outputEnergy(i);
+    //shuffle into random order
+    Collections.shuffle(slotList);
+    for (int slot : slotList) {
+      outputEnergy(slot);
     }
-
   }
 
   @Override

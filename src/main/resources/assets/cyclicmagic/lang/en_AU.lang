@@ -1308,6 +1308,10 @@ wireless.dimension=Cannot cross dimensions
 
 
 tile.cable_wireless.name=Transfer Node
-tile.cable_wireless.tooltip=Wireless transmission of energy, fluid, and items
-tile.cable_wireless.guide=Wireless transmission of energy, fluid, and items
+tile.cable_wireless.tooltip=Wireless transmission of fluid and items
+tile.cable_wireless.guide=Wireless transmission of fluid and items
 
+
+tile.cable_wireless_energy.name=Energy Transfer Node
+tile.cable_wireless_energy.tooltip=Wireless transmission of energy
+tile.cable_wireless_energy.guide=Wireless transmission of energy
