@@ -32,6 +32,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityVillager;
@@ -98,11 +100,26 @@ public class UtilEntity {
   }
 
   public static void setMaxHealth(EntityLivingBase living, double max) {
-    living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(max);
+    IAttributeInstance healthAttribute = living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    double amount = max - healthAttribute.getBaseValue();
+    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
+    // Need to remove modifier to apply a new one
+    if (modifier != null) {
+      healthAttribute.removeModifier(modifier);
+    }
+    // Operation 0 is a flat increase
+    modifier = new AttributeModifier(HEALTH_MODIFIER_ID, HEALTH_MODIFIER_NAME, amount, 0);
+    healthAttribute.applyModifier(modifier);
   }
 
   public static double getMaxHealth(EntityLivingBase living) {
-    return living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
+    IAttributeInstance healthAttribute = living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    double maxHealth = healthAttribute.getBaseValue();
+    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
+    if (modifier != null) {
+      maxHealth += modifier.getAmount();
+    }
+    return maxHealth;
   }
 
   public static int incrementMaxHealth(EntityLivingBase living, int by) {
