@@ -657,6 +657,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     Collections.shuffle(targetFaces);
     for (EnumFacing myFacingDir : targetFaces) {
       BlockPos posTarget = pos.offset(myFacingDir);
+      if (this.hasCapability(CapabilityEnergy.ENERGY, myFacingDir) == false) {
+        continue;
+      }
       IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
       TileEntity tileTarget = world.getTileEntity(posTarget);
       if (tileTarget == null) {

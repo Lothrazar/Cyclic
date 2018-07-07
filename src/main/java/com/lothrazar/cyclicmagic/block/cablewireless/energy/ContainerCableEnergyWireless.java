@@ -21,40 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.anvilmagma;
+package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.gui.FluidBar;
-import net.minecraft.client.gui.Gui;
+import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class GuiAnvilMagma extends GuiBaseContainer {
+public class ContainerCableEnergyWireless extends ContainerBaseMachine {
 
-  public GuiAnvilMagma(InventoryPlayer inventoryPlayer, TileEntityAnvilMagma tileEntity) {
-    super(new ContainerAnvilMagma(inventoryPlayer, tileEntity), tileEntity);
-    this.fieldRedstoneBtn = TileEntityAnvilMagma.Fields.REDSTONE.ordinal();
-    this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
-    fluidBar.setCapacity(TileEntityAnvilMagma.TANK_FULL);
+  public ContainerCableEnergyWireless(InventoryPlayer inventoryPlayer, TileCableEnergyWireless te) {
+    super(te);
+    this.setScreenSize(ScreenSize.LARGE);
+
+    int x = 9;
+    int y = 87;
+    for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
+      addSlotToContainer(new SlotCheckTileValid(te, i, x, y));
+      x += Const.SQ;
+    }
+
+    bindPlayerInventory(inventoryPlayer);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 50 - 1,
-        this.guiTop + ContainerAnvilMagma.SLOTY - 1,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 110 - 1,
-        this.guiTop + ContainerAnvilMagma.SLOTY - 1,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    this.tile.setField(id, data);
   }
+
+  @Override
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, this.tile);
+  }
+  //TODO: transfer sstack without deleting cards
+
 }
