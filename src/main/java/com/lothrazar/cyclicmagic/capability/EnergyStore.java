@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.energy;
+package com.lothrazar.cyclicmagic.capability;
 
 import net.minecraftforge.energy.EnergyStorage;
 

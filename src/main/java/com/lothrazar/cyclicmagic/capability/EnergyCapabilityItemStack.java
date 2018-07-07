@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.energy;
+package com.lothrazar.cyclicmagic.capability;
 
 import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
