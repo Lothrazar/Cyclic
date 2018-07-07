@@ -21,10 +21,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemLocation extends BaseItem implements IHasRecipe {
 
-  public ItemLocation() {
-    this.setMaxStackSize(1);
-  }
-
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     savePosition(player, pos, hand);

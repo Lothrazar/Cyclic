@@ -175,6 +175,7 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
 import com.lothrazar.cyclicmagic.item.slingshot.ItemPebble;
 import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
@@ -602,6 +603,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
 
+      //depends on this 
+      ItemLocation card_location = new ItemLocation();
+      ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
     }
     if (batteryInfinite) {//creative infinite battery
       BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
