@@ -17,13 +17,14 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
-  public static final int ENERGY_FULL = 1000 * 64;
-  //same as cable
-  public static final int TRANSFER_ENERGY_PER_TICK = ENERGY_FULL / 16;
-  public static final int SLOT_COUNT = 9;
 
+  public static final int ENERGY_FULL = 1000 * 64;
+  public static final int MAX_TRANSFER = 1000;
+  public static final int SLOT_COUNT = 9;
+  //it transfers this to each location if possible
+  private int transferRate = MAX_TRANSFER / 2;
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, TRANSFER_RATE;
   }
 
   List<Integer> slotList;
@@ -46,6 +47,8 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TRANSFER_RATE:
+        return this.transferRate;
     }
     return 0;
   }
@@ -55,6 +58,9 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case TRANSFER_RATE:
+        transferRate = value;
       break;
     }
   }
@@ -76,6 +82,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
     //shuffle into random order
     Collections.shuffle(slotList);
     for (int slot : slotList) {
+      //try to output the same rate to every location at the same speed
       outputEnergy(slot);
     }
   }
@@ -108,7 +115,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
       //drain from ME to Target 
       IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null);
       IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, null);
-      int drain = handlerHere.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+      int drain = handlerHere.extractEnergy(transferRate, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = handlerOutput.receiveEnergy(drain, false);

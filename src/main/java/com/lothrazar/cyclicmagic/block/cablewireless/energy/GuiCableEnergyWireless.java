@@ -32,6 +32,7 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
@@ -42,15 +43,14 @@ import net.minecraft.util.math.BlockPos;
 
 public class GuiCableEnergyWireless extends GuiBaseContainer {
 
+  private GuiSliderInteger slider;
 
   public GuiCableEnergyWireless(InventoryPlayer inventoryPlayer, TileCableEnergyWireless te) {
     super(new ContainerCableEnergyWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
-
-    int xCenter = this.getScreenSize().width() / 2;
     this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(16).setY(18).setX(xCenter - 9);
+    energyBar.setWidth(16).setY(18).setX(this.getScreenSize().width() - 24);
   }
 
   @Override
@@ -66,12 +66,18 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       btnSize.setTooltip("wireless.target");
       this.addButton(btnSize);
     }
+    int x = this.guiLeft + 6;
+    y = this.guiTop + 38;
+    slider = new GuiSliderInteger(tile, 77,
+        x, y, 140, 20, 1, TileCableEnergyWireless.MAX_TRANSFER,
+        TileCableEnergyWireless.Fields.TRANSFER_RATE.ordinal());
+    slider.setTooltip("pump.rate");
+    this.addButton(slider);
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id) {
-
+    if (button.id != redstoneBtn.id && button.id != slider.id) {
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
@@ -82,7 +88,6 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       }
       else {
         BlockPos target = dim.toBlockPos();
-
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
           Block block = tile.getWorld().getBlockState(target).getBlock();
