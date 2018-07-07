@@ -567,8 +567,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
       //peat 
       ItemBiomass peat_biomass = new ItemBiomass();
       ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
-      Item peat_fuel = new ItemPeatFuel();
+      ItemPeatFuel peat_fuel = new ItemPeatFuel(128, null);
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
+      ItemRegistry.register(new ItemPeatFuel(1024, peat_fuel), "peat_fuel_enriched", GuideCategory.ITEM);
       //
       RecipeHydrate.addRecipe(new RecipeHydrate(
           new ItemStack[] {

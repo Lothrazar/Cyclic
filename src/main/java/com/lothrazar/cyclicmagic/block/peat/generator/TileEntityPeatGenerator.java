@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.peat.generator;
 
+import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implements ITickable {
@@ -35,11 +37,11 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   //FOR REFERENCERF tools coal gen is 64 per tick
   //Thermal magmatic dynamo makes 40 per tick from lava
   //forestry engine 20/tick
-  public static final int PER_TICK = 128;
+  private int perTick = 128;
   //total energy made per item is PER_TICK * TIMER_FULL
-  private static final int CAPACITY = PER_TICK * 100;
+  private static final int CAPACITY = TileEntityBattery.CAPACITY / 2;
   //output slower than we generate
-  private static final int TRANSFER_ENERGY_PER_TICK = PER_TICK * 4;
+  private static final int TRANSFER_ENERGY_PER_TICK = 128 * 8;
 
   public static enum Fields {
     TIMER;
@@ -61,9 +63,9 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     // only if burning peat 
     if (timer > 0) {
       int capacity = energyStorage.getMaxEnergyStored() - energyStorage.getEnergyStored();
-      int actuallyGained = Math.min(PER_TICK, capacity);
+      int actuallyGained = Math.min(perTick, capacity);
       // this.energyStorage.receiveEnergy(PER_TICK, true);
-      if (actuallyGained == PER_TICK) {
+      if (actuallyGained == perTick) {
         timer--;
         this.spawnParticlesAbove();
         // either we have room to eat everything that generated, or we didnt.
@@ -75,6 +77,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
       //timer is zero. ok so it STAYS zero unless we can eat another peat brick
       // update fuel stuffs  
       if (this.isValidFuel(this.getStackInSlot(SLOT_INPUT))) {
+        this.perTick = this.getFuelValue(getStackInSlot(SLOT_INPUT));
         this.decrStackSize(SLOT_INPUT);
         timer = TIMER_FULL;
       }
@@ -86,8 +89,27 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
     return isValidFuel(stack);
   }
 
+  private int getFuelValue(ItemStack peat) {
+    if (peat.getItem() instanceof ItemPeatFuel) {
+      return ((ItemPeatFuel) peat.getItem()).getEnergyPerTick();
+    }
+    return 0;
+  }
+
   private boolean isValidFuel(ItemStack peat) {
     return peat.getItem() instanceof ItemPeatFuel;//TODO: NBT tag for fuel having?
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    this.perTick = compound.getInteger("energy_perTick");
+    super.readFromNBT(compound);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger("energy_perTick", this.perTick);
+    return super.writeToNBT(compound);
   }
 
   @Override

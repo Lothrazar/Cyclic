@@ -23,9 +23,44 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.peat;
 
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 
-public class ItemPeatFuel extends BaseItem {
+public class ItemPeatFuel extends BaseItem implements IHasRecipe {
 
-  public ItemPeatFuel() {}
+  //  @GameRegistry.ObjectHolder(Const.MODRES + "peat_fuel")
+  public Item peat = null;
+  private int energyPerTick;
+
+  public ItemPeatFuel(int val, ItemPeatFuel subFuel) {
+    setEnergyPerTick(val);
+    peat = subFuel;
+  }
+
+  public int getEnergyPerTick() {
+    return energyPerTick;
+  }
+
+  public void setEnergyPerTick(int energyPerTick) {
+    this.energyPerTick = energyPerTick;
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    if (peat != null) {
+      return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+          "ipi",
+          "pop",
+          "ipi",
+          'i', peat,
+          'p', new ItemStack(Items.COAL, 1, 1),
+          'o', Items.WHEAT_SEEDS);
+    }
+    return null;
+  }
 }
