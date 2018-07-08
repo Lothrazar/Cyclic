@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:placer_block_north"},
-        "facing=east":  { "model": "cyclicmagic:placer_block_east"},
+        "facing=north": { "model": "cyclicmagic:placer_block_south","y":180},
+        "facing=east":  { "model": "cyclicmagic:placer_block_south","y":270},
         "facing=south": { "model": "cyclicmagic:placer_block_south"},
+        "facing=west":  { "model": "cyclicmagic:placer_block_south" ,"y":90},
         "facing=up":    { "model": "cyclicmagic:placer_block_up"},
-        "facing=down":  { "model": "cyclicmagic:placer_block_down"},
-        "facing=west":  { "model": "cyclicmagic:placer_block_west" }
+        "facing=down":  { "model": "cyclicmagic:placer_block_down"}
     }
 }
