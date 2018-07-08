@@ -104,7 +104,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0, x, y;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     //now draw target location card slots 
     x = this.guiLeft + 8;
     y = this.guiTop + 86;
