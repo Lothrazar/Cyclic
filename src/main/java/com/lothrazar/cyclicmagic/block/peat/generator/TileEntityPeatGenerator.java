@@ -38,7 +38,6 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   //Thermal magmatic dynamo makes 40 per tick from lava
   //forestry engine 20/tick
   private int perTick = 128;
-  //total energy made per item is PER_TICK * TIMER_FULL
   private static final int CAPACITY = TileEntityBattery.CAPACITY / 2;
   //output slower than we generate
   private static final int TRANSFER_ENERGY_PER_TICK = 128 * 8;
@@ -97,7 +96,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   }
 
   private boolean isValidFuel(ItemStack peat) {
-    return peat.getItem() instanceof ItemPeatFuel;//TODO: NBT tag for fuel having?
+    return peat.getItem() instanceof ItemPeatFuel;
   }
 
   @Override

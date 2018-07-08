@@ -33,7 +33,6 @@ import net.minecraft.item.crafting.IRecipe;
 
 public class ItemPeatFuel extends BaseItem implements IHasRecipe {
 
-  //  @GameRegistry.ObjectHolder(Const.MODRES + "peat_fuel")
   public Item peat = null;
   private int energyPerTick;
 
