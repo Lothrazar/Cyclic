@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.tweak;
 
 import java.text.DecimalFormat;
 import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
@@ -32,9 +33,9 @@ import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -85,7 +86,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) {
       return;
     } //if f3 is not pressed
@@ -99,7 +100,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
 
   @SideOnly(Side.CLIENT)
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
       EntityHorse horse = (EntityHorse) player.getRidingEntity();
       double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
@@ -115,7 +116,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
 
   @SideOnly(Side.CLIENT)
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     /* The spawn chunks usually consist of an area of 16×16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5×5 chunks around them
      * are loaded, limiting their activities to an area of 12×12 chunks.
      * 

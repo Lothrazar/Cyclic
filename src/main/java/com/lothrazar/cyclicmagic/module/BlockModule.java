@@ -70,6 +70,10 @@ import com.lothrazar.cyclicmagic.block.cablepump.fluid.BlockFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.BlockItemPump;
 import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.BlockCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.BlockCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
@@ -171,6 +175,7 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
 import com.lothrazar.cyclicmagic.item.slingshot.ItemPebble;
 import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
@@ -270,6 +275,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean imbuer;
   private boolean dice;
   private boolean enableSlingshot;
+  private boolean cableWireless;
+  private boolean batteryInfinite;
 
   @Override
   public void onPreInit() {
@@ -560,8 +567,9 @@ public class BlockModule extends BaseModule implements IHasConfig {
       //peat 
       ItemBiomass peat_biomass = new ItemBiomass();
       ItemRegistry.register(peat_biomass, "peat_biomass", GuideCategory.ITEM);
-      Item peat_fuel = new ItemPeatFuel();
+      ItemPeatFuel peat_fuel = new ItemPeatFuel(128, null);
       ItemRegistry.register(peat_fuel, "peat_fuel", GuideCategory.ITEM);
+      ItemRegistry.register(new ItemPeatFuel(1024, peat_fuel), "peat_fuel_enriched", GuideCategory.ITEM);
       //
       RecipeHydrate.addRecipe(new RecipeHydrate(
           new ItemStack[] {
@@ -586,15 +594,27 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
       GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
-      //
     }
-    if (battery) {
-      BlockBattery battery = new BlockBattery(false);
-      BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
-      //cheater 
+    if (cableWireless) {
+      BlockCableContentWireless batteryw = new BlockCableContentWireless();
+      BlockRegistry.registerBlock(batteryw, "cable_wireless", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableContentWireless.class, Const.MODID + "cable_wireless_te");
+      // energy
+      BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
+      BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
+      //depends on this 
+      ItemLocation card_location = new ItemLocation();
+      ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
+    }
+    if (batteryInfinite) {//creative infinite battery
       BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
+    }
+    if (battery) {
+      BlockBattery battery = new BlockBattery();
+      BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
     }
     if (btrash) {
       BlockTrash trash = new BlockTrash();
@@ -713,6 +733,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dice = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     imbuer = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

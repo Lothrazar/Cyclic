@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:fire_starter_north"},
-        "facing=east": { "model":  "cyclicmagic:fire_starter_east"},
+        "facing=north": { "model": "cyclicmagic:fire_starter_south","y":180},
+        "facing=east": { "model":  "cyclicmagic:fire_starter_south","y":270},
         "facing=south": { "model": "cyclicmagic:fire_starter_south"},
-        "facing=west": { "model":  "cyclicmagic:fire_starter_west" }
+        "facing=west": { "model":  "cyclicmagic:fire_starter_south" ,"y":90}
     }
 }

@@ -35,6 +35,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityEnergyPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
@@ -84,7 +85,6 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
       return;
     }
     EnumFacing importFromSide = this.getCurrentFacing();
-
     IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
     TileEntity importFromTile = world.getTileEntity(pos.offset(importFromSide));
     IEnergyStorage exportHandler = null;
@@ -184,6 +184,9 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
     if (capability == CapabilityEnergy.ENERGY &&
         (facing == this.getCurrentFacing() || facing == this.getCurrentFacing().getOpposite())) {
       return true;
+    }
+    else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return false;
     }
     return super.hasCapability(capability, facing);
   }

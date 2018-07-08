@@ -154,7 +154,14 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRotation.displayString = this.tile.getRotationName();
-    btnRender.displayString = tile.getField(Fields.RENDERPARTICLES) + "";
+    int render = tile.getField(Fields.RENDERPARTICLES);
+    if (render == 0) {
+      btnRender.setTextureIndex(-1);
+    }
+    else if (render == 1)
+      btnRender.setTextureIndex(render + 2);
+    else if (render == 2)
+      btnRender.setTextureIndex(render);
     btnRender.setTooltip(tile.getName() + ".preview" + tile.getField(Fields.RENDERPARTICLES));
     btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
     btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";

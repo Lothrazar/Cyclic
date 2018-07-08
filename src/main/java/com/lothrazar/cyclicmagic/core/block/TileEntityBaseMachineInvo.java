@@ -31,11 +31,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.core.InvWrapperRestricted;
 import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.energy.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileFuel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -657,6 +657,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     Collections.shuffle(targetFaces);
     for (EnumFacing myFacingDir : targetFaces) {
       BlockPos posTarget = pos.offset(myFacingDir);
+      if (this.hasCapability(CapabilityEnergy.ENERGY, myFacingDir) == false) {
+        continue;
+      }
       IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir);
       TileEntity tileTarget = world.getTileEntity(posTarget);
       if (tileTarget == null) {

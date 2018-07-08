@@ -23,8 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.gui;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -80,8 +82,9 @@ public class PacketGuiShortOverride implements IMessage, IMessageHandler<PacketG
 
       @Override
       public void run() {
-        if (Minecraft.getMinecraft().player.openContainer != null) {
-          Minecraft.getMinecraft().player.openContainer.updateProgressBar(message.fieldId, message.value);
+        EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+        if (player.openContainer != null) {
+          player.openContainer.updateProgressBar(message.fieldId, message.value);
         }
       }
     });
