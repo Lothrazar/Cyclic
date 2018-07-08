@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ButtonTabToggleCrafting;
@@ -31,7 +32,6 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -67,7 +67,7 @@ public class EventExtendedInventory {
       int guiTop = (gui.height - ySize) / 2;
       int x = 44 + guiLeft;
       int y = guiTop;
-      EntityPlayer player = Minecraft.getMinecraft().player;
+      EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
       showInvToggle = data.hasInventoryExtended();// && !(gui instanceof GuiPlayerExtWorkbench);
       showCraftToggle = data.hasInventoryCrafting();// && !(gui instanceof GuiPlayerExtended);

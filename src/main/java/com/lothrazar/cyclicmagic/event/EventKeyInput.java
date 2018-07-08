@@ -45,7 +45,6 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -67,7 +66,7 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (!player.isSneaking() || event.getDwheel() == 0) {
       return;
     }
@@ -94,7 +93,7 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
-    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
+    EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     int slot = thePlayer.inventory.currentItem;
     if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
@@ -134,7 +133,7 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
     // only for player survival invo
-    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
+    EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     if (event.getGui() instanceof GuiInventory) {
       if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
@@ -192,7 +191,8 @@ public class EventKeyInput {
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
             //example: is a charm or something
             ModCyclic.network.sendToServer(new PacketItemToggle(slot));
-            UtilSound.playSound(Minecraft.getMinecraft().player, SoundEvents.UI_BUTTON_CLICK);
+            EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
+            UtilSound.playSound(thePlayer, SoundEvents.UI_BUTTON_CLICK);
             event.setCanceled(true);
           }
         }
