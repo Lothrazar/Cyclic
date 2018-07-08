@@ -84,7 +84,6 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
       return;
     }
     EnumFacing importFromSide = this.getCurrentFacing();
-
     IEnergyStorage myEnergy = this.getCapability(CapabilityEnergy.ENERGY, null);
     TileEntity importFromTile = world.getTileEntity(pos.offset(importFromSide));
     IEnergyStorage exportHandler = null;

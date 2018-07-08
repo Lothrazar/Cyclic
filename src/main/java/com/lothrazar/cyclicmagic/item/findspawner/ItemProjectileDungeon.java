@@ -83,7 +83,6 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     UtilItemStack.damageItem(player, held);
     EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
     doThrow(world, player, hand, entityendereye, 0.5F);
-
     if (USE_THREADING) {
       // less player lag, possible issues on some servers?
       Runnable runnable = new Runnable() {
@@ -115,6 +114,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
       entityendereye.moveTowards(blockpos);
     }
   }
+
   @Override
   public SoundEvent getSound() {
     return SoundRegistry.dungeonfinder;

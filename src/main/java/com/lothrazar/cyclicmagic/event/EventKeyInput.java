@@ -233,11 +233,11 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onWitchKingReturn(PlayerLoggedInEvent event) {
     try {
-    if (event.player.getGameProfile().getName().equalsIgnoreCase("Emoniph")) {
+      if (event.player.getGameProfile().getName().equalsIgnoreCase("Emoniph")) {
         for (EntityPlayer p : event.player.world.playerEntities) {
           p.sendMessage(new TextComponentString("The Witch King has returned!"));
+        }
       }
-    }
     }
     catch (Exception e) {
       // no big deal

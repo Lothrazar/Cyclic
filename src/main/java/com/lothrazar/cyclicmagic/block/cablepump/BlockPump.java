@@ -67,11 +67,11 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
     this.placeType = PlacementType.SIDE_BLOCK;
   }
 
-
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   public void setItemTransport() {
     this.itemTransport = true;
   }
@@ -83,6 +83,7 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   public void setPowerTransport() {
     this.powerTransport = true;
   }
+
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     if (side == EnumFacing.UP || side == EnumFacing.DOWN)
@@ -104,7 +105,6 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
   }
-
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {

@@ -603,7 +603,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
       BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
-
       //depends on this 
       ItemLocation card_location = new ItemLocation();
       ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);

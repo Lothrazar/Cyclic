@@ -71,7 +71,6 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
     if (isRunning() == false) {
       return;
     }
-
     outputItems();
     outputFluid();
   }

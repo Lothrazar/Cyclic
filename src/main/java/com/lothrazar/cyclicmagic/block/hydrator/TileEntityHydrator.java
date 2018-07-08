@@ -138,7 +138,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       if (this.getCurrentFluidStackAmount() >= rec.getFluidCost()) {
         if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
           //only create the output if cost was successfully paid
-
           this.sendOutputItem(rec.getRecipeOutput());
         }
         return true;

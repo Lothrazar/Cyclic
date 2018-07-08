@@ -54,7 +54,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     colLeft = this.guiLeft + 42;
     // colMid = xCenter - 8;
     colRight = xCenter + 26;
-
     this.fluidBar = new FluidBar(this, colRight, 18);
     fluidBar.setCapacity(TileCableContentWireless.TANK_FULL);
   }
@@ -96,7 +95,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
       }
       else {
         BlockPos target = dim.toBlockPos();
-
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
           Block block = tile.getWorld().getBlockState(target).getBlock();

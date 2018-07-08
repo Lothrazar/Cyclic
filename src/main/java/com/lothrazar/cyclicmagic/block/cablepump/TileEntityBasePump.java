@@ -52,7 +52,6 @@ public class TileEntityBasePump extends TileEntityBaseMachineFluid implements IF
     if (mapBlacklist != null && facing != null && mapBlacklist.get(facing)) {
       return false;//announce that capability does not exist on this side. items and all.
     }
-
     return super.hasCapability(capability, facing);
   }
 }

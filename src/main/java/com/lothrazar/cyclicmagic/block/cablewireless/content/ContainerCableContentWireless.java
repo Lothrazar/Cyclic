@@ -36,7 +36,6 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
   public ContainerCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-
     int x = 43;
     int y = 43;
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_TRANSFER, x, y));
@@ -45,8 +44,6 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_CARD_ITEM, x, y));
     x += 72;
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_CARD_FLUID, x, y));
-
-
     bindPlayerInventory(inventoryPlayer);
   }
 
@@ -62,5 +59,4 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
     listener.sendAllWindowProperties(this, this.tile);
   }
   //TODO: transfer sstack without deleting cards
-
 }

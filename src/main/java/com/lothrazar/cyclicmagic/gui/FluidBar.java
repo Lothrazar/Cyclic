@@ -24,11 +24,10 @@ public class FluidBar {
   }
 
   public void draw(FluidStack fluid) {
-
     final int u = 0, v = 0, x = parent.getGuiLeft() + getX(), y = parent.getGuiTop() + getY();
     parent.mc.getTextureManager().bindTexture(Const.Res.FLUID_BACKGROUND);
     Gui.drawModalRectWithCustomSizedTexture(
-       x, y, u, v,
+        x, y, u, v,
         width, height,
         width, height);
     //NOW the fluid part
@@ -39,10 +38,8 @@ public class FluidBar {
     float amount = fluid.amount;
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-
     parent.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
-
     drawFluid(x + 1, y + height - fluidAmount + 1, icon, 16, fluidAmount - 2);
   }
 
@@ -57,7 +54,6 @@ public class FluidBar {
    */
   private void drawFluid(int x, int y, TextureAtlasSprite icon, int width, int height) {
     int size = width;
-
     int drawHeight = 0;
     int drawWidth = 0;
     for (int i = 0; i < width; i += size) {
@@ -68,6 +64,7 @@ public class FluidBar {
       }
     }
   }
+
   public boolean isMouseover(int mouseX, int mouseY) {
     return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + width
         && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + height;

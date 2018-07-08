@@ -69,7 +69,6 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-
     compound.setDouble("sp_target_x", targetX);
     compound.setDouble("sp_target_y", targetY);
     compound.setDouble("sp_target_z", targetZ);
