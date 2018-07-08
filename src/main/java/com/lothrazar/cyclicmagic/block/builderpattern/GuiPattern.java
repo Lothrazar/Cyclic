@@ -132,7 +132,7 @@ public class GuiPattern extends GuiBaseContainer {
     bt.displayString = "<->";
     bt.setTooltip("tile.builder_pattern.flip");
     //24, 12,
-    this.buttonList.add(bt);
+    this.addButton(bt);
   }
 
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
@@ -143,7 +143,7 @@ public class GuiPattern extends GuiBaseContainer {
     btn.displayString = (isUp) ? "+" : "-";
     //15, 10
     btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase() + (isUp ? "up" : "down"));
-    this.buttonList.add(btn);
+    this.addButton(btn);
   }
 
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {

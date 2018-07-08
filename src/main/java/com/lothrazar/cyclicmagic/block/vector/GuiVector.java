@@ -113,7 +113,7 @@ public class GuiVector extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y,
         val, f);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     return btn;
   }
 

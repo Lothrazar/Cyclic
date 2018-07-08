@@ -154,7 +154,7 @@ public class GuiClock extends GuiBaseContainer {
         this.guiTop + y, this.tile.getPos(), field, w, h);
     btn.setIsChecked(tileClock.getSideHasPower(side));
     btn.setTooltip("tile.clock.facing." + side.name().toLowerCase());
-    this.buttonList.add(btn);
+    this.addButton(btn);
     poweredButtons.put(side, btn);
   }
 
@@ -191,7 +191,7 @@ public class GuiClock extends GuiBaseContainer {
       this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, min);
     }
     btn.setTooltip("tile.clock." + tooltip);
-    this.buttonList.add(btn);
+    this.addButton(btn);
   }
 
   @SideOnly(Side.CLIENT)

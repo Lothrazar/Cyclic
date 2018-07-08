@@ -59,7 +59,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     GuiButton helpBtn = new GuiButton(2,
         this.guiLeft + Const.SQ + Const.PAD + 2,
         this.guiTop + ContainerUncrafting.SLOTY_INPUT - 2, 12, 20, "?");
-    this.buttonList.add(helpBtn);
+    this.addButton(helpBtn);
   }
 
   @SideOnly(Side.CLIENT)
