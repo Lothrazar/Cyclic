@@ -75,13 +75,25 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     return super.getFacingFromState(state).getOpposite();
   }
 
+  public static boolean isWrenchItem(ItemStack held) {
+    return held.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
+  }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
-    if (side != this.getFacingFromState(state)) {
+    if (world.getTileEntity(pos) instanceof TileEntityLibrary == false) {
       return false;
     }
     TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
+    if (isWrenchItem(player.getHeldItem(hand))) {
+      //
+      library.toggleDisplaysText();
+      return true;
+    }
+    if (side != this.getFacingFromState(state)) {
+      return false;
+    }
     QuadrantEnum segment = QuadrantEnum.getForFace(side, hitX, hitY, hitZ);
     if (segment == null) {
       return false;//literal edge case
