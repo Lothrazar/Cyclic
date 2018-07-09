@@ -149,7 +149,9 @@ public class EnchantStack {
     if (this.isEmpty()) {
       return "--";
     }
-    return UtilChat.lang(ench.getName()).substring(0, 5);
+    String name = UtilChat.lang(ench.getName());
+    int length = Math.min(5, name.length());
+    return name.substring(0, length);
   }
 
   public ItemStack getRenderIcon() {
