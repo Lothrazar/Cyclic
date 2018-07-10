@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -33,7 +34,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
-    this.initEnergy(0, ENERGY_FULL);
+    this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
     slotList = IntStream.rangeClosed(
         0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   }
