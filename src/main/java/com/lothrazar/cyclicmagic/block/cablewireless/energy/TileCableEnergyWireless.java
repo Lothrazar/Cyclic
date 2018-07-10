@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -123,5 +124,19 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
         handlerHere.extractEnergy(filled, false);
       }
     }
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.transferRate = compound.getInteger("transferRate");
+    this.needsRedstone = compound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger("transferRate", transferRate);
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(compound);
   }
 }

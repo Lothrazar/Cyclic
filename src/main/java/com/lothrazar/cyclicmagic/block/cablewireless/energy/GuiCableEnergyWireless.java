@@ -115,4 +115,6 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       x += Const.SQ;
     }
   }
+  
+
 }
