@@ -599,7 +599,7 @@ tile.block_enchanter.tooltip=消耗能量和液态经验来附魔
 tile.block_enchanter.guide=以经验流体的形式通入经验，并通入能量或者放入燃料便可以附魔。可以通过管道和漏斗自动化。
 tile.block_fishing.invalidequip=需要一根钓鱼竿
 tile.block_fishing.invalidpos.gui1=至少需要
-tile.block_fishing.invalidpos.gui2=没有
+tile.block_fishing.invalidpos.gui2=
 tile.block_fishing.invalidpos.gui3=个水源方块相邻
 tile.block_fishing.invalidpos=至少要有1+格水源方块相邻。
 tile.block_fishing.name=自动鱼栅
@@ -1109,8 +1109,8 @@ dropper.delay=投掷延迟
 dropper.offset=投掷距离
 dropper.count=投掷数量
 
-cable.block.toggled.false=恢复管道连接，方向为
-cable.block.toggled.true=阻断管道连接，方向为
+cable.block.toggled.false=已恢复管道连接，方向为
+cable.block.toggled.true=已阻断管道连接，方向为
 
 tile.battery.name=电池
 tile.battery.tooltip=存储能量（FE）
