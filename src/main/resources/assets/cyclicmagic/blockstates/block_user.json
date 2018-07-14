@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:block_user_north"},
-        "facing=east":  { "model": "cyclicmagic:block_user_east"},
+        "facing=north": { "model": "cyclicmagic:block_user_south","y":180},
+        "facing=east":  { "model": "cyclicmagic:block_user_south","y":270},
         "facing=south": { "model": "cyclicmagic:block_user_south"},
-        "facing=west":  { "model": "cyclicmagic:block_user_west" }
+        "facing=west":  { "model": "cyclicmagic:block_user_south","y":90}
     }
 }

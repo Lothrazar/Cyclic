@@ -41,7 +41,6 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -154,7 +153,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) {
       return;

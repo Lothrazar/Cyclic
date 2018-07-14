@@ -23,6 +23,21 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.peat;
 
+import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 
-public class ItemBiomass extends BaseItem {}
+public class ItemBiomass extends BaseItem implements IHasRecipe {
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
+        "sbs",
+        "b b",
+        "sbs",
+        'b', "treeLeaves",
+        's', "vine");
+  }
+}

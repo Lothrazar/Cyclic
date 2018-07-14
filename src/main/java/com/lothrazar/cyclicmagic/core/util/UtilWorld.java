@@ -34,7 +34,6 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -189,11 +188,15 @@ public class UtilWorld {
     int zMax = (int) player.posZ + RADIUS;
     int distance = 0, distanceClosest = RADIUS * RADIUS;
     BlockPos posCurrent = null;
+    World world = player.getEntityWorld();
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.getEntityWorld().getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+          if (world.isAreaLoaded(posCurrent, 1) == false) {
+            continue;
+          }
+          if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
             // find closest?
             if (found == null) {
               found = posCurrent;
@@ -309,7 +312,7 @@ public class UtilWorld {
    */
   public static class OutlineRenderer {
 
-    public static void renderOutlines(RenderWorldLastEvent evt, EntityPlayerSP p, Set<BlockPos> coordinates, int r, int g, int b) {
+    public static void renderOutlines(RenderWorldLastEvent evt, EntityPlayer p, Set<BlockPos> coordinates, int r, int g, int b) {
       double doubleX = p.lastTickPosX + (p.posX - p.lastTickPosX) * evt.getPartialTicks();
       double doubleY = p.lastTickPosY + (p.posY - p.lastTickPosY) * evt.getPartialTicks();
       double doubleZ = p.lastTickPosZ + (p.posZ - p.lastTickPosZ) * evt.getPartialTicks();

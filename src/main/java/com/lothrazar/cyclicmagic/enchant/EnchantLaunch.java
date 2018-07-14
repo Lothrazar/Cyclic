@@ -35,7 +35,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.item.EntityBoat;
@@ -106,7 +105,7 @@ public class EnchantLaunch extends EnchantBase {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (player.isRiding() && player.getRidingEntity() instanceof EntityBoat) {
       return;
     }

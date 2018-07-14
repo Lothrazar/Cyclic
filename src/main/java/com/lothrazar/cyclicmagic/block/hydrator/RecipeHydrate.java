@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -60,7 +61,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     if (in.length > 4 || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
+    ModCyclic.logger.log("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
     for (int i = 0; i < in.length; i++) {
       if (in[i] != null && in[i].isEmpty() == false)
         recipeInput.set(i, in[i]);
@@ -72,13 +73,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    //    if (this.getRecipeOutput().getCount() == 8) {
-    //      ModCyclic.logger.log(" TEST RECIPE = " + this.getRecipeOutput());
-    //      ModCyclic.logger.log(inv.getStackInSlot(0) + " 0= " + recipeInput.get(0) + " ?? " + recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)));// seeds || seeds
-    //      ModCyclic.logger.log(inv.getStackInSlot(1) + " 0= " + recipeInput.get(1) + " ?? " + recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)));// flower || flower
-    //      ModCyclic.logger.log(inv.getStackInSlot(2) + " 2= " + recipeInput.get(2) + " ?? " + recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)));// leaves || leaves
-    //      ModCyclic.logger.log(inv.getStackInSlot(3) + " 3= " + recipeInput.get(3) + " ?? " + recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3)));// vile || vine 
-    //    }
     return recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)) &&
         recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)) &&
         recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)) &&
@@ -91,7 +85,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }
     //if item matches, then we are fine. check ore dict as well after that if item doesnt match 
     return sInvo.getCount() >= sRecipe.getCount() &&
-        (sInvo.getItem() == sRecipe.getItem() || OreDictionary.itemMatches(sInvo, sRecipe, false));
+        (sInvo.isItemEqual(sRecipe)
+            || OreDictionary.itemMatches(sInvo, sRecipe, false));
   }
 
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
@@ -227,6 +222,9 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
+    }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {

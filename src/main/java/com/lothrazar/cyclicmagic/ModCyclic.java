@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic;
 
 import java.io.File;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.log.ModLogger;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilString;
@@ -36,7 +37,6 @@ import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
@@ -59,6 +59,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -66,7 +67,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles,crafttweaker", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles,crafttweaker", canBeDeactivated = false, certificateFingerprint = "@FINGERPRINT@", updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
 
   @Instance(value = Const.MODID)
@@ -149,16 +150,17 @@ public class ModCyclic {
       module.onServerStarting(event);
     }
   }
-  //  @EventHandler
-  //  public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-  //    // https://tutorials.darkhax.net/tutorials/jar_signing/
-  //    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
-  //    String msg = "Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
-  //    if (logger == null) {
-  //      System.out.println(msg);
-  //    }
-  //    else {
-  //      ModCyclic.logger.error(msg);
-  //    }
-  //  }
+
+  @EventHandler
+  public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+    // https://tutorials.darkhax.net/tutorials/jar_signing/
+    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
+    String msg = "CYCLIC: Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
+    if (logger == null) {
+      System.out.println(msg);
+    }
+    else {
+      ModCyclic.logger.error(msg);
+    }
+  }
 }

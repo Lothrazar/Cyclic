@@ -21,22 +21,29 @@ compileJava {
 }
 
 minecraft {
+
+
     version = "${mc_version}-${forge_version}"
     mappings = "snapshot_20170624"
     runDir = "run"
     makeObfSourceJar = false
     useDepAts = true
     //Makes those replacement changes to the main mod class.
-   // replace '@FINGERPRINT@', project.findProperty('signSHA1')
-   // replaceIn "ModCyclic.java"
+
+    replace '@VERSION@', project.version
+    //Replaces all text that matches the left side with the right.
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    //Makes those replacement changes to the main mod class.
+    //My mod class is set in my project's gradle.properties file.
+    replaceIn "ModCyclic.java"
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
 
     // Skips if the keyStore property is missing.
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
+   // onlyIf {
+     //   project.hasProperty('keyStore')
+   // }
 
     // findProperty allows us to reference the property without it existing. 
     // Using project.propName would cause the script to fail validation if 

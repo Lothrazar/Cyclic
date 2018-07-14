@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.peat.farm;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -44,7 +43,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
 
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
-  private static final int PER_TICK = TileEntityPeatGenerator.PER_TICK / 2;
+  private static final int PER_TICK = 64;
   private static final int CAPACITY = 64 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {

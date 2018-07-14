@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
@@ -34,11 +35,9 @@ import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -72,18 +71,17 @@ public class EventRender {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent evt) {
-    Minecraft mc = Minecraft.getMinecraft();
-    EntityPlayerSP p = mc.player;
-    ItemStack heldItem = p.getHeldItemMainhand();
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+    ItemStack heldItem = player.getHeldItemMainhand();
     //any item can render outlines
     if (heldItem.getItem() instanceof IRenderOutline) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
         IRenderOutline wandInstance = (IRenderOutline) heldItem.getItem();
-        Set<BlockPos> coordinates = wandInstance.renderOutline(p.getEntityWorld(), heldItem, mouseOver);
+        Set<BlockPos> coordinates = wandInstance.renderOutline(player.getEntityWorld(), heldItem, mouseOver);
         if (coordinates != null && coordinates.size() > 0) {
           int[] rgb = wandInstance.getRgb();
-          UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, rgb[0], rgb[1], rgb[2]);
+          UtilWorld.OutlineRenderer.renderOutlines(evt, player, coordinates, rgb[0], rgb[1], rgb[2]);
         }
       }
     }

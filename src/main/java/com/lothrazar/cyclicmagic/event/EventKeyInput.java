@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.event;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
@@ -41,22 +42,22 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -65,7 +66,7 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (!player.isSneaking() || event.getDwheel() == 0) {
       return;
     }
@@ -92,7 +93,7 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
-    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
+    EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     int slot = thePlayer.inventory.currentItem;
     if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
@@ -132,7 +133,7 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
     // only for player survival invo
-    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
+    EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     if (event.getGui() instanceof GuiInventory) {
       if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
@@ -190,7 +191,8 @@ public class EventKeyInput {
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
             //example: is a charm or something
             ModCyclic.network.sendToServer(new PacketItemToggle(slot));
-            UtilSound.playSound(Minecraft.getMinecraft().player, SoundEvents.UI_BUTTON_CLICK);
+            EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
+            UtilSound.playSound(thePlayer, SoundEvents.UI_BUTTON_CLICK);
             event.setCanceled(true);
           }
         }
@@ -222,6 +224,23 @@ public class EventKeyInput {
     catch (Exception e) {
       //java.lang.IndexOutOfBoundsException  from org.lwjgl.input.Keyboard.isKeyDown(Keyboard.java:407)
       return false;
+    }
+  }
+
+  /**
+   * Witchery Author Tribute
+   */
+  @SubscribeEvent
+  public void onWitchKingReturn(PlayerLoggedInEvent event) {
+    try {
+      if (event.player.getGameProfile().getName().equalsIgnoreCase("Emoniph")) {
+        for (EntityPlayer p : event.player.world.playerEntities) {
+          p.sendMessage(new TextComponentString("The Witch King has returned!"));
+        }
+      }
+    }
+    catch (Exception e) {
+      // no big deal
     }
   }
 }

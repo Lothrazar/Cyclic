@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.hydrator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +43,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
+  private int needsRedstone = 1;
 
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED;
@@ -51,7 +54,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
@@ -59,8 +62,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
     this.initEnergy(BlockHydrator.FUEL_COST);
   }
-
-  private int needsRedstone = 1;
 
   @Override
   public int[] getFieldOrdinals() {
@@ -74,6 +75,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
+    this.updateLockSlots();
     if (this.isRunning() == false) {
       return;
     }
@@ -115,14 +117,31 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     return null;
   }
 
+  private void updateLockSlots() {
+    if (this.recipeIsLocked == 1) {
+      List<Integer> slotsImport = new ArrayList<Integer>();
+      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
+        if (this.getStackInSlot(slot).isEmpty() == false) {
+          slotsImport.add(slot);
+        }
+      }
+      this.setSlotsForInsert(slotsImport);
+    }
+    else {//all are free game
+      this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
+    }
+  }
+
   public boolean tryProcessRecipe() {
     RecipeHydrate rec = findMatchingRecipe();
-    if (rec != null && this.getCurrentFluidStackAmount() >= rec.getFluidCost()) {
-      if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
-        //only create the output if cost was successfully paid
-        this.sendOutputItem(rec.getRecipeOutput());
+    if (rec != null) {
+      if (this.getCurrentFluidStackAmount() >= rec.getFluidCost()) {
+        if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+          //only create the output if cost was successfully paid
+          this.sendOutputItem(rec.getRecipeOutput());
+        }
+        return true;
       }
-      return true;
     }
     return false;
   }

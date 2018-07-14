@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.enchanter;
 
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -62,8 +61,6 @@ public class GuiEnchanter extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerEnchanter.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    fluidBar.draw(
-        ((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        Const.Res.FLUID_EXP);
+    fluidBar.draw(tile.getCurrentFluidStack());
   }
 }

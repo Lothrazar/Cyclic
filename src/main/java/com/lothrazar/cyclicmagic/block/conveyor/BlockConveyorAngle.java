@@ -114,8 +114,8 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     final double heightInc = 0.0125D;
     final double sideInc = heightInc;
-    double edge = 1 - sideInc;
-    double height = heightInc;
+    double edge = 1;
+    double height = 0;
     switch (this.getFacingFromState(state)) {
       case DOWN:
       case UP:
@@ -158,11 +158,12 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }
+    boolean isGoingDown = state.getValue(FLIPPED); // false means up
     // this is a WORKING PARTIAL fix
     //that is, if item starts on conveyor. it moves
     //still trouble with edge/transition: rounding out from flat to vertical and opposite
     EnumFacing face = getFacingFromState(state);
-    if (state.getValue(FLIPPED)) {
+    if (isGoingDown) {
       face = face.getOpposite();
     }
     if (entity instanceof EntityLivingBase == false) {
@@ -189,9 +190,11 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         default:
         break;
       }
+      int degree = isGoingDown ? -45 : 45;
+      float pwr = isGoingDown ? power : power * 1.5F;
       //close to 45 degrees
-      UtilEntity.setVelocity(entity, 45, yaw, power * 1.5F);
-      hackOverBump(worldIn, pos, entity, face);
+      UtilEntity.setVelocity(entity, degree, yaw, pwr);
+      //  hackOverBump(worldIn, pos, entity, face);
     }
     else {
       //NEW 

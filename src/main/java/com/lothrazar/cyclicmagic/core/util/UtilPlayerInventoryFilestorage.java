@@ -155,7 +155,6 @@ public class UtilPlayerInventoryFilestorage {
           FileOutputStream fileoutputstream = new FileOutputStream(fileToSave);
           CompressedStreamTools.writeCompressed(data, fileoutputstream);
           fileoutputstream.close();
-          ModCyclic.logger.log("Successs saved for player " + fileToSave.getName());
         }
         else {
           ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString());

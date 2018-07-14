@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item.cannon;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -43,8 +42,10 @@ public class ParticleEventManager {
   public void onRenderAfterWorld(RenderWorldLastEvent event) {
     tickCounter++;
     GlStateManager.pushMatrix();
-    if (ModCyclic.proxy instanceof ClientProxy && Minecraft.getMinecraft().player != null) {
-      ClientProxy.particleRenderer.renderParticles(Minecraft.getMinecraft().player, event.getPartialTicks());
+    if (ModCyclic.proxy instanceof ClientProxy) {
+      EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+      if (player != null)
+        ClientProxy.particleRenderer.renderParticles(player, event.getPartialTicks());
     }
     GlStateManager.popMatrix();
   }

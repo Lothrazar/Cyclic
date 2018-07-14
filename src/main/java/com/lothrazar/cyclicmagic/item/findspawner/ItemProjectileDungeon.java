@@ -47,6 +47,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
   private static final int COOLDOWN = 10;
   private static int DUNGEONRADIUS = 64;
+  private boolean USE_THREADING;
 
   public ItemProjectileDungeon() {
     super();
@@ -61,7 +62,8 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-    DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of dungeonfinder");
+    DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of Spawner Seeker");
+    USE_THREADING = config.getBoolean("Ender Threading", Const.ConfigCategory.items, true, "If true, this item will do the searching on a new thread, and then come back to the projectile when found and end the thread.  Set to false to completely disable threading if you have any weird issues or false results, but be aware that setting to false will cause clientside lag on every use");
   }
 
   @Override
@@ -81,30 +83,36 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     UtilItemStack.damageItem(player, held);
     EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
     doThrow(world, player, hand, entityendereye, 0.5F);
-    //    ModCyclic.logger.log("entityendereye spawned wit hid " + entityendereye.getEntityId());
-    Runnable r = new Runnable() {
+    if (USE_THREADING) {
+      // less player lag, possible issues on some servers?
+      Runnable runnable = new Runnable() {
 
-      @Override
-      public void run() {
-        if (entityendereye == null || entityendereye.isDead) {
-          return;//something happened!
+        @Override
+        public void run() {
+          findTargetLocation(player, entityendereye);
         }
-        BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
-        if (blockpos == null) {
-          entityendereye.kill();
-          //          world.removeEntity(entityendereye);
-          //UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
-          if (world.isRemote) {
-            UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
-          }
-        }
-        else {
-          entityendereye.moveTowards(blockpos);
-        }
-      }
-    };
-    Thread t = new Thread(r);
-    t.start(); // starts thread in background.
+      };
+      Thread thread = new Thread(runnable);
+      thread.start(); // starts thread in background.
+    }
+    else {
+      //more lag but possibly safer
+      findTargetLocation(player, entityendereye);
+    }
+  }
+
+  private void findTargetLocation(EntityPlayer player, EntityDungeonEye entityendereye) {
+    if (entityendereye == null || entityendereye.isDead) {
+      return;//something happened!
+    }
+    BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
+    if (blockpos == null) {
+      entityendereye.kill();
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
+    }
+    else {
+      entityendereye.moveTowards(blockpos);
+    }
   }
 
   @Override

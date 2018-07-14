@@ -55,7 +55,6 @@ public class GuiAnvilMagma extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerAnvilMagma.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStackAmount(),
-        Const.Res.FLUID_LAVA);
+    fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

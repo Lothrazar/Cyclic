@@ -47,6 +47,21 @@ import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.ContainerBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.GuiBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.block.cablepump.energy.ContainerEnergyPump;
+import com.lothrazar.cyclicmagic.block.cablepump.energy.GuiEnergyPump;
+import com.lothrazar.cyclicmagic.block.cablepump.energy.TileEntityEnergyPump;
+import com.lothrazar.cyclicmagic.block.cablepump.fluid.ContainerFluidPump;
+import com.lothrazar.cyclicmagic.block.cablepump.fluid.GuiFluidPump;
+import com.lothrazar.cyclicmagic.block.cablepump.fluid.TileEntityFluidPump;
+import com.lothrazar.cyclicmagic.block.cablepump.item.ContainerItemPump;
+import com.lothrazar.cyclicmagic.block.cablepump.item.GuiItemPump;
+import com.lothrazar.cyclicmagic.block.cablepump.item.TileEntityItemPump;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.ContainerCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.GuiCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.ContainerCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.GuiCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
@@ -107,15 +122,6 @@ import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
-import com.lothrazar.cyclicmagic.block.pump.energy.ContainerEnergyPump;
-import com.lothrazar.cyclicmagic.block.pump.energy.GuiEnergyPump;
-import com.lothrazar.cyclicmagic.block.pump.energy.TileEntityEnergyPump;
-import com.lothrazar.cyclicmagic.block.pump.fluid.ContainerFluidPump;
-import com.lothrazar.cyclicmagic.block.pump.fluid.GuiFluidPump;
-import com.lothrazar.cyclicmagic.block.pump.fluid.TileEntityFluidPump;
-import com.lothrazar.cyclicmagic.block.pump.item.ContainerItemPump;
-import com.lothrazar.cyclicmagic.block.pump.item.GuiItemPump;
-import com.lothrazar.cyclicmagic.block.pump.item.TileEntityItemPump;
 import com.lothrazar.cyclicmagic.block.screen.ContainerScreen;
 import com.lothrazar.cyclicmagic.block.screen.GuiScreenBlock;
 import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
@@ -213,6 +219,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VOID = 41;
   public static final int GUI_INDEX_SOUNDPL = 42;
   public static final int GUI_INDEX_SIGNPOST = 43;
+  public static final int GUI_INDEX_W_CONTENT = 44;
+  public static final int GUI_INDEX_W_ENERGY = 45;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -432,6 +440,16 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerSoundPlayer(player.inventory, (TileEntitySoundPlayer) te);
         }
       break;
+      case GUI_INDEX_W_CONTENT:
+        if (te instanceof TileCableContentWireless) {
+          return new ContainerCableContentWireless(player.inventory, (TileCableContentWireless) te);
+        }
+      break;
+      case GUI_INDEX_W_ENERGY:
+        if (te instanceof TileCableEnergyWireless) {
+          return new ContainerCableEnergyWireless(player.inventory, (TileCableEnergyWireless) te);
+        }
+      break;
     }
     return null;
   }
@@ -647,9 +665,21 @@ public class ForgeGuiHandler implements IGuiHandler {
           }
         break;
         case GUI_INDEX_SIGNPOST:
-          return new GuiSignEditor(player,
-              player.getHeldItemMainhand(),
-              (TileEntitySign) te);
+          if (te instanceof TileEntitySign)
+            return new GuiSignEditor(player,
+                player.getHeldItemMainhand(),
+                (TileEntitySign) te);
+        break;
+        case GUI_INDEX_W_CONTENT:
+          if (te instanceof TileCableContentWireless) {
+            return new GuiCableContentWireless(player.inventory, (TileCableContentWireless) te);
+          }
+        break;
+        case GUI_INDEX_W_ENERGY:
+          if (te instanceof TileCableEnergyWireless) {
+            return new GuiCableEnergyWireless(player.inventory, (TileCableEnergyWireless) te);
+          }
+        break;
       }
     }
     return null;

@@ -67,7 +67,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ProgressBar progressBar = null;
   public EnergyBar energyBar = null;
   public FluidBar fluidBar = null;
-  private GuiButtonToggleRedstone redstoneBtn = null;
+  protected GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
@@ -96,14 +96,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int x = this.guiLeft + Const.PAD / 2;
     int y = this.guiTop + Const.PAD / 2;
     if (this.fieldRedstoneBtn >= 0) {
-      redstoneBtn = new GuiButtonToggleRedstone(1,
+      redstoneBtn = new GuiButtonToggleRedstone(131,
           x,
           y, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
       y += Const.PAD / 2 + redstoneBtn.width;
     }
     if (this.fieldPreviewBtn > 0) {
-      btnPreview = new GuiButtonTogglePreview(2,
+      btnPreview = new GuiButtonTogglePreview(132,
           x,
           y, this.tile.getPos());
       this.buttonList.add(btnPreview);

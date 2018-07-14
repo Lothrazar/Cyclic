@@ -29,6 +29,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -64,6 +65,26 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
 
   public EntityDungeonEye(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setDouble("sp_target_x", targetX);
+    compound.setDouble("sp_target_y", targetY);
+    compound.setDouble("sp_target_z", targetZ);
+    compound.setInteger("ticksExisted", ticksExisted);
+    compound.setBoolean("isLost", isLost);
+    return super.writeToNBT(compound);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    targetX = compound.getDouble("sp_target_x");
+    targetY = compound.getDouble("sp_target_y");
+    targetZ = compound.getDouble("sp_target_z");
+    ticksExisted = compound.getInteger("ticksExisted");
+    isLost = compound.getBoolean("isLost");
   }
 
   public void moveTowards(BlockPos pos) {

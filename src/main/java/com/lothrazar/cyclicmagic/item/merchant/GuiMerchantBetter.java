@@ -75,6 +75,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     return (ContainerMerchantBetter) this.inventorySlots;
   }
 
+  @Override
   public void initGui() {
     super.initGui();
     //setup for the validate btns
@@ -97,21 +98,24 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         currCol = i % btnColCount;
         x = this.xBtnStart + currCol * btnW;
         y = this.yBtnStart + currRow * btnH;
-        GuiButtonPurchase slotBtn = (GuiButtonPurchase) this.addButton(new GuiButtonPurchase(lastUnusedButtonId, x, y, btnW, btnH, i, this));
+        GuiButtonPurchase slotBtn = this.addButton(new GuiButtonPurchase(lastUnusedButtonId, x, y, btnW, btnH, i, this));
         merchButtons.add(slotBtn);
         lastUnusedButtonId++;
       }
     }
   }
 
+  @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {}
 
+  @Override
   public void updateScreen() {
     super.updateScreen();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);//try to sync between both containers
     this.validateMerchantButtons();
   }
 
+  @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonPurchase) {
       setAndTryPurchase(((GuiButtonPurchase) button));

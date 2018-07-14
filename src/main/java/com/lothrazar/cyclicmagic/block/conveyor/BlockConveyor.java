@@ -55,9 +55,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
 
+  private static final double HEIGHT = 0.1875D;
+  private static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, HEIGHT / 16.0, 1D);
   protected static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private static final int RECIPE_OUTPUT = 8;
-  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.1875D, 1D);
+  protected static final AxisAlignedBB BOUNDING_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, HEIGHT, 1D);
   protected final static float ANGLE = 1;
   private static final float powerCorrection = 0.02F;
 
@@ -154,9 +156,13 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   }
 
   @Override
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return COLLISION_AABB;
+  }
+
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    //  this.getCollisionBoundingBox(blockState, worldIn, pos)
-    return AABB;
+    return BOUNDING_AABB;
   }
 
   @Override
@@ -167,7 +173,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     EnumFacing face = getFacingFromState(state);
     tickMovement(pos, entity, face);
     if (entity instanceof EntityLivingBase == false) {
-      entity.motionY += 0.5;
+      // entity.motionY += 0.5;
       hackOverBump(worldIn, pos, entity, face);
     }
     //hack to get over the bump

@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:uncrafting_block_north"},
-        "facing=east": { "model":  "cyclicmagic:uncrafting_block_east"},
+        "facing=north": { "model": "cyclicmagic:uncrafting_block_south","y":180},
+        "facing=east": { "model":  "cyclicmagic:uncrafting_block_south","y":270},
         "facing=south": { "model": "cyclicmagic:uncrafting_block_south"},
-        "facing=west": { "model":  "cyclicmagic:uncrafting_block_west" }
+        "facing=west": { "model":  "cyclicmagic:uncrafting_block_south" ,"y":90}
     }
 }

@@ -28,26 +28,23 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -67,8 +64,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     this.setMaxStackSize(1);
   }
 
-  public static ArrayList<BookLocation> getLocations(ItemStack itemStack) {
-    ArrayList<BookLocation> list = new ArrayList<BookLocation>();
+  public static ArrayList<BlockPosDim> getLocations(ItemStack itemStack) {
+    ArrayList<BlockPosDim> list = new ArrayList<BlockPosDim>();
     String KEY;
     int end = getLargestSlot(itemStack);
     for (int i = 0; i <= end; i++) {
@@ -77,7 +74,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       if (csv == null || csv.isEmpty()) {
         continue;
       }
-      list.add(new BookLocation(csv));
+      list.add(new BlockPosDim(csv));
     }
     return list;
   }
@@ -122,20 +119,20 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   public static void saveCurrentLocation(EntityPlayer player, String name) {
     ItemStack book = getPlayersBook(player);
     int id = getEmptySlotAndIncrement(book);
-    BookLocation loc = new BookLocation(id, player, name);
+    BlockPosDim loc = new BlockPosDim(id, player, name);
     book.getTagCompound().setString(KEY_LOC + "_" + id, loc.toCSV());
   }
 
-  private static BookLocation getLocation(ItemStack stack, int slot) {
+  private static BlockPosDim getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
     if (csv == null || csv.isEmpty()) {
       return null;
     }
-    return new BookLocation(csv);
+    return new BlockPosDim(csv);
   }
 
   public static BlockPos getLocationPos(ItemStack stack, int slot) {
-    BookLocation loc = getLocation(stack, slot);
+    BlockPosDim loc = getLocation(stack, slot);
     if (loc == null) {
       return null;
     }
@@ -148,22 +145,18 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     if (csv == null || csv.isEmpty()) {
       return false;
     }
-    BookLocation loc = getLocation(book, slot);
+    BlockPosDim loc = getLocation(book, slot);
     if (player.dimension != loc.dimension) {
-      return false;
+      return false;//button was disabled anyway,... but just in case 
     }
-    UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
-    BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
-    BlockPos start = player.getPosition();
+    //something in vanilla 
     if (player instanceof EntityPlayerMP) {//server only
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
-      if (success) { // try and force chunk loading
-        player.getEntityWorld().getChunkFromBlockCoords(dest).setModified(true);
-        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, start, player.dimension, 32);
-        UtilSound.playSoundFromServer(SoundRegistry.warp, SoundCategory.PLAYERS, dest, player.dimension, 32);
+      if (success) { // try and force chunk loading it it worked 
+        player.getEntityWorld().getChunkFromBlockCoords(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
       }
     }
     return true;
@@ -188,55 +181,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
-  }
-
-  public static class BookLocation {
-
-    public double X;
-    public double Y;
-    public double Z;
-    public int id;
-    public int dimension;
-    public String display;
-
-    public BookLocation(int idx, EntityPlayer p, String d) {
-      X = p.posX;
-      Y = p.posY;
-      Z = p.posZ;
-      id = idx;
-      dimension = p.dimension;
-      display = d;
-    }
-
-    public BookLocation(String csv) {
-      String[] pts = csv.split(",");
-      id = Integer.parseInt(pts[0]);
-      X = Double.parseDouble(pts[1]);
-      Y = Double.parseDouble(pts[2]);
-      Z = Double.parseDouble(pts[3]);
-      dimension = Integer.parseInt(pts[4]);
-      if (pts.length > 5)
-        display = pts[5];
-    }
-
-    public String toCSV() {
-      return id + "," + X + "," + Y + "," + Z + "," + dimension + "," + display;
-    }
-
-    public BlockPos toBlockPos() {
-      return new BlockPos(X, Y, Z);
-    }
-
-    public String coordsDisplay() {
-      // "["+id + "] "+
-      return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
-      // showName
-    }
-
-    @Override
-    public String toString() {
-      return this.toCSV() + " : " + this.display;
-    }
   }
 
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
