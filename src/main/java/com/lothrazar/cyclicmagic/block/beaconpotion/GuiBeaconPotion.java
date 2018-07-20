@@ -69,7 +69,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos());
     btnSize.width = w;
-    this.buttonList.add(btnSize);
+    this.addButton(btnSize);
   }
 
   @Override

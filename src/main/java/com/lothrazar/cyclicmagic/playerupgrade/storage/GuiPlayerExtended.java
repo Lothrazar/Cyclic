@@ -51,28 +51,28 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     super.initGui();
     int id = 7, x = this.guiLeft + 168, y = this.guiTop + Const.PAD - 1, w = Const.PAD, h = Const.SQ, row = 1;
     ButtonToggleHotbar btn = new ButtonToggleHotbar(id, x, y, w, h, row);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     row++;
     id++;
     y += Const.SQ;
     btn = new ButtonToggleHotbar(id, x, y, w, h, row);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     row++;
     id++;
     y += Const.SQ;
     btn = new ButtonToggleHotbar(id, x, y, w, h, row);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     row++;
     id++;
     y += Const.SQ;
     btn = new ButtonToggleHotbar(id, x, y, w, h, row);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     //armor button
     id++;
     x = this.guiLeft;
     y = this.guiTop + Const.PAD;
     btn = new ButtonToggleHotbar(id, x, y, w, 4 * Const.SQ);
-    this.buttonList.add(btn);
+    this.addButton(btn);
   }
 
   @Override

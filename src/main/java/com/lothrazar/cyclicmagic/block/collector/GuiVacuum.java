@@ -56,7 +56,7 @@ public class GuiVacuum extends GuiBaseContainer {
     int x = this.guiLeft + 28;
     int y = this.guiTop + 32;
     btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    this.addButton(btnSize);
   }
 
   @SideOnly(Side.CLIENT)

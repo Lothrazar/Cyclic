@@ -60,7 +60,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     int width = 20;
     width = 50;
     ButtonBuildToggle btn = new ButtonBuildToggle(player, id, x, y, width);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += width + padding;
     ButtonWandReset b = new ButtonWandReset(player, id, x, y, width);
     if (ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {

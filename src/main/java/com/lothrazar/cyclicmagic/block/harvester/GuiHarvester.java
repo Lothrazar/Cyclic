@@ -65,14 +65,14 @@ public class GuiHarvester extends GuiBaseContainer {
     int y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(btnId++,
         x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    this.addButton(btnSize);
     int w = 58, h = 20;
     x += 40 + Const.PAD;
     btnSpray = new GuiButtonTooltip(btnId++,
         x, y,
         w, h, "");
     btnSpray.setTooltip("button.harvester.mode.tooltip");
-    this.buttonList.add(btnSpray);
+    this.addButton(btnSpray);
   }
 
   @Override

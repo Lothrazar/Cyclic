@@ -4,11 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +34,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
-    this.initEnergy(0, ENERGY_FULL);
+    this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
     slotList = IntStream.rangeClosed(
         0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   }
@@ -123,5 +125,19 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
         handlerHere.extractEnergy(filled, false);
       }
     }
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.transferRate = compound.getInteger("transferRate");
+    this.needsRedstone = compound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger("transferRate", transferRate);
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(compound);
   }
 }

@@ -25,15 +25,16 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -90,16 +91,20 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
   private void handle(PacketEntityDropRandom message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();
-    ModCyclic.logger.log("packet entityid" + message.entityId);
+
     Entity entityTarget = world.getEntityByID(message.entityId);
     if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
       EntityLivingBase entity = (EntityLivingBase) entityTarget;
       EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
-      ModCyclic.logger.log(entity.getName() + "!PACKET!!!DROP SLOT " + slot + " " + message.stack.getDisplayName());
-      UtilItemStack.dropItemStackInWorld(world, entity.getPosition().up(5), message.stack);
+
+      //      EntityItem ei = UtilItemStack.dropItemStackInWorld(world, entity.getPosition(), message.stack);
+      BlockPos pos = entity.getPosition();
+      EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, message.stack);
+      // entityItem.addVelocity(0, PotionDropItems.VELOCITY, 0);
+      world.spawnEntity(entityItem);
       entity.setItemStackToSlot(slot, ItemStack.EMPTY);
       if (entity instanceof EntityPlayer) {
-        UtilChat.addChatMessage((EntityPlayer) entity, "potion.butter.oops");
+        UtilChat.sendStatusMessage((EntityPlayer) entity, "potion.butter.oops");
       }
     }
     else {

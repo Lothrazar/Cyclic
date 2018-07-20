@@ -64,12 +64,12 @@ public class GuiMinerSmart extends GuiBaseContainer {
         guiLeft + 4, guiTop + Const.PAD + 40,
         tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1);
     btnWhitelist.width = 18;
-    this.buttonList.add(btnWhitelist);
+    this.addButton(btnWhitelist);
     x = this.guiLeft + Const.PAD * 4;
     y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    this.addButton(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,

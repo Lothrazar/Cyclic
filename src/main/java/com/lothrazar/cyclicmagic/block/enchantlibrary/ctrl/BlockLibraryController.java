@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.enchantlibrary;
+package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBase;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
