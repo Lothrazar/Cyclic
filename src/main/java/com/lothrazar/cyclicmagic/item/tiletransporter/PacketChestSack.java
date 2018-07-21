@@ -114,7 +114,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
                 if (!UtilPlaceBlocks.destroyBlock(world, position)) {
                   //we failed to break the block
                   // try to undo the break if we can
-                  UtilChat.sendStatusMessage(player, "sack.error.pickup");
+                  UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
                   world.setBlockState(position, state);
                   return;// and dont drop the full item stack or shrink the empty just end
                   //TileEntity tileCopy = world.getTileEntity(position);

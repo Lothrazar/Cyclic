@@ -116,7 +116,10 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-    String[] deflist = new String[] {};
+    String[] deflist = new String[] { "extracells:fluidcrafter",
+        "extracells:ecbaseblock",
+        "extracells:fluidfiller",
+        "refinedstorage:disk_drive" };
     String[] blacklist = config.getStringList("SackHoldingBlacklist",
         category, deflist, "Containers that cannot be lifted up with the Empty Sack of Holding.  Use block id; for example minecraft:chest");
     blacklistAll = NonNullList.from("",

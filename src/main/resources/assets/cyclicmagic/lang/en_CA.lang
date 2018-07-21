@@ -1321,4 +1321,4 @@ tile.cable_wireless_energy.tooltip=Wireless transmission of energy
 tile.cable_wireless_energy.guide=Wireless transmission of energy
 
 chest_sack.error.pickup=Error detected when attempting pickup - action cancelled (see logs for details)
-
+chest_sack.error.place=Error detected when attempting to place - action cancelled (see logs for details)
