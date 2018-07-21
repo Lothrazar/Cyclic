@@ -13,6 +13,7 @@ public class GuiVoidAnvil extends GuiBaseContainer {
     super(new ContainerVoidAnvil(inventoryPlayer, tile), tile);
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
+    this.fieldRedstoneBtn = TileEntityVoidAnvil.Fields.REDSTONE.ordinal();
   }
 
   @Override
