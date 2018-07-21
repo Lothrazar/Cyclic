@@ -224,6 +224,12 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
     }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.CLAY_BALL)
+    }, new ItemStack(Blocks.SAND)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.SOUL_SAND), new ItemStack(Blocks.SOUL_SAND), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)
+    }, new ItemStack(Items.CLAY_BALL, 6)));
   }
 
   public static void addRecipe(RecipeHydrate rec) {
