@@ -62,23 +62,23 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (pos == null) {
       return EnumActionResult.FAIL;
     }
     TileEntity tile = world.getTileEntity(pos);
     IBlockState state = world.getBlockState(pos);
     if (state == null || tile == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false
-      UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.inventory");
+      UtilChat.sendStatusMessage(player, "chest_sack.error.null");
       return EnumActionResult.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
     //blacklist?
     if (UtilString.isInList(blacklistAll, blockId)) {
-      UtilChat.sendStatusMessage(entityPlayer, "item.chest_sack_empty.blacklist");
+      UtilChat.sendStatusMessage(player, "chest_sack.error.blacklist");
       return EnumActionResult.FAIL;
     }
-    UtilSound.playSound(entityPlayer, pos, SoundRegistry.chest_sack_capture);
+    UtilSound.playSound(player, pos, SoundRegistry.chest_sack_capture);
     if (world.isRemote) {
       ModCyclic.network.sendToServer(new PacketChestSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }
