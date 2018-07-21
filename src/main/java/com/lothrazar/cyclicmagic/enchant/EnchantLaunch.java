@@ -134,7 +134,6 @@ public class EnchantLaunch extends EnchantBase {
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
-          ModCyclic.logger.log("jump cooldown set");
           player.getCooldownTracker().setCooldown(feet.getItem(), COOLDOWN);
         }
         uses = 0;

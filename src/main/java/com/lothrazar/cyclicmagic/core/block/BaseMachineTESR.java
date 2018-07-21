@@ -91,7 +91,7 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
         || Minecraft.getMinecraft().getBlockRendererDispatcher() == null
         || Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer() == null
         || getBakedModel() == null) {
-      ModCyclic.logger.info("TESR render animation caught by null check");
+      ModCyclic.logger.error("TESR render animation caught by null check");
       return;
     }
     GlStateManager.pushMatrix();

@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.block.cablepump;
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.block.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
@@ -112,7 +111,7 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
     if (te != null) {
       if (BlockCableBase.isWrenchItem(player.getHeldItem(hand))) {
         EnumFacing sideToToggle = null;
-        ModCyclic.logger.log(String.format("%f : %f : %f", hitX, hitY, hitZ));
+
         if (hitX < BlockCableBase.hitLimit) {
           sideToToggle = EnumFacing.WEST;
         }

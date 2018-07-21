@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.exppylon;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
@@ -86,9 +85,7 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
           if (message.value == 0) {
             //deposit all FROM player TO tile
             expToDrainFluid = Math.min(playerHasFluid, pylonSpaceFluid);
-            ModCyclic.logger.log("DEPOSIT ALL" + expToDrainFluid);
-            ModCyclic.logger.log("playerHasFluid" + playerHasFluid);
-            ModCyclic.logger.log("DEPOSIT pylonSpaceFluid" + pylonSpaceFluid);
+
           }
           else {//try deposit specified amt
             expToDrainFluid = Math.min(message.value * TileEntityXpPylon.FLUID_PER_EXP, pylonSpaceFluid);

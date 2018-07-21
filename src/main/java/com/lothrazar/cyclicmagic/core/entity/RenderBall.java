@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.entity;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -55,7 +54,7 @@ public class RenderBall<T extends Entity> extends Render<T> {
   public RenderBall(RenderManager renderManager, String texture) {
     super(renderManager);
     resource = new ResourceLocation(Const.MODID, "textures/entity/projectile/" + texture + ".png");
-    ModCyclic.logger.log("RenderBall init " + resource);
+
   }
 
   @Override

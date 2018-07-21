@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
@@ -61,7 +60,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     if (in.length > 4 || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    ModCyclic.logger.log("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
+
     for (int i = 0; i < in.length; i++) {
       if (in[i] != null && in[i].isEmpty() == false)
         recipeInput.set(i, in[i]);
