@@ -1319,3 +1319,6 @@ tile.cable_wireless.guide=Wireless transmission of fluid and items
 tile.cable_wireless_energy.name=Energy Transfer Node
 tile.cable_wireless_energy.tooltip=Wireless transmission of energy
 tile.cable_wireless_energy.guide=Wireless transmission of energy
+
+chest_sack.error.pickup=Error detected when attempting pickup - action cancelled (see logs for details)
+
