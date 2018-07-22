@@ -159,7 +159,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     //GRAVEL JUST FOR FUN EH
-    //IDEAS: bones, rotten flesh, mushrooms, leather??
     addRecipe(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
@@ -222,13 +221,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.CLAY_BALL)
-    }, new ItemStack(Blocks.SAND)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.SOUL_SAND), new ItemStack(Blocks.SOUL_SAND), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)
-    }, new ItemStack(Items.CLAY_BALL, 6)));
+    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {
