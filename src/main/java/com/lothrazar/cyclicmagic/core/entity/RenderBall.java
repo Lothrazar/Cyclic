@@ -54,7 +54,6 @@ public class RenderBall<T extends Entity> extends Render<T> {
   public RenderBall(RenderManager renderManager, String texture) {
     super(renderManager);
     resource = new ResourceLocation(Const.MODID, "textures/entity/projectile/" + texture + ".png");
-
   }
 
   @Override

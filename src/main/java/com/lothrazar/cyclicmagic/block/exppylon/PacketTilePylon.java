@@ -85,7 +85,6 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
           if (message.value == 0) {
             //deposit all FROM player TO tile
             expToDrainFluid = Math.min(playerHasFluid, pylonSpaceFluid);
-
           }
           else {//try deposit specified amt
             expToDrainFluid = Math.min(message.value * TileEntityXpPylon.FLUID_PER_EXP, pylonSpaceFluid);

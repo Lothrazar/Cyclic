@@ -67,6 +67,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   public void toggleDisplaysText() {
     this.displayMode = (this.displayMode + 1) % 2;
   }
+
   public boolean displaysText() {
     //1 means text, 0 is items
     return displayMode == 1;

@@ -111,7 +111,6 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
     if (te != null) {
       if (BlockCableBase.isWrenchItem(player.getHeldItem(hand))) {
         EnumFacing sideToToggle = null;
-
         if (hitX < BlockCableBase.hitLimit) {
           sideToToggle = EnumFacing.WEST;
         }

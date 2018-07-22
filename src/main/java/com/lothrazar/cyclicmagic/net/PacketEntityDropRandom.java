@@ -91,12 +91,10 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
   private void handle(PacketEntityDropRandom message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();
-
     Entity entityTarget = world.getEntityByID(message.entityId);
     if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
       EntityLivingBase entity = (EntityLivingBase) entityTarget;
       EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
-
       //      EntityItem ei = UtilItemStack.dropItemStackInWorld(world, entity.getPosition(), message.stack);
       BlockPos pos = entity.getPosition();
       EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, message.stack);

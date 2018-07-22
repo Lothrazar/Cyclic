@@ -60,7 +60,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     if (in.length > 4 || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-
     for (int i = 0; i < in.length; i++) {
       if (in[i] != null && in[i].isEmpty() == false)
         recipeInput.set(i, in[i]);

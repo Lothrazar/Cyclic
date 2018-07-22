@@ -36,7 +36,6 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   private static final int TEXTCOLOR = 0;
   //TODO: nameplage ugly when block on top. also redundant. revive one day??
   boolean doNameplate = false;
-
   final float horizDistFromCenter = 0.46F;
   final float leftColumn = 1.6F, rightColumn = 2.08F;
   final float topRow = -0.9F, bottomRow = -1.4125F;
