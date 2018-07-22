@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item.tiletransporter;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -81,13 +82,13 @@ public class ItemChestSack extends BaseItem {
     return EnumActionResult.SUCCESS;
   }
 
-  private boolean placeStoredTileEntity(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
+  private boolean placeStoredTileEntity(EntityPlayer player, ItemStack heldChestSack, BlockPos pos) {
     NBTTagCompound itemData = UtilNBT.getItemStackNBT(heldChestSack);
     Block block = Block.getBlockById(itemData.getInteger(KEY_BLOCKID));
     if (block == null) {
       //      heldChestSack.stackSize = 0;
       heldChestSack = ItemStack.EMPTY;
-      UtilChat.addChatMessage(entityPlayer, "Invalid block id " + itemData.getInteger(KEY_BLOCKID));
+      UtilChat.addChatMessage(player, "Invalid block id " + itemData.getInteger(KEY_BLOCKID));
       return false;
     }
     IBlockState toPlace;
@@ -98,17 +99,26 @@ public class ItemChestSack extends BaseItem {
     else {
       toPlace = block.getDefaultState();
     }
-    World world = entityPlayer.getEntityWorld();
-    world.setBlockState(pos, toPlace);
-    TileEntity tile = world.getTileEntity(pos);
-    if (tile != null) {
-      NBTTagCompound tileData = (NBTTagCompound) itemData.getCompoundTag(ItemChestSack.KEY_BLOCKTILE);
-      tileData.setInteger("x", pos.getX());
-      tileData.setInteger("y", pos.getY());
-      tileData.setInteger("z", pos.getZ());
-      tile.readFromNBT(tileData);
-      tile.markDirty();
-      world.markChunkDirty(pos, tile);
+    World world = player.getEntityWorld();
+    try {
+      world.setBlockState(pos, toPlace);
+      TileEntity tile = world.getTileEntity(pos);
+      if (tile != null) {
+        NBTTagCompound tileData = itemData.getCompoundTag(ItemChestSack.KEY_BLOCKTILE);
+        tileData.setInteger("x", pos.getX());
+        tileData.setInteger("y", pos.getY());
+        tileData.setInteger("z", pos.getZ());
+        tile.readFromNBT(tileData);// can cause errors in 3rd party mod
+        //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
+        tile.markDirty();
+        world.markChunkDirty(pos, tile);
+      }
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("Error attempting to place block in world", e);
+      UtilChat.sendStatusMessage(player, "chest_sack.error.place");
+      world.setBlockToAir(pos);
+      return false;
     }
     //    heldChestSack.stackSize = 0;
     heldChestSack = ItemStack.EMPTY;
@@ -128,6 +138,7 @@ public class ItemChestSack extends BaseItem {
     //super.addInformation(itemStack, player, list, advanced);
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;

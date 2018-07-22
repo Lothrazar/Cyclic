@@ -237,7 +237,7 @@ public class UtilPlaceBlocks {
     return moved;
   }
 
-  public static void destroyBlock(World world, BlockPos pos) {
+  public static boolean destroyBlock(World world, BlockPos pos) {
     if (world.getTileEntity(pos) != null) {
       world.removeTileEntity(pos);
     }
@@ -250,6 +250,7 @@ public class UtilPlaceBlocks {
     catch (Exception e) {
       ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
       e.printStackTrace();
+      return false;
     }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
     // IN CASE OF DOUBLE CHESTS
@@ -257,6 +258,7 @@ public class UtilPlaceBlocks {
     tryUpdateNeighbour(world, pos.south());
     tryUpdateNeighbour(world, pos.east());
     tryUpdateNeighbour(world, pos.west());
+    return true;
   }
 
   public static void tryUpdateNeighbour(World world, BlockPos pos) {

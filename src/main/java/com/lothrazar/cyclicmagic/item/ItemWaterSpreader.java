@@ -51,7 +51,7 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
 
   private static final int DURABILITY = 256 * 8;
   private static final int COOLDOWN = 10;
-  private static final int RADIUS = 1;
+  private static final int RADIUS = 4;
 
   public ItemWaterSpreader() {
     super(DURABILITY);

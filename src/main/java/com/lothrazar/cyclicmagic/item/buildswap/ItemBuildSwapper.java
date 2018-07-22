@@ -145,7 +145,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }

@@ -70,7 +70,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     if (worldIn.getBlockState(pos).getBlock() instanceof BlockLever) {
       UtilNBT.setItemStackBlockPos(stack, pos);
       if (worldIn.isRemote) {
-        UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".saved");
+        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".saved");
       }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
       return EnumActionResult.SUCCESS;
@@ -102,7 +102,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
     if (blockPos == null) {
       if (worldIn.isRemote) {
-        UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".invalid");
       }
       return false;
     }
@@ -110,7 +110,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       IBlockState blockState = worldIn.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (worldIn.isRemote) {
-          UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+          UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".invalid");
         }
         return false;
       }

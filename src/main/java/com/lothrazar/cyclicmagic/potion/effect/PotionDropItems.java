@@ -36,15 +36,12 @@ public class PotionDropItems extends PotionBase {
       }
       Collections.shuffle(slots);
       ItemStack stack;
-
       for (EntityEquipmentSlot slot : slots) {
         stack = entity.getItemStackFromSlot(slot);
         if (stack.isEmpty() == false && world.rand.nextDouble() < DROP_CHANCE) {
-
           if (world.isRemote) {
             ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId(), slot.ordinal(), stack.copy()));
           }
-
           entity.setItemStackToSlot(slot, ItemStack.EMPTY);
           break;
         }

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -90,8 +91,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost()) {
-      findRecipe();
+    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
+        isGridEmpty() == false) {
+      if (world.isRemote == false) {// maybe?
+        findRecipe();
+      }
       if (recipe != null && tryPayCost()) {
         // pay the cost  
         final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
@@ -178,10 +182,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     recipe = null;//doesnt match
+    ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
     //    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
     for (final IRecipe rec : CraftingManager.REGISTRY) {
       try {
-        // rec.getRecipeSize() <= 9 && 
         if (rec.matches(this.crafter, this.world)) {
           this.recipe = rec;
           return;
@@ -191,6 +195,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         throw new RuntimeException("Caught exception while querying recipe ", err);
       }
     }
+  }
+
+  public boolean isGridEmpty() {
+    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
+      if (this.getStackInSlot(i).isEmpty() == false) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private void setRecipeInput() {

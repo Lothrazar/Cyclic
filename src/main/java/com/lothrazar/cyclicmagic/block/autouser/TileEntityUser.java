@@ -149,10 +149,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           if (rightClickIfZero == 0) {//right click entities and blocks
             if (this.isInBlacklist(targetPos) == false) {
               this.rightClickBlock(targetPos);
-            }
-            else {
-              ModCyclic.logger.log("IN BLACKLIST OOOO" + targetPos);
-            }
+            } //else in blacklist so nothign
           }
           interactEntities(targetPos);
         }
@@ -293,7 +290,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         continue;
       }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName() + "_tryDumpFakePlayerInvo " + includeMainHand);//leaving in release
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }

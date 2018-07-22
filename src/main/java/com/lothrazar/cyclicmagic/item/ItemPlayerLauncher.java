@@ -178,7 +178,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.3F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }

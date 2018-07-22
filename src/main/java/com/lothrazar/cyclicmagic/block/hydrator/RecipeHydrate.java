@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
@@ -61,7 +60,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     if (in.length > 4 || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    ModCyclic.logger.log("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
     for (int i = 0; i < in.length; i++) {
       if (in[i] != null && in[i].isEmpty() == false)
         recipeInput.set(i, in[i]);
@@ -161,7 +159,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     //GRAVEL JUST FOR FUN EH
-    //IDEAS: bones, rotten flesh, mushrooms, leather??
     addRecipe(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
@@ -224,7 +221,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
+    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {

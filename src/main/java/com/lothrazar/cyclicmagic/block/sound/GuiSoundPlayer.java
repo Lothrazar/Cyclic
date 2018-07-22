@@ -35,7 +35,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     soundList.setSounds(allSounds);
     int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
     soundList.selectIndex(sel);
-    ModCyclic.logger.log("on init selected is" + sel);
   }
 
   @Override

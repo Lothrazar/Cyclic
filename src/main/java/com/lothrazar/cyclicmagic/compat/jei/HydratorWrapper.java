@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -33,8 +32,9 @@ public class HydratorWrapper implements IRecipeWrapper {
   public int size() {
     int size = 0;
     for (ItemStack s : src.getRecipeInput()) {
-      if (s.isEmpty() == false) size++;
-      ModCyclic.logger.log(s.toString());
+      if (s.isEmpty() == false) {
+        size++;
+      }
     }
     return size;
   }
