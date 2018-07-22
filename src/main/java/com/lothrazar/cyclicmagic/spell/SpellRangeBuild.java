@@ -77,6 +77,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     return true;
   }
 
+  @Override
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
@@ -91,7 +92,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
       state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
       if (state == null || state.getBlock() == null) {
-        UtilChat.addChatMessage(p, "wand.inventory.empty");
+        UtilChat.sendStatusMessage(p, "wand.inventory.empty");
         return;
       }
     }

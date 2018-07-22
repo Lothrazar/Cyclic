@@ -62,10 +62,12 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     super(worldIn, x, y, z);
   }
 
+  @Override
   public EntityMinecart.Type getType() {
     return EntityMinecart.Type.FURNACE;
   }
 
+  @Override
   protected void entityInit() {
     super.entityInit();
     this.dataManager.register(POWERED, Boolean.valueOf(false));
@@ -74,6 +76,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   /**
    * Called to update the entity's position/logic.
    */
+  @Override
   public void onUpdate() {
     super.onUpdate();
     if (this.fuel > 0) {
@@ -107,6 +110,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
    *
    * @return Carts max speed.
    */
+  @Override
   public float getMaxCartSpeedOnRail() {
     return super.getMaxCartSpeedOnRail() + 0.1f;//super is 1.2
   }
@@ -156,7 +160,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     }
     //      
     if (d0 > 1.0E-4D) {
-      d0 = (double) MathHelper.sqrt(d0);
+      d0 = MathHelper.sqrt(d0);
       //          this.pushX /= d0;
       //          this.pushZ /= d0;
       if (this.pushX * this.motionX + this.pushZ * this.motionZ < 0.0D) {
@@ -172,13 +176,14 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     }
   }
 
+  @Override
   protected void applyDrag() {
     if (this.fuel > 0) {
       return;
     }
     double d0 = this.pushX * this.pushX + this.pushZ * this.pushZ;
     if (d0 > 1.0E-4D) {
-      d0 = (double) MathHelper.sqrt(d0);
+      d0 = MathHelper.sqrt(d0);
       this.pushX /= d0;
       this.pushZ /= d0;
       double d1 = 1.0D;
@@ -196,6 +201,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
     super.applyDrag();
   }
 
+  @Override
   public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
     ItemStack itemstack = player.getHeldItem(hand);
     if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
@@ -206,7 +212,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       this.fuel += 3600;
     }
     if (player.world.isRemote) {
-      UtilChat.addChatMessage(player, UtilChat.lang("minecart.fuel") + this.fuel);
+      UtilChat.sendStatusMessage(player, UtilChat.lang("minecart.fuel") + this.fuel);
     }
     return true;
   }
@@ -214,6 +220,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   /**
    * (abstract) Protected helper method to write subclass entity data to NBT.
    */
+  @Override
   protected void writeEntityToNBT(NBTTagCompound compound) {
     super.writeEntityToNBT(compound);
     compound.setDouble("PushX", this.pushX);
@@ -224,6 +231,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   /**
    * (abstract) Protected helper method to read subclass entity data from NBT.
    */
+  @Override
   protected void readEntityFromNBT(NBTTagCompound compound) {
     super.readEntityFromNBT(compound);
     this.pushX = compound.getDouble("PushX");
@@ -232,13 +240,14 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   }
 
   protected boolean isMinecartPowered() {
-    return ((Boolean) this.dataManager.get(POWERED)).booleanValue();
+    return this.dataManager.get(POWERED).booleanValue();
   }
 
   protected void setMinecartPowered(boolean p_94107_1_) {
     this.dataManager.set(POWERED, Boolean.valueOf(p_94107_1_));
   }
 
+  @Override
   public IBlockState getDefaultDisplayTile() {
     return (this.isMinecartPowered() ? Blocks.LIT_FURNACE : Blocks.FURNACE).getDefaultState().withProperty(BlockFurnace.FACING, EnumFacing.NORTH);
   }

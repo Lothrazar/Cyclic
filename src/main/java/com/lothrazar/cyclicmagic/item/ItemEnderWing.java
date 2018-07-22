@@ -72,7 +72,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     }
     World world = player.getEntityWorld();
     if (player.dimension != 0) {
-      UtilChat.addChatMessage(player, "command.worldhome.dim");
+      UtilChat.sendStatusMessage(player, "command.worldhome.dim");
       return false;
     }
     //boolean success = false;
@@ -82,7 +82,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
         target = player.getBedLocation(0);
         // success = UtilWorld.tryTpPlayerToBed(world, player);
         if (target == null) {
-          UtilChat.addChatMessage(player, "command.gethome.bed");
+          UtilChat.sendStatusMessage(player, "command.gethome.bed");
           return false;
         }
       break;
