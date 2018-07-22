@@ -246,10 +246,6 @@ public class UtilPlaceBlocks {
       if (setToAirSuccess == false) {
         setToAirSuccess = world.destroyBlock(pos, false);//destroy with no drops if setToAir failed
       }
-      if (pos.getX() == 17) {
-        ModCyclic.logger.error("LOL hack to test replacing it back down");
-        return false;
-      }
     }
     catch (Exception e) {
       ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
