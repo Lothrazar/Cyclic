@@ -39,8 +39,8 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int INPUT_SIZE = 8;
-  public static final int OUTPUT_SIZE = 4;
+  public static final int INPUT_SIZE = 2 * 3;
+  public static final int OUTPUT_SIZE = INPUT_SIZE;
 
   public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;

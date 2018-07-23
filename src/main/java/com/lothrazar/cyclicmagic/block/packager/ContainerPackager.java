@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPackager extends ContainerBaseMachine {
 
-  static final int MID_SPACING = 133;
+  static final int MID_SPACING = 114;
   static final int SLOTX_START = 8;
   public static final int SLOTY = 30;
   static final int SQ = 18;

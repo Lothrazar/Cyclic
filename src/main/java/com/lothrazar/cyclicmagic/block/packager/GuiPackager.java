@@ -40,7 +40,7 @@ public class GuiPackager extends GuiBaseContainer {
     super(new ContainerPackager(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityPackager.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
-    energyBar.setX(70).setY(16).setWidth(14);
+    energyBar.setX(this.xSize / 2 - 8).setY(16).setWidth(14);
     //    this.fluidBar = new FluidBar(this, 98, 16);
     //    fluidBar.setCapacity(TileEntityPackager.TANK_FULL);
   }
@@ -77,18 +77,19 @@ public class GuiPackager extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int x = this.guiLeft + ContainerPackager.SLOTX_START - 1;
     int y = this.guiTop + ContainerPackager.SLOTY - 1;
+    int ROWS = 3;
     for (int k = 0; k < TileEntityPackager.INPUT_SIZE; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
-          x + k % 2 * Const.SQ,
-          y + k / 2 * Const.SQ,
+          x + k % ROWS * Const.SQ,
+          y + k / ROWS * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     x = this.guiLeft + ContainerPackager.MID_SPACING;
     y = this.guiTop + ContainerPackager.SLOTY - 1;
     for (int k = 0; k < TileEntityPackager.OUTPUT_SIZE; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
-          x + k % 2 * Const.SQ,
-          y + k / 2 * Const.SQ,
+          x + k % ROWS * Const.SQ,
+          y + k / ROWS * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     // fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
