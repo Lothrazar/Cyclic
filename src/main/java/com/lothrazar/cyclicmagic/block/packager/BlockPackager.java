@@ -28,8 +28,11 @@ import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -62,16 +65,13 @@ public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasR
 
   @Override
   public IRecipe addRecipe() {
-    return null;
-    //    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-    //        "rsr",
-    //        "lgl",
-    //        "ooo",
-    //        'l', Blocks.CLAY,
-    //        'o', Blocks.HARDENED_CLAY,
-    //        'g', Blocks.IRON_BLOCK,
-    //        's', Blocks.DROPPER,
-    //        'r', Items.WATER_BUCKET);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "pcp",
+        "x x",
+        "pcp",
+        'x', new ItemStack(Blocks.FURNACE),
+        'c', "workbench",
+        'p', "dyeLightBlue");
   }
 
   //  @Override

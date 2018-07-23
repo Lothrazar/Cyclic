@@ -39,22 +39,17 @@ public class RecipePackagerZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
-  public static void removeShapedRecipe(IItemStack output) {
+  public static void removeRecipe(IItemStack output) {
 
     ItemStack out = RecipeHydrateZen.toStack(output);
     for (RecipePackage rec : RecipePackage.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
         RecipeHydrate.recipes.remove(rec);
-        ModCyclic.logger.info("ZenScript: removed hydrator recipe for " + output.getDisplayName());
+        ModCyclic.logger.info("ZenScript: removed packager recipe for " + output.getDisplayName());
+        return;
       }
     }
-  }
-
-  @Deprecated
-  @Optional.Method(modid = "crafttweaker")
-  @ZenMethod
-  public static void removeShapelessRecipe(IItemStack output) {
-    removeShapedRecipe(output);
+    ModCyclic.logger.error("Failure: ZenScript: not found packager recipe for " + output.getDisplayName());
   }
 
   @Optional.Method(modid = "crafttweaker")
