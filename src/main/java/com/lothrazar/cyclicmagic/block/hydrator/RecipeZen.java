@@ -40,9 +40,9 @@ public class RecipeZen {
   public static void removeShapedRecipe(IItemStack output) {
 
     ItemStack out = toStack(output);
-    for (RecipeHydrate rec : RecipeHydrate.recipesShaped) {
+    for (RecipeHydrate rec : RecipeHydrate.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        RecipeHydrate.recipesShaped.remove(rec);
+        RecipeHydrate.recipes.remove(rec);
         ModCyclic.logger.info("ZenScript: removed hydrator recipe for " + output.getDisplayName());
       }
     }

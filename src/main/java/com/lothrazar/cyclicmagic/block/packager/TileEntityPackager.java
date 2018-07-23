@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.hydrator;
+package com.lothrazar.cyclicmagic.block.packager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,12 +35,12 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.FluidRegistry;
 
-public class TileEntityHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
+public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int RECIPE_SIZE = 4;
-  public static final int TANK_FULL = 10000;
+  public static final int INPUT_SIZE = 8;
+  public static final int OUTPUT_SIZE = 4;
+
   public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;
 
@@ -50,17 +49,16 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   private int recipeIsLocked = 0;
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
 
-  public TileEntityHydrator() {
-    super(2 * RECIPE_SIZE);// in, out 
-    tank = new FluidTankFixDesync(TANK_FULL, this);
-    timer = TIMER_FULL;
-    tank.setTileEntity(this);
-    tank.setFluidAllowed(FluidRegistry.WATER);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergy(BlockHydrator.FUEL_COST);
+  public TileEntityPackager() {
+    super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
+
+    //tank.setTileEntity(this);
+    //tank.setFluidAllowed(FluidRegistry.WATER);
+    this.setSlotsForInsert(1, INPUT_SIZE);
+    this.setSlotsForExtract(INPUT_SIZE + 1, INPUT_SIZE + OUTPUT_SIZE);
+    this.initEnergy(BlockPackager.FUEL_COST);
   }
 
   @Override
@@ -83,11 +81,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return;
     }
     //ignore timer when filling up water
-    if (this.getCurrentFluidStackAmount() == 0) {
-      return;
-    }
+
     if (this.updateTimerIsZero()) { // time to burn!
-      this.spawnParticlesAbove();
+
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }
@@ -95,11 +91,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
 
-
   private void updateLockSlots() {
     if (this.recipeIsLocked == 1) {
       List<Integer> slotsImport = new ArrayList<Integer>();
-      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
+      for (int slot = 0; slot < INPUT_SIZE; slot++) {
         if (this.getStackInSlot(slot).isEmpty() == false) {
           slotsImport.add(slot);
         }
@@ -112,43 +107,26 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public boolean tryProcessRecipe() {
-    RecipeHydrate irecipe = findMatchingRecipe();
-    if (irecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
-        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
-          //only create the output if cost was successfully paid
+    for (int i = 0; i < INPUT_SIZE; i++) {
+      if (this.getStackInSlot(i).isEmpty()) {
+        continue;
+      }
+      this.crafting.setInventorySlotContents(0, this.getStackInSlot(i).copy());
+      for (RecipePackage irecipe : RecipePackage.recipes) {
+        if (irecipe.matches(this.crafting, world)) {
+          //return irecipe;
+          this.decrStackSize(i, irecipe.getIngredientCount());
           this.sendOutputItem(irecipe.getRecipeOutput());
+          return true;
         }
-        return true;
       }
     }
     return false;
+
   }
 
-  /**
-   * try to match a shaped or shapeless recipe
-   * 
-   * @return
-   */
-  private RecipeHydrate findMatchingRecipe() {
-    boolean allAir = true;
-    for (int i = 0; i < RECIPE_SIZE; i++) {
-      //if ANY slot is non empty, we will get an && false which makes false
-      allAir = allAir && this.getStackInSlot(i).isEmpty();
-      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
-    }
-    if (allAir) {
-      return null;
-    }
-    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
-      }
-    }
-    return null;
-  }
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 3 + 1; i < 8; i++) {
+    for (int i = INPUT_SIZE + 1; i < this.getSizeInventory(); i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -214,16 +192,13 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     return this.needsRedstone == 1;
   }
 
-  public float getFillRatio() {
-    return tank.getFluidAmount() / tank.getCapacity();
-  }
 
   /**
    * For the crafting inventory, since its never in GUI and is just used for auto processing
    * 
    * @author Sam
    */
-  public static class ContainerDummyHydrator extends Container {
+  public static class ContainerDummyPackager extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
