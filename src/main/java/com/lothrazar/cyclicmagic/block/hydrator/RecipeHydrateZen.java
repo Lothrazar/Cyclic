@@ -33,7 +33,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.cyclicmagic.Hydrator")
 @ZenRegister
-public class RecipeZen {
+public class RecipeHydrateZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod

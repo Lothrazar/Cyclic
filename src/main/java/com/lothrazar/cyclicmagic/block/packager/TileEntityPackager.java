@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.packager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -114,6 +115,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       this.crafting.setInventorySlotContents(0, this.getStackInSlot(i).copy());
       for (RecipePackage irecipe : RecipePackage.recipes) {
         if (irecipe.matches(this.crafting, world)) {
+          ModCyclic.logger.info("matched !");
           //return irecipe;
           this.decrStackSize(i, irecipe.getIngredientCount());
           this.sendOutputItem(irecipe.getRecipeOutput());
