@@ -25,8 +25,9 @@ package com.lothrazar.cyclicmagic.block.packager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -41,7 +42,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public static final int INPUT_SIZE = 2 * 3;
   public static final int OUTPUT_SIZE = INPUT_SIZE;
-
   public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;
 
@@ -54,7 +54,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
-
     //tank.setTileEntity(this);
     //tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(1, INPUT_SIZE);
@@ -82,15 +81,12 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       return;
     }
     //ignore timer when filling up water
-
     if (this.updateTimerIsZero()) { // time to burn!
-
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }
     }
   }
-
 
   private void updateLockSlots() {
     if (this.recipeIsLocked == 1) {
@@ -108,23 +104,42 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   }
 
   public boolean tryProcessRecipe() {
-    for (int i = 0; i < INPUT_SIZE; i++) {
-      if (this.getStackInSlot(i).isEmpty()) {
-        continue;
-      }
-      this.crafting.setInventorySlotContents(0, this.getStackInSlot(i).copy());
-      for (RecipePackage irecipe : RecipePackage.recipes) {
+    boolean process = false;
+    //loop on all recipes
+    // on current recipe, try and find enough to satisfy needs
+    //process or continue to next
+    Map<Integer, Integer> mapSlotToCost = new HashMap<>();
+    for (RecipePackage irecipe : RecipePackage.recipes) {
+      int needed = irecipe.getIngredientCount();
+      int neededRemaining = needed;
+      for (int i = 0; i < INPUT_SIZE; i++) {
+        //  ModCyclic.logger.info("contents ! " + this.getStackInSlot(i));
+        this.crafting.setInventorySlotContents(0, this.getStackInSlot(i).copy());
         if (irecipe.matches(this.crafting, world)) {
-          ModCyclic.logger.info("matched !");
-          //return irecipe;
-          this.decrStackSize(i, irecipe.getIngredientCount());
-          this.sendOutputItem(irecipe.getRecipeOutput());
-          return true;
+          //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
+          //we found AN item with a matching recipe
+          int payHere = Math.min(neededRemaining, this.getStackInSlot(i).getCount());
+          mapSlotToCost.put(i, payHere);
+          //   ModCyclic.logger.info(i + " => " + payHere);
+          neededRemaining = neededRemaining - payHere;
+          if (neededRemaining == 0) {
+            process = true;
+            break;//break inv loop for current recipe
+          }
+          //else keep looking for the rest
         }
       }
+      // done looping inventory but not recipe
+      if (process) {
+        for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
+          //go 
+          this.decrStackSize(entry.getKey(), entry.getValue());
+        }
+        this.sendOutputItem(irecipe.getRecipeOutput());
+        break;//break out of recipe loop
+      }
     }
-    return false;
-
+    return process;
   }
 
   public void sendOutputItem(ItemStack itemstack) {
@@ -193,7 +208,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
-
 
   /**
    * For the crafting inventory, since its never in GUI and is just used for auto processing

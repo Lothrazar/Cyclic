@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.block.packager;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
@@ -22,9 +22,9 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
   }
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    //item matches AND size is enough
-    return RecipeHydrate.recipeSlotMatches(inv.getStackInSlot(0), inputItem)
-        && inputItem.getCount() <= inv.getStackInSlot(0).getCount();
+    //  ModCyclic.logger.info("???? ! " + inputItem);
+    return inv.getStackInSlot(0).isItemEqual(inputItem)
+        || OreDictionary.itemMatches(inv.getStackInSlot(0), inputItem, false);
   }
 
   public int getIngredientCount() {
