@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.packager;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrateZen;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
@@ -42,14 +41,19 @@ public class RecipePackagerZen {
   public static void removeRecipe(IItemStack output) {
 
     ItemStack out = RecipeHydrateZen.toStack(output);
+    RecipePackage toRemove = null;
     for (RecipePackage rec : RecipePackage.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        RecipeHydrate.recipes.remove(rec);
-        ModCyclic.logger.info("ZenScript: removed packager recipe for " + output.getDisplayName());
-        return;
+        toRemove = rec;
+        break;
       }
     }
-    ModCyclic.logger.error("Failure: ZenScript: not found packager recipe for " + output.getDisplayName());
+    if (toRemove == null)
+      ModCyclic.logger.error("Failure: ZenScript: not found packager recipe for " + output.getDisplayName());
+    else {
+      RecipePackage.recipes.remove(toRemove);
+      ModCyclic.logger.info("ZenScript: removed packager recipe for " + output.getDisplayName());
+    }
   }
 
   @Optional.Method(modid = "crafttweaker")

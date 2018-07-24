@@ -86,6 +86,6 @@ public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 350, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

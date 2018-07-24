@@ -23,10 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.packager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -46,17 +43,15 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   private int needsRedstone = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED;
+    REDSTONE, TIMER;
   }
 
-  private int recipeIsLocked = 0;
   public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
   private RecipePackage lastRecipe = null;
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
-    //tank.setTileEntity(this);
-    //tank.setFluidAllowed(FluidRegistry.WATER);
+
     this.setSlotsForInsert(1, INPUT_SIZE);
     this.setSlotsForExtract(INPUT_SIZE + 1, INPUT_SIZE + OUTPUT_SIZE);
     this.initEnergy(BlockPackager.FUEL_COST);
@@ -74,23 +69,26 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public void update() {
-    this.updateLockSlots();
+
     if (this.isRunning() == false) {
       return;
     }
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
+
     //ignore timer when filling up water
-    if (this.updateTimerIsZero()) { // time to burn!
+    if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
       if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
         this.timer = TIMER_FULL;
+        this.consumeEnergy();
       }
       else {
         //try to look for a new one
         for (RecipePackage irecipe : RecipePackage.recipes) {
           if (tryProcessRecipe(irecipe)) {
             //if we have found a recipe that can be processed. save reference to it for next loop
+            this.consumeEnergy();
             this.timer = TIMER_FULL;
             lastRecipe = irecipe;
           }
@@ -98,33 +96,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       }
     }
   }
-
-  private void updateLockSlots() {
-    if (this.recipeIsLocked == 1) {
-      List<Integer> slotsImport = new ArrayList<Integer>();
-      for (int slot = 0; slot < INPUT_SIZE; slot++) {
-        if (this.getStackInSlot(slot).isEmpty() == false) {
-          slotsImport.add(slot);
-        }
-      }
-      this.setSlotsForInsert(slotsImport);
-    }
-    else {//all are free game
-      this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    }
-  }
-  //
-  //  public RecipePackage findRecipe() {
-  //    for (int i = 0; i < INPUT_SIZE; i++) {
-  //      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
-  //    }
-  //    for (RecipePackage irecipe : RecipePackage.recipes) {
-  //      if (irecipe.matches(this.crafting, world)) {
-  //        return irecipe;
-  //      }
-  //    }
-  //    return null;
-  //  }
 
   public boolean tryProcessRecipe(RecipePackage recipe) {
     boolean process = false;
@@ -186,7 +157,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-    compound.setInteger("rlock", recipeIsLocked);
+
     return super.writeToNBT(compound);
   }
 
@@ -194,7 +165,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
-    this.recipeIsLocked = compound.getInteger("rlock");
   }
 
   @Override
@@ -204,8 +174,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case RECIPELOCKED:
-        return this.recipeIsLocked;
     }
     return -1;
   }
@@ -218,9 +186,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case RECIPELOCKED:
-        this.recipeIsLocked = value % 2;
       break;
     }
   }
