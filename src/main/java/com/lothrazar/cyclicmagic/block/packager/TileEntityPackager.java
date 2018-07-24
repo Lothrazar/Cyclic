@@ -51,6 +51,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   private int recipeIsLocked = 0;
   public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
+  private RecipePackage lastRecipe = null;
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
@@ -82,8 +83,18 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     }
     //ignore timer when filling up water
     if (this.updateTimerIsZero()) { // time to burn!
-      if (tryProcessRecipe()) {
+      if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
         this.timer = TIMER_FULL;
+      }
+      else {
+        //try to look for a new one
+        for (RecipePackage irecipe : RecipePackage.recipes) {
+          if (tryProcessRecipe(irecipe)) {
+            //if we have found a recipe that can be processed. save reference to it for next loop
+            this.timer = TIMER_FULL;
+            lastRecipe = irecipe;
+          }
+        }
       }
     }
   }
@@ -102,42 +113,61 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     }
   }
+  //
+  //  public RecipePackage findRecipe() {
+  //    for (int i = 0; i < INPUT_SIZE; i++) {
+  //      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
+  //    }
+  //    for (RecipePackage irecipe : RecipePackage.recipes) {
+  //      if (irecipe.matches(this.crafting, world)) {
+  //        return irecipe;
+  //      }
+  //    }
+  //    return null;
+  //  }
 
-  public boolean tryProcessRecipe() {
+  public boolean tryProcessRecipe(RecipePackage recipe) {
     boolean process = false;
-    //loop on all recipes
-    // on current recipe, try and find enough to satisfy needs
-    //process or continue to next
+    //check inventory to see if we can pay costs of the recipe
+    //loop over recipe ingredients
+    //for each ingredient. track down all requirements
+    // if all are met, pay then => true
     Map<Integer, Integer> mapSlotToCost = new HashMap<>();
-    for (RecipePackage irecipe : RecipePackage.recipes) {
-      int needed = irecipe.getIngredientCount();
+    for (ItemStack input : recipe.getInput()) {
+      process = false;
+      int needed = input.getCount();
+      //now find this many of them
       int neededRemaining = needed;
       for (int i = 0; i < INPUT_SIZE; i++) {
-        //  ModCyclic.logger.info("contents ! " + this.getStackInSlot(i));
-        this.crafting.setInventorySlotContents(0, this.getStackInSlot(i).copy());
-        if (irecipe.matches(this.crafting, world)) {
-          //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
-          //we found AN item with a matching recipe
-          int payHere = Math.min(neededRemaining, this.getStackInSlot(i).getCount());
-          mapSlotToCost.put(i, payHere);
-          //   ModCyclic.logger.info(i + " => " + payHere);
-          neededRemaining = neededRemaining - payHere;
-          if (neededRemaining == 0) {
-            process = true;
-            break;//break inv loop for current recipe
-          }
-          //else keep looking for the rest
+        if (input.isItemEqual(this.getStackInSlot(i)) == false) {
+          continue;
         }
-      }
-      // done looping inventory but not recipe
-      if (process) {
-        for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
-          //go 
-          this.decrStackSize(entry.getKey(), entry.getValue());
+
+        //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
+        //we found AN item with a matching recipe
+        int payHere = Math.min(neededRemaining, this.getStackInSlot(i).getCount());
+        mapSlotToCost.put(i, payHere);
+        //   ModCyclic.logger.info(i + " => " + payHere);
+        neededRemaining = neededRemaining - payHere;
+        if (neededRemaining == 0) {
+          process = true;
+          break;//break inv loop for current recipe
         }
-        this.sendOutputItem(irecipe.getRecipeOutput());
-        break;//break out of recipe loop
+        //else keep looking for the rest
       }
+      if (!process) {
+        //inventory did not have enough if "input" to craft so abort
+        //and ignore the rest of the recipe
+        break;
+      }
+    }
+    // done looping inventory but not recipe
+    if (process) {
+      for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
+        //go 
+        this.decrStackSize(entry.getKey(), entry.getValue());
+      }
+      this.sendOutputItem(recipe.getRecipeOutput());
     }
     return process;
   }

@@ -54,10 +54,17 @@ public class RecipePackagerZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
-  public static void addRecipe(IItemStack output, IItemStack inputs) {
+  public static void addRecipe(IItemStack output, IItemStack input) {
+    ModCyclic.logger.info("ZenScript: added packager recipe for " + output.getDisplayName());
+    RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStack(input)));
+  }
+
+  @Optional.Method(modid = "crafttweaker")
+  @ZenMethod
+  public static void addRecipe(IItemStack output, IItemStack[] inputs) {
 
     ModCyclic.logger.info("ZenScript: added packager recipe for " + output.getDisplayName());
-    RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(inputs), RecipeHydrateZen.toStack(output)));
+    RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStacks(inputs)));
   }
 
 }
