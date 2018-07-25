@@ -18,9 +18,9 @@ public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> 
   private IDrawable icon;
 
   public PackagerRecipeCategory(IGuiHelper helper) {
-    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
-    //TOD: block is wrong of course, just POC
-    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
+    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/packager_recipe.png"), 0, 0, 169, 69, 169, 69);
+
+    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_packager.png"), 0, 0, 16, 16, 16, 16);
   }
 
   @Override
@@ -51,13 +51,15 @@ public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, PackagerWrapper recipeWrapper, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    guiItemStacks.init(0, true, 3, Const.SQ);
-    guiItemStacks.init(1, true, 3, 2 * Const.SQ);
-    guiItemStacks.init(2, true, 3, 3 * Const.SQ);
+    int x = 3, y = 18;
+    guiItemStacks.init(0, true, x, y);
+    guiItemStacks.init(1, true, x + Const.SQ, y);
+    guiItemStacks.init(2, true, x + 2 * Const.SQ, y);
     //next row
-    guiItemStacks.init(3, true, 3 + Const.SQ, 1 * Const.SQ);
-    guiItemStacks.init(4, true, 3 + Const.SQ, 2 * Const.SQ);
-    guiItemStacks.init(5, true, 3 + Const.SQ, 3 * Const.SQ);
+    y += Const.SQ;
+    guiItemStacks.init(3, true, x, y);
+    guiItemStacks.init(4, true, x + Const.SQ, y);
+    guiItemStacks.init(5, true, x + 2 * Const.SQ, y);
     List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
