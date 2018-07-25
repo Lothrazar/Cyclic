@@ -23,11 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.forester;
 
-import com.lothrazar.cyclicmagic.block.forester.TileEntityForester.Fields;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,13 +37,34 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiForester extends GuiBaseContainer {
 
+  private ButtonTileEntityField btnSize;
+
   public GuiForester(InventoryPlayer inventoryPlayer, TileEntityForester tileEntity) {
     super(new ContainerForester(inventoryPlayer, tileEntity), tileEntity);
-    setScreenSize(ScreenSize.STANDARD);
-    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
+    setScreenSize(ScreenSize.LARGE);
+    this.fieldRedstoneBtn = TileEntityForester.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileEntityForester.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setX(150);
+  }
+
+  @Override
+  public void initGui() {
+    super.initGui();
+    int id = 3, x, y;
+    x = this.guiLeft + xSize / 4 + 22;
+    y = this.guiTop + 34;
+    btnSize = new ButtonTileEntityField(id++,
+        x, y, this.tile.getPos(), TileEntityForester.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
+    x = this.guiLeft + xSize / 4 - 2;
+    y = this.guiTop + 18;
+    GuiSliderInteger slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityForester.MAX_HEIGHT,
+        TileEntityForester.Fields.HEIGHT.ordinal());
+    slider.setTooltip("button.miner.height");
+    this.addButton(slider);
   }
 
   @Override
@@ -62,5 +85,6 @@ public class GuiForester extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityForester.Fields.SIZE.ordinal()));
   }
 }

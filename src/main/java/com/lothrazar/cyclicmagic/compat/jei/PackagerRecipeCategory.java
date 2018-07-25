@@ -12,25 +12,25 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> {
+public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> {
 
   private IDrawable gui;
   private IDrawable icon;
 
-  public HydratorRecipeCategory(IGuiHelper helper) {
-    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
+  public PackagerRecipeCategory(IGuiHelper helper) {
+    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/packager_recipe.png"), 0, 0, 169, 69, 169, 69);
 
-    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
+    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_packager.png"), 0, 0, 16, 16, 16, 16);
   }
 
   @Override
   public String getUid() {
-    return JEIPlugin.RECIPE_CATEGORY_HYDRATOR;
+    return JEIPlugin.RECIPE_CATEGORY_PACKAGER;
   }
 
   @Override
   public String getTitle() {
-    return UtilChat.lang("tile.block_hydrator.name");
+    return UtilChat.lang("tile.auto_packager.name");
   }
 
   @Override
@@ -49,12 +49,17 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
   }
 
   @Override
-  public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
+  public void setRecipe(IRecipeLayout recipeLayout, PackagerWrapper recipeWrapper, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    guiItemStacks.init(0, true, 3, Const.SQ);
-    guiItemStacks.init(1, true, 3, 2 * Const.SQ);
-    guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
-    guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
+    int x = 3, y = 18;
+    guiItemStacks.init(0, true, x, y);
+    guiItemStacks.init(1, true, x + Const.SQ, y);
+    guiItemStacks.init(2, true, x + 2 * Const.SQ, y);
+    //next row
+    y += Const.SQ;
+    guiItemStacks.init(3, true, x, y);
+    guiItemStacks.init(4, true, x + Const.SQ, y);
+    guiItemStacks.init(5, true, x + 2 * Const.SQ, y);
     List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);

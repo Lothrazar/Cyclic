@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiVacuum extends GuiBaseContainer {
 
   ITileStackWrapper te;
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
 
   public GuiVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum tileEntity) {
     super(new ContainerVacuum(inventoryPlayer, tileEntity), tileEntity);
@@ -55,7 +55,9 @@ public class GuiVacuum extends GuiBaseContainer {
     int id = 2;
     int x = this.guiLeft + 28;
     int y = this.guiTop + 32;
-    btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
+    btnSize = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityVacuum.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
   }
 

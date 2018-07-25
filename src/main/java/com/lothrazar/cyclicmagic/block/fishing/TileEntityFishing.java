@@ -62,7 +62,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   static final int SLOT_TOOL = 0;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, FUEL;
   }
 
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
@@ -306,6 +306,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
     }
@@ -315,6 +317,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

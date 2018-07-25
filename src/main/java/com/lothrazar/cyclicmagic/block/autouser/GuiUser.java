@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiUser extends GuiBaseContainer {
 
   private ButtonTileEntityField actionBtn;
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private ButtonTileEntityField yOffsetBtn;
 
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
@@ -58,9 +57,11 @@ public class GuiUser extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int btnId = 3;
-    btnSize = new GuiButtonToggleSize(btnId++,
+    btnSize = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
-        this.guiTop + 36, this.tile.getPos());
+        this.guiTop + 36, this.tile.getPos(), TileEntityUser.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
     actionBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,

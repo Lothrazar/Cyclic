@@ -21,33 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.forester;
+package com.lothrazar.cyclicmagic.block.packager;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
+import com.lothrazar.cyclicmagic.core.util.UtilFluid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerForester extends ContainerBaseMachine {
+public class ContainerPackager extends ContainerBaseMachine {
 
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY = 60;
+  static final int MID_SPACING = 114;
+  static final int SLOTX_START = 8;
+  public static final int SLOTY = 30;
+  static final int SQ = 18;
 
-  public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
+  public ContainerPackager(InventoryPlayer inventoryPlayer, TileEntityPackager te) {
     super(te);
-    this.setScreenSize(ScreenSize.LARGE);
-    int rowsize = 6;
-    for (int i = 0; i < te.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotCheckTileValid(tile, i,
-          SLOTX_START + i % rowsize * Const.SQ + Const.SQ,
-          SLOTY + (i / rowsize) * Const.SQ));
+    int slotNum = 0;
+    for (int i = 0; i < TileEntityPackager.INPUT_SIZE; i++) {
+      addSlotToContainer(new Slot(tile, slotNum,
+          SLOTX_START + i / 2 * Const.SQ,
+          SLOTY + i % 2 * Const.SQ));
+      slotNum++;
+    }
+    for (int i = 0; i < TileEntityPackager.OUTPUT_SIZE; i++) {
+      addSlotToContainer(new Slot(tile, slotNum,
+          MID_SPACING + 1 + i / 2 * Const.SQ,
+          SLOTY + i % 2 * Const.SQ));
+      slotNum++;
     }
     bindPlayerInventory(inventoryPlayer);
   }
@@ -60,14 +68,17 @@ public class ContainerForester extends ContainerBaseMachine {
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
-      // merges the item into player inventory since its in the tileEntity
+      // merges the item into player inventory since its in the tileEntity 
       if (slot < tile.getSizeInventory()) {
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
+      else if (UtilFluid.getFluidType(stackInSlot) == FluidRegistry.WATER) {// shortcut to middle stack if water
+        if (!this.mergeItemStack(stackInSlot, 8, 9, true)) {
+          return ItemStack.EMPTY;
+        }
+      }
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
@@ -83,6 +94,11 @@ public class ContainerForester extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
+  }
+
+  @Override
+  public void detectAndSendChanges() {
+    super.detectAndSendChanges();
   }
 
   @Override

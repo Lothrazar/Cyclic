@@ -21,13 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.hydrator;
+package com.lothrazar.cyclicmagic.block.packager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
+import java.util.HashMap;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,31 +34,27 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.FluidRegistry;
 
-public class TileEntityHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
+public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int RECIPE_SIZE = 4;
-  public static final int TANK_FULL = 10000;
+  public static final int INPUT_SIZE = 2 * 3;
+  public static final int OUTPUT_SIZE = INPUT_SIZE;
   public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED, FUEL;
+    REDSTONE, TIMER, FUEL;
   }
 
-  private int recipeIsLocked = 0;
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
+  private RecipePackage lastRecipe = null;
 
-  public TileEntityHydrator() {
-    super(2 * RECIPE_SIZE);// in, out 
-    tank = new FluidTankFixDesync(TANK_FULL, this);
-    timer = TIMER_FULL;
-    tank.setTileEntity(this);
-    tank.setFluidAllowed(FluidRegistry.WATER);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergy(BlockHydrator.FUEL_COST);
+  public TileEntityPackager() {
+    super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
+
+    this.setSlotsForInsert(1, INPUT_SIZE);
+    this.setSlotsForExtract(INPUT_SIZE + 1, INPUT_SIZE + OUTPUT_SIZE);
+    this.initEnergy(BlockPackager.FUEL_COST);
   }
 
   @Override
@@ -75,80 +69,82 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
-    this.updateLockSlots();
+
     if (this.isRunning() == false) {
       return;
     }
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
+
     //ignore timer when filling up water
-    if (this.getCurrentFluidStackAmount() == 0) {
-      return;
-    }
-    if (this.updateTimerIsZero()) { // time to burn!
-
-      if (tryProcessRecipe()) {
+    if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
+      if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
         this.timer = TIMER_FULL;
+        this.consumeEnergy();
       }
-    }
-  }
-
-
-
-  private void updateLockSlots() {
-    if (this.recipeIsLocked == 1) {
-      List<Integer> slotsImport = new ArrayList<Integer>();
-      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
-        if (this.getStackInSlot(slot).isEmpty() == false) {
-          slotsImport.add(slot);
+      else {
+        //try to look for a new one
+        for (RecipePackage irecipe : RecipePackage.recipes) {
+          if (tryProcessRecipe(irecipe)) {
+            //if we have found a recipe that can be processed. save reference to it for next loop
+            this.consumeEnergy();
+            this.timer = TIMER_FULL;
+            lastRecipe = irecipe;
+          }
         }
       }
-      this.setSlotsForInsert(slotsImport);
-    }
-    else {//all are free game
-      this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     }
   }
 
-  public boolean tryProcessRecipe() {
-    RecipeHydrate irecipe = findMatchingRecipe();
-    if (irecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
-        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
-          //only create the output if cost was successfully paid
-          this.sendOutputItem(irecipe.getRecipeOutput());
+  public boolean tryProcessRecipe(RecipePackage recipe) {
+    boolean process = false;
+    //check inventory to see if we can pay costs of the recipe
+    //loop over recipe ingredients
+    //for each ingredient. track down all requirements
+    // if all are met, pay then => true
+    Map<Integer, Integer> mapSlotToCost = new HashMap<>();
+    for (ItemStack input : recipe.getInput()) {
+      process = false;
+      int needed = input.getCount();
+      //now find this many of them
+      int neededRemaining = needed;
+      for (int i = 0; i < INPUT_SIZE; i++) {
+        if (input.isItemEqual(this.getStackInSlot(i)) == false) {
+          continue;
         }
-        return true;
+
+        //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
+        //we found AN item with a matching recipe
+        int payHere = Math.min(neededRemaining, this.getStackInSlot(i).getCount());
+        mapSlotToCost.put(i, payHere);
+        //   ModCyclic.logger.info(i + " => " + payHere);
+        neededRemaining = neededRemaining - payHere;
+        if (neededRemaining == 0) {
+          process = true;
+          break;//break inv loop for current recipe
+        }
+        //else keep looking for the rest
+      }
+      if (!process) {
+        //inventory did not have enough if "input" to craft so abort
+        //and ignore the rest of the recipe
+        break;
       }
     }
-    return false;
+    // done looping inventory but not recipe
+    if (process) {
+      for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
+        //go 
+        this.decrStackSize(entry.getKey(), entry.getValue());
+      }
+      this.sendOutputItem(recipe.getRecipeOutput());
+    }
+    return process;
   }
 
-  /**
-   * try to match a shaped or shapeless recipe
-   * 
-   * @return
-   */
-  private RecipeHydrate findMatchingRecipe() {
-    boolean allAir = true;
-    for (int i = 0; i < RECIPE_SIZE; i++) {
-      //if ANY slot is non empty, we will get an && false which makes false
-      allAir = allAir && this.getStackInSlot(i).isEmpty();
-      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
-    }
-    if (allAir) {
-      return null;
-    }
-    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
-      }
-    }
-    return null;
-  }
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 3 + 1; i < 8; i++) {
+    for (int i = INPUT_SIZE + 1; i < this.getSizeInventory(); i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -161,7 +157,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-    compound.setInteger("rlock", recipeIsLocked);
+
     return super.writeToNBT(compound);
   }
 
@@ -169,20 +165,17 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
-    this.recipeIsLocked = compound.getInteger("rlock");
   }
 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case RECIPELOCKED:
-        return this.recipeIsLocked;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -198,9 +191,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case RECIPELOCKED:
-        this.recipeIsLocked = value % 2;
       break;
     }
   }
@@ -219,16 +209,12 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     return this.needsRedstone == 1;
   }
 
-  public float getFillRatio() {
-    return tank.getFluidAmount() / tank.getCapacity();
-  }
-
   /**
    * For the crafting inventory, since its never in GUI and is just used for auto processing
    * 
    * @author Sam
    */
-  public static class ContainerDummyHydrator extends Container {
+  public static class ContainerDummyPackager extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {

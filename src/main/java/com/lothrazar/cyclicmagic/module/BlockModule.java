@@ -130,6 +130,8 @@ import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
+import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
+import com.lothrazar.cyclicmagic.block.packager.TileEntityPackager;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.peat.BlockPeat;
@@ -277,6 +279,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableSlingshot;
   private boolean cableWireless;
   private boolean batteryInfinite;
+  private boolean enablePackager;
 
   @Override
   public void onPreInit() {
@@ -493,6 +496,11 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockHydrator block_hydrator = new BlockHydrator();
       BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    }
+    if (enablePackager) {
+      BlockPackager auto_packager = new BlockPackager();
+      BlockRegistry.registerBlock(auto_packager, "auto_packager", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityPackager.class, "auto_packager_te");
     }
     if (expPylon) {
       FluidsRegistry.registerExp();//it needs EXP fluid to work
@@ -733,6 +741,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enablePackager = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

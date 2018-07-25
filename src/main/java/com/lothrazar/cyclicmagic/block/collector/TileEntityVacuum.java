@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,7 +41,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
+public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle {
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(10, new StackWrapper());
   private static final int VRADIUS = 2;
@@ -76,7 +75,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     if (!this.isRunning()) {
       return;
     }
-    this.spawnParticlesAbove();
+
     if (!this.updateTimerIsZero()) {
       return;
     }
@@ -209,11 +208,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
   }
 
   @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
-  }
-
-  @Override
   public List<BlockPos> getShape() {
     //vertical radius goes both up and down. so to draw shape, start below and push up
     BlockPos bottmCenter = getTargetCenter().offset(EnumFacing.DOWN, VRADIUS);
@@ -237,13 +231,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     return this.needsRedstone == 1;
   }
 
-  @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;//size zero means a 1x1 area
-    }
-  }
 
   @Override
   public StackWrapper getStackWrapper(int i) {

@@ -51,6 +51,7 @@ button.harvester.size6=13x13
 button.harvester.size7=15x15
 button.harvester.size8=17x17
 button.harvester.size9=19x19
+button.harvester.size10=21x21
 button.height.down=Decrease height
 button.height.up=Increase height
 button.itemfilter.type0=B
@@ -1324,3 +1325,8 @@ chest_sack.error.pickup=Error detected when attempting pickup - action cancelled
 chest_sack.error.place=Error detected when attempting to place - action cancelled (see logs for details)
 chest_sack.error.null=Error on pickup - null block state or tile entity
 chest_sack.error.blacklist=Pickup disabled by config blacklist
+
+
+tile.auto_packager.name=Packager
+tile.auto_packager.tooltip=Bulk packaging with custom recipes
+tile.auto_packager.guide=Package items in bulk such as iron and gold into blocks.  Supports custom recipes added using CraftTweaker.  

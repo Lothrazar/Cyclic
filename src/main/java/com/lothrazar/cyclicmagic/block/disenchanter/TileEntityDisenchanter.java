@@ -44,7 +44,7 @@ import net.minecraft.util.SoundCategory;
 public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
   public static enum Fields {
-    REDSTONE, TIMER
+    REDSTONE, TIMER, FUEL;
   }
 
   public static final int TIMER_FULL = 100;
@@ -92,7 +92,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (!isInputValid()) {
       return;
     }
-    this.spawnParticlesAbove();
+
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -180,6 +180,8 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -191,6 +193,9 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;
