@@ -65,7 +65,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int offsetZ = 0;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ, FUEL;
   }
 
   public enum BuildType {
@@ -209,6 +209,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.offsetY;
         case OZ:
           return this.offsetZ;
+        case FUEL:
+          return this.getEnergyCurrent();
       }
     }
     return -1;
@@ -218,6 +220,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
+        case FUEL:
+          this.setEnergyCurrent(value);
+        break;
         case TIMER:
           this.timer = value;
         break;

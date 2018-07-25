@@ -40,7 +40,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   private int hOffset = 0;
 
   public static enum Fields {
-    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, FUEL;
   }
 
   public TileEntityDropperExact() {
@@ -120,6 +120,8 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -137,6 +139,9 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;

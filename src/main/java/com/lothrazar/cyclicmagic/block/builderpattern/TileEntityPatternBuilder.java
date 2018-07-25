@@ -79,7 +79,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL;
   }
 
   public TileEntityPatternBuilder() {
@@ -378,6 +378,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return flipY;
       case FLIPZ:
         return flipZ;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -388,6 +390,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       value = MAXIMUM;
     }
     switch (f) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case OFFTARGX:
         this.offsetTargetX = value;
       break;

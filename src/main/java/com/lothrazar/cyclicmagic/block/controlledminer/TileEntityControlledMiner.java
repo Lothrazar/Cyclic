@@ -83,7 +83,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(4, new StackWrapper());
 
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL;
   }
 
   public TileEntityControlledMiner() {
@@ -347,6 +347,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case HEIGHT:
         return getHeight();
       case REDSTONE:
@@ -366,6 +368,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case HEIGHT:
         if (value > maxHeight) {
           value = maxHeight;

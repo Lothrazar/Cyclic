@@ -103,7 +103,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUEL;
   }
 
   public TileEntityUser() {
@@ -433,6 +433,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -440,6 +442,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case Y_OFFSET:
         if (value > 1) {
           value = -1;

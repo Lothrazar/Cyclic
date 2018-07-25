@@ -43,7 +43,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private static final String NBT_REDST = "redstone";
 
   public static enum Fields {
-    TIMER, REDSTONE
+    TIMER, REDSTONE;
   }
 
   private int timer;
