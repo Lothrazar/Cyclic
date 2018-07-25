@@ -37,12 +37,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerForester extends ContainerBaseMachine {
 
-  public static final int SLOTX_START = 12;
-  public static final int SLOTY = 20;
+  public static final int SLOTX_START = 8;
+  public static final int SLOTY = 60;
 
   public ContainerForester(InventoryPlayer inventoryPlayer, TileEntityForester te) {
     super(te);
-    this.setScreenSize(ScreenSize.STANDARD);
+    this.setScreenSize(ScreenSize.LARGE);
     int rowsize = 6;
     for (int i = 0; i < te.getSizeInventory(); i++) {
       addSlotToContainer(new SlotCheckTileValid(tile, i,

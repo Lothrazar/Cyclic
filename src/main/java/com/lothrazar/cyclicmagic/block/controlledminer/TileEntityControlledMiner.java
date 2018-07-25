@@ -37,7 +37,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -58,7 +57,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
@@ -114,9 +113,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
   @Override
   public void update() {
-    if (isRunning()) {
-      this.spawnParticlesAbove();
-    }
+
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -445,18 +442,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     return this.needsRedstone == 1;
   }
 
-  @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;//size zero means a 1x1 area
-    }
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
-  }
 
   @Override
   public List<BlockPos> getShape() {

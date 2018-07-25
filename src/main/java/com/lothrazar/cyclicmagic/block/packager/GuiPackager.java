@@ -28,46 +28,16 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPackager extends GuiBaseContainer {
 
-  boolean debugLabels = true;
-  // private ButtonTileEntityField btnToggle;
 
   public GuiPackager(InventoryPlayer inventoryPlayer, TileEntityPackager tileEntity) {
     super(new ContainerPackager(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityPackager.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(this.xSize / 2 - 8).setY(16).setWidth(14);
-    //    this.fluidBar = new FluidBar(this, 98, 16);
-    //    fluidBar.setCapacity(TileEntityPackager.TANK_FULL);
-  }
 
-  @Override
-  public void initGui() {
-    super.initGui();
-    int btnId = 3;
-    //    btnToggle = new ButtonTileEntityField(btnId++,
-    //        this.guiLeft + 26,
-    //        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.RECIPELOCKED.ordinal());
-    //    btnToggle.width = btnToggle.height = 20;
-    //    this.addButton(btnToggle);
-  }
-
-  @SideOnly(Side.CLIENT)
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //    if (tile.getField(Fields.RECIPELOCKED.ordinal()) == 1) {
-    //      btnToggle.setTextureIndex(5);
-    //      btnToggle.setTooltip("tile.hydrator.locked.tooltip");
-    //    }
-    //    else {
-    //      btnToggle.setTextureIndex(6);
-    //      btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
-    //    }
   }
 
   @Override
@@ -92,6 +62,5 @@ public class GuiPackager extends GuiBaseContainer {
           y + k / ROWS * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    // fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

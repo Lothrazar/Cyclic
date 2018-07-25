@@ -42,7 +42,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -80,7 +79,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
@@ -125,7 +124,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       return;
     }
     this.shiftAllUp(6);
-    this.spawnParticlesAbove();
+
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -476,7 +475,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        this.size = value;
+        this.size = Math.min(value, MAX_SIZE);
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
@@ -513,14 +512,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-
-  @Override
   public int getSpeed() {
     return 1;
   }
@@ -533,11 +524,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1).offset(EnumFacing.UP, yOffset);
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

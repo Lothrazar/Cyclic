@@ -474,12 +474,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
-  }
-
-  @Override
   public boolean isPreviewVisible() {
     return renderParticles == 1;
   }

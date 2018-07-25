@@ -113,9 +113,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
 
   @Override
   public void update() {
-    if (isRunning()) {
-      this.spawnParticlesAbove();
-    }
+
     World world = this.getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
@@ -282,6 +280,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

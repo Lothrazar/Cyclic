@@ -86,7 +86,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.isRunning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
+
     if (this.updateTimerIsZero() == false) {
       return;
     }

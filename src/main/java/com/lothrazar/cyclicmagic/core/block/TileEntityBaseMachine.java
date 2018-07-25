@@ -23,14 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.core.block;
 
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -75,14 +73,6 @@ public abstract class TileEntityBaseMachine extends TileEntity {
 
   protected BlockPos getCurrentFacingPos() {
     return this.getPos().offset(this.getCurrentFacing());
-  }
-
-  protected void spawnParticlesAbove() {
-    if (this.getWorld().rand.nextDouble() < 0.05) {//was 0.1
-      if (this.getWorld().isRemote == false) {
-        UtilParticle.spawnParticlePacket(EnumParticleTypes.SMOKE_NORMAL, this.getPos(), this.getDimension());
-      }
-    }
   }
 
   /**

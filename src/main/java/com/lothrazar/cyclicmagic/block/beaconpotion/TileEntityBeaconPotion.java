@@ -31,7 +31,6 @@ import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.state.IBlockState;
@@ -55,7 +54,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITileSizeToggle {
+public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   static final int MAX_POTION = 16000;
   private static final int POTION_TICKS = Const.TICKS_PER_SEC * 8;// 8 seconds
@@ -374,6 +373,9 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         this.entityType = EntityType.values()[value];
       break;
       case RANGE:
+        if (value > MAX_RADIUS)
+          radius = 3;
+        else
         this.radius = Math.min(value, MAX_RADIUS);
       break;
     }
@@ -473,13 +475,5 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public int getRadiusCalc() {
     return (int) Math.pow(2, this.radius);
   }
-
-  @Override
-  public void toggleSizeShape() {
-    int newRad = this.getField(Fields.RANGE.ordinal()) + 1;
-    if (newRad > MAX_RADIUS) {
-      newRad = 4;
-    }
-    this.setField(Fields.RANGE.ordinal(), newRad);
-  }
+ 
 }

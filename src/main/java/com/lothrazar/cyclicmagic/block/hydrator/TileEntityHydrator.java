@@ -87,7 +87,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
-      this.spawnParticlesAbove();
+
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }

@@ -105,7 +105,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (this.fieldPreviewBtn > 0) {
       btnPreview = new GuiButtonTogglePreview(132,
           x,
-          y, this.tile.getPos());
+          y, this.tile.getPos(), fieldPreviewBtn);
       this.addButton(btnPreview);
     }
   }

@@ -81,7 +81,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (inputStack.isEmpty()) {
       return;//no paying cost on empty work
     }
-    this.spawnParticlesAbove();
+
     //pay energy each tick
     if (this.updateEnergyIsBurning() == false) {
       return;

@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -45,7 +44,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int spotsSkippablePerTrigger = 50;
   public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
@@ -366,7 +365,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;
-      this.spawnParticlesAbove();
+
       ItemStack stack = getStackInSlot(0);
       if (stack.isEmpty()) {
         return;
@@ -425,17 +424,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
-  @Override
   public void toggleSizeShape() {
     TileEntityStructureBuilder.BuildType old = this.getBuildTypeEnum();
     TileEntityStructureBuilder.BuildType next = TileEntityStructureBuilder.BuildType.getNextType(old);
     this.setBuildType(next.ordinal());
-  }
-
-  @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
 
   @Override
