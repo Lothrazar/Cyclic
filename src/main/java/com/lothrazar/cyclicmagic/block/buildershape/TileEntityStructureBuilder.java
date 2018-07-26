@@ -226,6 +226,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.timer = value;
         break;
         case BUILDTYPE:
+          //??toggleSizeShape
           if (value >= BuildType.values().length) {
             value = 0;
           }
@@ -421,12 +422,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
-  }
-
-  public void toggleSizeShape() {
-    TileEntityStructureBuilder.BuildType old = this.getBuildTypeEnum();
-    TileEntityStructureBuilder.BuildType next = TileEntityStructureBuilder.BuildType.getNextType(old);
-    this.setBuildType(next.ordinal());
   }
 
   @Override
