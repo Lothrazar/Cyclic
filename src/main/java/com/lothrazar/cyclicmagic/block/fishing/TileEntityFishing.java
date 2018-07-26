@@ -268,15 +268,17 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         return;
       }
     }
-    equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
-    //IF enchanted and IF about to break, then spit it out
-    int damageRem = equip.getMaxDamage() - equip.getItemDamage();
-    if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
-      sendOutputItem(equip);
-      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
-    } //otherwise we also make sure if its fullly damanged
-    if (equip.getItemDamage() >= equip.getMaxDamage()) {
-      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+    else if (equip.getMaxDamage() > 0) { // -1 is unbreakable - EX Mystical Ag Supremium Fishing Rods
+      equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
+      //IF enchanted and IF about to break, then spit it out
+      int damageRem = equip.getMaxDamage() - equip.getItemDamage();
+      if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
+        sendOutputItem(equip);
+        this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+      } //otherwise we also make sure if its fullly damanged
+      if (equip.getItemDamage() >= equip.getMaxDamage()) {
+        this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+      }
     }
   }
 
