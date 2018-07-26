@@ -113,7 +113,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
   @Override
   public void update() {
-
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -444,7 +443,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
-
 
   @Override
   public List<BlockPos> getShape() {

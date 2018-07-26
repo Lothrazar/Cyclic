@@ -39,7 +39,6 @@ public class RecipePackagerZen {
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeRecipe(IItemStack output) {
-
     ItemStack out = RecipeHydrateZen.toStack(output);
     RecipePackage toRemove = null;
     for (RecipePackage rec : RecipePackage.recipes) {
@@ -66,9 +65,7 @@ public class RecipePackagerZen {
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs) {
-
     ModCyclic.logger.info("ZenScript: added packager recipe for " + output.getDisplayName());
     RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStacks(inputs)));
   }
-
 }

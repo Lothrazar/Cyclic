@@ -124,7 +124,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       return;
     }
     this.shiftAllUp(6);
-
     if (this.updateEnergyIsBurning() == false) {
       return;
     }

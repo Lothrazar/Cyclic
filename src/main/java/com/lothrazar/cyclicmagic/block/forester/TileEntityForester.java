@@ -115,7 +115,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -380,7 +379,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
-
 
   @Override
   public List<BlockPos> getShape() {

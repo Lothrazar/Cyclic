@@ -41,7 +41,6 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
   @Override
   public void fromBytes(ByteBuf buf) {
     //   NBTTagCompound tags = ByteBufUtils.readTag(buf);
- 
   }
 
   @Override

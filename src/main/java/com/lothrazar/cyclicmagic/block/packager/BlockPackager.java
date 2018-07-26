@@ -83,7 +83,6 @@ public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasR
   //    }
   //    return 0;
   //  }
-
   @Override
   public void syncConfig(Configuration config) {
     TileEntityPackager.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,

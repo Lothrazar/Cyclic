@@ -166,7 +166,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     void setSounds(List<ResourceLocation> sounds) {
       this.sounds = sounds;
     }
-
     //    boolean hasSelectedElements() {
     //      return selectedIndicies.size() > 0;
     //    }

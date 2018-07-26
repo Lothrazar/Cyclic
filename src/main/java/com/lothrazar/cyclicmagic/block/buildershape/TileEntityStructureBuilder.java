@@ -365,7 +365,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;
-
       ItemStack stack = getStackInSlot(0);
       if (stack.isEmpty()) {
         return;

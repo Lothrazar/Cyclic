@@ -113,7 +113,6 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
 
   @Override
   public void update() {
-
     World world = this.getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);

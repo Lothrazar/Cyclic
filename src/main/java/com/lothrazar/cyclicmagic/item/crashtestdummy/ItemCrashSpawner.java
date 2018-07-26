@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
-
   public ItemCrashSpawner() {
     super(25);
   }

@@ -92,7 +92,6 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (!isInputValid()) {
       return;
     }
-
     if (this.updateEnergyIsBurning() == false) {
       return;
     }

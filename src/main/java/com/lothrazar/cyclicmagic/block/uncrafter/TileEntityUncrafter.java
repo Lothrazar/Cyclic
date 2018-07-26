@@ -89,7 +89,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     if (stack.isEmpty()) {
       return;
     }
-
     if (this.updateEnergyIsBurning() == false) {
       return;
     }

@@ -19,7 +19,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> 
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/packager_recipe.png"), 0, 0, 169, 69, 169, 69);
-
     icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_packager.png"), 0, 0, 16, 16, 16, 16);
   }
 

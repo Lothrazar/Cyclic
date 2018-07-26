@@ -38,6 +38,7 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
   public NonNullList<ItemStack> getInput() {
     return input;
   }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     //    ShapelessRecipes matches has been copied to here
@@ -81,13 +82,8 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
   }
 
   public static void initAllRecipes() {
-    
-
-    addRecipe(new RecipePackage(new ItemStack(Blocks.MYCELIUM), 
+    addRecipe(new RecipePackage(new ItemStack(Blocks.MYCELIUM),
         new ItemStack[] { new ItemStack(Blocks.DIRT, 2, 1), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM) }));
-    
-    
-    
     addRecipe(new RecipePackage(new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Items.IRON_INGOT, 9)));
     addRecipe(new RecipePackage(new ItemStack(Items.IRON_INGOT), new ItemStack(Items.IRON_NUGGET, 9)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.GOLD_BLOCK), new ItemStack(Items.GOLD_INGOT, 9)));

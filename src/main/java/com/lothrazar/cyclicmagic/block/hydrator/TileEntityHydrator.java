@@ -87,14 +87,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
-
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }
     }
   }
-
-
 
   private void updateLockSlots() {
     if (this.recipeIsLocked == 1) {
@@ -147,6 +144,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     }
     return null;
   }
+
   public void sendOutputItem(ItemStack itemstack) {
     for (int i = 3 + 1; i < 8; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {

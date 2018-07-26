@@ -31,13 +31,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiPackager extends GuiBaseContainer {
 
-
   public GuiPackager(InventoryPlayer inventoryPlayer, TileEntityPackager tileEntity) {
     super(new ContainerPackager(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityPackager.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(this.xSize / 2 - 8).setY(16).setWidth(14);
-
   }
 
   @Override

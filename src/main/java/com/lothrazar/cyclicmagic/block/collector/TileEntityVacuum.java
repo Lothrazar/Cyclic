@@ -75,7 +75,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     if (!this.isRunning()) {
       return;
     }
-
     if (!this.updateTimerIsZero()) {
       return;
     }
@@ -233,7 +232,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
-
 
   @Override
   public StackWrapper getStackWrapper(int i) {

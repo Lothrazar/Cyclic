@@ -36,12 +36,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonTogglePreview extends GuiButtonTexture {
 
   private BlockPos pos;
-
   private int fieldId;
+
   public GuiButtonTogglePreview(int buttonId, int x, int y, BlockPos p, int field) {
     super(buttonId, x, y);
     this.pos = p;
-    fieldId=field;
+    fieldId = field;
     this.setTextureIndex(3);
   }
 

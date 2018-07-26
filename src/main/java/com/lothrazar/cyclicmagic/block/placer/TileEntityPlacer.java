@@ -126,7 +126,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       markDirty();
       return;
     }
-
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a

@@ -376,7 +376,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
         if (value > MAX_RADIUS)
           radius = 3;
         else
-        this.radius = Math.min(value, MAX_RADIUS);
+          this.radius = Math.min(value, MAX_RADIUS);
       break;
     }
   }
@@ -475,5 +475,4 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public int getRadiusCalc() {
     return (int) Math.pow(2, this.radius);
   }
- 
 }

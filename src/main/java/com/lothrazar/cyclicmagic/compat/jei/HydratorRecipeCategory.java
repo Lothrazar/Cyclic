@@ -19,7 +19,6 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
 
   public HydratorRecipeCategory(IGuiHelper helper) {
     gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
-
     icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
   }
 

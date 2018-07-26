@@ -11,6 +11,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   public static enum Fields {
     FUEL;
   }
+
   private static final double PCT_UPDATE_ON_TICK = 0.01;
   //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k
   // int dynamics is 1M

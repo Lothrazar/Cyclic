@@ -59,7 +59,6 @@ public class EntityHomingProjectile extends EntityThrowable {
 
   private int lifetime = MAX_LIFETIME;
   private UUID targetId = null;
-
   private EntityLivingBase targetEntity;
   private float damage = 6.0f;
 

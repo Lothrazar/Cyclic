@@ -51,7 +51,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
-
     this.setSlotsForInsert(1, INPUT_SIZE);
     this.setSlotsForExtract(INPUT_SIZE + 1, INPUT_SIZE + OUTPUT_SIZE);
     this.initEnergy(BlockPackager.FUEL_COST);
@@ -69,14 +68,12 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public void update() {
-
     if (this.isRunning() == false) {
       return;
     }
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
       if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
@@ -113,7 +110,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
         if (input.isItemEqual(this.getStackInSlot(i)) == false) {
           continue;
         }
-
         //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
         //we found AN item with a matching recipe
         int payHere = Math.min(neededRemaining, this.getStackInSlot(i).getCount());
@@ -157,7 +153,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-
     return super.writeToNBT(compound);
   }
 

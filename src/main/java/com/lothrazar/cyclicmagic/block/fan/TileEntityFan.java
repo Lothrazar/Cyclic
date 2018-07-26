@@ -326,7 +326,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     speed = Math.min(value, MAX_SPEED);
   }
 
-
   @Override
   public boolean isPreviewVisible() {
     return this.showParticles == 1;

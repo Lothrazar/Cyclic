@@ -52,7 +52,6 @@ public class GuiItemPump extends GuiBaseContainer {
     for (int j = 1; j < 10; j++) {
       x = this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1;
       y = this.guiTop + ContainerItemPump.SLOTY - 1;
-
       StackWrapper wrap = te.getStackWrapper(slotNum);
       wrap.setX(x);
       wrap.setY(y);
