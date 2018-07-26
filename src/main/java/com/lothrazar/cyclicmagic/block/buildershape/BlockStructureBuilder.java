@@ -58,6 +58,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
     this.setTickRandomly(true);
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -81,6 +82,8 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityStructureBuilder.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        25, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

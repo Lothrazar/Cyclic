@@ -47,7 +47,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_UNCRAFTME = 0;
   public static final int SLOT_ROWS = 4;
   public static final int SLOT_COLS = 5;
-  public static final int TIMER_FULL = 200;
+  public static int TIMER_FULL = 200;
   private int needsRedstone = 1;
 
   public static enum Fields {

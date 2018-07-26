@@ -202,7 +202,10 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
         this.renderParticles = value % 2;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
     }
   }

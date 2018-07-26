@@ -47,7 +47,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int spotsSkippablePerTrigger = 50;
-  public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static int TIMER_FULL = 25;
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int buildType;

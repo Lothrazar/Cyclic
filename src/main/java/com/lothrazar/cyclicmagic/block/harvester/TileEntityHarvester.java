@@ -49,7 +49,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
 
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
-  public final static int TIMER_FULL = 200;
+  public static int TIMER_FULL = 200;
 
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
@@ -195,7 +195,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.needsRedstone = value;
       break;
       case SIZE:
-        this.size = Math.min(value, MAX_SIZE);
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;

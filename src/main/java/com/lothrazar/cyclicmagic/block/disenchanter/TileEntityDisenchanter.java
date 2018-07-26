@@ -47,7 +47,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     REDSTONE, TIMER, FUEL;
   }
 
-  public static final int TIMER_FULL = 100;
+  public static int TIMER_FULL = 100;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_BOTTLE = 1;
   public static final int SLOT_REDSTONE = 2;

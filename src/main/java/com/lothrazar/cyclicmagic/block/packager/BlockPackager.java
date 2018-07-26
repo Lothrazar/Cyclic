@@ -86,6 +86,8 @@ public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityPackager.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        35, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 350, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

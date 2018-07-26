@@ -333,11 +333,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          size = 1;
+          value = 1;
         }
-        else
-          size = value;
-        ModCyclic.logger.log("F size " + size);
+        size = value;
       break;
       case HEIGHT:
         this.height = Math.min(value, MAX_HEIGHT);
