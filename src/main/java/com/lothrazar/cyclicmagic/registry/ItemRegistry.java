@@ -115,6 +115,7 @@ public class ItemRegistry {
     }
   }
 
+  @SuppressWarnings("deprecation")
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public static void registerModels(ModelRegistryEvent event) {

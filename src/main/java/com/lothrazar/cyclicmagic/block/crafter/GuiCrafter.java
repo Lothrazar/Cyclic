@@ -53,7 +53,7 @@ public class GuiCrafter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0, x, y;
+    int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
     int xPrefix = Const.PAD, yPrefix = ContainerCrafter.SLOTY;

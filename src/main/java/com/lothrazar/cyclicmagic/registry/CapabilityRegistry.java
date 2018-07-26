@@ -34,6 +34,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilityRegistry {
 
+  @SuppressWarnings("deprecation")
   public static void register() {
     CapabilityManager.INSTANCE.register(IPlayerExtendedProperties.class, new PlayerStorage(),
         InstancePlayerExtendedProperties.class);

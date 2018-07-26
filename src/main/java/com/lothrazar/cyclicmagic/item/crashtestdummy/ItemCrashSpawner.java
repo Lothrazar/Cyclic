@@ -19,32 +19,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
 
-  //
-  private static final int COOLDOWN = 20 * 5;
-  //  private static final int TICKS_USING = 53000;//bow has 72000
 
   public ItemCrashSpawner() {
     super(25);
   }
-  //
-  //  @Override
-  //  public int getMaxItemUseDuration(ItemStack stack) {
-  //    return TICKS_USING;//bow has 72000
-  //  }
-  //
-  //  @Override
-  //  public EnumAction getItemUseAction(ItemStack stack) {
-  //    return EnumAction.BOW;//make it use cooldown
-  //  }
-  //
-  //  @Override
-  //  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-  //    if (hand != EnumHand.MAIN_HAND) {
-  //      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
-  //    }
-  //    player.setActiveHand(hand);
-  //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
-  //  }
 
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -71,15 +49,6 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe {
         'e', Items.SPIDER_EYE,
         'g', Items.GUNPOWDER);
   }
-  //  @SubscribeEvent
-  //  public static void startTracking(PlayerEvent.StartTracking event) {
-  //    if (event.getTarget() instanceof EntityRobot) {
-  //      EntityRobot entity = (EntityRobot) event.getTarget();
-  //      System.out.println("StartTracking" + entity.world.isRemote);
-  //
-  //      
-  //    }
-  //  }
 
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

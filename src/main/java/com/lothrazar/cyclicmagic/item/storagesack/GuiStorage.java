@@ -47,7 +47,7 @@ public class GuiStorage extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int id = 0;
+
     int y = this.guiTop;
     int x = this.guiLeft;
     buttonToggle = new GuiButtonTooltip(75, x, y, 10, 10, "");

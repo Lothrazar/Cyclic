@@ -147,6 +147,7 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
     BlockPos pos = new BlockPos(origin);

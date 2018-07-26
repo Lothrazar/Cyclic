@@ -47,15 +47,12 @@ public class GuiItemPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0, x, y, slotNum = 0;
+    int x, y, slotNum = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int j = 1; j < 10; j++) {
       x = this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1;
       y = this.guiTop + ContainerItemPump.SLOTY - 1;
-      //      Gui.drawModalRectWithCustomSizedTexture(
-      //          x,
-      //          y,
-      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+
       StackWrapper wrap = te.getStackWrapper(slotNum);
       wrap.setX(x);
       wrap.setY(y);

@@ -171,6 +171,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     setUserPerm(UsersAllowed.values()[t]);
   }
 
+  @SuppressWarnings("deprecation")
   public void onCorrectPassword(World world) {
     Block me = this.getBlockType();
     IBlockState blockState = world.getBlockState(this.getPos());
