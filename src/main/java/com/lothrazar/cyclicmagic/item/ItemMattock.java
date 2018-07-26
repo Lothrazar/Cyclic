@@ -96,6 +96,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
    * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java and
    * https://github.com/SlimeKnights/TinkersConstruct
    */
+  @SuppressWarnings("deprecation")
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos posHit, EntityPlayer player) {
     RayTraceResult ray = rayTrace(player.getEntityWorld(), player, false);

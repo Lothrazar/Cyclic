@@ -267,14 +267,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   @Override
-  protected void spawnParticlesAbove() {
-    //turn off when its off
-    if (this.isRunning()) {
-      super.spawnParticlesAbove();
-    }
-  }
-
-  @Override
   public boolean hasEnoughEnergy() {
     if (this.getEnergyCost() == 0) {
       return true;

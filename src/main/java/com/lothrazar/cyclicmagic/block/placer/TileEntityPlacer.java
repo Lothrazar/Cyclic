@@ -43,7 +43,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private static final String NBT_REDST = "redstone";
 
   public static enum Fields {
-    TIMER, REDSTONE
+    TIMER, REDSTONE;
   }
 
   private int timer;
@@ -126,7 +126,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       markDirty();
       return;
     }
-    this.spawnParticlesAbove();// its still processing
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a

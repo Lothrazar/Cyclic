@@ -15,7 +15,7 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
   private int needsRedstone = 0;
 
   public static enum Fields {
-    REDSTONE, TIMER
+    REDSTONE, TIMER, FUEL;
   }
 
   public static final int SLOT_INPUT = 0;
@@ -51,6 +51,8 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
         return timer;
       case REDSTONE:
         return this.needsRedstone;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -64,7 +66,8 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       case REDSTONE:
         this.needsRedstone = value;
       break;
-      default:
+      case FUEL:
+        this.setEnergyCurrent(value);
       break;
     }
   }

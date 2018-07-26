@@ -95,6 +95,6 @@ public class BlockFishing extends BlockBaseHasTile implements IHasConfig, IHasRe
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 25, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

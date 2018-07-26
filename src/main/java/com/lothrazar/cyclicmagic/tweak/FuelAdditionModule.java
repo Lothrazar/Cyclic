@@ -38,6 +38,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@SuppressWarnings("deprecation")
 public class FuelAdditionModule extends BaseModule implements IHasConfig {
 
   private boolean enabled;

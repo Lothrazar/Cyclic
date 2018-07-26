@@ -46,11 +46,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   private int needsRedstone = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED;
+    REDSTONE, TIMER, RECIPELOCKED, FUEL;
   }
 
   private int recipeIsLocked = 0;
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
@@ -87,34 +87,10 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
-      this.spawnParticlesAbove();
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }
     }
-  }
-
-  /**
-   * try to match a shaped or shapeless recipe
-   * 
-   * @return
-   */
-  private RecipeHydrate findMatchingRecipe() {
-    boolean allAir = true;
-    for (int i = 0; i < RECIPE_SIZE; i++) {
-      //if ANY slot is non empty, we will get an && false which makes false
-      allAir = allAir && this.getStackInSlot(i).isEmpty();
-      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
-    }
-    if (allAir) {
-      return null;
-    }
-    for (RecipeHydrate irecipe : RecipeHydrate.recipesShaped) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
-      }
-    }
-    return null;
   }
 
   private void updateLockSlots() {
@@ -133,17 +109,40 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public boolean tryProcessRecipe() {
-    RecipeHydrate rec = findMatchingRecipe();
-    if (rec != null) {
-      if (this.getCurrentFluidStackAmount() >= rec.getFluidCost()) {
-        if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+    RecipeHydrate irecipe = findMatchingRecipe();
+    if (irecipe != null) {
+      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
+        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
           //only create the output if cost was successfully paid
-          this.sendOutputItem(rec.getRecipeOutput());
+          this.sendOutputItem(irecipe.getRecipeOutput());
         }
         return true;
       }
     }
     return false;
+  }
+
+  /**
+   * try to match a shaped or shapeless recipe
+   * 
+   * @return
+   */
+  private RecipeHydrate findMatchingRecipe() {
+    boolean allAir = true;
+    for (int i = 0; i < RECIPE_SIZE; i++) {
+      //if ANY slot is non empty, we will get an && false which makes false
+      allAir = allAir && this.getStackInSlot(i).isEmpty();
+      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
+    }
+    if (allAir) {
+      return null;
+    }
+    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
+      if (irecipe.matches(this.crafting, world)) {
+        return irecipe;
+      }
+    }
+    return null;
   }
 
   public void sendOutputItem(ItemStack itemstack) {
@@ -174,6 +173,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -187,6 +188,9 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;
@@ -222,7 +226,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
    * 
    * @author Sam
    */
-  public static class ContainerDummy extends Container {
+  public static class ContainerDummyHydrator extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {

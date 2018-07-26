@@ -168,6 +168,7 @@ public class Const {
     public static final String blocks = MODCONF + "blocks";
     public static final String cables = blocks + ".cables";
     public static final String fuelCost = MODCONF + "FuelCost";
+    public static final String machineTimer = MODCONF + "Time";
     public static final String inventory = MODCONF + "Inventory";
     public static final String items = MODCONF + "items";
     public static final String logging = MODCONF + "logging";
@@ -186,6 +187,7 @@ public class Const {
   public class ConfigText {
 
     public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
+    public static final String machineTimer = "Number of ticks needed to perform one action by this machine";
   }
 
   public class ToolStrings {

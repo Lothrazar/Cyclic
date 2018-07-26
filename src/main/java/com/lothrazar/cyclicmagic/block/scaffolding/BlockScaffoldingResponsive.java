@@ -45,6 +45,7 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 64), "dirt", "stickWood");
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
     super.neighborChanged(state, worldIn, pos, blockIn, fromPos);

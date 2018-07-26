@@ -76,6 +76,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
     this.setTranslucent();
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   @SideOnly(Side.CLIENT)
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {

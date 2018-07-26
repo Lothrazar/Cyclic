@@ -45,7 +45,7 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int TIMER_FULL = 20;
+  public static int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -53,7 +53,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_OUTPUT = SIZE_INPUT;//20 to 30
 
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, FUEL;
   }
 
   private Container fakeContainer;
@@ -86,7 +86,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.isRunning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateTimerIsZero() == false) {
       return;
     }
@@ -218,6 +217,8 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -229,6 +230,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

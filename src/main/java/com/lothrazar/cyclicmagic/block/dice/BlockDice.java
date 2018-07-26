@@ -50,6 +50,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
     return false;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
     TileEntity tile = world.getTileEntity(pos);

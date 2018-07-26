@@ -88,6 +88,8 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityUncrafter.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        150, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 200, 0, 500000, Const.ConfigText.fuelCost);
     String category = Const.ConfigCategory.uncrafter;
     UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");

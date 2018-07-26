@@ -73,6 +73,7 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
         'b', "gemDiamond");
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -82,6 +83,8 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityHarvester.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        150, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

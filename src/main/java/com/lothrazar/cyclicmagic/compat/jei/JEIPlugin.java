@@ -27,6 +27,9 @@ import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
+import com.lothrazar.cyclicmagic.block.packager.ContainerPackager;
+import com.lothrazar.cyclicmagic.block.packager.GuiPackager;
+import com.lothrazar.cyclicmagic.block.packager.RecipePackage;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -41,6 +44,7 @@ import net.minecraft.item.ItemStack;
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
 
   static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+  static final String RECIPE_CATEGORY_PACKAGER = "packager";
 
   @SuppressWarnings("deprecation")
   @Override
@@ -69,11 +73,20 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
         8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerPackager.class, RECIPE_CATEGORY_PACKAGER,
+        0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        6, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
+        8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     // Start Custom recipe type: Hydrator
     registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(RecipeHydrate.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
     // End Custom recipe type: Hydrator
+    // Packager
+    registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
+    registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
+    registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
@@ -87,5 +100,6 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
     registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    registry.addRecipeCategories(new PackagerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
   }
 }

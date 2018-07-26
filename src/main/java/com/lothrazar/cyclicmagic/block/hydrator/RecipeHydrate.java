@@ -40,10 +40,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
+  public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = 25;
@@ -77,7 +78,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
         recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
   }
 
-  private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
+  public static boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
     if (sInvo.isEmpty() != sRecipe.isEmpty()) {
       return false;//empty matching empty
     }
@@ -225,6 +226,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
   }
 
   public static void addRecipe(RecipeHydrate rec) {
-    recipesShaped.add(rec);
+    recipes.add(rec);
   }
 }

@@ -103,6 +103,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
     return ret;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
     //?? world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : 

@@ -24,8 +24,6 @@
 package com.lothrazar.cyclicmagic.block.clockredstone;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock.Fields;
 import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
@@ -44,8 +42,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClock extends GuiBaseContainer {
 
-  private Map<EnumFacing, ButtonCheckboxTileField> poweredButtons = new HashMap<EnumFacing, ButtonCheckboxTileField>();
-  boolean debugLabels = false;
   private int btnId = 0;
   int w = 18, h = 15;
   int rowOffset = Const.PAD / 2;
@@ -155,7 +151,6 @@ public class GuiClock extends GuiBaseContainer {
     btn.setIsChecked(tileClock.getSideHasPower(side));
     btn.setTooltip("tile.clock.facing." + side.name().toLowerCase());
     this.addButton(btn);
-    poweredButtons.put(side, btn);
   }
 
   @Override

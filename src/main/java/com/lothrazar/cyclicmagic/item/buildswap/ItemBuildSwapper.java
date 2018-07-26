@@ -236,7 +236,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   public Set<BlockPos> renderOutline(World world, ItemStack heldItem, RayTraceResult mouseOver) {
     IBlockState state = world.getBlockState(mouseOver.getBlockPos());
     Block block = state.getBlock();
-    if (block != null && block.getMaterial(state) != Material.AIR) {
+    if (block != null && state.getMaterial() != Material.AIR) {
       IBlockState matched = null;
       if (this.getWandType() == WandType.MATCH) {
         matched = world.getBlockState(mouseOver.getBlockPos());

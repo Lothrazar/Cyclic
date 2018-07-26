@@ -67,6 +67,8 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityCrafter.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        20, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -256,12 +256,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   }
 
   @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
-  }
-
-  @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }

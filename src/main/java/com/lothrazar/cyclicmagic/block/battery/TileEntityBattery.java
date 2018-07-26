@@ -8,6 +8,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITickable {
 
+  public static enum Fields {
+    FUEL;
+  }
+
   private static final double PCT_UPDATE_ON_TICK = 0.01;
   //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k
   // int dynamics is 1M
@@ -19,6 +23,24 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     super(1);
     this.initEnergy(0, CAPACITY);
     this.setSlotsForBoth();
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
+    }
+    return -1;
   }
 
   @Override
