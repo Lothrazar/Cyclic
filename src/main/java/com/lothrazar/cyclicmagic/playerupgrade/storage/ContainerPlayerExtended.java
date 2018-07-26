@@ -72,6 +72,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         }
       });
     }
+
     //  extended
     int xPos, yPos, sl;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {

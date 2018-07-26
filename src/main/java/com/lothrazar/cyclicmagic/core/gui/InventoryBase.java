@@ -45,7 +45,7 @@ public class InventoryBase {
   }
 
   public String getName() {
-    return "";
+    return "Cyclic Abstract Inventory";
   }
 
   public boolean hasCustomName() {
