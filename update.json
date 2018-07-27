@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.16.4",
-    "1.12.2-recommended": "1.16.4"
+    "1.12.2-latest": "1.16.5",
+    "1.12.2-recommended": "1.16.5"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -285,5 +285,6 @@
   	,"1.16.2":"Butter potion no longer drops your items 5 blocks above your head.  "
   	,"1.16.3":"Autocrafter optimizations: don't search recipes matches when grid is empty, and don't search recipes clientside only server.  Error checking for Sack of Holding: if it fails to pickup/copy a block -usually an exception thrown from another mod- it leaves the block alone (Refined Storage Disk Drive).  If Sack of Holding fails to place a block, it now sends an error message the same way to avoid duplicating empty blocks (Extra Cells some machines).  Added some blocks to default SackHoldingBlacklist config entry.  zh_CN updated by sandtechnology.  Added a Requires Redstone button to Void Anvil.  Increased range of Water Spreader.  "
   	,"1.16.4":"New Block: Auto-Packager: bulk packaging of certain items with Crafttweaker support.  Fixed RF Energy bars in machine GUI's not updating clientside when certain cables/fluxducts/generators would insert energy serverside.  Forester GUI now has size and height controls.  Using Quarks Link-to-chat feature (default of Shift-T) no longer crashes when using it inside the cyclic player Extended Inventory tab.  Automatic Fishing net no longer destroys unbreakable fishing rods (for example Supremium Rod from Mystical Ag).  Added time config subsection for several machines to change their processing time.  "
+  	,"1.16.5":"Fixed Packager interfacing with the wrong slots when automated with cables/hoppers.  Updated Packager default recipe set.   "
   }
 }

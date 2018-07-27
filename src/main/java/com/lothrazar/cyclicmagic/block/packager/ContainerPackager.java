@@ -46,12 +46,14 @@ public class ContainerPackager extends ContainerBaseMachine {
     super(te);
     int slotNum = 0;
     for (int i = 0; i < TileEntityPackager.INPUT_SIZE; i++) {
+
       addSlotToContainer(new Slot(tile, slotNum,
           SLOTX_START + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
     for (int i = 0; i < TileEntityPackager.OUTPUT_SIZE; i++) {
+
       addSlotToContainer(new Slot(tile, slotNum,
           MID_SPACING + 1 + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
