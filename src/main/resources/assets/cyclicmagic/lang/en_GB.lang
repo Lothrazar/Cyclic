@@ -730,6 +730,7 @@ tile.entity_detector.entitytype=Which Entity types are counted
 tile.entity_detector.equal=Equal
 tile.entity_detector.exp=Exp
 tile.entity_detector.greater=Greater
+tile.entity_detector.less=Less
 tile.entity_detector.greaterthan=Output redstone based on this comparison to the limit
 tile.entity_detector.guide=Sends out a redstone signal based on the nearby entities found.  You can control entity type, range, and numbers to detect.
 tile.entity_detector.item=Items

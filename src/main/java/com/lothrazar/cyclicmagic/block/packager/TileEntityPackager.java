@@ -51,8 +51,8 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
-    this.setSlotsForInsert(1, INPUT_SIZE);
-    this.setSlotsForExtract(INPUT_SIZE + 1, INPUT_SIZE + OUTPUT_SIZE);
+    this.setSlotsForInsert(0, INPUT_SIZE - 1);
+    this.setSlotsForExtract(INPUT_SIZE, INPUT_SIZE + OUTPUT_SIZE - 1);
     this.initEnergy(BlockPackager.FUEL_COST);
   }
 
@@ -140,12 +140,12 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   }
 
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = INPUT_SIZE + 1; i < this.getSizeInventory(); i++) {
-      if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
+    for (int i = INPUT_SIZE; i < this.getSizeInventory(); i++) {
+      if (!itemstack.isEmpty()) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
     }
-    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) { //FULL
+    if (!itemstack.isEmpty()) {
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.up(), itemstack);
     }
   }

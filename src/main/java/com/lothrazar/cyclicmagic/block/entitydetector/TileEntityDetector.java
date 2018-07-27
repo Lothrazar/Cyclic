@@ -214,7 +214,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         this.entityType = EntityType.values()[value];
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % 2;
       break;
     }
   }

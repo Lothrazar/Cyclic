@@ -248,7 +248,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.needsRedstone = value;
         break;
         case RENDERPARTICLES:
-          this.renderParticles = value;
+          this.renderParticles = value % 2;
         break;
         case ROTATIONS:
           this.rotations = Math.max(0, value);
