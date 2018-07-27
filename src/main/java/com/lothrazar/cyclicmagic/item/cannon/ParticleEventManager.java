@@ -22,7 +22,6 @@ public class ParticleEventManager {
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
     ParticleGolemLaser.sprite = event.getMap().registerSprite(new ResourceLocation(Const.MODID, "entity/particle_mote"));
-    System.out.println("onTextureStitch");
   }
 
   @SideOnly(Side.CLIENT)
