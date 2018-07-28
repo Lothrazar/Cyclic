@@ -1,8 +1,8 @@
 {
     "variants": {
-		"facing=north": { "model": "cyclicmagic:dehydrator","y":180},
-        "facing=east": { "model":  "cyclicmagic:dehydrator","y":270},
-        "facing=south": { "model": "cyclicmagic:dehydrator"},
-        "facing=west": { "model":  "cyclicmagic:dehydrator" ,"y":90}
+		"facing=west": { "model": "cyclicmagic:dehydrator","y":180},
+        "facing=north": { "model":  "cyclicmagic:dehydrator","y":270},
+        "facing=east": { "model": "cyclicmagic:dehydrator"},
+        "facing=south": { "model":  "cyclicmagic:dehydrator" ,"y":90}
     }
 }
