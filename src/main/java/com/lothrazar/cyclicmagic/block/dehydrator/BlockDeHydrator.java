@@ -36,11 +36,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDeHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
@@ -50,7 +53,20 @@ public class BlockDeHydrator extends BlockBaseHasTile implements IHasConfig, IHa
     super(Material.IRON);
     this.setTickRandomly(true);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_DEHYDRATOR);
+    //   this.setTranslucent();
+    setLightOpacity(0);
     RecipeDeHydrate.initAllRecipes();
+  }
+
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.CUTOUT;
   }
 
   @Override
