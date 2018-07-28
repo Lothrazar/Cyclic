@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic.block.packager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import com.google.common.collect.Lists;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -10,6 +12,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -33,6 +36,7 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
         input.set(i, in[i]);
     }
     output = out;
+    this.setRegistryName(new ResourceLocation(Const.MODID, "packager" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
   }
 
   public NonNullList<ItemStack> getInput() {

@@ -23,10 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -41,26 +37,27 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
-  public static final int RECIPE_SIZE = 4;
+  private static final int SLOT_RECIPE = 0;
+  public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;
+  private RecipeDeHydrate lastRecipe = null;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED, FUEL;
+    REDSTONE, TIMER, FUEL;
   }
 
-  private int recipeIsLocked = 0;
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), 1, 1);
 
   public TileEntityDeHydrator() {
-    super(2 * RECIPE_SIZE);// in, out 
+    super(1 + 2 * STASH_SIZE);// in, out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.LAVA);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
+    this.setSlotsForInsert(1, 4);
+    this.setSlotsForExtract(5, 8);
     this.initEnergy(BlockDeHydrator.FUEL_COST);
   }
 
@@ -76,49 +73,45 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
 
   @Override
   public void update() {
-    this.updateLockSlots();
+
     if (this.isRunning() == false) {
       return;
     }
+    this.tryShiftInput();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    //ignore timer when filling up water
-    if (this.getCurrentFluidStackAmount() == 0) {
-      return;
-    }
-    if (this.updateTimerIsZero()) { // time to burn!
-      if (tryProcessRecipe()) {
-        this.timer = TIMER_FULL;
+    //    //ignore timer when filling up water
+    //    if (this.getCurrentFluidStackAmount() == 0) {
+    //      return;
+    //    }
+    if (this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
+      lastRecipe = findMatchingRecipe();
+      if (this.lastRecipe != null && tryProcessRecipe()) {
+        this.timer = lastRecipe.getTime();
       }
     }
   }
 
-  private void updateLockSlots() {
-    if (this.recipeIsLocked == 1) {
-      List<Integer> slotsImport = new ArrayList<Integer>();
-      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
-        if (this.getStackInSlot(slot).isEmpty() == false) {
-          slotsImport.add(slot);
-        }
-      }
-      this.setSlotsForInsert(slotsImport);
+
+  private void tryShiftInput() {
+    if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
+      return;
     }
-    else {//all are free game
-      this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
+    for (int i = 1; i <= STASH_SIZE; i++) {
+      this.tryMergeStackIntoSlot(this.getStackInSlot(SLOT_RECIPE), SLOT_RECIPE);
     }
   }
 
   public boolean tryProcessRecipe() {
-    RecipeHydrate irecipe = findMatchingRecipe();
-    if (irecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
-        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+    if (lastRecipe != null) {
+      //      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
+      if (lastRecipe.tryPayCost(this)) {
           //only create the output if cost was successfully paid
-          this.sendOutputItem(irecipe.getRecipeOutput());
+        this.sendOutputItem(lastRecipe.getRecipeOutput());
         }
         return true;
-      }
+      //      }
     }
     return false;
   }
@@ -128,17 +121,11 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
    * 
    * @return
    */
-  private RecipeHydrate findMatchingRecipe() {
-    boolean allAir = true;
-    for (int i = 0; i < RECIPE_SIZE; i++) {
-      //if ANY slot is non empty, we will get an && false which makes false
-      allAir = allAir && this.getStackInSlot(i).isEmpty();
-      this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
-    }
-    if (allAir) {
-      return null;
-    }
-    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
+  private RecipeDeHydrate findMatchingRecipe() {
+
+    this.crafting.setInventorySlotContents(SLOT_RECIPE, this.getStackInSlot(SLOT_RECIPE).copy());
+
+    for (RecipeDeHydrate irecipe : RecipeDeHydrate.recipes) {
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }
@@ -147,7 +134,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   }
 
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 3 + 1; i < 8; i++) {
+    for (int i = STASH_SIZE + 1; i < this.getSizeInventory(); i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -160,7 +147,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-    compound.setInteger("rlock", recipeIsLocked);
+
     return super.writeToNBT(compound);
   }
 
@@ -168,7 +155,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
-    this.recipeIsLocked = compound.getInteger("rlock");
   }
 
   @Override
@@ -180,8 +166,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case RECIPELOCKED:
-        return this.recipeIsLocked;
     }
     return -1;
   }
@@ -197,9 +181,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case RECIPELOCKED:
-        this.recipeIsLocked = value % 2;
       break;
     }
   }

@@ -45,13 +45,19 @@ public class ContainerDeHydrator extends ContainerBaseMachine {
   public ContainerDeHydrator(InventoryPlayer inventoryPlayer, TileEntityDeHydrator te) {
     super(te);
     int slotNum = 0;
-    for (int i = 0; i < TileEntityDeHydrator.RECIPE_SIZE; i++) {
+    //recipe primary slot
+    addSlotToContainer(new Slot(tile, slotNum,
+        SLOTX_START + 48,
+        SLOTY + 10));
+    slotNum++;
+    int s = 4;
+    for (int i = 0; i < s; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
           SLOTX_START + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    for (int i = 0; i < TileEntityDeHydrator.RECIPE_SIZE; i++) {
+    for (int i = 0; i < s; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
           MID_SPACING + 1 + i / 2 * Const.SQ,
           SLOTY + i % 2 * Const.SQ));

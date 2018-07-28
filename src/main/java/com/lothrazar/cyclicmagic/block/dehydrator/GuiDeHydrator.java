@@ -44,8 +44,8 @@ public class GuiDeHydrator extends GuiBaseContainer {
     super(new ContainerDeHydrator(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityDeHydrator.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
-    energyBar.setX(70).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 98, 16);
+    energyBar.setX(84).setY(16).setWidth(14);
+    this.fluidBar = new FluidBar(this, 110, 16);
     fluidBar.setCapacity(TileEntityDeHydrator.TANK_FULL);
   }
 
@@ -71,18 +71,29 @@ public class GuiDeHydrator extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
     int x = this.guiLeft + ContainerDeHydrator.SLOTX_START - 1;
     int y = this.guiTop + ContainerDeHydrator.SLOTY - 1;
-    for (int k = 0; k < 4; k++) {
+    int s = 4;
+
+    int size = 26;
+      Gui.drawModalRectWithCustomSizedTexture(
+        x + 44,
+        y + 6,
+        u, v, size, size, size, size);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+
+    for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+
     x = this.guiLeft + ContainerDeHydrator.MID_SPACING;
     y = this.guiTop + ContainerHydrator.SLOTY - 1;
-    for (int k = 0; k < 4; k++) {
+
+    for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,
           y + k / 2 * Const.SQ,

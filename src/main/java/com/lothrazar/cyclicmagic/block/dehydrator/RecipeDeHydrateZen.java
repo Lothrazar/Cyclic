@@ -42,7 +42,7 @@ public class RecipeDeHydrateZen {
     for (RecipeDeHydrate rec : RecipeDeHydrate.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
         RecipeDeHydrate.recipes.remove(rec);
-        ModCyclic.logger.info("ZenScript: removed hydrator recipe for " + output.getDisplayName());
+        ModCyclic.logger.info("ZenScript: removed dehydrator recipe for " + output.getDisplayName());
       }
     }
   }
@@ -56,9 +56,9 @@ public class RecipeDeHydrateZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
-  public static void addRecipe(IItemStack output, IItemStack[] inputs, int water) {
-    ModCyclic.logger.info("ZenScript: added hydrator recipe for " + output.getDisplayName());
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStacks(inputs), toStack(output), water));
+  public static void addRecipe(IItemStack output, IItemStack inputs, int water) {
+    ModCyclic.logger.info("ZenScript: added dehydrator recipe for " + output.getDisplayName());
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), water));
   }
 
   /**
