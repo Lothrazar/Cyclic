@@ -1331,3 +1331,8 @@ chest_sack.error.blacklist=Pickup disabled by config blacklist
 tile.auto_packager.name=Packager
 tile.auto_packager.tooltip=Bulk packaging with custom recipes
 tile.auto_packager.guide=Package items in bulk such as iron and gold into blocks.  Supports custom recipes added using CraftTweaker.  
+
+tile.dehydrator.name=Dehydrator
+tile.dehydrator.tooltip=Process dehydration recipes
+tile.dehydrator.guide=Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.
+

@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,8 +39,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDeHydrator extends GuiBaseContainer {
 
-  boolean debugLabels = true;
-  private ButtonTileEntityField btnToggle;
 
   public GuiDeHydrator(InventoryPlayer inventoryPlayer, TileEntityDeHydrator tileEntity) {
     super(new ContainerDeHydrator(inventoryPlayer, tileEntity), tileEntity);
