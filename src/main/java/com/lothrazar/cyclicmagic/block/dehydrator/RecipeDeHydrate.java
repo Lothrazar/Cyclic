@@ -112,7 +112,9 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
 
   public static void initAllRecipes() {
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING),
-        new ItemStack(Items.STICK), 70));
+        new ItemStack(Items.STICK), 40));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CLAY),
+        new ItemStack(Blocks.SAND), 200));
   }
 
   public static void addRecipe(RecipeDeHydrate rec) {

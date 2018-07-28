@@ -23,12 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
+import com.lothrazar.cyclicmagic.block.beaconpotion.ContainerBeaconPotion;
+import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion.Fields;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -42,11 +45,13 @@ public class GuiDeHydrator extends GuiBaseContainer {
 
   public GuiDeHydrator(InventoryPlayer inventoryPlayer, TileEntityDeHydrator tileEntity) {
     super(new ContainerDeHydrator(inventoryPlayer, tileEntity), tileEntity);
-    this.fieldRedstoneBtn = TileEntityDeHydrator.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
-    energyBar.setX(84).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 110, 16);
+    fieldRedstoneBtn = TileEntityDeHydrator.Fields.REDSTONE.ordinal();
+    energyBar = new EnergyBar(this);
+    energyBar.setX(84).setY(16).setWidth(14).setHeight(50);
+    fluidBar = new FluidBar(this, 110, 16);
+    fluidBar.setHeight(52);
     fluidBar.setCapacity(TileEntityDeHydrator.TANK_FULL);
+    progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), 10);
   }
 
   @Override
@@ -70,6 +75,9 @@ public class GuiDeHydrator extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    if (progressBar != null) {
+      progressBar.setMaxValue(tile.getField(TileEntityDeHydrator.Fields.TIMERMAX.ordinal()));
+    }
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
     int x = this.guiLeft + ContainerDeHydrator.SLOTX_START - 1;

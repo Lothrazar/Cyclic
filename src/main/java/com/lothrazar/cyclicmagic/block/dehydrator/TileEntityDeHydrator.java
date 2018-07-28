@@ -40,12 +40,12 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   private static final int SLOT_RECIPE = 0;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  public final static int TIMER_FULL = 40;
   private int needsRedstone = 1;
+  private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER, TIMERMAX, FUEL;
   }
 
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), 1, 1);
@@ -53,7 +53,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   public TileEntityDeHydrator() {
     super(1 + 2 * STASH_SIZE);// in, out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
-    timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.LAVA);
     this.setSlotsForInsert(1, 4);
@@ -73,7 +72,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
 
   @Override
   public void update() {
-
     if (this.isRunning() == false) {
       return;
     }
@@ -81,14 +79,21 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    //    //ignore timer when filling up water
-    //    if (this.getCurrentFluidStackAmount() == 0) {
-    //      return;
-    //    }
-    if (this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
+    if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
+      lastRecipe = null;//all gone 
+    }
+    if (this.lastRecipe == null) {
       lastRecipe = findMatchingRecipe();
-      if (this.lastRecipe != null && tryProcessRecipe()) {
-        this.timer = lastRecipe.getTime();
+    }
+    if (this.lastRecipe != null && this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
+      if (tryProcessRecipe()) {
+        if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
+          lastRecipe = null;
+        }
+        else {//reset timer; if on same recipe
+          this.timer = lastRecipe.getTime();
+        }
+      //else recipe became null
       }
     }
   }
@@ -101,16 +106,22 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   }
 
   public boolean tryProcessRecipe() {
-    if (lastRecipe != null) {
-      //      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
-      if (lastRecipe.tryPayCost(this)) {
-          //only create the output if cost was successfully paid
-        this.sendOutputItem(lastRecipe.getRecipeOutput());
-        }
-        return true;
-      //      }
+    //last minute check in case item swapped
+    if (!recipeMatches(lastRecipe)) {
+      lastRecipe = null;
+      return false;
+    }
+    if (lastRecipe.tryPayCost(this)) {
+      //only create the output if cost was successfully paid
+      this.sendOutputItem(lastRecipe.getRecipeOutput());
+      return true;
     }
     return false;
+  }
+
+  private boolean recipeMatches(RecipeDeHydrate irecipe) {
+    this.crafting.setInventorySlotContents(SLOT_RECIPE, this.getStackInSlot(SLOT_RECIPE).copy());
+    return irecipe.matches(this.crafting, world);
   }
 
   /**
@@ -119,11 +130,10 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
    * @return
    */
   private RecipeDeHydrate findMatchingRecipe() {
-
-    this.crafting.setInventorySlotContents(SLOT_RECIPE, this.getStackInSlot(SLOT_RECIPE).copy());
-
+    //    this.crafting.setInventorySlotContents(SLOT_RECIPE, this.getStackInSlot(SLOT_RECIPE).copy());
     for (RecipeDeHydrate irecipe : RecipeDeHydrate.recipes) {
-      if (irecipe.matches(this.crafting, world)) {
+      if (recipeMatches(irecipe)) {
+        timerMax = timer = irecipe.getTime();
         return irecipe;
       }
     }
@@ -144,7 +154,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-
     return super.writeToNBT(compound);
   }
 
@@ -163,6 +172,10 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         return this.needsRedstone;
       case TIMER:
         return this.timer;
+      case TIMERMAX:
+        return timerMax;
+      default:
+      break;
     }
     return -1;
   }
@@ -178,6 +191,11 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       break;
       case TIMER:
         this.timer = value;
+      break;
+      case TIMERMAX:
+        timerMax = value;
+      break;
+      default:
       break;
     }
   }
