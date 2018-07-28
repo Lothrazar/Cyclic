@@ -21,26 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.anvil;
+package com.lothrazar.cyclicmagic.core.block;
 
-import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AnvilAutoTESR extends BaseMachineTESR<TileEntityAnvilAuto> {
+public class RenderItemTesr<T extends TileEntityBaseMachineInvo> extends BaseMachineTESR<T> {
 
-  public AnvilAutoTESR(int slot) {
+  private float yOffset;
+
+  public RenderItemTesr(int slot, float y) {
     super(slot);
+    yOffset = y;
   }
 
   @Override
   public void renderBasic(TileEntityBaseMachineInvo te) {
     ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
     if (stack.isEmpty() == false) {
-      renderItem(te, stack, 1.15F);
+      renderItem(te, stack, yOffset);
     }
   }
 }

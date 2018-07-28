@@ -37,7 +37,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
-  private static final int SLOT_RECIPE = 0;
+  static final int SLOT_RECIPE = 0;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 10000;
   private int needsRedstone = 1;
