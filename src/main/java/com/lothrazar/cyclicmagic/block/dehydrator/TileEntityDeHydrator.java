@@ -38,6 +38,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   static final int SLOT_RECIPE = 0;
+  public static final int LAVA_DRAIN = 10;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 10000;
   private int needsRedstone = 1;
@@ -85,6 +86,8 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     if (this.lastRecipe == null) {
       lastRecipe = findMatchingRecipe();
     }
+    //if we have lava, reduce timer an extra time
+    this.tryLavaSpeedup();
     if (this.lastRecipe != null && this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
       if (tryProcessRecipe()) {
         if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
@@ -95,6 +98,18 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         }
       //else recipe became null
       }
+    }
+  }
+
+  private void tryLavaSpeedup() {
+    // try to burn off some lava
+    if (timer == 0 || lastRecipe == null) {
+      return;
+    }
+    //if it works, hit up a timer-- to speed it up
+    if(tank.getFluidAmount() >=  LAVA_DRAIN){
+      tank.drain(LAVA_DRAIN, true);
+      this.timer--;
     }
   }
 
@@ -134,6 +149,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     for (RecipeDeHydrate irecipe : RecipeDeHydrate.recipes) {
       if (recipeMatches(irecipe)) {
         timerMax = timer = irecipe.getTime();
+
         return irecipe;
       }
     }
