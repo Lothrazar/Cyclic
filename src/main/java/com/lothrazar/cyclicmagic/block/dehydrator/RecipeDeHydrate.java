@@ -102,6 +102,13 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
     return recipeInput;
   }
 
+  public int getTime() {
+    return time;
+  }
+
+  public void setTime(int time) {
+    this.time = time;
+  }
 
   public static void initAllRecipes() {
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING),
@@ -112,11 +119,4 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
     recipes.add(rec);
   }
 
-  public int getTime() {
-    return time;
-  }
-
-  public void setTime(int time) {
-    this.time = time;
-  }
 }

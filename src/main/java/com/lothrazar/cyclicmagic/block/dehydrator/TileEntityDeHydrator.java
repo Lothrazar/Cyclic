@@ -93,13 +93,10 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     }
   }
 
-
   private void tryShiftInput() {
-    if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
-      return;
-    }
     for (int i = 1; i <= STASH_SIZE; i++) {
-      this.tryMergeStackIntoSlot(this.getStackInSlot(SLOT_RECIPE), SLOT_RECIPE);
+      ItemStack result = this.tryMergeStackIntoSlot(this.getStackInSlot(i), SLOT_RECIPE);
+      this.setInventorySlotContents(i, result);
     }
   }
 
