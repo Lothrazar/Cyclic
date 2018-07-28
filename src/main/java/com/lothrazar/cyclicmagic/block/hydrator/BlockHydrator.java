@@ -67,11 +67,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
   }
 
   @Override
-  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-    return side == EnumFacing.DOWN;
-  }
-
-  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityHydrator();
   }

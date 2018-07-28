@@ -41,9 +41,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
@@ -75,11 +72,6 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
     return BlockRenderLayer.CUTOUT;
   }
 
-  @Override
-  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-    return side == EnumFacing.DOWN;
-  }
-
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
@@ -99,7 +91,7 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
         "lgl",
         "ooo",
         'l', Blocks.CLAY,
-        'o', Blocks.MAGMA,
+        'o', "logWood",
         'g', Blocks.IRON_BLOCK,
         's', Blocks.DROPPER,
         'r', Items.WATER_BUCKET);

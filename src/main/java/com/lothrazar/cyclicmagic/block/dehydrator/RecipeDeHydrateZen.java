@@ -56,9 +56,9 @@ public class RecipeDeHydrateZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
-  public static void addRecipe(IItemStack output, IItemStack inputs, int water) {
+  public static void addRecipe(IItemStack output, IItemStack inputs, int ticks) {
     ModCyclic.logger.info("ZenScript: added dehydrator recipe for " + output.getDisplayName());
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), water));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), ticks));
   }
 
   /**
