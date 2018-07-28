@@ -54,7 +54,6 @@ public class BlockPeat extends BlockBase implements IHasRecipe {
     super(Material.GROUND);
     this.setSoundType(SoundType.GROUND);
     this.setHarvestLevel(Const.ToolStrings.shovel, 2);
-    this.setTickRandomly(true);
     isBaked = drop != null;
     this.drop = drop;
   }

@@ -62,7 +62,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
   public BlockHydrator() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setTickRandomly(true);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
     RecipeHydrate.initAllRecipes();
   }

@@ -57,7 +57,6 @@ public class BlockFishing extends BlockBaseHasTile implements IHasConfig, IHasRe
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
-    this.setTickRandomly(true);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_FISHER);
     this.setTranslucent();
   }

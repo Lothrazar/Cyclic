@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.dehydrator;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.core.block.RenderItemTesr;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -51,15 +51,15 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDeHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe, IBlockHasTESR {
+public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
   public static int FUEL_COST = 10;
 
   public BlockDeHydrator() {
     super(Material.IRON);
-    this.setTickRandomly(true);
+
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_DEHYDRATOR);
-    //   this.setTranslucent();
+
     setLightOpacity(0);
     RecipeDeHydrate.initAllRecipes();
   }
