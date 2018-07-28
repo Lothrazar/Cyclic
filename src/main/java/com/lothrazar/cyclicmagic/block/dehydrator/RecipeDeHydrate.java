@@ -30,6 +30,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -111,10 +112,24 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   }
 
   public static void initAllRecipes() {
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING),
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE),
         new ItemStack(Items.STICK), 40));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CLAY),
-        new ItemStack(Blocks.SAND), 200));
+        new ItemStack(Blocks.HARDENED_CLAY), 900));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.DIRT),
+        new ItemStack(Blocks.GRAVEL), 500));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.TALLGRASS, 1, 2),
+        new ItemStack(Blocks.DEADBUSH), 40));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.GRASS),
+        new ItemStack(Blocks.GRASS_PATH), 40));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.DIRT, 1, 1),
+        new ItemStack(Blocks.DIRT, 1, 2), 40));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Items.ROTTEN_FLESH, 12),
+        new ItemStack(Items.LEATHER), 500));
+    //dry out concrete back to powder
+    for (EnumDyeColor col : EnumDyeColor.values()) {
+      addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CONCRETE, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), 100));
+    }
   }
 
   public static void addRecipe(RecipeDeHydrate rec) {
