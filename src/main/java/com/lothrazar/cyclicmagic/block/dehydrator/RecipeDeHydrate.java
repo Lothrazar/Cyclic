@@ -43,7 +43,7 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public static ArrayList<RecipeDeHydrate> recipes = new ArrayList<RecipeDeHydrate>();
   private ItemStack recipeInput = ItemStack.EMPTY;
   private ItemStack resultItem = ItemStack.EMPTY;
-  //  private int fluidCost = 25;
+
   private int time = 70;
 
   public RecipeDeHydrate(ItemStack in, ItemStack out, int time) {
@@ -55,7 +55,7 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    return recipeSlotMatches(inv.getStackInSlot(0), recipeInput) ;
+    return recipeSlotMatches(inv.getStackInSlot(0), recipeInput);
   }
 
   public static boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
@@ -69,18 +69,11 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   }
 
   public boolean tryPayCost(IInventory invoSource) {
-    //    if (tank.getFluidAmount() < this.getFluidCost()) {
-    //      return false;//not enough fluid, so stop now
-    //    }
     if (invoSource.getStackInSlot(0).getCount() < recipeInput.getCount()) {
-        return false;//at least one of the stacks cannot pay
-      }
-
+      return false;//at least one of the stacks cannot pay
+    }
     //now actually pay, since they all can
-  invoSource.decrStackSize(0,recipeInput.getCount());
-    //    }
-    //pay fluid last. same for shaped and shapeless
-    //    tank.drain(this.getFluidCost(), true);
+    invoSource.decrStackSize(0, recipeInput.getCount());
     return true;
   }
 
@@ -135,5 +128,4 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public static void addRecipe(RecipeDeHydrate rec) {
     recipes.add(rec);
   }
-
 }

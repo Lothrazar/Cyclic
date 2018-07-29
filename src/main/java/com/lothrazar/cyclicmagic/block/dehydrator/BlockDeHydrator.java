@@ -35,7 +35,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -87,14 +86,13 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "rsr",
+        "r r",
         "lgl",
         "ooo",
         'l', Blocks.CLAY,
         'o', "logWood",
         'g', Blocks.IRON_BLOCK,
-        's', Blocks.DROPPER,
-        'r', Items.WATER_BUCKET);
+        'r', "dustRedstone");
   }
 
 
