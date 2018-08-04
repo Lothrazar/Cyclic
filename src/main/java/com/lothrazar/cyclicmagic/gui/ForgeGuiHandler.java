@@ -74,6 +74,9 @@ import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner
 import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.GuiCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.dehydrator.ContainerDeHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.GuiDeHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.TileEntityDeHydrator;
 import com.lothrazar.cyclicmagic.block.disenchanter.ContainerDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.GuiDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
@@ -225,6 +228,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_W_CONTENT = 44;
   public static final int GUI_INDEX_W_ENERGY = 45;
   public static final int GUI_INDEX_PACKAGER = 46;
+  public static final int GUI_INDEX_DEHYDRATOR = 47;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -457,6 +461,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_PACKAGER:
         if (te instanceof TileEntityPackager) {
           return new ContainerPackager(player.inventory, (TileEntityPackager) te);
+        }
+      break;
+      case GUI_INDEX_DEHYDRATOR:
+        if (te instanceof TileEntityDeHydrator) {
+          return new ContainerDeHydrator(player.inventory, (TileEntityDeHydrator) te);
         }
       break;
     }
@@ -692,6 +701,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_PACKAGER:
           if (te instanceof TileEntityPackager) {
             return new GuiPackager(player.inventory, (TileEntityPackager) te);
+          }
+        break;
+        case GUI_INDEX_DEHYDRATOR:
+          if (te instanceof TileEntityDeHydrator) {
+            return new GuiDeHydrator(player.inventory, (TileEntityDeHydrator) te);
           }
         break;
       }

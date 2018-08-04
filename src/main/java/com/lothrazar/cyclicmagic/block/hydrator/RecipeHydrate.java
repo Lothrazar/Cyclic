@@ -44,21 +44,22 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
+  private static final int FLUID_DEFAULT = 25;
   public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
-  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
+  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
-  private int fluidCost = 25;
+  private int fluidCost = FLUID_DEFAULT;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
-    this(new ItemStack[] { in }, out, 25);
+    this(new ItemStack[] { in }, out, FLUID_DEFAULT);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
-    this(in, out, 25);
+    this(in, out, FLUID_DEFAULT);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
-    if (in.length > 4 || in.length == 0) {
+    if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
     for (int i = 0; i < in.length; i++) {

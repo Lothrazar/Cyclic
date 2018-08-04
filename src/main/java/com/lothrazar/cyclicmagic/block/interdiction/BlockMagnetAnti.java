@@ -52,7 +52,6 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
     this.setTranslucent();
   }
 

@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.buildershape;
+package com.lothrazar.cyclicmagic.block.dehydrator;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.block.MachineTESR;
+import com.lothrazar.cyclicmagic.core.block.RenderItemTesr;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -40,6 +39,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
@@ -47,42 +47,57 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHasRecipe, IBlockHasTESR {
 
-  public static int FUEL_COST = 0;
+  public static int FUEL_COST = 10;
 
-  public BlockStructureBuilder() {
-    super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
-    this.setHardness(3.0F).setResistance(5.0F);
-    this.setSoundType(SoundType.METAL);
+  public BlockDeHydrator() {
+    super(Material.IRON);
+
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_DEHYDRATOR);
+
+    setLightOpacity(0);
+    RecipeDeHydrate.initAllRecipes();
+  }
+
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
   }
 
   @Override
   @SideOnly(Side.CLIENT)
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.CUTOUT;
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStructureBuilder.class, new MachineTESR(this, 0));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDeHydrator.class, new RenderItemTesr<TileEntityDeHydrator>(TileEntityDeHydrator.SLOT_RECIPE, 0.5F));
   }
 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityStructureBuilder();
+    return new TileEntityDeHydrator();
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', "obsidian",
-        'g', Blocks.OBSERVER,
-        's', Blocks.DISPENSER,
-        'r', "blockRedstone",
-        'b', Blocks.MAGMA);
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "r r",
+        "lgl",
+        "ooo",
+        'l', Blocks.CLAY,
+        'o', "logWood",
+        'g', Blocks.IRON_BLOCK,
+        'r', "dustRedstone");
   }
+
 
   @Override
   public void syncConfig(Configuration config) {
-    TileEntityStructureBuilder.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
-        25, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 20, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

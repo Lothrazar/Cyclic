@@ -86,6 +86,8 @@ import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.block.dehydrator.BlockDeHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.TileEntityDeHydrator;
 import com.lothrazar.cyclicmagic.block.dice.BlockDice;
 import com.lothrazar.cyclicmagic.block.dice.TileEntityDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
@@ -280,6 +282,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean cableWireless;
   private boolean batteryInfinite;
   private boolean enablePackager;
+  private boolean enableDehydr;
 
   @Override
   public void onPreInit() {
@@ -501,6 +504,11 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockPackager auto_packager = new BlockPackager();
       BlockRegistry.registerBlock(auto_packager, "auto_packager", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPackager.class, "auto_packager_te");
+    }
+    if (enableDehydr) {
+      BlockDeHydrator dehydrator = new BlockDeHydrator();
+      BlockRegistry.registerBlock(dehydrator, "dehydrator", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityDeHydrator.class, "dehydrator_te");
     }
     if (expPylon) {
       FluidsRegistry.registerExp();//it needs EXP fluid to work
@@ -741,6 +749,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    enableDehydr = config.getBoolean("dehydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePackager = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
