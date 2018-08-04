@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle {
 
+  private static final int PER_TICK = 5;
   public static final int MAX_RANGE = 32;
 
   public static enum Fields {
@@ -85,6 +86,12 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     World world = this.getWorld();
+    timer--;
+    if (world.isRemote || timer > 0) {
+      return;//client so halt
+    }
+    timer = PER_TICK;
+
     BlockPos p = this.getPos();
     double x = p.getX();
     double y = p.getY();
