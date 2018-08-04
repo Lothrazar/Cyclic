@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -119,7 +118,13 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
       //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
-      ModCyclic.logger.log("totalBroken " + totalBroken + " <= " + this.getHarvestMax(level));
+    }
+    //AFTER we harvest the close ones only THEN we branch out
+    for (BlockPos targetPos : theFuture) {
+      if (totalBroken >= this.getHarvestMax(level)
+          || player.getHeldItem(player.swingingHand).isEmpty()) {
+        break;
+      }
       totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
     return totalBroken;
@@ -146,7 +151,7 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     levelToMaxBreak = new int[this.getMaxLevel() + 1];
     levelToMaxBreak[0] = 0;
     for (int i = 1; i <= this.getMaxLevel(); i++) {
-      levelToMaxBreak[i] = config.getInt("EnchantExcavationBreak" + i, Const.ConfigCategory.modpackMisc, 10 + i * 12, 1, 128, "Max blocks broken by this enchantment at level " + i);
+      levelToMaxBreak[i] = config.getInt("EnchantExcavationBreak" + i, Const.ConfigCategory.modpackMisc, 10 + i * 16, 1, 512, "Max blocks broken by this enchantment at level " + i);
     }
   }
 }
