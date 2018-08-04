@@ -48,7 +48,6 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe {
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
-    this.setTickRandomly(true);
     this.setTranslucent();
   }
 

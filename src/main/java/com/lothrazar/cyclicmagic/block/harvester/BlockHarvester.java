@@ -55,7 +55,6 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_HARVESTER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
   }
 
   @Override

@@ -56,7 +56,6 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasC
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
     this.setTranslucent();
   }
 

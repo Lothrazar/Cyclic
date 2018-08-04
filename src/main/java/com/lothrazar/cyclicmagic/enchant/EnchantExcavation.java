@@ -93,10 +93,10 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
   /**
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    */
-  private void harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
-    if (totalBroken > this.getHarvestMax(level)
+  private int harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
+    if (totalBroken >= this.getHarvestMax(level)
         || player.getHeldItem(player.swingingHand).isEmpty()) {
-      return;
+      return totalBroken;
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
@@ -104,7 +104,10 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     for (BlockPos targetPos : theFuture) {
       IBlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
-      if (world.isAirBlock(targetPos) || player.canHarvestBlock(targetState) == false) {
+      if (world.isAirBlock(targetPos)
+          || player.canHarvestBlock(targetState) == false
+          || totalBroken >= this.getHarvestMax(level)
+          || player.getHeldItem(player.swingingHand).isEmpty()) {
         continue;
       }
       block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(EnumHand.MAIN_HAND));
@@ -115,8 +118,16 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
       //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
-      this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
+    //AFTER we harvest the close ones only THEN we branch out
+    for (BlockPos targetPos : theFuture) {
+      if (totalBroken >= this.getHarvestMax(level)
+          || player.getHeldItem(player.swingingHand).isEmpty()) {
+        break;
+      }
+      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
+    }
+    return totalBroken;
   }
 
   private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
@@ -140,7 +151,7 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     levelToMaxBreak = new int[this.getMaxLevel() + 1];
     levelToMaxBreak[0] = 0;
     for (int i = 1; i <= this.getMaxLevel(); i++) {
-      levelToMaxBreak[i] = config.getInt("EnchantExcavationBreak" + i, Const.ConfigCategory.modpackMisc, 10 + i * 12, 1, 128, "Max blocks broken by this enchantment at level " + i);
+      levelToMaxBreak[i] = config.getInt("EnchantExcavationBreak" + i, Const.ConfigCategory.modpackMisc, 10 + i * 16, 1, 512, "Max blocks broken by this enchantment at level " + i);
     }
   }
 }

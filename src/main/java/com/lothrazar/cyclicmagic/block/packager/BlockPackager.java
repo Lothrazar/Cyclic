@@ -48,7 +48,6 @@ public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasR
   public BlockPackager() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setTickRandomly(true);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PACKAGER);
     RecipePackage.initAllRecipes();
   }

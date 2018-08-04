@@ -28,14 +28,14 @@ public class PackagerWrapper implements IRecipeWrapper {
     ingredients.setInputs(ItemStack.class, ing);
     ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
   }
-
-  public int size() {
-    int size = 0;
-    for (ItemStack s : src.getInput()) {
-      if (s.isEmpty() == false) {
-        size++;
-      }
-    }
-    return size;
-  }
+  //
+  //  public int size() {
+  //    int size = 0;
+  //    for (ItemStack s : src.getInput()) {
+  //      if (s.isEmpty() == false) {
+  //        size++;
+  //      }
+  //    }
+  //    return size;
+  //  }
 }
