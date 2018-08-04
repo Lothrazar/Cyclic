@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -93,10 +94,10 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
   /**
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    */
-  private void harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
-    if (totalBroken > this.getHarvestMax(level)
+  private int harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
+    if (totalBroken >= this.getHarvestMax(level)
         || player.getHeldItem(player.swingingHand).isEmpty()) {
-      return;
+      return totalBroken;
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
@@ -104,7 +105,10 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
     for (BlockPos targetPos : theFuture) {
       IBlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
-      if (world.isAirBlock(targetPos) || player.canHarvestBlock(targetState) == false) {
+      if (world.isAirBlock(targetPos)
+          || player.canHarvestBlock(targetState) == false
+          || totalBroken >= this.getHarvestMax(level)
+          || player.getHeldItem(player.swingingHand).isEmpty()) {
         continue;
       }
       block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(EnumHand.MAIN_HAND));
@@ -115,8 +119,10 @@ public class EnchantExcavation extends EnchantBase implements IHasConfig {
       player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
       //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
-      this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
+      ModCyclic.logger.log("totalBroken " + totalBroken + " <= " + this.getHarvestMax(level));
+      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
     }
+    return totalBroken;
   }
 
   private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
