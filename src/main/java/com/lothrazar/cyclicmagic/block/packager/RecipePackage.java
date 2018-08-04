@@ -108,6 +108,7 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipePackage(new ItemStack(Blocks.PURPUR_BLOCK), new ItemStack(Items.CHORUS_FRUIT_POPPED, 4)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.CLAY), new ItemStack(Items.CLAY_BALL, 4)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.SNOW), new ItemStack(Items.SNOWBALL, 4)));
+    addRecipe(new RecipePackage(new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW_LAYER, 8)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.PRISMARINE, 1, 0), new ItemStack(Items.PRISMARINE_SHARD, 4)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.SANDSTONE), new ItemStack(Blocks.SAND, 4, 0)));
     addRecipe(new RecipePackage(new ItemStack(Blocks.RED_SANDSTONE), new ItemStack(Blocks.SAND, 4, 1)));
