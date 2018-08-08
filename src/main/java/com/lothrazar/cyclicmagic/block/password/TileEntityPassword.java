@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.password;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.Block;
@@ -57,6 +58,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     ACTIVETYPE, USERSALLOWED;
   }
 
+  public static List<String> listeningBlocksHash = new ArrayList<String>();
   public static List<TileEntityPassword> listeningBlocks = new ArrayList<TileEntityPassword>();
   private ActiveType type;
   private UsersAllowed userPerm;
@@ -69,16 +71,28 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     super(0);
     setType(ActiveType.TOGGLE);
     setUserPerm(UsersAllowed.ALL);//defaults to same behavior it had before these were added
-    //it does save to server. on world save and reload, it DOes save. problem is, 
-    //clientside does not KNOW about it
-    if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-      listeningBlocks.add(this);
-    }
   }
 
   @Override
   public void onChunkUnload() {
     this.invalidate();
+    this.onLoad();
+  }
+
+  @Override
+  public void onLoad() {
+    //it does save to server. on world save and reload, it DOes save. problem is, 
+    //clientside does not KNOW about it
+    if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
+      if (listeningBlocksHash.contains(this.pos.toString()) == false) {
+        ModCyclic.logger.info("Password add pos " + this.pos.toString());
+        listeningBlocks.add(this);
+        listeningBlocksHash.add(this.pos.toString());
+      }
+      else {
+        ModCyclic.logger.info("Password IGNORE pos " + this.pos.toString());
+      }
+    }
   }
 
   @Override
