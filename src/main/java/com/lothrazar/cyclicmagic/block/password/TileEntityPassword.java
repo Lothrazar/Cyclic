@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.password;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.Block;
@@ -85,13 +84,10 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     //clientside does not KNOW about it
     if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
       if (listeningBlocksHash.contains(this.pos.toString()) == false) {
-        ModCyclic.logger.info("Password add pos " + this.pos.toString());
         listeningBlocks.add(this);
         listeningBlocksHash.add(this.pos.toString());
       }
-      else {
-        ModCyclic.logger.info("Password IGNORE pos " + this.pos.toString());
-      }
+
     }
   }
 
