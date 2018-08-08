@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.playerupgrade;
 import java.util.List;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.item.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
@@ -36,7 +37,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFishFood;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
@@ -44,13 +44,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCraftingUnlock extends ItemFood implements IHasRecipe {
+public class ItemCraftingUnlock extends ItemFoodCreative implements IHasRecipe {
 
   private static final int numFood = 10;
 
   public ItemCraftingUnlock() {
     super(numFood, false);
-    this.setAlwaysEdible();
   }
 
   @Override

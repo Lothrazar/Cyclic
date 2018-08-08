@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.core.item.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilParticle;
@@ -38,7 +39,6 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
@@ -50,13 +50,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemAppleStep extends ItemFoodCreative implements IHasRecipe, IHasConfig {
 
   public static boolean defaultPlayerStepUp = false;
 
   public ItemAppleStep() {
     super(4, false);
-    this.setAlwaysEdible();
   }
 
   @Override
