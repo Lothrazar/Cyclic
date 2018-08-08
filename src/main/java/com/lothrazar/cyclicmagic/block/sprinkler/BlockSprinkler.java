@@ -40,6 +40,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -50,9 +51,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
 
+  private static final double BOUNDS = 0.0625;
+  protected static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(BOUNDS, 0, BOUNDS, 1.0D - BOUNDS, 0.5D, 1.0D - BOUNDS);
+
   public BlockSprinkler() {
     super(Material.IRON);
     this.setTranslucent();
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return AABB_BOTTOM_HALF;
   }
 
   @Override
@@ -65,6 +74,7 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
     return false;
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));

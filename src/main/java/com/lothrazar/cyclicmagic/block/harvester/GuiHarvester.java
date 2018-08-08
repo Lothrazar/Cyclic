@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.harvester;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -65,7 +64,7 @@ public class GuiHarvester extends GuiBaseContainer {
     int x = this.guiLeft + Const.PAD + 22;
     int y = this.guiTop + Const.PAD * 3 + 2;
     btnSize = new ButtonTileEntityField(btnId++,
-        x, y, this.tile.getPos(), TileEntityBeaconPotion.Fields.RANGE.ordinal());
+        x, y, this.tile.getPos(), TileEntityHarvester.Fields.SIZE.ordinal());
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
