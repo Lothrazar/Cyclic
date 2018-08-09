@@ -377,4 +377,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
+
+  //wrapper to make public 
+  public void insertButton(GuiButton buttonIn) {
+    super.addButton(buttonIn);
+  }
 }
