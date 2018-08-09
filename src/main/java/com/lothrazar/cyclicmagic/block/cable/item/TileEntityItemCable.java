@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.cable.item;
 
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import net.minecraft.util.EnumFacing;
 
 public class TileEntityItemCable extends TileEntityCableBase {
 
@@ -33,8 +32,4 @@ public class TileEntityItemCable extends TileEntityCableBase {
     this.setSlotsForBoth();
   }
 
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0 };
-  }
 }

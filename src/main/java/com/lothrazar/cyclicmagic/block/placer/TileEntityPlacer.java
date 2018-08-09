@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.placer;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
@@ -32,7 +33,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
@@ -47,7 +47,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   }
 
   private int timer;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private int needsRedstone = 1;
 
   public TileEntityPlacer() {
@@ -67,27 +66,25 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
 
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount())
-      switch (Fields.values()[id]) {
+    switch (Fields.values()[id]) {
       case TIMER:
-      return timer;
+        return timer;
       case REDSTONE:
-      return this.needsRedstone;
-      }
+        return this.needsRedstone;
+    }
     return -1;
   }
 
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount())
-      switch (Fields.values()[id]) {
+    switch (Fields.values()[id]) {
       case TIMER:
-      this.timer = value;
+        this.timer = value;
       break;
       case REDSTONE:
-      this.needsRedstone = value;
+        this.needsRedstone = value;
       break;
-      }
+    }
   }
 
   @Override
@@ -140,10 +137,11 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     }
     if (trigger) {
       if (stack.getItem() instanceof ItemBlock) {
-        if (UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack)) {
-          //     this.decrStackSize(0, 1);
-          //no no, vanilla itemblock handles decrement for me dont do it here
-          //if this block consumed power, do that here
+        try{
+          UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack);
+        }
+        catch(Throwable e){
+          ModCyclic.logger.error("Block could be not be placed , check world permissions and which mod the block came from ", e);
         }
       }
       else {
@@ -157,11 +155,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     }
     this.markDirty();
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
   }
 
   @Override
