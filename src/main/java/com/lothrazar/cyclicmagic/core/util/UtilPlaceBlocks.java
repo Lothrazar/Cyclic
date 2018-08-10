@@ -90,7 +90,6 @@ public class UtilPlaceBlocks {
       return false;
     }
     ItemBlock itemblock = (ItemBlock) stack.getItem();
-
     if (world.isAirBlock(placePos)) {
       Block block = itemblock.getBlock();
       IBlockState state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),

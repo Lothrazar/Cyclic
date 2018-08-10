@@ -164,9 +164,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     }
     if (trigger) {
       if (stack.getItem() instanceof ItemBlock && fakePlayer != null) {
-
         UtilEntity.setEntityFacing(fakePlayer.get(), this.getCurrentFacing());
-
         try {
           UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack, fakePlayer.get());
         }

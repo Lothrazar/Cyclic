@@ -19,18 +19,16 @@ public class ItemFoodCreative extends ItemFood {
     super(amount, isWolfFood);
     this.setAlwaysEdible();
   }
-  
+
   /**
    * Called when the equipped item is right clicked.
    * 
    * Altered to skip the canEat check - which is false for creative always
    */
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-  {
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
     ItemStack itemstack = playerIn.getHeldItem(handIn);
     playerIn.setActiveHand(handIn);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
   }
-
 }

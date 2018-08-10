@@ -31,5 +31,4 @@ public class TileEntityItemCable extends TileEntityCableBase {
     super(true, false, false);
     this.setSlotsForBoth();
   }
-
 }

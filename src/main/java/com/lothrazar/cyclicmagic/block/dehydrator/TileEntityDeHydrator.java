@@ -96,7 +96,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         else {//reset timer; if on same recipe
           this.timer = lastRecipe.getTime();
         }
-      //else recipe became null
+        //else recipe became null
       }
     }
   }
@@ -107,7 +107,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       return;
     }
     //if it works, hit up a timer-- to speed it up
-    if(tank.getFluidAmount() >=  LAVA_DRAIN){
+    if (tank.getFluidAmount() >= LAVA_DRAIN) {
       tank.drain(LAVA_DRAIN, true);
       this.timer--;
     }
@@ -149,7 +149,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     for (RecipeDeHydrate irecipe : RecipeDeHydrate.recipes) {
       if (recipeMatches(irecipe)) {
         timerMax = timer = irecipe.getTime();
-
         return irecipe;
       }
     }

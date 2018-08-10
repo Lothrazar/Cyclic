@@ -43,7 +43,6 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public static ArrayList<RecipeDeHydrate> recipes = new ArrayList<RecipeDeHydrate>();
   private ItemStack recipeInput = ItemStack.EMPTY;
   private ItemStack resultItem = ItemStack.EMPTY;
-
   private int time = 70;
 
   public RecipeDeHydrate(ItemStack in, ItemStack out, int time) {

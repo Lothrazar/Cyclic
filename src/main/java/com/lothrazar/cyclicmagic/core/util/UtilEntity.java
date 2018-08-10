@@ -496,7 +496,6 @@ public class UtilEntity {
       default:
         yaw = 0;
     }
-
     entity.rotationYaw = yaw;
   }
 

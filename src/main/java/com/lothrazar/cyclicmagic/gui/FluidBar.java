@@ -15,7 +15,6 @@ public class FluidBar {
   private int y;
   private int capacity;
   private int width = 36 / 2;
-
   private int height = 124 / 2;
 
   public FluidBar(GuiBaseContainer p, int x, int y) {

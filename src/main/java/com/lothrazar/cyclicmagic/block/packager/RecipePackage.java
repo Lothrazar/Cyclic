@@ -114,7 +114,6 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipePackage(new ItemStack(Blocks.RED_SANDSTONE), new ItemStack(Blocks.SAND, 4, 1)));
     //cant have both \0/ so just use crafter for the pris bricks
     //    addRecipe(new RecipePackage(new ItemStack(Blocks.PRISMARINE, 1, 1), new ItemStack(Items.PRISMARINE_SHARD, 9)));
-
     addRecipe(new RecipePackage(new ItemStack(Blocks.LAPIS_BLOCK), new ItemStack(Items.DYE, 9, EnumDyeColor.BLUE.getDyeDamage())));
     addRecipe(new RecipePackage(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Items.DYE, 9, EnumDyeColor.WHITE.getDyeDamage())));
   }

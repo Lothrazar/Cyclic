@@ -127,7 +127,6 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
         }
         return false;
       }
-
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
       setLeverPowerState(world, blockPos, blockState, hasPowerHere);

@@ -233,7 +233,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     //    ModCyclic.logger.log("rightClick client== " + result + "-" + world.getBlockState(targetPos).getBlock());
-
     if (result != EnumActionResult.SUCCESS) {
       //if its a throwable item, it happens on this line down below, the process right click
       result = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);

@@ -25,6 +25,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   public static final int PER_TICK = 1000 * 64;
   public static final int CAPACITY = 1000000;
   private Map<EnumFacing, Boolean> poweredSides;
+
   public TileEntityBattery() {
     super(1);
     this.initEnergy(0, CAPACITY);
@@ -53,6 +54,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   public void setSideField(EnumFacing side, int pow) {
     this.poweredSides.put(side, (pow == 1));
   }
+
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
@@ -124,7 +126,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   private void tryOutputItem() {
     for (EnumFacing f : EnumFacing.values()) {
       if (this.poweredSides.get(f)) {
-
         //this facing direction has output
         //TODO::!!>... copied from TileEntityCableBase 327 ish
         IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, f);

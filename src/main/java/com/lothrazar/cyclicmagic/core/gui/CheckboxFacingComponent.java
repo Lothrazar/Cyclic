@@ -10,7 +10,7 @@ public class CheckboxFacingComponent {
   private GuiBaseContainer parent;
   private int xCenter;
   private int yCenter;
-  
+
   public CheckboxFacingComponent(GuiBaseContainer parent) {
     this.parent = parent;
   }
@@ -42,7 +42,6 @@ public class CheckboxFacingComponent {
 
   private void addButtonFacing(EnumFacing side) {
     int x = 0, y = 0;
-
     int spacing = 14;
     int field = 0;
     //MAP side -> field

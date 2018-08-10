@@ -224,7 +224,6 @@ public class UtilHarvester {
     IBlockState blockState = world.getBlockState(posCurrent);
     Block blockCheck = blockState.getBlock();
     ResourceLocation blockId = blockCheck.getRegistryName();
-
     if (isIgnored(blockId)) {
       return drops;
     }
@@ -284,12 +283,9 @@ public class UtilHarvester {
         //added for rustic, it uses this version, other one does not work
         //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
-
       }
       else {
-   
         blockCheck.getDrops(drops, world, posCurrent, blockState.withProperty(propInt, maxAge), FORTUNE);
-
       }
       world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
       if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
@@ -300,7 +296,6 @@ public class UtilHarvester {
       }
       // we have a blackist of crops to skip the remove-seed step
       boolean removeSeed = tryRemoveOneSeed && drops.size() > 1 && !doNotRemoveSeeds(blockId);
-      
       if (removeSeed) {
         Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
         if (seedItem == null) {

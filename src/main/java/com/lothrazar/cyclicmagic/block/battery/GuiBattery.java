@@ -37,6 +37,7 @@ import net.minecraft.util.EnumFacing;
 public class GuiBattery extends GuiBaseContainer {
 
   CheckboxFacingComponent checkboxes;
+
   public GuiBattery(InventoryPlayer inventoryPlayer, TileEntityBattery te) {
     super(new ContainerBattery(inventoryPlayer, te), te);
     this.energyBar = new EnergyBar(this);
@@ -76,7 +77,6 @@ public class GuiBattery extends GuiBaseContainer {
     checkboxes.initGui();
   }
 
-
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -86,6 +86,5 @@ public class GuiBattery extends GuiBaseContainer {
         this.width / 2 - 9,
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
   }
 }
