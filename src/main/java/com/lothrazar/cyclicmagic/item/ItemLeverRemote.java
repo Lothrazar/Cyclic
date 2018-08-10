@@ -111,25 +111,25 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     }
     BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
     //default is zero which is ok
-    int dimensionTarget = UtilNBT.getItemStackNBTVal(stack, "LeverDim");
     if (blockPos == null) {
       if (world.isRemote) {
         UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
       }
       return false;
     }
-    IBlockState blockState = world.getBlockState(blockPos);
+    int dimensionTarget = UtilNBT.getItemStackNBTVal(stack, "LeverDim");
+    //check if we can avoid crossing dimensions
     if (dimensionTarget == player.dimension) {
+      IBlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {
           UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
         }
         return false;
       }
-      // 
-      ModCyclic.logger.info("lever same dim");
+
       blockState = world.getBlockState(blockPos);
-      boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
+      boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
       setLeverPowerState(world, blockPos, blockState, hasPowerHere);
       UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
       UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
@@ -137,14 +137,12 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       return true;
     }
     else if (player instanceof EntityPlayerMP && world.isRemote == false) {
-      // 
-      ModCyclic.logger.info("lever attempt OTHER  dim" + world.isRemote);
+      //then in the serverside only- find the block in the other dimension if it is loaded
       try {
         EntityPlayerMP mp = (EntityPlayerMP) player;
         // worldServer extends world
         WorldServer dw = mp.getServer().getWorld(dimensionTarget);
         if (dw == null) {
-          ModCyclic.logger.info("lever WORLD NULL");
           //server 2 chat packet 
           ModCyclic.network.sendTo(new PacketChat("dimension.notfound", true), mp);
           //dimension deleted
@@ -156,12 +154,8 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
           return false;
         }
         //now get
-        blockState = dw.getBlockState(blockPos);
-        ModCyclic.logger.info("lever FOUND dimensional chunk " + blockState);
-
-        ModCyclic.logger.info("lever SUCCESS");
+        IBlockState blockState = dw.getBlockState(blockPos);
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
-
         setLeverPowerState(dw, blockPos, blockState, hasPowerHere);
         ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
         UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
@@ -169,7 +163,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
         return true;
       }
       catch (Throwable e) {
-        ModCyclic.logger.error("dimension find error", e);
+        ModCyclic.logger.error("Dimension find error; safe to ignore", e);
       }
     }
     return false;

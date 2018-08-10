@@ -289,6 +289,6 @@
   	,"1.16.6":"New Block: Dehydrator, dries out blocks with custom recipes & crafttweaker support.  Fixed Excavate Enchantment breaking more blocks than the config entry for 'EnchantExcavationBreak' was set to.  Entity Detector lag busting: it now only scans serverside, and ticks 4 times per second instead of 20 times per second. "
   	,"1.16.7":"Fixed Peat Bog not baking in water.  Suggested minimum forge version 14.23.4.2705.  Fixed Extractor blocks rendering invalid positions.  "
   	,"1.16.8":"Fixed Size button in Harvester  not changing.  All upgrade-food can now be eaten in creative mode.  Added Empty Heart Container.  Reduce hitbox of Sprinkler.  Fix Password block triggering too many times after the world reloads. "
-  	,"1.16.9":"Battery block now auto-outputs energy to nearby blocks (customize in GUI).  "
+  	,"1.16.9":"Battery block now auto-outputs energy to nearby blocks (customize in GUI).  Remote Lever now can work across dimensions (if chunk is loaded) and has an item cooldown.   "
   }
 }
