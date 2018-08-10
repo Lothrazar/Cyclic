@@ -228,6 +228,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world.isAirBlock(targetPos)) {
       return;
     }
+    boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //  ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
@@ -262,7 +263,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
-    this.tryDumpFakePlayerInvo(true);
+    //if my hand was empty before operation, then there might be something in it now so drop that
+    //if it wasnt empty before (bonemeal whatever) then dont do that, it might dupe
+    this.tryDumpFakePlayerInvo(wasEmpty);
   }
 
   private void tryDumpStacks(List<ItemStack> toDump) {
