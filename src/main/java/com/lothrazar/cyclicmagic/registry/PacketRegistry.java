@@ -48,6 +48,7 @@ import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketColorStack;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
+import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import com.lothrazar.cyclicmagic.net.PacketEntitySyncToClient;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
@@ -91,7 +92,7 @@ public class PacketRegistry {
     network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketDeleteWaypoint.class, PacketDeleteWaypoint.class, packetID++, Side.SERVER);
-    packetID++;
+    network.registerMessage(PacketChat.class, PacketChat.class, packetID++, Side.CLIENT);
     packetID++;
     packetID++;
     packetID++;

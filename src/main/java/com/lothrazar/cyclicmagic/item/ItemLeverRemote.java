@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockStoneSlab;
@@ -104,65 +105,67 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
 
-  private boolean trigger(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-    if (playerIn.getCooldownTracker().hasCooldown(this)) {
+  private boolean trigger(ItemStack stack, World world, EntityPlayer player) {
+    if (player.getCooldownTracker().hasCooldown(this)) {
       return false;
     }
     BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
     //default is zero which is ok
     int dimensionTarget = UtilNBT.getItemStackNBTVal(stack, "LeverDim");
     if (blockPos == null) {
-      if (worldIn.isRemote) {
-        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+      if (world.isRemote) {
+        UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
       }
       return false;
     }
-    IBlockState blockState = worldIn.getBlockState(blockPos);
-    if (dimensionTarget == playerIn.dimension) {
+    IBlockState blockState = world.getBlockState(blockPos);
+    if (dimensionTarget == player.dimension) {
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
-        if (worldIn.isRemote) {
-          UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+        if (world.isRemote) {
+          UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
         }
         return false;
       }
       // 
       ModCyclic.logger.info("lever same dim");
-      blockState = worldIn.getBlockState(blockPos);
+      blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
-      setLeverPowerState(worldIn, blockPos, blockState, hasPowerHere);
-      UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
-      playerIn.getCooldownTracker().setCooldown(this, 20);
+      setLeverPowerState(world, blockPos, blockState, hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
+      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
+      player.getCooldownTracker().setCooldown(this, 20);
       return true;
     }
-    else if (playerIn instanceof EntityPlayerMP && worldIn.isRemote == false) {
+    else if (player instanceof EntityPlayerMP && world.isRemote == false) {
       // 
-      ModCyclic.logger.info("lever attempt OTHER  dim" + worldIn.isRemote);
+      ModCyclic.logger.info("lever attempt OTHER  dim" + world.isRemote);
       try {
-        EntityPlayerMP mp = (EntityPlayerMP) playerIn;
+        EntityPlayerMP mp = (EntityPlayerMP) player;
         // worldServer extends world
         WorldServer dw = mp.getServer().getWorld(dimensionTarget);
         if (dw == null) {
           ModCyclic.logger.info("lever WORLD NULL");
-
-          UtilChat.sendStatusMessage(playerIn, "dimension.notfound");
+          //server 2 chat packet 
+          ModCyclic.network.sendTo(new PacketChat("dimension.notfound", true), mp);
           //dimension deleted
           return false;
         }
         if (dw.isAreaLoaded(blockPos, 2) == false) {//2 is radius
           ModCyclic.logger.info("lever WORLD UNLOADED");
-          UtilChat.sendStatusMessage(playerIn, "chunk.unloaded");
+          ModCyclic.network.sendTo(new PacketChat("chunk.unloaded", true), mp);
           return false;
         }
         //now get
         blockState = dw.getBlockState(blockPos);
         ModCyclic.logger.info("lever FOUND dimensional chunk " + blockState);
-        //        dimensionWorld = dw;
 
         ModCyclic.logger.info("lever SUCCESS");
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
+
         setLeverPowerState(dw, blockPos, blockState, hasPowerHere);
-        UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
-        playerIn.getCooldownTracker().setCooldown(this, 20);
+        ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
+        UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
+        player.getCooldownTracker().setCooldown(this, 20);
         return true;
       }
       catch (Throwable e) {
