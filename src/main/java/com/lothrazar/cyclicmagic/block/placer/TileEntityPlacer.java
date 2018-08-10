@@ -23,8 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.placer;
 
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -34,6 +38,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 
 public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
@@ -41,6 +48,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
+  private WeakReference<FakePlayer> fakePlayer;
 
   public static enum Fields {
     TIMER, REDSTONE;
@@ -48,6 +56,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
 
   private int timer;
   private int needsRedstone = 1;
+  private UUID uuid;
 
   public TileEntityPlacer() {
     super(9);
@@ -114,6 +123,21 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
 
+  private void verifyFakePlayer(WorldServer w) {
+    if (fakePlayer == null) {
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getUnlocalizedName());
+      if (fakePlayer == null) {
+        ModCyclic.logger.error("Fake player failed to init ");
+      }
+    }
+  }
+
+  private void verifyUuid(World world) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+    }
+  }
+
   @Override
   public void update() {
     shiftAllUp();
@@ -123,10 +147,13 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       markDirty();
       return;
     }
+    if (world instanceof WorldServer) {
+      verifyUuid(world);
+      verifyFakePlayer((WorldServer) world);
+    }
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
-      timer = TIMER_FULL;// reset just like you would in a
-      // furnace
+      timer = TIMER_FULL;// reset just like you would in a  furnace
     }
     else {
       timer -= buildSpeed;
@@ -136,11 +163,14 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     }
     if (trigger) {
-      if (stack.getItem() instanceof ItemBlock) {
-        try{
-          UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack);
+      if (stack.getItem() instanceof ItemBlock && fakePlayer != null) {
+
+        UtilEntity.setEntityFacing(fakePlayer.get(), this.getCurrentFacing());
+
+        try {
+          UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack, fakePlayer.get());
         }
-        catch(Throwable e){
+        catch (Throwable e) {
           ModCyclic.logger.error("Block could be not be placed : " + stack.getItem().getRegistryName(), e);
         }
       }

@@ -85,18 +85,18 @@ public class UtilPlaceBlocks {
    * @param stack
    * @return
    */
-  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack) {
+  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack, EntityPlayer fake) {
+    if (stack.getItem() instanceof ItemBlock == false) {
+      return false;
+    }
     ItemBlock itemblock = (ItemBlock) stack.getItem();
-    EntityPlayer fake = null;
-    //client only hmm || itemblock.canPlaceBlockOnSide(world, placePos.down(), EnumFacing.DOWN, fake, stack)
+
     if (world.isAirBlock(placePos)) {
       Block block = itemblock.getBlock();
-      //        boolean blockAcross = ;
-      IBlockState state = block.getStateForPlacement(world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+      IBlockState state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
           stack.getItemDamage(), fake, EnumHand.MAIN_HAND);
       if (block.canPlaceBlockAt(world, placePos)) {
-        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
-            state)) {
+        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
           world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
           stack.shrink(1);
           return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
