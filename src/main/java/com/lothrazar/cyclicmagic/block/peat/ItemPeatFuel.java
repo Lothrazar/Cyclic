@@ -33,20 +33,16 @@ import net.minecraft.item.crafting.IRecipe;
 
 public class ItemPeatFuel extends BaseItem implements IHasRecipe {
 
+  public static int FUEL_WEAK;
+  public static int FUEL_STRONG;
   public Item peat = null;
-  private int energyPerTick;
 
-  public ItemPeatFuel(int val, ItemPeatFuel subFuel) {
-    setEnergyPerTick(val);
+  public ItemPeatFuel(ItemPeatFuel subFuel) {
     peat = subFuel;
   }
 
   public int getEnergyPerTick() {
-    return energyPerTick;
-  }
-
-  public void setEnergyPerTick(int energyPerTick) {
-    this.energyPerTick = energyPerTick;
+    return (peat == null) ? FUEL_WEAK : FUEL_STRONG;
   }
 
   @Override
