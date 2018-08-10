@@ -68,6 +68,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
     if (timer > 0) {
       return;
     }
+
     timer = TIMER_FULL;
     BlockPos current;
     for (int x = -1 * RADIUS; x <= RADIUS; x++) {
