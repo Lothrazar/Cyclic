@@ -141,7 +141,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
           UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack);
         }
         catch(Throwable e){
-          ModCyclic.logger.error("Block could be not be placed , check world permissions and which mod the block came from ", e);
+          ModCyclic.logger.error("Block could be not be placed : " + stack.getItem().getRegistryName(), e);
         }
       }
       else {
