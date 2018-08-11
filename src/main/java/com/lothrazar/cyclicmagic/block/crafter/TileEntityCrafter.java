@@ -275,6 +275,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.recipe == null) {
       return ItemStack.EMPTY;
     }
-    return recipe.getRecipeOutput().copy();
+    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
   }
 }
