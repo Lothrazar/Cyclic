@@ -118,6 +118,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (fromRecipe.isEmpty()) {
         continue;
       }
+
       //try to pay its cost
       for (int j = 0; j < SIZE_INPUT; j++) {
         fromInput = this.getStackInSlot(j);
