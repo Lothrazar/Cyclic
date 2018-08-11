@@ -39,7 +39,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDeHydrator extends GuiBaseContainer {
 
-
   public GuiDeHydrator(InventoryPlayer inventoryPlayer, TileEntityDeHydrator tileEntity) {
     super(new ContainerDeHydrator(inventoryPlayer, tileEntity), tileEntity);
     fieldRedstoneBtn = TileEntityDeHydrator.Fields.REDSTONE.ordinal();
@@ -66,7 +65,6 @@ public class GuiDeHydrator extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
   }
 
   @Override
@@ -80,24 +78,20 @@ public class GuiDeHydrator extends GuiBaseContainer {
     int x = this.guiLeft + ContainerDeHydrator.SLOTX_START - 1;
     int y = this.guiTop + ContainerDeHydrator.SLOTY - 1;
     int s = 4;
-
     int size = 26;
-      Gui.drawModalRectWithCustomSizedTexture(
+    Gui.drawModalRectWithCustomSizedTexture(
         x + 44,
         y + 6,
         u, v, size, size, size, size);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-
     for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-
     x = this.guiLeft + ContainerDeHydrator.MID_SPACING;
     y = this.guiTop + ContainerHydrator.SLOTY - 1;
-
     for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,

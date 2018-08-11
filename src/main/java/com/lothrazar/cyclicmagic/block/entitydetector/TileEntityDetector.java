@@ -91,7 +91,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       return;//client so halt
     }
     timer = PER_TICK;
-
     BlockPos p = this.getPos();
     double x = p.getX();
     double y = p.getY();

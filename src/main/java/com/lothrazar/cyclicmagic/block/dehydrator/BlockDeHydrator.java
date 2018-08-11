@@ -53,9 +53,7 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
 
   public BlockDeHydrator() {
     super(Material.IRON);
-
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_DEHYDRATOR);
-
     setLightOpacity(0);
     RecipeDeHydrate.initAllRecipes();
   }
@@ -94,7 +92,6 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
         'g', Blocks.IRON_BLOCK,
         'r', "dustRedstone");
   }
-
 
   @Override
   public void syncConfig(Configuration config) {

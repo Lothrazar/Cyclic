@@ -59,6 +59,7 @@ public class UtilHarvester {
   private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
   private static Map<String, Integer> harvestCustomMaxAge;
   private static Map<String, String> stupidModsThatDontUseAge = new HashMap<String, String>();
+  private static NonNullList<String> blocksDoNotRemoveSeeds;
 
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
@@ -143,12 +144,20 @@ public class UtilHarvester {
     blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
          ,"simplecorn:corn"
         );  
+    blocksDoNotRemoveSeeds = NonNullList.from(""
+        ,"plants2:crop_1"
+       );  
+    
     stupidModsThatDontUseAge.put("rustic:leaves_apple", "apple_age");
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
     harvestCustomMaxAge.put("simplecorn:corn", 9);
     /* @formatter:on */
+  }
+
+  private static boolean doNotRemoveSeeds(ResourceLocation blockId) {
+    return UtilString.isInList(blocksDoNotRemoveSeeds, blockId);
   }
 
   private static boolean isHarvestReflectionRegrow(ResourceLocation blockId) {
@@ -285,8 +294,9 @@ public class UtilHarvester {
           world.destroyBlock(posCurrent.up(), false);
         }
       }
-      // TODO: if needed we could add a list of which ones do not have seed removed 
-      if (drops.size() > 1 && tryRemoveOneSeed) {
+      // we have a blackist of crops to skip the remove-seed step
+      boolean removeSeed = tryRemoveOneSeed && drops.size() > 1 && !doNotRemoveSeeds(blockId);
+      if (removeSeed) {
         Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
         if (seedItem == null) {
           seedItem = Item.getItemFromBlock(blockCheck);
@@ -297,6 +307,7 @@ public class UtilHarvester {
             for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
               final ItemStack drop = iterator.next();
               if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+                ModCyclic.logger.log("Harvester remove seed item " + seedItem);
                 iterator.remove();
                 // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
                 break;
@@ -309,7 +320,7 @@ public class UtilHarvester {
           ModCyclic.logger.error(e.getMessage());
           e.printStackTrace();
         }
-      }
+      } //else dont remove seed
     }
     return drops;
   }

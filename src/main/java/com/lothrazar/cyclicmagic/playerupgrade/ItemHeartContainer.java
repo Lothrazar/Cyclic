@@ -70,9 +70,7 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-
     int healthChange = 2 * heartChangeOnEat;
-
     //one heart is 2 health points (half heart = 1 health)
     int newVal = UtilEntity.incrementMaxHealth(player, healthChange);
     prop.setMaxHealth(newVal);
@@ -126,9 +124,7 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-
     double currentHearts = UtilEntity.getMaxHealth(player) / 2;
-
     //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
     if (currentHearts + heartChangeOnEat > maxHearts || currentHearts + heartChangeOnEat < 1) {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));

@@ -87,7 +87,6 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
         listeningBlocks.add(this);
         listeningBlocksHash.add(this.pos.toString());
       }
-
     }
   }
 

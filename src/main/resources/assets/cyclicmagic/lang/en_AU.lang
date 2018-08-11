@@ -367,11 +367,16 @@ item.magic_net.tooltip=Throw at a living entity to capture
 item.mattock.guide=3x3 mining that treats dirt and stone type blocks equally.
 item.mattock.name=Mattock
 item.mattock.tooltip=3x3 mining; equal parts shovel and pickaxe
-item.password_remote.guide=Remote redstone that is password based.  Give it a password, then anytime that word is said in chat the redstone will trigger.  If it triggers, password is removed from chat display.  Claim it to yourself so no other players can use it.
+item.password_remote.guide=Remote redstone lever that you bind to a lever in the world by sneaking.  Works across any distance including dimensions if the chunk is loaded.  
 item.password_remote.invalid=Invalid position, Lever not found
 item.password_remote.name=Remote Lever
 item.password_remote.saved=Position Saved
 item.password_remote.tooltip=Bind this to a lever in the world (shift click) to activate it remotely
+
+dimension.notfound=Dimension not found
+chunk.unloaded=Action failed; chunk not loaded
+item.password_remote.powered.true=On
+item.password_remote.powered.false=Off
 
 item.purple_boots.guide=Stronger than diamond, comes pre-enchanted with Feather Falling and Depth Strider. 
 item.purple_boots.name=Crystallized Obsidian Boots
@@ -1083,11 +1088,11 @@ item.peat_biomass.guide=Created using plant matter in the Hydrator
 
 item.peat_fuel.name=Peat
 item.peat_fuel.tooltip=Create energy in a Peat-fired Generator
-item.peat_fuel.guide=Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks, producing 128/tick for a total of 25600 generated per item.
+item.peat_fuel.guide=Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.
 
 item.peat_fuel_enriched.name=Enriched Peat
 item.peat_fuel_enriched.tooltip=Create energy in a Peat-fired Generator
-item.peat_fuel_enriched.guide=Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks, producing 1024/tick.
+item.peat_fuel_enriched.guide=Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.
 
 tile.peat_unbaked.name=Dry Peat Bog
 tile.peat_unbaked.tooltip=Slowly turns into a Peat Deposit when sitting in water

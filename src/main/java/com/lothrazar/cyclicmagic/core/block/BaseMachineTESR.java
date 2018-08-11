@@ -135,8 +135,7 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
       //instead I catch and ignore this exception/
     }
     catch (Exception e) {
-      ModCyclic.logger.info("TESR render baked model exception");
-      e.printStackTrace();
+      ModCyclic.logger.error("TESR render baked model exception", e);
     }
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();

@@ -90,12 +90,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
-        isGridEmpty() == false) {
-      if (world.isRemote == false) {// maybe?
+    if (this.getEnergyCurrent() >= this.getEnergyCost() && isGridEmpty() == false) {
+      //      if (world.isRemote == false) {// maybe?
         findRecipe();
-      }
-      if (recipe != null && tryPayCost()) {
+      //      }
+      if (recipe != null && !world.isRemote && tryPayCost()) {
         // pay the cost  
         final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
         //confirmed this test does actually et the outut: 4x planks 
@@ -119,6 +118,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (fromRecipe.isEmpty()) {
         continue;
       }
+
       //try to pay its cost
       for (int j = 0; j < SIZE_INPUT; j++) {
         fromInput = this.getStackInSlot(j);
@@ -160,6 +160,16 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
+    //payments have made its
+    //    NonNullList<ItemStack> remainder = recipe.getRemainingItems(crafter);
+    //    for (int i = 0; i < remainder.size(); ++i) {
+    //      ItemStack slot = this.crafter.getStackInSlot(i);
+    //      ItemStack remainderCurrent = remainder.get(i);
+    //      if (!slot.getItem().getContainerItem(slot).isEmpty()) {
+    //        //container item exists
+    //        ModCyclic.logger.log(i + "  container item" + slot + " VS DMG  " + remainderCurrent.getItemDamage() + "?" + remainderCurrent.getCount());
+    //      }
+    //    }
     return true;
   }
 
@@ -269,5 +279,13 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
+  }
+
+  public ItemStack getRecipeResult() {
+    //    ModCyclic.logger.log(recipe + "");
+    if (this.recipe == null) {
+      return ItemStack.EMPTY;
+    }
+    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
   }
 }

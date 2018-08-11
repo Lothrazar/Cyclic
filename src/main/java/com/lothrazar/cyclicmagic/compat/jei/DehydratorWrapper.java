@@ -28,7 +28,6 @@ public class DehydratorWrapper implements IRecipeWrapper {
     ingredients.setInputs(ItemStack.class, ing);
     ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
   }
-
   //  public int size() {
   //    int size = 0;
   //    for (ItemStack s : src.getInput()) {
