@@ -90,12 +90,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
-        isGridEmpty() == false) {
-      if (world.isRemote == false) {// maybe?
+    if (this.getEnergyCurrent() >= this.getEnergyCost() && isGridEmpty() == false) {
+      //      if (world.isRemote == false) {// maybe?
         findRecipe();
-      }
-      if (recipe != null && tryPayCost()) {
+      //      }
+      if (recipe != null && !world.isRemote && tryPayCost()) {
         // pay the cost  
         final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
         //confirmed this test does actually et the outut: 4x planks 
@@ -269,5 +268,13 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
+  }
+
+  public ItemStack getRecipeResult() {
+    //    ModCyclic.logger.log(recipe + "");
+    if (this.recipe == null) {
+      return ItemStack.EMPTY;
+    }
+    return recipe.getRecipeOutput().copy();
   }
 }
