@@ -159,6 +159,16 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
+    //payments have made its
+    //    NonNullList<ItemStack> remainder = recipe.getRemainingItems(crafter);
+    //    for (int i = 0; i < remainder.size(); ++i) {
+    //      ItemStack slot = this.crafter.getStackInSlot(i);
+    //      ItemStack remainderCurrent = remainder.get(i);
+    //      if (!slot.getItem().getContainerItem(slot).isEmpty()) {
+    //        //container item exists
+    //        ModCyclic.logger.log(i + "  container item" + slot + " VS DMG  " + remainderCurrent.getItemDamage() + "?" + remainderCurrent.getCount());
+    //      }
+    //    }
     return true;
   }
 
