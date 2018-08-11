@@ -35,15 +35,25 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
+
+  private static final double BOUNDS = 0.0625 * 3.0;
+  protected static final AxisAlignedBB BOUNDING = new AxisAlignedBB(BOUNDS, BOUNDS, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
 
   public BlockItemCableSort() {
     super(Material.CLAY);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
     this.setTranslucent();
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return BOUNDING;
   }
 
   @Override

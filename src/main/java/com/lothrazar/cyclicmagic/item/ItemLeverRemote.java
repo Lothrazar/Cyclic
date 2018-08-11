@@ -148,7 +148,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
           return false;
         }
         if (dw.isAreaLoaded(blockPos, 2) == false) {//2 is radius
-          ModCyclic.logger.info("lever WORLD UNLOADED");
+
           ModCyclic.network.sendTo(new PacketChat("chunk.unloaded", true), mp);
           return false;
         }
