@@ -45,7 +45,7 @@ import net.minecraftforge.common.util.FakePlayer;
 public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
   private static final int buildSpeed = 1;
-  public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static final int TIMER_FULL = 1;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private WeakReference<FakePlayer> fakePlayer;
