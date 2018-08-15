@@ -40,6 +40,12 @@ public class EnergyStore extends EnergyStorage {
     this.maxExtract = MAX_TRANSFER;
   }
 
+  public EnergyStore(int cap, int maxRec, int maxExt) {
+    super(cap);
+    this.maxReceive = maxRec;
+    this.maxExtract = maxExt;
+  }
+
   public void setEnergyStored(int en) {
     if (en < 0) {
       en = 0;

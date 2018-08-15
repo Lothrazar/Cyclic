@@ -47,7 +47,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   private static final int CAPACITY = 64 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, FUEL;
   }
 
   private int needsRedstone = 1;
@@ -203,6 +203,8 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -214,6 +216,9 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

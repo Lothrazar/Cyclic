@@ -327,11 +327,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
 
   @Override
-  public void togglePreview() {
-    this.showParticles = (this.showParticles + 1) % 2;
-  }
-
-  @Override
   public boolean isPreviewVisible() {
     return this.showParticles == 1;
   }

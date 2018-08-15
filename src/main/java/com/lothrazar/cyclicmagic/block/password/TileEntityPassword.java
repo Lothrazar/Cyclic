@@ -57,6 +57,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     ACTIVETYPE, USERSALLOWED;
   }
 
+  public static List<String> listeningBlocksHash = new ArrayList<String>();
   public static List<TileEntityPassword> listeningBlocks = new ArrayList<TileEntityPassword>();
   private ActiveType type;
   private UsersAllowed userPerm;
@@ -69,16 +70,24 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     super(0);
     setType(ActiveType.TOGGLE);
     setUserPerm(UsersAllowed.ALL);//defaults to same behavior it had before these were added
-    //it does save to server. on world save and reload, it DOes save. problem is, 
-    //clientside does not KNOW about it
-    if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-      listeningBlocks.add(this);
-    }
   }
 
   @Override
   public void onChunkUnload() {
     this.invalidate();
+    this.onLoad();
+  }
+
+  @Override
+  public void onLoad() {
+    //it does save to server. on world save and reload, it DOes save. problem is, 
+    //clientside does not KNOW about it
+    if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
+      if (listeningBlocksHash.contains(this.pos.toString()) == false) {
+        listeningBlocks.add(this);
+        listeningBlocksHash.add(this.pos.toString());
+      }
+    }
   }
 
   @Override
@@ -171,6 +180,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     setUserPerm(UsersAllowed.values()[t]);
   }
 
+  @SuppressWarnings("deprecation")
   public void onCorrectPassword(World world) {
     Block me = this.getBlockType();
     IBlockState blockState = world.getBlockState(this.getPos());

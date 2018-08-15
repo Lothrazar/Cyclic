@@ -29,10 +29,10 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock.Fields;
 import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.core.gui.CheckboxFacingComponent;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
-import com.lothrazar.cyclicmagic.gui.button.ButtonCheckboxTileField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import net.minecraft.client.gui.GuiButton;
@@ -44,9 +44,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClock extends GuiBaseContainer {
 
-  private Map<EnumFacing, ButtonCheckboxTileField> poweredButtons = new HashMap<EnumFacing, ButtonCheckboxTileField>();
-  boolean debugLabels = false;
-  private int btnId = 0;
   int w = 18, h = 15;
   int rowOffset = Const.PAD / 2;
   int colOffset = Const.PAD / 4;
@@ -59,12 +56,40 @@ public class GuiClock extends GuiBaseContainer {
   int yRow2 = yRow1 + h + colOffset;
   int yRow3 = yRow2 + h + colOffset;
   int xColFacing = xCol4 + w + Const.PAD;
+  CheckboxFacingComponent checkboxes;
   TileEntityClock tileClock;
 
   public GuiClock(InventoryPlayer inventoryPlayer, TileEntityClock tileEntity) {
     super(new ContainerClock(inventoryPlayer, tileEntity), tileEntity);
     tileClock = (TileEntityClock) this.tile;
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    checkboxes = new CheckboxFacingComponent(this);
+    checkboxes.setX(140);
+    checkboxes.setY(Const.PAD * 4);
+    Map<EnumFacing, Integer> facingFields = new HashMap<EnumFacing, Integer>();
+    for (EnumFacing side : EnumFacing.values()) {
+      switch (side) {
+        case DOWN:
+          facingFields.put(side, Fields.D.ordinal());
+        break;
+        case EAST:
+          facingFields.put(side, Fields.E.ordinal());
+        break;
+        case NORTH:
+          facingFields.put(side, Fields.N.ordinal());
+        break;
+        case SOUTH:
+          facingFields.put(side, Fields.S.ordinal());
+        break;
+        case UP:
+          facingFields.put(side, Fields.U.ordinal());
+        break;
+        case WEST:
+          facingFields.put(side, Fields.W.ordinal());
+        break;
+      }
+    }
+    checkboxes.setFacingFields(facingFields);
   }
 
   @Override
@@ -98,9 +123,8 @@ public class GuiClock extends GuiBaseContainer {
     addButton(xCol4, yRow2, Fields.TOFF.ordinal(), 5, "delay");
     addButton(xCol2, yRow3, Fields.POWER.ordinal(), -1, "power");
     addButton(xCol3, yRow3, Fields.POWER.ordinal(), 1, "power");
-    for (EnumFacing f : EnumFacing.values()) {
-      addButtonFacing(f);
-    }
+    //checkboxes
+    checkboxes.initGui();
   }
 
   private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
@@ -110,52 +134,6 @@ public class GuiClock extends GuiBaseContainer {
     txt.setText(text);
     txtBoxes.add(txt);
     return txt;
-  }
-
-  private void addButtonFacing(EnumFacing side) {
-    int x = 0, y = 0;
-    int xCenter = 140, yCenter = Const.PAD * 4;
-    int spacing = 14;
-    int field = 0;
-    switch (side) {
-      case EAST:
-        x = xCenter + spacing;
-        y = yCenter;
-        field = Fields.E.ordinal();
-      break;
-      case NORTH:
-        x = xCenter;
-        y = yCenter - spacing;
-        field = Fields.N.ordinal();
-      break;
-      case SOUTH:
-        x = xCenter;
-        y = yCenter + spacing;
-        field = Fields.S.ordinal();
-      break;
-      case WEST:
-        x = xCenter - spacing;
-        y = yCenter;
-        field = Fields.W.ordinal();
-      break;
-      case UP:
-        x = xCenter + spacing;
-        y = Const.PAD * 8;
-        field = Fields.U.ordinal();
-      break;
-      case DOWN:
-        x = xCenter - spacing;
-        y = Const.PAD * 8;
-        field = Fields.D.ordinal();
-      break;
-    }
-    ButtonCheckboxTileField btn = new ButtonCheckboxTileField(btnId++,
-        this.guiLeft + x,
-        this.guiTop + y, this.tile.getPos(), field, w, h);
-    btn.setIsChecked(tileClock.getSideHasPower(side));
-    btn.setTooltip("tile.clock.facing." + side.name().toLowerCase());
-    this.buttonList.add(btn);
-    poweredButtons.put(side, btn);
   }
 
   @Override
@@ -174,7 +152,7 @@ public class GuiClock extends GuiBaseContainer {
   }
 
   private void addButton(int x, int y, int field, int value, String tooltip) {
-    ButtonTileEntityField btn = new ButtonTileEntityField(btnId++,
+    ButtonTileEntityField btn = new ButtonTileEntityField(field + 50,
         this.guiLeft + x,
         this.guiTop + y, this.tile.getPos(), field, value,
         w, h);
@@ -191,7 +169,7 @@ public class GuiClock extends GuiBaseContainer {
       this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, min);
     }
     btn.setTooltip("tile.clock." + tooltip);
-    this.buttonList.add(btn);
+    this.addButton(btn);
   }
 
   @SideOnly(Side.CLIENT)
@@ -203,15 +181,9 @@ public class GuiClock extends GuiBaseContainer {
         txt.drawTextBox();
       }
     }
-    // this.drawString("" + this.tile.getField(Fields.TON.ordinal()), xColText, yRow1 + rowOffset);
-    //  this.drawString("" + this.tile.getField(Fields.TOFF.ordinal()), xColText, yRow2 + rowOffset);
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
   }
 
-  //  @Override
-  //  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
-  //    super.updateScreen();
-  //  }
   @Override
   protected void keyTyped(char pchar, int keyCode) throws IOException {
     super.keyTyped(pchar, keyCode);

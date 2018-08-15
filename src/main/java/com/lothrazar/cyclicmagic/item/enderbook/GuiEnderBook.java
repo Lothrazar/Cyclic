@@ -76,9 +76,9 @@ public class GuiEnderBook extends GuiScreen {
     buttonNew = new ButtonWaypointNew(buttonIdNew, this.width / 2 - w, // x
         20, // y
         w, h, buttonIdNew);
-    buttonList.add(buttonNew);
+    addButton(buttonNew);
     ButtonClose buttonClose = new ButtonClose(9999, this.width / 2 - w - 50, 20);
-    buttonList.add(buttonClose);
+    addButton(buttonClose);
     if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
       buttonNew.enabled = false;// also a tooltip?
     }

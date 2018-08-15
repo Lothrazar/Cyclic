@@ -37,7 +37,7 @@ public class EntityRobot extends EntityCreature {
     boolean success = super.attackEntityFrom(source, amount);
     if (success && source.getTrueSource() instanceof EntityPlayer
         && world instanceof WorldServer) {
-      String m = amount + "  [ " + this.getHealth() + " / " + this.getMaxHealth() + " ]";
+      //      String m = amount + "  [ " + this.getHealth() + " / " + this.getMaxHealth() + " ]";
       trackers.add(new DmgTracker(MAX_TIMER, amount + ""));
       //    UtilChat.addChatMessage(((EntityPlayer) source.getTrueSource()), m);
       //arg server only

@@ -34,7 +34,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -46,11 +45,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
-  public final static int TIMER_FULL = 200;
+  public static int TIMER_FULL = 200;
 
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
@@ -138,7 +137,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
 
   private void setOutputItems(List<ItemStack> output) {
-    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory() - 1);
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory());
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {
         UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
@@ -196,7 +195,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.needsRedstone = value;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
@@ -213,14 +215,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
 
   @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-
-  @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
     if (val > 1) {
@@ -232,11 +226,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

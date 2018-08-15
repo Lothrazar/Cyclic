@@ -478,6 +478,27 @@ public class UtilEntity {
     }
   }
 
+  public static void setEntityFacing(EntityLivingBase entity, EnumFacing currentFacing) {
+    float yaw = 0;
+    switch (currentFacing) {
+      case EAST:
+        yaw = 270F;
+      break;
+      case NORTH:
+        yaw = 180F;
+      break;
+      case WEST:
+        yaw = 90F;
+      break;
+      case DOWN:
+      case UP:
+      case SOUTH:
+      default:
+        yaw = 0;
+    }
+    entity.rotationYaw = yaw;
+  }
+
   /**
    * used by bounce potion and vector plate
    * 

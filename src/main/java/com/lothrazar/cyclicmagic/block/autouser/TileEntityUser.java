@@ -42,7 +42,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilString;
 import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -80,7 +79,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
@@ -103,7 +102,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUEL;
   }
 
   public TileEntityUser() {
@@ -125,7 +124,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       return;
     }
     this.shiftAllUp(6);
-    this.spawnParticlesAbove();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -149,10 +147,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           if (rightClickIfZero == 0) {//right click entities and blocks
             if (this.isInBlacklist(targetPos) == false) {
               this.rightClickBlock(targetPos);
-            }
-            else {
-              ModCyclic.logger.log("IN BLACKLIST OOOO" + targetPos);
-            }
+            } //else in blacklist so nothign
           }
           interactEntities(targetPos);
         }
@@ -233,10 +228,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (world.isAirBlock(targetPos)) {
       return;
     }
+    boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //  ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    //ModCyclic.logger.log("rightClick client== " + this.world.isRemote + r.toString());
+    //    ModCyclic.logger.log("rightClick client== " + result + "-" + world.getBlockState(targetPos).getBlock());
     if (result != EnumActionResult.SUCCESS) {
       //if its a throwable item, it happens on this line down below, the process right click
       result = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
@@ -266,6 +262,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
+    //if my hand was empty before operation, then there might be something in it now so drop that
+    //if it wasnt empty before (bonemeal whatever) then dont do that, it might dupe
+    this.tryDumpFakePlayerInvo(wasEmpty);
   }
 
   private void tryDumpStacks(List<ItemStack> toDump) {
@@ -293,7 +292,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         continue;
       }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName() + "_tryDumpFakePlayerInvo " + includeMainHand);//leaving in release
+        ModCyclic.logger.log("AutoUser found drop " + s.getDisplayName());
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -437,6 +436,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -444,6 +445,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case Y_OFFSET:
         if (value > 1) {
           value = -1;
@@ -475,7 +479,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
@@ -512,14 +519,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-
-  @Override
   public int getSpeed() {
     return 1;
   }
@@ -532,11 +531,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1).offset(EnumFacing.UP, yOffset);
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

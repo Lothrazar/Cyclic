@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.core.block.RenderItemTesr;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -81,7 +82,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IHasConfig, IHas
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvilAuto.class, new AnvilAutoTESR(TileEntityAnvilAuto.SLOT_INPUT));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvilAuto.class, new RenderItemTesr<TileEntityAnvilAuto>(TileEntityAnvilAuto.SLOT_INPUT, 1.15F));
   }
 
   @Override

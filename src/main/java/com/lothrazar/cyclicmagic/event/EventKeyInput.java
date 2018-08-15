@@ -204,6 +204,7 @@ public class EventKeyInput {
     }
   }
 
+  @SuppressWarnings("deprecation")
   @SideOnly(Side.CLIENT)
   private boolean isGuiKeyDown(KeyBinding keybinding) {
     if (keybinding == null) {

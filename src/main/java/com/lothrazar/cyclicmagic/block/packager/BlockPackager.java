@@ -21,73 +21,71 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.enchantlibrary;
+package com.lothrazar.cyclicmagic.block.packager;
 
-import java.util.List;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class BlockLibraryController extends BlockBase implements IHasRecipe {
+public class BlockPackager extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
 
-  private static final int RANGE = 4;
-  Block libraryInstance;
+  public static int FUEL_COST = 0;
 
-  public BlockLibraryController(Block lib) {
-    super(Material.WOOD);
-    libraryInstance = lib;
+  public BlockPackager() {
+    super(Material.IRON);
+    this.setHardness(3.0F).setResistance(5.0F);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_PACKAGER);
+    RecipePackage.initAllRecipes();
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    List<BlockPos> connectors = UtilWorld.getMatchingInRange(world, pos, libraryInstance, RANGE);
-    TileEntity te;
-    TileEntityLibrary lib;
-    ItemStack playerHeld = player.getHeldItem(hand);
-    if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
-      return false;
-    }
-    for (BlockPos p : connectors) {
-      te = world.getTileEntity(p);
-      if (te instanceof TileEntityLibrary) {
-        lib = (TileEntityLibrary) te;
-        QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
-        if (quad == null) {
-          quad = lib.findEmptyQuadrant();
-        }
-        if (quad != null) {
-          //now try insert here 
-          if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
-            lib.markDirty();
-            return true;
-          }
-        }
-      }
-    }
-    // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
-    return false;
+  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    return side == EnumFacing.DOWN;
+  }
+
+  @Override
+  public TileEntity createTileEntity(World worldIn, IBlockState state) {
+    return new TileEntityPackager();
   }
 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        " r ",
-        "rgr",
-        " r ",
-        'g', "chestEnder",
-        'r', libraryInstance);
+        "pcp",
+        "x x",
+        "pcp",
+        'x', new ItemStack(Blocks.FURNACE),
+        'c', "workbench",
+        'p', "dyeLightBlue");
+  }
+
+  //  @Override
+  //  public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
+  //    TileEntity te = world.getTileEntity(pos);
+  //    if (te instanceof TileEntityPackager) {
+  //      float fill = ((TileEntityPackager) te).getFillRatio();
+  //      return (int) (15 * fill);
+  //    }
+  //    return 0;
+  //  }
+  @Override
+  public void syncConfig(Configuration config) {
+    TileEntityPackager.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        35, 1, 9000, Const.ConfigText.machineTimer);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 350, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

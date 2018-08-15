@@ -36,7 +36,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -87,10 +86,6 @@ import net.minecraftforge.common.util.FakePlayer;
  */
 public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public TileEntityBlockMiner() {
-    super(0);
-  }
-
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -106,6 +101,10 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     REDSTONE
   }
 
+  public TileEntityBlockMiner() {
+    super(0);
+  }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -113,9 +112,6 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
 
   @Override
   public void update() {
-    if (isRunning()) {
-      this.spawnParticlesAbove();
-    }
     World world = this.getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
@@ -236,18 +232,6 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     }
   }
 
-  //  @Override
-  //  public EnumFacing getCurrentFacing() {
-  //    return BlockBaseFacingOmni.getCurrentFacing(this.getWorld(), this.getPos());
-  //  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {}
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] {};
-  }
-
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount())
@@ -282,6 +266,7 @@ public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements I
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }

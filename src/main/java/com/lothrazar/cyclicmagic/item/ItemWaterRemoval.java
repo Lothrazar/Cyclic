@@ -174,7 +174,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }

@@ -56,7 +56,6 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasC
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
     this.setTranslucent();
   }
 
@@ -88,6 +87,8 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasC
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityDisenchanter.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        80, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

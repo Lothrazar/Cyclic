@@ -175,7 +175,6 @@ public class GuiSignEditor extends GuiScreen {
    * @param color
    * @return
    */
-  @SuppressWarnings("unused")
   public static int toHex(TextFormatting color) {
     switch (color) {
       case BLACK://0

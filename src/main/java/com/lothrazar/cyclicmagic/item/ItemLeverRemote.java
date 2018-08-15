@@ -24,16 +24,19 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -45,6 +48,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,7 +63,8 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
     if (pointer != null) {
-      tooltip.add(TextFormatting.RED + UtilChat.blockPosToString(pointer));
+      int dimensionTarget = UtilNBT.getItemStackNBTVal(stack, "LeverDim");
+      tooltip.add(TextFormatting.RED + UtilChat.blockPosToString(pointer) + " [" + dimensionTarget + "]");
     }
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
@@ -69,8 +74,10 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     ItemStack stack = playerIn.getHeldItem(hand);
     if (worldIn.getBlockState(pos).getBlock() instanceof BlockLever) {
       UtilNBT.setItemStackBlockPos(stack, pos);
+      //and save dimension
+      UtilNBT.setItemStackNBTVal(stack, "LeverDim", playerIn.dimension);
       if (worldIn.isRemote) {
-        UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".saved");
+        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".saved");
       }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
       return EnumActionResult.SUCCESS;
@@ -98,29 +105,67 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
 
-  private boolean trigger(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+  private boolean trigger(ItemStack stack, World world, EntityPlayer player) {
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return false;
+    }
     BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
+    //default is zero which is ok
     if (blockPos == null) {
-      if (worldIn.isRemote) {
-        UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+      if (world.isRemote) {
+        UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
       }
       return false;
     }
-    else {
-      IBlockState blockState = worldIn.getBlockState(blockPos);
+    int dimensionTarget = UtilNBT.getItemStackNBTVal(stack, "LeverDim");
+    //check if we can avoid crossing dimensions
+    if (dimensionTarget == player.dimension) {
+      IBlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
-        if (worldIn.isRemote) {
-          UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+        if (world.isRemote) {
+          UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
         }
         return false;
       }
-      else {
+      blockState = world.getBlockState(blockPos);
+      boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
+      setLeverPowerState(world, blockPos, blockState, hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
+      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
+      player.getCooldownTracker().setCooldown(this, 20);
+      return true;
+    }
+    else if (player instanceof EntityPlayerMP && world.isRemote == false) {
+      //then in the serverside only- find the block in the other dimension if it is loaded
+      try {
+        EntityPlayerMP mp = (EntityPlayerMP) player;
+        // worldServer extends world
+        WorldServer dw = mp.getServer().getWorld(dimensionTarget);
+        if (dw == null) {
+          //server 2 chat packet 
+          ModCyclic.network.sendTo(new PacketChat("dimension.notfound", true), mp);
+          //dimension deleted
+          return false;
+        }
+        if (dw.isAreaLoaded(blockPos, 2) == false) {//2 is radius
+
+          ModCyclic.network.sendTo(new PacketChat("chunk.unloaded", true), mp);
+          return false;
+        }
+        //now get
+        IBlockState blockState = dw.getBlockState(blockPos);
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
-        setLeverPowerState(worldIn, blockPos, blockState, hasPowerHere);
-        UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
+        setLeverPowerState(dw, blockPos, blockState, hasPowerHere);
+        ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
+        UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
+        player.getCooldownTracker().setCooldown(this, 20);
         return true;
       }
+      catch (Throwable e) {
+        ModCyclic.logger.error("Dimension find error; safe to ignore", e);
+      }
     }
+    return false;
   }
 
   private void setLeverPowerState(World worldIn, BlockPos blockPos, IBlockState blockState, boolean hasPowerHere) {

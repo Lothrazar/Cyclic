@@ -58,7 +58,6 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
-    this.setTickRandomly(true);
     this.setTranslucent();
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PATTERN);
   }

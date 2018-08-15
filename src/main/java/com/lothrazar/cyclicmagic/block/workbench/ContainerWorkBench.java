@@ -89,7 +89,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     catch (Exception e) {
       //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
       //but from another mod there could be an error bubbling up to here
-      ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
+      ModCyclic.logger.error("A recipe has thrown an error unexpectedly");
     }
   }
 

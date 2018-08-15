@@ -85,18 +85,17 @@ public class UtilPlaceBlocks {
    * @param stack
    * @return
    */
-  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack) {
+  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack, EntityPlayer fake) {
+    if (stack.getItem() instanceof ItemBlock == false) {
+      return false;
+    }
     ItemBlock itemblock = (ItemBlock) stack.getItem();
-    EntityPlayer fake = null;
-    //client only hmm || itemblock.canPlaceBlockOnSide(world, placePos.down(), EnumFacing.DOWN, fake, stack)
     if (world.isAirBlock(placePos)) {
       Block block = itemblock.getBlock();
-      //        boolean blockAcross = ;
-      IBlockState state = block.getStateForPlacement(world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
+      IBlockState state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
           stack.getItemDamage(), fake, EnumHand.MAIN_HAND);
       if (block.canPlaceBlockAt(world, placePos)) {
-        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(),
-            state)) {
+        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
           world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
           stack.shrink(1);
           return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
@@ -237,7 +236,7 @@ public class UtilPlaceBlocks {
     return moved;
   }
 
-  public static void destroyBlock(World world, BlockPos pos) {
+  public static boolean destroyBlock(World world, BlockPos pos) {
     if (world.getTileEntity(pos) != null) {
       world.removeTileEntity(pos);
     }
@@ -250,6 +249,7 @@ public class UtilPlaceBlocks {
     catch (Exception e) {
       ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
       e.printStackTrace();
+      return false;
     }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
     // IN CASE OF DOUBLE CHESTS
@@ -257,6 +257,7 @@ public class UtilPlaceBlocks {
     tryUpdateNeighbour(world, pos.south());
     tryUpdateNeighbour(world, pos.east());
     tryUpdateNeighbour(world, pos.west());
+    return true;
   }
 
   public static void tryUpdateNeighbour(World world, BlockPos pos) {

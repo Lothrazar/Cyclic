@@ -33,7 +33,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -60,7 +59,6 @@ public class EntityHomingProjectile extends EntityThrowable {
 
   private int lifetime = MAX_LIFETIME;
   private UUID targetId = null;
-  private BlockPos targetPos;
   private EntityLivingBase targetEntity;
   private float damage = 6.0f;
 
@@ -82,7 +80,7 @@ public class EntityHomingProjectile extends EntityThrowable {
 
   public void setTarget(EntityLivingBase target) {
     this.targetId = target.getUniqueID();
-    targetPos = target.getPosition();
+    //    targetPos = target.getPosition();
     targetEntity = target;
     // ModCyclic.logger.error("pos  =" + this.targetPos);
   }

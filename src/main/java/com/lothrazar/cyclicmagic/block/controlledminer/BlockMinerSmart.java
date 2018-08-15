@@ -65,6 +65,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
     return new TileEntityControlledMiner();
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -88,6 +89,8 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
+    TileEntityControlledMiner.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+        100, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -81,7 +81,8 @@ public class GuiHydrator extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int x = this.guiLeft + ContainerHydrator.SLOTX_START - 1;
     int y = this.guiTop + ContainerHydrator.SLOTY - 1;
-    for (int k = 0; k < 4; k++) {
+    int s = TileEntityHydrator.RECIPE_SIZE;
+    for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,
           y + k / 2 * Const.SQ,
@@ -89,7 +90,7 @@ public class GuiHydrator extends GuiBaseContainer {
     }
     x = this.guiLeft + ContainerHydrator.MID_SPACING;
     y = this.guiTop + ContainerHydrator.SLOTY - 1;
-    for (int k = 0; k < 4; k++) {
+    for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * Const.SQ,
           y + k / 2 * Const.SQ,

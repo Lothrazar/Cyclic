@@ -23,19 +23,58 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.battery;
 
+import java.util.HashMap;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery.Fields;
+import com.lothrazar.cyclicmagic.core.gui.CheckboxFacingComponent;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumFacing;
 
 public class GuiBattery extends GuiBaseContainer {
 
+  CheckboxFacingComponent checkboxes;
+
   public GuiBattery(InventoryPlayer inventoryPlayer, TileEntityBattery te) {
     super(new ContainerBattery(inventoryPlayer, te), te);
-    //    this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(8).setX(150);
+    checkboxes = new CheckboxFacingComponent(this);
+    checkboxes.setX(40);
+    checkboxes.setY(20);
+    Map<EnumFacing, Integer> facingFields = new HashMap<EnumFacing, Integer>();
+    for (EnumFacing side : EnumFacing.values()) {
+      switch (side) {
+        case DOWN:
+          facingFields.put(side, Fields.D.ordinal());
+        break;
+        case EAST:
+          facingFields.put(side, Fields.E.ordinal());
+        break;
+        case NORTH:
+          facingFields.put(side, Fields.N.ordinal());
+        break;
+        case SOUTH:
+          facingFields.put(side, Fields.S.ordinal());
+        break;
+        case UP:
+          facingFields.put(side, Fields.U.ordinal());
+        break;
+        case WEST:
+          facingFields.put(side, Fields.W.ordinal());
+        break;
+      }
+    }
+    checkboxes.setFacingFields(facingFields);
+  }
+
+  @Override
+  public void initGui() {
+    super.initGui();
+    checkboxes.initGui();
   }
 
   @Override
@@ -47,8 +86,5 @@ public class GuiBattery extends GuiBaseContainer {
         this.width / 2 - 9,
         this.guiTop + 34 - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //DRAW ENERGY BAR
-    //    fuelX = this.guiLeft + getScreenSize().width() - 25;
-    //    fuelY = this.guiTop + 8;
   }
 }

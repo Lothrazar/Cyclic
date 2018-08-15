@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.enchantlibrary;
+package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
+import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
 import com.lothrazar.cyclicmagic.core.block.BaseTESR;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,6 +33,7 @@ import net.minecraft.util.EnumFacing;
 
 public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
 
+  private static final int TEXTCOLOR = 0;
   //TODO: nameplage ugly when block on top. also redundant. revive one day??
   boolean doNameplate = false;
   final float horizDistFromCenter = 0.46F;
@@ -101,14 +104,19 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
   }
 
   private void renderEnchantStack(TileEntityLibrary te, EnchantStack stack, QuadrantEnum quad, EnumFacing face, double x, double y, double z, int destroyStage, float xt, float yt, float zt) {
-    if (stack.isEmpty() == false) {
+    if (stack.isEmpty()) {
+      return;
+    }
+    if (te.displaysText()) {
+      int angle = angleOfFace(face);
+      renderTextAt(stack.shortName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F, zt - 0.44F, angle, TEXTCOLOR);
+      if (stack.isEmpty() == false) {
+        renderTextAt(stack.levelName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + vOffset, zt - 0.44F, angle, TEXTCOLOR);
+        renderTextAt(stack.countName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + 2 * vOffset, zt - 0.44F, angle, TEXTCOLOR);
+      }
+    }
+    else {
       renderStack(te, stack, face, quad, x, y, z);
     }
-    //    int angle = angleOfFace(face);
-    //        renderTextAt(stack.shortName(), x, y, z, destroyStage, xt, yt, zt, angle);
-    //    if (stack.isEmpty() == false) {
-    //      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt, yt + vOffset, zt, angle);
-    //      renderTextAt(stack.countName(), x, y, z, destroyStage, xt, yt + 2 * vOffset, zt, angle);
-    //    }
   }
 }

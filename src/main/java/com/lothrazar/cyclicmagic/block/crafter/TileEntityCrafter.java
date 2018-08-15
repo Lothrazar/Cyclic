@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -44,7 +45,7 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int TIMER_FULL = 20;
+  public static int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -52,7 +53,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_OUTPUT = SIZE_INPUT;//20 to 30
 
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, FUEL;
   }
 
   private Container fakeContainer;
@@ -85,14 +86,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.isRunning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateTimerIsZero() == false) {
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost()) {
-      findRecipe();
-      if (recipe != null && tryPayCost()) {
+    if (this.getEnergyCurrent() >= this.getEnergyCost() && isGridEmpty() == false) {
+      //      if (world.isRemote == false) {// maybe?
+        findRecipe();
+      //      }
+      if (recipe != null && !world.isRemote && tryPayCost()) {
         // pay the cost  
         final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
         //confirmed this test does actually et the outut: 4x planks 
@@ -116,6 +118,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (fromRecipe.isEmpty()) {
         continue;
       }
+
       //try to pay its cost
       for (int j = 0; j < SIZE_INPUT; j++) {
         fromInput = this.getStackInSlot(j);
@@ -157,6 +160,16 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
+    //payments have made its
+    //    NonNullList<ItemStack> remainder = recipe.getRemainingItems(crafter);
+    //    for (int i = 0; i < remainder.size(); ++i) {
+    //      ItemStack slot = this.crafter.getStackInSlot(i);
+    //      ItemStack remainderCurrent = remainder.get(i);
+    //      if (!slot.getItem().getContainerItem(slot).isEmpty()) {
+    //        //container item exists
+    //        ModCyclic.logger.log(i + "  container item" + slot + " VS DMG  " + remainderCurrent.getItemDamage() + "?" + remainderCurrent.getCount());
+    //      }
+    //    }
     return true;
   }
 
@@ -178,10 +191,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     recipe = null;//doesnt match
+    ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
     //    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
     for (final IRecipe rec : CraftingManager.REGISTRY) {
       try {
-        // rec.getRecipeSize() <= 9 && 
         if (rec.matches(this.crafter, this.world)) {
           this.recipe = rec;
           return;
@@ -191,6 +204,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         throw new RuntimeException("Caught exception while querying recipe ", err);
       }
     }
+  }
+
+  public boolean isGridEmpty() {
+    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
+      if (this.getStackInSlot(i).isEmpty() == false) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private void setRecipeInput() {
@@ -205,6 +227,8 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -216,6 +240,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;
@@ -252,5 +279,13 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     compound.setInteger(NBT_TIMER, timer);
     compound.setInteger(NBT_REDST, needsRedstone);
     return super.writeToNBT(compound);
+  }
+
+  public ItemStack getRecipeResult() {
+    //    ModCyclic.logger.log(recipe + "");
+    if (this.recipe == null) {
+      return ItemStack.EMPTY;
+    }
+    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
   }
 }

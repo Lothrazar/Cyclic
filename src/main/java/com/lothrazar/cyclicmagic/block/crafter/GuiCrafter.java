@@ -29,7 +29,10 @@ import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class GuiCrafter extends GuiBaseContainer {
 
@@ -53,7 +56,7 @@ public class GuiCrafter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0, x, y;
+    int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
     int xPrefix = Const.PAD, yPrefix = ContainerCrafter.SLOTY;
@@ -86,6 +89,19 @@ public class GuiCrafter extends GuiBaseContainer {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
+    }
+    //phantom recipe output
+    ItemStack recipeOutput = this.tileCrafter.getRecipeResult();
+    if (!recipeOutput.isEmpty()) {
+      int x = guiLeft + this.width / 4 - 40;
+      int y = guiTop + 30;
+      GlStateManager.pushMatrix();
+      RenderHelper.enableGUIStandardItemLighting();
+      mc.getRenderItem().renderItemAndEffectIntoGUI(recipeOutput, x, y);
+      //keep this render quantity for later
+      if (recipeOutput.getCount() > 1)
+        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, recipeOutput, x + 1, y + 1, recipeOutput.getCount() + "");
+      GlStateManager.popMatrix();
     }
   }
 }

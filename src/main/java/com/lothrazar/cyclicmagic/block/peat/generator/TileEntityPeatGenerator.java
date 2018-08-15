@@ -66,7 +66,6 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
       // this.energyStorage.receiveEnergy(PER_TICK, true);
       if (actuallyGained == perTick) {
         timer--;
-        this.spawnParticlesAbove();
         // either we have room to eat everything that generated, or we didnt.
         //if we did, burn some fuel. if not, wait for more room in battery
         energyStorage.setEnergyStored(energyStorage.getEnergyStored() + actuallyGained);

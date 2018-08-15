@@ -33,7 +33,6 @@ import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
 
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private ButtonTileEntityField btnWhitelist;
   ITileStackWrapper te;
 
@@ -64,12 +63,14 @@ public class GuiMinerSmart extends GuiBaseContainer {
         guiLeft + 4, guiTop + Const.PAD + 40,
         tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1);
     btnWhitelist.width = 18;
-    this.buttonList.add(btnWhitelist);
+    this.addButton(btnWhitelist);
     x = this.guiLeft + Const.PAD * 4;
     y = this.guiTop + Const.PAD * 3 + 2;
-    btnSize = new GuiButtonToggleSize(id++,
-        x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    btnSize = new ButtonTileEntityField(id++,
+        x, y, this.tile.getPos(), TileEntityControlledMiner.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,

@@ -68,26 +68,26 @@ public class GuiPylon extends GuiBaseContainer {
     btnCollect = new ButtonExpPylon(btnId++,
         x, y, w + 12, h, "");
     btnCollect.setTooltip("button.exp_pylon.collect.tooltip");
-    this.buttonList.add(btnCollect);
+    this.addButton(btnCollect);
     y += h + Const.PAD / 2;
     //collect and bottle are done, now the rest
     ButtonExpPylon btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "+" + 10);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(10);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += hSpacing;
     btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "+" + 50);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(50);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += hSpacing;
     btn = new ButtonExpPylon(btnId++,
         x, y, w / 2 + 5, h, "+" + 500);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(500);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x = this.guiLeft + Const.PAD;
     y += h + Const.PAD / 2;
     //START OF - ROW

@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
@@ -41,27 +40,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  public static ArrayList<RecipeHydrate> recipesShaped = new ArrayList<RecipeHydrate>();
-  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(4, ItemStack.EMPTY);// new ItemStack[4];
+  private static final int FLUID_DEFAULT = 25;
+  public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
+  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
-  private int fluidCost = 25;
+  private int fluidCost = FLUID_DEFAULT;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
-    this(new ItemStack[] { in }, out, 25);
+    this(new ItemStack[] { in }, out, FLUID_DEFAULT);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
-    this(in, out, 25);
+    this(in, out, FLUID_DEFAULT);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
-    if (in.length > 4 || in.length == 0) {
+    if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    ModCyclic.logger.log("Hydrator recipe for " + out.getDisplayName() + " is size? " + in.length);
     for (int i = 0; i < in.length; i++) {
       if (in[i] != null && in[i].isEmpty() == false)
         recipeInput.set(i, in[i]);
@@ -79,7 +79,7 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
         recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
   }
 
-  private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
+  public static boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
     if (sInvo.isEmpty() != sRecipe.isEmpty()) {
       return false;//empty matching empty
     }
@@ -161,7 +161,6 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     //GRAVEL JUST FOR FUN EH
-    //IDEAS: bones, rotten flesh, mushrooms, leather??
     addRecipe(new RecipeHydrate(
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
@@ -224,10 +223,10 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 3, BlockSand.EnumType.RED_SAND.ordinal())));
+    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {
-    recipesShaped.add(rec);
+    recipes.add(rec);
   }
 }

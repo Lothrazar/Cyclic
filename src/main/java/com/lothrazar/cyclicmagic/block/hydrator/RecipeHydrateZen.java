@@ -33,16 +33,16 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.cyclicmagic.Hydrator")
 @ZenRegister
-public class RecipeZen {
+public class RecipeHydrateZen {
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeShapedRecipe(IItemStack output) {
     ItemStack out = toStack(output);
-    for (RecipeHydrate rec : RecipeHydrate.recipesShaped) {
+    for (RecipeHydrate rec : RecipeHydrate.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        RecipeHydrate.recipesShaped.remove(rec);
-        ModCyclic.logger.info("removed hydrator recipe for " + output.getDisplayName());
+        RecipeHydrate.recipes.remove(rec);
+        ModCyclic.logger.info("ZenScript: removed hydrator recipe for " + output.getDisplayName());
       }
     }
   }
@@ -54,8 +54,10 @@ public class RecipeZen {
     removeShapedRecipe(output);
   }
 
+  @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs, int water) {
+    ModCyclic.logger.info("ZenScript: added hydrator recipe for " + output.getDisplayName());
     RecipeHydrate.addRecipe(new RecipeHydrate(toStacks(inputs), toStack(output), water));
   }
 

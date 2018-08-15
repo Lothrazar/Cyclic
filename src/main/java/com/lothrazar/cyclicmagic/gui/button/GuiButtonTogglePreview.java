@@ -27,8 +27,7 @@ import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle.ActionType;
+import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,11 +35,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonTogglePreview extends GuiButtonTexture {
 
-  private BlockPos tilePos;
+  private BlockPos pos;
+  private int fieldId;
 
-  public GuiButtonTogglePreview(int buttonId, int x, int y, BlockPos p) {
+  public GuiButtonTogglePreview(int buttonId, int x, int y, BlockPos p, int field) {
     super(buttonId, x, y);
-    this.tilePos = p;
+    this.pos = p;
+    fieldId = field;
     this.setTextureIndex(3);
   }
 
@@ -49,7 +50,7 @@ public class GuiButtonTogglePreview extends GuiButtonTexture {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileSizeToggle(tilePos, ActionType.PREVIEW));
+      ModCyclic.network.sendToServer(new PacketTileIncrementField(pos, fieldId, 1));
     }
     return pressed;
   }

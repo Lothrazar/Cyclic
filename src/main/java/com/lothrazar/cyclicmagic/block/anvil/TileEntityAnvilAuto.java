@@ -40,7 +40,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, FUEL;
   }
 
   private int timer = 0;
@@ -81,7 +81,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (inputStack.isEmpty()) {
       return;//no paying cost on empty work
     }
-    this.spawnParticlesAbove();
     //pay energy each tick
     if (this.updateEnergyIsBurning() == false) {
       return;
@@ -122,6 +121,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
         return timer;
       case REDSTONE:
         return needsRedstone;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -134,6 +135,9 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case FUEL:
+        this.setEnergyCurrent(value);
       break;
     }
   }

@@ -35,7 +35,6 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     soundList.setSounds(allSounds);
     int sel = tile.getField(Fields.SOUNDINDEX.ordinal());
     soundList.selectIndex(sel);
-    ModCyclic.logger.log("on init selected is" + sel);
   }
 
   @Override
@@ -136,12 +135,12 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     public int getSelectionIndex() {
       return selectedIndex;
     }
-
-    public ResourceLocation getSelection() {
-      if (selectedIndex >= 0 && selectedIndex < sounds.size())
-        return this.sounds.get(selectedIndex);
-      return null;
-    }
+    //
+    //    public ResourceLocation getSelection() {
+    //      if (selectedIndex >= 0 && selectedIndex < sounds.size())
+    //        return this.sounds.get(selectedIndex);
+    //      return null;
+    //    }
 
     void selectRange(int start, int end) {
       for (int i = start; i <= end; i++) {
@@ -167,17 +166,16 @@ public class GuiSoundPlayer extends GuiBaseContainer {
     void setSounds(List<ResourceLocation> sounds) {
       this.sounds = sounds;
     }
-
-    boolean hasSelectedElements() {
-      return selectedIndicies.size() > 0;
-    }
-
-    List<ResourceLocation> getSelectedSounds() {
-      List<ResourceLocation> ret = new ArrayList<>();
-      for (int i : selectedIndicies) {
-        ret.add(sounds.get(i));
-      }
-      return ret;
-    }
+    //    boolean hasSelectedElements() {
+    //      return selectedIndicies.size() > 0;
+    //    }
+    //
+    //    List<ResourceLocation> getSelectedSounds() {
+    //      List<ResourceLocation> ret = new ArrayList<>();
+    //      for (int i : selectedIndicies) {
+    //        ret.add(sounds.get(i));
+    //      }
+    //      return ret;
+    //    }
   }
 }

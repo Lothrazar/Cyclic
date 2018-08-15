@@ -48,6 +48,7 @@ import com.lothrazar.cyclicmagic.item.sleep.PacketSleepClient;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketColorStack;
 import com.lothrazar.cyclicmagic.item.storagesack.PacketStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.PacketChestSack;
+import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import com.lothrazar.cyclicmagic.net.PacketEntitySyncToClient;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
@@ -65,7 +66,6 @@ import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
@@ -92,7 +92,7 @@ public class PacketRegistry {
     network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketDeleteWaypoint.class, PacketDeleteWaypoint.class, packetID++, Side.SERVER);
-    packetID++;
+    network.registerMessage(PacketChat.class, PacketChat.class, packetID++, Side.CLIENT);
     packetID++;
     packetID++;
     packetID++;
@@ -111,7 +111,7 @@ public class PacketRegistry {
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChestSack.class, PacketChestSack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
+    packetID++;//
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileClientToServer.class, PacketTileClientToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);

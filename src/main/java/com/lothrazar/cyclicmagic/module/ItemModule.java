@@ -253,6 +253,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean robotSpawner;
   private boolean lasers;
   private boolean enableNetherbrickTools;
+  private boolean enableHeartToxic;
 
   @Override
   public void onPreInit() {
@@ -792,12 +793,16 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(apple_emerald);
     }
     if (enableHeartContainer) {
-      ItemHeartContainer heart_food = new ItemHeartContainer();
+      ItemHeartContainer heart_food = new ItemHeartContainer(1);
       ItemRegistry.register(heart_food, "heart_food");
       ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
+    }
+    if (enableHeartToxic) {
+      ItemHeartContainer heart_toxic = new ItemHeartContainer(-1);
+      ItemRegistry.register(heart_toxic, "heart_toxic");
     }
     if (enableInventoryCrafting) {
       ItemCraftingUnlock crafting_food = new ItemCraftingUnlock();
@@ -840,6 +845,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    enableHeartToxic = config.getBoolean("heart_toxic", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

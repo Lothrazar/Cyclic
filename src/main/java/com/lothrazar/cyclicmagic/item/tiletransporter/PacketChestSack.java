@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item.tiletransporter;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
@@ -83,6 +84,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
       // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
       thread.addScheduledTask(new Runnable() {
 
+        @Override
         public void run() {
           BlockPos position = message.pos;
           EntityPlayer player = ctx.getServerHandler().player;
@@ -109,10 +111,20 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
             if (held.getItem() instanceof ItemChestSackEmpty) {
               Item chest_sack = ((ItemChestSackEmpty) held.getItem()).getFullSack();
               if (chest_sack != null) {
+                if (!UtilPlaceBlocks.destroyBlock(world, position)) {
+                  //we failed to break the block
+                  // try to undo the break if we can
+                  UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
+                  world.setBlockState(position, state);
+                  return;// and dont drop the full item stack or shrink the empty just end
+                  //TileEntity tileCopy = world.getTileEntity(position);
+                  //  if (tileCopy != null) {
+                  //    tileCopy.readFromNBT(tileData);
+                  //  } 
+                }
                 ItemStack drop = new ItemStack(chest_sack);
                 drop.setTagCompound(itemData);
                 UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
-                UtilPlaceBlocks.destroyBlock(world, position);
                 if (player.capabilities.isCreativeMode == false && held.getCount() > 0) {
                   held.shrink(1);
                   if (held.getCount() == 0) {

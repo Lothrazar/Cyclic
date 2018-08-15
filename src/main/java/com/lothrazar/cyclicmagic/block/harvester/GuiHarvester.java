@@ -31,7 +31,7 @@ import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -42,7 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiHarvester extends GuiBaseContainer {
 
   boolean debugLabels = false;
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private GuiButtonTooltip btnSpray;
 
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
@@ -63,16 +63,18 @@ public class GuiHarvester extends GuiBaseContainer {
     int btnId = 20;
     int x = this.guiLeft + Const.PAD + 22;
     int y = this.guiTop + Const.PAD * 3 + 2;
-    btnSize = new GuiButtonToggleSize(btnId++,
-        x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    btnSize = new ButtonTileEntityField(btnId++,
+        x, y, this.tile.getPos(), TileEntityHarvester.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
     int w = 58, h = 20;
     x += 40 + Const.PAD;
     btnSpray = new GuiButtonTooltip(btnId++,
         x, y,
         w, h, "");
     btnSpray.setTooltip("button.harvester.mode.tooltip");
-    this.buttonList.add(btnSpray);
+    this.addButton(btnSpray);
   }
 
   @Override

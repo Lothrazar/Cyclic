@@ -203,11 +203,6 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     }
   }
 
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[0];
-  }
-
   /**
    * Returns true if automation can insert the given item in the given slot from the given side.
    */

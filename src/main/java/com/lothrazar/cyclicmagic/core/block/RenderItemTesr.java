@@ -21,34 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.core.block;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle.ActionType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonToggleSize extends GuiButtonTooltip {
+@SideOnly(Side.CLIENT)
+public class RenderItemTesr<T extends TileEntityBaseMachineInvo> extends BaseMachineTESR<T> {
 
-  private BlockPos tilePos;
+  private float yOffset;
 
-  public GuiButtonToggleSize(int buttonId, int x, int y, BlockPos p) {
-    super(buttonId, x, y, 44, 20, "");
-    this.tilePos = p;
-    this.setTooltip("button.size.tooltip");
+  public RenderItemTesr(int slot, float y) {
+    super(slot);
+    yOffset = y;
   }
 
-  @SideOnly(Side.CLIENT)
   @Override
-  public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-    boolean pressed = super.mousePressed(mc, mouseX, mouseY);
-    if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileSizeToggle(tilePos, ActionType.SIZE));
+  public void renderBasic(TileEntityBaseMachineInvo te) {
+    ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
+    if (stack.isEmpty() == false) {
+      renderItem(te, stack, yOffset);
     }
-    return pressed;
   }
 }

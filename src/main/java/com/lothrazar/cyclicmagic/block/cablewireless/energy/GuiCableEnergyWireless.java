@@ -35,10 +35,12 @@ import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
 public class GuiCableEnergyWireless extends GuiBaseContainer {
@@ -90,8 +92,15 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
         BlockPos target = dim.toBlockPos();
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
-          Block block = tile.getWorld().getBlockState(target).getBlock();
-          UtilChat.addChatMessage(player, block.getLocalizedName());
+          IBlockState statehere = tile.getWorld().getBlockState(target);
+          Block block = statehere.getBlock();
+          //    if (block.getLocalizedName().equals(block.getUnlocalizedName())) {
+          //example: thermal machiens use crazy item stack NBT + Block metadata 
+          ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, block.damageDropped(statehere));
+          UtilChat.addChatMessage(player, dropped.getDisplayName());
+          //   }
+          // else
+          //   UtilChat.addChatMessage(player, block.getLocalizedName());
         }
         else {
           UtilChat.addChatMessage(player, "wireless.unloaded");

@@ -78,10 +78,8 @@ public class PacketTileClientToServer implements IMessage, IMessageHandler<Packe
     TileEntity tile = ModCyclic.proxy.getPlayerEntity(ctx).getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.readFromNBT(message.tileTags);
-      ModCyclic.logger.log("client Save text " + message.tileTags);
       NBTTagCompound tags = new NBTTagCompound();
       tile.writeToNBT(tags);
-      ModCyclic.logger.log("unit test " + message.tileTags);
       tile.markDirty();
     }
     return null;

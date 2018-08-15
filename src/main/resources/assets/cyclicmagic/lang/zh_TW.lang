@@ -49,6 +49,7 @@ button.harvester.size6=13x13
 button.harvester.size7=15x15
 button.harvester.size8=17x17
 button.harvester.size9=19x19
+button.harvester.size10=21x21
 button.height.down=降低高度
 button.height.up=提升高度
 button.inventory.hotbarswap=與快捷欄交換

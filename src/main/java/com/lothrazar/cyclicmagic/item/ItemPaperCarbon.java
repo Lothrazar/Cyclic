@@ -60,7 +60,6 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   private static final String KEY_SIGN2 = "sign_2";
   private static final String KEY_SIGN3 = "sign_3";
   private static final String KEY_NOTE = "note";
-  private static final String KEY_SIGNNBT = "note";
 
   public ItemPaperCarbon() {
     super();

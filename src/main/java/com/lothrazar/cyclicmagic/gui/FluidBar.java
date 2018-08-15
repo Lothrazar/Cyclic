@@ -14,13 +14,29 @@ public class FluidBar {
   private int x;
   private int y;
   private int capacity;
-  private final int width = 36 / 2;
-  private final int height = 124 / 2;
+  private int width = 36 / 2;
+  private int height = 124 / 2;
 
   public FluidBar(GuiBaseContainer p, int x, int y) {
     parent = p;
     this.setX(x);
     this.setY(y);
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
   }
 
   public void draw(FluidStack fluid) {

@@ -45,7 +45,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   public static int FLUID_COST = 300;
 
   public static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, FUEL;
   }
 
   private int timer = 0;
@@ -123,6 +123,8 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -134,6 +136,9 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;

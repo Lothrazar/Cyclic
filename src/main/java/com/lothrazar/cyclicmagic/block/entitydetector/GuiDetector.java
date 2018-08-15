@@ -105,7 +105,7 @@ public class GuiDetector extends GuiBaseContainer {
       ud = (isUp) ? "up" : "down";
     }
     btn.setTooltip("tile.entity_detector." + f.name().toLowerCase() + ud);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     return btn;
   }
 

@@ -152,6 +152,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     initEnergy(fcost, maxStored, true);
   }
 
+  protected void initEnergy(EnergyStore store) {
+    this.energyStorage = store;
+    this.hasEnergy = true;
+  }
+
   protected void initEnergy(int fcost, int maxStored, boolean canImportPower) {
     this.energyCost = fcost;
     this.hasEnergy = true;
@@ -258,14 +263,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
           }
         }
       }
-    }
-  }
-
-  @Override
-  protected void spawnParticlesAbove() {
-    //turn off when its off
-    if (this.isRunning()) {
-      super.spawnParticlesAbove();
     }
   }
 

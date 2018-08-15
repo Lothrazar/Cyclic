@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.enchantlibrary;
+package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
 import java.util.Map;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.enchantment.Enchantment;
@@ -43,6 +45,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
   QuadrantEnum lastClicked = null;
   private int timer = 0;
+  private int displayMode = 0;
 
   public TileEntityLibrary() {
     super();
@@ -59,6 +62,15 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     if (this.timer == 0) {
       this.lastClicked = null;
     }
+  }
+
+  public void toggleDisplaysText() {
+    this.displayMode = (this.displayMode + 1) % 2;
+  }
+
+  public boolean displaysText() {
+    //1 means text, 0 is items
+    return displayMode == 1;
   }
 
   public EnchantStack getEnchantStack(QuadrantEnum area) {
@@ -127,6 +139,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
+    displayMode = tags.getInteger("displayMode");
     this.timer = tags.getInteger("t");
     if (tags.hasKey(NBT_CLICKED))
       this.lastClicked = QuadrantEnum.values()[tags.getInteger(NBT_CLICKED)];
@@ -139,6 +152,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger("displayMode", displayMode);
     for (QuadrantEnum q : QuadrantEnum.values()) {
       tags.setTag(q.name(), getEnchantStack(q).writeToNBT());
     }

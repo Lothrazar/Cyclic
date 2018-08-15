@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle {
 
+  private static final int PER_TICK = 5;
   public static final int MAX_RANGE = 32;
 
   public static enum Fields {
@@ -85,6 +86,11 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void update() {
     World world = this.getWorld();
+    timer--;
+    if (world.isRemote || timer > 0) {
+      return;//client so halt
+    }
+    timer = PER_TICK;
     BlockPos p = this.getPos();
     double x = p.getX();
     double y = p.getY();
@@ -214,7 +220,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         this.entityType = EntityType.values()[value];
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % 2;
       break;
     }
   }
@@ -253,12 +259,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.rectFrame(this.getPos(), this.rangeX, this.rangeY, this.rangeZ);
-  }
-
-  @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
 
   @Override

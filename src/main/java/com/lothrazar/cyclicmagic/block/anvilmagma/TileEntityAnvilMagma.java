@@ -85,7 +85,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
-    this.spawnParticlesAbove();
     if (this.getCurrentFluidStackAmount() < 0) {
       this.setCurrentFluid(0);
     }
