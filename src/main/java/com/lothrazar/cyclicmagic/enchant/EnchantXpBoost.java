@@ -46,7 +46,7 @@ public class EnchantXpBoost extends EnchantBase {
   private static final int XP_PER_LVL = 8;
 
   public EnchantXpBoost() {
-    super("expboost", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("expboost", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(XP_PER_LVL + "")));
   }
 

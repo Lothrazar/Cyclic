@@ -39,7 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantLifeLeech extends EnchantBase {
 
   public EnchantLifeLeech() {
-    super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
 

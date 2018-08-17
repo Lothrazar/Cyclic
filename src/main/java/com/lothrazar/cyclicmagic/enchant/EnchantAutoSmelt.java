@@ -40,7 +40,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantAutoSmelt extends EnchantBase {
 
   public EnchantAutoSmelt() {
-    super("autosmelt", Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("autosmelt", Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
 

@@ -61,7 +61,7 @@ public class EnchantBeheading extends EnchantBase implements IHasConfig {
   private int percentDrop;
 
   public EnchantBeheading() {
-    super("beheading", Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("beheading", Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
     buildDefaultHeadList();
   }

@@ -41,7 +41,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantQuickdraw extends EnchantBase {
 
   public EnchantQuickdraw() {
-    super("quickdraw", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("quickdraw", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
 
