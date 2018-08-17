@@ -122,6 +122,7 @@ enchantment.cyclicmagic.enchantment.magnet.desc=Makes you magnetic for item stac
 enchantment.cyclicmagic.enchantment.quickdraw.desc=This triples the speed that your bow draws up to full power.
 enchantment.cyclicmagic.enchantment.reach.desc=Increases your building and mining reach
 enchantment.cyclicmagic.enchantment.venom.desc=Inflicts the poison status effect on the target
+enchantment.cyclicmagic.enchantment.waterwalking.desc=Walk on water when this is on your boots.  Sneak to sink. 
 enchantment.expboost.guide=Increases experience drops for killing and mining by factor of $0 per level.  Rarity is $1
 enchantment.expboost=Experience Boost
 enchantment.launch.guide=Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that a cooldown of $0 ticks; sneak to jump normally.  Rarity is $1
