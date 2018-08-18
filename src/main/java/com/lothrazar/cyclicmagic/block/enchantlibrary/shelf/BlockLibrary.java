@@ -98,7 +98,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     if (segment == null) {
       return false;//literal edge case
     }
-
     library.setLastClicked(segment);
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;

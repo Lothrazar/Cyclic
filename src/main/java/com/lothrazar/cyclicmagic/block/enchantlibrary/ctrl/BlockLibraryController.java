@@ -75,7 +75,6 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
           if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
             lib.markDirty();
             world.markChunkDirty(lib.getPos(), lib);
-
             return true;
           }
         }

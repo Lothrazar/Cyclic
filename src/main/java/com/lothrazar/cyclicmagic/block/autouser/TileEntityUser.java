@@ -229,7 +229,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       return;
     }
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
-
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
     if (result == EnumActionResult.SUCCESS) {
