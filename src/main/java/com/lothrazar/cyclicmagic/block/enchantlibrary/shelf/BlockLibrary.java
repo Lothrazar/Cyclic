@@ -123,7 +123,7 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       }
     }
     //display information about whats inside ??maybe?? if sneaking
-    else if (player.isSneaking() == false) {
+    else if (player.isSneaking() == false && !player.world.isRemote) {
       EnchantStack es = library.getEnchantStack(segment);
       UtilChat.sendStatusMessage(player, es.toString());
       library.markDirty();

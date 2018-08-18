@@ -49,5 +49,4 @@ public class GuiPlacer extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPlacer.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerPlacer.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
-
 }

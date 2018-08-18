@@ -103,7 +103,6 @@ public class GuiItemSort extends GuiBaseContainer {
     int id = 2;
     ButtonTileEntityField btn;
     for (EnumFacing f : EnumFacing.values()) {
-
       btn = new ButtonTileEntityField(
           id++,
           this.guiLeft + Const.PAD,

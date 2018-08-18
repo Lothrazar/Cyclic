@@ -62,22 +62,44 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
       return false;
     }
+    //first look for the same enchant and level
+    TileEntityLibrary libMatch = null;
+    QuadrantEnum quadMatch = null;
     for (BlockPos p : connectors) {
       te = world.getTileEntity(p);
       if (te instanceof TileEntityLibrary) {
         lib = (TileEntityLibrary) te;
         QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
-        if (quad == null) {
-          quad = lib.findEmptyQuadrant();
-        }
         if (quad != null) {
-          //now try insert here 
-          if (lib.addEnchantmentFromPlayer(player, hand, quad)) {
-            lib.markDirty();
-            return true;
+          libMatch = lib;
+          quadMatch = quad;
+          break;
+        }
+      }
+    }
+    //just find the first empty slot
+    if (libMatch == null) {
+      for (BlockPos p : connectors) {
+        te = world.getTileEntity(p);
+        if (te instanceof TileEntityLibrary) {
+          lib = (TileEntityLibrary) te;
+          QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
+          if (quad == null) {
+            quad = lib.findEmptyQuadrant();
+          }
+          if (quad != null) {
+            libMatch = lib;
+            quadMatch = quad;
+            break;
           }
         }
       }
+    }
+    //now try insert here 
+    if (libMatch != null && quadMatch != null && libMatch.addEnchantmentFromPlayer(player, hand, quadMatch)) {
+      libMatch.markDirty();
+      world.markChunkDirty(libMatch.getPos(), libMatch);
+      return true;
     }
     // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
     return false;

@@ -93,7 +93,7 @@ public class GuiCrafter extends GuiBaseContainer {
     //phantom recipe output
     ItemStack recipeOutput = this.tileCrafter.getRecipeResult();
     if (!recipeOutput.isEmpty()) {
-      int x = guiLeft + this.width / 4 - 40;
+      int x = guiLeft + 67;
       int y = guiTop + 30;
       GlStateManager.pushMatrix();
       RenderHelper.enableGUIStandardItemLighting();

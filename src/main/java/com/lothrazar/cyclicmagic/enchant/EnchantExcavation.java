@@ -49,7 +49,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantExcavation extends EnchantBase implements IHasConfig {
 
   public EnchantExcavation() {
-    super("excavation", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("excavation", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
 
