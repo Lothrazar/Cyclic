@@ -45,7 +45,7 @@ public class EnchantLifeLeech extends EnchantBase {
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 2;
   }
 
   @SubscribeEvent
@@ -58,13 +58,17 @@ public class EnchantLifeLeech extends EnchantBase {
         // we -1  since potion level 1 is  II
         //so that means enchantment I giving poison I means this
         int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
-        int min = 1;//so if restore starts at 4 the rand will be [min,restore]
+        int min = level;//so if restore starts at 4 the rand will be [min,restore]
         restore = attacker.getEntityWorld().rand.nextInt(restore + 1) + min;
         if (restore > 0) {
-          attacker.getFoodStats().setFoodLevel(attacker.getFoodStats().getFoodLevel() + level);
+          //hunger
+          attacker.getFoodStats().setFoodLevel(attacker.getFoodStats().getFoodLevel() + restore);
+          attacker.getFoodStats().setFoodSaturationLevel(attacker.getFoodStats().getSaturationLevel() + restore);
+          //hearts
           if (attacker.getHealth() < attacker.getMaxHealth()) {
             attacker.heal(restore);
-            UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));
+            UtilParticle.spawnParticle(target.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
+            UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
           }
         }
       }
