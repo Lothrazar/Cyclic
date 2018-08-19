@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.core.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -44,5 +45,15 @@ public abstract class BaseItem extends Item {
       tooltip.add(UtilChat.lang(getTooltip()));
     }
     super.addInformation(stack, player, tooltip, advanced);
+  }
+
+  protected ItemStack findAmmo(EntityPlayer player, Item item) {
+    for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+      ItemStack itemstack = player.inventory.getStackInSlot(i);
+      if (itemstack.getItem() == item) {
+        return itemstack;
+      }
+    }
+    return ItemStack.EMPTY;
   }
 }
