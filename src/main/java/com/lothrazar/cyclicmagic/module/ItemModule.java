@@ -41,6 +41,7 @@ import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
 import com.lothrazar.cyclicmagic.item.ItemMattock;
+import com.lothrazar.cyclicmagic.item.ItemObsShears;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPistonWand;
 import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
@@ -251,12 +252,16 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean glowingHelmet;
   private boolean signEditor;
   private boolean robotSpawner;
-  private boolean lasers;
+  private boolean rainbowCannon;
   private boolean enableNetherbrickTools;
   private boolean enableHeartToxic;
+  private boolean obsShears;
 
   @Override
   public void onPreInit() {
+    if (obsShears) {
+      ItemRegistry.register(new ItemObsShears(), "shears_obsidian", GuideCategory.ITEM);
+    }
     if (robotSpawner) {
       EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
       EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
@@ -264,7 +269,7 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
       ModCyclic.instance.events.register(spawner);
     }
-    if (lasers) {
+    if (rainbowCannon) {
       ItemRegistry.register(new ItemProjectileCannon(), "laser_cannon", GuideCategory.ITEMTHROW);
       EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityGolemLaser.NAME), EntityGolemLaser.class, EntityGolemLaser.NAME, 1031, ModCyclic.instance, 64, 1, true);
     }
@@ -845,8 +850,9 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    obsShears = config.getBoolean("shears_obsidian", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHeartToxic = config.getBoolean("heart_toxic", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    lasers = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    rainbowCannon = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     signEditor = config.getBoolean("sign_editor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -861,7 +867,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    // enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderSnow = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderWool = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderTorch = config.getBoolean("EnderTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

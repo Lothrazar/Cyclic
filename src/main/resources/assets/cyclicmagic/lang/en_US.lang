@@ -1345,3 +1345,7 @@ tile.dehydrator.name=Dehydrator
 tile.dehydrator.tooltip=Process dehydration recipes
 tile.dehydrator.guide=Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.
 
+
+item.shears_obsidian.name=Obsidian Shears
+item.shears_obsidian.tooltip=Reinforced durability
+item.shears_obsidian.guide=Ten times the durability of regular shears.  Can also harvest whole melons and pumpkins.  
