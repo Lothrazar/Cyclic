@@ -431,6 +431,12 @@ item.storage_bag.success=Items moved:
 item.storage_bag.tooltip2=Hit Deposit Mode: 
 item.storage_bag.tooltip=Item Stacks: 
 item.storage_bag.toggle=Toggle Hit Deposit Mode
+
+item.storage_bag.pickup=Toggle auto-pickup
+item.storage_bag.pickup.filter=Gather items matching what is in the bag
+item.storage_bag.pickup.everything=Gather everything picked up
+item.storage_bag.pickup.nothing=Bag will gather nothing
+
 item.sword_ender.guide=Unbreakable sword with a special right-click ability to launch an ender pearl
 item.sword_ender.name=Sword of Evasion
 item.sword_ender.tooltip=Blocking shoots an ender pearl

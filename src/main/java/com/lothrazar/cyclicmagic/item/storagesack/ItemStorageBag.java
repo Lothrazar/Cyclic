@@ -59,8 +59,40 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
 
   private static final String GUI_ID = "guiID";
 
+  public static enum StoragePickupType {
+    NOTHING, FILTER, EVERYTHING;
+
+    private final static String NBT = "deposit";
+
+    public static int get(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      return tags.getInteger(NBT);
+    }
+
+    public static String getName(ItemStack wand) {
+      try {
+        NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+        return "item.storage_bag.pickup." + StoragePickupType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+      }
+      catch (Exception e) {
+        return "item.storage_bag.pickup." + NOTHING.toString().toLowerCase();
+      }
+    }
+
+    public static void toggle(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      int type = tags.getInteger(NBT);
+      type++;
+      if (type > EVERYTHING.ordinal()) {
+        type = NOTHING.ordinal();
+      }
+      tags.setInteger(NBT, type);
+      wand.setTagCompound(tags);
+    }
+  }
+
   public static enum StorageActionType {
-    NOTHING, DEPOSIT, MERGE;
+    NOTHING, MERGE, DEPOSIT;
 
     private final static String NBT_COLOUR = "COLOUR";
     private final static String NBT = "build";
@@ -83,9 +115,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
 
     public static int get(ItemStack wand) {
-      if (wand == null) {
-        return 0;
-      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -104,7 +133,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > MERGE.ordinal()) {
+      if (type > DEPOSIT.ordinal()) {
         type = NOTHING.ordinal();
       }
       tags.setInteger(NBT, type);
@@ -147,7 +176,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
-    //    super.addInformation(stack, playerIn, tooltip, advanced);
+    tooltip.add(UtilChat.lang(StoragePickupType.getName(stack)));
   }
 
   @Override
@@ -162,25 +191,33 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       return;
     }
     ItemStack stackOnGround = event.getItem().getItem();
+    //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
-    NonNullList<ItemStack> onGround = NonNullList.create();
-    onGround.add(stackOnGround);
+
     for (ItemStack stackIsBag : foundBags) {
-      // TODO : custom whitelist?? 
-      // treat bag contents as whtielist
-      boolean doesMatch = false;
-      NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(stackIsBag);
-      for (ItemStack tryMatch : inv) {
-        if (tryMatch.isItemEqualIgnoreDurability(stackOnGround)) {
-          doesMatch = true;
-          break;
+      int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
+      if (pickupType == StoragePickupType.NOTHING.ordinal()) {
+        continue;
+      }
+      if (pickupType == StoragePickupType.FILTER.ordinal()) {
+        // treat bag contents as whtielist
+        boolean doesMatch = false;
+        NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(stackIsBag);
+        for (ItemStack tryMatch : inv) {
+          if (tryMatch.isItemEqualIgnoreDurability(stackOnGround)) {
+            doesMatch = true;
+            break;
+          }
+        }
+        if (!doesMatch) {
+          return;//  filter type an it does not match
         }
       }
-      if (!doesMatch) {
-        return;//  nope
-      }
+      //else type is everything so just go
       //do the real deposit
       InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
+      NonNullList<ItemStack> onGround = NonNullList.create();
+      onGround.add(stackOnGround);
       BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
       if (ret.stacks.get(0).isEmpty()) {
         /// we got everything
