@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -47,6 +48,16 @@ public abstract class BaseItem extends Item {
     super.addInformation(stack, player, tooltip, advanced);
   }
 
+  protected NonNullList<ItemStack> findAmmoList(EntityPlayer player, Item item) {
+    NonNullList<ItemStack> found = NonNullList.create();
+    for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+      ItemStack itemstack = player.inventory.getStackInSlot(i);
+      if (itemstack.getItem() == item) {
+        found.add(itemstack);
+      }
+    }
+    return found;
+  }
   protected ItemStack findAmmo(EntityPlayer player, Item item) {
     for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
       ItemStack itemstack = player.inventory.getStackInSlot(i);

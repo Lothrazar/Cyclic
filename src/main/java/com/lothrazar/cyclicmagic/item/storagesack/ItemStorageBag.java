@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -49,6 +50,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -156,12 +158,46 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
 
   @SubscribeEvent
+  public void onEntityItemPickupEvent(EntityItemPickupEvent event) {
+    if (event.getItem().isDead) {
+      return;
+    }
+    ItemStack stack = event.getItem().getItem();
+    NonNullList<ItemStack> found = this.findAmmoList(event.getEntityPlayer(), this);
+    NonNullList<ItemStack> wrapper = NonNullList.create();
+    wrapper.add(stack);
+    // 
+    for (ItemStack held : found) {
+      //try to auto deposit
+      if (stack.getItem() == Items.APPLE) {
+        //TODO: whitelist
+//        NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(held);
+        InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), held);
+       
+        BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, wrapper, false);
+        if (ret.stacks.get(0).isEmpty()) {
+          ModCyclic.logger.log("bag return  cancelled ");
+
+          event.getItem().setDead();
+          event.setCanceled(true);
+        }
+        else {
+          ModCyclic.logger.log("bag return " + ret.stacks.get(0));
+          event.getItem().setItem(ret.stacks.get(0));
+        }
+      }
+      break;
+    }
+  }
+
+
+  @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
       World world = event.getWorld();
-      TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+      TileEntity tile = world.getTileEntity(event.getPos());
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
@@ -228,6 +264,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return UtilNBT.getItemStackNBT(wand).getString(GUI_ID);
   }
 
+  //
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
