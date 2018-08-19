@@ -38,7 +38,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -162,34 +161,41 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (event.getItem().isDead) {
       return;
     }
-    ItemStack stack = event.getItem().getItem();
-    NonNullList<ItemStack> found = this.findAmmoList(event.getEntityPlayer(), this);
-    NonNullList<ItemStack> wrapper = NonNullList.create();
-    wrapper.add(stack);
-    // 
-    for (ItemStack held : found) {
-      //try to auto deposit
-      if (stack.getItem() == Items.APPLE) {
-        //TODO: whitelist
-//        NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(held);
-        InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), held);
-       
-        BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, wrapper, false);
-        if (ret.stacks.get(0).isEmpty()) {
-          ModCyclic.logger.log("bag return  cancelled ");
-
-          event.getItem().setDead();
-          event.setCanceled(true);
+    ItemStack stackOnGround = event.getItem().getItem();
+    NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
+    NonNullList<ItemStack> onGround = NonNullList.create();
+    onGround.add(stackOnGround);
+    for (ItemStack stackIsBag : foundBags) {
+      // TODO : custom whitelist?? 
+      // treat bag contents as whtielist
+      boolean doesMatch = false;
+      NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(stackIsBag);
+      for (ItemStack tryMatch : inv) {
+        if (tryMatch.isItemEqualIgnoreDurability(stackOnGround)) {
+          doesMatch = true;
+          break;
         }
-        else {
-          ModCyclic.logger.log("bag return " + ret.stacks.get(0));
-          event.getItem().setItem(ret.stacks.get(0));
-        }
+      }
+      if (!doesMatch) {
+        return;//  nope
+      }
+      //do the real deposit
+      InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
+      BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
+      if (ret.stacks.get(0).isEmpty()) {
+        /// we got everything
+        ModCyclic.logger.log("bag return  cancelled ");
+        event.getItem().setDead();
+        event.setCanceled(true);
+      }
+      else {
+        //we got part of it
+        ModCyclic.logger.log("bag return " + ret.stacks.get(0));
+        event.getItem().setItem(ret.stacks.get(0));
       }
       break;
     }
   }
-
 
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
