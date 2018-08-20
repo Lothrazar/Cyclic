@@ -52,6 +52,7 @@ public abstract class PotionBase extends Potion {
     super.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean isBeneficial() {
     return this.beneficial;//decides top or bottom row
@@ -78,5 +79,5 @@ public abstract class PotionBase extends Potion {
     this.icon = icon;
   }
 
-  public void tick(EntityLivingBase entity) {};
+  public void tick(EntityLivingBase entity) {}
 }

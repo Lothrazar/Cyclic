@@ -24,23 +24,27 @@
 package com.lothrazar.cyclicmagic.item.boomerang;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -50,6 +54,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class EntityBoomerang extends EntityThrowableDispensable {
 
+  private static final int STUN_TICKS = 45;
   private static final int TICKS_UNTIL_RETURN = 12;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
@@ -59,16 +64,13 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   public static final Item boomerangItem = null;
   static final float DAMAGE_MIN = 1.5F;
   static final float DAMAGE_MAX = 2.8F;
-
   private EntityLivingBase targetEntity;
 
   public static class FactoryFire implements IRenderFactory<EntityBoomerang> {
 
     @Override
     public Render<? super EntityBoomerang> createRenderFor(RenderManager rm) {
-
       return new RenderSnowballSpin<EntityBoomerang>(rm, boomerangItem, Minecraft.getMinecraft().getRenderItem());
-      
     }
   }
 
@@ -125,6 +127,12 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       else {
         float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
         mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
+        if (mop.entityHit instanceof EntityLivingBase) {
+          EntityLivingBase living = (EntityLivingBase) mop.entityHit;
+          if (living.isPotionActive(PotionEffectRegistry.STUN) == false) {
+            living.addPotionEffect(new PotionEffect(PotionEffectRegistry.STUN, STUN_TICKS, 1));
+          }
+        }
       }
     }
     else {
@@ -134,7 +142,16 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   }
 
   private void dropAsItem() {
-    UtilItemStack.dropItemStackInWorld(world, this.getPosition().up(), boomerangItem);
+    if (this.targetEntity != null) {
+      //try to give it to the player the nicest way possible 
+      if (targetEntity.getHeldItemMainhand().isEmpty())
+        targetEntity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(boomerangItem));
+      else
+        targetEntity.dropItem(boomerangItem, 1);
+    }
+    else {
+      UtilItemStack.dropItemStackInWorld(world, this.getPosition().up(), boomerangItem);
+    }
     this.setDead();
   }
 
@@ -152,16 +169,8 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     if (this.ticksExisted > TICKS_UNTIL_RETURN) {
       setIsReturning();
     }
-
-
     tryPickupNearby();
     movementReturnCheck();
-    //failed animation attempt
-    //    double max = 180.0D;
-    //    float yFactor = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-    //    this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * max / Math.PI);
-    //    this.rotationPitch = (float) (MathHelper.atan2(this.motionY, yFactor) * max / Math.PI);
-    //    setLocationAndAngles(this.posX, this.posY, this.posZ, rotationYaw, rotationPitch);
   }
 
   private void movementReturnCheck() {
@@ -181,9 +190,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     //    List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
     List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).grow(range, range, range));
     for (Entity entityHit : list) {
-      if (entityHit instanceof EntityItem) {
-        ModCyclic.logger.log("passanger");
-        //        this.addPassenger(entityHit);
+      if (entityHit instanceof EntityItem || entityHit instanceof EntityXPOrb) {
         entityHit.startRiding(this);
         break;
       }

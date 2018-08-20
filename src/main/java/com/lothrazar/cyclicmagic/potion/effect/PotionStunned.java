@@ -21,30 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.potion.effect.PotionBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventPotionTick {
+public class PotionStunned extends PotionBase {
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) {
-      return;
-    }
-    for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect) && entity.getActivePotionEffect(effect) != null) {
-        if (entity.getActivePotionEffect(effect).getDuration() == 0) {
-          entity.removeActivePotionEffect(effect);
-        }
-        else {
-          effect.tick(entity);
-        }
-      }
+  public PotionStunned() {
+    super("stunned", true, 0xC2C4F7);
+  }
+
+  @Override
+  public void tick(EntityLivingBase entity) {
+    // if (entity.world.rand.nextDouble() < 0.8)
+    //UtilParticle.spawnParticle(entity.world, EnumParticleTypes.SPIT, entity);
+    entity.posX = entity.prevPosX;
+    entity.posZ = entity.prevPosZ;
+    entity.rotationYaw = (float) (entity.world.rand.nextInt(180) - 360.0);
+    entity.rotationPitch = (float) (entity.world.rand.nextInt(90) - 180.0);
+    //    entity.addVelocity(x, y, z);
+    if (entity.world.isRemote) {
+      entity.setVelocity(0, entity.motionY, 0);
     }
   }
 }
