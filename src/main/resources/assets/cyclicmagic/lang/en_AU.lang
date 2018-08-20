@@ -1355,3 +1355,7 @@ tile.dehydrator.guide=Dehydrate certain items.  Add more recipes using CraftTwea
 item.shears_obsidian.name=Obsidian Shears
 item.shears_obsidian.tooltip=Reinforced durability
 item.shears_obsidian.guide=Ten times the durability of regular shears.  Can also harvest whole melons and pumpkins.  
+
+item.boomerang.name=Boomerang
+item.boomerang.tooltip=Stuns enemies and picks up items
+item.boomerang.guide=Stuns enemies and picks up items.  Bounces off blocks or returns after a fixed distance. 

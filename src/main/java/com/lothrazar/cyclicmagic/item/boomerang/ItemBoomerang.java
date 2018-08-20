@@ -23,13 +23,16 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.boomerang;
 
+import java.util.List;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -37,6 +40,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe {
 
@@ -71,16 +76,24 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " bs",
-        " fb",
-        "b  ",
-        's', Items.STRING,
-        'b', new ItemStack(Items.STICK),
-        'f', new ItemStack(Items.LEATHER));
+        " fd",
+        "dgf",
+        " fd",
+        'd', Items.GLOWSTONE_DUST,
+        'g', "ingotGold",
+        'f', new ItemStack(Blocks.ACACIA_FENCE));
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    tooltip.add(UtilChat.lang(getTooltip()));
+    super.addInformation(stack, player, tooltip, advanced);
   }
 
   @Override
   public SoundEvent getSound() {
-    return SoundEvents.ENTITY_SNOWBALL_THROW;
+    //liquid_evaporate
+    return SoundRegistry.step_height_up;
   }
 }
