@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.boomerang;
 
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.util.Const;
@@ -53,20 +54,20 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   private static final int TICKS_UNTIL_RETURN = 12;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
-  private EntityLivingBase targetEntity;
-
   private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.STRING);
   @GameRegistry.ObjectHolder(Const.MODRES + "boomerang")
-  public static final Item bullet = null;
+  public static final Item boomerangItem = null;
   static final float DAMAGE_MIN = 1.5F;
   static final float DAMAGE_MAX = 2.8F;
 
+  private EntityLivingBase targetEntity;
   public static class FactoryFire implements IRenderFactory<EntityBoomerang> {
 
     @Override
     public Render<? super EntityBoomerang> createRenderFor(RenderManager rm) {
-      RenderSnowball<EntityBoomerang> x = new RenderSnowball<EntityBoomerang>(rm, bullet, Minecraft.getMinecraft().getRenderItem());
+
+      RenderSnowball<EntityBoomerang> x = new RenderSnowball<EntityBoomerang>(rm, boomerangItem, Minecraft.getMinecraft().getRenderItem());
       return x;
     }
   }
@@ -98,8 +99,8 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     tag.setString("OWNER", dataManager.get(OWNER));
     tag.setByte("returning", dataManager.get(IS_RETURNING));
     super.writeEntityToNBT(tag);
-
   }
+
   @Override
   public void readEntityFromNBT(NBTTagCompound tag) {
     dataManager.set(OWNER, tag.getString("OWNER"));
@@ -118,49 +119,67 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
       if (isOwner(mop.entityHit)) {
-        ModCyclic.logger.log("OWNER YES" + bullet);
-
-        UtilItemStack.dropItemStackInWorld(world, this.getPosition(), bullet);
-        this.setDead();
-      }
-      else if (mop.entityHit instanceof EntityItem) {
-        this.addPassenger(mop.entityHit);
-
+        //i hit owner, im done
+        dropAsItem();
       }
       else {
         float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
         mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
       }
     }
-
     else {
-
-      ModCyclic.logger.log("boomerang hit dead YES");
-      // drop as item
-      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), bullet);
-      this.setDead();
+      // hit a block or something, go back
+      setIsReturning();
     }
+  }
+
+  private void dropAsItem() {
+    UtilItemStack.dropItemStackInWorld(world, this.getPosition().up(), boomerangItem);
+    this.setDead();
+  }
+
+  private void setIsReturning() {
+    dataManager.set(IS_RETURNING, (byte) 1);
   }
 
   @Override
   public void onUpdate() {
     super.onUpdate();
-    if(this.ticksExisted > TICKS_UNTIL_RETURN){
-      dataManager.set(IS_RETURNING, (byte) 1);
-    }
-    else if (this.ticksExisted > TICKS_UNTIL_DEATH) {
-      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), bullet);
-      this.setDead();
+    if (this.ticksExisted > TICKS_UNTIL_DEATH) {
+      dropAsItem();
       return;
     }
+    if (this.ticksExisted > TICKS_UNTIL_RETURN) {
+      setIsReturning();
+    }
+
+    tryPickupNearby();
+    movementReturnCheck();
+  }
+
+  private void movementReturnCheck() {
     boolean returning = dataManager.get(IS_RETURNING) == 1;
     if (returning) {
       //reverse direction 
       if (this.targetEntity != null) {
-        ModCyclic.logger.log("returning now");
         this.moveTowardsTarget();
       }
+    }
+  }
 
+  private void tryPickupNearby() {
+    //try to find entities to pick up
+    int range = 1;
+    // processImpact does not hit entity items so we pushed it over here
+    //    List<EntityLivingBase> targets = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE));
+    List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).grow(range, range, range));
+    for (Entity entityHit : list) {
+      if (entityHit instanceof EntityItem) {
+        ModCyclic.logger.log("passanger");
+        //        this.addPassenger(entityHit);
+        entityHit.startRiding(this);
+        break;
+      }
     }
   }
 
@@ -174,7 +193,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     rotationPitch = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(posX, posY, posZ, targetEntity.posX, targetEntity.posY, targetEntity.posZ));
     Vec3d moveVec = UtilEntity.lookVector(this.rotationYaw, this.rotationPitch).scale(SPEED);
     this.motionX = 0.5f * motionX + 0.5f * moveVec.x;
-    this.motionY = 0.5f * motionY + 0.5f * moveVec.y;
+    this.motionY = 0.5f * motionY + 0.503f * moveVec.y;
     this.motionZ = 0.5f * motionZ + 0.5f * moveVec.z;
   }
 }
