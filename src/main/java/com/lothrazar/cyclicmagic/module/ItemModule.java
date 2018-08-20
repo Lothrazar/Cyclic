@@ -55,6 +55,8 @@ import com.lothrazar.cyclicmagic.item.ItemWandHypno;
 import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterRemoval;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
+import com.lothrazar.cyclicmagic.item.boomerang.EntityBoomerang;
+import com.lothrazar.cyclicmagic.item.boomerang.ItemBoomerang;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
@@ -259,6 +261,11 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void onPreInit() {
+    if (true) {
+      ItemBoomerang ender_eye_orb = new ItemBoomerang();
+      ItemRegistry.register(ender_eye_orb, "boomerang");
+      EntityProjectileRegistry.registerModEntity(EntityBoomerang.class, "boomerang", 1729);
+    }
     if (obsShears) {
       ItemRegistry.register(new ItemObsShears(), "shears_obsidian", GuideCategory.ITEM);
     }
