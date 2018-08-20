@@ -24,11 +24,17 @@
 package com.lothrazar.cyclicmagic.item.boomerang;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -36,6 +42,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,6 +53,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -170,7 +180,29 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       setIsReturning();
     }
     tryPickupNearby();
+    tryToggleRedstone();
     movementReturnCheck();
+  }
+
+  private void tryToggleRedstone() {
+    for (BlockPos pos : UtilShape.cubeFilled(getPosition(), 2, 1)) {
+      if (world.isAirBlock(pos)) {
+        continue;
+      }
+      IBlockState blockState = world.getBlockState(pos);
+      Block block = blockState.getBlock();
+      ModCyclic.logger.log(block.getLocalizedName());
+      if (block == Blocks.LEVER) {
+        ModCyclic.logger.log("!!lever");
+        UtilWorld.toggleLeverPowerState(world, pos, blockState);
+        UtilSound.playSound(world, this.getPosition(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS);
+      }
+      else if (block == Blocks.STONE_BUTTON || block == Blocks.WOODEN_BUTTON) {
+        ModCyclic.logger.log("!!button");
+        UtilWorld.pressButtonPowerState(world, this.getPosition(), blockState);
+      }
+      break;
+    }
   }
 
   private void movementReturnCheck() {
