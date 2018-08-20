@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -62,13 +61,14 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   static final float DAMAGE_MAX = 2.8F;
 
   private EntityLivingBase targetEntity;
+
   public static class FactoryFire implements IRenderFactory<EntityBoomerang> {
 
     @Override
     public Render<? super EntityBoomerang> createRenderFor(RenderManager rm) {
 
-      RenderSnowball<EntityBoomerang> x = new RenderSnowball<EntityBoomerang>(rm, boomerangItem, Minecraft.getMinecraft().getRenderItem());
-      return x;
+      return new RenderSnowballSpin<EntityBoomerang>(rm, boomerangItem, Minecraft.getMinecraft().getRenderItem());
+      
     }
   }
 
@@ -153,8 +153,15 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       setIsReturning();
     }
 
+
     tryPickupNearby();
     movementReturnCheck();
+    //failed animation attempt
+    //    double max = 180.0D;
+    //    float yFactor = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+    //    this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * max / Math.PI);
+    //    this.rotationPitch = (float) (MathHelper.atan2(this.motionY, yFactor) * max / Math.PI);
+    //    setLocationAndAngles(this.posX, this.posY, this.posZ, rotationYaw, rotationPitch);
   }
 
   private void movementReturnCheck() {
