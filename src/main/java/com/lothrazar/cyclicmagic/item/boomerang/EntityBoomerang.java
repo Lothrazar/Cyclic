@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -188,32 +187,27 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     if (this.ticksExisted > TICKS_UNTIL_RETURN) {
       setIsReturning();
     }
-    if (this.hasTriggeredRedstoneAlready() == false) {
-      tryToggleRedstone();
+    final BlockPos pos = this.getPosition();
+    if (hasTriggeredRedstoneAlready() == false && world.isAirBlock(pos) == false) {
+      tryToggleRedstone(pos);
     }
     tryPickupNearby();
     movementReturnCheck();
   }
 
-  private void tryToggleRedstone() {
-    for (BlockPos pos : UtilShape.cubeFilled(getPosition(), 2, 1)) {
-      if (world.isAirBlock(pos)) {
-        continue;
+  private void tryToggleRedstone(final BlockPos pos) {
+    if (thrower instanceof EntityPlayer) {
+      try {
+        IBlockState blockState = world.getBlockState(pos);
+        Block block = blockState.getBlock();
+        boolean hasTriggered = block.onBlockActivated(world, pos, blockState, (EntityPlayer) this.thrower, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F);
+        if (hasTriggered) {
+          this.setRedstoneHasTriggered();
+        }
       }
-      IBlockState blockState = world.getBlockState(pos);
-      Block block = blockState.getBlock();
-      ModCyclic.logger.log(block.getLocalizedName());
-      if (thrower instanceof EntityPlayer) {
-        try {
-          boolean hasTriggered = block.onBlockActivated(world, pos, blockState, (EntityPlayer) this.thrower, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F);
-          if (hasTriggered) {
-            this.setRedstoneHasTriggered();
-          }
-        }
-        catch (Throwable e) {
-          //since activated can hit any block, be safe
-          ModCyclic.logger.error("Error on activate block", e);
-        }
+      catch (Throwable e) {
+        //since activated can hit any block, be safe
+        ModCyclic.logger.error("Error on activate block", e);
       }
     }
   }
