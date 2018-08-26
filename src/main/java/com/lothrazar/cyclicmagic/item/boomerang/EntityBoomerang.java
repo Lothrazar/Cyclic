@@ -30,8 +30,6 @@ import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilShape;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -42,8 +40,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,8 +49,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -206,18 +203,17 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       IBlockState blockState = world.getBlockState(pos);
       Block block = blockState.getBlock();
       ModCyclic.logger.log(block.getLocalizedName());
-      if (block == Blocks.LEVER) {
-        ModCyclic.logger.log("!!lever");
-        UtilWorld.toggleLeverPowerState(world, pos, blockState);
-        UtilSound.playSound(world, this.getPosition(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS);
-        this.setRedstoneHasTriggered();
-        return;
-      }
-      else if (block == Blocks.STONE_BUTTON || block == Blocks.WOODEN_BUTTON) {
-        ModCyclic.logger.log("!!button");
-        UtilWorld.pressButtonPowerState(world, pos, blockState);
-        this.setRedstoneHasTriggered();
-        return;
+      if (thrower instanceof EntityPlayer) {
+        try {
+          boolean hasTriggered = block.onBlockActivated(world, pos, blockState, (EntityPlayer) this.thrower, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F);
+          if (hasTriggered) {
+            this.setRedstoneHasTriggered();
+          }
+        }
+        catch (Throwable e) {
+          //since activated can hit any block, be safe
+          ModCyclic.logger.error("Error on activate block", e);
+        }
       }
     }
   }

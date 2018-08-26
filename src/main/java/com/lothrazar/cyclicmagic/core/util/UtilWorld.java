@@ -32,7 +32,6 @@ import java.util.Set;
 import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -531,23 +530,23 @@ public class UtilWorld {
     return found;
   }
 
-  public static void pressButtonPowerState(World worldIn, BlockPos blockPos, IBlockState blockState) {
-    boolean isPressed = blockState.getValue(BlockButton.POWERED);
-    if (isPressed) {
-      return;
-    }
-    IBlockState stateNew = blockState.withProperty(BlockButton.POWERED, true);
-    boolean success = worldIn.setBlockState(blockPos, stateNew);
-    if (success) {
-      flagUpdate(worldIn, blockPos, blockState, stateNew);
-      flagUpdate(worldIn, blockPos.down(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.up(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.west(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.east(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.north(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
-    }
-  }
+  //  public static void pressButtonPowerState(World worldIn, BlockPos blockPos, IBlockState blockState) {
+  //    boolean isPressed = blockState.getValue(BlockButton.POWERED);
+  //    if (isPressed) {
+  //      return;
+  //    }
+  //    IBlockState stateNew = blockState.withProperty(BlockButton.POWERED, true);
+  //    boolean success = worldIn.setBlockState(blockPos, stateNew);
+  //    if (success) {
+  //      flagUpdate(worldIn, blockPos, blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.down(), blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.up(), blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.west(), blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.east(), blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.north(), blockState, stateNew);
+  //      flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
+  //    }
+  //  }
 
   public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, IBlockState blockState) {
     boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;

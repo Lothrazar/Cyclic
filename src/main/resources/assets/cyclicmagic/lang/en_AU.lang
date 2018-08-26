@@ -1358,4 +1358,4 @@ item.shears_obsidian.guide=Ten times the durability of regular shears.  Can also
 
 item.boomerang.name=Boomerang
 item.boomerang.tooltip=Stuns enemies and picks up items
-item.boomerang.guide=Stuns enemies and picks up items.  Bounces off blocks or returns after a fixed distance. 
+item.boomerang.guide=Stuns enemies and picks up items.  Bounces off blocks or returns after a fixed distance.  Attempts to activate any block it hits or passes through such as Levers and Buttons.  
