@@ -69,6 +69,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
   private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
+  private static final DataParameter<Byte> REDSTONE_TRIGGERED = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.STRING);
   @GameRegistry.ObjectHolder(Const.MODRES + "boomerang")
   public static final Item boomerangItem = null;
@@ -101,6 +102,14 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     dataManager.set(OWNER, ent.getUniqueID().toString());
   }
 
+  private void setRedstoneHasTriggered() {
+    this.dataManager.set(REDSTONE_TRIGGERED, (byte) 1);
+  }
+
+  private boolean hasTriggeredRedstoneAlready() {
+    return this.dataManager.get(REDSTONE_TRIGGERED) > 0;
+  }
+
   public boolean isOwner(Entity entityHit) {
     String id = dataManager.get(OWNER);
     return id.equalsIgnoreCase(entityHit.getUniqueID().toString());
@@ -110,6 +119,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   public void writeEntityToNBT(NBTTagCompound tag) {
     tag.setString("OWNER", dataManager.get(OWNER));
     tag.setByte("returning", dataManager.get(IS_RETURNING));
+    tag.setByte("REDSTONE_TRIGGERED", dataManager.get(REDSTONE_TRIGGERED));
     super.writeEntityToNBT(tag);
   }
 
@@ -117,11 +127,13 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   public void readEntityFromNBT(NBTTagCompound tag) {
     dataManager.set(OWNER, tag.getString("OWNER"));
     dataManager.set(IS_RETURNING, tag.getByte("returning"));
+    dataManager.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
     super.readEntityFromNBT(tag);
   }
 
   @Override
   protected void entityInit() {
+    this.dataManager.register(REDSTONE_TRIGGERED, (byte) 0);
     this.dataManager.register(IS_RETURNING, (byte) 0);
     this.dataManager.register(OWNER, "");
     super.entityInit();
@@ -179,8 +191,10 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     if (this.ticksExisted > TICKS_UNTIL_RETURN) {
       setIsReturning();
     }
+    if (this.hasTriggeredRedstoneAlready() == false) {
+      tryToggleRedstone();
+    }
     tryPickupNearby();
-    tryToggleRedstone();
     movementReturnCheck();
   }
 
@@ -196,12 +210,15 @@ public class EntityBoomerang extends EntityThrowableDispensable {
         ModCyclic.logger.log("!!lever");
         UtilWorld.toggleLeverPowerState(world, pos, blockState);
         UtilSound.playSound(world, this.getPosition(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS);
+        this.setRedstoneHasTriggered();
+        return;
       }
       else if (block == Blocks.STONE_BUTTON || block == Blocks.WOODEN_BUTTON) {
         ModCyclic.logger.log("!!button");
-        UtilWorld.pressButtonPowerState(world, this.getPosition(), blockState);
+        UtilWorld.pressButtonPowerState(world, pos, blockState);
+        this.setRedstoneHasTriggered();
+        return;
       }
-      break;
     }
   }
 
