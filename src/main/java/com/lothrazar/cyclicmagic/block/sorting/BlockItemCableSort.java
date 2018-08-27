@@ -43,7 +43,7 @@ import net.minecraft.world.World;
 public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
 
   private static final double BOUNDS = 0.0625 * 3.0;
-  protected static final AxisAlignedBB BOUNDING = new AxisAlignedBB(BOUNDS, BOUNDS, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(BOUNDS, BOUNDS, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
 
   public BlockItemCableSort() {
     super(Material.CLAY);
@@ -54,7 +54,17 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return BOUNDING;
+    return AABB;
+  }
+
+  @Override
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    return AABB;
+  }
+
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
   }
 
   @Override
