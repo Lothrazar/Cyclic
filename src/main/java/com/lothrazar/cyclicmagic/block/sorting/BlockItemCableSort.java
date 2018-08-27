@@ -49,6 +49,7 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
     super(Material.CLAY);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
     this.setTranslucent();
+    setLightOpacity(0);
   }
 
   @Override
