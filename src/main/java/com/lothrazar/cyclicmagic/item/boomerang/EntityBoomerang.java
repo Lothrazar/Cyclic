@@ -60,18 +60,20 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class EntityBoomerang extends EntityThrowableDispensable {
 
+  @GameRegistry.ObjectHolder(Const.MODRES + "boomerang")
+  public static final Item boomerangItem = null;
   private static final int STUN_TICKS = 45;
   private static final int TICKS_UNTIL_RETURN = 12;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
+  static final float DAMAGE_MIN = 1.5F;
+  static final float DAMAGE_MAX = 2.8F;
   private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<Byte> REDSTONE_TRIGGERED = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.STRING);
-  @GameRegistry.ObjectHolder(Const.MODRES + "boomerang")
-  public static final Item boomerangItem = null;
-  static final float DAMAGE_MIN = 1.5F;
-  static final float DAMAGE_MAX = 2.8F;
+
   private EntityLivingBase targetEntity;
+  private ItemStack boomerangThrown = ItemStack.EMPTY;
 
   public static class FactoryFire implements IRenderFactory<EntityBoomerang> {
 
@@ -98,6 +100,14 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     dataManager.set(OWNER, ent.getUniqueID().toString());
   }
 
+  public ItemStack getBoomerangThrown() {
+    return boomerangThrown;
+  }
+
+  public void setBoomerangThrown(ItemStack boomerangThrown) {
+    this.boomerangThrown = boomerangThrown;
+  }
+
   private void setRedstoneHasTriggered() {
     this.dataManager.set(REDSTONE_TRIGGERED, (byte) 1);
   }
@@ -116,6 +126,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     tag.setString("OWNER", dataManager.get(OWNER));
     tag.setByte("returning", dataManager.get(IS_RETURNING));
     tag.setByte("REDSTONE_TRIGGERED", dataManager.get(REDSTONE_TRIGGERED));
+    boomerangThrown.writeToNBT(tag);
     super.writeEntityToNBT(tag);
   }
 
@@ -124,6 +135,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     dataManager.set(OWNER, tag.getString("OWNER"));
     dataManager.set(IS_RETURNING, tag.getByte("returning"));
     dataManager.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
+    boomerangThrown = new ItemStack(tag);
     super.readEntityFromNBT(tag);
   }
 
@@ -163,12 +175,12 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     if (this.targetEntity != null) {
       //try to give it to the player the nicest way possible 
       if (targetEntity.getHeldItemMainhand().isEmpty())
-        targetEntity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(boomerangItem));
+        targetEntity.setHeldItem(EnumHand.MAIN_HAND,boomerangThrown);
       else
-        targetEntity.dropItem(boomerangItem, 1);
+        targetEntity.entityDropItem(boomerangThrown, 0.5F);
     }
     else {
-      UtilItemStack.dropItemStackInWorld(world, this.getPosition().up(), boomerangItem);
+      UtilItemStack.dropItemStackInWorld(world, this.getPosition().up(), boomerangThrown);
     }
     this.setDead();
   }

@@ -27,6 +27,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +47,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe {
 
   public ItemBoomerang() {
-    super(1);
+    super(256);
   }
 
   @Override
@@ -61,9 +62,10 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe {
     float velocityFactor = percentageCharged * 1.5F;//flat upscale
 
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
-    shootMain(world, player, velocityFactor, damage);
+    EntityBoomerang projectile = (EntityBoomerang) shootMain(world, player, velocityFactor, damage);
+    UtilItemStack.damageItem(player, stack);
+    projectile.setBoomerangThrown(stack.copy());
     player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-
   }
 
   @Override
