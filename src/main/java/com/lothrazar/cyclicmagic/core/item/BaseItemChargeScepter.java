@@ -217,9 +217,10 @@ public abstract class BaseItemChargeScepter extends BaseTool {
     player.swingArm(EnumHand.MAIN_HAND);
   }
 
-  protected void shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
+  protected EntityThrowable shootMain(World world, EntityPlayer player, float velocityFactor, float damage) {
     EntityThrowable proj = createBullet(world, player, damage);
     this.launchProjectile(world, player, proj, velocityFactor * VELOCITY_MAX);
+    return proj;
   }
 
   private void shootTwins(World world, EntityPlayer player, float velocityFactor, float damage) {

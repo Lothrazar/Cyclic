@@ -37,8 +37,13 @@ public class EventPotionTick {
       return;
     }
     for (PotionBase effect : PotionEffectRegistry.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
+      if (effect != null && entity.isPotionActive(effect) && entity.getActivePotionEffect(effect) != null) {
+        if (entity.getActivePotionEffect(effect).getDuration() == 0) {
+          entity.removeActivePotionEffect(effect);
+        }
+        else {
+          effect.tick(entity);
+        }
       }
     }
   }

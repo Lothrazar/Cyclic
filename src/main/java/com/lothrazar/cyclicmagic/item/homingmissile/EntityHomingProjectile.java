@@ -132,6 +132,10 @@ public class EntityHomingProjectile extends EntityThrowable {
       return;
     }
     //+ target.getEyeHeight() / 2.0
+    moveTowardsTarget();
+  }
+
+  private void moveTowardsTarget() {
     rotationYaw = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(posX, posY, posZ, targetEntity.posX, targetEntity.posY, targetEntity.posZ));
     rotationPitch = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(posX, posY, posZ, targetEntity.posX, targetEntity.posY, targetEntity.posZ));
     Vec3d moveVec = UtilEntity.lookVector(this.rotationYaw, this.rotationPitch).scale(SPEED);
