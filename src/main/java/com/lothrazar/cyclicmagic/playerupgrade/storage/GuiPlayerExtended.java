@@ -34,7 +34,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 
   //TODO: in const repo
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
-  public static final ResourceLocation armor = new ResourceLocation(Const.MODID, "textures/gui/armor.png");
+  public static final ResourceLocation armor = new ResourceLocation(Const.MODID, "textures/gui/armor2x.png");
 
   public GuiPlayerExtended(ContainerPlayerExtended ctr) {
     super(ctr);
@@ -77,6 +77,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    hasActivePotionEffects = false;//hide potion popup
     super.drawScreen(mouseX, mouseY, partialTicks);
     ITooltipButton btn;
     for (int i = 0; i < buttonList.size(); i++) {
@@ -99,12 +100,13 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     int k = this.guiLeft;
     int l = this.guiTop;
     this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
-    //28x85
+    //47x85
     this.mc.getTextureManager().bindTexture(armor);
-    int u = 0, v = 0, w = 28, h = 85;
+    int u = 0, v = 0, w = 47, h = 85;
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft - w,
         this.guiTop, u, v,
         w, h, w, h);
+
   }
 }

@@ -49,7 +49,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
     }
-    int VROW = 3, VCOL = 9, armorX = -4 - Const.SQ, armorY;
+    int VROW = 3, VCOL = 9, armorX = -5 - 2 * Const.SQ, armorY;
     for (int k = 0; k < ARMOR.length; k++) {
       armorY = Const.PAD + k * Const.SQ;
       final EntityEquipmentSlot slot = ARMOR[k];
@@ -73,14 +73,40 @@ public class ContainerPlayerExtended extends ContainerBase {
       });
     }
     //  extended
-    int xPos, yPos, sl;
+    int xPos, yPos, sl = 0;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
         xPos = pad + j * SQ;
         yPos = pad + i * SQ;
         sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
+
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
+    }
+    //extended armor 
+    for (int k = 0; k < ARMOR.length; k++) {
+      sl++;
+
+      armorY = Const.PAD + (k) * Const.SQ;
+      final EntityEquipmentSlot slot = ARMOR[k];
+      this.addSlotToContainer(new Slot(inventory, sl, armorX + Const.SQ + 1, armorY) {
+
+        @Override
+        public int getSlotStackLimit() {
+          return 1;
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+          return stack.getItem().isValidArmor(stack, slot, player);
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public String getSlotTexture() {
+          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
+        }
+      });
     }
     //  player inventory
     for (int i = 0; i < Const.ROWS_VANILLA; ++i) {
