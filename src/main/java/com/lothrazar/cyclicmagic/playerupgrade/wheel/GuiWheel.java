@@ -1,12 +1,16 @@
 package com.lothrazar.cyclicmagic.playerupgrade.wheel;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonItemstack;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -15,20 +19,18 @@ import net.minecraft.item.ItemStack;
 public class GuiWheel extends GuiScreen {
 
   private static final int MIN_RADIUS = 26;
-  private static final int BTNCOUNT = 20;
+  private static final int BTNCOUNT = 18;
   private static final int YOFFSET = 15;
-  private final EntityPlayer entityPlayer;
+  private final EntityPlayer player;
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
   private int radius;
   private double arc;
-  int textureWidth = 200;
-  int textureHeight = 180;
 
   public GuiWheel(EntityPlayer p) {
     super();
-    this.entityPlayer = p;
+    this.player = p;
   }
 
   @Override
@@ -47,8 +49,7 @@ public class GuiWheel extends GuiScreen {
       cx = xCenter + radius * Math.cos(ang) - 2;
       cy = yCenter + radius * Math.sin(ang) - 2;
       btn = new GuiButtonItemstack(id++, (int) cx, (int) cy, 20, 20);
-      btn.setTooltip("test" + i);
-      btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(entityPlayer, i).copy());
+      btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, i).copy());
       this.buttonList.add(btn);
       ang += arc;
     }
@@ -56,49 +57,39 @@ public class GuiWheel extends GuiScreen {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    ModCyclic.logger.info("btn hit " + button.id);
     if (button instanceof GuiButtonItemstack) {
-      //
-      ModCyclic.network.sendToServer(new PacketSwapPlayerStack(button.id, entityPlayer.inventory.currentItem));
-      // UtilPlayerInventoryFilestorage.setPlayerInventoryStack(entityPlayer, button.id, ((GuiButtonItemstack) button).getStackRender());
+      ModCyclic.network.sendToServer(new PacketSwapPlayerStack(button.id, player.inventory.currentItem));
+      player.closeScreen();
     }
   }
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    double ang = 0;
-    double cx, cy;
-    ItemStack curHotbar = entityPlayer.inventory.getStackInSlot(this.entityPlayer.inventory.currentItem);
+    ItemStack curHotbar = player.inventory.getStackInSlot(this.player.inventory.currentItem);
     if (curHotbar.isEmpty() == false) {
-      //
       ModCyclic.proxy.renderItemOnScreen(curHotbar, mouseX, mouseY);
     }
-    //TODO: move this to btn class as well ??
-    //    int spellSize = 16;
-    //    UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);
-    //    for (ISpell s : SpellRegistry.getSpellbook()) {
-    //      cx = xCenter + radius * Math.cos(ang);
-    //      cy = yCenter + radius * Math.sin(ang);
-    //      //TODO: move this to btn class as well? but it would need access to the player props
-    //      ResourceLocation header;
-    //      if (props.isSpellUnlocked(s.getID())) {// TODO: do we want different icons for these
-    //        header = s.getIconDisplayHeaderEnabled();
-    //      }
-    //      else {
-    //        header = s.getIconDisplayHeaderDisabled();
-    //      }
-    //      UtilTextureRender.drawTextureSimple(header, (int) cx + 1, (int) cy - 6, spellSize - 2, spellSize - 4);
-    //      ang += arc;
-    //    }
-    //    GuiButtonSpell btn;
-    //    for (int i = 0; i < buttonList.size(); i++) {
-    //      if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof GuiButtonSpell) {
-    //        btn = (GuiButtonSpell) buttonList.get(i);
-    //        drawHoveringText(btn.getTooltipForPlayer(props), mouseX, mouseY, fontRendererObj);
-    //        break;//cant hover on 2 at once
-    //      }
-    //    }
+    drawButtonTooltips(mouseX, mouseY);
+  }
+
+  private void drawButtonTooltips(int mouseX, int mouseY) {
+    GuiButtonItemstack button;
+    List<String> tooltips = new ArrayList<>();
+    for (GuiButton b : buttonList) {
+      if (b.isMouseOver() && b instanceof GuiButtonItemstack) {
+        button = (GuiButtonItemstack) b;
+        if (button.getStackRender().isEmpty()) {
+          tooltips.add(UtilChat.lang("toolcircle.swap"));
+        }
+        else {
+          tooltips = button.getStackRender().getTooltip(player, ITooltipFlag.TooltipFlags.ADVANCED);
+          ModCyclic.logger.log("itemstack tooltips " + tooltips.size());
+        }
+        drawHoveringText(tooltips, mouseX, mouseY);
+        break;// cant hover on 2 at once
+      }
+    }
   }
 
   @Override
