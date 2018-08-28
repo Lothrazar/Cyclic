@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.playerupgrade.wheel.GuiWheel;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -126,6 +127,10 @@ public class EventKeyInput {
       else {
         ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
       }
+    }
+    else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
+      //
+      Minecraft.getMinecraft().displayGuiScreen(new GuiWheel(thePlayer));
     }
   }
 
