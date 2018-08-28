@@ -1,9 +1,9 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:dropper_exact","y":180},
-        "facing=east":  { "model": "cyclicmagic:dropper_exact","y":270},
-        "facing=south": { "model": "cyclicmagic:dropper_exact"},
-        "facing=west":  { "model": "cyclicmagic:dropper_exact" ,"y":90},
+        "facing=north": { "model": "cyclicmagic:dropper_exact"},
+        "facing=east":  { "model": "cyclicmagic:dropper_exact","y":90},
+        "facing=south": { "model": "cyclicmagic:dropper_exact","y":180},
+        "facing=west":  { "model": "cyclicmagic:dropper_exact" ,"y":270},
         "facing=up":    { "model": "cyclicmagic:dropper_exact","x":90},
         "facing=down":  { "model": "cyclicmagic:dropper_exact","x":270}
     }
