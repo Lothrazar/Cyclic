@@ -59,6 +59,13 @@ public class GuiWheel extends GuiScreen {
     for (int i = 26; i > 18; i--) {
       addStackButton(i);
     }
+    radius -= 36;
+    for (int i = 34; i > 26; i--) {
+      addStackButton(i);
+    }
+    for (int i = 42; i > 34; i--) {
+      addStackButton(i);
+    }
   }
 
   private void addStackButton(int slot) {
