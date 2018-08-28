@@ -931,6 +931,7 @@ unlocks.crafting=Unlocked Inventory Crafting
 unlocks.extended=Unlocked Extended Inventory
 locked.crafting=Inventory Crafting still locked
 locked.extended=Extended Inventory still locked
+toolcircle.swap=Deposit and swap items here
 unlocks.stepheight.false=Step Height Disabled
 unlocks.stepheight.true=Step Height Enabled
 wand.action.double=Mode: Double Shot

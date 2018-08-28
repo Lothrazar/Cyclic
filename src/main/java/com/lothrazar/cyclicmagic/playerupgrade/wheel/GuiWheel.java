@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 public class GuiWheel extends GuiScreen {
 
   private static final int MIN_RADIUS = 26;
-  private static final int BTNCOUNT = 18;
+  private static final int BTNCOUNT = 16;
   private static final int YOFFSET = 15;
   private final EntityPlayer player;
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
@@ -29,6 +29,7 @@ public class GuiWheel extends GuiScreen {
   private int yCenter;
   private int radius;
   private double arc;
+  double ang = 0, cx, cy;
 
   public GuiWheel(EntityPlayer p) {
     super();
@@ -50,19 +51,24 @@ public class GuiWheel extends GuiScreen {
     yCenter = this.height / 2 - YOFFSET;
     radius = xCenter / 3 + MIN_RADIUS;
     arc = (2 * Math.PI) / BTNCOUNT;
-    double ang = 0;
-    double cx, cy;
-    int id = 0;
-    ang = 0;
-    GuiButtonItemstack btn;
-    for (int i = 0; i < BTNCOUNT; i++) {
-      cx = xCenter + radius * Math.cos(ang) - 2;
-      cy = yCenter + radius * Math.sin(ang) - 2;
-      btn = new GuiButtonItemstack(id++, (int) cx, (int) cy, 20, 20);
-      btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, i).copy());
-      this.buttonList.add(btn);
-      ang += arc;
+    ang = Math.PI;
+
+    for (int i = 10; i < 18; i++) {
+      addStackButton(i);
     }
+    for (int i = 26; i > 18; i--) {
+      addStackButton(i);
+    }
+  }
+
+  private void addStackButton(int slot) {
+    GuiButtonItemstack btn;
+    cx = xCenter + radius * Math.cos(ang) - 2;
+    cy = yCenter + radius * Math.sin(ang) - 2;
+    btn = new GuiButtonItemstack(slot, (int) cx, (int) cy);
+    btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot).copy());
+    this.buttonList.add(btn);
+    ang += arc;
   }
 
   @Override

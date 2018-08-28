@@ -1,16 +1,19 @@
 package com.lothrazar.cyclicmagic.core.gui;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.config.GuiUtils;
 
 public class GuiButtonItemstack extends GuiButtonExt {
 
   private ItemStack stackRender = ItemStack.EMPTY;
 
-  public GuiButtonItemstack(int buttonId, int x, int y, int widthIn, int heightIn) {
-    super(buttonId, x, y, widthIn, heightIn, "");
+  public GuiButtonItemstack(int buttonId, int x, int y) {
+    super(buttonId, x, y, 20, 20, "");
   }
 
   @Override
@@ -18,6 +21,9 @@ public class GuiButtonItemstack extends GuiButtonExt {
     if (this.visible) {
       //render 
       super.drawButton(mc, mouseX, mouseY, p);
+      ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Const.MODID, "textures/gui/slot_magic.png");
+      int k = this.getHoverState(this.hovered);
+      GuiUtils.drawContinuousTexturedBox(BUTTON_TEXTURES, this.x, this.y, 0, 0, this.width, this.height, 200, 20, 0, 0, 0, 0, this.zLevel);
       if (!stackRender.isEmpty())
         ModCyclic.proxy.renderItemOnScreen(this.stackRender, this.x + 2, this.y + 2);
     }
