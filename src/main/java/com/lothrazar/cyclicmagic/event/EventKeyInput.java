@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
@@ -110,27 +111,28 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended() == false) {
-        //then open the normal inventory
-        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
+      if (data.hasInventoryExtended()) {
+        ModCyclic.network.sendToServer(new PacketOpenExtendedInventory());
       }
       else {
-        ModCyclic.network.sendToServer(new PacketOpenExtendedInventory());
+        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
       }
     }
     else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryCrafting() == false) {
-        //then open the normal inventory
-        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
+      if (data.hasInventoryCrafting()) {
+        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
       }
       else {
-        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
+        UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
       }
     }
     else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
-      //
-      Minecraft.getMinecraft().displayGuiScreen(new GuiWheel(thePlayer));
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if (data.hasInventoryExtended())
+        Minecraft.getMinecraft().displayGuiScreen(new GuiWheel(thePlayer));
+      else
+        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
     }
   }
 

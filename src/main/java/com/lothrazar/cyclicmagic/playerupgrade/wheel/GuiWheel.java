@@ -8,8 +8,10 @@ import com.lothrazar.cyclicmagic.core.gui.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
+import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -31,6 +33,14 @@ public class GuiWheel extends GuiScreen {
   public GuiWheel(EntityPlayer p) {
     super();
     this.player = p;
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    if (ClientProxy.keyWheel != null && GameSettings.isKeyDown(ClientProxy.keyWheel)) {
+      player.closeScreen();
+    }
   }
 
   @Override
@@ -84,7 +94,6 @@ public class GuiWheel extends GuiScreen {
         }
         else {
           tooltips = button.getStackRender().getTooltip(player, ITooltipFlag.TooltipFlags.ADVANCED);
-          ModCyclic.logger.log("itemstack tooltips " + tooltips.size());
         }
         drawHoveringText(tooltips, mouseX, mouseY);
         break;// cant hover on 2 at once
