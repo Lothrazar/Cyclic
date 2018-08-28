@@ -150,9 +150,10 @@ public class EnchantStack {
       return "--";
     }
     String name = UtilChat.lang(ench.getName());
-    int length = Math.min(6, name.length());
+    int length = Math.min(10, name.length());
     return name.substring(0, length);
   }
+
 
   public ItemStack getRenderIcon() {
     return makeEnchantedBook();

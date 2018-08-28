@@ -140,7 +140,7 @@ public class ClientProxy extends CommonProxy {
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
     keyWheel = new KeyBinding("key.keyWheel", Keyboard.KEY_R, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyWheel);
-    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
+    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_C, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
   }
 

@@ -75,7 +75,8 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
           xt = leftEdge + spRemainders - 0.05F;//padding. why left doesnt need i dont know
         break;
       }
-      renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor());
+      float fontSize = 0.010416667F;
+      renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);
       ln++;
       if (ln >= MAX_LINES) {
         break;

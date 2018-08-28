@@ -45,7 +45,6 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     super(block);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void render(TileEntityLibrary te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     EnumFacing face = te.getCurrentFacing();
@@ -55,10 +54,10 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.TR), QuadrantEnum.TR, face, x, y, z, destroyStage, rightColumn, topRow, horizDistFromCenter);
     renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BL), QuadrantEnum.BL, face, x, y, z, destroyStage, leftColumn, bottomRow, horizDistFromCenter);
     renderEnchantStack(te, te.getEnchantStack(QuadrantEnum.BR), QuadrantEnum.BR, face, x, y, z, destroyStage, rightColumn, bottomRow, horizDistFromCenter);
-    if (doNameplate && te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
-      //TODO: we could xyz offset in different ways too
-      this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
-    }
+    //    if (doNameplate && te.getLastClicked() != null && te.getEnchantStack(te.lastClicked).isEmpty() == false) {
+    //      //TODO: we could xyz offset in different ways too
+    //      this.drawNameplate((T) te, te.getEnchantStack(te.lastClicked).toString(), x, y, z, 50);
+    //    }
     //    } 
   }
 
@@ -91,7 +90,8 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       break;
     }
     float bookY = startY, bookX = startX;
-    for (int i = 0; i < stack.getCount(); i++) {
+    int max = (int) Math.ceil((stack.getCount()) / 8.0F);
+    for (int i = 0; i < max; i++) {
       bookX += scaleFactor;
       if (i % 8 == 0) {
         bookX = startX;
@@ -107,16 +107,19 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     if (stack.isEmpty()) {
       return;
     }
-    if (te.displaysText()) {
+    float fontSize = 0.010416667F / 1.5F;
+    GlStateManager.pushMatrix();
+
       int angle = angleOfFace(face);
-      renderTextAt(stack.shortName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F, zt - 0.44F, angle, TEXTCOLOR);
+      renderTextAt(stack.shortName(), x, y, z, destroyStage, xt - 1.517F, yt + 0.77F, zt - 0.44F, angle, TEXTCOLOR, fontSize);
       if (stack.isEmpty() == false) {
-        renderTextAt(stack.levelName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + vOffset, zt - 0.44F, angle, TEXTCOLOR);
-        renderTextAt(stack.countName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + 2 * vOffset, zt - 0.44F, angle, TEXTCOLOR);
+        renderTextAt(stack.levelName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
+        renderTextAt(stack.countName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + 2 * vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
       }
-    }
-    else {
+    //    }
       renderStack(te, stack, face, quad, x, y, z);
-    }
+
+    //GlStateManager.scale(1, 1, 1);
+    GlStateManager.popMatrix();
   }
 }

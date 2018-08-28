@@ -141,7 +141,8 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
    * @param angle
    * @param textColor
    */
-  public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt, float angle, int textColor) {
+  public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt,
+      float angle, int textColor, float fontSize) {
     boolean lightsOn = true;//TODO: toggle?
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
@@ -158,8 +159,8 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     //below sets position
     GlStateManager.translate(xt, yt, zt);
     //sake makes it the right size do not touch
-    //  float f3 = 0.010416667F;
-    GlStateManager.scale(0.010416667F, -0.010416667F, 0.010416667F);
+
+    GlStateManager.scale(fontSize, -1 * fontSize, fontSize);
     //if we skip the 3f line, its brighter. leave it in: darker
     if (lightsOn == false) {
       GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);//no idea what this does

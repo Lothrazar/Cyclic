@@ -530,6 +530,7 @@ key.columnshiftdown=Item Shift Down
 key.columnshiftup=Item Shift Up
 key.keyExtraCraftin=Inventory Crafting (if unlocked)
 key.keyExtraInvo=Extended Inventory (if unlocked)
+key.keyWheel=Extended Inventory Wheel (if unlocked)
 minecart.fuel=Fuel: 
 potion.bounce=Bouncy
 potion.ender=Ender Aura
