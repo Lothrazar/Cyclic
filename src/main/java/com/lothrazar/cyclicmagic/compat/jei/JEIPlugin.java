@@ -40,6 +40,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -91,15 +92,18 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
     // End Custom recipe type: Hydrator
     // Packager
     registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
     registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
     registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
+    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
     //DEHydrator
     registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
     registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
     registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
+    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 

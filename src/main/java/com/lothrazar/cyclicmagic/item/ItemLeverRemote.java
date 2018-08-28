@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.core.item.BaseItem;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.core.util.UtilWorld;
 import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.BlockLever;
@@ -129,7 +130,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       }
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
-      setLeverPowerState(world, blockPos, blockState, hasPowerHere);
+      UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
       UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
       UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       player.getCooldownTracker().setCooldown(this, 20);
@@ -154,7 +155,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
         //now get
         IBlockState blockState = dw.getBlockState(blockPos);
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
-        setLeverPowerState(dw, blockPos, blockState, hasPowerHere);
+        UtilWorld.toggleLeverPowerState(dw, blockPos, blockState);
         ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
         UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
         player.getCooldownTracker().setCooldown(this, 20);
@@ -167,26 +168,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     return false;
   }
 
-  private void setLeverPowerState(World worldIn, BlockPos blockPos, IBlockState blockState, boolean hasPowerHere) {
-    IBlockState stateNew = blockState.withProperty(BlockLever.POWERED, !hasPowerHere);
-    boolean success = worldIn.setBlockState(blockPos, stateNew);
-    if (success) {
-      flagUpdate(worldIn, blockPos, blockState, stateNew);
-      flagUpdate(worldIn, blockPos.down(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.up(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.west(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.east(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.north(), blockState, stateNew);
-      flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
-    }
-  }
 
-  private void flagUpdate(World worldIn, BlockPos blockPos, IBlockState blockState, IBlockState stateNew) {
-    //    worldIn.notifyBlockUpdate(blockPos,blockState,stateNew,3);
-    worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock(), true);//THIS one works only with true
-    //    worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
-    //    worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
-  }
 
   @Override
   public IRecipe addRecipe() {

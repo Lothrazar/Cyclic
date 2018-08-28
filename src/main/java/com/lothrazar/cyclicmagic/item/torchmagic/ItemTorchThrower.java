@@ -25,11 +25,14 @@ package com.lothrazar.cyclicmagic.item.torchmagic;
 
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilSound;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
@@ -65,14 +68,27 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " gc",
         " cg",
         "l  ",
         'g', "ingotGold",
         'c', "blockCoal",
         'l', "logWood");
-    return null;
+  }
+
+  @Override
+  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (entityIn instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) entityIn;
+      if (stack.isItemDamaged()) {
+        ItemStack torches = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
+        if (!torches.isEmpty()) {
+          torches.shrink(1);
+          UtilItemStack.repairItem(player, stack);
+        }
+      }
+    }
   }
 
   @Override

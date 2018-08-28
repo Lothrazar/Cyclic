@@ -21,39 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.core.entity;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import javax.annotation.Nonnull;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
 
-public abstract class EntityThrowableDispensable extends EntityThrowable {
+public class PotionStunned extends PotionBase {
 
-  public EntityThrowableDispensable(World worldIn) {
-    super(worldIn);
-  }
-
-  public EntityThrowableDispensable(World worldIn, @Nonnull EntityLivingBase ent) {
-    super(worldIn, ent);
-  }
-
-  public EntityThrowableDispensable(World worldIn, double x, double y, double z) {
-    super(worldIn, x, y, z);
+  public PotionStunned() {
+    super("stunned", true, 0xC2C4F7);
   }
 
   @Override
-  protected void onImpact(RayTraceResult mop) {
-    if (this.isDead) {
-      return;
+  public void tick(EntityLivingBase entity) {
+    // if (entity.world.rand.nextDouble() < 0.8)
+    //UtilParticle.spawnParticle(entity.world, EnumParticleTypes.SPIT, entity);
+    entity.posX = entity.prevPosX;
+    entity.posZ = entity.prevPosZ;
+    entity.rotationYaw = (float) (entity.world.rand.nextInt(180) - 360.0);
+    entity.rotationPitch = (float) (entity.world.rand.nextInt(90) - 180.0);
+    //    entity.addVelocity(x, y, z);
+    if (entity.world.isRemote) {
+      entity.setVelocity(0, entity.motionY, 0);
     }
-    if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer && mop.entityHit.world.isRemote) {
-      return;
-    }
-    this.processImpact(mop);
   }
-
-  protected abstract void processImpact(RayTraceResult mop);
 }

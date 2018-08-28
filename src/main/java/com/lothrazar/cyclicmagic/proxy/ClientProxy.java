@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynMining;
 import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynSafe;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.item.boomerang.EntityBoomerang;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite.FactoryDyn;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
@@ -163,6 +164,7 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntitySlingshot.class, new EntitySlingshot.FactoryFire());
+    RenderingRegistry.registerEntityRenderingHandler(EntityBoomerang.class, new EntityBoomerang.FactoryFire());
   }
 
   @SideOnly(Side.CLIENT)

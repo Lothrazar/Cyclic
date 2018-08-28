@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.core.entity.RenderBall;
 import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
@@ -54,32 +55,39 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
     super(worldIn);
   }
 
-  public EntityMagicNetFull(World worldIn, EntityLivingBase ent, ItemStack c) {
-    super(worldIn, ent);
-    this.captured = c;
+  public EntityMagicNetFull(World worldIn, double x, double y, double z) {
+    super(worldIn, x, y, z);
   }
 
-  public EntityMagicNetFull(World worldIn, double x, double y, double z, ItemStack c) {
-    super(worldIn, x, y, z);
-    this.captured = c;
+  public EntityMagicNetFull(World worldIn, @Nonnull EntityLivingBase ent, ItemStack c) {
+    super(worldIn, ent);
+    this.setCaptured(c);
   }
 
   @Override
   protected void processImpact(RayTraceResult mop) {
-    if (captured == null || captured.hasTagCompound() == false) {
+    if (getCaptured() == null || getCaptured().hasTagCompound() == false) {
       //client desync maybe
       return;
     }
-    Entity spawnEntity = EntityList.createEntityFromNBT(captured.getTagCompound(), this.getEntityWorld());
+    Entity spawnEntity = EntityList.createEntityFromNBT(getCaptured().getTagCompound(), this.getEntityWorld());
     if (spawnEntity != null) {
-      spawnEntity.readFromNBT(captured.getTagCompound());
+      spawnEntity.readFromNBT(getCaptured().getTagCompound());
       spawnEntity.setLocationAndAngles(this.posX, this.posY + 1.1F, this.posZ, this.rotationYaw, 0.0F);
       this.getEntityWorld().spawnEntity(spawnEntity);
       if (spawnEntity instanceof EntityLivingBase) {
         UtilSound.playSound((EntityLivingBase) spawnEntity, SoundRegistry.monster_ball_release);
-        UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), new ItemStack(captured.getItem()));
+        UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), new ItemStack(getCaptured().getItem()));
       }
     }
     this.setDead();
+  }
+
+  public ItemStack getCaptured() {
+    return captured;
+  }
+
+  public void setCaptured(ItemStack captured) {
+    this.captured = captured;
   }
 }

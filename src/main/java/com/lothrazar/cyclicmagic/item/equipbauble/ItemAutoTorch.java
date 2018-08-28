@@ -27,11 +27,13 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.item.BaseCharm;
 import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -51,18 +53,26 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IHasConfig {
   }
 
   @Override
-  public void onTick(ItemStack stack, EntityPlayer living) {
+  public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) {
       return;
     }
-    World world = living.world;
-    BlockPos pos = living.getPosition();
+
+    World world = player.world;
+    BlockPos pos = player.getPosition();
     if (world.getLight(pos, true) < lightLimit
-        && living.isSpectator() == false
+        && player.isSpectator() == false
         && world.isSideSolid(pos.down(), EnumFacing.UP)
         && world.isAirBlock(pos)) { // dont overwrite liquids 
-      if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
-        super.damageCharm(living, stack);
+      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
+        super.damageCharm(player, stack);
+      }
+    }
+    else if (stack.isItemDamaged()) {
+      ItemStack torches = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
+      if (!torches.isEmpty()) {
+        torches.shrink(1);
+        UtilItemStack.repairItem(player, stack);
       }
     }
   }
