@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.playerupgrade.wheel;
 
+import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonItemstack;
+import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 //based on my ancient 2015 spellbook concept 
@@ -15,7 +18,6 @@ public class GuiWheel extends GuiScreen {
   private static final int BTNCOUNT = 20;
   private static final int YOFFSET = 15;
   private final EntityPlayer entityPlayer;
-
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
@@ -25,9 +27,8 @@ public class GuiWheel extends GuiScreen {
   int textureHeight = 180;
 
   public GuiWheel(EntityPlayer p) {
-    
     super();
-    this.entityPlayer = p; 
+    this.entityPlayer = p;
   }
 
   @Override
@@ -47,13 +48,21 @@ public class GuiWheel extends GuiScreen {
       cy = yCenter + radius * Math.sin(ang) - 2;
       btn = new GuiButtonItemstack(id++, (int) cx, (int) cy, 20, 20);
       btn.setTooltip("test" + i);
-      btn.setStackRender(new ItemStack(Blocks.STONE));
-
+      btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(entityPlayer, i).copy());
       this.buttonList.add(btn);
       ang += arc;
     }
   }
 
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    ModCyclic.logger.info("btn hit " + button.id);
+    if (button instanceof GuiButtonItemstack) {
+      //
+      ModCyclic.network.sendToServer(new PacketSwapPlayerStack(button.id, entityPlayer.inventory.currentItem));
+      // UtilPlayerInventoryFilestorage.setPlayerInventoryStack(entityPlayer, button.id, ((GuiButtonItemstack) button).getStackRender());
+    }
+  }
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {

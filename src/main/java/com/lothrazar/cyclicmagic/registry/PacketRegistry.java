@@ -59,6 +59,7 @@ import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclicmagic.net.PacketSound;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerHotbar;
+import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
@@ -93,7 +94,7 @@ public class PacketRegistry {
     network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
     network.registerMessage(PacketDeleteWaypoint.class, PacketDeleteWaypoint.class, packetID++, Side.SERVER);
     network.registerMessage(PacketChat.class, PacketChat.class, packetID++, Side.CLIENT);
-    packetID++;
+    network.registerMessage(PacketSwapPlayerStack.class, PacketSwapPlayerStack.class, packetID++, Side.SERVER);
     packetID++;
     packetID++;
     network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);

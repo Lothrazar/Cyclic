@@ -21,75 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.playerupgrade;
+package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<PacketSyncExtendedInventory, IMessage> {
+public class PacketSwapPlayerStack implements IMessage, IMessageHandler<PacketSwapPlayerStack, IMessage> {
 
-  private int slot;
-  private int playerId;
-  private ItemStack itemStack = null;
+  public PacketSwapPlayerStack() {}
 
-  public PacketSyncExtendedInventory() {}
+  private int indexDest;
+  private int hotbarSource;
 
-  public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
-    this.slot = slot;
-    this.itemStack = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot);
-    this.playerId = player.getEntityId();
+  public PacketSwapPlayerStack(int indx, int hotbar) {
+    indexDest = indx;
+    hotbarSource = hotbar;
   }
 
   @Override
-  public void toBytes(ByteBuf buffer) {
-    buffer.writeByte(slot);
-    buffer.writeInt(playerId);
-    ByteBufUtils.writeItemStack(buffer, itemStack);
+  public void fromBytes(ByteBuf buf) {
+    NBTTagCompound tags = ByteBufUtils.readTag(buf);
+    this.indexDest = tags.getInteger("ix");
+    this.hotbarSource = tags.getInteger("hot");
   }
 
   @Override
-  public void fromBytes(ByteBuf buffer) {
-    slot = buffer.readByte();
-    playerId = buffer.readInt();
-    itemStack = ByteBufUtils.readItemStack(buffer);
+  public void toBytes(ByteBuf buf) {
+    NBTTagCompound tags = new NBTTagCompound();
+    tags.setInteger("ix", this.indexDest);
+    tags.setInteger("hot", this.hotbarSource);
+    ByteBufUtils.writeTag(buf, tags);
   }
 
-  @SideOnly(Side.CLIENT)
   @Override
-  public IMessage onMessage(final PacketSyncExtendedInventory message, MessageContext ctx) {
-    Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-
-      @Override
-      public void run() {
-        processMessage(message);
-      }
-    });
-    return null;
-  }
-
-  @SideOnly(Side.CLIENT)
-  void processMessage(PacketSyncExtendedInventory message) {
-    World world = ModCyclic.proxy.getClientWorld();
-    if (world == null)
-      return;
-    Entity p = world.getEntityByID(message.playerId);
-    if (p != null && p instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) p;
-      UtilPlayerInventoryFilestorage.setPlayerInventoryStack(player, slot, message.itemStack);
-      //      UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList[message.slot] = message.itemStack;
+  public IMessage onMessage(PacketSwapPlayerStack message, MessageContext ctx) {
+    EntityPlayer player = ctx.getServerHandler().player;
+    if (message.hotbarSource >= 0) {
+      ItemStack hotbarItem = player.inventory.getStackInSlot(message.hotbarSource);
+      ItemStack onStorage = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, message.indexDest);
+      ModCyclic.logger.log(message.hotbarSource + "H" + hotbarItem);
+      ModCyclic.logger.log(message.indexDest + "SSSS " + onStorage);
     }
-    return;
+    return null;
   }
 }
