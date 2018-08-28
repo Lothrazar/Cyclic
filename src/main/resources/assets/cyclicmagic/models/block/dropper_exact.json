@@ -2,11 +2,11 @@
     "parent": "block/cube_directional",
     "textures": {
         "particle": "blocks/anvil_base",
-        "down": "cyclicmagic:blocks/dropper_exact_front",
-        "up": "cyclicmagic:blocks/dropper_exact_back",
-        "north": "cyclicmagic:blocks/dropper_exact_down",
-        "east": "cyclicmagic:blocks/dropper_exact_right",
-        "south": "cyclicmagic:blocks/dropper_exact_down",
-        "west": "cyclicmagic:blocks/dropper_exact_left"
+        "down": "cyclicmagic:blocks/fluid_placer_front",
+        "up": "cyclicmagic:blocks/fluid_placer_back",
+        "north": "cyclicmagic:blocks/dropper_exact_arrow",
+        "east": "cyclicmagic:blocks/dropper_exact_arrow",
+        "south": "cyclicmagic:blocks/dropper_exact_arrow",
+        "west": "cyclicmagic:blocks/dropper_exact_arrow"
     }
 }
