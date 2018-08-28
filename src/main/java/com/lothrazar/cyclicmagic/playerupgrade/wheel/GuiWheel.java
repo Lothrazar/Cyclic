@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.playerupgrade.wheel;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonItemstack;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class GuiWheel extends GuiScreen {
 
   private static final int MIN_RADIUS = 26;
-  private static final int BTNCOUNT = 16;
+  private static final int BTNCOUNT = 20;
   private static final int YOFFSET = 15;
   private final EntityPlayer entityPlayer;
 
@@ -35,8 +36,7 @@ public class GuiWheel extends GuiScreen {
     xCenter = this.width / 2;
     yCenter = this.height / 2 - YOFFSET;
     radius = xCenter / 3 + MIN_RADIUS;
-    arc = (2 * Math.PI) / BTNCOUNT;// SpellRegistry.getSpellbook().size();
-    //    this.buttonList.add(new GuiButton(999, xCenter - 15, yCenter - 10));
+    arc = (2 * Math.PI) / BTNCOUNT;
     double ang = 0;
     double cx, cy;
     int id = 0;
@@ -48,27 +48,23 @@ public class GuiWheel extends GuiScreen {
       btn = new GuiButtonItemstack(id++, (int) cx, (int) cy, 20, 20);
       btn.setTooltip("test" + i);
       btn.setStackRender(new ItemStack(Blocks.STONE));
+
       this.buttonList.add(btn);
       ang += arc;
     }
   }
 
-  @Override
-  public void drawBackground(int tint) {
-    super.drawBackground(tint);
-    //    ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-    //    int screenWidth = res.getScaledWidth();
-    //    int screenHeight = res.getScaledHeight();
-    //    int guiLeft = screenWidth / 2 - textureWidth / 2;
-    //    int guiTop = screenHeight / 2 - textureHeight / 2;
-    //    UtilTextureRender.drawTextureSimple(background, guiLeft, guiTop, 200, 200);
-  }
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     double ang = 0;
     double cx, cy;
+    ItemStack curHotbar = entityPlayer.inventory.getStackInSlot(this.entityPlayer.inventory.currentItem);
+    if (curHotbar.isEmpty() == false) {
+      //
+      ModCyclic.proxy.renderItemOnScreen(curHotbar, mouseX, mouseY);
+    }
     //TODO: move this to btn class as well ??
     //    int spellSize = 16;
     //    UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);

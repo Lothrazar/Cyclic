@@ -15,15 +15,17 @@ public class GuiButtonItemstack extends GuiButtonTooltip {
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY, float p) {
     if (this.visible) {
-      super.drawButton(mc, mouseX, mouseY, p);
+
       //render 
-      ModCyclic.proxy.renderItemOnScreen(this.stackRender, this.x + 2, this.y + 2);
+      if (stackRender.isEmpty())
+        super.drawButton(mc, mouseX, mouseY, p);
+      else
+        ModCyclic.proxy.renderItemOnScreen(this.stackRender, this.x + 2, this.y + 2);
     }
   }
 
   public ItemStack getStackRender() {
     return stackRender;
-    
   }
 
   public void setStackRender(ItemStack stackRender) {
