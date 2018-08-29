@@ -33,10 +33,13 @@ import net.minecraft.util.ITickable;
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, R, G, B;
   }
 
   private int needsRedstone = 0;
+  private int red = 255;
+  private int green = 0;
+  private int blue = 0;
 
   public TileEntityLaser() {
     super(4);
@@ -83,6 +86,12 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
         return this.timer;
       case REDSTONE:
         return this.needsRedstone;
+      case B:
+        return blue;
+      case G:
+        return green;
+      case R:
+        return red;
     }
     return -1;
   }
@@ -96,6 +105,15 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
       case REDSTONE:
         this.needsRedstone = value;
       break;
+      case B:
+        blue = value;
+      break;
+      case G:
+        green = value;
+      break;
+      case R:
+        red = value;
+      break;
     }
   }
 
@@ -108,4 +126,12 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   public int getFieldCount() {
     return Fields.values().length;
   }
+
+  public float[] getColor() {
+   return new float[]{
+       this.red/255.0F,
+       this.green/255.0F,
+       this.blue /255.0F
+    };
+   }
 }

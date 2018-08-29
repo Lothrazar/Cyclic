@@ -42,7 +42,7 @@ public class ContainerLaser extends ContainerBaseMachine {
     this.setScreenSize(ScreenSize.LARGE);
     int x, y;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
-      x = 30;
+      x = 8;
       y = 43 + i * Const.SQ;
       addSlotToContainer(new SlotCheckTileValid(te, i, x, y));
     }

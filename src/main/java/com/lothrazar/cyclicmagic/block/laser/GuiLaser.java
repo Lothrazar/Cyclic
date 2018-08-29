@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.laser;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -35,28 +36,24 @@ public class GuiLaser extends GuiBaseContainer {
     super(new ContainerLaser(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityLaser.Fields.REDSTONE.ordinal();
-
   }
 
   @Override
   public void initGui() {
     super.initGui();
-    //SLIDERS
-    //    int y = 106;
-    //    int size = Const.SQ;
-    //    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ITEM,
-    //        this.guiLeft + colLeft,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
-    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
-    //        this.guiLeft + colRight,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
+    int id = 0, x = guiLeft + 48, y = guiTop + 20, width = 120, h = 16;
+    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
+    sliderX.setTooltip("screen.red");
+    this.addButton(sliderX);
+    y += 24;
+    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.G.ordinal());
+    sliderX.setTooltip("screen.green");
+    this.addButton(sliderX);
+    y += 24;
+    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.B.ordinal());
+    sliderX.setTooltip("screen.blue");
+    this.addButton(sliderX);
   }
-
-
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -64,12 +61,11 @@ public class GuiLaser extends GuiBaseContainer {
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int i = 0; i < tile.getSizeInventory(); i++) {
-      x = this.guiLeft + 30;
+      x = this.guiLeft + 7;
       y = this.guiTop + 42 + i * Const.SQ;
       Gui.drawModalRectWithCustomSizedTexture(
           x, y,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-
   }
 }
