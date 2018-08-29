@@ -39,7 +39,7 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   private int needsRedstone = 0;
 
   public TileEntityLaser() {
-    super(1);
+    super(4);
   }
 
   @Override

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.laser;
 
 import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,9 +40,12 @@ public class ContainerLaser extends ContainerBaseMachine {
   public ContainerLaser(InventoryPlayer inventoryPlayer, TileEntityLaser te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    int x = 43;
-    int y = 43;
-    addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
+    int x, y;
+    for (int i = 0; i < tile.getSizeInventory(); i++) {
+      x = 30;
+      y = 43 + i * Const.SQ;
+      addSlotToContainer(new SlotCheckTileValid(te, i, x, y));
+    }
 
     bindPlayerInventory(inventoryPlayer);
   }

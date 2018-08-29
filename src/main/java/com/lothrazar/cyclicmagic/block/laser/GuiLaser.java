@@ -31,23 +31,17 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiLaser extends GuiBaseContainer {
 
-  private int colLeft;
-  //private int colMid;
-  private int colRight;
-
   public GuiLaser(InventoryPlayer inventoryPlayer, TileEntityLaser te) {
     super(new ContainerLaser(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityLaser.Fields.REDSTONE.ordinal();
-    int xCenter = this.getScreenSize().width() / 2;
-    colLeft = this.guiLeft + 42;
-    // colMid = xCenter - 8;
-    colRight = xCenter + 26;
+
   }
 
   @Override
   public void initGui() {
     super.initGui();
+    //SLIDERS
     //    int y = 106;
     //    int size = Const.SQ;
     //    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ITEM,
@@ -69,22 +63,13 @@ public class GuiLaser extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    // item transfer slot 
-    x = this.guiLeft + colLeft;
-    y = this.guiTop + 42;
-    Gui.drawModalRectWithCustomSizedTexture(
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //now draw target location card slots 
-    x = this.guiLeft + colLeft;
-    y = this.guiTop + 86;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colRight;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    for (int i = 0; i < tile.getSizeInventory(); i++) {
+      x = this.guiLeft + 30;
+      y = this.guiTop + 42 + i * Const.SQ;
+      Gui.drawModalRectWithCustomSizedTexture(
+          x, y,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
 
   }
 }
