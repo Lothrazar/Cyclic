@@ -23,19 +23,42 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
+@Mod.EventBusSubscriber(modid = Const.MODID)
 public class EntityProjectileRegistry {
 
-  static int trackingRange = 64;
-  static int updateFrequency = 1;
-  static boolean sendsVelocityUpdates = true;
+  private static List<EntityEntry> ENTITIES = new ArrayList<>();
+  final static int trackingRange = 64;
+  final static int updateFrequency = 20;// maybe 20 
+  final static boolean sendsVelocityUpdates = true;
+  static int modEntityId = 1100;
 
-  public static void registerModEntity(Class<? extends Entity> entityClass, String entityName, int id) {
-    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, entityName), entityClass, Const.MODCONF + entityName, id, ModCyclic.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+  public static void registerModEntity(Class<? extends Entity> entityClass, String entityName, @Deprecated int id) {
+    ENTITIES.add(createEntityEntry(entityName, entityClass));
+  }
+
+  @SubscribeEvent
+  public static void registerEntities(final RegistryEvent.Register<EntityEntry> event) {
+    event.getRegistry().registerAll(ENTITIES.toArray(new EntityEntry[0]));
+  }
+
+  private static <T extends Entity> EntityEntry createEntityEntry(String name, Class<T> cls) {
+    EntityEntryBuilder<T> builder = EntityEntryBuilder.create();
+    builder.entity(cls);
+    builder.name(Const.MODCONF + name);
+    builder.id(new ResourceLocation(Const.MODID, name), modEntityId++);
+    builder.tracker(trackingRange, updateFrequency, sendsVelocityUpdates);
+    //    builder.egg(primaryColorIn, secondaryColorIn);
+    return builder.build();
   }
 }
