@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.laser;
 
 import com.lothrazar.cyclicmagic.core.block.BaseTESR;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.core.util.RenderUtil;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -41,13 +42,19 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
   public void render(TileEntityLaser te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     //   super.render(te, x, y, z, partialTicks, destroyStage, alpha);
     //find laser endpoints and go
+    if (te.isRunning() == false) {
+      return;
+    }
+    BlockPos first = te.getPos();
+    BlockPosDim second = te.getTarget(0);
+    if (second == null || second.toBlockPos() == null || second.dimension != te.getDimension()) {
+      return;
+    }
     float[] color = new float[] { 1F, 0F, 0.5F };
     double rotationTime = 120;
     double beamWidth = 0.15;
     float transparency = 0.1F;
-    BlockPos first = te.getPos();
-    BlockPos second = first.up(5).west(5);
-    RenderUtil.renderLaser(first, second,
+    RenderUtil.renderLaser(first, second.toBlockPos(),
         rotationTime, transparency, beamWidth, color);
   }
 

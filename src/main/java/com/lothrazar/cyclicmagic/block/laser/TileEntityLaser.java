@@ -24,7 +24,9 @@
 package com.lothrazar.cyclicmagic.block.laser;
 
 import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
@@ -34,10 +36,10 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
     REDSTONE, TIMER;
   }
 
-  private int needsRedstone = 1;
+  private int needsRedstone = 0;
 
   public TileEntityLaser() {
-    super(0);
+    super(1);
   }
 
   @Override
@@ -45,6 +47,10 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
     if (this.isRunning() == false) {
       return;
     }
+  }
+
+  BlockPosDim getTarget(int slot) {
+    return ItemLocation.getPosition(this.getStackInSlot(slot));
   }
 
   @Override

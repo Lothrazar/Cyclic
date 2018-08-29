@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.laser;
 import com.lothrazar.cyclicmagic.core.IHasRecipe;
 import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -55,12 +56,13 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
     //    this.setHardness(3F);
     //    this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_LASER);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.CUTOUT;
+    return BlockRenderLayer.TRANSLUCENT;
   }
 
   @Override

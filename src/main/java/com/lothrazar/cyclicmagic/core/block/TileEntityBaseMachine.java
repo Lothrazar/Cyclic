@@ -107,7 +107,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return syncData;
   }
 
-  protected int getDimension() {
+  public int getDimension() {
     if (this.world == null || this.world.provider == null) {
       return 0;
     }
