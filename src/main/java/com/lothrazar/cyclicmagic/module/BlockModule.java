@@ -126,6 +126,8 @@ import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
 import com.lothrazar.cyclicmagic.block.imbue.TileEntityImbue;
 import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
+import com.lothrazar.cyclicmagic.block.laser.BlockLaser;
+import com.lothrazar.cyclicmagic.block.laser.TileEntityLaser;
 import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
@@ -286,6 +288,8 @@ public class BlockModule extends BaseModule implements IHasConfig {
 
   @Override
   public void onPreInit() {
+    BlockRegistry.registerBlock(new BlockLaser(), "laser", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityLaser.class, "laser_te");
     super.onPreInit();
     if (enableSlingshot) {
       ItemRegistry.register(new ItemPebble(), "stone_pebble");
