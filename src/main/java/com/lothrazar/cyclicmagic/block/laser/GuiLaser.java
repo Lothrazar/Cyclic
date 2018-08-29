@@ -59,7 +59,7 @@ public class GuiLaser extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0, x, y;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       x = this.guiLeft + 7;
       y = this.guiTop + 42 + i * Const.SQ;

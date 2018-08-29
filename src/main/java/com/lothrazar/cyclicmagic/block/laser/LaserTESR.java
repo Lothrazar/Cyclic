@@ -47,7 +47,7 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
     }
     float[] color = te.getColor();//new float[] { te.getField(Fields), 0F, 0.5F };
     double rotationTime = 120;
-    double beamWidth = 0.15;
+    double beamWidth = 0.09;
     float transparency = 0.1F;
     BlockPos first = te.getPos();
     BlockPosDim second = null;

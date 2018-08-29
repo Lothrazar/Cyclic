@@ -47,8 +47,7 @@ public class Const {
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
     public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
     public static final ResourceLocation BACKGROUND_SACK = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
-    //    public static final ResourceLocation FUEL_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr.png");
-    //    public static final ResourceLocation FUEL_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner.png");
+
     public static final ResourceLocation ENERGY_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_ctr.png");
     public static final ResourceLocation ENERGY_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_inner.png");
     //    public static final ResourceLocation FUEL_CTRVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr_vert.png");

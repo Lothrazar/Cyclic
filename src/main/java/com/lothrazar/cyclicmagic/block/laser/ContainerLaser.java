@@ -44,7 +44,13 @@ public class ContainerLaser extends ContainerBaseMachine {
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       x = 8;
       y = 43 + i * Const.SQ;
-      addSlotToContainer(new SlotCheckTileValid(te, i, x, y));
+      addSlotToContainer(new SlotCheckTileValid(te, i, x, y) {
+
+        @Override
+        public int getSlotStackLimit() {
+          return 1;
+        }
+      });
     }
 
     bindPlayerInventory(inventoryPlayer);
