@@ -33,13 +33,15 @@ import net.minecraft.util.ITickable;
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static enum Fields {
-    REDSTONE, TIMER, R, G, B;
+    REDSTONE, TIMER, R, G, B, ALPHA, PULSE;
   }
 
   private int needsRedstone = 0;
   private int red = 255;
   private int green = 0;
   private int blue = 0;
+  private int transparency = 30;//1-100 will become 0-1
+  private boolean isPulsing = true;
 
   public TileEntityLaser() {
     super(4);
