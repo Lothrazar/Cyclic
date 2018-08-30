@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.clockredstone;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;

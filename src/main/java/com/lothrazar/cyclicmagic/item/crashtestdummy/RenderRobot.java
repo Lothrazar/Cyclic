@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item.crashtestdummy;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot.DmgTracker;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.GlStateManager;

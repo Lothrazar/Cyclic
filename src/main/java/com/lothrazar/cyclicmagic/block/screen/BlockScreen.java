@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screen;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.material.Material;

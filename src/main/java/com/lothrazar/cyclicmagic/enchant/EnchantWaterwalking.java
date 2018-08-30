@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -39,7 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantWaterwalking extends EnchantBase {
+public class EnchantWaterwalking extends BaseEnchant {
 
   public EnchantWaterwalking() {
     super("waterwalking", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });

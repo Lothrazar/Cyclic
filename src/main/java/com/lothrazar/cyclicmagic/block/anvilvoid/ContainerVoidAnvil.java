@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block.anvilvoid;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;

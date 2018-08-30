@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.tweak.dispenser;
 
-import com.lothrazar.cyclicmagic.core.util.UtilPlantable;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.util.UtilPlantable;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;

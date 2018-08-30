@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block.battery;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.capability.EnergyCapabilityItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

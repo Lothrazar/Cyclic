@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.enchant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -38,7 +37,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantReach extends EnchantBase {
+public class EnchantReach extends BaseEnchant {
 
   private static final String NBT_REACH_ON = "reachon";
   private static final int REACH_VANILLA = 5;

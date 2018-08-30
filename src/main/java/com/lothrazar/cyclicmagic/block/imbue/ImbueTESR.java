@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.imbue;
 
-import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.BaseMachineTESR;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

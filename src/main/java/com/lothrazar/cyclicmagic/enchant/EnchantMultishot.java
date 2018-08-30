@@ -24,9 +24,8 @@
 package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +41,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantMultishot extends EnchantBase {
+public class EnchantMultishot extends BaseEnchant {
 
   public EnchantMultishot() {
     super("multishot", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });

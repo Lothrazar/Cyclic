@@ -24,9 +24,8 @@
 package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +35,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantLifeLeech extends EnchantBase {
+public class EnchantLifeLeech extends BaseEnchant {
 
   public EnchantLifeLeech() {
     super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });

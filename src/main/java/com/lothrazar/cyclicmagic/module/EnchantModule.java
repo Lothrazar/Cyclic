@@ -24,8 +24,7 @@
 package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.enchant.BaseEnchant;
 import com.lothrazar.cyclicmagic.enchant.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchant.EnchantBeheading;
 import com.lothrazar.cyclicmagic.enchant.EnchantExcavation;
@@ -39,6 +38,7 @@ import com.lothrazar.cyclicmagic.enchant.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchant.EnchantWaterwalking;
 import com.lothrazar.cyclicmagic.enchant.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnchantModule extends BaseModule implements IHasConfig {
@@ -88,19 +88,19 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       EnchantRegistry.register(venom);
     }
     if (enableLifeleech) {
-      EnchantBase lifeleech = new EnchantLifeLeech();
+      BaseEnchant lifeleech = new EnchantLifeLeech();
       EnchantRegistry.register(lifeleech);
     }
     if (enablebeheading) {
-      EnchantBase beheading = new EnchantBeheading();
+      BaseEnchant beheading = new EnchantBeheading();
       EnchantRegistry.register(beheading);
     }
     if (enableQuickdraw) {
-      EnchantBase quickdraw = new EnchantQuickdraw();
+      BaseEnchant quickdraw = new EnchantQuickdraw();
       EnchantRegistry.register(quickdraw);
     }
     if (enableExcavate) {
-      EnchantBase excavation = new EnchantExcavation();
+      BaseEnchant excavation = new EnchantExcavation();
       EnchantRegistry.register(excavation);
     }
     if (enableMultishot) {
@@ -123,7 +123,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
     enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablebeheading = c.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableQuickdraw = c.getBoolean("EnchantQuickdraw", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    for (EnchantBase b : EnchantRegistry.enchants) {
+    for (BaseEnchant b : EnchantRegistry.enchants) {
       if (b instanceof IHasConfig) {
         ((IHasConfig) b).syncConfig(c);
       }

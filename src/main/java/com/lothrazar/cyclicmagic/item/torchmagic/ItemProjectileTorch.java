@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.torchmagic;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;

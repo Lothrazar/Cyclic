@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.findspawner;
 
-import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.core.entity.RenderBall;
+import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.RenderBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;

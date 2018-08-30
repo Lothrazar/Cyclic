@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

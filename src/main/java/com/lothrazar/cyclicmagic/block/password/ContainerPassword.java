@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.password;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 
 public class ContainerPassword extends ContainerBase {
 

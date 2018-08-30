@@ -4,7 +4,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

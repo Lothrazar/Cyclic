@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.ore;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.module.WorldModule;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

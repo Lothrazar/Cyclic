@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.magnetitem;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachine;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;

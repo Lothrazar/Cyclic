@@ -24,12 +24,12 @@
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

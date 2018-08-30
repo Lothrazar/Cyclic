@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.tweak.dispenser;
 
-import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.core.item.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;

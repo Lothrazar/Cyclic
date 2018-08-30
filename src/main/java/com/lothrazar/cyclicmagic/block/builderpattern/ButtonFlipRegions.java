@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.builderpattern;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.builderpattern.PacketTilePatternSwap.SwapType;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;

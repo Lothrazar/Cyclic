@@ -25,10 +25,9 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,7 +39,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantVenom extends EnchantBase {
+public class EnchantVenom extends BaseEnchant {
 
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
 

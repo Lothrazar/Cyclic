@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.item.endereye;
 
 import java.lang.reflect.Field;
-import com.lothrazar.cyclicmagic.core.entity.RenderBall;
-import com.lothrazar.cyclicmagic.core.util.UtilReflection;
+import com.lothrazar.cyclicmagic.entity.RenderBall;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityEnderEye;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

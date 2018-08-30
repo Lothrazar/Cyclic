@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block.batterycheat;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.util.ITickable;
 
 public class TileEntityBatteryInfinite extends TileEntityBaseMachineInvo implements ITickable {

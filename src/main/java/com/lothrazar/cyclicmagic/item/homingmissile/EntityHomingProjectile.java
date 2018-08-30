@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.item.homingmissile;
 
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.core.entity.RenderBall;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.entity.RenderBall;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;

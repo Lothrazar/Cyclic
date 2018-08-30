@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.screen;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.BaseTESR;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.core.BaseTESR;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {

@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -37,7 +36,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantAutoSmelt extends EnchantBase {
+public class EnchantAutoSmelt extends BaseEnchant {
 
   public EnchantAutoSmelt() {
     super("autosmelt", Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });

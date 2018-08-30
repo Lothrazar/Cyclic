@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.minecart;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseItemMinecart;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseItemMinecart;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;

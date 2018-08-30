@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.dynamite;
 
-import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;

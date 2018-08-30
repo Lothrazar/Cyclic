@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseCharm;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

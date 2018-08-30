@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block.sound;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class ContainerSoundPlayer extends ContainerBaseMachine {

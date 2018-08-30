@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screen;
 
-import com.lothrazar.cyclicmagic.core.ITileTextbox;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.ITileTextbox;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITileTextbox {

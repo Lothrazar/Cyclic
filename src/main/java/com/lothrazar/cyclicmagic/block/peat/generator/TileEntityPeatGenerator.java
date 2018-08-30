@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.peat.generator;
 
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;

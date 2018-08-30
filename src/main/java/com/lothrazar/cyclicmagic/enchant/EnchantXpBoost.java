@@ -25,9 +25,8 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.UtilExperience;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilExperience;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,7 +40,7 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantXpBoost extends EnchantBase {
+public class EnchantXpBoost extends BaseEnchant {
 
   private static final int XP_PER_LVL = 8;
 

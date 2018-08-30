@@ -25,16 +25,15 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantMagnet extends EnchantBase {
+public class EnchantMagnet extends BaseEnchant {
 
   private static final int ITEM_HRADIUS = 4;
   private static final int HRADIUS_PER_LEVEL = 4;

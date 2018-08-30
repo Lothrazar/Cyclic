@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item.cannon;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.particle.IParticleTracked;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

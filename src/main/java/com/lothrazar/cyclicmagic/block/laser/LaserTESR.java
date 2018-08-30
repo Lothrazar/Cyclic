@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.laser;
 
-import com.lothrazar.cyclicmagic.core.block.BaseTESR;
-import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.core.util.RenderUtil;
+import com.lothrazar.cyclicmagic.block.core.BaseTESR;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
+import com.lothrazar.cyclicmagic.util.RenderUtil;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
