@@ -40,8 +40,9 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.skill.GuiSkills;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.playerupgrade.wheel.GuiWheel;
+import com.lothrazar.cyclicmagic.playerupgrade.tools.GuiTools;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -129,10 +130,16 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended())
-        Minecraft.getMinecraft().displayGuiScreen(new GuiWheel(thePlayer));
-      else
+      if (data.hasInventoryExtended()) {
+        // TESTING ONLY 
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+          Minecraft.getMinecraft().displayGuiScreen(new GuiSkills(thePlayer));
+        else
+          Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
+      }
+      else {
         UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      }
     }
   }
 

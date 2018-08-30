@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.playerupgrade.wheel;
+package com.lothrazar.cyclicmagic.playerupgrade.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 
 //based on my ancient 2015 spellbook concept 
 /// https://github.com/PrinceOfAmber/Cyclic/blob/838b9b669a2d1644077d35a91d997a4d5dca0448/src/main/java/com/lothrazar/cyclicmagic/gui/GuiSpellbook.java
-public class GuiWheel extends GuiScreen {
+public class GuiTools extends GuiScreen {
 
   private static final int MIN_RADIUS = 26;
   private static final int BTNCOUNT = 16;
@@ -27,11 +27,8 @@ public class GuiWheel extends GuiScreen {
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
-  private int radius;
-  private double arc;
-  double ang = 0, cx, cy;
 
-  public GuiWheel(EntityPlayer p) {
+  public GuiTools(EntityPlayer p) {
     super();
     this.player = p;
   }
@@ -49,33 +46,40 @@ public class GuiWheel extends GuiScreen {
     super.initGui();
     xCenter = this.width / 2;
     yCenter = this.height / 2 - YOFFSET;
-    radius = xCenter / 3 + MIN_RADIUS;
-    arc = (2 * Math.PI) / BTNCOUNT;
-    ang = Math.PI;
-
-    for (int i = 10; i < 18; i++) {
-      addStackButton(i);
+    int vspace = 22, hspace = 22;
+    int myWidth = (hspace - 1) * 9;
+    int leftStart = xCenter - myWidth / 2;
+    int cx = leftStart;// full width is 
+    int cy = yCenter - 50;
+    for (int i = 9; i < 18; i++) {
+      cx += hspace;
+      addStackButton(i, cx, cy);
     }
-    for (int i = 26; i > 18; i--) {
-      addStackButton(i);
+    cx = leftStart;
+    cy += vspace;
+    for (int i = 18; i < 27; i++) {
+      cx += hspace;
+      addStackButton(i, cx, cy);
     }
-    radius -= 36;
-    for (int i = 34; i > 26; i--) {
-      addStackButton(i);
+    cx = leftStart;
+    cy += vspace;
+    for (int i = 27; i < 36; i++) {
+      cx += hspace;
+      addStackButton(i, cx, cy);
     }
-    for (int i = 42; i > 34; i--) {
-      addStackButton(i);
+    cx = leftStart;
+    cy += vspace;
+    for (int i = 36; i < 45; i++) {
+      cx += hspace;
+      addStackButton(i, cx, cy);
     }
   }
 
-  private void addStackButton(int slot) {
+  private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
-    cx = xCenter + radius * Math.cos(ang) - 2;
-    cy = yCenter + radius * Math.sin(ang) - 2;
-    btn = new GuiButtonItemstack(slot, (int) cx, (int) cy);
+    btn = new GuiButtonItemstack(slot, cx, cy);
     btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot).copy());
     this.buttonList.add(btn);
-    ang += arc;
   }
 
   @Override
