@@ -32,10 +32,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -79,6 +76,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   public boolean isFullCube(IBlockState state) {
     return false;
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityLaser();
@@ -94,14 +92,12 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
 
   @Override
   public IRecipe addRecipe() {
-
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "pwp",
-        "wfw",
-        "pwp",
-        'w', Blocks.ACACIA_DOOR,
-        'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
-        'p', "chestTrapped");
+        "ggg",
+        "grg",
+        "gbg",
+        'g', "paneGlassColorless",
+        'r', "dustRedstone",
+        'b', "blockRedstone");
   }
-
 }

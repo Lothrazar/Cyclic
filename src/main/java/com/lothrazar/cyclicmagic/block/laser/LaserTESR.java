@@ -46,7 +46,7 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
       return;
     }
     float[] color = te.getColor();//new float[] { te.getField(Fields), 0F, 0.5F };
-    double rotationTime = 120;
+    double rotationTime = te.isPulsing() ? 120 : 0;
     double beamWidth = 0.09;
     float transparency = 0.291F;
     BlockPos first = te.getPos();
@@ -55,7 +55,7 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
       second = te.getTarget(i);
       if (second != null && second.toBlockPos() != null && second.dimension == te.getDimension()) {
         RenderUtil.renderLaser(first, second.toBlockPos(),
-            rotationTime, transparency, beamWidth, color);
+            rotationTime, te.alphaCalculated(), beamWidth, color);
       }
     }
   }

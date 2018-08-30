@@ -50,16 +50,6 @@ public class GuiDeHydrator extends GuiBaseContainer {
     progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), 10);
   }
 
-  @Override
-  public void initGui() {
-    super.initGui();
-    int btnId = 3;
-    //    btnToggle = new ButtonTileEntityField(btnId++,
-    //        this.guiLeft + 26,
-    //        this.guiTop + Const.PAD / 2, this.tile.getPos(), TileEntityDeHydrator.Fields.RECIPELOCKED.ordinal());
-    //    btnToggle.width = btnToggle.height = 20;
-    //    this.addButton(btnToggle);
-  }
 
   @SideOnly(Side.CLIENT)
   @Override

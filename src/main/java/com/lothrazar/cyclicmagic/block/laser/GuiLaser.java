@@ -26,11 +26,15 @@ package com.lothrazar.cyclicmagic.block.laser;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiLaser extends GuiBaseContainer {
+
+  private ButtonTileEntityField btnPulsing;
 
   public GuiLaser(InventoryPlayer inventoryPlayer, TileEntityLaser te) {
     super(new ContainerLaser(inventoryPlayer, te), te);
@@ -41,23 +45,34 @@ public class GuiLaser extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int id = 0, x = guiLeft + 48, y = guiTop + 20, width = 120, h = 16;
-    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
+    int id = 0, x = guiLeft + 48, y = guiTop + 20, width = 120, h = 12;
+    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
     sliderX.setTooltip("screen.red");
     this.addButton(sliderX);
-    y += 24;
-    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.G.ordinal());
+    y += h + 4;
+    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.G.ordinal());
     sliderX.setTooltip("screen.green");
     this.addButton(sliderX);
-    y += 24;
-    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, TileEntityLaser.Fields.B.ordinal());
+    y += h + 4;
+    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.B.ordinal());
     sliderX.setTooltip("screen.blue");
     this.addButton(sliderX);
+    y += h + 4;
+    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, TileEntityLaser.Fields.ALPHA.ordinal());
+    sliderX.setTooltip("screen.alpha");
+    this.addButton(sliderX);
+    //
+    y += 24;
+    btnPulsing = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityLaser.Fields.PULSE.ordinal());
+    btnPulsing.width = 64;
+    btnPulsing.setTooltip("button.pulsing.tooltip");
+    this.addButton(btnPulsing);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    btnPulsing.displayString = UtilChat.lang("button.pulsing.name" + this.tile.getField(TileEntityLaser.Fields.PULSE.ordinal()));
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     for (int i = 0; i < tile.getSizeInventory(); i++) {

@@ -40,7 +40,7 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   private int red = 255;
   private int green = 0;
   private int blue = 0;
-  private int transparency = 30;//1-100 will become 0-1
+  private int alpha = 30;//1-100 will become 0-1
   private boolean isPulsing = true;
 
   public TileEntityLaser() {
@@ -94,6 +94,12 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
         return green;
       case R:
         return red;
+      case ALPHA:
+        return alpha;
+      case PULSE:
+        return isPulsing ? 1 : 0;
+      default:
+      break;
     }
     return -1;
   }
@@ -116,9 +122,24 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
       case R:
         red = value;
       break;
+      case ALPHA:
+        alpha = value;
+      break;
+      case PULSE:
+        isPulsing = (value == 1);
+      break;
+      default:
+      break;
     }
   }
 
+  public boolean isPulsing() {
+    return isPulsing; 
+  }
+
+  public float alphaCalculated() {
+    return alpha / 100.0F;
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(getFieldCount());
