@@ -36,7 +36,6 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.playerupgrade.skill.GuiSkills;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.tools.GuiTools;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
@@ -132,9 +131,9 @@ public class EventKeyInput {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
       if (data.hasInventoryExtended()) {
         // TESTING ONLY 
-        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-          Minecraft.getMinecraft().displayGuiScreen(new GuiSkills(thePlayer));
-        else
+        //        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        //          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
+        //        else
           Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
       }
       else {

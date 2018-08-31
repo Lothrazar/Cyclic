@@ -3,28 +3,21 @@ package com.lothrazar.cyclicmagic.playerupgrade.skill;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.registry.SkillRegistry;
+import com.lothrazar.cyclicmagic.skill.ISkill;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilTextureRender;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 
 //based on my ancient 2015 spellbook concept 
 /// https://github.com/PrinceOfAmber/Cyclic/blob/838b9b669a2d1644077d35a91d997a4d5dca0448/src/main/java/com/lothrazar/cyclicmagic/gui/GuiSpellbook.java
-public class GuiSkills extends GuiScreen {
+public class GuiSkillWheel extends GuiScreen {
 
-  private final static int textureWidth = 200;
-  private final static int textureHeight = 180;
-  private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
   private static final int MIN_RADIUS = 20;
   private static final int BTNCOUNT = 12;
   private static final int YOFFSET = 18;
@@ -36,7 +29,7 @@ public class GuiSkills extends GuiScreen {
   private double arc;
   double ang = 0, cx, cy;
 
-  public GuiSkills(EntityPlayer p) {
+  public GuiSkillWheel(EntityPlayer p) {
     super();
     this.player = p;
   }
@@ -57,27 +50,19 @@ public class GuiSkills extends GuiScreen {
     radius = xCenter / 3 + MIN_RADIUS - 20;
     arc = (2 * Math.PI) / BTNCOUNT;
     ang = Math.PI;
-    for (int i = 10; i < 18; i++) {
-      addStackButton(i);
+    int i = 0;
+    for (ISkill skill : SkillRegistry.getSkills()) {
+      this.addStackButton(i, skill);
+      i++;
     }
-    for (int i = 26; i > 18; i--) {
-      addStackButton(i);
-    }
-    //    radius -= 36;
-    //    for (int i = 34; i > 26; i--) {
-    //      addStackButton(i);
-    //    }
-    //    for (int i = 42; i > 34; i--) {
-    //      addStackButton(i);
-    //    }
   }
 
-  private void addStackButton(int slot) {
+  private void addStackButton(int slot, ISkill skill) {
     GuiButtonItemstack btn;
     cx = xCenter + radius * Math.cos(ang) - 2;
     cy = yCenter + radius * Math.sin(ang) - 2;
     btn = new GuiButtonItemstack(slot, (int) cx, (int) cy);
-    ModCyclic.logger.log("SKILLS WIP ");
+    btn.setStackRender(skill.getIcon());
     //    btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot).copy());
     this.buttonList.add(btn);
     ang += arc;
@@ -86,19 +71,13 @@ public class GuiSkills extends GuiScreen {
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonItemstack) {
+      ISkill curr = SkillRegistry.getSkills().get(button.id);
+      curr.toggle(player);
       //      ModCyclic.network.sendToServer(new PacketSwapPlayerStack(button.id, player.inventory.currentItem));
       player.closeScreen();
     }
   }
 
-  private void drawBackground() {
-    ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-    int screenWidth = res.getScaledWidth();
-    int screenHeight = res.getScaledHeight();
-    int guiLeft = screenWidth / 2 - textureWidth / 2;
-    int guiTop = screenHeight / 2 - textureHeight / 2 - 20;
-    UtilTextureRender.drawTextureSimple(background, guiLeft, guiTop, textureWidth, textureHeight);
-  }
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
