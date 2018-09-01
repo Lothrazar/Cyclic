@@ -24,9 +24,13 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -42,9 +46,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class BlockShears extends BlockBase implements IHasRecipe {
+public class BlockShears extends BlockBase implements IHasRecipe, IContent {
 
   private static final double OFFSET = 0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0.0D, OFFSET, 1 - OFFSET, 1 - OFFSET, 1 - OFFSET);
@@ -55,6 +60,24 @@ public class BlockShears extends BlockBase implements IHasRecipe {
     super(Material.CLOTH);
     this.setSoundType(SoundType.CLOTH);
     this.setTranslucent();
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_shears", GuideCategory.BLOCK);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.content;
+    enabled = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

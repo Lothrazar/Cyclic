@@ -23,10 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fan;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -38,8 +42,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe {
+public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockFan() {
@@ -59,6 +65,24 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe {
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "fan", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Fan", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

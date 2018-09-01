@@ -25,8 +25,6 @@ package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
-import com.lothrazar.cyclicmagic.block.BlockShears;
-import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
@@ -35,11 +33,7 @@ import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
 import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
 import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
-import com.lothrazar.cyclicmagic.block.autouser.BlockUser;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.block.battery.BlockBattery;
-import com.lothrazar.cyclicmagic.block.battery.ItemBlockBattery;
-import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.batterycheat.BlockBatteryInfinite;
 import com.lothrazar.cyclicmagic.block.batterycheat.TileEntityBatteryInfinite;
 import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
@@ -50,7 +44,6 @@ import com.lothrazar.cyclicmagic.block.bean.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.block.bean.ItemMagicBean;
 import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
-import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
 import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
@@ -76,36 +69,25 @@ import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
 import com.lothrazar.cyclicmagic.block.collector.TileEntityVacuum;
-import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
-import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
-import com.lothrazar.cyclicmagic.block.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.block.dehydrator.BlockDeHydrator;
 import com.lothrazar.cyclicmagic.block.dehydrator.TileEntityDeHydrator;
-import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
-import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.enchanter.BlockEnchanter;
 import com.lothrazar.cyclicmagic.block.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.BlockLibrary;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
-import com.lothrazar.cyclicmagic.block.entitydetector.BlockDetector;
-import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.exppylon.BlockXpPylon;
 import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.block.fan.BlockFan;
-import com.lothrazar.cyclicmagic.block.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireFrost;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
-import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
-import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.forester.BlockForester;
 import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
@@ -124,8 +106,6 @@ import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
 import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
 import com.lothrazar.cyclicmagic.block.packager.TileEntityPackager;
-import com.lothrazar.cyclicmagic.block.password.BlockPassword;
-import com.lothrazar.cyclicmagic.block.password.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.block.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
@@ -133,25 +113,14 @@ import com.lothrazar.cyclicmagic.block.peat.farm.BlockPeatFarm;
 import com.lothrazar.cyclicmagic.block.peat.farm.TileEntityPeatFarm;
 import com.lothrazar.cyclicmagic.block.peat.generator.BlockPeatGenerator;
 import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
-import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
-import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.scaffolding.ItemBlockScaffolding;
-import com.lothrazar.cyclicmagic.block.screen.BlockScreen;
-import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
 import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclicmagic.block.sprinkler.TileSprinkler;
-import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
-import com.lothrazar.cyclicmagic.block.tank.ItemBlockFluidTank;
-import com.lothrazar.cyclicmagic.block.tank.TileEntityFluidTank;
-import com.lothrazar.cyclicmagic.block.trash.BlockTrash;
-import com.lothrazar.cyclicmagic.block.trash.TileEntityTrash;
-import com.lothrazar.cyclicmagic.block.uncrafter.BlockUncrafting;
-import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
@@ -159,8 +128,6 @@ import com.lothrazar.cyclicmagic.block.wireless.BlockRedstoneWireless;
 import com.lothrazar.cyclicmagic.block.wireless.ItemBlockWireless;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessRec;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessTr;
-import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
-import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
@@ -190,27 +157,10 @@ import net.minecraftforge.oredict.OreDictionary;
 public class BlockModule extends BaseModule implements IHasConfig {
 
   private boolean fragileEnabled;
-  private boolean fishingBlock;
-  private boolean enableBucketBlocks;
-  private boolean enableShearingBlock;
-  private boolean enableFan;
-  private boolean entityDetector;
-  private boolean disenchanter;
-  private boolean autoCrafter;
-  private boolean soundproofing;
-  private boolean workbench;
   private boolean enablePumpAndPipes;
   private boolean enableLibrary;
-  private boolean screen;
-  private boolean btrash;
-  private boolean enableUncrafter;
-  private boolean enableBuilderBlock;
   private boolean enableHarvester;
   private boolean enableMiner;
-  private boolean enablePlacer;
-  private boolean enablePassword;
-  private boolean enableMinerSmart;
-  private boolean enableUser;
   private boolean enablePattern;
   private boolean expPylon;
   private boolean enableVacuum;
@@ -235,7 +185,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableMilk;
   private boolean enablePoison;
   private boolean anvilMagma;
-  private boolean battery;
   private boolean etarget;
   private boolean moon;
   private boolean buttonLarge;
@@ -269,7 +218,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void onPreInit() {
     //WARN: registerTileEntity move to resource locatoin: THIS WILL DELETE CONTENTS of existing worlds 
-
     super.onPreInit();
     if (enableSlingshot) {
       ItemRegistry.register(new ItemPebble(), "stone_pebble");
@@ -278,7 +226,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
       ModCyclic.instance.events.register(slingshot_weapon);
     }
-
     if (fire_starter) {
       BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
@@ -302,7 +249,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (fireDarkUsed) {
       BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
     }
-
     if (buttonLarge) {
       BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     }
@@ -489,47 +435,19 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(builder_pattern, "builder_pattern", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
     }
-    if (enableBuilderBlock) {
-      BlockStructureBuilder builder_block = new BlockStructureBuilder();
-      BlockRegistry.registerBlock(builder_block, "builder_block", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
-    }
+
     if (enableHarvester) {
       BlockHarvester harvester_block = new BlockHarvester();
       BlockRegistry.registerBlock(harvester_block, "harvester_block", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
     }
-    if (enableUncrafter) {
-      BlockUncrafting uncrafting_block = new BlockUncrafting();
-      BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
-    }
+
     if (enableMiner) {
       BlockMiner miner_block = new BlockMiner();
       BlockRegistry.registerBlock(miner_block, "block_miner", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
     }
-    if (enableMinerSmart) {
-      BlockMinerSmart block_miner_smart = new BlockMinerSmart();
-      BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
-    }
-    if (enablePlacer) {
-      BlockPlacer placer_block = new BlockPlacer();
-      BlockRegistry.registerBlock(placer_block, "placer_block", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityPlacer.class, "placer_block_te");
-    }
-    if (enablePassword) {
-      BlockPassword password_block = new BlockPassword();
-      BlockRegistry.registerBlock(password_block, "password_block", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
-      ModCyclic.instance.events.register(password_block);
-    }
-    if (enableUser) {
-      BlockUser block_user = new BlockUser();
-      BlockRegistry.registerBlock(block_user, "block_user", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
-    }
+
     if (enchanter) {
       FluidsRegistry.registerExp();
       BlockEnchanter block_enchanter = new BlockEnchanter();
@@ -595,21 +513,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
     }
-    if (battery) {
-      BlockBattery battery = new BlockBattery();
-      BlockRegistry.registerBlock(battery, new ItemBlockBattery(battery), "battery", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
-    }
-    if (btrash) {
-      BlockTrash trash = new BlockTrash();
-      BlockRegistry.registerBlock(trash, "trash", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
-    }
-    if (screen) {
-      BlockScreen screen = new BlockScreen();
-      BlockRegistry.registerBlock(screen, "block_screen", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
-    }
     if (enableLibrary) {
       BlockLibrary library = new BlockLibrary();
       BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
@@ -617,35 +520,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockLibraryController lc = new BlockLibraryController(library);
       BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(library);
-    }
-    if (workbench) {
-      BlockWorkbench workbench = new BlockWorkbench();
-      BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
-    }
-    if (soundproofing) {
-      BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
-      BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing", GuideCategory.BLOCK);
-      ModCyclic.instance.events.register(block_soundproofing);
-    }
-    if (autoCrafter) {
-      BlockCrafter auto_crafter = new BlockCrafter();
-      BlockRegistry.registerBlock(auto_crafter, "auto_crafter", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
-    }
-    if (entityDetector) {
-      BlockDetector detector = new BlockDetector();
-      BlockRegistry.registerBlock(detector, "entity_detector", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
-    }
-    if (enableFan) {
-      BlockFan fan = new BlockFan();
-      BlockRegistry.registerBlock(fan, "fan", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
-    }
-    if (enableShearingBlock) {
-      BlockShears block_shears = new BlockShears();
-      BlockRegistry.registerBlock(block_shears, "block_shears", GuideCategory.BLOCK);
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
@@ -661,24 +535,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_fragile_weak, ib, "block_fragile_weak", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(ib);
     }
-    if (fishingBlock) {
-      BlockFishing block_fishing = new BlockFishing();
-      BlockRegistry.registerBlock(block_fishing, "block_fishing", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
-    }
-    if (disenchanter) {
-      BlockDisenchanter block_disenchanter = new BlockDisenchanter();
-      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
-    }
-    if (enableBucketBlocks) {
-      //tank
-      BlockFluidTank block_storeempty = new BlockFluidTank();
-      BlockRegistry.registerBlock(block_storeempty, new ItemBlockFluidTank(block_storeempty), "block_storeempty", null);
-      GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
-      GuideRegistry.register(GuideCategory.BLOCK, block_storeempty, null, null);
-    }
-
     if (enablePumpAndPipes) {
       //sort
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
@@ -721,25 +577,13 @@ public class BlockModule extends BaseModule implements IHasConfig {
     buttonLarge = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
-    btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
-    screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);
-    workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);
-    soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
-    autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
-    disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
-    entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
-    enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
-    enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
-    enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -756,16 +600,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
     enableVacuum = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityControlledMiner.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
     vectorPlate = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableInterdict = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

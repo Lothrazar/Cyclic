@@ -23,13 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.autouser;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.core.MachineTESR;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
@@ -46,10 +48,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IContent {
 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
@@ -66,6 +69,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
     return new TileEntityUser();
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -83,7 +87,20 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_user", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
     maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
   }

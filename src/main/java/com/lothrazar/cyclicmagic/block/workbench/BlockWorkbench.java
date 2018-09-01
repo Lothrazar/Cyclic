@@ -23,19 +23,25 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHasOreDict {
+public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHasOreDict, IContent {
 
   public BlockWorkbench() {
     super(Material.ROCK);
@@ -46,6 +52,24 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityWorkbench();
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_workbench", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Workbench", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

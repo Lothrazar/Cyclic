@@ -24,10 +24,14 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.material.Material;
@@ -43,11 +47,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
+public class BlockSoundSuppress extends BlockBase implements IHasRecipe, IContent {
 
   private static final int VOL_REDUCE_PER_BLOCK = 4;
   private static final int RADIUS = 6;
@@ -57,6 +62,24 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
   public BlockSoundSuppress() {
     super(Material.CLAY);
     this.myTooltip = UtilChat.lang("tile.block_soundproofing.tooltip") + RADIUS;
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_soundproofing", GuideCategory.BLOCK);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Soundproofing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @SideOnly(Side.CLIENT)
@@ -74,7 +97,7 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
       //we do use it inside the sound class, but the engine callss tat later on, and our factor is tacked in
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
       //the number of nearby blocks informs how much we muffle the sound by
-      float pct = ((float) VOL_REDUCE_PER_BLOCK) / 100F;
+      float pct = (VOL_REDUCE_PER_BLOCK) / 100F;
       newSound.setVolume(pct / blocks.size());
       event.setResultSound(newSound);
     }

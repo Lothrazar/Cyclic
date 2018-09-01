@@ -23,9 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.trash;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -35,8 +39,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockTrash extends BlockBaseHasTile implements IHasRecipe {
+public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   public static final AxisAlignedBB AABB = new AxisAlignedBB(0.08D, 0.0D, 0.08D, 0.92D, 0.55D, 0.92D);
 
@@ -63,6 +69,24 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe {
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "trash", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("trash", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

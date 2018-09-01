@@ -23,11 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.entitydetector;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -40,11 +44,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
+public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IContent {
 
   public BlockDetector() {
     super(Material.ROCK);
@@ -83,6 +89,24 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDetector.class, new EntityDetectorTESR());
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "entity_detector", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EntityDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

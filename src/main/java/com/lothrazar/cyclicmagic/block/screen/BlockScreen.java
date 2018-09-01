@@ -23,11 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screen;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -41,16 +45,36 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe {
+public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe, IContent {
 
   public BlockScreen() {
     super(Material.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
     this.setLightOpacity(0);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_screen", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("block_screen", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

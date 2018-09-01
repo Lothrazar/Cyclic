@@ -2,11 +2,15 @@ package com.lothrazar.cyclicmagic.block.battery;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -25,10 +29,12 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
+public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
 
@@ -50,6 +56,24 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe {
   public BlockBattery() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, new ItemBlockBattery(this), "battery", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

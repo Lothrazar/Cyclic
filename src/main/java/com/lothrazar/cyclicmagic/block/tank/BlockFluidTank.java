@@ -25,10 +25,15 @@ package com.lothrazar.cyclicmagic.block.tank;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.ITileEntityProvider;
@@ -53,15 +58,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IHasRecipe, IBlockHasTESR {
+public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IHasRecipe, IBlockHasTESR, IContent {
 
   public static final PropertyBool TANK_ABOVE = PropertyBool.create("above");
   public static final PropertyBool TANK_BELOW = PropertyBool.create("below");
@@ -74,6 +81,25 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
     this.setSoundType(SoundType.GLASS);
     this.setHarvestLevel("pickaxe", 1);
     this.setTranslucent();
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, new ItemBlockFluidTank(this), "block_storeempty", null);
+    GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
+    GuideRegistry.register(GuideCategory.BLOCK, this, null, null);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @SuppressWarnings("deprecation")
