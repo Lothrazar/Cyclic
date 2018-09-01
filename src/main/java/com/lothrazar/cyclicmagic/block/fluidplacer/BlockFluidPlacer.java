@@ -23,10 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fluidplacer;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -41,10 +44,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe {
+public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe, IContent {
 
   public BlockFluidPlacer() {
     super(Material.WOOD);
@@ -75,6 +80,25 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
   }
 
   //end of fixing getdrops
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "fluid_placer", null);
+    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.content;
+    enabled = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
+  }
+
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

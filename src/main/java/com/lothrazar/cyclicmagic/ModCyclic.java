@@ -25,7 +25,10 @@ package com.lothrazar.cyclicmagic;
 
 import java.io.File;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.block.anvilvoid.BlockVoidAnvil;
 import com.lothrazar.cyclicmagic.block.dice.BlockDice;
+import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
+import com.lothrazar.cyclicmagic.block.fluidplacer.BlockFluidPlacer;
 import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
 import com.lothrazar.cyclicmagic.block.laser.BlockLaser;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
@@ -123,6 +126,9 @@ public class ModCyclic {
     content.add(new BlockSoundPlayer());
     content.add(new BlockDice());
     content.add(new BlockImbue());
+    content.add(new BlockVoidAnvil());
+    content.add(new BlockDropperExact());
+    content.add(new BlockFluidPlacer());
     for (IContent cont : content) {
       ConfigRegistry.register(cont);
     }

@@ -32,8 +32,6 @@ import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
-import com.lothrazar.cyclicmagic.block.anvilvoid.BlockVoidAnvil;
-import com.lothrazar.cyclicmagic.block.anvilvoid.TileEntityVoidAnvil;
 import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
 import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
 import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
@@ -90,8 +88,6 @@ import com.lothrazar.cyclicmagic.block.dehydrator.BlockDeHydrator;
 import com.lothrazar.cyclicmagic.block.dehydrator.TileEntityDeHydrator;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.disenchanter.TileEntityDisenchanter;
-import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
-import com.lothrazar.cyclicmagic.block.dropper.TileEntityDropperExact;
 import com.lothrazar.cyclicmagic.block.enchanter.BlockEnchanter;
 import com.lothrazar.cyclicmagic.block.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
@@ -110,8 +106,6 @@ import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
-import com.lothrazar.cyclicmagic.block.fluidplacer.BlockFluidPlacer;
-import com.lothrazar.cyclicmagic.block.fluidplacer.TileEntityFluidPlacer;
 import com.lothrazar.cyclicmagic.block.forester.BlockForester;
 import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
 import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
@@ -209,7 +203,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableLibrary;
   private boolean screen;
   private boolean btrash;
-  private boolean fluidPlacer;
   private boolean enableUncrafter;
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
@@ -241,7 +234,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enableBeans;
   private boolean enableMilk;
   private boolean enablePoison;
-  private boolean dispenserPowered;
   private boolean anvilMagma;
   private boolean battery;
   private boolean etarget;
@@ -249,7 +241,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean buttonLarge;
   private boolean doorbell;
   private boolean fire_starter;
-  private boolean void_anvil;
   private boolean enableEnderBlaze;
   /**
    * - create the object (or just a Feature if none exists) and submit to _______ registry listing
@@ -311,11 +302,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (fireDarkUsed) {
       BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
     }
-    if (void_anvil) {
-      BlockRegistry.registerBlock(new BlockVoidAnvil(), "void_anvil", GuideCategory.BLOCK);
-      // 
-      GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, "void_anvil_te");
-    }
+
     if (buttonLarge) {
       BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
     }
@@ -691,12 +678,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
       GuideRegistry.register(GuideCategory.BLOCK, block_storeempty, null, null);
     }
-    if (fluidPlacer) {
-      //fluid placer
-      BlockFluidPlacer placer = new BlockFluidPlacer();
-      BlockRegistry.registerBlock(placer, "fluid_placer", null);
-      GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
-    }
+
     if (enablePumpAndPipes) {
       //sort
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
@@ -721,10 +703,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
-    if (dispenserPowered) {
-      BlockRegistry.registerBlock(new BlockDropperExact(), "dropper_exact", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
-    }
   }
 
   @Override
@@ -738,19 +716,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
     batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    void_anvil = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     buttonLarge = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     battery = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    dispenserPowered = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
-    fluidPlacer = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
     btrash = config.getBoolean("trash", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     screen = config.getBoolean("block_screen", category, true, Const.ConfigCategory.contentDefaultText);

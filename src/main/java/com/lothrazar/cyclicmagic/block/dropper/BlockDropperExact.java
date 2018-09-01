@@ -23,10 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dropper;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
@@ -37,8 +39,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockDropperExact extends BlockBaseFacingOmni implements IHasConfig, IHasRecipe {
+public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, IHasRecipe {
 
   public static int FUEL_COST = 0;
 
@@ -63,7 +66,21 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IHasConfig
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "dropper_exact", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
