@@ -118,7 +118,8 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       if (enchants.size() == 1) {
         //if it only has 1, and we are going to reomve that last thing, well its just a book now
         //TODO: merge shared with TileENtityDisenchanter
-        player.setHeldItem(hand, new ItemStack(Items.BOOK));
+        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+        player.setHeldItem(hand, ItemStack.EMPTY);
         player.getCooldownTracker().setCooldown(Items.BOOK, 50);
       }
       else {
@@ -127,7 +128,9 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
         enchants.remove(enchToRemove);
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(enchants, inputCopy);
-        player.setHeldItem(hand, inputCopy);
+        //        player.setHeldItem(hand, inputCopy);
+        player.addItemStackToInventory(inputCopy);
+        player.setHeldItem(hand, ItemStack.EMPTY);
       }
       //        library.markDirty();
       //      onSuccess(player);

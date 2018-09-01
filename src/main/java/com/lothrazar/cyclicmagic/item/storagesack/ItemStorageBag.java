@@ -49,6 +49,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -58,8 +59,40 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
 
   private static final String GUI_ID = "guiID";
 
+  public static enum StoragePickupType {
+    NOTHING, FILTER, EVERYTHING;
+
+    private final static String NBT = "deposit";
+
+    public static int get(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      return tags.getInteger(NBT);
+    }
+
+    public static String getName(ItemStack wand) {
+      try {
+        NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+        return "item.storage_bag.pickup." + StoragePickupType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+      }
+      catch (Exception e) {
+        return "item.storage_bag.pickup." + NOTHING.toString().toLowerCase();
+      }
+    }
+
+    public static void toggle(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      int type = tags.getInteger(NBT);
+      type++;
+      if (type > EVERYTHING.ordinal()) {
+        type = NOTHING.ordinal();
+      }
+      tags.setInteger(NBT, type);
+      wand.setTagCompound(tags);
+    }
+  }
+
   public static enum StorageActionType {
-    NOTHING, DEPOSIT, MERGE;
+    NOTHING, MERGE, DEPOSIT;
 
     private final static String NBT_COLOUR = "COLOUR";
     private final static String NBT = "build";
@@ -82,9 +115,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
 
     public static int get(ItemStack wand) {
-      if (wand == null) {
-        return 0;
-      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -103,7 +133,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > MERGE.ordinal()) {
+      if (type > DEPOSIT.ordinal()) {
         type = NOTHING.ordinal();
       }
       tags.setInteger(NBT, type);
@@ -146,7 +176,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
-    //    super.addInformation(stack, playerIn, tooltip, advanced);
+    tooltip.add(UtilChat.lang(StoragePickupType.getName(stack)));
   }
 
   @Override
@@ -156,12 +186,61 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
 
   @SubscribeEvent
+  public void onEntityItemPickupEvent(EntityItemPickupEvent event) {
+    if (event.getItem().isDead) {
+      return;
+    }
+    ItemStack stackOnGround = event.getItem().getItem();
+    //multiple bags held by player
+    NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
+
+    for (ItemStack stackIsBag : foundBags) {
+      int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
+      if (pickupType == StoragePickupType.NOTHING.ordinal()) {
+        continue;
+      }
+      if (pickupType == StoragePickupType.FILTER.ordinal()) {
+        // treat bag contents as whtielist
+        boolean doesMatch = false;
+        NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(stackIsBag);
+        for (ItemStack tryMatch : inv) {
+          if (tryMatch.isItemEqualIgnoreDurability(stackOnGround)) {
+            doesMatch = true;
+            break;
+          }
+        }
+        if (!doesMatch) {
+          return;//  filter type an it does not match
+        }
+      }
+      //else type is everything so just go
+      //do the real deposit
+      InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
+      NonNullList<ItemStack> onGround = NonNullList.create();
+      onGround.add(stackOnGround);
+      BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
+      if (ret.stacks.get(0).isEmpty()) {
+        /// we got everything
+        ModCyclic.logger.log("bag return  cancelled ");
+        event.getItem().setDead();
+        event.setCanceled(true);
+      }
+      else {
+        //we got part of it
+        ModCyclic.logger.log("bag return " + ret.stacks.get(0));
+        event.getItem().setItem(ret.stacks.get(0));
+      }
+      break;
+    }
+  }
+
+  @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
       World world = event.getWorld();
-      TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+      TileEntity tile = world.getTileEntity(event.getPos());
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
@@ -228,6 +307,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return UtilNBT.getItemStackNBT(wand).getString(GUI_ID);
   }
 
+  //
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",

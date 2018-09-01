@@ -60,10 +60,13 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
       ItemStack heldCopy = held.copy();
       held.getTagCompound().removeTag(NBT_ENTITYID);
       held.setTagCompound(null);
-      return new EntityMagicNetFull(world, null, heldCopy);
+      EntityMagicNetFull ent = new EntityMagicNetFull(world, x, y, z);
+      ent.setCaptured(heldCopy);
+      return ent;
     }
     else {
-      return new EntityMagicNetEmpty(world, null);
+      EntityMagicNetEmpty ent = new EntityMagicNetEmpty(world, x, y, z);
+      return ent;
     }
   }
 

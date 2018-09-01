@@ -21,32 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.placer;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.EntityLivingBase;
 
-public class GuiPlacer extends GuiBaseContainer {
+public class PotionStunned extends PotionBase {
 
-  static final int padding = 8;
-  private TileEntityPlacer tile;
-  boolean debugLabels = false;
-
-  public GuiPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer tileEntity) {
-    super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
-    this.fieldRedstoneBtn = TileEntityPlacer.Fields.REDSTONE.ordinal();
+  public PotionStunned() {
+    super("stunned", true, 0xC2C4F7);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPlacer.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerPlacer.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+  public void tick(EntityLivingBase entity) {
+    // if (entity.world.rand.nextDouble() < 0.8)
+    //UtilParticle.spawnParticle(entity.world, EnumParticleTypes.SPIT, entity);
+    entity.posX = entity.prevPosX;
+    entity.posZ = entity.prevPosZ;
+    entity.rotationYaw = (float) (entity.world.rand.nextInt(180) - 360.0);
+    entity.rotationPitch = (float) (entity.world.rand.nextInt(90) - 180.0);
+    //    entity.addVelocity(x, y, z);
+    if (entity.world.isRemote) {
+      entity.setVelocity(0, entity.motionY, 0);
     }
   }
 }

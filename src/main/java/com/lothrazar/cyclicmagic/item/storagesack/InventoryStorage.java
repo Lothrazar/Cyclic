@@ -38,13 +38,13 @@ public class InventoryStorage extends InventoryBase implements IInventory {
 
   public static final int INV_SIZE = 7 * 11; //6*11
   //  private ItemStack[] inv = new ItemStack[INV_SIZE];
-  private final ItemStack internalWand;
+  private final ItemStack internalBag;
   private EntityPlayer thePlayer;
 
-  public InventoryStorage(EntityPlayer player) {
+  public InventoryStorage(EntityPlayer player, ItemStack bag) {
     super(INV_SIZE);
-    internalWand = player.getHeldItemMainhand();
-    inv = readFromNBT(internalWand);
+    internalBag = bag;
+    inv = readFromNBT(internalBag);
     thePlayer = player;
   }
 
@@ -133,7 +133,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
         thePlayer.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
       }
     }
-    writeToNBT(internalWand, inv);
+    writeToNBT(internalBag, inv);
   }
 
   @Override

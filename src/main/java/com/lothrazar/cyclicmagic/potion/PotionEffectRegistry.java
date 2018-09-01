@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.potion.effect.PotionFrostWalker;
 import com.lothrazar.cyclicmagic.potion.effect.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.effect.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.effect.PotionSnow;
+import com.lothrazar.cyclicmagic.potion.effect.PotionStunned;
 import com.lothrazar.cyclicmagic.potion.effect.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.effect.PotionWaterwalk;
 import net.minecraft.potion.Potion;
@@ -59,6 +60,7 @@ public class PotionEffectRegistry {
   public static final PotionBase BOUNCE = new PotionBounce();
   public static final PotionBase FROSTW = new PotionFrostWalker();
   public static final PotionBase DROPS = new PotionDropItems();
+  public static final PotionBase STUN = new PotionStunned();
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
 
   private static void register() {
@@ -79,6 +81,7 @@ public class PotionEffectRegistry {
     registerPotionEffect(BOUNCE);
     registerPotionEffect(FROSTW);
     registerPotionEffect(DROPS);
+    registerPotionEffect(STUN);
   }
 
   private static void registerPotionEffect(PotionBase effect) {

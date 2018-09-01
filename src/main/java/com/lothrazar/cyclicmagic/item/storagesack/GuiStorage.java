@@ -26,17 +26,22 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.core.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiStorage extends GuiBaseContainer {
 
-  private GuiButtonTooltip buttonToggle;
+  private GuiButtonTexture buttonToggle;
   private EntityPlayer player;
+  private GuiButtonTexture buttonTogglePickup;
 
   public GuiStorage(ContainerStorage containerItem, EntityPlayer player) {
     super(containerItem);
@@ -47,13 +52,20 @@ public class GuiStorage extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int y = this.guiTop;
-    int x = this.guiLeft;
-    buttonToggle = new GuiButtonTooltip(75, x, y, 10, 10, "");
+    int y = this.guiTop + 138;
+    int x = this.guiLeft + 194;
+    int id = 75, size = Const.SQ;
+    buttonToggle = new GuiButtonTexture(id++, x, y, size, size);
     buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
+    y += 20;
+    buttonTogglePickup = new GuiButtonTexture(id++, x, y, size, size);
+    buttonTogglePickup.setTooltip("item.storage_bag.togglepickup");
+    this.addButton(buttonTogglePickup);
     int i = 0;
-    int size = 12;
+    size = 12;
+    y = this.guiTop;
+    x = this.guiLeft;
     for (EnumDyeColor color : EnumDyeColor.values()) {
       GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
           size, size, color.name().substring(0, 1));
@@ -64,10 +76,20 @@ public class GuiStorage extends GuiBaseContainer {
     }
   }
 
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    buttonToggle.setTextureIndex(11 + ItemStorageBag.StorageActionType.get(player.getHeldItemMainhand()));
+    buttonTogglePickup.setTextureIndex(11 + ItemStorageBag.StoragePickupType.get(player.getHeldItemMainhand()));
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+  }
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {
-      ModCyclic.network.sendToServer(new PacketStorageBag());
+      ModCyclic.network.sendToServer(new PacketStorageBag(0));
+    }
+    else if (button.id == this.buttonTogglePickup.id) {
+      ModCyclic.network.sendToServer(new PacketStorageBag(1));
     }
     else {
       ItemStorageBag.StorageActionType.setColour(player.getHeldItemMainhand(), button.id);

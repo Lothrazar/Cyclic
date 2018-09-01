@@ -109,6 +109,9 @@ public class UtilItemStack {
     damageItem(p, s, 1);
   }
 
+  public static void repairItem(EntityPlayer p, ItemStack s) {
+    s.setItemDamage(s.getItemDamage() - 1);
+  }
   public static void damageItem(EntityPlayer p, ItemStack s, int num) {
     if (p.capabilities.isCreativeMode == false && p.world.isRemote == false) {
       s.damageItem(num, p);

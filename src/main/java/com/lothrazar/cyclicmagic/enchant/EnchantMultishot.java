@@ -45,7 +45,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantMultishot extends EnchantBase {
 
   public EnchantMultishot() {
-    super("multishot", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("multishot", Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
   }
 
@@ -96,7 +96,7 @@ public class EnchantMultishot extends EnchantBase {
     //extract enchants from bow
     int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
     if (power > 0) {
-      entityarrow.setDamage(entityarrow.getDamage() + (double) power * 0.5D + 0.5D);
+      entityarrow.setDamage(entityarrow.getDamage() + power * 0.5D + 0.5D);
     }
     int punch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stackBow);
     if (punch > 0) {

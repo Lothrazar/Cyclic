@@ -92,7 +92,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     //so now we do not burn fuel if timer is stuck at zero with no craft action
     if (this.getEnergyCurrent() >= this.getEnergyCost() && isGridEmpty() == false) {
       //      if (world.isRemote == false) {// maybe?
-        findRecipe();
+      findRecipe();
       //      }
       if (recipe != null && !world.isRemote && tryPayCost()) {
         // pay the cost  
@@ -118,7 +118,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (fromRecipe.isEmpty()) {
         continue;
       }
-
       //try to pay its cost
       for (int j = 0; j < SIZE_INPUT; j++) {
         fromInput = this.getStackInSlot(j);

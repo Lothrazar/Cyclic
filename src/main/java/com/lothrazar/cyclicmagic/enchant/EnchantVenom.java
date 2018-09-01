@@ -45,7 +45,7 @@ public class EnchantVenom extends EnchantBase {
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
 
   public EnchantVenom() {
-    super("venom", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    super("venom", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(durationTicksPerLevel + "")));
   }
 

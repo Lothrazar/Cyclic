@@ -56,6 +56,16 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe {
   }
 
   @Override
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    return AABB;
+  }
+
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
