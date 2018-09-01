@@ -833,7 +833,7 @@ tile.plate_push_fast.guide=一个可以推动实体的简单的传送带。它�
 
 tile.plate_push_fast.name=传送带（快速）
 tile.plate_push_fast_corner.name=转向传送带（快速）
-tile.plate_push_fast_angle.name=倾斜传送带（普通）
+tile.plate_push_fast_angle.name=倾斜传送带（快速）
 
 tile.plate_push_slow.guide=一个可以推动实体的简单的传送带。它对大部分实体（譬如：玩家、物品、经验球）均有作用。可以使用扳手转向。
  
