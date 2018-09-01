@@ -24,6 +24,11 @@
 package com.lothrazar.cyclicmagic;
 
 import java.io.File;
+import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.block.dice.BlockDice;
+import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
+import com.lothrazar.cyclicmagic.block.laser.BlockLaser;
+import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -77,6 +82,7 @@ public class ModCyclic {
   public static CommonProxy proxy;
   public static ModLogger logger;
   public EventRegistry events;
+  private ArrayList<IContent> content;
   public static SimpleNetworkWrapper network;
   public final static CreativeTabCyclic TAB = new CreativeTabCyclic();
   @CapabilityInject(IPlayerExtendedProperties.class)
@@ -102,9 +108,32 @@ public class ModCyclic {
     this.events.registerCoreEvents();
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
+
+    //create alll instances of "content" aka blocks/items
+    //^^ maybe a map with <category.configKey , instance>
+    // maybe re-use IHasConfigg or new-extended ??? IContent: enabled(): boolean; register(): void; //optional. do tileentity/etc
+    //a "ModuleNewtype" will just be an iContent that has no physicality, no block or item to it 
+    // ->> OR we have "PeatModule", a content block with multi-content
+    // ->> consider: fire & fluids, content that depends on secondary flags, it comes in if previous are in
+    // run config including this new content hook
+    //after config sync, find all content where enabled()===true and init/register it
+    //then Forge content registries finish the rest 
+    content = new ArrayList<IContent>();
+    content.add(new BlockLaser());
+    content.add(new BlockSoundPlayer());
+    content.add(new BlockDice());
+    content.add(new BlockImbue());
+    for (IContent cont : content) {
+      ConfigRegistry.register(cont);
+    }
     ConfigRegistry.syncAllConfig();
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPreInit();
+    }
+    for (IContent cont : content) {
+      if (cont.enabled()) {
+        cont.register();
+      }
     }
     proxy.preInit();
     //fluids still does the old way ( FluidRegistry.addBucketForFluid)

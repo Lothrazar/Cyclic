@@ -2,10 +2,14 @@ package com.lothrazar.cyclicmagic.block.dice;
 
 import java.util.Random;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +23,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
+public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
   public BlockDice() {
     super(Material.ROCK);
@@ -88,6 +94,24 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe {
   public static EnumFacing getRandom(Random rand) {
     int index = MathHelper.getInt(rand, 0, EnumFacing.values().length - 1);
     return EnumFacing.values()[index];
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("dice", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityDice.class, "dice_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   @Override

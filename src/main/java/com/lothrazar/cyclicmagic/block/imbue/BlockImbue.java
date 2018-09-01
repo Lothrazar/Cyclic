@@ -2,11 +2,16 @@ package com.lothrazar.cyclicmagic.block.imbue;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.dynamite.ExplosionBlockSafe;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -31,15 +36,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe, IContent {
 
   static final String NBT_IMBUE = "CYCLIC_IMBUE";
   private static final String NBT_IMBUE_CHARGE = "CYCLIC_CHARGE";
@@ -265,6 +272,25 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
 
   public static void addRecipe(RecipeImbue imb) {
     recipes.add(imb);
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public void register() {
+    ModCyclic.instance.events.register(this);
+    BlockRegistry.registerBlock(this, "imbuer", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   @Override
