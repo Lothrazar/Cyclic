@@ -25,10 +25,12 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -54,8 +56,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasRecipe {
+public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRecipe {
 
   public static int FUEL_COST = 0;
 
@@ -168,7 +171,21 @@ public class BlockHydrator extends BlockBaseHasTile implements IHasConfig, IHasR
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), "block_hydrator", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

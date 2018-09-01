@@ -29,8 +29,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
@@ -49,7 +52,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
+public class BlockCropMagicBean extends BlockCrops implements IContent {
 
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
@@ -196,7 +199,25 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   }
 
   @Override
+  public void register() {
+    BlockCropMagicBean sprout = new BlockCropMagicBean();
+    BlockRegistry.registerBlock(sprout, "sprout", null);
+    ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
+    ItemRegistry.register(sprout_seed, "sprout_seed");
+    LootTableRegistry.registerLoot(sprout_seed);
+    sprout.setSeed(sprout_seed);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.blocks + ".magicbean";
     allowBonemeal = config.getBoolean("MagicBeanBonemeal", category, true, "Allow bonemeal on magic bean");
     dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, false, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");

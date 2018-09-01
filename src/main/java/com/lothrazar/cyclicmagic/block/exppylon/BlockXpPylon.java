@@ -25,11 +25,16 @@ package com.lothrazar.cyclicmagic.block.exppylon;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.SoundType;
@@ -51,15 +56,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IContent {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockXpPylon() {
@@ -85,6 +92,25 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   @Override
   public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
     return side == EnumFacing.DOWN;
+  }
+
+  @Override
+  public void register() {
+    FluidsRegistry.registerExp();//it needs EXP fluid to work
+    BlockRegistry.registerBlock(this, new ItemBlockPylon(this), "exp_pylon", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

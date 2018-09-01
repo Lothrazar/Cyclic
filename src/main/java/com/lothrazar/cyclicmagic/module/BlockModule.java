@@ -26,27 +26,10 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
-import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
-import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
-import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
-import com.lothrazar.cyclicmagic.block.anvilmagma.TileEntityAnvilMagma;
-import com.lothrazar.cyclicmagic.block.applesprout.BlockAppleCrop;
-import com.lothrazar.cyclicmagic.block.arrowtarget.BlockArrowTarget;
-import com.lothrazar.cyclicmagic.block.arrowtarget.TileEntityArrowTarget;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.block.batterycheat.BlockBatteryInfinite;
-import com.lothrazar.cyclicmagic.block.batterycheat.TileEntityBatteryInfinite;
-import com.lothrazar.cyclicmagic.block.beaconempty.BlockBeaconPowered;
-import com.lothrazar.cyclicmagic.block.beaconempty.TileEntityBeaconPowered;
-import com.lothrazar.cyclicmagic.block.beaconpotion.BlockBeaconPotion;
-import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion;
-import com.lothrazar.cyclicmagic.block.bean.BlockCropMagicBean;
-import com.lothrazar.cyclicmagic.block.bean.ItemMagicBean;
 import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
-import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
-import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
 import com.lothrazar.cyclicmagic.block.cable.fluid.BlockCableFluid;
@@ -65,47 +48,21 @@ import com.lothrazar.cyclicmagic.block.cablewireless.content.BlockCableContentWi
 import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.BlockCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
-import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
-import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
-import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
-import com.lothrazar.cyclicmagic.block.collector.TileEntityVacuum;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
-import com.lothrazar.cyclicmagic.block.dehydrator.BlockDeHydrator;
-import com.lothrazar.cyclicmagic.block.dehydrator.TileEntityDeHydrator;
-import com.lothrazar.cyclicmagic.block.enchanter.BlockEnchanter;
-import com.lothrazar.cyclicmagic.block.enchanter.TileEntityEnchanter;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.BlockLibrary;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
-import com.lothrazar.cyclicmagic.block.exppylon.BlockXpPylon;
-import com.lothrazar.cyclicmagic.block.exppylon.ItemBlockPylon;
-import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireFrost;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
-import com.lothrazar.cyclicmagic.block.forester.BlockForester;
-import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
-import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
-import com.lothrazar.cyclicmagic.block.harvester.TileEntityHarvester;
-import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
-import com.lothrazar.cyclicmagic.block.hydrator.ItemBlockHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
-import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
-import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
-import com.lothrazar.cyclicmagic.block.interdiction.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
-import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
-import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
-import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
-import com.lothrazar.cyclicmagic.block.moondetector.TileEntityMoon;
-import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
-import com.lothrazar.cyclicmagic.block.packager.TileEntityPackager;
 import com.lothrazar.cyclicmagic.block.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.block.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
@@ -119,8 +76,6 @@ import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.scaffolding.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
-import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
-import com.lothrazar.cyclicmagic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
@@ -141,7 +96,6 @@ import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -159,36 +113,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean fragileEnabled;
   private boolean enablePumpAndPipes;
   private boolean enableLibrary;
-  private boolean enableHarvester;
-  private boolean enableMiner;
   private boolean enablePattern;
-  private boolean expPylon;
-  private boolean enableVacuum;
-  private boolean enableHydrator;
-  private boolean enableClock;
-  private boolean enableSprinkler;
   private boolean enableSpikes;
-  private boolean emptyBeacon;
-  private boolean beaconPotion;
   private boolean wireless;
-  private boolean forester;
-  private boolean enchanter;
-  private boolean anvil;
   private boolean enablePeat;
   private boolean enableConveyor;
   private boolean launchPads;
   private boolean enableMagnet;
-  private boolean enableInterdict;
   private boolean vectorPlate;
-  private boolean enableApple;
-  private boolean enableBeans;
   private boolean enableMilk;
   private boolean enablePoison;
-  private boolean anvilMagma;
-  private boolean etarget;
-  private boolean moon;
-  private boolean buttonLarge;
-  private boolean doorbell;
   private boolean fire_starter;
   private boolean enableEnderBlaze;
   /**
@@ -211,9 +145,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   boolean fireFrostUsed = false;
   private boolean enableSlingshot;
   private boolean cableWireless;
-  private boolean batteryInfinite;
-  private boolean enablePackager;
-  private boolean enableDehydr;
 
   @Override
   public void onPreInit() {
@@ -249,44 +180,16 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (fireDarkUsed) {
       BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
     }
-    if (buttonLarge) {
-      BlockRegistry.registerBlock(new BlockButtonLarge(), "button_large", GuideCategory.BLOCK);
-    }
-    if (doorbell) {
-      BlockRegistry.registerBlock(new BlockDoorbell(), "doorbell_simple", GuideCategory.BLOCK);
-    }
-    if (moon) {
-      BlockRegistry.registerBlock(new BlockMoonDetector(), "moon_sensor", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
-    }
-    if (etarget) {
-      BlockRegistry.registerBlock(new BlockArrowTarget(), "target", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
-    }
+
+
     if (enableMilk) {
       FluidsRegistry.registerMilk();
     }
     if (enablePoison) {
       FluidsRegistry.registerPoison();
     }
-    if (enableBeans) {
-      BlockCropMagicBean sprout = new BlockCropMagicBean();
-      BlockRegistry.registerBlock(sprout, "sprout", null);
-      ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
-      ItemRegistry.register(sprout_seed, "sprout_seed");
-      LootTableRegistry.registerLoot(sprout_seed);
-      sprout.setSeed(sprout_seed);
-      //      AchievementRegistry.registerItemAchievement(sprout_seed);
-    }
-    if (enableApple) {
-      BlockAppleCrop apple = new BlockAppleCrop();
-      BlockRegistry.registerBlock(apple, "apple", GuideCategory.BLOCK);
-    }
-    if (enableInterdict) {
-      BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
-      BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
-      GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
-    }
+
+
     if (enableMagnet) {
       BlockMagnet magnet_block = new BlockMagnet();
       BlockRegistry.registerBlock(magnet_block, "magnet_block", GuideCategory.BLOCKPLATE);
@@ -364,11 +267,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
     }
-    if (forester) {
-      BlockForester block_forester = new BlockForester();
-      BlockRegistry.registerBlock(block_forester, "block_forester", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
-    }
+
     if (wireless) {
       BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
       BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
@@ -378,93 +277,21 @@ public class BlockModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
       ModCyclic.instance.events.register(BlockRedstoneWireless.class);
     }
-    if (beaconPotion) {
-      BlockBeaconPotion beacon_potion = new BlockBeaconPotion();
-      BlockRegistry.registerBlock(beacon_potion, "beacon_potion", null);
-      GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, "beacon_potion_te");
-    }
-    if (emptyBeacon) {
-      BlockBeaconPowered beacon_redstone = new BlockBeaconPowered();
-      BlockRegistry.registerBlock(beacon_redstone, "beacon_redstone", null);
-      GameRegistry.registerTileEntity(TileEntityBeaconPowered.class, "beacon_redstone_te");
-    }
-    if (enableClock) {
-      BlockRedstoneClock clock = new BlockRedstoneClock();
-      BlockRegistry.registerBlock(clock, "clock", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
-    }
-    if (enableSprinkler) {
-      BlockSprinkler sprinkler = new BlockSprinkler();
-      BlockRegistry.registerBlock(sprinkler, "sprinkler", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
-    }
+
     if (enableSpikes) {
       BlockSpikesRetractable spikes_iron = new BlockSpikesRetractable(false);
       BlockRegistry.registerBlock(spikes_iron, "spikes_iron", GuideCategory.BLOCK);
       BlockSpikesRetractable spikes_redstone_diamond = new BlockSpikesRetractable(true);
       BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCK);
     }
-    if (enableVacuum) {
-      BlockVacuum vacuum_block = new BlockVacuum();
-      BlockRegistry.registerBlock(vacuum_block, "block_vacuum", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
-    }
-    if (enableHydrator) {
-      BlockHydrator block_hydrator = new BlockHydrator();
-      BlockRegistry.registerBlock(block_hydrator, new ItemBlockHydrator(block_hydrator), "block_hydrator", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
-    }
-    if (enablePackager) {
-      BlockPackager auto_packager = new BlockPackager();
-      BlockRegistry.registerBlock(auto_packager, "auto_packager", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityPackager.class, "auto_packager_te");
-    }
-    if (enableDehydr) {
-      BlockDeHydrator dehydrator = new BlockDeHydrator();
-      BlockRegistry.registerBlock(dehydrator, "dehydrator", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityDeHydrator.class, "dehydrator_te");
-    }
-    if (expPylon) {
-      FluidsRegistry.registerExp();//it needs EXP fluid to work
-      BlockXpPylon exp_pylon = new BlockXpPylon();
-      BlockRegistry.registerBlock(exp_pylon, new ItemBlockPylon(exp_pylon), "exp_pylon", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
-    }
+
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
       BlockRegistry.registerBlock(builder_pattern, "builder_pattern", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
     }
 
-    if (enableHarvester) {
-      BlockHarvester harvester_block = new BlockHarvester();
-      BlockRegistry.registerBlock(harvester_block, "harvester_block", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
-    }
 
-    if (enableMiner) {
-      BlockMiner miner_block = new BlockMiner();
-      BlockRegistry.registerBlock(miner_block, "block_miner", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
-    }
-
-    if (enchanter) {
-      FluidsRegistry.registerExp();
-      BlockEnchanter block_enchanter = new BlockEnchanter();
-      BlockRegistry.registerBlock(block_enchanter, "block_enchanter", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
-    }
-    Block block_anvil_magma = Blocks.ENCHANTING_TABLE;
-    if (anvilMagma) {
-      block_anvil_magma = new BlockAnvilMagma();
-      BlockRegistry.registerBlock(block_anvil_magma, "block_anvil_magma", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + "block_anvil_magma_te");
-    }
-    if (anvil) {
-      BlockAnvilAuto block_anvil = new BlockAnvilAuto(block_anvil_magma);
-      BlockRegistry.registerBlock(block_anvil, "block_anvil", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
-    }
     if (enablePeat) {
       //peat 
       ItemBiomass peat_biomass = new ItemBiomass();
@@ -509,10 +336,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       ItemLocation card_location = new ItemLocation();
       ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
     }
-    if (batteryInfinite) {//creative infinite battery
-      BlockRegistry.registerBlock(new BlockBatteryInfinite(), "battery_infinite", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
-    }
+
     if (enableLibrary) {
       BlockLibrary library = new BlockLibrary();
       BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
@@ -564,49 +388,27 @@ public class BlockModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+
     ItemPeatFuel.FUEL_WEAK = config.getInt("peat_fuel", Const.ConfigCategory.fuelCost, 256, 10, 99999, "Energy generated by normal Peat");
     ItemPeatFuel.FUEL_STRONG = config.getInt("peat_fuel_enriched", Const.ConfigCategory.fuelCost, 4096, 10, 99999, "Energy generated by crafted Peat");
-    enableDehydr = config.getBoolean("dehydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePackager = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    batteryInfinite = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    doorbell = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    buttonLarge = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    moon = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    etarget = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableApple = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
-    anvil = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    anvilMagma = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enchanter = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    forester = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    beaconPotion = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    emptyBeacon = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableClock = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableSprinkler = config.getBoolean("Sprinkler", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpikes = config.getBoolean("Spikes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableHydrator = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableVacuum = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
-    enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityControlledMiner.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
     vectorPlate = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableInterdict = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

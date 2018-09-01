@@ -2,8 +2,12 @@ package com.lothrazar.cyclicmagic.block.buttonflat;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.state.IBlockState;
@@ -18,10 +22,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockButtonLarge extends BlockButton implements IHasRecipe {
+public class BlockButtonLarge extends BlockButton implements IHasRecipe, IContent {
 
   private static final double SMALL = 0.0925D;
   private static final double LARGE = 1 - SMALL;// 0.9375D;//0.875D;
@@ -40,6 +45,23 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe {
 
   public BlockButtonLarge() {
     super(false);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "button_large", GuideCategory.BLOCK);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

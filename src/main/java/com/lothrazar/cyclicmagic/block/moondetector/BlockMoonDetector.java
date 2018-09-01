@@ -1,8 +1,12 @@
 package com.lothrazar.cyclicmagic.block.moondetector;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,8 +20,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
+public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   protected static final AxisAlignedBB DAYLIGHT_DETECTOR_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D);
   public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
@@ -26,6 +32,24 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe {
   public BlockMoonDetector() {
     super(Material.ROCK);
     this.setTranslucent();
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "moon_sensor", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

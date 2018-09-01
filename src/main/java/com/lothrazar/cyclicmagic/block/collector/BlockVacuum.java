@@ -23,12 +23,16 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.collector;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.core.MachineTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -40,11 +44,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
+public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IContent {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockVacuum() {
@@ -59,6 +65,24 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_vacuum", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r r",
@@ -70,6 +94,7 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
         'h', Blocks.HOPPER);
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));

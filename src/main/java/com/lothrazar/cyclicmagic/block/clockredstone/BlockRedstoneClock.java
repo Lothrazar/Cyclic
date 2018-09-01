@@ -24,10 +24,14 @@
 package com.lothrazar.cyclicmagic.block.clockredstone;
 
 import java.util.Random;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.material.Material;
@@ -43,10 +47,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
+public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   private static final int PARTICLE_DENSITY = 2;
   public static final PropertyBool POWERED = BlockLever.POWERED;//PropertyBool.create("powered");
@@ -54,6 +60,24 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe {
   public BlockRedstoneClock() {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_CLOCK);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "clock", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityClock.class, "clock_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Clock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -23,12 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.core.RenderItemTesr;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
@@ -44,10 +46,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHasRecipe, IBlockHasTESR {
+public class BlockDeHydrator extends BlockBaseFacing implements IContent, IHasRecipe, IBlockHasTESR {
 
   public static int FUEL_COST = 10;
 
@@ -94,7 +97,21 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "dehydrator", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityDeHydrator.class, "dehydrator_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("dehydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 20, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

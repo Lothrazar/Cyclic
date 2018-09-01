@@ -23,10 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.sprinkler;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -45,11 +49,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe {
+public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, IHasRecipe, IContent {
 
   private static final double BOUNDS = 0.0625;
   protected static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(BOUNDS, 0, BOUNDS, 1.0D - BOUNDS, 0.5D, 1.0D - BOUNDS);
@@ -93,6 +99,24 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
       UtilChat.sendStatusMessage(player, UtilChat.lang(this.getUnlocalizedName() + ".particles." + te.isSpawningParticles()));
     }
     return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "sprinkler", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileSprinkler.class, "sprinkler_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Sprinkler", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

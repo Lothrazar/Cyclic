@@ -25,9 +25,11 @@ package com.lothrazar.cyclicmagic.block.applesprout;
 
 import java.util.Random;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
@@ -54,7 +56,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe, IHasConfig {
+public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe, IContent {
 
   private static int GROWTH_TICKRATE = 500;
   private static int LIGHT_GROWTH = 5;
@@ -205,7 +207,21 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe, 
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "apple", GuideCategory.BLOCK);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.content;
+    enabled = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
     GROWTH_TICKRATE = config.getInt("AppleGrowthTicks", Const.ConfigCategory.blocks, 500, 1, 99999, "Ticks for apple sprout to grow, 1 will grow almost instantly");
     LIGHT_GROWTH = config.getInt("AppleLightLevel", Const.ConfigCategory.blocks, 5, 0, 15, "Light required for apple to grow");
   }

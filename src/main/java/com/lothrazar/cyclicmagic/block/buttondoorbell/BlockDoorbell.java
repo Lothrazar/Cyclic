@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.block.buttondoorbell;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.BlockButton;
@@ -18,10 +22,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDoorbell extends BlockButton implements IHasRecipe {
+public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
 
   private static final double SIXLRG = 0.6875D;
   private static final double THREELRG = 0.255D;
@@ -42,6 +47,23 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe {
 
   public BlockDoorbell() {
     super(false);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "doorbell_simple", GuideCategory.BLOCK);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
