@@ -24,10 +24,7 @@
 package com.lothrazar.cyclicmagic.liquid;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.liquid.exp.BlockFluidExp;
 import com.lothrazar.cyclicmagic.liquid.exp.FluidExp;
-import com.lothrazar.cyclicmagic.liquid.poison.BlockFluidPoison;
-import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Items;
@@ -40,28 +37,14 @@ import net.minecraftforge.fluids.FluidUtil;
 public class FluidsRegistry {
 
   public static FluidExp fluid_exp;
-  public static FluidPoison fluid_poison;
-
-  public static void registerPoison() {
-    fluid_poison = new FluidPoison();
-    FluidRegistry.registerFluid(fluid_poison);
-    BlockFluidPoison block_poison = new BlockFluidPoison();
-    fluid_poison.setBlock(block_poison);
-    BlockRegistry.registerBlock(block_poison, "poison", null);
-    FluidRegistry.addBucketForFluid(fluid_poison);
-  }
 
 
   public static void registerExp() {
-    if (fluid_exp != null) {
-      return;
+    if (fluid_exp == null) {
+      fluid_exp = new FluidExp();
+      fluid_exp.register();
     }
-    fluid_exp = new FluidExp();
-    FluidRegistry.registerFluid(fluid_exp);
-    BlockFluidExp block_exp = new BlockFluidExp();
-    fluid_exp.setBlock(block_exp);
-    BlockRegistry.registerBlock(block_exp, "xpjuice", null);
-    FluidRegistry.addBucketForFluid(fluid_exp);
+
   }
 
   public static void register(BlockFluidClassic block, Fluid fluid, String name) {
@@ -74,7 +57,7 @@ public class FluidsRegistry {
   public static void addPoisonRecipe() {
     try {
       //dont do this, FluidsRegistry.fluid_poison , some other mod might have added poison first, then we get rejected --> null
-      Fluid poison = FluidRegistry.getFluid(FluidsRegistry.fluid_poison.getName());
+      Fluid poison = FluidRegistry.getFluid("poison");
       if (poison == null) {
         return;
       }

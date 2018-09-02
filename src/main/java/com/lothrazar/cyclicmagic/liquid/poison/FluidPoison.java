@@ -23,16 +23,20 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.liquid.poison;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * I learned how to do this thanks to @elucent https://github.com/RootsTeam/Embers/blob/6e75e7c5c19e6dc6f9eb91a75f56c938b64a9898/src/main/java/teamroots/embers/fluid/FluidMoltenIron.java
  * 
  * @author Sam
  */
-public class FluidPoison extends Fluid {
+public class FluidPoison extends Fluid implements IContent {
 
   public FluidPoison() {
     super("poison", new ResourceLocation(Const.MODID, "blocks/fluid_poison_base"), new ResourceLocation(Const.MODID, "blocks/fluid_poison_flowing"));
@@ -40,5 +44,27 @@ public class FluidPoison extends Fluid {
     setDensity(1200);//water is 1000, lava is 3000
     this.setLuminosity(6);
     setUnlocalizedName("poison");
+  }
+
+  @Override
+  public void register() {
+    FluidPoison fluid_poison = new FluidPoison();
+    FluidRegistry.registerFluid(fluid_poison);
+    BlockFluidPoison block_poison = new BlockFluidPoison(fluid_poison);
+    fluid_poison.setBlock(block_poison);
+    BlockRegistry.registerBlock(block_poison, "poison", null);
+    FluidRegistry.addBucketForFluid(fluid_poison);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

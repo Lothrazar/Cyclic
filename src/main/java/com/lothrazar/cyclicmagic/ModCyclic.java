@@ -146,6 +146,7 @@ import com.lothrazar.cyclicmagic.item.snowmagic.ItemProjectileSnow;
 import com.lothrazar.cyclicmagic.item.torchmagic.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.torchmagic.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
+import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.DynamiteModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
@@ -239,6 +240,7 @@ public class ModCyclic {
     //after config sync, find all content where enabled()===true and init/register it
     //then Forge content registries finish the rest 
     content = new ArrayList<IContent>();
+    content.add(new FluidPoison());
     content.add(new FluidMilk());
     content.add(new EnchantAutoSmelt());
     content.add(new EnchantBeheading());

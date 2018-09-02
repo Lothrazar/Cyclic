@@ -81,7 +81,6 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
-import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -107,7 +106,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean enablePeat;
   private boolean enableConveyor;
   private boolean launchPads;
-  private boolean enablePoison;
   private boolean fire_starter;
   private boolean enableEnderBlaze;
   /**
@@ -159,10 +157,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(new BlockFireSafe(), "fire_dark", null);
     }
 
-    if (enablePoison) {
-      FluidsRegistry.registerPoison();
-    }
- 
+
     if (launchPads) {
       //med
       BlockLaunch plate_launch_med = new BlockLaunch(BlockLaunch.LaunchType.MEDIUM, SoundEvents.BLOCK_SLIME_FALL);
@@ -350,7 +345,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePoison = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

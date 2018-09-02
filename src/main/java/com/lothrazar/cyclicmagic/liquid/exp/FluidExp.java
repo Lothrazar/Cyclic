@@ -23,9 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.liquid.exp;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * I learned how to do this thanks to @elucent https://github.com/RootsTeam/Embers/blob/6e75e7c5c19e6dc6f9eb91a75f56c938b64a9898/src/main/java/teamroots/embers/fluid/FluidMoltenIron.java
@@ -33,7 +37,7 @@ import net.minecraftforge.fluids.Fluid;
  * @author Sam
  *
  */
-public class FluidExp extends Fluid {
+public class FluidExp extends Fluid implements IContent {
 
   public FluidExp() {
     super("xpjuice", new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_base"), new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_flowing"));
@@ -41,4 +45,22 @@ public class FluidExp extends Fluid {
     setDensity(1200);//water is 1000, lava is 3000
     setUnlocalizedName("xpjuice");
   }
+
+  @Override
+  public void register() {
+    FluidRegistry.registerFluid(this);
+    BlockFluidExp block_exp = new BlockFluidExp();
+    this.setBlock(block_exp);
+    BlockRegistry.registerBlock(block_exp, "xpjuice", null);
+    FluidRegistry.addBucketForFluid(this);
+  }
+
+
+  @Override
+  public boolean enabled() {
+    return false;//gets force-registered by other blocks that use it
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {}
 }
