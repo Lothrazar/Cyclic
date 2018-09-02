@@ -1378,5 +1378,5 @@ item.boomerang.tooltip=Stuns enemies and picks up items
 item.boomerang.guide=Stuns enemies and picks up items.  Bounces off blocks or returns after a fixed distance.  Attempts to activate any block it hits or passes through such as Levers and Buttons.  
 
 tile.laser.name=Laser Cell
-tile.laser.tooltip=Render harmless lasers anywhere
-tile.laser.guide=Use GPS Markers to target lasers and control their appearance.  
+tile.laser.tooltip=Render harmless lasers
+tile.laser.guide=Use GPS Markers to target lasers and heavily customize their appearance.  
