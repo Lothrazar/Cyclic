@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.module;
+package com.lothrazar.cyclicmagic.registry.content;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -11,13 +11,14 @@ import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
-public class DynamiteModule implements IContent {
+public class DynamiteContent implements IContent {
 
   @Override
   public void register() {

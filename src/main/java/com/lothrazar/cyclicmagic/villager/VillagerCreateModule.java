@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.villager;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
+import com.lothrazar.cyclicmagic.registry.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.common.config.Configuration;

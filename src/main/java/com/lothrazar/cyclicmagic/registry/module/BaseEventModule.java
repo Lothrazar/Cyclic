@@ -21,18 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.module;
+package com.lothrazar.cyclicmagic.registry.module;
 
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 
-public abstract class BaseModule implements ICyclicModule {
+public abstract class BaseEventModule extends BaseModule {
 
-  //having these makes implementing each one optional
-  public void onPreInit() {}
-
-  public void onInit() {}
-
-  public void onPostInit() {}
-
-  public void onServerStarting(FMLServerStartingEvent event) {}
+  public void onPreInit() {
+    ModCyclic.instance.events.register(this);
+  }
 }

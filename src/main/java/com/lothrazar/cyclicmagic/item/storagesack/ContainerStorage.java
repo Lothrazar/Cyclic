@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
-import com.lothrazar.cyclicmagic.module.MultiContent;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
