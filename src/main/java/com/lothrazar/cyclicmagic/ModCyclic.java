@@ -51,6 +51,7 @@ import com.lothrazar.cyclicmagic.block.dice.BlockDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.dropper.BlockDropperExact;
 import com.lothrazar.cyclicmagic.block.enchanter.BlockEnchanter;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.BlockLibrary;
 import com.lothrazar.cyclicmagic.block.entitydetector.BlockDetector;
 import com.lothrazar.cyclicmagic.block.exppylon.BlockXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.BlockFan;
@@ -240,6 +241,7 @@ public class ModCyclic {
     //after config sync, find all content where enabled()===true and init/register it
     //then Forge content registries finish the rest 
     content = new ArrayList<IContent>();
+    content.add(new BlockLibrary());
     content.add(new FluidPoison());
     content.add(new FluidMilk());
     content.add(new EnchantAutoSmelt());

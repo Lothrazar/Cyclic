@@ -51,9 +51,6 @@ import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorAngle;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyorCorner;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.BlockLibrary;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireFrost;
 import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
@@ -100,7 +97,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
 
   private boolean fragileEnabled;
   private boolean enablePumpAndPipes;
-  private boolean enableLibrary;
   private boolean enableSpikes;
   private boolean wireless;
   private boolean enablePeat;
@@ -288,14 +284,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
     }
 
-    if (enableLibrary) {
-      BlockLibrary library = new BlockLibrary();
-      BlockRegistry.registerBlock(library, "block_library", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
-      BlockLibraryController lc = new BlockLibraryController(library);
-      BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
-      ModCyclic.instance.events.register(library);
-    }
+
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
       ItemBlock ib = new ItemBlockScaffolding(block_fragile);
@@ -345,7 +334,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableLibrary = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
     enablePumpAndPipes = config.getBoolean("PumpAndPipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     // enablePipes = config.getBoolean("Pipes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
