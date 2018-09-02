@@ -28,7 +28,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.module.CommandModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.ItemPotionModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
 import com.lothrazar.cyclicmagic.module.WorldModule;
@@ -61,7 +60,6 @@ public class ModuleRegistry {
 
   public static void registerAll() {
     register(new CommandModule());
-    register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
     register(new PlayerAbilitiesModule());
     register(new TextInfoModule());

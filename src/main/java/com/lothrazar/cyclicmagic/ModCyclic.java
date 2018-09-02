@@ -152,6 +152,7 @@ import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.DynamiteModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.ItemPotionContent;
 import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemCraftingUnlock;
@@ -237,6 +238,7 @@ public class ModCyclic {
 
     //content creation 
     content = new ArrayList<IContent>();
+    content.add(new ItemPotionContent());
     content.add(new MultiContent());
     content.add(new BlockLibrary());
     content.add(new FluidPoison());

@@ -25,13 +25,29 @@ package com.lothrazar.cyclicmagic.module;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class KeyInventoryShiftModule extends BaseModule implements IHasConfig {
+public class KeyInventoryShiftModule extends BaseEventModule implements IHasConfig {
 
+  public boolean cancelPotionInventoryShift;
   public static boolean enableInvoKeys;//static because mod proxy looks at this
 
-  public void syncConfig(Configuration c) {
-    enableInvoKeys = c.getBoolean("KeybindInventoryShift", Const.ConfigCategory.inventory, true, "Set this to false (and restart your client) to remove the inventory shift keybindings");
+  @Override
+  public void syncConfig(Configuration config) {
+    enableInvoKeys = config.getBoolean("KeybindInventoryShift", Const.ConfigCategory.inventory, true, "Set this to false (and restart your client) to remove the inventory shift keybindings");
+    String category = Const.ConfigCategory.inventory;
+    cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
+        "When true, this blocks the potions moving the inventory over");
   }
+
+  @SideOnly(Side.CLIENT)
+  @SubscribeEvent
+  public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
+    event.setCanceled(cancelPotionInventoryShift);
+  }
+
 }
