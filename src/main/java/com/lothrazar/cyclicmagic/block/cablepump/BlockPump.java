@@ -57,12 +57,10 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   private boolean powerTransport = false;
 
   public BlockPump() {
-    super(Material.ROCK);
-    this.setHardness(3F);
-    this.setResistance(3F);
-    this.setHarvestLevel("pickaxe", 1);
-    this.setTranslucent();
+    super(Material.LEAVES);//shears look for wool block not cloth
+    setHardness(0.5F);
     setSoundType(SoundType.CLOTH);
+    this.setTranslucent();
     this.placeType = PlacementType.SIDE_BLOCK;
   }
 
