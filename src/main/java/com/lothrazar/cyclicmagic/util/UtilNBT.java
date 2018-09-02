@@ -40,6 +40,10 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
 
+  public static int intColor(int r, int g, int b) {
+    return (r * 65536 + g * 256 + b);
+  }
+
   public static String posToStringCSV(BlockPos position) {
     if (position == null) {
       return "";

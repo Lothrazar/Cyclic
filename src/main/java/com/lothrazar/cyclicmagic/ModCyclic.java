@@ -117,6 +117,7 @@ import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.boomerang.ItemBoomerang;
 import com.lothrazar.cyclicmagic.item.cannon.ItemProjectileCannon;
 import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
+import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.enderbook.ItemEnderBook;
@@ -151,6 +152,7 @@ import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.DynamiteModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemCraftingUnlock;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
@@ -175,8 +177,10 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SkillRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
+import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilString;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -231,16 +235,9 @@ public class ModCyclic {
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
 
-    //create alll instances of "content" aka blocks/items
-    //^^ maybe a map with <category.configKey , instance>
-    // maybe re-use IHasConfigg or new-extended ??? IContent: enabled(): boolean; register(): void; //optional. do tileentity/etc
-    //a "ModuleNewtype" will just be an iContent that has no physicality, no block or item to it 
-    // ->> OR we have "PeatModule", a content block with multi-content
-    // ->> consider: fire & fluids, content that depends on secondary flags, it comes in if previous are in
-    // run config including this new content hook
-    //after config sync, find all content where enabled()===true and init/register it
-    //then Forge content registries finish the rest 
+    //content creation 
     content = new ArrayList<IContent>();
+    content.add(new MultiContent());
     content.add(new BlockLibrary());
     content.add(new FluidPoison());
     content.add(new FluidMilk());
@@ -403,6 +400,7 @@ public class ModCyclic {
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
     PermissionRegistry.register();
     InterModCommsRegistry.register();
+    ModCyclic.proxy.initColors();
   }
 
   @EventHandler
@@ -416,6 +414,9 @@ public class ModCyclic {
      */
     if (logger.runUnitTests()) {
       UtilString.unitTests();
+    }
+    for (BaseItemProjectile item : MultiContent.projectiles) {
+      BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorProjectileThrowable(item));
     }
   }
 

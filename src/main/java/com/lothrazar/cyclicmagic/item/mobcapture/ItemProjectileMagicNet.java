@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.module.ItemModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -131,7 +131,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
     EntityMagicNetEmpty.renderSnowball = this;
     EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
     EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
-    ItemModule.projectiles.add(this);
+    MultiContent.projectiles.add(this);
   }
 
   private boolean enabled;

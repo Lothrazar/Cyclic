@@ -61,8 +61,8 @@ import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
-import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -355,7 +355,7 @@ public class ClientProxy extends CommonProxy {
 
   @Override
   public void initColors() {
-    if (ItemModule.storage_bag != null) {
+    if (MultiContent.storage_bag != null) {
       Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
           (stack, tintIndex) -> {
             if (tintIndex == 0) {//layer zero is outline, ignore this 
@@ -363,7 +363,7 @@ public class ClientProxy extends CommonProxy {
             }
             //layer 1 is overlay 
             return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
-          }, ItemModule.storage_bag);
+          }, MultiContent.storage_bag);
     }
   }
 }

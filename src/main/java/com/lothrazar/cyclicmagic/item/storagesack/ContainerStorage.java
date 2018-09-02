@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
-import com.lothrazar.cyclicmagic.module.ItemModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,7 +60,8 @@ public class ContainerStorage extends ContainerBase {
         x = pad + k * Const.SQ;
         y = 7 + l * Const.SQ;
         slot = k + l * cols;
-        this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
+        this.addSlotToContainer(new SlotItemRestrictedInverse(
+            invoWand, slot, x, y, MultiContent.storage_bag));
       }
     }
     this.bindPlayerInventory(player.inventory);

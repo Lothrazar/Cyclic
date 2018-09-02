@@ -35,12 +35,12 @@ public class DynamiteModule implements IContent {
     ItemRegistry.register(ender_tnt_6, "ender_tnt_6", null);
     GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
     EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
-    ItemModule.projectiles.add(ender_tnt_1);
-    ItemModule.projectiles.add(ender_tnt_2);
-    ItemModule.projectiles.add(ender_tnt_3);
-    ItemModule.projectiles.add(ender_tnt_4);
-    ItemModule.projectiles.add(ender_tnt_5);
-    ItemModule.projectiles.add(ender_tnt_6);
+    MultiContent.projectiles.add(ender_tnt_1);
+    MultiContent.projectiles.add(ender_tnt_2);
+    MultiContent.projectiles.add(ender_tnt_3);
+    MultiContent.projectiles.add(ender_tnt_4);
+    MultiContent.projectiles.add(ender_tnt_5);
+    MultiContent.projectiles.add(ender_tnt_6);
     //first the basic recipes
     page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), "paper", new ItemStack(Items.CLAY_BALL), "enderpearl"));
     page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL)));

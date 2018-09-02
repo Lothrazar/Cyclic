@@ -5,11 +5,11 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
-import com.lothrazar.cyclicmagic.module.ItemModule;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -35,7 +35,8 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe, IContent {
   @Override
   public void register() {
     EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
-    EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), ItemModule.intColor(159, 255, 222), ItemModule.intColor(222, 111, 51));
+    EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME),
+        UtilNBT.intColor(159, 255, 222), UtilNBT.intColor(222, 111, 51));
     ItemRegistry.register(this, "robot_spawner", GuideCategory.TRANSPORT);
     ModCyclic.instance.events.register(this);
   }
