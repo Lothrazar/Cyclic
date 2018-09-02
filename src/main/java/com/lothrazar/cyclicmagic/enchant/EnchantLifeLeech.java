@@ -25,12 +25,15 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,6 +43,23 @@ public class EnchantLifeLeech extends BaseEnchant {
   public EnchantLifeLeech() {
     super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

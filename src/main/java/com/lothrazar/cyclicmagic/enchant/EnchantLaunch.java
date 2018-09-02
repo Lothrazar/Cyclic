@@ -28,7 +28,9 @@ import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -45,6 +47,7 @@ import net.minecraft.item.ItemElytra;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -62,6 +65,23 @@ public class EnchantLaunch extends BaseEnchant {
   public EnchantLaunch() {
     super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(COOLDOWN + "")));
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

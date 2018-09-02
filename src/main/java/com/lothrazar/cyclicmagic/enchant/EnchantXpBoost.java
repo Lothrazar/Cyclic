@@ -26,6 +26,8 @@ package com.lothrazar.cyclicmagic.enchant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -35,6 +37,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -47,6 +50,23 @@ public class EnchantXpBoost extends BaseEnchant {
   public EnchantXpBoost() {
     super("expboost", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(XP_PER_LVL + "")));
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

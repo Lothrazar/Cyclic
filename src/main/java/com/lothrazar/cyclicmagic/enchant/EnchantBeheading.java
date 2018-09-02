@@ -29,6 +29,7 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -63,6 +64,18 @@ public class EnchantBeheading extends BaseEnchant implements IHasConfig {
     super("beheading", Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
     buildDefaultHeadList();
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   private void buildDefaultHeadList() {
@@ -189,6 +202,7 @@ public class EnchantBeheading extends BaseEnchant implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantBeheading", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     this.percentDrop = config.getInt("BeheadingPercent", Const.ConfigCategory.modpackMisc, 10, 1, 100, "Percent chance that the beheading enchant will actually drop a head.");
     String[] defaultConf = new String[] { "roots:fairy-Elucent" };
     String[] mappings = config.getStringList("BeheadingExtraMobs", Const.ConfigCategory.modpackMisc, defaultConf, "By default Beheading works on vanilla mobs and player heads.  Add creatures from any other mod here along with a player name to act as the skin for the dropped head.  Format is: mod:monster-player, see the /summon command for mod data. ");

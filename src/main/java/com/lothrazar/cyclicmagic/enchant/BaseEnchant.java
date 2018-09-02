@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchant;
 
+import com.lothrazar.cyclicmagic.IContent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -30,7 +31,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public abstract class BaseEnchant extends Enchantment {
+public abstract class BaseEnchant extends Enchantment implements IContent {
 
   protected BaseEnchant(String name, Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);

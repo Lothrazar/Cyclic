@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,6 +36,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -47,6 +50,23 @@ public class EnchantReach extends BaseEnchant {
   public EnchantReach() {
     super("reach", RARITY, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(REACH_BOOST + "")));
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantReach", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

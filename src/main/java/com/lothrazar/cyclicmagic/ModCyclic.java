@@ -78,6 +78,18 @@ import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
+import com.lothrazar.cyclicmagic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclicmagic.enchant.EnchantBeheading;
+import com.lothrazar.cyclicmagic.enchant.EnchantExcavation;
+import com.lothrazar.cyclicmagic.enchant.EnchantLaunch;
+import com.lothrazar.cyclicmagic.enchant.EnchantLifeLeech;
+import com.lothrazar.cyclicmagic.enchant.EnchantMagnet;
+import com.lothrazar.cyclicmagic.enchant.EnchantMultishot;
+import com.lothrazar.cyclicmagic.enchant.EnchantQuickdraw;
+import com.lothrazar.cyclicmagic.enchant.EnchantReach;
+import com.lothrazar.cyclicmagic.enchant.EnchantVenom;
+import com.lothrazar.cyclicmagic.enchant.EnchantWaterwalking;
+import com.lothrazar.cyclicmagic.enchant.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
@@ -226,6 +238,18 @@ public class ModCyclic {
     //after config sync, find all content where enabled()===true and init/register it
     //then Forge content registries finish the rest 
     content = new ArrayList<IContent>();
+    content.add(new EnchantAutoSmelt());
+    content.add(new EnchantBeheading());
+    content.add(new EnchantExcavation());
+    content.add(new EnchantLaunch());
+    content.add(new EnchantLifeLeech());
+    content.add(new EnchantMagnet());
+    content.add(new EnchantMultishot());
+    content.add(new EnchantQuickdraw());
+    content.add(new EnchantReach());
+    content.add(new EnchantVenom());
+    content.add(new EnchantWaterwalking());
+    content.add(new EnchantXpBoost());
     content.add(new ItemCrashSpawner());
     content.add(new ItemProjectileCannon());
     content.add(new ItemMerchantAlmanac());

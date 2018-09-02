@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -50,6 +51,18 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
   public EnchantExcavation() {
     super("excavation", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     GuideRegistry.register(this, new ArrayList<String>());
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   @Override
@@ -146,6 +159,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantExcavation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     // level starts at 1 so just ignore index 0 of array always, 0 means non enchanted
     levelToMaxBreak = new int[this.getMaxLevel() + 1];
     levelToMaxBreak[0] = 0;
