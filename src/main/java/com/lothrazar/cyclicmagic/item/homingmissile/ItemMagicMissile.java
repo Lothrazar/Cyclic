@@ -25,10 +25,15 @@ package com.lothrazar.cyclicmagic.item.homingmissile;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -43,6 +48,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -52,7 +58,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Sam
  *
  */
-public class ItemMagicMissile extends BaseTool implements IHasRecipe {
+public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
 
   private static final double RANGE = 16.0;
   private static final int durability = 500;
@@ -60,6 +66,24 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe {
 
   public ItemMagicMissile() {
     super(durability);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "wand_missile", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

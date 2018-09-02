@@ -23,9 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobs;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombieVillager;
@@ -40,13 +45,14 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.village.MerchantRecipe;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemVillagerMagic extends BaseItem implements IHasRecipe {
+public class ItemVillagerMagic extends BaseItem implements IHasRecipe, IContent {
 
   private static final int CONVTIME = 1200;
 
@@ -59,6 +65,25 @@ public class ItemVillagerMagic extends BaseItem implements IHasRecipe {
         'a', Items.APPLE,
         'g', "nuggetGold",
         'i', "nuggetIron");
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "apple_emerald");
+    LootTableRegistry.registerLoot(this);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EmeraldApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

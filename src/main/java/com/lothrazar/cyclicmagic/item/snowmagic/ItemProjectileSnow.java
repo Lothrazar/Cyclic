@@ -23,21 +23,47 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.snowmagic;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemRapidScepter;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasRecipe {
+public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasRecipe, IContent {
 
   public ItemProjectileSnow() {
     super(1000);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "ender_snow", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

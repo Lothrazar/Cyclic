@@ -24,12 +24,15 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -50,7 +53,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, IHasConfig {
+public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, IContent {
 
   //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
   public static int GHOST_SECONDS;
@@ -82,7 +85,24 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, IHa
   }
 
   @Override
+  public void register() {
+    //    ItemNoclipGhost corrupted_chorus = new ItemNoclipGhost();
+    ItemRegistry.register(this, "corrupted_chorus");
+    ModCyclic.instance.events.register(this);
+    LootTableRegistry.registerLoot(this);
+    LootTableRegistry.registerLoot(this, ChestType.ENDCITY);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("CorruptedChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.modpackMisc;
     GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 10, 1, 60, "How long you can noclip after eating corrupted chorus");
     POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");

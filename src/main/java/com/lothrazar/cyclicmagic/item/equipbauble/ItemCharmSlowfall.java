@@ -23,9 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -37,8 +41,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
+public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe, IContent {
 
   private final static int seconds = 30;
   private final static int fallDistanceLimit = 6;
@@ -47,6 +52,24 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
 
   public ItemCharmSlowfall() {
     super(durability);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "charm_wing", GuideCategory.ITEMBAUBLES);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("WingCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

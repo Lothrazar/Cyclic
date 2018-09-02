@@ -23,8 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.slingshot;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemChargeScepter;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -41,15 +46,37 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IHasRecipe {
+public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IHasRecipe, IContent {
 
   @GameRegistry.ObjectHolder(Const.MODRES + "stone_pebble")
   public static final Item bullet = null;
 
   public ItemProjectileSlingshot() {
     super(1);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(new ItemPebble(), "stone_pebble");
+    //  ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
+    ItemRegistry.register(this, "slingshot_weapon", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

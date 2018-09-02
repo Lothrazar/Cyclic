@@ -23,10 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -34,8 +39,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmAir extends BaseCharm implements IHasRecipe {
+public class ItemCharmAir extends BaseCharm implements IHasRecipe, IContent {
 
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
@@ -43,6 +49,25 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
 
   public ItemCharmAir() {
     super(durability);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "charm_air", GuideCategory.ITEMBAUBLES);
+    ModCyclic.instance.events.register(this);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

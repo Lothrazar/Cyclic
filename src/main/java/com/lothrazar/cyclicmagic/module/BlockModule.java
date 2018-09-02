@@ -27,8 +27,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockSpikesRetractable;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
-import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
-import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.cable.energy.BlockPowerCable;
 import com.lothrazar.cyclicmagic.block.cable.energy.TileEntityCablePower;
@@ -61,8 +59,6 @@ import com.lothrazar.cyclicmagic.block.fire.BlockFireSafe;
 import com.lothrazar.cyclicmagic.block.firestarter.BlockFireStarter;
 import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
-import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
-import com.lothrazar.cyclicmagic.block.magnetitem.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.peat.BlockPeat;
 import com.lothrazar.cyclicmagic.block.peat.ItemBiomass;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
@@ -76,22 +72,15 @@ import com.lothrazar.cyclicmagic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.scaffolding.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.sorting.BlockItemCableSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
-import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
-import com.lothrazar.cyclicmagic.block.vector.ItemBlockVectorPlate;
-import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.block.wireless.BlockRedstoneWireless;
 import com.lothrazar.cyclicmagic.block.wireless.ItemBlockWireless;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessRec;
 import com.lothrazar.cyclicmagic.block.wireless.TileEntityWirelessTr;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
-import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
-import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
-import com.lothrazar.cyclicmagic.item.slingshot.ItemPebble;
-import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
@@ -113,14 +102,11 @@ public class BlockModule extends BaseModule implements IHasConfig {
   private boolean fragileEnabled;
   private boolean enablePumpAndPipes;
   private boolean enableLibrary;
-  private boolean enablePattern;
   private boolean enableSpikes;
   private boolean wireless;
   private boolean enablePeat;
   private boolean enableConveyor;
   private boolean launchPads;
-  private boolean enableMagnet;
-  private boolean vectorPlate;
   private boolean enableMilk;
   private boolean enablePoison;
   private boolean fire_starter;
@@ -143,20 +129,13 @@ public class BlockModule extends BaseModule implements IHasConfig {
   //fire is a dependency block like liquids, used by many places
   boolean fireDarkUsed = false;
   boolean fireFrostUsed = false;
-  private boolean enableSlingshot;
   private boolean cableWireless;
 
   @Override
   public void onPreInit() {
     //WARN: registerTileEntity move to resource locatoin: THIS WILL DELETE CONTENTS of existing worlds 
     super.onPreInit();
-    if (enableSlingshot) {
-      ItemRegistry.register(new ItemPebble(), "stone_pebble");
-      ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
-      ItemRegistry.register(slingshot_weapon, "slingshot_weapon", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
-      ModCyclic.instance.events.register(slingshot_weapon);
-    }
+
     if (fire_starter) {
       BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
@@ -188,13 +167,7 @@ public class BlockModule extends BaseModule implements IHasConfig {
     if (enablePoison) {
       FluidsRegistry.registerPoison();
     }
-
-
-    if (enableMagnet) {
-      BlockMagnet magnet_block = new BlockMagnet();
-      BlockRegistry.registerBlock(magnet_block, "magnet_block", GuideCategory.BLOCKPLATE);
-      GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
-    }
+ 
     if (launchPads) {
       //med
       BlockLaunch plate_launch_med = new BlockLaunch(BlockLaunch.LaunchType.MEDIUM, SoundEvents.BLOCK_SLIME_FALL);
@@ -260,13 +233,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       plate_push_slowest_angle.setCorner(plate_push_slowest_corner);
       plate_push_slowest_corner.setAngled(plate_push_slowest_angle);
     }
-    if (vectorPlate) {
-      BlockVectorPlate plate_vector = new BlockVectorPlate();
-      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector");
-      GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
-      GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
-      ModCyclic.instance.events.register(plate_vector);
-    }
 
     if (wireless) {
       BlockRedstoneWireless wireless_transmitter = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.TRANSMITTER);
@@ -285,11 +251,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(spikes_redstone_diamond, "spikes_diamond", GuideCategory.BLOCK);
     }
 
-    if (enablePattern) {
-      BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
-      BlockRegistry.registerBlock(builder_pattern, "builder_pattern", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
-    }
 
 
     if (enablePeat) {
@@ -392,7 +353,6 @@ public class BlockModule extends BaseModule implements IHasConfig {
     ItemPeatFuel.FUEL_WEAK = config.getInt("peat_fuel", Const.ConfigCategory.fuelCost, 256, 10, 99999, "Energy generated by normal Peat");
     ItemPeatFuel.FUEL_STRONG = config.getInt("peat_fuel_enriched", Const.ConfigCategory.fuelCost, 4096, 10, 99999, "Energy generated by crafted Peat");
     cableWireless = config.getBoolean("cable_wireless", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableSlingshot = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fire_starter = config.getBoolean("fire_starter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMilk = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -404,13 +364,10 @@ public class BlockModule extends BaseModule implements IHasConfig {
     enablePeat = config.getBoolean("PeatFeature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + "; this feature includes several items and blocks used by the Peat farming system");
     wireless = config.getBoolean("wireless_transmitter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpikes = config.getBoolean("Spikes", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
     TileEntityControlledMiner.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
-    vectorPlate = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");

@@ -23,8 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -38,8 +41,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmWater extends BaseCharm implements IHasRecipe {
+public class ItemCharmWater extends BaseCharm implements IHasRecipe, IContent {
 
   private static final int breath = 6;
   private static final int durability = 32;
@@ -47,6 +51,23 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
 
   public ItemCharmWater() {
     super(durability);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "charm_water", GuideCategory.ITEMBAUBLES);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("WaterCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

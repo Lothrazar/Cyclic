@@ -23,8 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,8 +36,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
+public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
 
   private static final int durability = 4096;
 
@@ -41,9 +46,27 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
     super(durability);
   }
 
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "charm_boat", GuideCategory.ITEMBAUBLES);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
   /**
    * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and update it's contents.
    */
+  @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       onTick(stack, (EntityPlayer) entityIn);

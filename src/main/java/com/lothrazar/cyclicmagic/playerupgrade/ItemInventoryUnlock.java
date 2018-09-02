@@ -24,11 +24,13 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -47,7 +49,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe, IHasConfig {
+public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe, IContent {
 
   private static final int numFood = 10;
 
@@ -55,6 +57,20 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
     super(numFood, false);
     this.setAlwaysEdible();
   }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "inventory_food");
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
 
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
@@ -79,6 +95,7 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
 
   @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("InventoryUpgrade(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.inventory;
     EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
   }

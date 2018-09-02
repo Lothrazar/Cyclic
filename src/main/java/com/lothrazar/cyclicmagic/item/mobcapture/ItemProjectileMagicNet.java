@@ -24,10 +24,14 @@
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.module.ItemModule;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
@@ -46,7 +50,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasConfig, IHasRecipe {
+public class ItemProjectileMagicNet extends BaseItemProjectile implements IContent, IHasRecipe {
 
   public static final String NBT_ENTITYID = "id";
 
@@ -122,7 +126,26 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasCo
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "magic_net", GuideCategory.ITEMTHROW);
+    EntityMagicNetEmpty.renderSnowball = this;
+    EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
+    EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
+    ItemModule.projectiles.add(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+
+
     String category = Const.ConfigCategory.modpackMisc + ".magic_net";
     // @formatter:off
     String[] deflist = new String[] {
