@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
+import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;

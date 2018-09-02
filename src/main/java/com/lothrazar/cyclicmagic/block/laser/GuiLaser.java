@@ -36,6 +36,9 @@ public class GuiLaser extends GuiBaseContainer {
 
   private ButtonTileEntityField btnPulsing;
   private ButtonTileEntityField btnExtending;
+  private ButtonTileEntityField btnX;
+  private ButtonTileEntityField btnY;
+  private ButtonTileEntityField btnZ;
 
   public GuiLaser(InventoryPlayer inventoryPlayer, TileEntityLaser te) {
     super(new ContainerLaser(inventoryPlayer, te), te);
@@ -46,7 +49,7 @@ public class GuiLaser extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int id = 0, x = guiLeft + 36, y = guiTop + 20, width = 120, h = 12;
+    int id = 0, x = guiLeft + 36, y = guiTop + 16, width = 120, h = 12;
     GuiSliderInteger sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
     sliderX.setTooltip("screen.red");
     this.addButton(sliderX);
@@ -64,7 +67,7 @@ public class GuiLaser extends GuiBaseContainer {
     this.addButton(sliderX);
     //
     x -= Const.PAD;
-    y += 24;
+    y += 16;
     btnPulsing = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityLaser.Fields.PULSE.ordinal());
     btnPulsing.width = 64;
     btnPulsing.setTooltip("button.pulsing.tooltip");
@@ -74,6 +77,24 @@ public class GuiLaser extends GuiBaseContainer {
     btnExtending.width = 64;
     btnExtending.setTooltip("button.extending.tooltip");
     this.addButton(btnExtending);
+    y += 24;
+    // three ctrls
+    x = guiLeft + 29;
+    int wid = 42;
+    btnX = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityLaser.Fields.XOFF.ordinal());
+    btnX.width = wid;
+    btnX.setTooltip("button.offsetx.tooltip");
+    this.addButton(btnX);
+    x += wid + Const.PAD / 2;
+    btnY = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityLaser.Fields.YOFF.ordinal());
+    btnY.width = wid;
+    btnY.setTooltip("button.offsety.tooltip");
+    this.addButton(btnY);
+    x += wid + Const.PAD / 2;
+    btnZ = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityLaser.Fields.ZOFF.ordinal());
+    btnZ.width = wid;
+    btnZ.setTooltip("button.offsetz.tooltip");
+    this.addButton(btnZ);
   }
 
   @Override
@@ -81,6 +102,9 @@ public class GuiLaser extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     btnPulsing.displayString = UtilChat.lang("button.pulsing.name" + this.tile.getField(TileEntityLaser.Fields.PULSE.ordinal()));
     btnExtending.displayString = UtilChat.lang("button.extending.name" + this.tile.getField(TileEntityLaser.Fields.EXTENDING.ordinal()));
+    btnX.displayString = UtilChat.lang("button.offsetblock.name" + this.tile.getField(TileEntityLaser.Fields.XOFF.ordinal()));
+    btnY.displayString = UtilChat.lang("button.offsetblock.name" + this.tile.getField(TileEntityLaser.Fields.YOFF.ordinal()));
+    btnZ.displayString = UtilChat.lang("button.offsetblock.name" + this.tile.getField(TileEntityLaser.Fields.ZOFF.ordinal()));
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     for (int i = 0; i < tile.getSizeInventory(); i++) {

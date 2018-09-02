@@ -51,7 +51,7 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
     double beamWidth = 0.09;
     BlockPos first = te.getPos();
     BlockPosDim second = null;
-    int timer = 100;
+    int timer = TileEntityLaser.MAX_TIMER;
     if (te.isExtending()) {
       timer = te.getField(TileEntityLaser.Fields.TIMER.ordinal());
     }
@@ -60,6 +60,10 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
       if (second != null && second.toBlockPos() != null && second.dimension == te.getDimension()) {
         LaserConfig laserCnf = new LaserConfig(first, second.toBlockPos(),
             rotationTime, te.alphaCalculated(), beamWidth, color);
+        laserCnf.xOffset = te.getxOffset();
+        laserCnf.yOffset = te.getyOffset();
+        laserCnf.zOffset = te.getzOffset();
+        //     
         laserCnf.timer = timer;
         RenderUtil.renderLaser(laserCnf);
       }

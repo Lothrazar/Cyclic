@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.laser;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
+import com.lothrazar.cyclicmagic.data.OffsetEnum;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,8 +34,9 @@ import net.minecraft.util.ITickable;
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static final int MAX_TIMER = 100;
+
   public static enum Fields {
-    REDSTONE, TIMER, R, G, B, ALPHA, PULSE, EXTENDING;
+    REDSTONE, TIMER, R, G, B, ALPHA, PULSE, EXTENDING, XOFF, YOFF, ZOFF;
   }
 
   private int needsRedstone = 0;
@@ -44,6 +46,9 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   private int alpha = 30;//1-100 will become 0-1
   private boolean isPulsing = true;
   private boolean isExtending = false;
+  private OffsetEnum xOffset = OffsetEnum.CENTER;
+  private OffsetEnum yOffset = OffsetEnum.CENTER;
+  private OffsetEnum zOffset = OffsetEnum.CENTER;
 
   public TileEntityLaser() {
     super(4);
@@ -118,6 +123,12 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
         return isPulsing ? 1 : 0;
       case EXTENDING:
         return isExtending ? 1 : 0;
+      case XOFF:
+        return this.xOffset.ordinal();
+      case YOFF:
+        return this.yOffset.ordinal();
+      case ZOFF:
+        return this.zOffset.ordinal();
       default:
       break;
     }
@@ -151,6 +162,23 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
       case EXTENDING:
         isExtending = (value == 1);
       break;
+      case XOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.xOffset = OffsetEnum.values()[value];
+      break;
+      case YOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.yOffset = OffsetEnum.values()[value];
+      break;
+      case ZOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.zOffset = OffsetEnum.values()[value];
+      break;
+      default:
+      break;
     }
   }
 
@@ -174,6 +202,18 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   @Override
   public int getFieldCount() {
     return Fields.values().length;
+  }
+
+  public OffsetEnum getxOffset() {
+    return this.xOffset;
+  }
+
+  public OffsetEnum getyOffset() {
+    return this.yOffset;
+  }
+
+  public OffsetEnum getzOffset() {
+    return this.zOffset;
   }
 
   public float[] getColor() {

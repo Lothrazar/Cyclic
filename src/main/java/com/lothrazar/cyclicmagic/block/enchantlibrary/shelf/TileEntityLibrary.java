@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
+import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.laser.TileEntityLaser;
+import com.lothrazar.cyclicmagic.data.OffsetEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -37,6 +38,9 @@ public class RenderUtil {
     double beamWidth;
     float[] color;
     public int timer;
+    public OffsetEnum xOffset = OffsetEnum.CENTER;
+    public OffsetEnum yOffset = OffsetEnum.CENTER;
+    public OffsetEnum zOffset = OffsetEnum.CENTER;
   }
 
   public static final int MAX_LIGHT_X = 0xF000F0;
@@ -44,9 +48,12 @@ public class RenderUtil {
 
   @SideOnly(Side.CLIENT)
   public static void renderLaser(LaserConfig conf) {
+    double offsetX = conf.xOffset.getOffset();
+    double offsetY = conf.yOffset.getOffset();
+    double offsetZ = conf.zOffset.getOffset();
     RenderUtil.renderLaser(
-        conf.first.getX() + 0.5, conf.first.getY() + 0.5, conf.first.getZ() + 0.5,
-        conf.second.getX() + 0.5, conf.second.getY() + 0.5, conf.second.getZ() + 0.5,
+        conf.first.getX() + offsetX, conf.first.getY() + offsetY, conf.first.getZ() + offsetZ,
+        conf.second.getX() + offsetX, conf.second.getY() + offsetY, conf.second.getZ() + offsetZ,
         conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer);
   }
 
