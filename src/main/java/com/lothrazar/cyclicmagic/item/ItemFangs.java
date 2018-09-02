@@ -23,9 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -43,10 +49,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemFangs extends BaseTool implements IHasRecipe {
+public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
 
   private static final String NBT_FANG_FROMPLAYER = "cyclicfang";
   private static final int COOLDOWN = 10;//ticks not seconds
@@ -55,6 +62,26 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
 
   public ItemFangs() {
     super(DURABILITY);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "evoker_fang", GuideCategory.ITEM);
+    LootTableRegistry.registerLoot(this);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
   }
 
   @Override
@@ -90,11 +117,11 @@ public class ItemFangs extends BaseTool implements IHasRecipe {
     //double d1 = Math.max(posY,caster.posY) ;
     float arctan = (float) MathHelper.atan2(posZ - caster.posZ, posX - caster.posX);
     for (int i = 0; i < MAX_RANGE; ++i) {
-      double fract = 1.25D * (double) (i + 1);
+      double fract = 1.25D * (i + 1);
       this.summonFangSingle(caster,
-          caster.posX + (double) MathHelper.cos(arctan) * fract,
+          caster.posX + MathHelper.cos(arctan) * fract,
           minY,
-          caster.posZ + (double) MathHelper.sin(arctan) * fract,
+          caster.posZ + MathHelper.sin(arctan) * fract,
           arctan, i);
     }
     onCastSuccess(caster);

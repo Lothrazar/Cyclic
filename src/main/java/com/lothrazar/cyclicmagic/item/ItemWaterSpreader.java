@@ -23,9 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -46,8 +49,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
+public class ItemWaterSpreader extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 256 * 8;
   private static final int COOLDOWN = 10;
@@ -55,6 +59,23 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe {
 
   public ItemWaterSpreader() {
     super(DURABILITY);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "water_spreader");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

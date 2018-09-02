@@ -23,9 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.endereye;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -38,16 +42,35 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
+public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe, IContent {
 
   private static final int durability = 100;
   private static final int cooldown = 30;
 
   public ItemEnderEyeReuse() {
     super(durability);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "ender_eye_orb");
+    EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, "ender_eye_orb", 1029);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("item.ender_eye_orb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -59,7 +82,7 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
     if (worldIn.isRemote == false) {
       BlockPos blockpos = ((WorldServer) worldIn).getChunkProvider().getNearestStructurePos(worldIn, "Stronghold", new BlockPos(playerIn), false);
       if (blockpos != null) {
-        EntityEnderEyeUnbreakable entity = new EntityEnderEyeUnbreakable(worldIn, playerIn.posX, playerIn.posY + (double) (playerIn.height / 2.0F), playerIn.posZ);
+        EntityEnderEyeUnbreakable entity = new EntityEnderEyeUnbreakable(worldIn, playerIn.posX, playerIn.posY + playerIn.height / 2.0F, playerIn.posZ);
         //      entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
         entity.moveTowards(blockpos);
         worldIn.spawnEntity(entity);
@@ -82,6 +105,7 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe {
         's', "blockIron");
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;

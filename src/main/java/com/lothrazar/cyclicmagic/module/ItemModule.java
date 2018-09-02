@@ -29,28 +29,14 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideItem;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
-import com.lothrazar.cyclicmagic.item.ItemFangs;
-import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
-import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
-import com.lothrazar.cyclicmagic.item.ItemRotateBlock;
-import com.lothrazar.cyclicmagic.item.ItemSoulstone;
-import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
-import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
-import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
-import com.lothrazar.cyclicmagic.item.cannon.ItemProjectileCannon;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
-import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT.ExplosionType;
-import com.lothrazar.cyclicmagic.item.endereye.EntityEnderEyeUnbreakable;
-import com.lothrazar.cyclicmagic.item.endereye.ItemEnderEyeReuse;
 import com.lothrazar.cyclicmagic.item.enderpearl.ItemEnderPearlReuse;
-import com.lothrazar.cyclicmagic.item.equipbauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.item.equipment.ItemGlowingHelmet;
 import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerArmor;
 import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerSword;
@@ -68,7 +54,6 @@ import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstonePickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneSpade;
-import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartChest;
@@ -102,9 +87,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ItemModule extends BaseModule implements IHasConfig {
 
@@ -132,25 +115,13 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean storageBagEnabled;
   private boolean enableChestSack;
 
-  private boolean enablewaterSpread;
 
-  private boolean enableBlockRot;
-  private boolean enableCGlove;
-  private boolean enableElevate;
-  private boolean enableLever;
-  private boolean enableTrader;
-  private boolean enableSoulstone;
-  private boolean enablePlayerLauncher;
-  private boolean evokerFang;
-  private boolean enderEyeReuse;
   public static ItemStorageBag storage_bag = null;//ref by ContainerStorage
   private boolean enableEmeraldGear;
   private boolean enableSandstoneTools;
   private boolean enablePurpleGear;
   private boolean enablePurpleSwords;
   private boolean glowingHelmet;
-  private boolean robotSpawner;
-  private boolean rainbowCannon;
   private boolean enableNetherbrickTools;
   private boolean enableHeartToxic;
 
@@ -158,17 +129,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
 
 
-    if (robotSpawner) {
-      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
-      EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
-      ItemCrashSpawner spawner = new ItemCrashSpawner();
-      ItemRegistry.register(spawner, "robot_spawner", GuideCategory.TRANSPORT);
-      ModCyclic.instance.events.register(spawner);
-    }
-    if (rainbowCannon) {
-      ItemRegistry.register(new ItemProjectileCannon(), "laser_cannon", GuideCategory.ITEMTHROW);
-      EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityGolemLaser.NAME), EntityGolemLaser.class, EntityGolemLaser.NAME, 1031, ModCyclic.instance, 64, 1, true);
-    }
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
       ItemRegistry.register(gold_minecart, "gold_minecart", GuideCategory.TRANSPORT);
@@ -288,55 +248,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
       GuideRegistry.register(GuideCategory.GEAR, sandstone_axe, "item.sandstonegear.title", "item.sandstonegear.guide");
-    }
-    if (enableCGlove) {
-      ItemGloveClimb glove_climb = new ItemGloveClimb();
-      ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
-      LootTableRegistry.registerLoot(glove_climb);
-    }
-    if (evokerFang) {
-      ItemFangs evoker_fangs = new ItemFangs();
-      ItemRegistry.register(evoker_fangs, "evoker_fang", GuideCategory.ITEM);
-      LootTableRegistry.registerLoot(evoker_fangs);
-      ModCyclic.instance.events.register(evoker_fangs);
-    }
-    if (enablePlayerLauncher) {
-      ItemPlayerLauncher tool_launcher = new ItemPlayerLauncher();
-      ItemRegistry.register(tool_launcher, "tool_launcher", GuideCategory.TRANSPORT);
-      ModCyclic.instance.events.register(tool_launcher);
-    }
-    if (enableSoulstone) {
-      ItemSoulstone soulstone = new ItemSoulstone();
-      ItemRegistry.register(soulstone, "soulstone");
-      ModCyclic.instance.events.register(soulstone);
-    }
-    if (enableTrader) {
-      ItemMerchantAlmanac tool_trade = new ItemMerchantAlmanac();
-      ItemRegistry.register(tool_trade, "tool_trade");
-      ModCyclic.instance.events.register(tool_trade);
-    }
-    if (enableLever) {
-      ItemLeverRemote password_remote = new ItemLeverRemote();
-      ItemRegistry.register(password_remote, "password_remote");
-    }
-    if (enableElevate) {
-      ItemWarpSurface tool_elevate = new ItemWarpSurface();
-      ItemRegistry.register(tool_elevate, "tool_elevate", GuideCategory.TRANSPORT);
-      LootTableRegistry.registerLoot(tool_elevate);
-    }
-    if (enableBlockRot) {
-      ItemRotateBlock tool_rotate = new ItemRotateBlock();
-      ItemRegistry.register(tool_rotate, "tool_rotate");
-    }
-    if (enablewaterSpread) {
-      ItemWaterSpreader water_spreader = new ItemWaterSpreader();
-      ItemRegistry.register(water_spreader, "water_spreader");
-    }
-
-    if (enderEyeReuse) {
-      ItemEnderEyeReuse ender_eye_orb = new ItemEnderEyeReuse();
-      ItemRegistry.register(ender_eye_orb, "ender_eye_orb");
-      EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, "ender_eye_orb", 1029);
     }
 
 
@@ -487,8 +398,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     enableHeartToxic = config.getBoolean("heart_toxic", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    rainbowCannon = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dropperMinecart = config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -503,16 +412,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
     ItemHorseUpgrade.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
     ItemHorseUpgrade.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
     ItemHorseUpgrade.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
-    enderEyeReuse = config.getBoolean("item.ender_eye_orb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    evokerFang = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableLever = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableElevate = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
