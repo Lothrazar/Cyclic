@@ -174,30 +174,31 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     }
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
-    EnumFacing importFromSide = this.getCurrentFacing();
-    //    EnumFacing exportToSide = importFromSide.getOpposite();
+
     List<EnumFacing> sidesOut = getSidesNotFacing();
-    for (EnumFacing exportToSide : sidesOut) {
-      if (this.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide) == false) {
+    for (EnumFacing facingDir : sidesOut) {
+      if (this.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facingDir) == false) {
         continue;
       }
-      BlockPos posTarget = pos.offset(exportToSide);
+      EnumFacing themFacingMe = facingDir.getOpposite();
+      BlockPos posTarget = pos.offset(facingDir);
       TileEntity tileTarget = world.getTileEntity(posTarget);
-      //   ModCyclic.logger.log("EXPORT TO  FROM " + tileTarget.getClass());
+
       if (tileTarget == null ||
-          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, exportToSide.getOpposite()) == false) {
+          tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe) == false) {
         continue;
       }
-      ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, exportToSide.getOpposite(), stackToExport);
+      ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
       if (pulled.getCount() != stackToExport.getCount()) {
         this.setInventorySlotContents(SLOT_TRANSFER, pulled);
         //one or more was put in
         outputSuccess = true;
       }
-      if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
-        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
-        if (cable.isItemPipe())
-          cable.updateIncomingItemFace(importFromSide);
+      if (outputSuccess && world.getTileEntity(pos.offset(facingDir)) instanceof TileEntityCableBase) {
+        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(facingDir));
+        if (cable.isItemPipe()) {
+          cable.updateIncomingItemFace(themFacingMe);
+        }
       }
       if (outputSuccess)
         break;
