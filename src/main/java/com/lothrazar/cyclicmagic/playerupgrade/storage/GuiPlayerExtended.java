@@ -107,6 +107,5 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
         this.guiLeft - w,
         this.guiTop, u, v,
         w, h, w, h);
-
   }
 }

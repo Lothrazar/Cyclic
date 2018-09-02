@@ -235,7 +235,6 @@ public class ModCyclic {
     this.events.registerCoreEvents();
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
-
     //content creation 
     content = new ArrayList<IContent>();
     content.add(new ItemPotionContent());

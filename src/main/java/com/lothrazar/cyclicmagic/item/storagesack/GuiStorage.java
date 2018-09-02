@@ -83,6 +83,7 @@ public class GuiStorage extends GuiBaseContainer {
     buttonTogglePickup.setTextureIndex(11 + ItemStorageBag.StoragePickupType.get(player.getHeldItemMainhand()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {

@@ -80,6 +80,7 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   public boolean enabled() {
     return enabled;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutoCrafter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

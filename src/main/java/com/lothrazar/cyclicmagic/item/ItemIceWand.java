@@ -52,7 +52,6 @@ import net.minecraftforge.common.config.Configuration;
 public class ItemIceWand extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 256;
-
   private static final int RADIUS = 2;
 
   public ItemIceWand() {

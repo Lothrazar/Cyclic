@@ -93,7 +93,6 @@ public class RenderUtil {
     GlStateManager.rotate((float) rot, 1, 0, 0);
     GlStateManager.disableTexture2D();
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-
     for (double i = 0; i < 4; i++) {//four corners of the quad 
       double width = beamWidth * (i / 4.0);
       buffer.pos(length, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
@@ -112,11 +111,9 @@ public class RenderUtil {
       buffer.pos(0, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
       buffer.pos(0, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
       buffer.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-
     }
     tessy.draw();
     GlStateManager.enableTexture2D();
-
     GlStateManager.alphaFunc(alphaTestFunc, alphaTestRef);
     GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
     GlStateManager.disableBlend();

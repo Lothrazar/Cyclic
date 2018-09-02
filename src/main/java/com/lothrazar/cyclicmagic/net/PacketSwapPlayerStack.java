@@ -66,7 +66,6 @@ public class PacketSwapPlayerStack implements IMessage, IMessageHandler<PacketSw
     if (message.hotbarSource >= 0) {
       ItemStack hotbarItem = player.inventory.getStackInSlot(message.hotbarSource);
       ItemStack onStorage = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, message.indexDest);
-
       player.inventory.setInventorySlotContents(message.hotbarSource, onStorage);
       UtilPlayerInventoryFilestorage.setPlayerInventoryStack(player, message.indexDest, hotbarItem);
     }

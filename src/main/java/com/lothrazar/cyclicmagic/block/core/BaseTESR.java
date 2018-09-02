@@ -159,7 +159,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     //below sets position
     GlStateManager.translate(xt, yt, zt);
     //sake makes it the right size do not touch
-
     GlStateManager.scale(fontSize, -1 * fontSize, fontSize);
     //if we skip the 3f line, its brighter. leave it in: darker
     if (lightsOn == false) {

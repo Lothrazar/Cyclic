@@ -50,7 +50,6 @@ public class GuiDeHydrator extends GuiBaseContainer {
     progressBar = new ProgressBar(this, 10, ContainerBeaconPotion.SLOTY + 20, Fields.TIMER.ordinal(), 10);
   }
 
-
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

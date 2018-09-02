@@ -132,7 +132,6 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
-
     this.timer = tags.getInteger("t");
     if (tags.hasKey(NBT_CLICKED))
       this.lastClicked = QuadrantEnum.values()[tags.getInteger(NBT_CLICKED)];
@@ -145,7 +144,6 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-
     for (QuadrantEnum q : QuadrantEnum.values()) {
       tags.setTag(q.name(), getEnchantStack(q).writeToNBT());
     }

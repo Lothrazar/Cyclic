@@ -117,6 +117,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   }
 
   private boolean enabled;
+
   @Override
   public boolean enabled() {
     return enabled;

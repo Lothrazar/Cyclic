@@ -36,13 +36,11 @@ public class FluidsRegistry {
 
   public static FluidExp fluid_exp;
 
-
   public static void registerExp() {
     if (fluid_exp == null) {
       fluid_exp = new FluidExp();
       fluid_exp.register();
     }
-
   }
 
   public static void register(BlockFluidClassic block, Fluid fluid, String name) {

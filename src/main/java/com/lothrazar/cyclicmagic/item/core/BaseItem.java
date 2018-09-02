@@ -58,6 +58,7 @@ public abstract class BaseItem extends Item {
     }
     return found;
   }
+
   protected ItemStack findAmmo(EntityPlayer player, Item item) {
     for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
       ItemStack itemstack = player.inventory.getStackInSlot(i);

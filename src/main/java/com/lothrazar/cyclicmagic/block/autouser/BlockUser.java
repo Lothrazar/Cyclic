@@ -98,6 +98,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   public boolean enabled() {
     return enabled;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

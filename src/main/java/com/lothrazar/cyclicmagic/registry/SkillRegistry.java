@@ -19,5 +19,4 @@ public class SkillRegistry {
   public static List<ISkill> getSkills() {
     return skills;
   }
-
 }

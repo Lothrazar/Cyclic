@@ -189,8 +189,6 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
     return false;
   }
 
-
-
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),

@@ -79,14 +79,12 @@ public class ContainerPlayerExtended extends ContainerBase {
         xPos = pad + j * SQ;
         yPos = pad + i * SQ;
         sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
-
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
     }
     //extended armor 
     for (int k = 0; k < ARMOR.length; k++) {
       sl++;
-
       armorY = Const.PAD + (k) * Const.SQ;
       final EntityEquipmentSlot slot = ARMOR[k];
       this.addSlotToContainer(new Slot(inventory, sl, armorX + Const.SQ + 1, armorY) {

@@ -144,8 +144,6 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
-
     String category = Const.ConfigCategory.modpackMisc + ".magic_net";
     // @formatter:off
     String[] deflist = new String[] {

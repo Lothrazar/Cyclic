@@ -100,6 +100,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   public boolean enabled() {
     return enabled;
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

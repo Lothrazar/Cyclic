@@ -24,9 +24,7 @@ public class GuiSkillBook extends GuiScreen {
   private final static int textureWidth = 200;
   private final static int textureHeight = 180;
   private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
-
   private final EntityPlayer player;
-
   double ang = 0, cx, cy;
 
   public GuiSkillBook(EntityPlayer p) {
@@ -45,9 +43,7 @@ public class GuiSkillBook extends GuiScreen {
   @Override
   public void initGui() {
     super.initGui();
-
   }
-
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {

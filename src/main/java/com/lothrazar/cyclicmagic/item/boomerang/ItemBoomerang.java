@@ -83,7 +83,6 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];
     float amountCharged = percentageCharged * MAX_CHARGE;
     float velocityFactor = percentageCharged * 1.5F;//flat upscale
-
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5
     EntityBoomerang projectile = (EntityBoomerang) shootMain(world, player, velocityFactor, damage);
     UtilItemStack.damageItem(player, stack);

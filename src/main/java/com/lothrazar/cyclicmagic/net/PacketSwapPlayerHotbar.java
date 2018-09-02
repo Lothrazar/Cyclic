@@ -76,7 +76,6 @@ public class PacketSwapPlayerHotbar implements IMessage, IMessageHandler<PacketS
       ItemStack onPlayer, onStorage;
       EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.HEAD };
       for (int armorSlot = 0; armorSlot < player.inventory.armorInventory.size(); armorSlot++) {
-
         onPlayer = player.inventory.armorInventory.get(armorSlot).copy();
         playerSlot = playerSlots[armorSlot];
         onStorage = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, playerSlot).copy();

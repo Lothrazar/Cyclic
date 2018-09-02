@@ -121,7 +121,6 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IConten
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
     //old default was 140
     TileEntityMagnet.TIMER_FULL = config.getInt("MagnetBlockTimer", Const.ConfigCategory.modpackMisc, 100, 5, 5000, "How fast it pulses.  Smaller numbers are faster");
     TileEntityMagnet.ITEM_HRADIUS = config.getInt("MagnetBlockDistance", Const.ConfigCategory.modpackMisc, 16, 2, 128, "Distance it pulls items from.");

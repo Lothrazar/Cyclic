@@ -35,7 +35,6 @@ public class RenderSnowballSpin<T extends Entity> extends RenderSnowball<T> {
       angle = -180;
     }
     GlStateManager.rotate(angle, 0.0F, 0.0F, 1.0F);
-
     this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     if (this.renderOutlines) {
       GlStateManager.enableColorMaterial();

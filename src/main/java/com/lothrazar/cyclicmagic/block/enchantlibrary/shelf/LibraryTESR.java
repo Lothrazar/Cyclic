@@ -109,16 +109,14 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
     }
     float fontSize = 0.010416667F / 1.5F;
     GlStateManager.pushMatrix();
-
-      int angle = angleOfFace(face);
-      renderTextAt(stack.shortName(), x, y, z, destroyStage, xt - 1.517F, yt + 0.77F, zt - 0.44F, angle, TEXTCOLOR, fontSize);
-      if (stack.isEmpty() == false) {
-        renderTextAt(stack.levelName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
-        renderTextAt(stack.countName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + 2 * vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
-      }
+    int angle = angleOfFace(face);
+    renderTextAt(stack.shortName(), x, y, z, destroyStage, xt - 1.517F, yt + 0.77F, zt - 0.44F, angle, TEXTCOLOR, fontSize);
+    if (stack.isEmpty() == false) {
+      renderTextAt(stack.levelName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
+      renderTextAt(stack.countName(), x, y, z, destroyStage, xt - 1.5F, yt + 0.8F + 2 * vOffset, zt - 0.44F, angle, TEXTCOLOR, fontSize);
+    }
     //    }
-      renderStack(te, stack, face, quad, x, y, z);
-
+    renderStack(te, stack, face, quad, x, y, z);
     //GlStateManager.scale(1, 1, 1);
     GlStateManager.popMatrix();
   }

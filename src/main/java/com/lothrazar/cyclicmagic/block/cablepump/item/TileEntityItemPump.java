@@ -174,7 +174,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     }
     boolean outputSuccess = false;
     ItemStack stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
-
     List<EnumFacing> sidesOut = getSidesNotFacing();
     for (EnumFacing facingDir : sidesOut) {
       if (this.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facingDir) == false) {
@@ -183,7 +182,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
       EnumFacing themFacingMe = facingDir.getOpposite();
       BlockPos posTarget = pos.offset(facingDir);
       TileEntity tileTarget = world.getTileEntity(posTarget);
-
       if (tileTarget == null ||
           tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe) == false) {
         continue;

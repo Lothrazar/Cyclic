@@ -112,7 +112,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-
     // item transfer slot 
     x = this.guiLeft + colLeft;
     y = this.guiTop + 42;
@@ -130,7 +129,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-
     fluidBar.draw(((TileCableContentWireless) tile).getCurrentFluidStack());
   }
 }

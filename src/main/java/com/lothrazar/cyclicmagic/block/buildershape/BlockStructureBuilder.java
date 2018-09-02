@@ -89,6 +89,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   }
 
   private boolean enabled;
+
   @Override
   public boolean enabled() {
     return enabled;

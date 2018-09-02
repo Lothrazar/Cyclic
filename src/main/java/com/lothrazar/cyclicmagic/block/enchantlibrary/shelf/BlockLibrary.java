@@ -112,7 +112,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       return false;
     }
     TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
-
     if (side != this.getFacingFromState(state)) {
       return false;
     }

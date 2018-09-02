@@ -78,7 +78,6 @@ public class GuiSkillWheel extends GuiScreen {
     }
   }
 
-
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     //   drawBackground(1);

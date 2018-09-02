@@ -7,5 +7,4 @@ public interface IContent extends IHasConfig {
   public void register();
 
   public boolean enabled();
-
 }

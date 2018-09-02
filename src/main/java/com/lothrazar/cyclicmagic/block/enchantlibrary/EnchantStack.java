@@ -154,7 +154,6 @@ public class EnchantStack {
     return name.substring(0, length);
   }
 
-
   public ItemStack getRenderIcon() {
     return makeEnchantedBook();
     //TODO: this was going to be some crazy config system 

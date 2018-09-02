@@ -193,7 +193,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     ItemStack stackOnGround = event.getItem().getItem();
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
-
     for (ItemStack stackIsBag : foundBags) {
       int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
       if (pickupType == StoragePickupType.NOTHING.ordinal()) {

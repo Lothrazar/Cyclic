@@ -81,7 +81,6 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("EvokerFang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
   }
 
   @Override

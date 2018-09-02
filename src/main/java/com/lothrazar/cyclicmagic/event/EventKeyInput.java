@@ -134,7 +134,7 @@ public class EventKeyInput {
         //        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         //          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
         //        else
-          Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
+        Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
       }
       else {
         UtilChat.sendStatusMessage(thePlayer, "locked.extended");

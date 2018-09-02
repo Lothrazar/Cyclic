@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 
 public class StepupSkill implements ISkill {
 
-
   @Override
   public void toggle(EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);

@@ -49,7 +49,6 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
   public BlockItemCableSort() {
     super(Material.CLOTH);
     setSoundType(SoundType.CLOTH);
- 
     setHardness(0.5F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
     this.setTranslucent();

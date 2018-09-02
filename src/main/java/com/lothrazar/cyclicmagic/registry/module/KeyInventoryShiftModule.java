@@ -49,5 +49,4 @@ public class KeyInventoryShiftModule extends BaseEventModule implements IHasConf
   public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
     event.setCanceled(cancelPotionInventoryShift);
   }
-
 }

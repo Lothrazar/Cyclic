@@ -52,7 +52,6 @@ public class ContainerLaser extends ContainerBaseMachine {
         }
       });
     }
-
     bindPlayerInventory(inventoryPlayer);
   }
 

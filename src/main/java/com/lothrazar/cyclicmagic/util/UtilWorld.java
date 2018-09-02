@@ -547,7 +547,6 @@ public class UtilWorld {
   //      flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
   //    }
   //  }
-
   public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, IBlockState blockState) {
     boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
     IBlockState stateNew = blockState.withProperty(BlockLever.POWERED, !hasPowerHere);

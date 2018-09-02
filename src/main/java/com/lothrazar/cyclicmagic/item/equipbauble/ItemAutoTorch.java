@@ -61,7 +61,6 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IContent {
     if (!this.canTick(stack)) {
       return;
     }
-
     World world = player.world;
     BlockPos pos = player.getPosition();
     if (world.getLight(pos, true) < lightLimit

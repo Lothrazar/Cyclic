@@ -71,7 +71,6 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
     return enabled;
   }
 
-
   @Override
   protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
     final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
