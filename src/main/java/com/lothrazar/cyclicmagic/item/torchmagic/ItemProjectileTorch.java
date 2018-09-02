@@ -23,10 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.torchmagic;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -36,12 +41,31 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecipe {
+public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecipe, IContent {
 
   public ItemProjectileTorch() {
     super();
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "ender_torch", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

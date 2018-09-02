@@ -24,11 +24,16 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -42,10 +47,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickToggle {
+public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickToggle, IContent {
 
   private static final int cooldown = 600;//ticks not seconds
   private static final int durability = 16;
@@ -55,6 +61,26 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
   }
 
   private WarpType warpType;
+
+  @Override
+  public void register() {
+    String name = warpType == WarpType.SPAWN ? "tool_warp_spawn" : "tool_warp_home";
+    ItemRegistry.register(this, name, GuideCategory.TRANSPORT);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    String name = warpType == WarpType.SPAWN ? "EnderWingPrime" : "EnderWing";
+    enabled = config.getBoolean(name, Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
 
   public ItemEnderWing(WarpType type) {
     super(durability);

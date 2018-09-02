@@ -26,12 +26,15 @@ package com.lothrazar.cyclicmagic.item.random;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -48,12 +51,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasRecipe {
+public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasRecipe, IContent {
 
   private static final int durability = 5000;
   private static final int cooldown = 15;
@@ -112,6 +116,24 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
     }
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_randomize");
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

@@ -25,13 +25,16 @@ package com.lothrazar.cyclicmagic.item.sleep;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -65,7 +68,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig, IHasClickToggle {
+public class ItemSleepingMat extends BaseTool implements IHasRecipe, IContent, IHasClickToggle {
 
   // thank you for the examples forge. player data storage based on API source
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
@@ -190,7 +193,22 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig,
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "sleeping_mat");
+    ModCyclic.instance.events.register(this);
+    LootTableRegistry.registerLoot(this, ChestType.BONUS);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("SleepingMat", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, false, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
   }

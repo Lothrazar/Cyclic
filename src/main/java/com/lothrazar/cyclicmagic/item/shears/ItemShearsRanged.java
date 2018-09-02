@@ -23,10 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.shears;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -42,13 +47,32 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
+public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe, IContent {
 
   public ItemShearsRanged() {
     super();
     this.setMaxDamage(1000);
     this.setMaxStackSize(1);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "ender_wool", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
