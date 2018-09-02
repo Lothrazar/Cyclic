@@ -23,9 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.liquid.milk;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * I learned how to do this thanks to @elucent https://github.com/RootsTeam/Embers/blob/6e75e7c5c19e6dc6f9eb91a75f56c938b64a9898/src/main/java/teamroots/embers/fluid/FluidMoltenIron.java
@@ -33,12 +38,33 @@ import net.minecraftforge.fluids.Fluid;
  * @author Sam
  *
  */
-public class FluidMilk extends Fluid {
+public class FluidMilk extends Fluid implements IContent {
 
   public FluidMilk() {
     super("milk", new ResourceLocation(Const.MODID, "blocks/fluid_milk_base"), new ResourceLocation(Const.MODID, "blocks/fluid_milk_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
     setUnlocalizedName("milk");
+  }
+
+  @Override
+  public void register() {
+    FluidRegistry.registerFluid(this);
+    Block block_milk = new BlockFluidMilk(this);
+    this.setBlock(block_milk);
+    BlockRegistry.registerBlock(block_milk, "milk", null);
+    FluidRegistry.addBucketForFluid(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

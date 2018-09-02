@@ -26,13 +26,10 @@ package com.lothrazar.cyclicmagic.liquid;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.liquid.exp.BlockFluidExp;
 import com.lothrazar.cyclicmagic.liquid.exp.FluidExp;
-import com.lothrazar.cyclicmagic.liquid.milk.BlockFluidMilk;
-import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
 import com.lothrazar.cyclicmagic.liquid.poison.BlockFluidPoison;
 import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -42,7 +39,6 @@ import net.minecraftforge.fluids.FluidUtil;
 
 public class FluidsRegistry {
 
-  public static FluidMilk fluid_milk;
   public static FluidExp fluid_exp;
   public static FluidPoison fluid_poison;
 
@@ -55,14 +51,6 @@ public class FluidsRegistry {
     FluidRegistry.addBucketForFluid(fluid_poison);
   }
 
-  public static void registerMilk() {
-    fluid_milk = new FluidMilk();
-    FluidRegistry.registerFluid(fluid_milk);
-    Block block_milk = new BlockFluidMilk();
-    fluid_milk.setBlock(block_milk);
-    BlockRegistry.registerBlock(block_milk, "milk", null);
-    FluidRegistry.addBucketForFluid(fluid_milk);
-  }
 
   public static void registerExp() {
     if (fluid_exp != null) {

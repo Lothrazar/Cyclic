@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.liquid.milk;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.core.BlockFluidBase;
-import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -50,10 +49,10 @@ public class BlockFluidMilk extends BlockFluidBase {
 
   public static FluidStack stack;
 
-  public BlockFluidMilk() {
-    super(FluidsRegistry.fluid_milk, Material.WATER);
-    FluidsRegistry.fluid_milk.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME);
+  public BlockFluidMilk(FluidMilk fluid_milk) {
+    super(fluid_milk, Material.WATER);
+    fluid_milk.setBlock(this);
+    stack = new FluidStack(fluid_milk, Fluid.BUCKET_VOLUME);
   }
 
   @SideOnly(Side.CLIENT)
