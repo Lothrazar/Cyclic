@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.core.BlockFluidBase;
 import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -60,12 +59,11 @@ public class BlockFluidMilk extends BlockFluidBase {
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
-    Block block = FluidsRegistry.block_milk;
-    Item item = Item.getItemFromBlock(block);
+    Item item = Item.getItemFromBlock(this);
     ModelBakery.registerItemVariants(item);
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
     ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
-    ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+    ModelLoader.setCustomStateMapper(this, new StateMapperBase() {
 
       @Override
       protected ModelResourceLocation getModelResourceLocation(IBlockState bs) {
