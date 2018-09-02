@@ -23,9 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -41,7 +42,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
+public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 12;
@@ -104,7 +105,20 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IHasConfig {
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_spelunker");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     range = config.getInt("CavefinderRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");
   }
 }

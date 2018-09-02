@@ -29,19 +29,11 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideItem;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
-import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
-import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemFangs;
-import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
-import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
-import com.lothrazar.cyclicmagic.item.ItemObsShears;
-import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
-import com.lothrazar.cyclicmagic.item.ItemProspector;
 import com.lothrazar.cyclicmagic.item.ItemRotateBlock;
 import com.lothrazar.cyclicmagic.item.ItemSoulstone;
-import com.lothrazar.cyclicmagic.item.ItemStirrups;
 import com.lothrazar.cyclicmagic.item.ItemWarpSurface;
 import com.lothrazar.cyclicmagic.item.ItemWaterSpreader;
 import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper;
@@ -51,12 +43,10 @@ import com.lothrazar.cyclicmagic.item.cannon.ItemProjectileCannon;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.EntityRobot;
 import com.lothrazar.cyclicmagic.item.crashtestdummy.ItemCrashSpawner;
-import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT.ExplosionType;
-import com.lothrazar.cyclicmagic.item.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.endereye.EntityEnderEyeUnbreakable;
 import com.lothrazar.cyclicmagic.item.endereye.ItemEnderEyeReuse;
 import com.lothrazar.cyclicmagic.item.enderpearl.ItemEnderPearlReuse;
@@ -78,10 +68,6 @@ import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstonePickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneSpade;
-import com.lothrazar.cyclicmagic.item.findspawner.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.item.findspawner.ItemProjectileDungeon;
-import com.lothrazar.cyclicmagic.item.lightningmagic.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.item.lightningmagic.ItemProjectileLightning;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
@@ -101,14 +87,12 @@ import com.lothrazar.cyclicmagic.item.scythe.ItemScythe;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.tiletransporter.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.tiletransporter.ItemChestSackEmpty;
-import com.lothrazar.cyclicmagic.item.torchmagic.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
@@ -136,9 +120,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean turretMinecart;
   private boolean enableHeartContainer;
   private boolean enableHorseFoodUpgrades;
-  private boolean enableEnderDungeonFinder;
-
-  private boolean enderLightning;
   public static ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
   private boolean dynamiteSafe;
   private boolean dynamiteMining;
@@ -146,21 +127,13 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean enableToolHarvest;
   private boolean enableHarvestWeeds;
   private boolean enablePearlReuse;
-  private boolean enableCyclicWand;
-  private boolean enableProspector;
-  private boolean enableCavefinder;
   private boolean enableSwappers;
   private boolean enablePearlReuseMounted;
-  private boolean enableCarbonPaper;
   private boolean storageBagEnabled;
-  private boolean enableEnderBook;
   private boolean enableChestSack;
-  private boolean enableStirrups;
-  private boolean enableTorchLauncher;
-  private boolean enderSack;
+
   private boolean enablewaterSpread;
-  private boolean enableFreezer;
-  private boolean enableFireKiller;
+
   private boolean enableBlockRot;
   private boolean enableCGlove;
   private boolean enableElevate;
@@ -180,14 +153,11 @@ public class ItemModule extends BaseModule implements IHasConfig {
   private boolean rainbowCannon;
   private boolean enableNetherbrickTools;
   private boolean enableHeartToxic;
-  private boolean obsShears;
 
   @Override
   public void onPreInit() {
 
-    if (obsShears) {
-      ItemRegistry.register(new ItemObsShears(), "shears_obsidian", GuideCategory.ITEM);
-    }
+
     if (robotSpawner) {
       EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
       EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME), intColor(159, 255, 222), intColor(222, 111, 51));
@@ -362,32 +332,14 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemWaterSpreader water_spreader = new ItemWaterSpreader();
       ItemRegistry.register(water_spreader, "water_spreader");
     }
-    if (enableFreezer) {
-      ItemIceWand water_freezer = new ItemIceWand();
-      ItemRegistry.register(water_freezer, "water_freezer");
-    }
-    if (enableFireKiller) {
-      ItemFireExtinguish fire_killer = new ItemFireExtinguish();
-      ItemRegistry.register(fire_killer, "fire_killer");
-    }
+
     if (enderEyeReuse) {
       ItemEnderEyeReuse ender_eye_orb = new ItemEnderEyeReuse();
       ItemRegistry.register(ender_eye_orb, "ender_eye_orb");
       EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, "ender_eye_orb", 1029);
     }
-    if (enderSack) {
-      ItemEnderBag sack_ender = new ItemEnderBag();
-      ItemRegistry.register(sack_ender, "sack_ender");
-      LootTableRegistry.registerLoot(sack_ender);
-    }
-    if (enableTorchLauncher) {
-      ItemTorchThrower tool_torch_launcher = new ItemTorchThrower();
-      ItemRegistry.register(tool_torch_launcher, "tool_torch_launcher");
-    }
-    if (enableStirrups) {
-      ItemStirrups tool_mount = new ItemStirrups();
-      ItemRegistry.register(tool_mount, "tool_mount");
-    }
+
+
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
       ItemChestSack chest_sack = new ItemChestSack();
@@ -398,35 +350,16 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ItemRegistry.register(chest_sack_empty, "chest_sack_empty");
       //   ItemRegistry.registerWithJeiDescription(chest_sack_empty);
     }
-    if (enableEnderBook) {
-      ItemEnderBook book_ender = new ItemEnderBook();
-      ItemRegistry.register(book_ender, "book_ender", GuideCategory.TRANSPORT);
-      LootTableRegistry.registerLoot(book_ender);
-      LootTableRegistry.registerLoot(book_ender);
-      // ItemRegistry.registerWithJeiDescription(book_ender);
-    }
+
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
       ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
     }
-    if (enableCarbonPaper) {
-      ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
-      ItemRegistry.register(carbon_paper, "carbon_paper");
-      //ItemRegistry.registerWithJeiDescription(carbon_paper);
-    }
-    if (enableProspector) {
-      ItemProspector tool_prospector = new ItemProspector();
-      ItemRegistry.register(tool_prospector, "tool_prospector");
-      LootTableRegistry.registerLoot(tool_prospector);
-      //ItemRegistry.registerWithJeiDescription(tool_prospector);
-    }
-    if (enableCavefinder) {
-      ItemCaveFinder tool_spelunker = new ItemCaveFinder();
-      ItemRegistry.register(tool_spelunker, "tool_spelunker");
-      // ItemRegistry.registerWithJeiDescription(tool_spelunker);
-    }
+
+
+
 
     if (enablePearlReuse) {
       ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse(ItemEnderPearlReuse.OrbType.NORMAL);
@@ -462,19 +395,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
     }
 
 
-    if (enableCyclicWand) {
-      ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
-      ItemRegistry.register(cyclic_wand_build, "cyclic_wand_build");
-      SpellRegistry.register(cyclic_wand_build);
-      ModCyclic.instance.events.register(this);
-      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
-      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
-      //      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
-      ModCyclic.TAB.setTabItemIfNull(cyclic_wand_build);
-      //    ItemRegistry.registerWithJeiDescription(cyclic_wand_build);
-    }
-
-
     if (enableSwappers) {
       ItemBuildSwapper tool_swap = new ItemBuildSwapper(WandType.NORMAL);
       ItemRegistry.register(tool_swap, "tool_swap");
@@ -484,21 +404,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(tool_swap_match);
     }
 
-    if (enableEnderDungeonFinder) {
-      ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
-      ItemRegistry.register(ender_dungeon, "ender_dungeon", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
-      LootTableRegistry.registerLoot(ender_dungeon);
-    }
-
-
-    if (enderLightning) {
-      ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
-      ItemRegistry.register(ender_lightning, "ender_lightning", GuideCategory.ITEMTHROW);
-      EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
-      LootTableRegistry.registerLoot(ender_lightning);
-      ModCyclic.instance.events.register(ender_lightning);
-    }
     if (dynamiteSafe) {
       ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);
       ItemRegistry.register(dynamite_safe, "dynamite_safe", GuideCategory.ITEMTHROW);
@@ -581,7 +486,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
-    obsShears = config.getBoolean("shears_obsidian", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHeartToxic = config.getBoolean("heart_toxic", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     rainbowCannon = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     robotSpawner = config.getBoolean("robot_spawner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -593,8 +497,6 @@ public class ItemModule extends BaseModule implements IHasConfig {
     stoneMinecart = config.getBoolean("StoneMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enderLightning = config.getBoolean("EnderLightning", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHeartContainer = config.getBoolean("HeartContainer(food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHorseFoodUpgrades = config.getBoolean("HorseFood", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.modpackMisc;
@@ -611,24 +513,14 @@ public class ItemModule extends BaseModule implements IHasConfig {
     enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableFreezer = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableFireKiller = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enderSack = config.getBoolean("EnderSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableTorchLauncher = config.getBoolean("TorchLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableToolHarvest = config.getBoolean("HarvestScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestLeaves = config.getBoolean("TreeScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableProspector = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableStirrups = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemBuildSwapper.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
     glowingHelmet = config.getBoolean("GlowingHelmet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

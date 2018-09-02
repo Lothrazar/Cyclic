@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -9,13 +13,31 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemObsShears extends ItemShears implements IHasRecipe {
+public class ItemObsShears extends ItemShears implements IHasRecipe, IContent {
 
   public ItemObsShears() {
     super();
     int ironDur = 238;
     this.setMaxDamage(ironDur * 10);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "shears_obsidian", GuideCategory.ITEM);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("shears_obsidian", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

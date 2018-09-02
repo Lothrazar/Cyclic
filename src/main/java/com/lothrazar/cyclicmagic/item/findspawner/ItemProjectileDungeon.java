@@ -23,10 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.findspawner;
 
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -43,7 +47,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
+public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IContent {
 
   private static final int COOLDOWN = 10;
   private static int DUNGEONRADIUS = 64;
@@ -61,7 +65,22 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "ender_dungeon", GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of Spawner Seeker");
     USE_THREADING = config.getBoolean("Ender Threading", Const.ConfigCategory.items, true, "If true, this item will do the searching on a new thread, and then come back to the projectile when found and end the thread.  Set to false to completely disable threading if you have any weird issues or false results, but be aware that setting to false will cause clientside lag on every use");
   }

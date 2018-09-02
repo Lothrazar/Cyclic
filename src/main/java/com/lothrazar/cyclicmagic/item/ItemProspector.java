@@ -25,9 +25,11 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -47,7 +49,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
+public class ItemProspector extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 12;
@@ -57,6 +59,19 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
 
   public ItemProspector() {
     super(DURABILITY);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_prospector");
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   @Override
@@ -145,6 +160,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IHasConfig {
 
   @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.modpackMisc;
     ItemProspector.range = config.getInt("ProspectorRange", category, 32, 2, 256, "Block Range it will search onclick");
     isBlacklist = config.getBoolean("ProspectorIsBlacklist", category, true, "True means this (ProspectorBlockList) is a blacklist, ignore whats listed. False means its a whitelist: only print whats listed.");

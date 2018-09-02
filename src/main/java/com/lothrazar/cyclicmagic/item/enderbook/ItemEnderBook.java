@@ -25,12 +25,15 @@ package com.lothrazar.cyclicmagic.item.enderbook;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -51,7 +54,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
+public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   public static String KEY_LOC = "location";
   public static String KEY_LARGEST = "loc_largest";
@@ -193,7 +196,21 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "book_ender", GuideCategory.TRANSPORT);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc,
         16, 1, 64, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
             " per column, and putting too many may send it offscreen");

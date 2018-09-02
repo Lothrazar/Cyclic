@@ -25,10 +25,14 @@ package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import java.util.List;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
@@ -55,7 +59,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
+public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
 
   private static final String NBT_SPELLCURRENT = "spell_id";
   private List<ISpell> spellbook;
@@ -243,7 +247,26 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "cyclic_wand_build");
+    SpellRegistry.register(this);
+    ModCyclic.instance.events.register(this);
+    LootTableRegistry.registerLoot(this, ChestType.ENDCITY, 15);
+    LootTableRegistry.registerLoot(this, ChestType.GENERIC, 1);
+    //      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
+    ModCyclic.TAB.setTabItemIfNull(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.items;
     //TODO: no good place to put this eh
     String renderLocation = config.getString("Scepter HUD", Const.ConfigCategory.items, RenderLoc.BOTTOMLEFT.toString().toLowerCase(), "Location of scepter Hud [topleft, topright, bottomleft, bottomright].  Used by both Exchange Scepters and Cyclic Build Scepter.  ");
