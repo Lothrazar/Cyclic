@@ -76,15 +76,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
         'p', "dyeLightBlue");
   }
 
-  //  @Override
-  //  public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
-  //    TileEntity te = world.getTileEntity(pos);
-  //    if (te instanceof TileEntityPackager) {
-  //      float fill = ((TileEntityPackager) te).getFillRatio();
-  //      return (int) (15 * fill);
-  //    }
-  //    return 0;
-  //  }  @Override
+  @Override
   public void register() {
     BlockRegistry.registerBlock(this, "auto_packager", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityPackager.class, "auto_packager_te");
@@ -102,6 +94,6 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
     enabled = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityPackager.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
         35, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 350, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
