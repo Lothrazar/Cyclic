@@ -32,8 +32,9 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
+  public static final int MAX_TIMER = 100;
   public static enum Fields {
-    REDSTONE, TIMER, R, G, B, ALPHA, PULSE;
+    REDSTONE, TIMER, R, G, B, ALPHA, PULSE, EXTENDING;
   }
 
   private int needsRedstone = 0;
@@ -42,6 +43,7 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   private int blue = 0;
   private int alpha = 30;//1-100 will become 0-1
   private boolean isPulsing = true;
+  private boolean isExtending = false;
 
   public TileEntityLaser() {
     super(4);
@@ -52,6 +54,10 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
     if (this.isRunning() == false) {
       return;
     }
+    timer++;
+    if (timer > MAX_TIMER) {
+      timer = 0;
+    }
   }
 
   BlockPosDim getTarget(int slot) {
@@ -59,15 +65,27 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger("redst");
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    this.needsRedstone = tags.getInteger("redst");
+    red = tags.getInteger("red");
+    green = tags.getInteger("green");
+    blue = tags.getInteger("blue");
+    alpha = tags.getInteger("alpha");
+    isPulsing = tags.getBoolean("puls");
+    isExtending = tags.getBoolean("extend");
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger("redst", this.needsRedstone);
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger("redst", this.needsRedstone);
+    tags.setInteger("red", red);
+    tags.setInteger("green", green);
+    tags.setInteger("blue", blue);
+    tags.setInteger("alpha", alpha);
+    tags.setBoolean("puls", isPulsing);
+    tags.setBoolean("extend", isExtending);
+    return super.writeToNBT(tags);
   }
 
   @Override
@@ -98,6 +116,8 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
         return alpha;
       case PULSE:
         return isPulsing ? 1 : 0;
+      case EXTENDING:
+        return isExtending ? 1 : 0;
       default:
       break;
     }
@@ -128,18 +148,24 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
       case PULSE:
         isPulsing = (value == 1);
       break;
-      default:
+      case EXTENDING:
+        isExtending = (value == 1);
       break;
     }
   }
 
   public boolean isPulsing() {
-    return isPulsing; 
+    return isPulsing;
+  }
+
+  public boolean isExtending() {
+    return isExtending;
   }
 
   public float alphaCalculated() {
     return alpha / 100.0F;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(getFieldCount());
@@ -151,10 +177,10 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
   }
 
   public float[] getColor() {
-   return new float[]{
-       this.red/255.0F,
-       this.green/255.0F,
-       this.blue /255.0F
+    return new float[] {
+        this.red / 255.0F,
+        this.green / 255.0F,
+        this.blue / 255.0F
     };
-   }
+  }
 }

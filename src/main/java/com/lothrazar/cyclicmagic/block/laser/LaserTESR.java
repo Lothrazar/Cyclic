@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.laser;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.util.RenderUtil;
+import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,14 +49,19 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
     float[] color = te.getColor();//new float[] { te.getField(Fields), 0F, 0.5F };
     double rotationTime = te.isPulsing() ? 120 : 0;
     double beamWidth = 0.09;
-    float transparency = 0.291F;
     BlockPos first = te.getPos();
     BlockPosDim second = null;
+    int timer = 100;
+    if (te.isExtending()) {
+      timer = te.getField(TileEntityLaser.Fields.TIMER.ordinal());
+    }
     for (int i = 0; i < te.getSizeInventory(); i++) {
       second = te.getTarget(i);
       if (second != null && second.toBlockPos() != null && second.dimension == te.getDimension()) {
-        RenderUtil.renderLaser(first, second.toBlockPos(),
+        LaserConfig laserCnf = new LaserConfig(first, second.toBlockPos(),
             rotationTime, te.alphaCalculated(), beamWidth, color);
+        laserCnf.timer = timer;
+        RenderUtil.renderLaser(laserCnf);
       }
     }
   }
