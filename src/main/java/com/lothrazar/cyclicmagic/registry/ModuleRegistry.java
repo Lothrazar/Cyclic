@@ -26,16 +26,12 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.module.BlockModule;
-import com.lothrazar.cyclicmagic.module.CommandModule;
-import com.lothrazar.cyclicmagic.module.EnchantModule;
-import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.ItemModule;
-import com.lothrazar.cyclicmagic.module.ItemPotionModule;
-import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
-import com.lothrazar.cyclicmagic.module.LootTableModule;
-import com.lothrazar.cyclicmagic.module.WorldModule;
 import com.lothrazar.cyclicmagic.playerupgrade.PlayerAbilitiesModule;
+import com.lothrazar.cyclicmagic.registry.module.CommandModule;
+import com.lothrazar.cyclicmagic.registry.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.registry.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.registry.module.LootTableModule;
+import com.lothrazar.cyclicmagic.registry.module.WorldModule;
 import com.lothrazar.cyclicmagic.tweak.EnvironmentTweaksModule;
 import com.lothrazar.cyclicmagic.tweak.FragileTorchesModule;
 import com.lothrazar.cyclicmagic.tweak.FuelAdditionModule;
@@ -63,12 +59,8 @@ public class ModuleRegistry {
   }
 
   public static void registerAll() {
-    register(new BlockModule());
     register(new CommandModule());
-    register(new ItemModule());
-    register(new ItemPotionModule());
     register(new DispenserBehaviorModule());
-    register(new EnchantModule());
     register(new PlayerAbilitiesModule());
     register(new TextInfoModule());
     register(new FragileTorchesModule());

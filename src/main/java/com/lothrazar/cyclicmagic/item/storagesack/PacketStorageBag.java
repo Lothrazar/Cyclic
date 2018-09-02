@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StoragePickupType;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block.firestarter;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class ContainerFireStarter extends ContainerBaseMachine {

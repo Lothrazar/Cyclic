@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:fluid_placer_south","y":180},
-        "facing=east":  { "model": "cyclicmagic:fluid_placer_south","y":270},
-        "facing=south": { "model": "cyclicmagic:fluid_placer_south"},
-        "facing=west":  { "model": "cyclicmagic:fluid_placer_south" ,"y":90},
-        "facing=up":    { "model": "cyclicmagic:fluid_placer_up"},
-        "facing=down":  { "model": "cyclicmagic:fluid_placer_down"}
+        "facing=north": { "model": "cyclicmagic:fluid_placer","y":180},
+        "facing=east":  { "model": "cyclicmagic:fluid_placer","y":270},
+        "facing=south": { "model": "cyclicmagic:fluid_placer"},
+        "facing=west":  { "model": "cyclicmagic:fluid_placer" ,"y":90},
+        "facing=up":    { "model": "cyclicmagic:fluid_placer","x":90},
+        "facing=down":  { "model": "cyclicmagic:fluid_placer","x":270}
     }
 }

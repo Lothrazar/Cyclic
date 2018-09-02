@@ -110,6 +110,9 @@ import com.lothrazar.cyclicmagic.block.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.block.laser.ContainerLaser;
+import com.lothrazar.cyclicmagic.block.laser.GuiLaser;
+import com.lothrazar.cyclicmagic.block.laser.TileEntityLaser;
 import com.lothrazar.cyclicmagic.block.miner.ContainerBlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.GuiBlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
@@ -146,9 +149,6 @@ import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
-import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
@@ -166,6 +166,9 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
@@ -229,6 +232,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_W_ENERGY = 45;
   public static final int GUI_INDEX_PACKAGER = 46;
   public static final int GUI_INDEX_DEHYDRATOR = 47;
+  public static final int GUI_INDEX_LASER = 48;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -466,6 +470,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_DEHYDRATOR:
         if (te instanceof TileEntityDeHydrator) {
           return new ContainerDeHydrator(player.inventory, (TileEntityDeHydrator) te);
+        }
+      break;
+      case GUI_INDEX_LASER:
+        if (te instanceof TileEntityLaser) {
+          return new ContainerLaser(player.inventory, (TileEntityLaser) te);
         }
       break;
     }
@@ -706,6 +715,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_DEHYDRATOR:
           if (te instanceof TileEntityDeHydrator) {
             return new GuiDeHydrator(player.inventory, (TileEntityDeHydrator) te);
+          }
+        break;
+        case GUI_INDEX_LASER:
+          if (te instanceof TileEntityLaser) {
+            return new GuiLaser(player.inventory, (TileEntityLaser) te);
           }
         break;
       }

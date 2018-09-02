@@ -23,9 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.core.BaseCommand;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
-import com.lothrazar.cyclicmagic.module.ItemModule;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
@@ -60,7 +60,8 @@ public class ContainerStorage extends ContainerBase {
         x = pad + k * Const.SQ;
         y = 7 + l * Const.SQ;
         slot = k + l * cols;
-        this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
+        this.addSlotToContainer(new SlotItemRestrictedInverse(
+            invoWand, slot, x, y, MultiContent.storage_bag));
       }
     }
     this.bindPlayerInventory(player.inventory);

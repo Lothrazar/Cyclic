@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.enchant.BaseEnchant;
 import com.lothrazar.cyclicmagic.enchant.EnchantReach;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -36,10 +36,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantRegistry {
 
-  public static ArrayList<EnchantBase> enchants = new ArrayList<EnchantBase>();
+  public static ArrayList<BaseEnchant> enchants = new ArrayList<BaseEnchant>();
   public static EnchantReach reach;
 
-  public static void register(EnchantBase ench) {
+  public static void register(BaseEnchant ench) {
     ResourceLocation resourceLocation = new ResourceLocation(Const.MODID, ench.getName());
     ench.setRegistryName(resourceLocation);
     ModCyclic.instance.events.register(ench);

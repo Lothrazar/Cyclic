@@ -23,11 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.sorting;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -46,7 +47,10 @@ public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(BOUNDS, BOUNDS, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
 
   public BlockItemCableSort() {
-    super(Material.CLAY);
+    super(Material.CLOTH);
+    setSoundType(SoundType.CLOTH);
+ 
+    setHardness(0.5F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
     this.setTranslucent();
     setLightOpacity(0);

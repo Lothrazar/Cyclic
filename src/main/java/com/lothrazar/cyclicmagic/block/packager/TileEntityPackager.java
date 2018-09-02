@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.block.packager;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -71,13 +71,12 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
-    if (this.updateEnergyIsBurning() == false) {
-      return;
-    }
+
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
       if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
         this.timer = TIMER_FULL;
+        // are we empty? if empty dont consume
         this.consumeEnergy();
       }
       else {

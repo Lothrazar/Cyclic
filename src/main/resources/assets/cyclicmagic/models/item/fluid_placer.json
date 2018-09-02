@@ -1,5 +1,5 @@
  {
-     "parent": "cyclicmagic:block/fluid_placer_south",
+     "parent": "cyclicmagic:block/fluid_placer",
      "display": {
          "thirdperson": {
              "rotation": [ 10, -45, 170 ],
