@@ -1,5 +1,7 @@
 {
     "variants": {
-        "normal": { "model": "cyclicmagic:water_candle" }
+        "normal": { "model": "cyclicmagic:water_candle" },
+        "lit=true": { "model": "cyclicmagic:water_candle_lit" },
+        "lit=false": { "model": "cyclicmagic:water_candle" }
     }
 }

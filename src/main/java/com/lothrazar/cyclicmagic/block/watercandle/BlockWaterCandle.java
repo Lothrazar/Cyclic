@@ -35,6 +35,8 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -44,8 +46,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.common.config.Configuration;
@@ -56,9 +61,10 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent {
 
+  public static final PropertyBool POWERED = PropertyBool.create("lit");
   private static final int TICK_RATE = 50;
   private static final int RADIUS = 5;
-  private static final double CHANCE = 0.333;
+  private static final double CHANCE_OFF = 0.02;
   EnumCreatureType type = EnumCreatureType.MONSTER;
 
   public BlockWaterCandle() {
@@ -69,6 +75,17 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     this.setTranslucent();
   }
 
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    if (state.getValue(POWERED).booleanValue() == false
+        && player.getHeldItem(hand).getItem() == Items.FLINT_AND_STEEL) {
+
+      world.setBlockState(pos, state.withProperty(POWERED, true));
+
+      return true;
+    }
+    return false;
+  }
   @Override
   public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
     return false;
@@ -83,17 +100,17 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   public int quantityDropped(Random rand) {
     return 0;
   }
-
-  @Override
-  public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-    try {
-      //      if (rand.nextDouble() < CHANCE)
-        trySpawn(world, pos, rand);
-    }
-    catch (Exception exception) {
-      ModCyclic.logger.error("Error spawning monster ", exception);
-    }
-  }
+  //
+  //  @Override
+  //  public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+  //    try {
+  //      //      if (rand.nextDouble() < CHANCE)
+  //        trySpawn(world, pos, rand);
+  //    }
+  //    catch (Exception exception) {
+  //      ModCyclic.logger.error("Error spawning monster ", exception);
+  //    }
+  //  }
 
   @Override
   public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
@@ -107,7 +124,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   }
 
   private void trySpawn(World world, BlockPos pos, Random rand) throws Exception {
-    ModCyclic.logger.error("!!tick ");
+
     List<SpawnListEntry> spawnOptions = world.getBiome(pos).getSpawnableList(type);
     if (spawnOptions == null) {
       return;
@@ -139,7 +156,12 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     //we can spawn here
     if (world.spawnEntity(monster)) {
       monster.onInitialSpawn(world.getDifficultyForLocation(pos), null);//i hope null is ok? 
-      world.scheduleUpdate(pos, this, TICK_RATE);
+      if (rand.nextDouble() < CHANCE_OFF) {
+        world.setBlockState(pos, getDefaultState());
+      }
+      else {
+        world.scheduleUpdate(pos, this, TICK_RATE);
+      }
     }
   }
 
@@ -165,6 +187,28 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     enabled = config.getBoolean("water_candle", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, POWERED);
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    return (state.getValue(POWERED) ? 1 : 0);
+  }
+
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    return this.getDefaultState().withProperty(POWERED, meta == 1);
+  }
+
+  @Override
+  public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    if (blockState.getValue(POWERED).booleanValue()) {
+      return 15;
+    }
+    return 0;
+  }
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),

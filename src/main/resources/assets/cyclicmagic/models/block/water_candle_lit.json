@@ -2,6 +2,8 @@
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
 		"pillar": "blocks/quartz_block_top",
+		"centerwater": "blocks/water_still",
+		"flame": "blocks/water_still",
 		"center": "blocks/gold_block",
 		"base": "blocks/gold_block",
 		"particle": "blocks/gold_block"
@@ -30,7 +32,20 @@
 				"south": {"uv": [0, 0, 9, 0.25], "texture": "#center"},
 				"west": {"uv": [0, 0, 8, 0.25], "texture": "#center"},
 				"up": {"uv": [0, 0, 9, 8], "texture": "#center"},
-				"down": {"uv": [1, 2, 10, 10], "texture": "#center"}
+				"down": {"uv": [3, 5, 12, 13], "texture": "#center"}
+			}
+		},
+		{
+			"name": "centerwater",
+			"from": [3, 0.5, 4],
+			"to": [12, 0.75, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 9, 0.25], "texture": "#centerwater"},
+				"east": {"uv": [0, 0, 8, 0.25], "texture": "#centerwater"},
+				"south": {"uv": [0, 0, 9, 0.25], "texture": "#centerwater"},
+				"west": {"uv": [0, 0, 8, 0.25], "texture": "#centerwater"},
+				"up": {"uv": [0, 0, 9, 8], "texture": "#centerwater"},
+				"down": {"uv": [0, 0, 9, 8], "texture": "#centerwater"}
 			}
 		},
 		{
@@ -83,6 +98,32 @@
 				"west": {"uv": [0, 0, 2, 0.75], "texture": "#base"},
 				"up": {"uv": [4, 14, 13, 16], "texture": "#base"},
 				"down": {"uv": [0, 0, 9, 2], "texture": "#base"}
+			}
+		},
+		{
+			"name": "flame",
+			"from": [7, 12, 8],
+			"to": [9, 14, 8],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 2], "texture": "#flame"},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#flame"},
+				"south": {"uv": [0, 0, 2, 2], "texture": "#flame"},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#flame"},
+				"up": {"uv": [0, 0, 2, 0], "texture": "#flame"},
+				"down": {"uv": [0, 0, 2, 0], "texture": "#flame"}
+			}
+		},
+		{
+			"name": "flame",
+			"from": [8, 12, 7],
+			"to": [8, 14, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 0, 2], "texture": "#flame"},
+				"east": {"uv": [0, 0, 2, 2], "texture": "#flame"},
+				"south": {"uv": [0, 0, 0, 2], "texture": "#flame"},
+				"west": {"uv": [0, 0, 2, 2], "texture": "#flame"},
+				"up": {"uv": [0, 0, 0, 2], "texture": "#flame"},
+				"down": {"uv": [0, 0, 0, 2], "texture": "#flame"}
 			}
 		}
 	]
