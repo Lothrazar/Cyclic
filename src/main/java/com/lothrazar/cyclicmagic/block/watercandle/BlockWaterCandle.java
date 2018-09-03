@@ -176,10 +176,11 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
 
   private void afterSpawnSuccess(World world, BlockPos pos, Random rand) {
     if (rand.nextDouble() < CHANCE_OFF) {
+      ModCyclic.logger.log("off now");
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
-      world.setBlockState(pos, getDefaultState());
+      world.setBlockState(pos, getDefaultState().withProperty(IS_LIT, false));
     }
     else {
       world.scheduleUpdate(pos, this, TICK_RATE);
@@ -226,6 +227,9 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("water_candle", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    //    private static final int TICK_RATE = 50;
+    //    private static final int RADIUS = 5;
+    //    private static final double CHANCE_OFF = 0.02;
   }
 
   @Override
