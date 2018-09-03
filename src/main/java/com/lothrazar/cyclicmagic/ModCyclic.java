@@ -76,6 +76,7 @@ import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclicmagic.block.trash.BlockTrash;
 import com.lothrazar.cyclicmagic.block.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.vector.BlockVectorPlate;
+import com.lothrazar.cyclicmagic.block.watercandle.BlockWaterCandle;
 import com.lothrazar.cyclicmagic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
@@ -237,6 +238,7 @@ public class ModCyclic {
     ModuleRegistry.registerAll();//create new instance of every module
     //content creation 
     content = new ArrayList<IContent>();
+
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
     content.add(new BlockLibrary());
@@ -365,6 +367,7 @@ public class ModCyclic {
     content.add(new BlockVoidAnvil());
     content.add(new BlockDropperExact());
     content.add(new BlockFluidPlacer());
+    content.add(new BlockWaterCandle());
     for (IContent cont : content) {
       ConfigRegistry.register(cont);
     }
