@@ -260,10 +260,12 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
-        " q ",
-        " q ",
+        " s ",
+        "qdq",
         "ggg",
-        'g', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        's', Items.STRING,
+        'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
+        'd', Items.DIAMOND,
         'q', Items.QUARTZ);
   }
 }
