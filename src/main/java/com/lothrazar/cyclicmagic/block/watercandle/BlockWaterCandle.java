@@ -66,6 +66,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     this.setSoundType(SoundType.GROUND);
     //    this.setHarvestLevel(Const.ToolStrings.shovel, 2);
     this.setTickRandomly(true);
+    this.setTranslucent();
   }
 
   @Override
