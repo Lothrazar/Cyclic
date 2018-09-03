@@ -44,6 +44,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -68,14 +69,14 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent {
 
   public static final PropertyBool IS_LIT = PropertyBool.create("lit");
-  private static final int TICK_RATE = 50;
-  private static final int RADIUS = 5;
-  private static final double CHANCE_OFF = 0.02;
+  private static int TICK_RATE = 50;
+  private static int RADIUS = 5;
+  private static double CHANCE_OFF = 0.02;
   private EnumCreatureType type = EnumCreatureType.MONSTER;
-
   private static final double BOUNDS = 0.0625 * 3.0;
   private static final AxisAlignedBB AABB = new AxisAlignedBB(BOUNDS, 0, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
   private static final double CHANCE_SOUND = 0.3;
+
   public BlockWaterCandle() {
     super(Material.IRON);
     this.setSoundType(SoundType.METAL);
@@ -129,6 +130,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   public int quantityDropped(Random rand) {
     return 0;
   }
+
   //
   @Override
   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
@@ -145,7 +147,8 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS);
     }
     try {
-      trySpawn(world, pos, rand);
+      if (world.getBlockState(pos).getValue(IS_LIT).booleanValue())
+        trySpawn(world, pos, rand);
     }
     catch (Exception exception) {
       ModCyclic.logger.error("Error spawning monster ", exception);
@@ -167,7 +170,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
         ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null) == Event.Result.DENY) {
       return;
     }
-    //we can spawn here
+    //we can spawn here 
     if (world.spawnEntity(monster)) {
       monster.onInitialSpawn(world.getDifficultyForLocation(pos), null);//i hope null is ok? 
       afterSpawnSuccess(world, pos, rand);
@@ -176,7 +179,6 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
 
   private void afterSpawnSuccess(World world, BlockPos pos, Random rand) {
     if (rand.nextDouble() < CHANCE_OFF) {
-      ModCyclic.logger.log("off now");
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
@@ -203,7 +205,6 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     Entity ent = entityEntry.newInstance(world);
     if (ent instanceof EntityLiving)
       monster = (EntityLiving) ent;
-
     return monster;
   }
 
@@ -227,9 +228,10 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("water_candle", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    //    private static final int TICK_RATE = 50;
-    //    private static final int RADIUS = 5;
-    //    private static final double CHANCE_OFF = 0.02;
+    String category = Const.ConfigCategory.blocks + ".water_candle";
+    TICK_RATE = config.getInt("tick_speed", category, 50, 1, 9999, "Spawning tick speed");
+    RADIUS = config.getInt("radius", category, 8, 1, 128, "Spawning radius");
+    CHANCE_OFF = config.getFloat("chance_off", category, 0.01F, 0.001F, 0.99F, "Chance this will turn itself off after each spawn; 0.01 means 1%.  ");
   }
 
   @Override
@@ -258,11 +260,10 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 4),
-        "pcp",
-        "cxc",
-        "pcp",
-        'c', "dirt",
-        'x', Items.DIAMOND,
-        'p', new ItemStack(Items.CLAY_BALL));
+        " q ",
+        " q ",
+        "ggg",
+        'g', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+        'q', Items.QUARTZ);
   }
 }

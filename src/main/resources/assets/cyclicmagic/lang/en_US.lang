@@ -1380,3 +1380,7 @@ item.boomerang.guide=Stuns enemies and picks up items.  Bounces off blocks or re
 tile.laser.name=Laser Cell
 tile.laser.tooltip=Render harmless lasers
 tile.laser.guide=Use GPS Markers to target lasers and heavily customize their appearance.  
+
+tile.water_candle.name=Water Candle
+tile.water_candle.tooltip=Increase nearby spawns when lit
+tile.water_candle.guide=Light with flint and steel.  Greatly increases natural mobs spawns nearby.  Follows normal spawning rules of mobs and biome.  Has a chance of being extinguished on every spawn.  Many propertes in config file.
