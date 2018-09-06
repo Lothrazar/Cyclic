@@ -53,7 +53,7 @@ public class GuiDeHydrator extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int btnId = 3;
+    //    int btnId = 3;
     //    btnToggle = new ButtonTileEntityField(btnId++,
     //        this.guiLeft + 26,
     //        this.guiTop + Const.PAD / 2, this.tile.getPos(), TileEntityDeHydrator.Fields.RECIPELOCKED.ordinal());
