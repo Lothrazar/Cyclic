@@ -62,6 +62,15 @@ build.dependsOn signJar
 //Defines basic patterns for pulling various dependencies.
 repositories {
     maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+		url 'http://maven.blamejared.com'
+	}
+	maven {
+        url = "http://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
     	name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
@@ -81,18 +90,12 @@ repositories {
 }
 
 dependencies {
-
-  // compile against the JEI API
-  // deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
-  // at runtime, use the full JEI jar
-  // runtime "mezz.jei:jei_${mc_version}:${jei_version}"
-
-  //compile files("lib/Baubles-${baubles_version}.jar")
-  
+  deobfCompile "mezz.jei:jei_${mc_version}:+"
+  deobfCompile "mcp.mobius.waila:Hwyla:+"
+  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
+  deobfCompile "baubles:Baubles:1.12:1.5.2"
+  deobfCompile "fastworkbench:FastWorkbench:1.12.2:1.5.2"
   deobfCompile name: "Baubles", version: "${baubles_version}"
-  
-  
-  
   deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 }
 
