@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.playerupgrade.storage;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;

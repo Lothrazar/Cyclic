@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StoragePickupType;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -40,6 +40,7 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
   private int type;
 
   public PacketStorageBag() {}
+
   public PacketStorageBag(int type) {
     this.type = type;
   }
@@ -63,9 +64,9 @@ public class PacketStorageBag implements IMessage, IMessageHandler<PacketStorage
     ItemStack stack = player.getHeldItemMainhand();
     if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
       if (message.type == 0) {
-      ItemStorageBag.StorageActionType.toggle(stack);
-      UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
-    }
+        ItemStorageBag.StorageActionType.toggle(stack);
+        UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(stack)));
+      }
       else {
         ItemStorageBag.StoragePickupType.toggle(stack);
         UtilChat.addChatMessage(player, UtilChat.lang(StoragePickupType.getName(stack)));

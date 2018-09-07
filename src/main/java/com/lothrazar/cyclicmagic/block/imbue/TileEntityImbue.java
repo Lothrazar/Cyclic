@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.block.imbue;
 
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.imbue.BlockImbue.ImbueFlavor;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;

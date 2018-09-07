@@ -6,8 +6,8 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.block.cable.BlockCableBase;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingOmni;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -57,12 +57,10 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   private boolean powerTransport = false;
 
   public BlockPump() {
-    super(Material.ROCK);
-    this.setHardness(3F);
-    this.setResistance(3F);
-    this.setHarvestLevel("pickaxe", 1);
-    this.setTranslucent();
+    super(Material.LEAVES);//shears look for wool block not cloth
+    setHardness(0.5F);
     setSoundType(SoundType.CLOTH);
+    this.setTranslucent();
     this.placeType = PlacementType.SIDE_BLOCK;
   }
 

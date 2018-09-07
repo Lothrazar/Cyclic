@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.exppylon;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 
 public class ButtonExpPylon extends GuiButtonTooltip {
 

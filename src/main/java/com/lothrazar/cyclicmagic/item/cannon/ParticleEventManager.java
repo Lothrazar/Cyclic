@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item.cannon;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;

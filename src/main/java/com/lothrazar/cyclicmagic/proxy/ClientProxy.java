@@ -26,9 +26,8 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynMining;
-import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynSafe;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.entity.RenderProjectile.FactoryDynMining;
+import com.lothrazar.cyclicmagic.entity.RenderProjectile.FactoryDynSafe;
 import com.lothrazar.cyclicmagic.item.boomerang.EntityBoomerang;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite;
 import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite.FactoryDyn;
@@ -62,10 +61,11 @@ import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
-import com.lothrazar.cyclicmagic.module.ItemModule;
-import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -101,6 +101,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyBarDown;
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
+  public static KeyBinding keyWheel;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
 
   @Override
@@ -135,9 +136,11 @@ public class ClientProxy extends CommonProxy {
       keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_RBRACKET, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
     }
-    keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
+    keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_X, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
-    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
+    keyWheel = new KeyBinding("key.keyWheel", Keyboard.KEY_R, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyWheel);
+    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_C, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
   }
 
@@ -352,7 +355,7 @@ public class ClientProxy extends CommonProxy {
 
   @Override
   public void initColors() {
-    if (ItemModule.storage_bag != null) {
+    if (MultiContent.storage_bag != null) {
       Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
           (stack, tintIndex) -> {
             if (tintIndex == 0) {//layer zero is outline, ignore this 
@@ -360,7 +363,7 @@ public class ClientProxy extends CommonProxy {
             }
             //layer 1 is overlay 
             return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
-          }, ItemModule.storage_bag);
+          }, MultiContent.storage_bag);
     }
   }
 }

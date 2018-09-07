@@ -30,8 +30,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.cable.item.TileEntityItemCable;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -108,9 +108,9 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   }
 
   public BlockCableBase() {
-    super(Material.CLOTH);
-    setDefaultState(getDefaultState());
+    super(Material.LEAVES);//leaves so that shears can harvest
     setSoundType(SoundType.CLOTH);
+    setDefaultState(getDefaultState());
     setHardness(0.5F);
     setResistance(2.5F);
     setLightOpacity(0);

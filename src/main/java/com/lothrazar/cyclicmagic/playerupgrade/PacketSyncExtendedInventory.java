@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -40,9 +40,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<PacketSyncExtendedInventory, IMessage> {
 
-  int slot;
-  int playerId;
-  ItemStack itemStack = null;
+  private int slot;
+  private int playerId;
+  private ItemStack itemStack = null;
 
   public PacketSyncExtendedInventory() {}
 
@@ -71,6 +71,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
   public IMessage onMessage(final PacketSyncExtendedInventory message, MessageContext ctx) {
     Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 
+      @Override
       public void run() {
         processMessage(message);
       }

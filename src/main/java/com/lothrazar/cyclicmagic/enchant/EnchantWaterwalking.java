@@ -25,8 +25,9 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.enchant.EnchantBase;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,14 +37,32 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantWaterwalking extends EnchantBase {
+public class EnchantWaterwalking extends BaseEnchant {
 
   public EnchantWaterwalking() {
     super("waterwalking", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
     GuideRegistry.register(this, new ArrayList<String>(Arrays.asList("")));
+  }
+
+  @Override
+  public void register() {
+    EnchantRegistry.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -86,7 +105,7 @@ public class EnchantWaterwalking extends EnchantBase {
     BlockPos belowPos = player.getPosition().down();
     if (player.world.containsAnyLiquid(new AxisAlignedBB(belowPos)) && player.world.isAirBlock(player.getPosition()) && player.motionY < 0
         && !player.isSneaking()) {// let them slip down into it when sneaking
-      double diff = player.posY - ((double) player.getPosition().getY());
+      double diff = player.posY - (player.getPosition().getY());
       if (diff < 0.1) {
         player.motionY = 0;// stop falling
         player.onGround = true; // act as if on solid ground

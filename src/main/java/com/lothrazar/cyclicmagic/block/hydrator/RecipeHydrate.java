@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.hydrator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

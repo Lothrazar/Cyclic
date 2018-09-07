@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiEnergyPump extends GuiBaseContainer {
