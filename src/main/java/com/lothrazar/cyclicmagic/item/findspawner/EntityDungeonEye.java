@@ -92,7 +92,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
     this.targetY = pos.getY();
     this.targetZ = pos.getZ();
     this.isLost = false;
-    this.setThrowableHeading(this.targetX, this.targetY, this.targetZ, (this.getGravityVelocity()), 0.01F);
+    this.shoot(this.targetX, this.targetY, this.targetZ, (this.getGravityVelocity()), 0.01F);
   }
 
   public void kill() {

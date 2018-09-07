@@ -88,7 +88,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
 
   //copy vanilla methods: 8 facing directions bitwise-combined with enabled or not
   public static EnumFacing getFacing(int meta) {
-    return EnumFacing.getFront(meta & 7);
+    return EnumFacing.byIndex(meta & 7);// WAS getFront
   }
 
   public static EnumFacing getFacing(IBlockState state) {
@@ -131,7 +131,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
       if (this.doesPlayerDamage) {
         if (worldIn instanceof WorldServer) {

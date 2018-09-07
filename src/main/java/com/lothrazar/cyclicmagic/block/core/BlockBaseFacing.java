@@ -44,7 +44,7 @@ public abstract class BlockBaseFacing extends BlockBaseHasTile {
 
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    EnumFacing facing = EnumFacing.getHorizontal(meta);
+    EnumFacing facing = EnumFacing.byHorizontalIndex(meta);
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
 
@@ -63,7 +63,7 @@ public abstract class BlockBaseFacing extends BlockBaseHasTile {
 
   @Override
   public int getMetaFromState(IBlockState state) {
-    EnumFacing facing = (EnumFacing) state.getValue(PROPERTYFACING);
+    EnumFacing facing = state.getValue(PROPERTYFACING);
     int facingbits = facing.getHorizontalIndex();
     return facingbits;
   }

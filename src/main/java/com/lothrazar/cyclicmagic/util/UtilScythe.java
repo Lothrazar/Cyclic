@@ -268,7 +268,7 @@ public class UtilScythe {
       }
       return true;
     }
-    if (blockCheck.getRegistryName().getResourceDomain().equals("minecraft") == false) {
+    if (blockCheck.getRegistryName().getNamespace().equals("minecraft") == false) {
       ModCyclic.logger.log("SCYTHE could not clip " + blockId);
     }
     return false;

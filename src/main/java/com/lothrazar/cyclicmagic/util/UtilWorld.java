@@ -261,7 +261,7 @@ public class UtilWorld {
     if (pos == null) {
       return false;
     }
-    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
+    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getTranslationKey().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
 

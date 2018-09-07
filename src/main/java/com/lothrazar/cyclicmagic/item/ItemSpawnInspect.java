@@ -92,7 +92,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
     if (!worldObj.isRemote) {
       ChunkProviderServer s = (ChunkProviderServer) worldObj.getChunkProvider();
       BlockPos pos = posIn.offset(side);
-      Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
+      Chunk chunk = worldObj.getChunk(pos);
       if (worldObj.getChunkProvider() instanceof ChunkProviderServer) {
         List<SpawnDetail> names = new ArrayList<SpawnDetail>();
         for (EnumCreatureType creatureType : EnumCreatureType.values()) {

@@ -77,7 +77,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     if (this.enableShooting) {
-      tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+      tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     }
     super.addInformation(stack, player, tooltip, advanced);
   }
@@ -121,7 +121,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
           if (!world.isRemote) {
             EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, player);
             // - 20
-            entityenderpearl.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.6F, 1.0F);
+            entityenderpearl.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.6F, 1.0F);
             world.spawnEntity(entityenderpearl);
           }
       }
@@ -136,7 +136,7 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
     ItemStack potion = PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), ptype);
     EntityPotion entitypotion = new EntityPotion(world, player, potion);
     //- 20
-    entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.6F, 0.5F);
+    entitypotion.shoot(player, player.rotationPitch, player.rotationYaw, 0, 1.6F, 0.5F);
     if (world.isRemote == false) {
       world.spawnEntity(entitypotion);
     }
@@ -155,6 +155,6 @@ public class ItemPowerSword extends ItemSword implements IHasRecipe, IHasConfig 
 
   @Override
   public void syncConfig(Configuration config) {
-    this.enableShooting = config.getBoolean(this.getUnlocalizedName().replace("item.", "") + "_projectiles", Const.ConfigCategory.modpackMisc, true, "Disable the projectile (splash potion / ender pearl) from this endgame sword");
+    this.enableShooting = config.getBoolean(this.getTranslationKey().replace("item.", "") + "_projectiles", Const.ConfigCategory.modpackMisc, true, "Disable the projectile (splash potion / ender pearl) from this endgame sword");
   }
 }

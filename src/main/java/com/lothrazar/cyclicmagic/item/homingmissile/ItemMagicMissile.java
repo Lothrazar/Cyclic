@@ -109,7 +109,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
       //closest actual monster
       EntityLivingBase target = UtilEntity.getClosestEntity(world, player, trimmedTargets);
       EntityHomingProjectile projectile = new EntityHomingProjectile(world, player);
-      projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
+      projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
       projectile.setTarget(target);
       world.spawnEntity(projectile);
     }

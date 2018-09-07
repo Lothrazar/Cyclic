@@ -62,7 +62,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
 

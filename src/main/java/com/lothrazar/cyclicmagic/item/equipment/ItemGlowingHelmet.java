@@ -87,7 +87,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
-    list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    list.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
     super.addInformation(held, player, list, par4);
@@ -103,12 +103,14 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
         'o', "glowstone");
   }
 
+  @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
 
+  @Override
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     if (tags.hasKey(NBT_STATUS) == false) {

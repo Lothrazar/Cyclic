@@ -81,7 +81,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 
@@ -108,12 +108,12 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!(entityIn instanceof EntityLivingBase)) {
       return;
     }
     EntityLivingBase entity = (EntityLivingBase) entityIn;
-    if (!entityIn.isCollidedHorizontally) {
+    if (!entityIn.collidedHorizontally) {
       return;
     }
     UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);

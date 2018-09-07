@@ -89,6 +89,6 @@ public abstract class BlockBaseHasTile extends BlockBase {
   }
 
   public String getRawName() {
-    return this.getUnlocalizedName().replace("tile.", "");
+    return this.getTranslationKey().replace("tile.", "");
   }
 }

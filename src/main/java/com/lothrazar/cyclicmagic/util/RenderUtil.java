@@ -78,7 +78,7 @@ public class RenderUtil {
     double rot = rotationTime > 0 ? (360D * ((world.getTotalWorldTime() % rotationTime) / rotationTime)) : 0;
     double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
     double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
-    double length = combinedVec.lengthVector();
+    double length = combinedVec.length();
     length = length * (timer / (TileEntityLaser.MAX_TIMER * 1.0));
     GlStateManager.pushMatrix();
     GlStateManager.disableLighting();

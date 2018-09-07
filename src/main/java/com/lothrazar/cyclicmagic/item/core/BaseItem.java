@@ -36,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BaseItem extends Item {
 
   protected String getTooltip() {
-    return this.getUnlocalizedName() + ".tooltip";
+    return this.getTranslationKey() + ".tooltip";
   }
 
   @SideOnly(Side.CLIENT)

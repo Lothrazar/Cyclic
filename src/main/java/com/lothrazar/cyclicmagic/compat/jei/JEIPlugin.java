@@ -109,7 +109,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
+      registry.addDescription(new ItemStack(item), item.getTranslationKey() + ".guide");
     }
     //end of Info tab
   }

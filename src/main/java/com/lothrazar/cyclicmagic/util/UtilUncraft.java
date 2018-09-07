@@ -97,7 +97,7 @@ public class UtilUncraft {
           }
         }
       case MODNAME:
-        String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
+        String modId = item.getRegistryName().getNamespace();// the minecraft part of minecraft:wool (without colon)
         for (String s : blacklistMod) {//dont use .contains on the list. must use .equals on string
           if (s != null && s.equals(modId)) {
             return true;

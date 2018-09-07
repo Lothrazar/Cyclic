@@ -99,7 +99,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
       //and save dimension
       UtilNBT.setItemStackNBTVal(stack, "LeverDim", playerIn.dimension);
       if (worldIn.isRemote) {
-        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".saved");
+        UtilChat.sendStatusMessage(playerIn, this.getTranslationKey() + ".saved");
       }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
       return EnumActionResult.SUCCESS;
@@ -135,7 +135,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
     //default is zero which is ok
     if (blockPos == null) {
       if (world.isRemote) {
-        UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
+        UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
       }
       return false;
     }
@@ -145,14 +145,14 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
       IBlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {
-          UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
+          UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
         }
         return false;
       }
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
       UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
-      UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
       UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       player.getCooldownTracker().setCooldown(this, 20);
       return true;
@@ -177,7 +177,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
         IBlockState blockState = dw.getBlockState(blockPos);
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
         UtilWorld.toggleLeverPowerState(dw, blockPos, blockState);
-        ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
+        ModCyclic.network.sendTo(new PacketChat(this.getTranslationKey() + ".powered." + hasPowerHere, true), mp);
         UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
         player.getCooldownTracker().setCooldown(this, 20);
         return true;

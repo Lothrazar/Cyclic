@@ -84,12 +84,12 @@ public class RecipeRegistry {
   public static class Util1pt12 {
 
     public static ResourceLocation buildName(ItemStack output) {
-      ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
+      ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getTranslationKey());
       int limit = 999;
       int index = 0;
       while (usedRecipeNames.containsKey(firstTry.toString()) || index > limit) {
         index++;
-        firstTry = new ResourceLocation(Const.MODID, firstTry.getResourcePath() + "_" + index);
+        firstTry = new ResourceLocation(Const.MODID, firstTry.getPath() + "_" + index);
       }
       usedRecipeNames.put(firstTry.toString(), true);
       return firstTry;
@@ -156,7 +156,7 @@ public class RecipeRegistry {
       }
     }
     ResourceLocation location = Util1pt12.buildName(output);
-    ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, Util1pt12.convertToNonNullList(recipeComponents));
+    ShapelessRecipes recipe = new ShapelessRecipes(location.getNamespace(), output, Util1pt12.convertToNonNullList(recipeComponents));
     add(recipe, location);
     return recipe;
   }
@@ -222,9 +222,9 @@ public class RecipeRegistry {
     if (ModCyclic.logger.runUnitTests()) {//OMG UNIT TESTING WAAT
       ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
       if (output0.getItem() == output.getItem())
-        ModCyclic.logger.logTestResult("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe succefully registered and working: " + output.getTranslationKey());
       else {
-        ModCyclic.logger.logTestResult("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe FAILED to register" + output.getTranslationKey());
       }
     }
     return recipe;

@@ -121,7 +121,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     int yFloor = MathHelper.floor(entity.posY);
     double posWithinBlock = entity.posY - yFloor;
     TileEntityVector tile = (TileEntityVector) worldIn.getTileEntity(pos);
@@ -257,7 +257,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   //END OF ITEMBLOCK DATA
   @SideOnly(Side.CLIENT)
   @Override
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
 

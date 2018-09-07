@@ -173,7 +173,7 @@ public class BlockAppleCrop extends BlockBase implements IGrowable, IHasRecipe, 
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 

@@ -193,18 +193,18 @@ public class UtilItemStack {
 
   public static @Nonnull String getStringForItemStack(ItemStack itemStack) {
     Item item = itemStack.getItem();
-    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath() + "/" + itemStack.getMetadata();
+    return item.getRegistryName().getNamespace() + ":" + item.getRegistryName().getPath() + "/" + itemStack.getMetadata();
   }
 
   public static String getStringForItem(Item item) {
     if (item == null || item.getRegistryName() == null) {
       return "";
     }
-    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
+    return item.getRegistryName().getNamespace() + ":" + item.getRegistryName().getPath();
   }
 
   public static String getStringForBlock(Block b) {
-    return b.getRegistryName().getResourceDomain() + ":" + b.getRegistryName().getResourcePath();
+    return b.getRegistryName().getNamespace() + ":" + b.getRegistryName().getPath();
   }
 
   public static void dropBlockState(World world, BlockPos position, IBlockState current) {

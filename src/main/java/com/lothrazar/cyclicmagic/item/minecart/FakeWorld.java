@@ -115,8 +115,8 @@ public class FakeWorld extends World {
   }
 
   @Override
-  public Chunk getChunkFromChunkCoords(int chunkX, int chunkZ) {
-    return this.getCartWorld().getChunkFromChunkCoords(chunkX, chunkZ);
+  public Chunk getChunk(int chunkX, int chunkZ) {
+    return this.getCartWorld().getChunk(chunkX, chunkZ);
   }
 
   @Override

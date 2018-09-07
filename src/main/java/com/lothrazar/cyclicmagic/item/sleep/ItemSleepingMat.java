@@ -119,7 +119,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IContent, I
     //hack because vanilla/forge has that java.lang.IllegalArgumentException: Cannot get property PropertyDirection error with assuming its a bed when its blocks.air
     ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, true, "sleeping", "field_71083_bS");
     ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, 0, "sleepTimer", "field_71076_b");
-    UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".trying");
+    UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".trying");
     //first set bed location
     player.bedLocation = player.getPosition();
     ModCyclic.network.sendTo(new PacketSleepClient(player.bedLocation), player);
@@ -221,8 +221,8 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IContent, I
   }
 
   public static void setRenderOffsetForSleep(EntityPlayer mp, EnumFacing fac) {
-    mp.renderOffsetX = -1.8F * fac.getFrontOffsetX();
-    mp.renderOffsetZ = -1.8F * fac.getFrontOffsetZ();
+    mp.renderOffsetX = -1.8F * fac.getXOffset();
+    mp.renderOffsetZ = -1.8F * fac.getZOffset();
     try {
       //stupid private functions in entity player
       Method m = ReflectionHelper.findMethod(Entity.class, "setSize", "func_70105_a", float.class, float.class);

@@ -60,7 +60,7 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 

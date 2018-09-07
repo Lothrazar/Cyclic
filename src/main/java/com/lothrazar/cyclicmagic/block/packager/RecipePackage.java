@@ -36,7 +36,7 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
         input.set(i, in[i]);
     }
     output = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "packager" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "packager" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   public NonNullList<ItemStack> getInput() {
