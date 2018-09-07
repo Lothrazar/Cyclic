@@ -111,6 +111,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   }
 
   @Override
+  @Deprecated
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     final double heightInc = 0.0125D;
     final double sideInc = heightInc;

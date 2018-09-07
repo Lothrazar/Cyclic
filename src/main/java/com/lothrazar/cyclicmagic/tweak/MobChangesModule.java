@@ -90,8 +90,9 @@ public class MobChangesModule extends BaseEventModule implements IHasConfig {
           EntityEnderman.setCarriable(registeredBlock, false);
         }
         catch (Exception e) {
-          ModCyclic.logger.error("MobChangesModule: error trying to disable enderman pickup ability on ",
-              registeredBlock.getTranslationKey());
+
+          ModCyclic.logger.error("MobChangesModule: error trying to disable enderman pickup ability on ", registeredBlock.getTranslationKey());
+
           e.printStackTrace();
         }
       }
