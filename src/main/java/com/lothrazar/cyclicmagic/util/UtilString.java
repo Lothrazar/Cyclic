@@ -46,7 +46,9 @@ public class UtilString {
     if (toMatch == null) {
       return false;
     }
-    String id = toMatch.getNamespace().toString();
+
+    String id = toMatch.getNamespace();
+
     for (String strFromList : list) {
       if (strFromList.equals(id)) {
         return true;

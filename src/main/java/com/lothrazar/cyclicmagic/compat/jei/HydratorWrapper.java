@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
@@ -25,8 +26,8 @@ public class HydratorWrapper implements IRecipeWrapper {
     for (ItemStack wtf : src.getRecipeInput()) {
       ing.add(wtf.copy());
     }
-    ingredients.setInputs(ItemStack.class, ing);
-    ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
+    ingredients.setInputs(VanillaTypes.ITEM, ing);
+    ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
   }
   //  public int size() {
   //    int size = 0;

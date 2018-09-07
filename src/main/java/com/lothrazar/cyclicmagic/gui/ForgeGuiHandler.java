@@ -146,9 +146,6 @@ import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.block.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.block.vector.GuiVector;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
-import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
-import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
-import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
@@ -161,8 +158,6 @@ import com.lothrazar.cyclicmagic.item.signcolor.GuiSignEditor;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.GuiStorage;
 import com.lothrazar.cyclicmagic.item.storagesack.InventoryStorage;
-import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
@@ -243,8 +238,8 @@ public class ForgeGuiHandler implements IGuiHandler {
         return null;
       case GUI_INDEX_EXTENDED:
         return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player);
-      case GUI_INDEX_PWORKBENCH:
-        return new ContainerPlayerExtWorkbench(player.inventory, player);
+//      case GUI_INDEX_PWORKBENCH:
+//        return CompatFastBench.LOADED ? new ContainerFastPlayerBench(player, world) : new ContainerPlayerExtWorkbench(player.inventory, player);
       case GUI_INDEX_WAND:
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
@@ -347,11 +342,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerCrafter(player.inventory, (TileEntityCrafter) te);
         }
       break;
-      case GUI_INDEX_WORKBENCH:
-        if (te instanceof TileEntityWorkbench) {
-          return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
-        }
-      break;
+//      case GUI_INDEX_WORKBENCH:
+//        if (te instanceof TileEntityWorkbench) {
+//          return CompatFastBench.LOADED ? new ContainerFastWorkbench(player, world, (TileEntityWorkbench) te) : new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
+//        }
+//      break;
       case GUI_INDEX_HYDRATOR:
         if (te instanceof TileEntityHydrator) {
           return new ContainerHydrator(player.inventory, (TileEntityHydrator) te);
@@ -491,8 +486,8 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));
         case GUI_INDEX_EXTENDED:
           return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player));
-        case GUI_INDEX_PWORKBENCH:
-          return new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
+//        case GUI_INDEX_PWORKBENCH:
+//          return CompatFastBench.LOADED ? new GuiFastPlayerBench(player) : new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
         case GUI_INDEX_WAND:
           ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
           return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
@@ -586,11 +581,11 @@ public class ForgeGuiHandler implements IGuiHandler {
             return new GuiCrafter(player.inventory, (TileEntityCrafter) te);
           }
         break;
-        case GUI_INDEX_WORKBENCH:
-          if (te instanceof TileEntityWorkbench) {
-            return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
-          }
-        break;
+//        case GUI_INDEX_WORKBENCH:
+//          if (te instanceof TileEntityWorkbench) {
+//            return CompatFastBench.LOADED ? new GuiFastWorkbench(player.inventory, world, (TileEntityWorkbench) te) : new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
+//          }
+//        break;
         case GUI_INDEX_HYDRATOR:
           if (te instanceof TileEntityHydrator) {
             return new GuiHydrator(player.inventory, (TileEntityHydrator) te);

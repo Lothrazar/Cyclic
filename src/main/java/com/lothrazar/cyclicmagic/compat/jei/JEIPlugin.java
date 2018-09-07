@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbe
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
@@ -51,7 +52,6 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
   static final String RECIPE_CATEGORY_DEHYDRATOR = "dehydrator";
   static final String RECIPE_CATEGORY_PACKAGER = "packager";
 
-  @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's
@@ -92,24 +92,24 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
     // End Custom recipe type: Hydrator
     // Packager
     registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
     registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
     registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
     //DEHydrator
     registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
     registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
     registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
-      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      registry.addDescription(new ItemStack(item), item.getTranslationKey() + ".guide");
+      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview 
+      registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, item.getTranslationKey() + ".guide");
     }
     //end of Info tab
   }

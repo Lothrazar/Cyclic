@@ -100,9 +100,11 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
    */
   public IPosition getDispensePosition(IBlockSource coords) {
     EnumFacing enumfacing = this.getFacing(coords.getBlockState());
+
     double d0 = coords.getX() + 0.7D * enumfacing.getXOffset();
     double d1 = coords.getY() + 0.7D * enumfacing.getYOffset();
     double d2 = coords.getZ() + 0.7D * enumfacing.getZOffset();
+
     return new PositionImpl(d0, d1, d2);
   }
 
@@ -118,12 +120,14 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     }
     EntityItem entityitem = new EntityItem(worldIn, d0, d1, d2, stack);
     double d3 = worldIn.rand.nextDouble() * 0.1D + 0.2D;
+
     entityitem.motionX = facing.getXOffset() * d3;
     entityitem.motionY = 0.20000000298023224D;
     entityitem.motionZ = facing.getZOffset() * d3;
     entityitem.motionX += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
     entityitem.motionY += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
     entityitem.motionZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
+
     worldIn.spawnEntity(entityitem);
   }
 
