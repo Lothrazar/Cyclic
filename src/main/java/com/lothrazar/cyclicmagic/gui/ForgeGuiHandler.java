@@ -146,6 +146,9 @@ import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastWorkbench;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
@@ -166,6 +169,7 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
+
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
@@ -345,7 +349,7 @@ public class ForgeGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_WORKBENCH:
         if (te instanceof TileEntityWorkbench) {
-          return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
+          return CompatFastBench.LOADED ? new ContainerFastWorkbench(player, world, (TileEntityWorkbench) te) : new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
         }
       break;
       case GUI_INDEX_HYDRATOR:
@@ -579,7 +583,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_WORKBENCH:
           if (te instanceof TileEntityWorkbench) {
-            return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
+            return CompatFastBench.LOADED ? new GuiFastWorkbench(player.inventory, world, (TileEntityWorkbench) te) : new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
           }
         break;
         case GUI_INDEX_HYDRATOR:
