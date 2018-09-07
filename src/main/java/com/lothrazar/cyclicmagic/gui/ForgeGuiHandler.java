@@ -147,7 +147,9 @@ import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastWorkbench;
 import com.lothrazar.cyclicmagic.core.util.UtilEntity;
 import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
@@ -244,7 +246,7 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_EXTENDED:
         return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player);
       case GUI_INDEX_PWORKBENCH:
-        return new ContainerPlayerExtWorkbench(player.inventory, player);
+        return CompatFastBench.LOADED ? new ContainerFastPlayerBench(player, world) : new ContainerPlayerExtWorkbench(player.inventory, player);
       case GUI_INDEX_WAND:
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
@@ -487,7 +489,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_EXTENDED:
           return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player));
         case GUI_INDEX_PWORKBENCH:
-          return new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
+          return CompatFastBench.LOADED ? new GuiFastPlayerBench(player) : new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
         case GUI_INDEX_WAND:
           ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
           return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);

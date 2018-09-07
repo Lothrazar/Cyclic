@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference;
 import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.core.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,12 +39,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
 
   protected NonNullList<ItemStack> inv;
-  private ContainerPlayerExtWorkbench eventHandler;
+  private Container eventHandler;
   public WeakReference<EntityPlayer> player;
   public static final int IROW = 3;
   public static final int ICOL = 3;
 
-  public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
+  public InventoryPlayerExtWorkbench(Container containerPlayerExtWorkbench, EntityPlayer player) {
     super(containerPlayerExtWorkbench, 3, 3);
     this.eventHandler = containerPlayerExtWorkbench;
     inv = NonNullList.withSize(IROW * ICOL + 5, ItemStack.EMPTY);//5 armor + 3x3
