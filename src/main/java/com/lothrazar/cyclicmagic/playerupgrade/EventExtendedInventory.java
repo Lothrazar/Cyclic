@@ -62,7 +62,7 @@ public class EventExtendedInventory {
         || gui instanceof GuiScreenHorseInventory
         || gui.getClass().getName().equals("com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench")) {
       // gui left and top are private, so are the sizes
-      ModCyclic.logger.log("!!!! ");
+
       int xSize = 176;
       int ySize = 166;
       int guiLeft = (gui.width - xSize) / 2;

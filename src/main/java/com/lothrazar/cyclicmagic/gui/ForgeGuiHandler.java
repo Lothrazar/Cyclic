@@ -146,9 +146,14 @@ import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.block.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.block.vector.GuiVector;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
+import com.lothrazar.cyclicmagic.block.workbench.GuiWorkbench;
+import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
 import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastWorkbench;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
@@ -347,11 +352,11 @@ public class ForgeGuiHandler implements IGuiHandler {
           return new ContainerCrafter(player.inventory, (TileEntityCrafter) te);
         }
       break;
-//      case GUI_INDEX_WORKBENCH:
-//        if (te instanceof TileEntityWorkbench) {
-//          return CompatFastBench.LOADED ? new ContainerFastWorkbench(player, world, (TileEntityWorkbench) te) : new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
-//        }
-//      break;
+      case GUI_INDEX_WORKBENCH:
+        if (te instanceof TileEntityWorkbench) {
+          return CompatFastBench.LOADED ? new ContainerFastWorkbench(player, world, (TileEntityWorkbench) te) : new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te);
+        }
+      break;
       case GUI_INDEX_HYDRATOR:
         if (te instanceof TileEntityHydrator) {
           return new ContainerHydrator(player.inventory, (TileEntityHydrator) te);
@@ -586,11 +591,11 @@ public class ForgeGuiHandler implements IGuiHandler {
             return new GuiCrafter(player.inventory, (TileEntityCrafter) te);
           }
         break;
-//        case GUI_INDEX_WORKBENCH:
-//          if (te instanceof TileEntityWorkbench) {
-//            return CompatFastBench.LOADED ? new GuiFastWorkbench(player.inventory, world, (TileEntityWorkbench) te) : new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
-//          }
-//        break;
+        case GUI_INDEX_WORKBENCH:
+          if (te instanceof TileEntityWorkbench) {
+            return CompatFastBench.LOADED ? new GuiFastWorkbench(player.inventory, world, (TileEntityWorkbench) te) : new GuiWorkbench(player.inventory, (TileEntityWorkbench) te);
+          }
+        break;
         case GUI_INDEX_HYDRATOR:
           if (te instanceof TileEntityHydrator) {
             return new GuiHydrator(player.inventory, (TileEntityHydrator) te);
