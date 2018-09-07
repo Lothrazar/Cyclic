@@ -87,7 +87,7 @@ public class UtilEntity {
   public static void teleportWallSafe(EntityLivingBase player, World world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     world.markBlockRangeForRenderUpdate(coords, coords);
-    world.getChunkFromBlockCoords(coords).setModified(true);
+    world.getChunk(coords).setModified(true);
     player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
   }
@@ -139,7 +139,7 @@ public class UtilEntity {
     yaw %= 360; // and this one if you want a strict interpretation of the
     // zones
     int facing = yaw / 45; // 360degrees divided by 45 == 8 zones
-    return EnumFacing.getHorizontal(facing / 2);
+    return EnumFacing.byHorizontalIndex(facing / 2);
   }
 
   public static double getSpeedTranslated(double speed) {

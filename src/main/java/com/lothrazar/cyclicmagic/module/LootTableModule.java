@@ -126,7 +126,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   //  }
   private void addLoot(LootPool main, Item item, int rando) {
     if (item != null) {//shortcut fix bc of new module config system that can delete items   
-      main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
+      main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getTranslationKey()));
     }
   }
 

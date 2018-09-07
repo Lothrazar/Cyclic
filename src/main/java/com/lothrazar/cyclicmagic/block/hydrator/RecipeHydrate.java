@@ -68,7 +68,7 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
     this.fluidCost = w;
     this.resultItem = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   @Override

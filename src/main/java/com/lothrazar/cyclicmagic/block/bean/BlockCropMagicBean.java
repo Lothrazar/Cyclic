@@ -205,7 +205,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
       if (drop == null || drop.getItem() == null) {
         continue;
       }
-      String resource = drop.getItem().getRegistryName().getResourceDomain() + ":" + drop.getItem().getRegistryName().getResourcePath();
+      String resource = drop.getItem().getRegistryName().getNamespace() + ":" + drop.getItem().getRegistryName().getPath();
       if (drop.getMetadata() > 0) {
         resource += "*" + drop.getMetadata();
       }

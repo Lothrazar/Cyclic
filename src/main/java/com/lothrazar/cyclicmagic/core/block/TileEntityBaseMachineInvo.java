@@ -290,7 +290,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       ModCyclic.logger.error(" null blockType:" + this.getClass().getName());
       return "";
     }
-    return this.getBlockType().getUnlocalizedName() + ".name";
+    return this.getBlockType().getTranslationKey() + ".name";
   }
 
   @Override

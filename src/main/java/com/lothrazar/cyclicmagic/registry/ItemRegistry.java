@@ -65,7 +65,7 @@ public class ItemRegistry {
   public static List<Item> itemList = new ArrayList<Item>();
 
   public static void register(Item item, String key, GuideCategory cat) {
-    item.setUnlocalizedName(key);
+    item.setTranslationKey(key);
     item.setRegistryName(new ResourceLocation(Const.MODID, key));
     itemList.add(item);
     item.setCreativeTab(ModCyclic.TAB);
@@ -141,7 +141,7 @@ public class ItemRegistry {
       if (item instanceof ItemBlock) {
         continue;
       }
-      name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
+      name = Const.MODRES + item.getTranslationKey().replaceAll("item.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
     }
     Item item;
@@ -149,12 +149,12 @@ public class ItemRegistry {
       item = Item.getItemFromBlock(b);
       if (b instanceof BlockCableBase) {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
-            new ResourceLocation(Const.MODID, b.getUnlocalizedName().replaceAll("tile.", "")), "inventory"));
+            new ResourceLocation(Const.MODID, b.getTranslationKey().replaceAll("tile.", "")), "inventory"));
         ModelLoader.setCustomStateMapper(b, STATE_MAPPER);
         //TODO: CABLE REGISTRY OR SOMETHING
         continue;
       }
-      name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
+      name = Const.MODRES + b.getTranslationKey().replaceAll("tile.", "");
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name, "inventory"));
       ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(name));
       if (b instanceof IBlockHasTESR) {

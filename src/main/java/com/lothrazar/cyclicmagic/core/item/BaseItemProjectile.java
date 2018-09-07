@@ -60,7 +60,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     if (!world.isRemote) {
       // func_184538_a
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
-      thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
+      thing.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
       world.spawnEntity(thing);
     }
     player.swingArm(hand);

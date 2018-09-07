@@ -141,10 +141,10 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe {
   }
 
   @Override
-  public float getStrVsBlock(ItemStack stack, IBlockState state) {
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
     Block block = state.getBlock();
     if (block != Blocks.WEB && state.getMaterial() != Material.LEAVES) {
-      return block == Blocks.WOOL ? 5.0F : super.getStrVsBlock(stack, state);
+      return block == Blocks.WOOL ? 5.0F : super.getDestroySpeed(stack, state);
     }
     else {
       return 15.0F;

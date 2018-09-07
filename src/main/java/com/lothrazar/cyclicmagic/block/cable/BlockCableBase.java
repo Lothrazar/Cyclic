@@ -300,7 +300,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     for (AxisAlignedBB box : boxes) {
       RayTraceResult result = box.calculateIntercept(a, b);
       if (result != null) {
-        Vec3d vec = result.hitVec.addVector(x, y, z);
+        Vec3d vec = result.hitVec.add(x, y, z);
         results.add(new RayTraceResult(vec,
             result.sideHit, pos));
       }
@@ -319,7 +319,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT_MIPPED;
   }
 

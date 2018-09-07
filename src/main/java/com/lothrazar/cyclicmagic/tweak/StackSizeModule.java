@@ -78,7 +78,7 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.itemsTack;
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
-      String name = entry.getKey().getUnlocalizedName();
+      String name = entry.getKey().getTranslationKey();
       int enabled = config.getBoolean(name, category, true, "Increase stack size to " + entry.getValue()) ? 1 : 0;
       enabledMap.put(entry.getKey(), enabled);
     }

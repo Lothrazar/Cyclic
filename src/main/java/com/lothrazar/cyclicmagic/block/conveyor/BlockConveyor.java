@@ -166,7 +166,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }
@@ -279,7 +279,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   //below is all for facing
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    EnumFacing facing = EnumFacing.getHorizontal(meta);
+    EnumFacing facing = EnumFacing.byHorizontalIndex(meta);
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
 

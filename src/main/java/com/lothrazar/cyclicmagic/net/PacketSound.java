@@ -51,8 +51,8 @@ public class PacketSound implements IMessage, IMessageHandler<PacketSound, IMess
   public PacketSound(BlockPos p, SoundEvent t, SoundCategory cat) {
     pos = p;
     ResourceLocation r = t.getRegistryName();
-    domain = r.getResourceDomain();
-    type = r.getResourcePath();
+    domain = r.getNamespace();
+    type = r.getPath();
     category = cat.getName(); //SoundCategory.BLOCKS.getName()
   }
 

@@ -126,8 +126,8 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
       x += vec3d.x - d0;
       y += (vec3d1.y + vec3d2.y) / 2.0D - d1;
       z += vec3d.z - d2;
-      Vec3d vec3d3 = vec3d2.addVector(-vec3d1.x, -vec3d1.y, -vec3d1.z);
-      if (vec3d3.lengthVector() != 0.0D) {
+      Vec3d vec3d3 = vec3d2.add(-vec3d1.x, -vec3d1.y, -vec3d1.z);
+      if (vec3d3.length() != 0.0D) {
         vec3d3 = vec3d3.normalize();
         entityYaw = (float) (Math.atan2(vec3d3.z, vec3d3.x) * 180.0D / Math.PI);
         f3 = (float) (Math.atan(vec3d3.y) * 73.0D);

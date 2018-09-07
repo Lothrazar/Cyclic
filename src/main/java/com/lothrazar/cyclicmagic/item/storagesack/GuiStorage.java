@@ -69,7 +69,7 @@ public class GuiStorage extends GuiBaseContainer {
     for (EnumDyeColor color : EnumDyeColor.values()) {
       GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
           size, size, color.name().substring(0, 1));
-      buttonColour.setTooltip(UtilChat.lang("colour." + color.getUnlocalizedName() + ".name"));
+      buttonColour.setTooltip(UtilChat.lang("colour." + color.getTranslationKey() + ".name"));
       buttonColour.packedFGColour = color.getColorValue();
       this.addButton(buttonColour);
       i++;

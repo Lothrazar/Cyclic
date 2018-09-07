@@ -52,6 +52,6 @@ public class ItemBlockWireless extends ItemBlock {
         return;
       }
     }
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 }

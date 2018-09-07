@@ -70,7 +70,7 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, IHa
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltips.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 
   @Override

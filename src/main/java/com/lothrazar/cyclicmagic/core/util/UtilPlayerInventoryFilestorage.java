@@ -115,7 +115,7 @@ public class UtilPlayerInventoryFilestorage {
             e.printStackTrace();
           }
         }
-        if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
+        if (file1 == null || !file1.exists() || data == null || data.isEmpty()) {
           ModCyclic.logger.error("Data not found for " + player.getDisplayNameString());//+ ". Trying to load backup data."
           //          if (file2 != null && file2.exists()) {
           //            try {

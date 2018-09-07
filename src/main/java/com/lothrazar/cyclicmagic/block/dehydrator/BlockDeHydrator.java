@@ -65,7 +65,7 @@ public class BlockDeHydrator extends BlockBaseFacing implements IHasConfig, IHas
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 

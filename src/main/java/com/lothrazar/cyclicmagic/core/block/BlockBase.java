@@ -57,7 +57,7 @@ public abstract class BlockBase extends Block {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     if (myTooltip == null) {
-      myTooltip = this.getUnlocalizedName() + ".tooltip";
+      myTooltip = this.getTranslationKey() + ".tooltip";
     }
     tooltip.add(UtilChat.lang(myTooltip));
   }
@@ -69,10 +69,10 @@ public abstract class BlockBase extends Block {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     if (this.isTransp)
       return BlockRenderLayer.TRANSLUCENT;
     else
-      return super.getBlockLayer(); // SOLID
+      return super.getRenderLayer(); // SOLID
   }
 }

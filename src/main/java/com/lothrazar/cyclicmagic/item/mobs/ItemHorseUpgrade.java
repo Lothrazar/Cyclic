@@ -77,7 +77,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       return;
     } // just being safe
     Item carrot = stack.getItem();
-    tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
+    tooltip.add(UtilChat.lang(carrot.getTranslationKey(stack) + ".effect"));
   }
 
   @Override

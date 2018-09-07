@@ -88,7 +88,7 @@ public class EnchantMultishot extends EnchantBase {
     entityarrow.posX += offsetVector.x;
     entityarrow.posY += offsetVector.y;
     entityarrow.posZ += offsetVector.z;
-    entityarrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, charge * 3.0F, 1.0F);
+    entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, charge * 3.0F, 1.0F);
     //from ItemBow vanilla class
     if (charge == 1.0F) {
       entityarrow.setIsCritical(true);

@@ -53,7 +53,7 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
 
   public BaseTESR(@Nullable Block block) {
     if (block != null)
-      resource = "tesr/" + block.getUnlocalizedName().replace("tile.", "").replace(".name", "");
+      resource = "tesr/" + block.getTranslationKey().replace("tile.", "").replace(".name", "");
   }
 
   @Nullable

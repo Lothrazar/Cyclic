@@ -49,7 +49,7 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
     recipeInput = in;
     resultItem = out;
     this.time = time;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   @Override

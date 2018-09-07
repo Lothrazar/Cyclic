@@ -133,7 +133,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
 
   @SideOnly(Side.CLIENT)
   @Override
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.TRANSLUCENT; // http://www.minecraftforge.net/forum/index.php?topic=18754.0
   }
 

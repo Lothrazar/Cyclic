@@ -84,7 +84,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       //removed  && entityPlayer.isSneaking() == false
       if (state != null && (state.getBlock() == Blocks.WALL_SIGN || state.getBlock() == Blocks.WALL_BANNER)) {
         // but NOT standing sign or standing banner
-        EnumFacing face = EnumFacing.getFront(state.getBlock().getMetaFromState(state));
+        EnumFacing face = EnumFacing.byIndex(state.getBlock().getMetaFromState(state));
         BlockPos posBehind = pos.offset(face.getOpposite());
         IBlockState stuffBehind = worldObj.getBlockState(posBehind);
         if (stuffBehind != null && stuffBehind.getBlock() != null && worldObj.getTileEntity(posBehind) != null) {

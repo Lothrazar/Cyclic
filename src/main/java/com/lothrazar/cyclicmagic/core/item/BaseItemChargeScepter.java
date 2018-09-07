@@ -239,7 +239,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   protected void launchProjectile(World world, EntityPlayer player, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
-      thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
+      thing.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
       world.spawnEntity(thing);
     }
     BlockPos pos = player.getPosition();

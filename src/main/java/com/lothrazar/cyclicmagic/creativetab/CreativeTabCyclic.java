@@ -58,7 +58,7 @@ public class CreativeTabCyclic extends CreativeTabs {
   }
 
   @Override
-  public ItemStack getTabIconItem() {
+  public ItemStack createIcon() {
     return tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(tabItem);
   }
 

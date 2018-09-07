@@ -38,11 +38,11 @@ public class ItemObsShears extends ItemShears implements IHasRecipe {
   }
 
   @Override
-  public float getStrVsBlock(ItemStack stack, IBlockState state) {
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
     Block block = state.getBlock();
     if (block == Blocks.MELON_BLOCK || block == Blocks.PUMPKIN) {
       return 15F;//
     }
-    return super.getStrVsBlock(stack, state);
+    return super.getDestroySpeed(stack, state);
   }
 }

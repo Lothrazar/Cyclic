@@ -156,7 +156,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       //also moving up so  not stuck in floor
       boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
       if (success) { // try and force chunk loading it it worked 
-        player.getEntityWorld().getChunkFromBlockCoords(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
+        player.getEntityWorld().getChunk(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
       }
     }
     return true;

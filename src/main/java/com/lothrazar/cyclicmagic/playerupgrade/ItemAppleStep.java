@@ -110,7 +110,7 @@ public class ItemAppleStep extends ItemFoodCreative implements IHasRecipe, IHasC
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     super.addInformation(stack, player, tooltip, advanced);
   }
 

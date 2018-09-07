@@ -24,7 +24,7 @@ minecraft {
 
 
     version = "${mc_version}-${forge_version}"
-    mappings = "snapshot_20170624"
+    mappings = "stable_39"
     runDir = "run"
     makeObfSourceJar = false
     useDepAts = true
@@ -92,10 +92,9 @@ repositories {
 dependencies {
   deobfCompile "mezz.jei:jei_${mc_version}:+"
   deobfCompile "mcp.mobius.waila:Hwyla:+"
-  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
-  deobfCompile "baubles:Baubles:1.12:1.5.2"
-  deobfCompile "fastworkbench:FastWorkbench:1.12.2:1.5.2"
-  deobfCompile name: "Baubles", version: "${baubles_version}"
+  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
+  deobfCompile "baubles:Baubles:1.12:${baubles_version}"
+  deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
   deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 }
 

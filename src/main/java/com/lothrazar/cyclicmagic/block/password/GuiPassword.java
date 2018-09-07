@@ -52,7 +52,7 @@ public class GuiPassword extends GuiBaseContainer {
     super(new ContainerPassword(tileEntity), tileEntity);
     ctr = (ContainerPassword) this.inventorySlots;
     this.ySize = 79;//texture size in pixels
-    namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
+    namePref = tileEntity.getBlockType().getTranslationKey() + ".";
   }
 
   @Override

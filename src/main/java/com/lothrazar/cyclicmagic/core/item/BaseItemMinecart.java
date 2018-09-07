@@ -90,9 +90,9 @@ public abstract class BaseItemMinecart extends BaseItem {
       }
       EnumFacing enumfacing = (EnumFacing) source.getBlockState().getValue(BlockDispenser.FACING);
       World world = source.getWorld();
-      double d0 = source.getX() + (double) enumfacing.getFrontOffsetX() * 1.125D;
-      double d1 = Math.floor(source.getY()) + (double) enumfacing.getFrontOffsetY();
-      double d2 = source.getZ() + (double) enumfacing.getFrontOffsetZ() * 1.125D;
+      double d0 = source.getX() + (double) enumfacing.getXOffset() * 1.125D;
+      double d1 = Math.floor(source.getY()) + (double) enumfacing.getYOffset();
+      double d2 = source.getZ() + (double) enumfacing.getZOffset() * 1.125D;
       BlockPos blockpos = source.getBlockPos().offset(enumfacing);
       IBlockState iblockstate = world.getBlockState(blockpos);
       BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = iblockstate.getBlock() instanceof BlockRailBase ? ((BlockRailBase) iblockstate.getBlock()).getRailDirection(world, blockpos, iblockstate, null) : BlockRailBase.EnumRailDirection.NORTH_SOUTH;

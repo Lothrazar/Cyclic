@@ -82,8 +82,8 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-    super.onEntityCollidedWithBlock(world, pos, state, entity);
+  public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+    super.onEntityCollision(world, pos, state, entity);
     //ignore vertical sides.
     double x = entity.posX - pos.getX();
     double z = entity.posZ - pos.getZ();

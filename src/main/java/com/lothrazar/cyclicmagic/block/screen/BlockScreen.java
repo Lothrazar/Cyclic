@@ -60,7 +60,7 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.SOLID;
   }
 
