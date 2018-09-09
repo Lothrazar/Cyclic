@@ -71,6 +71,9 @@ repositories {
 		url 'http://maven.blamejared.com'
 	}
 	maven {
+		url 'https://maven.mcmoddev.com/'
+	}
+	maven {
         url = "http://minecraft.curseforge.com/api/maven/"
     }
     maven {
@@ -102,20 +105,16 @@ repositories {
 }
 
 dependencies {
-<<<<<<< HEAD
 
-=======
->>>>>>> 218b81578bfc34a730260032586f299df1959e57
   deobfCompile "mezz.jei:jei_${mc_version}:+"
   deobfCompile "mcp.mobius.waila:Hwyla:+"
   deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
   deobfCompile "baubles:Baubles:1.12:${baubles_version}"
   deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
-<<<<<<< HEAD
-  
-=======
->>>>>>> 218b81578bfc34a730260032586f299df1959e57
   deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+
+  // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
+  // deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-${mc_version}-${ench_descr_version}:+"
 }
 
 processResources {
