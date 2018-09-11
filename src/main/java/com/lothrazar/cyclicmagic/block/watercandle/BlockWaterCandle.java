@@ -47,7 +47,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -116,22 +115,6 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     return false;
   }
 
-  @Override
-  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-    return false;
-  }
-
-  @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return null;
-  }
-
-  @Override
-  public int quantityDropped(Random rand) {
-    return 0;
-  }
-
-  //
   @Override
   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
     triggerUpdate(world, pos, rand);
