@@ -297,20 +297,23 @@ public class UtilEntity {
     return all;
   }
 
-  public static void speedupEntityIfMoving(EntityLivingBase entity, float factor) {
+  public static boolean speedupEntityIfMoving(EntityLivingBase entity, float factor) {
     if (entity.moveForward > 0) {
       if (entity.getRidingEntity() != null && entity.getRidingEntity() instanceof EntityLivingBase) {
         speedupEntity((EntityLivingBase) entity.getRidingEntity(), factor);
+        return true;
       }
       else {
         speedupEntity(entity, factor);
+        return true;
       }
     }
+    return false;
   }
 
   public static void speedupEntity(EntityLivingBase entity, float factor) {
-    entity.motionX += net.minecraft.util.math.MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
-    entity.motionZ += net.minecraft.util.math.MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
+    entity.motionX += MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
+    entity.motionZ += MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
   }
 
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
