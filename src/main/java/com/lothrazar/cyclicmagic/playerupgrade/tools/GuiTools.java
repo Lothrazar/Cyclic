@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic.playerupgrade.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
@@ -77,13 +79,15 @@ public class GuiTools extends GuiScreen {
     }
   }
 
+  Map<Integer, GuiButtonItemstack> buttons = new HashMap<>();
+
   private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
     btn = new GuiButtonItemstack(slot, cx, cy);
     ItemStack stack = inventory.getStackInSlot(slot).copy();
     btn.setStackRender(stack);
-    System.out.println(slot + " GUI " + stack);
     this.buttonList.add(btn);
+    buttons.put(slot, btn);
   }
 
   @Override
@@ -100,6 +104,14 @@ public class GuiTools extends GuiScreen {
     ItemStack curHotbar = player.inventory.getStackInSlot(this.player.inventory.currentItem);
     if (curHotbar.isEmpty() == false) {
       ModCyclic.proxy.renderItemOnScreen(curHotbar, mouseX, mouseY);
+    }
+    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;//+20 somehow magically fixes bottom row
+    for (int a = 0; a < size; a++) {
+      if (buttons.containsKey(a) && this.buttons.get(a) != null) {
+        GuiButtonItemstack button = this.buttons.get(a);
+        System.out.println(a + " REFRESH" + inventory.getStackInSlot(a));
+        button.setStackRender(inventory.getStackInSlot(a).copy());
+      }
     }
     drawButtonTooltips(mouseX, mouseY);
   }

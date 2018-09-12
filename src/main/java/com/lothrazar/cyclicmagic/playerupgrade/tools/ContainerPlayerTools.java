@@ -41,13 +41,22 @@ public class ContainerPlayerTools extends ContainerBase {
   public ContainerPlayerTools(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
     this.player = player;
     eInvo.setEventHandler(this);
-    //    if (player.getEntityWorld().isRemote == false) {
-      //if serverside 
+    //        if (player.getEntityWorld().isRemote == false) {
+    //if serverside  
       UtilPlayerInventoryFilestorage.putDataIntoInventory(eInvo, player);
+
       this.detectAndSendChanges();
       //
-    //    }
+    //        }
     setInventory(eInvo);
+    UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
+    if (player.getEntityWorld().isRemote == false) {
+    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;//+20 somehow magically fixes bottom row
+    for (int a = 0; a < size; a++) {
+      System.out.println(a + " SYNC" + inventory.getStackInSlot(a));
+      inventory.syncSlotToClients(a);
+    }
+    }
   }
 
   public void setInventory(InventoryPlayerExtended inv) {
