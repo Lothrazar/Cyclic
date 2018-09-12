@@ -29,11 +29,10 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
 
 public class ContainerPlayerTools extends ContainerBase {
 
-  public InventoryPlayerExtended inventory;
+  private InventoryPlayerExtended inventory;
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
   final int pad = Const.PAD;
@@ -41,30 +40,25 @@ public class ContainerPlayerTools extends ContainerBase {
 
   public ContainerPlayerTools(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
     this.player = player;
-
-    inventory = eInvo;// UtilPlayerInventoryFilestorage.getPlayerInventory(player);
-
-    inventory.setEventHandler(this);
-    //    if (!player.getEntityWorld().isRemote) {
-      UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
+    eInvo.setEventHandler(this);
+    //    if (player.getEntityWorld().isRemote == false) {
+      //if serverside 
+      UtilPlayerInventoryFilestorage.putDataIntoInventory(eInvo, player);
+      this.detectAndSendChanges();
+      //
     //    }
-    //  extended 9-44 so that works
-    int xPos, yPos, sl = 0;
-    for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
-      for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
-        xPos = pad + j * SQ;
-        yPos = pad + i * SQ;
-        sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
-        System.out.println(sl + " !TOOLS  " + inventory.inv.get(sl));
-        this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
-      }
-    }
-
-
+    setInventory(eInvo);
   }
 
+  public void setInventory(InventoryPlayerExtended inv) {
+    inventory = inv;
+  }
 
   public EntityPlayer getPlayer() {
     return player;
+  }
+
+  public InventoryPlayerExtended getInv() {
+    return inventory;
   }
 }

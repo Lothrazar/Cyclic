@@ -31,7 +31,7 @@ public class GuiTools extends GuiScreen {
   public GuiTools(ContainerPlayerTools ctr) {
     super();
     this.player = ctr.getPlayer();
-    inventory = ctr.inventory;
+    inventory = ctr.getInv();
   }
 
   @Override
