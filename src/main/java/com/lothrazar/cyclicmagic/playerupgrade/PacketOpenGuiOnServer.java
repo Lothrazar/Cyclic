@@ -24,25 +24,42 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketOpenExtendedInventory implements IMessage, IMessageHandler<PacketOpenExtendedInventory, IMessage> {
+public class PacketOpenGuiOnServer implements IMessage, IMessageHandler<PacketOpenGuiOnServer, IMessage> {
 
-  public PacketOpenExtendedInventory() {}
+  private int guiId;
+
+  public PacketOpenGuiOnServer() {}
+
+  public PacketOpenGuiOnServer(int guiId) {
+    this.guiId = guiId;
+  }
 
   @Override
-  public void toBytes(ByteBuf buffer) {}
+  public void fromBytes(ByteBuf buf) {
+    NBTTagCompound tags = ByteBufUtils.readTag(buf);
+    guiId = tags.getInteger("gui");
+  }
 
   @Override
-  public void fromBytes(ByteBuf buffer) {}
+  public void toBytes(ByteBuf buf) {
+    NBTTagCompound tags = new NBTTagCompound();
+    tags.setInteger("gui", guiId);
+    ByteBufUtils.writeTag(buf, tags);
+  }
 
   @Override
-  public IMessage onMessage(PacketOpenExtendedInventory message, MessageContext ctx) {
-    ctx.getServerHandler().player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_EXTENDED, ctx.getServerHandler().player.getEntityWorld(), (int) ctx.getServerHandler().player.posX, (int) ctx.getServerHandler().player.posY, (int) ctx.getServerHandler().player.posZ);
+  public IMessage onMessage(PacketOpenGuiOnServer message, MessageContext ctx) {
+    ctx.getServerHandler().player.openGui(ModCyclic.instance, message.guiId, ctx.getServerHandler().player.getEntityWorld(),
+        (int) ctx.getServerHandler().player.posX,
+        (int) ctx.getServerHandler().player.posY,
+        (int) ctx.getServerHandler().player.posZ);
     return null;
   }
 }

@@ -171,6 +171,8 @@ import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.playerupgrade.tools.ContainerPlayerTools;
+import com.lothrazar.cyclicmagic.playerupgrade.tools.GuiTools;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -240,12 +242,15 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PACKAGER = 46;
   public static final int GUI_INDEX_DEHYDRATOR = 47;
   public static final int GUI_INDEX_LASER = 48;
+  public static final int GUI_INDEX_TOOLSWAPPER = 49;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
     TileEntity te = world.getTileEntity(p);
     switch (ID) {
+      case GUI_INDEX_TOOLSWAPPER:
+        return new ContainerPlayerTools(player.inventory, new InventoryPlayerExtended(player), player);
       case VANILLA_SIGN:
         return null;
       case GUI_INDEX_EXTENDED:
@@ -495,6 +500,8 @@ public class ForgeGuiHandler implements IGuiHandler {
     if (world instanceof WorldClient) {
       TileEntity te = world.getTileEntity(p);
       switch (ID) {
+        case GUI_INDEX_TOOLSWAPPER:
+          return new GuiTools(new ContainerPlayerTools(player.inventory, new InventoryPlayerExtended(player), player));
         case VANILLA_SIGN:
           return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));
         case GUI_INDEX_EXTENDED:

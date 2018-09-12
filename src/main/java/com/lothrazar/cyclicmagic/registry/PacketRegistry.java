@@ -69,8 +69,7 @@ import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -80,7 +79,8 @@ public class PacketRegistry {
 
   public static void register(SimpleNetworkWrapper network) {
     int packetID = 0;
-    network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);
+    packetID++;
+    //    network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);
     network.registerMessage(PacketOpenNormalInventory.class, PacketOpenNormalInventory.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncExtendedInventory.class, PacketSyncExtendedInventory.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSpellShiftLeft.class, PacketSpellShiftLeft.class, packetID++, Side.SERVER);
@@ -97,7 +97,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSwapPlayerStack.class, PacketSwapPlayerStack.class, packetID++, Side.SERVER);
     packetID++;
     packetID++;
-    network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketOpenGuiOnServer.class, PacketOpenGuiOnServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
     packetID++;//removed packets from a refactor . KEEP THESE lines so packet ids dont mismatch

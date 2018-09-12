@@ -6,6 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
+import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
@@ -20,17 +21,17 @@ import net.minecraft.item.ItemStack;
 /// https://github.com/PrinceOfAmber/Cyclic/blob/838b9b669a2d1644077d35a91d997a4d5dca0448/src/main/java/com/lothrazar/cyclicmagic/gui/GuiSpellbook.java
 public class GuiTools extends GuiScreen {
 
-  private static final int MIN_RADIUS = 26;
-  private static final int BTNCOUNT = 16;
+  // TODO: PacketOpenGuiOnServer
   private static final int YOFFSET = 15;
   private final EntityPlayer player;
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
+  private InventoryPlayerExtended inventory;
 
-  public GuiTools(EntityPlayer p) {
+  public GuiTools(ContainerPlayerTools ctr) {
     super();
-    this.player = p;
+    this.player = ctr.getPlayer();
   }
 
   @Override
@@ -44,6 +45,8 @@ public class GuiTools extends GuiScreen {
   @Override
   public void initGui() {
     super.initGui();
+    inventory = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+    //get from server then use
     xCenter = this.width / 2;
     yCenter = this.height / 2 - YOFFSET;
     int vspace = 22, hspace = 22;
@@ -78,7 +81,7 @@ public class GuiTools extends GuiScreen {
   private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
     btn = new GuiButtonItemstack(slot, cx, cy);
-    btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot).copy());
+    btn.setStackRender(inventory.getStackInSlot(slot).copy());
     this.buttonList.add(btn);
   }
 

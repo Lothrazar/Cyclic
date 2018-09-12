@@ -24,8 +24,9 @@
 package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
@@ -57,7 +58,7 @@ public class ButtonTabToggleCrafting extends GuiButtonTooltip {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtended) {
-        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
+        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.player));
