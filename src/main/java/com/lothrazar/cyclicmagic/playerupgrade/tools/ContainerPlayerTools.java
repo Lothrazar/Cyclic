@@ -33,29 +33,27 @@ import net.minecraft.inventory.Slot;
 
 public class ContainerPlayerTools extends ContainerBase {
 
-  public InventoryPlayerExtended inventory;
+  //  public InventoryPlayerExtended inventory;
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
   final int pad = Const.PAD;
   private EntityPlayer player;
 
   public ContainerPlayerTools(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
-    inventory = eInvo;
-    inventory.setEventHandler(this);
-    //if remote is false meaning server 
-    if (!player.getEntityWorld().isRemote) {
-      UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
-    }
     this.player = player;
-    System.out.println("TOOLS yes");
 
-    //  extended
+    //    player.gui 
+    //if remote is false meaning server 
+    InventoryPlayerExtended inventory = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+
+    //  extended 9-44 so that works
     int xPos, yPos, sl = 0;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
         xPos = pad + j * SQ;
         yPos = pad + i * SQ;
         sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
+        System.out.println(sl + " TOOLS  " + inventory.inv.get(sl));
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
     }
