@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.GameSettings;
@@ -32,6 +31,7 @@ public class GuiTools extends GuiScreen {
   public GuiTools(ContainerPlayerTools ctr) {
     super();
     this.player = ctr.getPlayer();
+    inventory = ctr.inventory;
   }
 
   @Override
@@ -45,7 +45,6 @@ public class GuiTools extends GuiScreen {
   @Override
   public void initGui() {
     super.initGui();
-    inventory = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
     //get from server then use
     xCenter = this.width / 2;
     yCenter = this.height / 2 - YOFFSET;
@@ -81,7 +80,9 @@ public class GuiTools extends GuiScreen {
   private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
     btn = new GuiButtonItemstack(slot, cx, cy);
-    btn.setStackRender(inventory.getStackInSlot(slot).copy());
+    ItemStack stack = inventory.getStackInSlot(slot).copy();
+    btn.setStackRender(stack);
+    System.out.println(slot + " GUI " + stack);
     this.buttonList.add(btn);
   }
 
