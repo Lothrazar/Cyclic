@@ -3,8 +3,10 @@ package com.lothrazar.cyclicmagic.compat.fastbench;
 import com.lothrazar.cyclicmagic.block.workbench.InventoryWorkbench;
 import com.lothrazar.cyclicmagic.block.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -44,6 +46,12 @@ public class ContainerFastWorkbench extends ContainerFastBench {
 		} else {
 			return playerIn.getDistanceSq(te.getPos().getX() + 0.5D, te.getPos().getY() + 0.5D, te.getPos().getZ() + 0.5D) <= 64.0D;
 		}
+	}
+	
+	@Override
+	public void onContainerClosed(EntityPlayer player) {
+		((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
+		super.onContainerClosed(player);
 	}
 
 }
