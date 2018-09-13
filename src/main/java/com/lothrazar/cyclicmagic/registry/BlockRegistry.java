@@ -65,7 +65,7 @@ public class BlockRegistry {
       b.setCreativeTab(ModCyclic.TAB);
     }
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
-    b.setUnlocalizedName(name);
+    b.setTranslationKey(name);
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }

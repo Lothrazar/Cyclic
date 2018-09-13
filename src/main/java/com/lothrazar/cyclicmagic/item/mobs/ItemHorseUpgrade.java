@@ -30,12 +30,12 @@ import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
@@ -77,7 +77,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       return;
     } // just being safe
     Item carrot = stack.getItem();
-    tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
+    tooltip.add(UtilChat.lang(carrot.getTranslationKey(stack) + ".effect"));
   }
 
   @Override

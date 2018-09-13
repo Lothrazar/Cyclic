@@ -147,7 +147,7 @@ public class ItemVillagerMagic extends BaseItem implements IHasRecipe, IContent 
   private void startConverting(EntityZombieVillager v, int t) {
     //      v.conversionTime = t;
     ObfuscationReflectionHelper.setPrivateValue(EntityZombieVillager.class, v, t, "conversionTime", "field_82234_d");
-    v.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, t, Math.min(v.world.getDifficulty().getDifficultyId() - 1, 0)));
+    v.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, t, Math.min(v.world.getDifficulty().getId() - 1, 0)));
     v.world.setEntityState(v, (byte) 16);
     try {
       //       v.getDataManager().set(CONVERTING, Boolean.valueOf(true));

@@ -78,7 +78,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
     ItemStack stack = player.getHeldItem(hand);
     if (world.isRemote == false) {
       EntityTorchBolt thing = new EntityTorchBolt(world, player);
-      thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, VELOCITY_DEFAULT, INACCURACY_DEFAULT);
+      thing.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, VELOCITY_DEFAULT, INACCURACY_DEFAULT);
       world.spawnEntity(thing);
     }
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);

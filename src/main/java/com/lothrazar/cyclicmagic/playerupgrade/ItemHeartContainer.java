@@ -119,7 +119,7 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
 
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 
   @Override

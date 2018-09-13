@@ -68,7 +68,7 @@ public class BlockDeHydrator extends BlockBaseFacing implements IContent, IHasRe
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 

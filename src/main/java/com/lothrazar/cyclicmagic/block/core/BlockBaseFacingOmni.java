@@ -57,7 +57,7 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
 
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.getFront(meta & 7));
+    return this.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.byIndex(meta & 7));
   }
 
   public EnumFacing getFacingFromState(IBlockState state) {

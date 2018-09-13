@@ -201,7 +201,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles,crafttweaker", canBeDeactivated = false, certificateFingerprint = "@FINGERPRINT@", updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "[1.12,)", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "required:forge@[14.23.4.2705,);before:guideapi;after:jei;after:baubles,crafttweaker;after:fastbench@[1.5.3,)", canBeDeactivated = false, certificateFingerprint = "@FINGERPRINT@", updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "[1.12,)", acceptedMinecraftVersions = "[1.12,)", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigFactory")
 public class ModCyclic {
 
   @Instance(value = Const.MODID)

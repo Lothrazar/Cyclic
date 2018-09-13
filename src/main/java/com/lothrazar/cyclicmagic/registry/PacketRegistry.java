@@ -63,14 +63,14 @@ import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
+import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -80,7 +80,8 @@ public class PacketRegistry {
 
   public static void register(SimpleNetworkWrapper network) {
     int packetID = 0;
-    network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);
+    packetID++;
+    //    network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, packetID++, Side.SERVER);
     network.registerMessage(PacketOpenNormalInventory.class, PacketOpenNormalInventory.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncExtendedInventory.class, PacketSyncExtendedInventory.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSpellShiftLeft.class, PacketSpellShiftLeft.class, packetID++, Side.SERVER);
@@ -97,7 +98,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSwapPlayerStack.class, PacketSwapPlayerStack.class, packetID++, Side.SERVER);
     packetID++;
     packetID++;
-    network.registerMessage(PacketOpenFakeWorkbench.class, PacketOpenFakeWorkbench.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketOpenGuiOnServer.class, PacketOpenGuiOnServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
     packetID++;//removed packets from a refactor . KEEP THESE lines so packet ids dont mismatch
@@ -130,7 +131,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketFluidSync.class, PacketFluidSync.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSwapPlayerHotbar.class, PacketSwapPlayerHotbar.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketTileFacingToggle.class, PacketTileFacingToggle.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketSyncToolslot.class, PacketSyncToolslot.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileSetField.class, PacketTileSetField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketStorageBag.class, PacketStorageBag.class, packetID++, Side.SERVER);
     network.registerMessage(PacketGuiShortOverride.class, PacketGuiShortOverride.class, packetID++, Side.CLIENT);

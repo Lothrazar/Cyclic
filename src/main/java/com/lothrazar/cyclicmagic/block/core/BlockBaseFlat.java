@@ -63,7 +63,7 @@ public abstract class BlockBaseFlat extends BlockBase {
 
   @SideOnly(Side.CLIENT)
   @Override
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
 

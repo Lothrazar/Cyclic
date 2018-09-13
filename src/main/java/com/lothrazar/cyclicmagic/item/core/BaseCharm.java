@@ -44,19 +44,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BaseCharm extends BaseItem implements IHasClickToggle, baubles.api.IBauble {
 
   private final static String NBT_STATUS = "onoff";
-  public ItemStack repairedBy = ItemStack.EMPTY;
 
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
 
+  @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
 
+  @Override
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     if (tags.hasKey(NBT_STATUS) == false) {
@@ -65,6 +66,7 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     return tags.getInteger(NBT_STATUS) == 1;
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return canTick(stack);
@@ -93,7 +95,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
   }
 
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
-    this.repairedBy = craftItem.copy();
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
@@ -104,11 +105,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
         'i', "ingotIron");
   }
 
-  @Override
-  public boolean getIsRepairable(ItemStack toRepair, ItemStack ingredient) {
-    return ingredient.isItemEqual(repairedBy);
-  }
-
   /**
    * Fires while in inventory OR while in bauble slot
    * 
@@ -117,16 +113,19 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
    */
   public abstract void onTick(ItemStack arg0, EntityPlayer arg1);
 
+  @Override
   @Optional.Method(modid = "baubles")
   public boolean canEquip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
   }
 
+  @Override
   @Optional.Method(modid = "baubles")
   public boolean canUnequip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
   }
 
+  @Override
   @Optional.Method(modid = "baubles")
   public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
     try {
@@ -142,19 +141,22 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     }
   }
 
+  @Override
   @Optional.Method(modid = "baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
 
+  @Override
   @Optional.Method(modid = "baubles")
   public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {}
 
+  @Override
   @Optional.Method(modid = "baubles")
-  public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
+  public void onWornTick(ItemStack stack, EntityLivingBase plr) {
     if (!this.canTick(stack)) {
       return;
     }
-    if (arg1 instanceof EntityPlayer && stack != null && stack.getCount() > 0) {
-      this.onTick(stack, (EntityPlayer) arg1);
+    if (plr instanceof EntityPlayer && !stack.isEmpty() && stack.getCount() > 0) {
+      this.onTick(stack, (EntityPlayer) plr);
     }
   }
 

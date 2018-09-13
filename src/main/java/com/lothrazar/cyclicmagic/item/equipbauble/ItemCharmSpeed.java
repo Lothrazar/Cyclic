@@ -31,14 +31,15 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemCharmSpeed extends BaseCharm implements IHasRecipe, IContent {
 
-  private static final int durability = 2000;
+  private static final double CHANCE_DAMAGE = 0.005;
+  private static final int durability = 20000;
   private static final float speedfactor = 0.08F;
 
   public ItemCharmSpeed() {
@@ -68,13 +69,13 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe, IContent {
       return;
     }
     UtilEntity.speedupEntityIfMoving(player, speedfactor);
-    if (player.getEntityWorld().rand.nextDouble() < 0.1) {
-      super.damageCharm(player, stack);
+    if (player.getEntityWorld().rand.nextDouble() < CHANCE_DAMAGE) {
+      stack.damageItem(1, player);
     }
   }
 
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(new ItemStack(Blocks.EMERALD_BLOCK));
+    return super.addRecipeAndRepair(new ItemStack(Items.EMERALD));
   }
 }

@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
@@ -126,5 +127,12 @@ public class ContainerWorkBench extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
+  }
+
+  @Override
+  public void onContainerClosed(EntityPlayer player) {
+    if (player.inventoryContainer instanceof ContainerPlayer)
+      ((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
+    super.onContainerClosed(player);
   }
 }

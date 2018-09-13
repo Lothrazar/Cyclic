@@ -8,6 +8,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,8 +19,8 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
   private IDrawable icon;
 
   public HydratorRecipeCategory(IGuiHelper helper) {
-    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
-    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
+    gui = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    icon = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
   @Override
@@ -54,7 +55,7 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
     guiItemStacks.init(1, true, 3, 2 * Const.SQ);
     guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
     guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
-    List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
       if (input != null && input.isEmpty() == false)

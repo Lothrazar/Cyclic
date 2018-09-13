@@ -51,7 +51,7 @@ public class BlockFireBase extends BlockFire {
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 
   @Override
@@ -110,7 +110,7 @@ public class BlockFireBase extends BlockFire {
                 BlockPos blockpos = pos.add(k, i1, l);
                 int k1 = this.getNeighborEncouragement(worldIn, blockpos);
                 if (k1 > 0) {
-                  int l1 = (k1 + 40 + worldIn.getDifficulty().getDifficultyId() * 7) / (intAge + 30);
+                  int l1 = (k1 + 40 + worldIn.getDifficulty().getId() * 7) / (intAge + 30);
                   if (isHumid) {
                     l1 /= 2;
                   }
@@ -164,7 +164,7 @@ public class BlockFireBase extends BlockFire {
         worldIn.setBlockState(pos, this.getDefaultState().withProperty(AGE, Integer.valueOf(j)), 3);
       }
       if (iblockstate.getBlock() == Blocks.TNT) {
-        Blocks.TNT.onBlockDestroyedByPlayer(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
+        Blocks.TNT.onPlayerDestroy(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
       }
     }
   }

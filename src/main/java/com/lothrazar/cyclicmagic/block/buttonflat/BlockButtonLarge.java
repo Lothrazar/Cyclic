@@ -77,7 +77,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 
   @Override

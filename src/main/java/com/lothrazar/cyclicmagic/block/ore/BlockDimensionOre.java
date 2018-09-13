@@ -181,7 +181,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 }

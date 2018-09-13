@@ -66,7 +66,7 @@ public abstract class BaseItemMinecart extends BaseItem {
           d0 = 0.5D;
         }
         EntityMinecart entityminecart = summonMinecart(worldIn);//new EntityMinecartTurret(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
-        entityminecart.setPosition((double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
+        entityminecart.setPosition(pos.getX() + 0.5D, pos.getY() + 0.0625D + d0, pos.getZ() + 0.5D);
         if (itemstack.hasDisplayName()) {
           entityminecart.setCustomNameTag(itemstack.getDisplayName());
         }
@@ -84,15 +84,18 @@ public abstract class BaseItemMinecart extends BaseItem {
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
+    @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
       if (stack.getItem() instanceof BaseItemMinecart == false) {
         return stack;
       }
-      EnumFacing enumfacing = (EnumFacing) source.getBlockState().getValue(BlockDispenser.FACING);
+      EnumFacing enumfacing = source.getBlockState().getValue(BlockDispenser.FACING);
       World world = source.getWorld();
-      double d0 = source.getX() + (double) enumfacing.getFrontOffsetX() * 1.125D;
-      double d1 = Math.floor(source.getY()) + (double) enumfacing.getFrontOffsetY();
-      double d2 = source.getZ() + (double) enumfacing.getFrontOffsetZ() * 1.125D;
+
+      double d0 = source.getX() + enumfacing.getXOffset() * 1.125D;
+      double d1 = Math.floor(source.getY()) + enumfacing.getYOffset();
+      double d2 = source.getZ() + enumfacing.getZOffset() * 1.125D;
+
       BlockPos blockpos = source.getBlockPos().offset(enumfacing);
       IBlockState iblockstate = world.getBlockState(blockpos);
       BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = iblockstate.getBlock() instanceof BlockRailBase ? ((BlockRailBase) iblockstate.getBlock()).getRailDirection(world, blockpos, iblockstate, null) : BlockRailBase.EnumRailDirection.NORTH_SOUTH;
@@ -131,6 +134,7 @@ public abstract class BaseItemMinecart extends BaseItem {
     /**
      * Play the dispense sound from the specified block.
      */
+    @Override
     protected void playDispenseSound(IBlockSource source) {
       source.getWorld().playEvent(1000, source.getBlockPos(), 0);
     }

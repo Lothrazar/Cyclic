@@ -66,6 +66,7 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     stackMap.put(Items.EGG, MAX);
   }
 
+  @Override
   public void onInit() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       boolean enabled = (enabledMap.get(entry.getKey()) == 1);
@@ -75,10 +76,11 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     }
   }
 
+  @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.itemsTack;
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
-      String name = entry.getKey().getUnlocalizedName();
+      String name = entry.getKey().getTranslationKey();
       int enabled = config.getBoolean(name, category, true, "Increase stack size to " + entry.getValue()) ? 1 : 0;
       enabledMap.put(entry.getKey(), enabled);
     }

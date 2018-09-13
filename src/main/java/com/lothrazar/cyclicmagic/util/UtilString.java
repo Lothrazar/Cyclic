@@ -46,7 +46,9 @@ public class UtilString {
     if (toMatch == null) {
       return false;
     }
-    String id = toMatch.getResourceDomain().toString();
+
+    String id = toMatch.getNamespace();
+
     for (String strFromList : list) {
       if (strFromList.equals(id)) {
         return true;
@@ -54,8 +56,8 @@ public class UtilString {
       if (matchWildcard) {
         String modIdFromList = strFromList.split(":")[0];
         String blockIdFromList = strFromList.split(":")[1];//has the *
-        String modIdToMatch = toMatch.getResourceDomain();
-        String blockIdToMatch = toMatch.getResourcePath();
+        String modIdToMatch = toMatch.getNamespace();
+        String blockIdToMatch = toMatch.getPath();
         if (modIdFromList.equals(modIdToMatch) == false) {
           continue;
         }

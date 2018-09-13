@@ -108,8 +108,8 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public float getStrVsBlock(ItemStack stack, IBlockState state) {
-    return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
   }
 
   /**
@@ -163,7 +163,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
       if (world.isRemote) {//C
         world.playEvent(2001, posCurrent, Block.getStateId(bsCurrent));
         if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true)) {
-          blockCurrent.onBlockDestroyedByPlayer(world, posCurrent, bsCurrent);
+          blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
         }
         stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
         if (stack.getCount() == 0 && stack == player.getHeldItemMainhand()) {
@@ -178,7 +178,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
         if (xpGivenOnDrop >= 0) {
           if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true)) {
             TileEntity tile = world.getTileEntity(posCurrent);
-            blockCurrent.onBlockDestroyedByPlayer(world, posCurrent, bsCurrent);
+            blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
             blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, tile, stack);
             blockCurrent.dropXpOnBlockBreak(world, posCurrent, xpGivenOnDrop);
           }
@@ -192,7 +192,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
-    list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    list.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     super.addInformation(held, player, list, par4);
   }
 

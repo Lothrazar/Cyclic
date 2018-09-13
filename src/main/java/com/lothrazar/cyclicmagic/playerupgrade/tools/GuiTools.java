@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic.playerupgrade.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
@@ -20,17 +22,18 @@ import net.minecraft.item.ItemStack;
 /// https://github.com/PrinceOfAmber/Cyclic/blob/838b9b669a2d1644077d35a91d997a4d5dca0448/src/main/java/com/lothrazar/cyclicmagic/gui/GuiSpellbook.java
 public class GuiTools extends GuiScreen {
 
-  private static final int MIN_RADIUS = 26;
-  private static final int BTNCOUNT = 16;
+  // TODO: PacketOpenGuiOnServer
   private static final int YOFFSET = 15;
   private final EntityPlayer player;
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
+  private ContainerPlayerTools container;
 
-  public GuiTools(EntityPlayer p) {
+  public GuiTools(ContainerPlayerTools ctr) {
     super();
-    this.player = p;
+    this.player = ctr.getPlayer();
+    container = ctr;
   }
 
   @Override
@@ -44,6 +47,7 @@ public class GuiTools extends GuiScreen {
   @Override
   public void initGui() {
     super.initGui();
+    //get from server then use
     xCenter = this.width / 2;
     yCenter = this.height / 2 - YOFFSET;
     int vspace = 22, hspace = 22;
@@ -75,11 +79,15 @@ public class GuiTools extends GuiScreen {
     }
   }
 
+  Map<Integer, GuiButtonItemstack> buttons = new HashMap<>();
+
   private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
     btn = new GuiButtonItemstack(slot, cx, cy);
-    btn.setStackRender(UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot).copy());
+    //    ItemStack stack = inventory.getStackInSlot(slot).copy();
+    //    btn.setStackRender(stack);
     this.buttonList.add(btn);
+    buttons.put(slot, btn);
   }
 
   @Override
@@ -96,6 +104,14 @@ public class GuiTools extends GuiScreen {
     ItemStack curHotbar = player.inventory.getStackInSlot(this.player.inventory.currentItem);
     if (curHotbar.isEmpty() == false) {
       ModCyclic.proxy.renderItemOnScreen(curHotbar, mouseX, mouseY);
+    }
+    int size = UtilPlayerInventoryFilestorage.getSize();
+    for (int a = 0; a < size; a++) {
+      if (buttons.containsKey(a) && this.buttons.get(a) != null) {
+        GuiButtonItemstack button = this.buttons.get(a);
+        ItemStack stack = this.container.getStack(a);
+        button.setStackRender(stack);
+      }
     }
     drawButtonTooltips(mouseX, mouseY);
   }

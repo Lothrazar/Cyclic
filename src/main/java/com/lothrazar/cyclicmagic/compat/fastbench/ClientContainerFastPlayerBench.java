@@ -21,28 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.playerupgrade;
+package com.lothrazar.cyclicmagic.compat.fastbench;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import io.netty.buffer.ByteBuf;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.world.World;
 
-public class PacketOpenFakeWorkbench implements IMessage, IMessageHandler<PacketOpenFakeWorkbench, IMessage> {
+public class ClientContainerFastPlayerBench extends ContainerFastPlayerBench {
 
-  public PacketOpenFakeWorkbench() {}
+	public ClientContainerFastPlayerBench(EntityPlayer player, World world) {
+		super(player, world);
+	}
 
-  @Override
-  public void fromBytes(ByteBuf buf) {}
-
-  @Override
-  public void toBytes(ByteBuf buf) {}
-
-  @Override
-  public IMessage onMessage(PacketOpenFakeWorkbench message, MessageContext ctx) {
-    ctx.getServerHandler().player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().player.getEntityWorld(), (int) ctx.getServerHandler().player.posX, (int) ctx.getServerHandler().player.posY, (int) ctx.getServerHandler().player.posZ);
-    return null;
-  }
+	@Override
+	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
+	}
 }

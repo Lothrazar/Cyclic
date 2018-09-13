@@ -115,7 +115,7 @@ public class UtilPlayerInventoryFilestorage {
             e.printStackTrace();
           }
         }
-        if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
+        if (file1 == null || !file1.exists() || data == null || data.isEmpty()) {
           ModCyclic.logger.error("Data not found for " + player.getDisplayNameString());//+ ". Trying to load backup data."
           //          if (file2 != null && file2.exists()) {
           //            try {
@@ -206,5 +206,9 @@ public class UtilPlayerInventoryFilestorage {
 
   public static void putDataIntoInventory(InventoryPlayerExtended inventory, EntityPlayer player) {
     inventory.inv = getPlayerInventory(player).inv;
+  }
+
+  public static int getSize() {
+    return InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;
   }
 }
