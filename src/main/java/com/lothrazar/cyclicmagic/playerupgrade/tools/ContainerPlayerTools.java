@@ -23,11 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.tools;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -41,19 +44,33 @@ public class ContainerPlayerTools extends ContainerBase {
   private EntityPlayer player;
 
   public ContainerPlayerTools(InventoryPlayer playerInv, EntityPlayer player) {
+    player.openContainer = this;
     this.player = player;
-    if (player.getEntityWorld().isRemote == false) {
+  }
+
+  @Override
+  public void detectAndSendChanges() {
+    //System.out.println("DETECT client=" + this.player.world.isRemote);
+    if (player.getEntityWorld().isRemote == false && player instanceof EntityPlayerMP) {
       //if serverside  
       InventoryPlayerExtended serverStacks = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
       int size = UtilPlayerInventoryFilestorage.getSize();
+      EntityPlayerMP mp = (EntityPlayerMP) player;
       for (int a = 0; a < size; a++) {
-        System.out.println(a + " TODO server sync SYNC" + serverStacks.getStackInSlot(a));
+        System.out.println(a + "   server sync SYNC");
+        ModCyclic.network.sendTo(new PacketSyncToolslot(a, serverStacks.getStackInSlot(a)), mp);
       }
     }
   }
 
   public ItemStack getStack(int i) {
     return this.inventory.get(i);
+  }
+
+  @Override
+  public void putStackInSlot(int i, ItemStack stack) {
+    System.out.println(i + "?client= " + player.world.isRemote + " SET STACK  " + stack);
+    this.inventory.set(i, stack);
   }
 
   public EntityPlayer getPlayer() {

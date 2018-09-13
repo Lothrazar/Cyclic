@@ -63,6 +63,7 @@ import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
+import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
@@ -130,7 +131,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketFluidSync.class, PacketFluidSync.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSwapPlayerHotbar.class, PacketSwapPlayerHotbar.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketTileFacingToggle.class, PacketTileFacingToggle.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketSyncToolslot.class, PacketSyncToolslot.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileSetField.class, PacketTileSetField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketStorageBag.class, PacketStorageBag.class, packetID++, Side.SERVER);
     network.registerMessage(PacketGuiShortOverride.class, PacketGuiShortOverride.class, packetID++, Side.CLIENT);

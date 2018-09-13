@@ -23,6 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.anvil.ContainerAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.GuiAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
@@ -493,15 +497,23 @@ public class ForgeGuiHandler implements IGuiHandler {
     return null;
   }
 
+  public static final Map<UUID, ContainerPlayerTools> map = new HashMap<>();
+
   @SideOnly(Side.CLIENT)
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
     if (world instanceof WorldClient) {
       TileEntity te = world.getTileEntity(p);
+
       switch (ID) {
         case GUI_INDEX_TOOLSWAPPER:
-          return new GuiTools(new ContainerPlayerTools(player.inventory, player));
+          ContainerPlayerTools ctr = new ContainerPlayerTools(player.inventory, player);
+
+          ModCyclic.logger.error("player.getEntityId()" + player.getUniqueID());
+          map.put(player.getUniqueID(), ctr);
+          //          player.openContainer = ctr;
+          return new GuiTools(ctr);
         case VANILLA_SIGN:
           return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));
         case GUI_INDEX_EXTENDED:
