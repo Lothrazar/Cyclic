@@ -29,45 +29,34 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class ContainerPlayerTools extends ContainerBase {
 
-  private InventoryPlayerExtended inventory;
+  private NonNullList<ItemStack> inventory = NonNullList.withSize(UtilPlayerInventoryFilestorage.getSize(), ItemStack.EMPTY);
   public static final int SQ = Const.SQ;
   public static final int HOTBAR_SIZE = Const.HOTBAR_SIZE;
   final int pad = Const.PAD;
   private EntityPlayer player;
 
-  public ContainerPlayerTools(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
+  public ContainerPlayerTools(InventoryPlayer playerInv, EntityPlayer player) {
     this.player = player;
-    eInvo.setEventHandler(this);
-    //        if (player.getEntityWorld().isRemote == false) {
-    //if serverside  
-      UtilPlayerInventoryFilestorage.putDataIntoInventory(eInvo, player);
-
-      this.detectAndSendChanges();
-      //
-    //        }
-    setInventory(eInvo);
-    UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
     if (player.getEntityWorld().isRemote == false) {
-    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;//+20 somehow magically fixes bottom row
-    for (int a = 0; a < size; a++) {
-      System.out.println(a + " SYNC" + inventory.getStackInSlot(a));
-      inventory.syncSlotToClients(a);
-    }
+      //if serverside  
+      InventoryPlayerExtended serverStacks = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+      int size = UtilPlayerInventoryFilestorage.getSize();
+      for (int a = 0; a < size; a++) {
+        System.out.println(a + " TODO server sync SYNC" + serverStacks.getStackInSlot(a));
+      }
     }
   }
 
-  public void setInventory(InventoryPlayerExtended inv) {
-    inventory = inv;
+  public ItemStack getStack(int i) {
+    return this.inventory.get(i);
   }
 
   public EntityPlayer getPlayer() {
     return player;
-  }
-
-  public InventoryPlayerExtended getInv() {
-    return inventory;
   }
 }

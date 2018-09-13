@@ -207,4 +207,8 @@ public class UtilPlayerInventoryFilestorage {
   public static void putDataIntoInventory(InventoryPlayerExtended inventory, EntityPlayer player) {
     inventory.inv = getPlayerInventory(player).inv;
   }
+
+  public static int getSize() {
+    return InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;
+  }
 }

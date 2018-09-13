@@ -250,7 +250,7 @@ public class ForgeGuiHandler implements IGuiHandler {
     TileEntity te = world.getTileEntity(p);
     switch (ID) {
       case GUI_INDEX_TOOLSWAPPER:
-        return new ContainerPlayerTools(player.inventory, new InventoryPlayerExtended(player), player);
+        return new ContainerPlayerTools(player.inventory, player);
       case VANILLA_SIGN:
         return null;
       case GUI_INDEX_EXTENDED:
@@ -501,7 +501,7 @@ public class ForgeGuiHandler implements IGuiHandler {
       TileEntity te = world.getTileEntity(p);
       switch (ID) {
         case GUI_INDEX_TOOLSWAPPER:
-          return new GuiTools(new ContainerPlayerTools(player.inventory, new InventoryPlayerExtended(player), player));
+          return new GuiTools(new ContainerPlayerTools(player.inventory, player));
         case VANILLA_SIGN:
           return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));
         case GUI_INDEX_EXTENDED:

@@ -8,9 +8,9 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
-import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.GameSettings;
@@ -28,12 +28,12 @@ public class GuiTools extends GuiScreen {
   // https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
   private int xCenter;
   private int yCenter;
-  private InventoryPlayerExtended inventory;
+  private ContainerPlayerTools container;
 
   public GuiTools(ContainerPlayerTools ctr) {
     super();
     this.player = ctr.getPlayer();
-    inventory = ctr.getInv();
+    container = ctr;
   }
 
   @Override
@@ -84,8 +84,8 @@ public class GuiTools extends GuiScreen {
   private void addStackButton(int slot, int cx, int cy) {
     GuiButtonItemstack btn;
     btn = new GuiButtonItemstack(slot, cx, cy);
-    ItemStack stack = inventory.getStackInSlot(slot).copy();
-    btn.setStackRender(stack);
+    //    ItemStack stack = inventory.getStackInSlot(slot).copy();
+    //    btn.setStackRender(stack);
     this.buttonList.add(btn);
     buttons.put(slot, btn);
   }
@@ -105,12 +105,12 @@ public class GuiTools extends GuiScreen {
     if (curHotbar.isEmpty() == false) {
       ModCyclic.proxy.renderItemOnScreen(curHotbar, mouseX, mouseY);
     }
-    int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW + 20;//+20 somehow magically fixes bottom row
+    int size = UtilPlayerInventoryFilestorage.getSize();
     for (int a = 0; a < size; a++) {
       if (buttons.containsKey(a) && this.buttons.get(a) != null) {
         GuiButtonItemstack button = this.buttons.get(a);
-        System.out.println(a + " REFRESH" + inventory.getStackInSlot(a));
-        button.setStackRender(inventory.getStackInSlot(a).copy());
+        ItemStack stack = this.container.getStack(a);
+        button.setStackRender(stack);
       }
     }
     drawButtonTooltips(mouseX, mouseY);
