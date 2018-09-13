@@ -57,7 +57,7 @@ public class ContainerPlayerTools extends ContainerBase {
       int size = UtilPlayerInventoryFilestorage.getSize();
       EntityPlayerMP mp = (EntityPlayerMP) player;
       for (int a = 0; a < size; a++) {
-        System.out.println(a + "   server sync SYNC");
+
         ModCyclic.network.sendTo(new PacketSyncToolslot(a, serverStacks.getStackInSlot(a)), mp);
       }
     }
@@ -69,7 +69,6 @@ public class ContainerPlayerTools extends ContainerBase {
 
   @Override
   public void putStackInSlot(int i, ItemStack stack) {
-    System.out.println(i + "?client= " + player.world.isRemote + " SET STACK  " + stack);
     this.inventory.set(i, stack);
   }
 
