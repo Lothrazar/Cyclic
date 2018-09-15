@@ -27,9 +27,9 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword.PacketType;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -52,7 +52,7 @@ public class GuiPassword extends GuiBaseContainer {
     super(new ContainerPassword(tileEntity), tileEntity);
     ctr = (ContainerPassword) this.inventorySlots;
     this.ySize = 79;//texture size in pixels
-    namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
+    namePref = tileEntity.getBlockType().getTranslationKey() + ".";
   }
 
   @Override

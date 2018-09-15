@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.item.tiletransporter;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -97,7 +97,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
           NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
           tile.writeToNBT(tileData);
           NBTTagCompound itemData = new NBTTagCompound();
-          itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
+          itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
           itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
           itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
           itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));

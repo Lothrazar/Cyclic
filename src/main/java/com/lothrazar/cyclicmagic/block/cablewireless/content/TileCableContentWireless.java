@@ -1,12 +1,12 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.UtilFluid;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;

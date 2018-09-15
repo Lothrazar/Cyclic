@@ -30,9 +30,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -65,7 +65,7 @@ public class BlockRegistry {
       b.setCreativeTab(ModCyclic.TAB);
     }
     b.setRegistryName(new ResourceLocation(Const.MODID, name));
-    b.setUnlocalizedName(name);
+    b.setTranslationKey(name);
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }

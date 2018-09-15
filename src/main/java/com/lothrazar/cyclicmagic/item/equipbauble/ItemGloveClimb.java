@@ -23,24 +23,48 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseCharm;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.item.core.BaseCharm;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
+public class ItemGloveClimb extends BaseCharm implements IHasRecipe, IContent {
 
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;
 
   public ItemGloveClimb() {
     super(6000);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "glove_climb", GuideCategory.ITEMBAUBLES);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -60,7 +84,7 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe {
     if (!this.canTick(stack)) {
       return;
     }
-    if (player.isCollidedHorizontally) {
+    if (player.collidedHorizontally) {
       World world = player.getEntityWorld();
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
       stack.damageItem(1, player);

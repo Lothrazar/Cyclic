@@ -25,14 +25,14 @@ package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -119,6 +119,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     //now draw target location card slots 
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     x = this.guiLeft + colLeft;
     y = this.guiTop + 86;
     Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
@@ -128,11 +129,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //    x = this.guiLeft + colRight;
-    //    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-    //        x, y,
-    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //    y += Const.SQ;
     fluidBar.draw(((TileCableContentWireless) tile).getCurrentFluidStack());
   }
 }

@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.sprinkler;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.core.block.BaseTESR;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.BaseTESR;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

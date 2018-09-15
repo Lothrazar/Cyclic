@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -126,6 +126,9 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     this.onCraftMatrixChanged(craftMatrix);
   }
 
+  public EntityPlayer getPlayer() {
+    return thePlayer;
+  }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     //i have to assume the recipe will safely validate itself

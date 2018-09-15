@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fire;
 
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,7 +42,7 @@ public class BlockFireFrost extends BlockFireBase {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!worldIn.isRemote && entityIn instanceof EntityLivingBase) {
       EntityLivingBase e = ((EntityLivingBase) entityIn);
       if (!e.isPotionActive(MobEffects.SLOWNESS)) {
@@ -53,6 +53,6 @@ public class BlockFireFrost extends BlockFireBase {
         e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Const.TICKS_PER_SEC * 10, Const.Potions.II));
       }
     }
-    super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+    super.onEntityCollision(worldIn, pos, state, entityIn);
   }
 }

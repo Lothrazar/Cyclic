@@ -27,11 +27,11 @@ import java.text.DecimalFormat;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import com.lothrazar.cyclicmagic.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
@@ -124,7 +124,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
      * of a chunk, 17 chunks will be loaded along that axis, of which 13 activate entities. */
     BlockPos spawn = player.getEntityWorld().getSpawnPoint();
     BlockPos here = player.getPosition();
-    Chunk chunkHere = player.getEntityWorld().getChunkFromBlockCoords(here);
+    Chunk chunkHere = player.getEntityWorld().getChunk(here);
     int xCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.x) + Const.CHUNK_SIZE / 2;
     int zCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.z) + Const.CHUNK_SIZE / 2;
     //end border

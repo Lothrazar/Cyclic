@@ -23,16 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.uncrafter;
 
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.block.MachineTESR;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft.BlacklistType;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.core.MachineTESR;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.BlacklistType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -46,10 +48,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
+public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IContent, IBlockHasTESR {
 
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public static int FUEL_COST = 0;
@@ -86,7 +89,21 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "uncrafting_block", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityUncrafter.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
         150, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 200, 0, 500000, Const.ConfigText.fuelCost);

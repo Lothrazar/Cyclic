@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.enderpearl;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseTool;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,7 +63,7 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
     playerIn.getCooldownTracker().setCooldown(this, cooldown);
     if (!worldIn.isRemote) {
       EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn); //func_184538_a
-      entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+      entityenderpearl.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
       worldIn.spawnEntity(entityenderpearl);
       if (orbType == OrbType.MOUNTED) {
         playerIn.dismountRidingEntity();
@@ -99,6 +99,7 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
     return null;
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;

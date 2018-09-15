@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.dehydrator;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -49,7 +49,7 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
     recipeInput = in;
     resultItem = out;
     this.time = time;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   @Override

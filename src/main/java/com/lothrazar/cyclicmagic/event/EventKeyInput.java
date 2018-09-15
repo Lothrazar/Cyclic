@@ -27,24 +27,24 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import net.minecraft.client.Minecraft;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -109,22 +109,34 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended() == false) {
-        //then open the normal inventory
-        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
+      if (data.hasInventoryExtended()) {
+        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
       }
       else {
-        ModCyclic.network.sendToServer(new PacketOpenExtendedInventory());
+        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
       }
     }
     else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryCrafting() == false) {
-        //then open the normal inventory
-        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
+      if (data.hasInventoryCrafting()) {
+        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
       }
       else {
-        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
+        UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+      }
+    }
+    else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if (data.hasInventoryExtended()) {
+        // TESTING ONLY 
+        //        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        //          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
+        //        else
+        //        Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
+        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+      }
+      else {
+        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
       }
     }
   }

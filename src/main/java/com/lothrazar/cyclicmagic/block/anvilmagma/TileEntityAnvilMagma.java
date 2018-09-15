@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.block.anvilmagma;
 
 import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.UtilString;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;

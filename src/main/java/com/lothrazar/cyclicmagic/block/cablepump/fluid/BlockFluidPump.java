@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import com.lothrazar.cyclicmagic.block.cablepump.BlockPump;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.ITileEntityProvider;

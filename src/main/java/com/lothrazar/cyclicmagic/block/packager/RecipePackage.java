@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.google.common.collect.Lists;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -36,7 +36,7 @@ public class RecipePackage extends IForgeRegistryEntry.Impl<IRecipe> implements 
         input.set(i, in[i]);
     }
     output = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "packager" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "packager" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   public NonNullList<ItemStack> getInput() {

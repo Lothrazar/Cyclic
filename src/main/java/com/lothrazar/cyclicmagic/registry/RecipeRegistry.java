@@ -30,8 +30,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.liquid.FluidsRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -85,12 +84,12 @@ public class RecipeRegistry {
   public static class Util1pt12 {
 
     public static ResourceLocation buildName(ItemStack output) {
-      ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getUnlocalizedName());
+      ResourceLocation firstTry = new ResourceLocation(Const.MODID, output.getTranslationKey());
       int limit = 999;
       int index = 0;
       while (usedRecipeNames.containsKey(firstTry.toString()) || index > limit) {
         index++;
-        firstTry = new ResourceLocation(Const.MODID, firstTry.getResourcePath() + "_" + index);
+        firstTry = new ResourceLocation(Const.MODID, firstTry.getPath() + "_" + index);
       }
       usedRecipeNames.put(firstTry.toString(), true);
       return firstTry;
@@ -157,7 +156,7 @@ public class RecipeRegistry {
       }
     }
     ResourceLocation location = Util1pt12.buildName(output);
-    ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, Util1pt12.convertToNonNullList(recipeComponents));
+    ShapelessRecipes recipe = new ShapelessRecipes(location.getNamespace(), output, Util1pt12.convertToNonNullList(recipeComponents));
     add(recipe, location);
     return recipe;
   }
@@ -223,9 +222,9 @@ public class RecipeRegistry {
     if (ModCyclic.logger.runUnitTests()) {//OMG UNIT TESTING WAAT
       ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
       if (output0.getItem() == output.getItem())
-        ModCyclic.logger.logTestResult("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe succefully registered and working: " + output.getTranslationKey());
       else {
-        ModCyclic.logger.logTestResult("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+        ModCyclic.logger.logTestResult("Brewing Recipe FAILED to register" + output.getTranslationKey());
       }
     }
     return recipe;

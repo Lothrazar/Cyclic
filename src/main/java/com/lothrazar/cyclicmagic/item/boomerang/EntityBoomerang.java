@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.item.boomerang;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.entity.EntityThrowableDispensable;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,6 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<Byte> REDSTONE_TRIGGERED = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.BYTE);
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(EntityBoomerang.class, DataSerializers.STRING);
-
   private EntityLivingBase targetEntity;
   private ItemStack boomerangThrown = ItemStack.EMPTY;
 
@@ -175,7 +174,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     if (this.targetEntity != null) {
       //try to give it to the player the nicest way possible 
       if (targetEntity.getHeldItemMainhand().isEmpty())
-        targetEntity.setHeldItem(EnumHand.MAIN_HAND,boomerangThrown);
+        targetEntity.setHeldItem(EnumHand.MAIN_HAND, boomerangThrown);
       else
         targetEntity.entityDropItem(boomerangThrown, 0.5F);
     }

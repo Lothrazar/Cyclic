@@ -34,10 +34,17 @@ import com.lothrazar.cyclicmagic.block.packager.ContainerPackager;
 import com.lothrazar.cyclicmagic.block.packager.GuiPackager;
 import com.lothrazar.cyclicmagic.block.packager.RecipePackage;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastWorkbench;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
@@ -51,7 +58,6 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
   static final String RECIPE_CATEGORY_DEHYDRATOR = "dehydrator";
   static final String RECIPE_CATEGORY_PACKAGER = "packager";
 
-  @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's
@@ -92,26 +98,50 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
     registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
     registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
     // End Custom recipe type: Hydrator
     // Packager
     registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
     registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
     registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
     //DEHydrator
     registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
     registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
     registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
-    registry.addRecipeCategoryCraftingItem(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
-      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
+      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview 
+      registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, item.getTranslationKey() + ".guide");
     }
     //end of Info tab
+    
+    //FB Compat
+    if(CompatFastBench.LOADED) {
+        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+            1, // @param recipeSlotStart    the first slot for recipe inputs 
+            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+            36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+            1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+            4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+            1, // @param recipeSlotStart    the first slot for recipe inputs 
+            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+            36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+            1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+            4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    }
   }
 
   @Override

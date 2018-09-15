@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
+import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;

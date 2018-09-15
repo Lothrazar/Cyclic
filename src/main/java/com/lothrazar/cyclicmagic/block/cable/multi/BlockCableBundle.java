@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cable.multi;
 
 import com.lothrazar.cyclicmagic.block.cable.BlockCableBase;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

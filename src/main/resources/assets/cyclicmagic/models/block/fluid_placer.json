@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/fluid_placer_arrow",
+        "up": "cyclicmagic:blocks/fluid_placer_arrow",
+        "north": "cyclicmagic:blocks/fluid_placer_back",
+        "east": "cyclicmagic:blocks/fluid_placer_arrow",
+        "south": "cyclicmagic:blocks/fluid_placer_front",
+        "west": "cyclicmagic:blocks/fluid_placer_arrow"
+    }
+}

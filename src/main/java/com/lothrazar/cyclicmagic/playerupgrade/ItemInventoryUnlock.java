@@ -24,17 +24,19 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.ItemFoodCreative;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -47,13 +49,26 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe, IHasConfig {
+public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe, IContent {
 
   private static final int numFood = 10;
 
   public ItemInventoryUnlock() {
     super(numFood, false);
     this.setAlwaysEdible();
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "inventory_food");
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
   @Override
@@ -79,6 +94,7 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
 
   @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("InventoryUpgrade(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.inventory;
     EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
   }
@@ -86,6 +102,6 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltips.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 }

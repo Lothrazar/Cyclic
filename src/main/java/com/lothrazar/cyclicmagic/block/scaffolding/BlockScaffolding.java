@@ -24,11 +24,11 @@
 package com.lothrazar.cyclicmagic.block.scaffolding;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.block.core.BlockBase;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -81,7 +81,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 
@@ -108,12 +108,12 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!(entityIn instanceof EntityLivingBase)) {
       return;
     }
     EntityLivingBase entity = (EntityLivingBase) entityIn;
-    if (!entityIn.isCollidedHorizontally) {
+    if (!entityIn.collidedHorizontally) {
       return;
     }
     UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);

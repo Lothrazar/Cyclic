@@ -23,14 +23,20 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.QuadrantEnum;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.QuadrantEnum;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -48,14 +54,38 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe {
+public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe, IContent {
 
   public BlockLibrary() {
     super(Material.WOOD);
+  }
+
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_library", GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
+    BlockLibraryController lc = new BlockLibraryController(this);
+    BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.content;
+    enabled = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -75,10 +105,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     return super.getFacingFromState(state).getOpposite();
   }
 
-  public static boolean isWrenchItem(ItemStack held) {
-    return held.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
-  }
-
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //hit Y is always vertical. horizontal is either X or Z, and sometimes is inverted
@@ -86,11 +112,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       return false;
     }
     TileEntityLibrary library = (TileEntityLibrary) world.getTileEntity(pos);
-    if (isWrenchItem(player.getHeldItem(hand))) {
-      //
-      library.toggleDisplaysText();
-      return true;
-    }
     if (side != this.getFacingFromState(state)) {
       return false;
     }

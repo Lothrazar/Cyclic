@@ -25,12 +25,12 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTexture;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTexture;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
@@ -69,7 +69,7 @@ public class GuiStorage extends GuiBaseContainer {
     for (EnumDyeColor color : EnumDyeColor.values()) {
       GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
           size, size, color.name().substring(0, 1));
-      buttonColour.setTooltip(UtilChat.lang("colour." + color.getUnlocalizedName() + ".name"));
+      buttonColour.setTooltip(UtilChat.lang("colour." + color.getTranslationKey() + ".name"));
       buttonColour.packedFGColour = color.getColorValue();
       this.addButton(buttonColour);
       i++;
@@ -83,6 +83,7 @@ public class GuiStorage extends GuiBaseContainer {
     buttonTogglePickup.setTextureIndex(11 + ItemStorageBag.StoragePickupType.get(player.getHeldItemMainhand()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == this.buttonToggle.id) {

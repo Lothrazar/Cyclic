@@ -1,13 +1,14 @@
 package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,8 +19,8 @@ public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> 
   private IDrawable icon;
 
   public PackagerRecipeCategory(IGuiHelper helper) {
-    gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/packager_recipe.png"), 0, 0, 169, 69, 169, 69);
-    icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/auto_packager.png"), 0, 0, 16, 16, 16, 16);
+    gui = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/gui/packager_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    icon = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/blocks/auto_packager.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
   @Override
@@ -59,7 +60,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<PackagerWrapper> 
     guiItemStacks.init(3, true, x, y);
     guiItemStacks.init(4, true, x + Const.SQ, y);
     guiItemStacks.init(5, true, x + 2 * Const.SQ, y);
-    List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
       if (input != null && input.isEmpty() == false)

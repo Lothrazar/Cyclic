@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.scythe;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.util.UtilScythe;
+import com.lothrazar.cyclicmagic.util.UtilScythe;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

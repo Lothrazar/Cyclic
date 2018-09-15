@@ -63,6 +63,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     return 0;
   }
 
+  @Override
   public IBlockState getDefaultDisplayTile() {
     return Blocks.OBSERVER.getDefaultState();//.withProperty(BlockChest.FACING, EnumFacing.NORTH);
   }
@@ -108,7 +109,9 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     EntityTippedArrow entitytippedarrow = new EntityTippedArrow(world, position.getX(), position.getY(), position.getZ());
     entitytippedarrow.setPotionEffect(PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionType.getPotionTypeForName("slowness")));
     entitytippedarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
-    entitytippedarrow.setThrowableHeading((double) enumfacing.getFrontOffsetX(), YAW, (double) enumfacing.getFrontOffsetZ(), VELOCITY, INACCRACY);
+
+    entitytippedarrow.shoot(enumfacing.getXOffset(), YAW, enumfacing.getZOffset(), VELOCITY, INACCRACY);
+
     world.spawnEntity(entitytippedarrow);
   }
 

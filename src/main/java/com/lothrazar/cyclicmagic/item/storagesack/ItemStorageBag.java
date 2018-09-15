@@ -26,16 +26,16 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer.BagDepositReturn;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer.BagDepositReturn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -193,7 +193,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     ItemStack stackOnGround = event.getItem().getItem();
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
-
     for (ItemStack stackIsBag : foundBags) {
       int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
       if (pickupType == StoragePickupType.NOTHING.ordinal()) {

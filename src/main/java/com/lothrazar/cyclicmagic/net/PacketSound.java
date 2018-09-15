@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,8 +51,8 @@ public class PacketSound implements IMessage, IMessageHandler<PacketSound, IMess
   public PacketSound(BlockPos p, SoundEvent t, SoundCategory cat) {
     pos = p;
     ResourceLocation r = t.getRegistryName();
-    domain = r.getResourceDomain();
-    type = r.getResourcePath();
+    domain = r.getNamespace();
+    type = r.getPath();
     category = cat.getName(); //SoundCategory.BLOCKS.getName()
   }
 

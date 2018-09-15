@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFlat;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFlat;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -166,7 +166,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }
@@ -279,7 +279,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   //below is all for facing
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    EnumFacing facing = EnumFacing.getHorizontal(meta);
+    EnumFacing facing = EnumFacing.byHorizontalIndex(meta);
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
 

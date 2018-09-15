@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilFurnace;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilFurnace;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -84,7 +84,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       //removed  && entityPlayer.isSneaking() == false
       if (state != null && (state.getBlock() == Blocks.WALL_SIGN || state.getBlock() == Blocks.WALL_BANNER)) {
         // but NOT standing sign or standing banner
-        EnumFacing face = EnumFacing.getFront(state.getBlock().getMetaFromState(state));
+        EnumFacing face = EnumFacing.byIndex(state.getBlock().getMetaFromState(state));
         BlockPos posBehind = pos.offset(face.getOpposite());
         IBlockState stuffBehind = worldObj.getBlockState(posBehind);
         if (stuffBehind != null && stuffBehind.getBlock() != null && worldObj.getTileEntity(posBehind) != null) {

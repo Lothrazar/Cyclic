@@ -26,12 +26,12 @@ package com.lothrazar.cyclicmagic.playerupgrade;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -59,8 +59,10 @@ public class EventExtendedInventory {
     boolean showCraftToggle = false;
     if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
         || gui instanceof GuiPlayerExtWorkbench
-        || gui instanceof GuiScreenHorseInventory) {
+        || gui instanceof GuiScreenHorseInventory
+        || gui.getClass().getName().equals("com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench")) {
       // gui left and top are private, so are the sizes
+
       int xSize = 176;
       int ySize = 166;
       int guiLeft = (gui.width - xSize) / 2;

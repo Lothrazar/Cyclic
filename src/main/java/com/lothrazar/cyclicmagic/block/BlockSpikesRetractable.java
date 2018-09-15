@@ -26,14 +26,14 @@ package com.lothrazar.cyclicmagic.block;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -88,7 +88,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
 
   //copy vanilla methods: 8 facing directions bitwise-combined with enabled or not
   public static EnumFacing getFacing(int meta) {
-    return EnumFacing.getFront(meta & 7);
+    return EnumFacing.byIndex(meta & 7);// WAS getFront
   }
 
   public static EnumFacing getFacing(IBlockState state) {
@@ -131,7 +131,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof EntityLivingBase && worldIn.getBlockState(pos).getValue(ACTIVATED)) {
       if (this.doesPlayerDamage) {
         if (worldIn instanceof WorldServer) {

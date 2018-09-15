@@ -26,8 +26,8 @@ package com.lothrazar.cyclicmagic.block.conveyor;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -111,6 +111,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   }
 
   @Override
+  @Deprecated
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     final double heightInc = 0.0125D;
     final double sideInc = heightInc;
@@ -154,7 +155,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
   }
 
   @Override
-  public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+  public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }

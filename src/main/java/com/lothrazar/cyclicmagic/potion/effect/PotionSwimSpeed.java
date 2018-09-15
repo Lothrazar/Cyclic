@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.potion.effect;
 
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
 
 public class PotionSwimSpeed extends PotionBase {

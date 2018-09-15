@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.peat;
 
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseItem;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

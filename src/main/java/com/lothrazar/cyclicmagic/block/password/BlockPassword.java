@@ -26,12 +26,17 @@ package com.lothrazar.cyclicmagic.block.password;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.password.TileEntityPassword.UsersAllowed;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -48,10 +53,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
+public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   public static final PropertyBool POWERED = PropertyBool.create("powered");
 
@@ -65,10 +72,30 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "password_block", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPassword();
   }
 
+  @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(POWERED, meta == 1 ? true : false);
   }
@@ -137,9 +164,9 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     if (wasFound > 0) {
       event.setCanceled(true);//If this event is canceled, the chat message is never distributed to all clients.
       if (wasFound == 1)
-        UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".triggered") + event.getMessage());
+        UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getTranslationKey() + ".triggered") + event.getMessage());
       else
-        UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getUnlocalizedName() + ".triggeredmany") + event.getMessage());
+        UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getTranslationKey() + ".triggeredmany") + event.getMessage());
     }
   }
 

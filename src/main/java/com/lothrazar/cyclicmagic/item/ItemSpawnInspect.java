@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseTool;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -49,14 +51,32 @@ import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
+public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 10;
 
   public ItemSpawnInspect() {
     super(DURABILITY);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_spawn_inspect");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -72,7 +92,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe {
     if (!worldObj.isRemote) {
       ChunkProviderServer s = (ChunkProviderServer) worldObj.getChunkProvider();
       BlockPos pos = posIn.offset(side);
-      Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
+      Chunk chunk = worldObj.getChunk(pos);
       if (worldObj.getChunkProvider() instanceof ChunkProviderServer) {
         List<SpawnDetail> names = new ArrayList<SpawnDetail>();
         for (EnumCreatureType creatureType : EnumCreatureType.values()) {

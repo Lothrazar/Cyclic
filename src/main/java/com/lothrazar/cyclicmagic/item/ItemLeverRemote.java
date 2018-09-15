@@ -24,15 +24,18 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.net.PacketChat;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.state.IBlockState;
@@ -50,13 +53,31 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLeverRemote extends BaseItem implements IHasRecipe {
+public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
 
   public ItemLeverRemote() {
     this.setMaxStackSize(1);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "password_remote");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -78,7 +99,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       //and save dimension
       UtilNBT.setItemStackNBTVal(stack, "LeverDim", playerIn.dimension);
       if (worldIn.isRemote) {
-        UtilChat.sendStatusMessage(playerIn, this.getUnlocalizedName() + ".saved");
+        UtilChat.sendStatusMessage(playerIn, this.getTranslationKey() + ".saved");
       }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
       return EnumActionResult.SUCCESS;
@@ -114,7 +135,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     //default is zero which is ok
     if (blockPos == null) {
       if (world.isRemote) {
-        UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
+        UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
       }
       return false;
     }
@@ -124,14 +145,14 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
       IBlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {
-          UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".invalid");
+          UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
         }
         return false;
       }
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);
       UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
-      UtilChat.sendStatusMessage(player, this.getUnlocalizedName() + ".powered." + hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
       UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       player.getCooldownTracker().setCooldown(this, 20);
       return true;
@@ -156,7 +177,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
         IBlockState blockState = dw.getBlockState(blockPos);
         boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
         UtilWorld.toggleLeverPowerState(dw, blockPos, blockState);
-        ModCyclic.network.sendTo(new PacketChat(this.getUnlocalizedName() + ".powered." + hasPowerHere, true), mp);
+        ModCyclic.network.sendTo(new PacketChat(this.getTranslationKey() + ".powered." + hasPowerHere, true), mp);
         UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
         player.getCooldownTracker().setCooldown(this, 20);
         return true;
@@ -167,8 +188,6 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe {
     }
     return false;
   }
-
-
 
   @Override
   public IRecipe addRecipe() {
