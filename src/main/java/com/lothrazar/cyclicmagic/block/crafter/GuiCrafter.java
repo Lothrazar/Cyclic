@@ -57,6 +57,7 @@ public class GuiCrafter extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
+    int x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
     int xPrefix = Const.PAD, yPrefix = ContainerCrafter.SLOTY;
@@ -75,8 +76,10 @@ public class GuiCrafter extends GuiBaseContainer {
     yPrefix = ContainerCrafter.SLOTY + 2 * Const.SQ;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
-            this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+        x = xPrefix - 1 + j * Const.SQ;
+        y = yPrefix - 1 + i * Const.SQ;
+        Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + x,
+            this.guiTop + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
     //output
