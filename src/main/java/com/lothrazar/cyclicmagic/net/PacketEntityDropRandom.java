@@ -46,14 +46,12 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
 
   private int entityId;
   private int slot;
-  private ItemStack stack;
 
   public PacketEntityDropRandom() {}
 
-  public PacketEntityDropRandom(int entityid, int level, ItemStack st) {
+  public PacketEntityDropRandom(int entityid, int level) {
     entityId = entityid;
     this.slot = level;
-    stack = st;
   }
 
   @Override
@@ -61,7 +59,6 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     entityId = tags.getInteger("entityId");
     slot = tags.getInteger("level");
-    stack = new ItemStack(tags.getCompoundTag("stack"));
   }
 
   @Override
@@ -69,7 +66,6 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("entityId", entityId);
     tags.setInteger("level", slot);
-    tags.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
     ByteBufUtils.writeTag(buf, tags);
   }
 
@@ -95,9 +91,13 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
     if (entityTarget != null && entityTarget instanceof EntityLivingBase) {
       EntityLivingBase entity = (EntityLivingBase) entityTarget;
       EntityEquipmentSlot slot = EntityEquipmentSlot.values()[message.slot];
+      ItemStack stackCurrent = player.getItemStackFromSlot(slot);
+      if (stackCurrent.isEmpty()) {
+        return;
+      }
       //      EntityItem ei = UtilItemStack.dropItemStackInWorld(world, entity.getPosition(), message.stack);
       BlockPos pos = entity.getPosition();
-      EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, message.stack);
+      EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stackCurrent);
       // entityItem.addVelocity(0, PotionDropItems.VELOCITY, 0);
       world.spawnEntity(entityItem);
       entity.setItemStackToSlot(slot, ItemStack.EMPTY);
