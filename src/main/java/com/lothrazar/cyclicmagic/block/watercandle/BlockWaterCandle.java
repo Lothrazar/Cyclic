@@ -154,7 +154,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null);
 
     //  ModCyclic.logger.log(wattest + "?" + canSpawn + " " + monster.getName());
-    if (canSpawn == Event.Result.DENY && monster.getCanSpawnHere() == false) {
+    if (canSpawn == Event.Result.DENY || monster.getCanSpawnHere() == false) {
       afterSpawnFailure(world, pos);
     }
     else if (world.spawnEntity(monster)) {
