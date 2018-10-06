@@ -118,6 +118,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     List<BlockPos> shape = getShapeFilled();
     for (BlockPos posCurrent : shape) {
       this.tryHarvestSingle(posCurrent);
+      if (this.isInventoryFull()) {
+        //still might drop items for example if there is room for wheat, but seeds come in
+        //but if that happens, just get item collectors or faster piping .
+        //worth keepin for single cropss like netherwart
+        return;
+      }
     }
   }
 
