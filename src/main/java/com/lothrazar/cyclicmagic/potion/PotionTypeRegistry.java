@@ -43,14 +43,12 @@ public class PotionTypeRegistry {
   }
 
   public static PotionTypeCyclic addPotionType(PotionEffect eff, String name, Item item) {
-    PotionTypeCyclic pot = addPotionType(eff, name, new ItemStack(item));
-    potions.add(pot);
-    return pot;
+    return addPotionType(eff, name, new ItemStack(item));
   }
 
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
-    //    PotionTypeRegistry.register();
+
     for (PotionTypeCyclic pt : potions) {
       event.getRegistry().register(pt);
       pt.addMix();
