@@ -202,7 +202,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;
         }
         size = value;
       break;
