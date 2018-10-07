@@ -48,7 +48,6 @@ public class PotionTypeRegistry {
 
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<PotionType> event) {
-
     for (PotionTypeCyclic pt : potions) {
       event.getRegistry().register(pt);
       pt.addMix();

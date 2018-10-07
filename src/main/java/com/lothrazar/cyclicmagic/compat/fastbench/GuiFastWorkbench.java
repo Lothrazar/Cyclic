@@ -8,15 +8,14 @@ import shadows.fastbench.gui.GuiFastBench;
 
 public class GuiFastWorkbench extends GuiFastBench {
 
-	public GuiFastWorkbench(InventoryPlayer inv, World world, TileEntityWorkbench te) {
+  public GuiFastWorkbench(InventoryPlayer inv, World world, TileEntityWorkbench te) {
     super(inv, world, te.getPos());
-		this.inventorySlots = new ClientContainerFastWorkbench(inv.player, world, te);
-	}
+    this.inventorySlots = new ClientContainerFastWorkbench(inv.player, world, te);
+  }
 
-	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.fontRenderer.drawString(I18n.format("tile.block_workbench.name"), 28, 6, 4210752);
-		this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
-	}
-
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    this.fontRenderer.drawString(I18n.format("tile.block_workbench.name"), 28, 6, 4210752);
+    this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+  }
 }

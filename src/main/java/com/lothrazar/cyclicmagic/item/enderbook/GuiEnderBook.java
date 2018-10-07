@@ -46,7 +46,6 @@ public class GuiEnderBook extends GuiScreen {
 
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
-
   final int maxNameLen = 20;
 
   public GuiEnderBook(EntityPlayer entityPlayer, ItemStack book) {

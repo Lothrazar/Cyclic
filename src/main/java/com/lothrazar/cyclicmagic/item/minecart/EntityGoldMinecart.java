@@ -123,9 +123,7 @@ public class EntityGoldMinecart extends EntityMinecart {
         this.setRollingDirection(-this.getRollingDirection());
         this.setRollingAmplitude(10);
         this.setDamage(50.0F);
-
         this.markVelocityChanged();//setBeenAttacked
-
       }
     }
   }

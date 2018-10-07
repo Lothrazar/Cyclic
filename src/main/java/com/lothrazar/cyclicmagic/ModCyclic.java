@@ -238,7 +238,6 @@ public class ModCyclic {
     ModuleRegistry.registerAll();//create new instance of every module
     //content creation 
     content = new ArrayList<IContent>();
-
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
     content.add(new BlockLibrary());

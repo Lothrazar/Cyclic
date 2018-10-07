@@ -268,7 +268,6 @@ public class UtilHarvester {
     }
     //boolean hasberry type of flag harvests
     if (useBooleanProperty.containsKey(blockId)) {
-
       String property = useBooleanProperty.get(blockId);
       PropertyBool propFlag = getBoolProperty(blockState, property);
       if (blockState.getValue(propFlag)) {

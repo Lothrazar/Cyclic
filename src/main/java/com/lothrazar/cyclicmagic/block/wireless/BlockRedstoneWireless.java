@@ -213,10 +213,8 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     }
   }
 
-
   @Override
   public int quantityDropped(Random random) {
-
     return 0;
   }
 
