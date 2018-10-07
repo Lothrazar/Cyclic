@@ -66,6 +66,7 @@ public class ItemProjectileCannon extends BaseItem implements IHasRecipe, IConte
 
   public ItemProjectileCannon() {
     super();
+    this.setMaxStackSize(1);
   }
 
   @Override
