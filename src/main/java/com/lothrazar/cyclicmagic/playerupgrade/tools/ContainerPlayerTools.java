@@ -57,7 +57,6 @@ public class ContainerPlayerTools extends ContainerBase {
       int size = UtilPlayerInventoryFilestorage.getSize();
       EntityPlayerMP mp = (EntityPlayerMP) player;
       for (int a = 0; a < size; a++) {
-
         ModCyclic.network.sendTo(new PacketSyncToolslot(a, serverStacks.getStackInSlot(a)), mp);
       }
     }

@@ -499,11 +499,9 @@ public class ForgeGuiHandler implements IGuiHandler {
     BlockPos p = new BlockPos(x, y, z);
     if (world instanceof WorldClient) {
       TileEntity te = world.getTileEntity(p);
-
       switch (ID) {
         case GUI_INDEX_TOOLSWAPPER:
           ContainerPlayerTools ctr = new ContainerPlayerTools(player.inventory, player);
-
           return new GuiTools(ctr);
         case VANILLA_SIGN:
           return new GuiEditSign((TileEntitySign) world.getTileEntity(new BlockPos(x, y, z)));

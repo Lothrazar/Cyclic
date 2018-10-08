@@ -41,7 +41,6 @@ import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -118,29 +117,28 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, item.getTranslationKey() + ".guide");
     }
     //end of Info tab
-    
     //FB Compat
-    if(CompatFastBench.LOADED) {
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
-            1, // @param recipeSlotStart    the first slot for recipe inputs 
-            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
-            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
-            36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
-            1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
-            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
-            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
-            4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
-            1, // @param recipeSlotStart    the first slot for recipe inputs 
-            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
-            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
-            36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
-            1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
-            9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
-            10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
-            4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    if (CompatFastBench.LOADED) {
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs 
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+          36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs 
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+          36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     }
   }
 

@@ -149,27 +149,35 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     float z = pos.getZ() + MathHelper.getInt(rand, -1 * RADIUS, RADIUS);
     monster.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner 
-    if (monster.getCanSpawnHere() &&
-        ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null) == Event.Result.DENY) {
-      return;
+    Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null);
+    //  ModCyclic.logger.log(wattest + "?" + canSpawn + " " + monster.getName());
+    if (canSpawn == Event.Result.DENY || monster.getCanSpawnHere() == false) {
+      afterSpawnFailure(world, pos);
     }
-    //we can spawn here 
-    if (world.spawnEntity(monster)) {
-      monster.onInitialSpawn(world.getDifficultyForLocation(pos), null);//i hope null is ok? 
-      afterSpawnSuccess(world, pos, rand);
+    else if (world.spawnEntity(monster)) {
+      afterSpawnSuccess(monster, world, pos, rand);
     }
   }
 
-  private void afterSpawnSuccess(World world, BlockPos pos, Random rand) {
+  private void afterSpawnFailure(World world, BlockPos pos) {
+    world.scheduleUpdate(pos, this, TICK_RATE);
+  }
+
+  private void afterSpawnSuccess(EntityLiving monster, World world, BlockPos pos, Random rand) {
+    monster.onInitialSpawn(world.getDifficultyForLocation(pos), null);//i hope null is ok? 
     if (rand.nextDouble() < CHANCE_OFF) {
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
-      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
-      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
-      world.setBlockState(pos, getDefaultState().withProperty(IS_LIT, false));
+      turnOff(world, pos);
     }
     else {
       world.scheduleUpdate(pos, this, TICK_RATE);
     }
+  }
+
+  private void turnOff(World world, BlockPos pos) {
+    UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
+    UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
+    UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
+    world.setBlockState(pos, getDefaultState().withProperty(IS_LIT, false));
   }
 
   private EntityLiving findMonsterToSpawn(World world, BlockPos pos, Random rand) {

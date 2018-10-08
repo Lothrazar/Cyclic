@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.item.random;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.random.ItemRandomizer.ActionType;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -34,6 +35,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -82,38 +84,49 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
   @Override
   public IMessage onMessage(PacketRandomize message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      EntityPlayer player = ctx.getServerHandler().player;
-      World world = player.getEntityWorld();
-      List<BlockPos> places = getPlaces(message.pos, message.side, message.actionType);
-      List<BlockPos> rpos = new ArrayList<BlockPos>();
-      List<IBlockState> rstates = new ArrayList<IBlockState>();
-      //ignore liquid/tile entities IE do not break chests / etc
-      IBlockState stateHere = null;
-      for (BlockPos p : places) {
-        stateHere = world.getBlockState(p);
-        if (stateHere != null
-            && world.getTileEntity(p) == null
-            && world.isAirBlock(p) == false
-            && stateHere.getMaterial().isLiquid() == false) {
-          //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
-          rpos.add(p);
-          rstates.add(stateHere);
+      IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
+      thread.addScheduledTask(new Runnable() {
+
+        @Override
+        public void run() {
+          runAction(message, ctx);
         }
-      }
-      Collections.shuffle(rpos, world.rand);
-      BlockPos swapPos;
-      IBlockState swapState;
-      synchronized (rpos) {//just in case
-        for (int i = 0; i < rpos.size(); i++) {
-          swapPos = rpos.get(i);
-          swapState = rstates.get(i);
-          world.destroyBlock(swapPos, false);
-          //playing sound here in large areas causes ConcurrentModificationException
-          UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false);
-        }
-      }
+      });
     }
     return null;
+  }
+
+  private static void runAction(final PacketRandomize message, final MessageContext ctx) {
+    EntityPlayer player = ctx.getServerHandler().player;
+    World world = player.getEntityWorld();
+    List<BlockPos> places = getPlaces(message.pos, message.side, message.actionType);
+    List<BlockPos> rpos = new ArrayList<BlockPos>();
+    List<IBlockState> rstates = new ArrayList<IBlockState>();
+    //ignore liquid/tile entities IE do not break chests / etc
+    IBlockState stateHere = null;
+    for (BlockPos p : places) {
+      stateHere = world.getBlockState(p);
+      if (stateHere != null
+          && world.getTileEntity(p) == null
+          && world.isAirBlock(p) == false
+          && stateHere.getMaterial().isLiquid() == false) {
+        //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
+        rpos.add(p);
+        rstates.add(stateHere);
+      }
+    }
+    Collections.shuffle(rpos, world.rand);
+    BlockPos swapPos;
+    IBlockState swapState;
+    synchronized (rpos) {//just in case
+      for (int i = 0; i < rpos.size(); i++) {
+        swapPos = rpos.get(i);
+        swapState = rstates.get(i);
+        world.destroyBlock(swapPos, false);
+        //playing sound here in large areas causes ConcurrentModificationException
+        UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false);
+      }
+    }
   }
 
   static List<BlockPos> getPlaces(final BlockPos pos, final EnumFacing side, ActionType actionType) {

@@ -32,6 +32,7 @@ import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -58,13 +59,14 @@ public class UtilHarvester {
   private static NonNullList<String> blocksBreakAboveIfMatching;
   private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
   private static Map<String, Integer> harvestCustomMaxAge;
-  private static Map<String, String> stupidModsThatDontUseAge = new HashMap<String, String>();
+  private static Map<String, String> modsThatDontUseAge = new HashMap<String, String>();
+  private static Map<String, String> useBooleanProperty = new HashMap<String, String>();
   private static NonNullList<String> blocksDoNotRemoveSeeds;
 
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
-        "terraqueous:pergola", "minecraft:*_stem", "croparia:stem_*"
+        "terraqueous:pergola", "minecraft:*_stem", "croparia:stem_*", "rustic:grape_stem"
     };
     String[] blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  A star is for a wildcard");
     //TODO: config it after its decided? maybe? maybe not?
@@ -148,7 +150,8 @@ public class UtilHarvester {
         ,"plants2:crop_1"
        );  
     
-    stupidModsThatDontUseAge.put("rustic:leaves_apple", "apple_age");
+    useBooleanProperty.put("rustic:grape_leaves", "grapes");
+    modsThatDontUseAge.put("rustic:leaves_apple", "apple_age"); 
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
@@ -196,6 +199,18 @@ public class UtilHarvester {
     return world.getBlockState(pos).getBlock().equals(blockCheck);
   }
 
+  private static PropertyBool getBoolProperty(IBlockState blockState, String property) {
+    UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
+    while (unmodifiableiterator.hasNext()) {
+      //      Entry<IProperty<?>, Comparable<?>> entry = unmodifiableiterator.next();
+      IProperty<?> iproperty = unmodifiableiterator.next().getKey();
+      if (iproperty instanceof PropertyBool && iproperty.getName().equals(property)) {
+        return (PropertyBool) iproperty;
+      }
+    }
+    return null;
+  }
+
   private static PropertyInteger getAgeProperty(IBlockState blockState, ResourceLocation blockId) {
     UnmodifiableIterator<Entry<IProperty<?>, Comparable<?>>> unmodifiableiterator = blockState.getProperties().entrySet().iterator();
     while (unmodifiableiterator.hasNext()) {
@@ -207,8 +222,8 @@ public class UtilHarvester {
       if (iproperty.getName().equals(AGE) && iproperty instanceof PropertyInteger) {
         return (PropertyInteger) iproperty;
       }
-      else if (stupidModsThatDontUseAge.containsKey(blockId.toString()) &&
-          iproperty.getName().equals(stupidModsThatDontUseAge.get(blockId.toString())) && iproperty instanceof PropertyInteger) {
+      else if (modsThatDontUseAge.containsKey(blockId.toString()) &&
+          iproperty.getName().equals(modsThatDontUseAge.get(blockId.toString())) && iproperty instanceof PropertyInteger) {
         return (PropertyInteger) iproperty;
       }
     }
@@ -251,7 +266,19 @@ public class UtilHarvester {
       world.destroyBlock(posCurrent.up(), false);
       return drops;
     }
-    //new generic harvest
+    //boolean hasberry type of flag harvests
+    if (useBooleanProperty.containsKey(blockId)) {
+      String property = useBooleanProperty.get(blockId);
+      PropertyBool propFlag = getBoolProperty(blockState, property);
+      if (blockState.getValue(propFlag)) {
+        blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
+        if (drops.size() == 0)//use deprecated only if main is offline 
+          drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
+        // and then reset to off 
+        world.setBlockState(posCurrent, blockState.withProperty(propFlag, false));
+      }
+    }
+    //age growth 
     PropertyInteger propInt = getAgeProperty(blockState, blockId);
     if (propInt != null) {
       int currentAge = blockState.getValue(propInt);
@@ -307,7 +334,7 @@ public class UtilHarvester {
             for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
               final ItemStack drop = iterator.next();
               if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
-                ModCyclic.logger.log("Harvester remove seed item " + seedItem);
+                //                ModCyclic.logger.log("Harvester remove seed item " + seedItem);
                 iterator.remove();
                 // ModCyclic.logger.log("yay remove seed " + drop.getDisplayName());
                 break;

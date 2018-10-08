@@ -109,9 +109,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     EntityTippedArrow entitytippedarrow = new EntityTippedArrow(world, position.getX(), position.getY(), position.getZ());
     entitytippedarrow.setPotionEffect(PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionType.getPotionTypeForName("slowness")));
     entitytippedarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
-
     entitytippedarrow.shoot(enumfacing.getXOffset(), YAW, enumfacing.getZOffset(), VELOCITY, INACCRACY);
-
     world.spawnEntity(entitytippedarrow);
   }
 

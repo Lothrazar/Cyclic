@@ -81,8 +81,7 @@ public class EnchantLifeLeech extends BaseEnchant {
         restore = attacker.getEntityWorld().rand.nextInt(restore + 1) + min;
         if (restore > 0) {
           //hunger
-          attacker.getFoodStats().setFoodLevel(attacker.getFoodStats().getFoodLevel() + restore);
-          attacker.getFoodStats().setFoodSaturationLevel(attacker.getFoodStats().getSaturationLevel() + restore);
+          attacker.getFoodStats().addStats(restore, 0.5F);
           //hearts
           if (attacker.getHealth() < attacker.getMaxHealth()) {
             attacker.heal(restore);
