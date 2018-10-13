@@ -103,7 +103,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
-    compound.setInteger("transferRate", this.transferRate);
+    transferRate = compound.getInteger("transferRate");
   }
 
   @Override
