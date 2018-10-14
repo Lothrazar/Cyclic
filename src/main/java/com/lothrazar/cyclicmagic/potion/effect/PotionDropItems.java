@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 public class PotionDropItems extends PotionBase {
 
   private static final double DROP_CHANCE = 0.06;
-  // public static final double VELOCITY = 1.7;
 
   public PotionDropItems() {
     super("butter", false, 0xe5e500);
@@ -31,22 +30,21 @@ public class PotionDropItems extends PotionBase {
       if (pot.getAmplifier() == Const.Potions.I) {
         slots = Arrays.asList(EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND);
       }
-      else {// if (message.level == Const.Potions.II) {so yo
+      else {
         slots = Arrays.asList(EntityEquipmentSlot.values());
       }
       Collections.shuffle(slots);
-      ItemStack stack;
+      ItemStack stack = ItemStack.EMPTY;
       for (EntityEquipmentSlot slot : slots) {
         stack = entity.getItemStackFromSlot(slot);
         if (stack.isEmpty() == false && world.rand.nextDouble() < DROP_CHANCE) {
           if (world.isRemote) {
-            ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId(), slot.ordinal(), stack.copy()));
+            ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId(), slot.ordinal()));
           }
-          entity.setItemStackToSlot(slot, ItemStack.EMPTY);
+          //          entity.setItemStackToSlot(slot, ItemStack.EMPTY);
           break;
         }
       }
-      //    ModCyclic.logger.log(DROP_CHANCE + "||client entityid" + entity.getEntityId() + "_" + entity.getName());
     }
   }
 

@@ -4,6 +4,5 @@ import net.minecraftforge.fml.common.Loader;
 
 public class CompatFastBench {
 
-	public static final boolean LOADED = Loader.isModLoaded("fastbench");
-	
+  public static final boolean LOADED = Loader.isModLoaded("fastbench");
 }

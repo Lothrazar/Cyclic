@@ -30,11 +30,10 @@ import net.minecraft.world.World;
 
 public class ClientContainerFastPlayerBench extends ContainerFastPlayerBench {
 
-	public ClientContainerFastPlayerBench(EntityPlayer player, World world) {
-		super(player, world);
-	}
+  public ClientContainerFastPlayerBench(EntityPlayer player, World world) {
+    super(player, world);
+  }
 
-	@Override
-	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
-	}
+  @Override
+  protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {}
 }

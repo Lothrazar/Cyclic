@@ -129,6 +129,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public EntityPlayer getPlayer() {
     return thePlayer;
   }
+
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     //i have to assume the recipe will safely validate itself

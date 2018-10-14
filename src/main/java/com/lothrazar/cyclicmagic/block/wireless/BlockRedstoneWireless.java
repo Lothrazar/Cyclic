@@ -193,6 +193,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
       return;
     } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
+    //    event.
     World world = event.getWorld();
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();
@@ -203,11 +204,18 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       if (t.getTargetPos() != null)
         UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
+      world.setBlockToAir(pos);
     }
     else if (ent != null && ent instanceof TileEntityWirelessRec) {
       ItemStack stack = new ItemStack(state.getBlock());
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
+      world.setBlockToAir(pos);
     }
+  }
+
+  @Override
+  public int quantityDropped(Random random) {
+    return 0;
   }
 
   //disable regular drops, make my own drop that saves nbt

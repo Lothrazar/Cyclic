@@ -66,6 +66,9 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   }
 
   private boolean doesFluidMatchTank(FluidStack incoming) {
+    if (tank == null) {
+      return false;
+    }
     if (tank.getFluid() == null) {
       return true;
     }

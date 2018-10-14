@@ -85,10 +85,8 @@ public class ItemPotionContent implements IContent {
   public void register() {
     if (ItemPotionContent.enableButter) {
       potionTypeButter = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Items.GOLD_INGOT));
-      //      potions.add(potionTypeButter);
       potionTypeButterII = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, SHORT, Const.Potions.II), "butter2", Item.getItemFromBlock(Blocks.HARDENED_CLAY));
       potionTypeButterII.base = potionTypeButter;
-      //      potions.add(potionTypeButterII);
     }
     if (ItemPotionContent.enableSlowfall) {
       potionTypeSlowfall = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()));
