@@ -198,8 +198,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void consumeEnergy() {
     if (this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
       if (this.getEnergyCurrent() >= this.getEnergyCost()) {
-        //        ModCyclic.logger.log("extractEnergy " + this.getFuelCost() + " _isRemote_" + world.isRemote
-        //            + " and total was " + this.getFuelCurrent());
         this.energyStorage.extractEnergy(this.getEnergyCost(), false);
       }
     }
@@ -562,15 +560,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return super.getCapability(capability, facing);
   }
 
-  /**
-   * returns true only if one or more inventory slots is empty
-   * 
-   * ignores fuelSlot
-   * 
-   * @return boolean
-   */
   protected boolean isInventoryFull() {
-    for (int i = 0; i < this.inv.size(); i++) {
+    return isInventoryFull(0);
+  }
+
+  protected boolean isInventoryFull(int start) {
+    for (int i = start; i < this.inv.size(); i++) {
       //if its empty or it is below max count, then it has room -> not full
       if (this.inv.get(i).isEmpty()
           || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()) {
@@ -579,6 +574,24 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     //no empty stacks found
     return true;
+  }
+
+  protected boolean inventoryHasRoom(int start, ItemStack wouldInsert) {
+    int emptySlots = 0;
+    for (int i = start; i < this.inv.size(); i++) {
+      //if its empty or it is below max count, then it has room -> not full
+      ItemStack invStack = this.inv.get(i);
+      if (invStack.isEmpty()) {
+        return true;
+      }
+      //      || this.inv.get(i).getCount() < this.inv.get(i).getMaxStackSize()
+      //if the stack matches, AND theres n
+      if (ItemStack.areItemsEqual(invStack, wouldInsert)) {
+        emptySlots += (invStack.getMaxStackSize() - invStack.getCount());
+      }
+    }
+    //no empty stacks found 
+    return emptySlots >= wouldInsert.getCount();
   }
 
   /**

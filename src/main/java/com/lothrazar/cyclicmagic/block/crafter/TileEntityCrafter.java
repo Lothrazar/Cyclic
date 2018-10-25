@@ -90,17 +90,18 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost() && isGridEmpty() == false) {
-      //      if (world.isRemote == false) {// maybe?
+    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
+        this.isGridEmpty() == false) {
       findRecipe();
-      //      }
-      if (recipe != null && !world.isRemote && tryPayCost()) {
-        // pay the cost  
-        final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
-        //confirmed this test does actually et the outut: 4x planks 
-        sendOutput(craftingResult);
-        timer = TIMER_FULL;
-        this.consumeEnergy();
+      if (recipe != null && !world.isRemote) {
+        ItemStack craftResult = recipe.getCraftingResult(this.crafter);
+        if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
+          if (tryPayCost()) {
+            sendOutput(craftResult);
+            timer = TIMER_FULL;
+            this.consumeEnergy();
+          }
+        }
       }
     }
   }
@@ -151,7 +152,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     //now we know there is enough everywhere. we validated
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-      //      ModCyclic.logger.info(" PAY cost at  = " + entry);
       Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
       if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
         //example: making cake, dump out empty bucket
@@ -159,16 +159,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
-    //payments have made its
-    //    NonNullList<ItemStack> remainder = recipe.getRemainingItems(crafter);
-    //    for (int i = 0; i < remainder.size(); ++i) {
-    //      ItemStack slot = this.crafter.getStackInSlot(i);
-    //      ItemStack remainderCurrent = remainder.get(i);
-    //      if (!slot.getItem().getContainerItem(slot).isEmpty()) {
-    //        //container item exists
-    //        ModCyclic.logger.log(i + "  container item" + slot + " VS DMG  " + remainderCurrent.getItemDamage() + "?" + remainderCurrent.getCount());
-    //      }
-    //    }
+
     return true;
   }
 
@@ -218,7 +209,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
       craftSlot = i - gridStart;
-      //      ModCyclic.logger.info("Crafter set "+craftSlot+"_"+ this.getStackInSlot(i ));
+
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
@@ -281,7 +272,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
 
   public ItemStack getRecipeResult() {
-    //    ModCyclic.logger.log(recipe + "");
+
     if (this.recipe == null) {
       return ItemStack.EMPTY;
     }
