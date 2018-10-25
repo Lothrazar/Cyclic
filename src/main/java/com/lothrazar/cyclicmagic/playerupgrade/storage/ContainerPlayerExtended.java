@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.storage;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
@@ -140,10 +141,11 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    //   ModCyclic.logger.error("HEYY " + iSlot);
+    ModCyclic.logger.error("HEYY " + iSlot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slot = this.inventorySlots.get(iSlot);
-    int playerStart = 40, playerEnd = 66, topStart = 4, topEnd = 39, hotbarStart = 67, hotbarEnd = 75, armorStart = 0, armorEnd = 3;
+    /// the topEnd +4 is for right hand armor
+    int playerStart = 44, playerEnd = 70, topStart = 4, topEnd = 39 + 4, hotbarStart = 71, hotbarEnd = hotbarStart + 8, armorStart = 0, armorEnd = 3;
     if (slot != null && slot.getHasStack()) {
       ItemStack stackInSlot = slot.getStack();
       stack = stackInSlot.copy();

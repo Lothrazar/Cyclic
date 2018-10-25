@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.17.3",
-    "1.12.2-recommended": "1.17.3"
+    "1.12.2-latest": "1.17.4",
+    "1.12.2-recommended": "1.17.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -295,5 +295,6 @@
 	,"1.17.1":"New Block: Laser Cell.  New block: Water Candle.  All new textures for Fluid Placer and Precise Dropper.  Improved rendering of Ender Library face.  New keyboard wheel shortcut that re-uses your extended inventory to hot-swap your items toolbelt style.  Fixed short 1 length cables sometimes getting stuck with items.   Packager no longer drains energy when it has no recipe, also it only drains recipe on craft instead of per-tick so default config cost was updated.  Cables now easily and quickly harvested by shears.  Updated zh_cn.lang from sandtechnology.  " 
   	,"1.17.2":"Fix server not starting up on newer forge versions.  Crafting workbench and inventory now compatible with FastWorkbench by shadows-on-fire.  Set minimum forge version to now check and be enforced (required minimum is 14.23.4.2705, suggested is 14.23.4.2760+).  Water candle can now be harvested by pickaxe.  Apple Sprout recipe updated.  Apple Sprout now compatible with info mods such as TOP/WAILA.  Removed some custom anvil repair recipes that were causing issues.  Buffed Speed Charm: increased durability and reduced damaging chance of Speed Charm.  Fix server desync with the new inventory hot tool swap GUI and Keybinding.  "
   	,"1.17.3":"Fixed life leech sometimes setting invalid food values (Lykrast).  Updated zh_CN.lang (sandtechnology).  Fixed duplicate potion registry errors in log.  Fixed Water Candle not following some spawn rules such as light levels.  Fixed an uncommon crash when bundled cables first connects to certain blocks.  Harvester can now go down to size 1x1.  Harvester gathers grape berries from the vines in Rustic.  Fixed an intermittent crash when using Block Randomizer in multiplayer.  Fixed a block breaking issue with Wireless redstone blocks.  Fixed block transparency issue with Dehydrator.  Fix tooltip language issue in Storage bag GUI button that toggle auto pickup modes.  Rainbow Cannon is no longer stackable.   "
+    ,"1.17.4":"Fixed Fluid extraction cable not saving the fluid rate setting on world reload.  Typo fixed in language file.  Fixed shift-clicking item issues in the extended player inventory.  "
   }
 }

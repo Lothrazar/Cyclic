@@ -89,7 +89,7 @@ public class ItemRegistry {
   public static void onRegistryEvent(RegistryEvent.Register<Item> event) {
     // event.getRegistry().registerAll(ItemRegistry.itemMap.values().toArray(new Item[0]));
     //new registries are crazy wacky. so ore dict DOES NOT WORK in block reg, stack becomes empty
-    for (Item item : ItemRegistry.itemList) {
+    for (Item item : itemList) {
       event.getRegistry().register(item);
       if (item instanceof IHasOreDict) {
         OreDictionary.registerOre(((IHasOreDict) item).getOreDict(), item);
