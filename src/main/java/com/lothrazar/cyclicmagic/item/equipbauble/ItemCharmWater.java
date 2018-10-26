@@ -72,7 +72,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
+    return super.addRecipe(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
 
   @Override
