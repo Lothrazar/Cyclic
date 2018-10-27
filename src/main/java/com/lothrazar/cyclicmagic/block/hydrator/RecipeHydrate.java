@@ -73,10 +73,29 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    return recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0)) &&
-        recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1)) &&
-        recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2)) &&
-        recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
+    this.sanityCheckInput();
+    boolean match0 = recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0));
+    boolean match1 = recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1));
+    boolean match2 = recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2));
+    boolean match3 = recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
+    return match0 && match1 && match2 && match3;
+  }
+
+  /**
+   * Clean out errors/bad data. Example: Oak sapling that has metadata zero gets converted to 32767
+   */
+  private void sanityCheckInput() {
+    for (int i = 0; i < recipeInput.size(); i++) {
+      ItemStack s = recipeInput.get(i);
+      if (s.isEmpty()) {
+        continue;
+      }
+      if (s.getMetadata() == 32767) {
+        ItemStack snew = new ItemStack(s.getItem(), 1, 0);
+        snew.setTagCompound(s.getTagCompound());
+        recipeInput.set(i, snew);
+      }
+    }
   }
 
   public static boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {

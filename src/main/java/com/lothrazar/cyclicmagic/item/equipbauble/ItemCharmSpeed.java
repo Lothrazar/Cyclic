@@ -76,6 +76,6 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(new ItemStack(Items.EMERALD));
+    return super.addRecipe(new ItemStack(Items.EMERALD));
   }
 }

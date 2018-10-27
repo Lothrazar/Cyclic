@@ -76,8 +76,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public void update() {
     this.updateLockSlots();
-    if (this.isRunning() == false) {
-      return;
+    if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
+      return;//dont drain power when full  
     }
     if (this.updateEnergyIsBurning() == false) {
       return;
@@ -110,15 +110,17 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public boolean tryProcessRecipe() {
     RecipeHydrate irecipe = findMatchingRecipe();
-    if (irecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()) {
+    if (irecipe != null  ) {
+      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()
+          && this.inventoryHasRoom(4, irecipe.getRecipeOutput().copy())) {
         if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
           //only create the output if cost was successfully paid
-          this.sendOutputItem(irecipe.getRecipeOutput());
+          this.sendOutputItem(irecipe.getRecipeOutput().copy());
         }
         return true;
       }
     }
+
     return false;
   }
 
@@ -138,6 +140,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return null;
     }
     for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
+
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }
@@ -146,7 +149,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 3 + 1; i < 8; i++) {
+    for (int i = 4; i < 8; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }

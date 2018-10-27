@@ -97,6 +97,6 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(new ItemStack(Blocks.BONE_BLOCK));
+    return super.addRecipe(new ItemStack(Blocks.BONE_BLOCK));
   }
 }
