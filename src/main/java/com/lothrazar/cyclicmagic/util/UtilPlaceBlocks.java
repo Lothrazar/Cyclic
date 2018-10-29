@@ -85,16 +85,25 @@ public class UtilPlaceBlocks {
    * @param stack
    * @return
    */
-  public static boolean placeItemblock(World world, BlockPos placePos, ItemStack stack, EntityPlayer fake) {
+  public static boolean placeItemblock(World world, BlockPos placePos, final ItemStack stack, EntityPlayer fake) {
     if (stack.getItem() instanceof ItemBlock == false) {
       return false;
     }
     ItemBlock itemblock = (ItemBlock) stack.getItem();
     if (world.isAirBlock(placePos)) {
       Block block = itemblock.getBlock();
-      IBlockState state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
-          stack.getItemDamage(), fake, EnumHand.MAIN_HAND);
+      IBlockState state = null;
       if (block.canPlaceBlockAt(world, placePos)) {
+        if (stack.getMetadata() > 0) {
+          //fixes blocks that dont override their own custom getStateForPlacement
+          //example; primal core without this removes metadata from wood planks, converting it
+          state = block.getStateFromMeta(stack.getMetadata());
+        }
+        else {
+          //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
+          state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
+              stack.getMetadata(), fake, EnumHand.MAIN_HAND);
+        }
         if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
           world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
           stack.shrink(1);
