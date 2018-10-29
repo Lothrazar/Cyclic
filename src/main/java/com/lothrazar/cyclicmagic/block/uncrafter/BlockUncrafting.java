@@ -115,26 +115,56 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     String[] deflist = new String[] {
         "minecraft:end_crystal",
         "minecraft:magma",
+        "minecraft:elytra",
+        "forge:bucketfilled",
+        "astralsorcery:itemwand",
         "progressiveautomation:WitherDiamond",
         "progressiveautomation:WitherGold",
         "progressiveautomation:WitherIron",
         "progressiveautomation:WitherStone",
         "progressiveautomation:WitherWood",
-        "minecraft:elytra", "techreborn:uumatter",
-        "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special"
+        "techreborn:uumatter",
+        "spectrite:spectrite_arrow",
+        "spectrite:spectrite_arrow_special"
     };
     String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
     //OUTPUT
-    deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "botania:manaTablet",
-        "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem",
-        "harvestcraft:bakewareItem", "harvestcraft:saucepanItem", "harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem",
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star", "minecraft:elytra", "techreborn:uumatter"
+    deflist = new String[] {
+        "minecraft:milk_bucket",
+        "minecraft:water_bucket",
+        "minecraft:lava_bucket",
+        "minecraft:nether_star",
+        "minecraft:elytra",
+        "forge:bucketfilled",
+        "abyssalcraft:cloth",
+        "abyssalcraft:transmutationgem",
+        "botania:manatablet",
+        "extrautils2:glasscutter",
+        "harvestcraft:juiceritem",
+        "harvestcraft:mixingbowlitem",
+        "harvestcraft:mortarandpestleitem",
+        "harvestcraft:bakewareitem",
+        "harvestcraft:saucepanitem",
+        "harvestcraft:skilletitem",
+        "harvestcraft:potitem",
+        "harvestcraft:cuttingboarditem",
+        "ic2:forge_hammer",
+        "ic2:cutter",
+        "minecolonies:sceptergold",
+        "mysticalagriculture:infusion_crystal",
+        "mysticalagriculture:master_infusion_crystal",
+        "techreborn:uumatter"
     };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
     //MODNAME
-    deflist = new String[] { "projecte", "resourcefulcrops", "spectrite" };
+    deflist = new String[] {
+        "projecte",
+        "flammpfeil.slashblade",
+        "resourcefulcrops",
+        "spectrite"
+    };
     blacklist = config.getStringList("BlacklistMod", category, deflist, "If a mod id is in this list, then nothing from that mod will be uncrafted ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.MODNAME);
     //CONTAINS
