@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.17.5",
-    "1.12.2-recommended": "1.17.5"
+    "1.12.2-latest": "1.17.6",
+    "1.12.2-recommended": "1.17.6"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -297,5 +297,6 @@
   	,"1.17.3":"Fixed life leech sometimes setting invalid food values (Lykrast).  Updated zh_CN.lang (sandtechnology).  Fixed duplicate potion registry errors in log.  Fixed Water Candle not following some spawn rules such as light levels.  Fixed an uncommon crash when bundled cables first connects to certain blocks.  Harvester can now go down to size 1x1.  Harvester gathers grape berries from the vines in Rustic.  Fixed an intermittent crash when using Block Randomizer in multiplayer.  Fixed a block breaking issue with Wireless redstone blocks.  Fixed block transparency issue with Dehydrator.  Fix tooltip language issue in Storage bag GUI button that toggle auto pickup modes.  Rainbow Cannon is no longer stackable.   "
     ,"1.17.4":"Fixed Fluid extraction cable not saving the fluid rate setting on world reload.  Typo fixed in language file.  Fixed shift-clicking item issues in the extended player inventory.  "
   	,"1.17.5":"zh_tw.lang updated by mcBegins2Snow.  Auto Crafter now stops crafting when full, so it stops consuming power and dropping items on the ground.  Pharos beacon now sets to 20 seconds instead of 8 to avoid Night Vision flickering.  Fixed an issue with Hydrator recipes and ore dictionary when metadata became 32767.  Hydrator no longer processes when full or drops things on the ground.  "
+	,"1.17.6":"Fixed SFX maker not saving selected index on world reload.  "
   }
 }
