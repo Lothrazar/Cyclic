@@ -47,10 +47,6 @@ public class UtilChat {
     sender.sendMessage(new TextComponentTranslation(lang(text)));
   }
 
-  public static void addChatMessage(EntityPlayer player, ITextComponent textComponentTranslation) {
-    player.sendMessage(textComponentTranslation);
-  }
-
   public static String blockPosToString(BlockPos pos) {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
@@ -123,9 +119,9 @@ public class UtilChat {
     int y = pos.getY();
     int z = pos.getZ();
     int xDist, yDist, zDist;
-    xDist = (int) player.getPosition().getX() - x;
-    yDist = (int) player.getPosition().getY() - y;
-    zDist = (int) player.getPosition().getZ() - z;
+    xDist = player.getPosition().getX() - x;
+    yDist = player.getPosition().getY() - y;
+    zDist = player.getPosition().getZ() - z;
     //in terms of directon copmass:
     //North is -z;  south is +z   
     //east is +x, west is -x

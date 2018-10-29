@@ -81,7 +81,7 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
   }
 
   public IRecipe addRecipeAndRepair(Item craftItem) {
-    return this.addRecipeAndRepair(new ItemStack(craftItem));
+    return this.addRecipe(new ItemStack(craftItem));
   }
 
   /**
@@ -94,7 +94,7 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     }
   }
 
-  public IRecipe addRecipeAndRepair(ItemStack craftItem) {
+  public IRecipe addRecipe(ItemStack craftItem) {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",

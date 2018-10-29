@@ -106,7 +106,7 @@ repositories {
 
 dependencies {
 
-  deobfCompile "mezz.jei:jei_${mc_version}:+"
+  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
   deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
   deobfCompile "baubles:Baubles:1.12:${baubles_version}"
   deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"

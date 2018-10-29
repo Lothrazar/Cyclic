@@ -57,7 +57,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   static final int MAX_POTION = 16000;
-  private static final int POTION_TICKS = Const.TICKS_PER_SEC * 8;// 8 seconds
+  private static final int POTION_TICKS = Const.TICKS_PER_SEC * 20;//cant be too low BC night vision flicker
   private static final int MAX_RADIUS = 8;
 
   public static enum Fields {

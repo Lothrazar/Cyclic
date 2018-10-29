@@ -63,8 +63,7 @@ public class UtilInventoryTransfer {
         playerItem = player.inventory.getStackInSlot(islotPlayer);
         if (playerItem.isEmpty()) {
           continue;
-        } // empty inventory slot
-        //ModMain.logger.info("try dep :"+islotPlayer + "_"+playerItem.getUnlocalizedName());
+        } // empty inventory slot 
         inventory.setInventorySlotContents(islotInvo, playerItem);
         player.inventory.setInventorySlotContents(islotPlayer, ItemStack.EMPTY);
         break;
