@@ -28,8 +28,8 @@ import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.EntityT
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.core.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;

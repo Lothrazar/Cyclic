@@ -159,7 +159,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
-
     return true;
   }
 
@@ -209,7 +208,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
       craftSlot = i - gridStart;
-
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
@@ -272,7 +270,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
 
   public ItemStack getRecipeResult() {
-
     if (this.recipe == null) {
       return ItemStack.EMPTY;
     }
