@@ -54,6 +54,7 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
         ResourceLocation sound = allSounds.get(soundIndex);
         //        ModCyclic.logger.log("SEL" + sound);
         if (sound != null && SoundEvent.REGISTRY.getObject(sound) != null) {
+          // 
           UtilSound.playSound(world, pos, SoundEvent.REGISTRY.getObject(sound), SoundCategory.BLOCKS);
           timer = TIMER_MAX;
         }
@@ -111,11 +112,13 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    soundIndex = tagCompound.getInteger("soundIndex");
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger("soundIndex", soundIndex);
     return super.writeToNBT(tagCompound);
   }
 }
