@@ -225,12 +225,27 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (this.isInBlacklist(targetPos)) {
       return;
     }
-    if (rightClickFluidAttempt(targetPos)) {
-      ModCyclic.logger.log("rightClickFluidAttempt : true");
-      syncPlayerTool();
-      return;
+    FakePlayer player = fakePlayer.get();
+    ItemStack playerHeld = player.getHeldItemMainhand();
+    //if both block and itemstack are fluid compatible 
+    if (UtilFluid.stackHasFluidHandler(playerHeld) &&
+        UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
+      boolean success = rightClickFluidTank(targetPos);
+      if (success) {
+        ModCyclic.logger.log("rightClickFluidAttempt : true");
+        syncPlayerTool();
+        return;
+      }
     }
-    ModCyclic.logger.log("rightClickFluidAttempt : false ");
+    else if (UtilFluid.stackHasFluidHandler(playerHeld) &&
+        world.isAirBlock(targetPos)) {
+      if (rightClickFluidAir(targetPos)) {
+        ModCyclic.logger.log("rightClickFluidAir : true");
+        syncPlayerTool();
+        return;
+      }
+    }
+
     if (world.isAirBlock(targetPos)) {
       return;
     }
@@ -310,15 +325,15 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
     int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    
+
     for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-//      if (includeMainHand == false &&
-//          fakePlayer.get().inventory.currentItem == i) {
-//        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
-//        //example: dont push over tools or weapons in certain cases
-//        continue;
-//      }
+      //      if (includeMainHand == false &&
+      //          fakePlayer.get().inventory.currentItem == i) {
+      //        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
+      //        //example: dont push over tools or weapons in certain cases
+      //        continue;
+      //      }
       if (s.isEmpty() == false) {
         ModCyclic.logger.log("AutoUser found drop " + s.getDisplayName());
         toDrop.add(s.copy());
@@ -386,20 +401,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       //      }
     }
     return false;
-  }
-
-  private boolean rightClickFluidAttempt(BlockPos targetPos) {
-    FakePlayer player = fakePlayer.get();
-    ItemStack playerHeld = player.getHeldItemMainhand();
-    if (playerHeld.isEmpty() || UtilFluid.stackHasFluidHandler(playerHeld) == false) {
-      return false;
-    }
-    if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
-      return rightClickFluidTank(targetPos);
-    }
-    else {
-      return rightClickFluidAir(targetPos);
-    }
   }
 
   /**
