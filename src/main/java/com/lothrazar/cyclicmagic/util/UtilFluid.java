@@ -91,7 +91,7 @@ public class UtilFluid {
         return returnMe;
       }
     }
-    return ItemStack.EMPTY;
+    return fluidHandler.getContainer();
   }
 
   public static ItemStack drainOneBucket(ItemStack d) {
