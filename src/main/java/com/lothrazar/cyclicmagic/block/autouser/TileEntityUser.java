@@ -232,14 +232,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
       if (success) {
-        ModCyclic.logger.log("rightClickFluidAttempt : true");
+        // ModCyclic.logger.log("rightClickFluidAttempt : true");
         syncPlayerTool();
         return;
       }
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
-        ModCyclic.logger.log("rightClickFluidAir : true");
+        // ModCyclic.logger.log("rightClickFluidAir : true");
         /// missing piece  
         syncPlayerTool();
         return;
@@ -253,10 +253,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    ModCyclic.logger.log(result + "after block ; HELD= " + fakePlayer.get().getHeldItemMainhand());
+    //  ModCyclic.logger.log(result + "after block ; HELD= " + fakePlayer.get().getHeldItemMainhand());
     if (result != EnumActionResult.FAIL) {
       boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
-      ModCyclic.logger.log("after block ? equal " + eq);
+      //ModCyclic.logger.log("after block ? equal " + eq);
       if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
 
         syncPlayerTool();
@@ -265,7 +265,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         //       
         this.tryDumpFakePlayerInvo(true);
         syncPlayerTool();
-        ModCyclic.logger.log("ELIF sync after " + fakePlayer.get().getHeldItemMainhand());
+        //   ModCyclic.logger.log("ELIF sync after " + fakePlayer.get().getHeldItemMainhand());
       }
     }
     else {
@@ -322,7 +322,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void tryDumpFakePlayerInvo(boolean includeMainHand) {
-    ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
+    //   ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
     int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
 
@@ -335,7 +335,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       //        continue;
       //      }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("AutoUser found drop " + s.getDisplayName());
+
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -353,10 +353,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
     boolean wasFull = UtilFluid.isEmptyOfFluid(playerHeld);
-    ModCyclic.logger.log("[RCF] start " + player.getHeldItemMainhand() + " " + player.inventory.currentItem);
+    // ModCyclic.logger.log("[RCF] start " + player.getHeldItemMainhand() + " " + player.inventory.currentItem);
     boolean success = UtilFluid.interactWithFluidHandler(player, world, targetPos, this.getCurrentFacing().getOpposite());
     playerHeld = player.getHeldItemMainhand();
-    ModCyclic.logger.log("[RCF] after interact " + player.getHeldItemMainhand());
+    // ModCyclic.logger.log("[RCF] after interact " + player.getHeldItemMainhand());
     if (success) {
       if (UtilFluid.isEmptyOfFluid(playerHeld)) {
         this.tryDumpFakePlayerInvo(!wasFull && playerHeld.getCount() == 1);
@@ -378,7 +378,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean rightClickFluidAir(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
-    ModCyclic.logger.log("rightClickFluidAir ");
+
     //item stack does not hve fluid handler
     //dispense stack so either pickup or place liquid
     if (UtilFluid.isEmptyOfFluid(playerHeld)) {
@@ -391,19 +391,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
     else {
-      ModCyclic.logger.log("dumpContainer");
+
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
-      ModCyclic.logger.log("dumpContainer Result " + drainedStackOrNull);
       if (!drainedStackOrNull.isItemEqual(playerHeld)) {
         player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
         this.tryDumpFakePlayerInvo(true);
         return true;
       }
-      //      if (!drainedStackOrNull.isEmpty()) {
-      //        //        playerHeld.shrink(1);  
-      //        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), drainedStackOrNull);
-      //        return true;
-      //      }
+
     }
     return false;
   }
