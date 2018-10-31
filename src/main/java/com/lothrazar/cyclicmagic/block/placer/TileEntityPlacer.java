@@ -175,6 +175,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       else {
         Block stuff = Block.getBlockFromItem(stack.getItem());
         if (stuff != null && stuff != Blocks.AIR) {
+          //
           if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
               UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {
             this.decrStackSize(0, 1);

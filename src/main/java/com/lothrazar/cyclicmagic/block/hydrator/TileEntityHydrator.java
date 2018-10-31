@@ -110,7 +110,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public boolean tryProcessRecipe() {
     RecipeHydrate irecipe = findMatchingRecipe();
-    if (irecipe != null  ) {
+    if (irecipe != null) {
       if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()
           && this.inventoryHasRoom(4, irecipe.getRecipeOutput().copy())) {
         if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
@@ -120,7 +120,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
         return true;
       }
     }
-
     return false;
   }
 
@@ -140,7 +139,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       return null;
     }
     for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
-
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }

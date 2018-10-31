@@ -47,7 +47,6 @@ public class UtilChat {
     sender.sendMessage(new TextComponentTranslation(lang(text)));
   }
 
-
   public static String blockPosToString(BlockPos pos) {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
