@@ -237,10 +237,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return;
       }
     }
-    else if (UtilFluid.stackHasFluidHandler(playerHeld) &&
-        world.isAirBlock(targetPos)) {
+    else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
         ModCyclic.logger.log("rightClickFluidAir : true");
+        /// missing piece  
         syncPlayerTool();
         return;
       }
@@ -384,8 +384,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (UtilFluid.isEmptyOfFluid(playerHeld)) {
       FluidActionResult res = UtilFluid.fillContainer(world, targetPos, playerHeld, this.getCurrentFacing());
       if (res != FluidActionResult.FAILURE) {
-        playerHeld.shrink(1);
-        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), res.getResult());
+        player.setHeldItem(EnumHand.MAIN_HAND, res.getResult());
+        this.tryDumpFakePlayerInvo(true);
+        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), res.getResult());
         return true;
       }
     }
@@ -393,7 +394,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       ModCyclic.logger.log("dumpContainer");
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
       ModCyclic.logger.log("dumpContainer Result " + drainedStackOrNull);
-      return !drainedStackOrNull.isItemEqual(playerHeld);
+      if (!drainedStackOrNull.isItemEqual(playerHeld)) {
+        player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
+        this.tryDumpFakePlayerInvo(true);
+        return true;
+      }
       //      if (!drainedStackOrNull.isEmpty()) {
       //        //        playerHeld.shrink(1);  
       //        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), drainedStackOrNull);
