@@ -290,15 +290,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void tryDumpFakePlayerInvo(boolean includeMainHand) {
+    ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
+    int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
+    
+    for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-      if (includeMainHand == false &&
-          fakePlayer.get().inventory.currentItem == i) {
-        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
-        //example: dont push over tools or weapons in certain cases
-        continue;
-      }
+//      if (includeMainHand == false &&
+//          fakePlayer.get().inventory.currentItem == i) {
+//        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
+//        //example: dont push over tools or weapons in certain cases
+//        continue;
+//      }
       if (s.isEmpty() == false) {
         ModCyclic.logger.log("AutoUser found drop " + s.getDisplayName());
         toDrop.add(s.copy());
@@ -317,23 +320,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean rightClickFluidTank(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
+    boolean wasFull = UtilFluid.isEmptyOfFluid(playerHeld);
+    ModCyclic.logger.log("[RCF] start " + player.getHeldItemMainhand() + " " + player.inventory.currentItem);
     boolean success = UtilFluid.interactWithFluidHandler(player, world, targetPos, this.getCurrentFacing().getOpposite());
     playerHeld = player.getHeldItemMainhand();
+    ModCyclic.logger.log("[RCF] after interact " + player.getHeldItemMainhand());
     if (success) {
-      ModCyclic.logger.log("Fluid handler success " + player.getHeldItemMainhand());
-      //if stack has no fluid, AND size > 1, then keep holding it (do the false version)
-      //else stack has fluid so do true 
-      if (UtilFluid.isEmptyOfFluid(playerHeld)) { //original was empty.. maybe its full now IDK
-        ModCyclic.logger.log("EMPTY falsver  " + playerHeld.getCount());
-        //if theres only 1, then  dump what im holding, else keep it
-        this.tryDumpFakePlayerInvo(false);
-        // item stack is empty so push to output stack
+      if (UtilFluid.isEmptyOfFluid(playerHeld)) {
+        this.tryDumpFakePlayerInvo(!wasFull && playerHeld.getCount() == 1);
       }
       else {//im holding a stack that has fluid, get rid of it
-        ModCyclic.logger.log(" NOT EMPTY   ");
         this.tryDumpFakePlayerInvo(true);
       }
-      this.tryDumpFakePlayerInvo(true);
       return success;
     }
     return false;
