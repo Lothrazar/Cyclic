@@ -226,18 +226,31 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       return;
     }
     if (rightClickFluidAttempt(targetPos)) {
-      this.setInventorySlotContents(SLOT_TOOL, fakePlayer.get().getHeldItemMainhand());
+      ModCyclic.logger.log("rightClickFluidAttempt : true");
+      syncPlayerTool();
       return;
     }
+    ModCyclic.logger.log("rightClickFluidAttempt : false ");
     if (world.isAirBlock(targetPos)) {
       return;
     }
+    ItemStack before = fakePlayer.get().getHeldItemMainhand();
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    if (result == EnumActionResult.SUCCESS) {
+    ModCyclic.logger.log(result + "after block ; HELD= " + fakePlayer.get().getHeldItemMainhand());
+    if (result != EnumActionResult.FAIL) {
+      boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
+      ModCyclic.logger.log("after block ? equal " + eq);
       if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
-        inv.set(SLOT_TOOL, ItemStack.EMPTY);
+
+        syncPlayerTool();
+      }
+      else if (!eq) {
+        //       
+        this.tryDumpFakePlayerInvo(true);
+        syncPlayerTool();
+        ModCyclic.logger.log("ELIF sync after " + fakePlayer.get().getHeldItemMainhand());
       }
     }
     else {
@@ -268,10 +281,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           }
         }
       }
+      //if my hand was empty before operation, then there might be something in it now so drop that
+      //if it wasnt empty before (bonemeal whatever) then dont do that, it might dupe
+      this.tryDumpFakePlayerInvo(wasEmpty);
     }
-    //if my hand was empty before operation, then there might be something in it now so drop that
-    //if it wasnt empty before (bonemeal whatever) then dont do that, it might dupe
-    this.tryDumpFakePlayerInvo(wasEmpty);
+  }
+
+  private void syncPlayerTool() {
+    this.setInventorySlotContents(SLOT_TOOL, fakePlayer.get().getHeldItemMainhand());
   }
 
   private void tryDumpStacks(List<ItemStack> toDump) {
@@ -346,7 +363,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean rightClickFluidAir(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
-    ModCyclic.logger.log(" stack does not have hannldrrrrr ");
+    ModCyclic.logger.log("rightClickFluidAir ");
     //item stack does not hve fluid handler
     //dispense stack so either pickup or place liquid
     if (UtilFluid.isEmptyOfFluid(playerHeld)) {
@@ -358,13 +375,17 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
     else {
+      ModCyclic.logger.log("dumpContainer");
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
-      if (!drainedStackOrNull.isEmpty()) {
-        playerHeld.shrink(1);
-        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), drainedStackOrNull);
-      }
+      ModCyclic.logger.log("dumpContainer Result " + drainedStackOrNull);
+      return !drainedStackOrNull.isItemEqual(playerHeld);
+      //      if (!drainedStackOrNull.isEmpty()) {
+      //        //        playerHeld.shrink(1);  
+      //        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), drainedStackOrNull);
+      //        return true;
+      //      }
     }
-    return true;
+    return false;
   }
 
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
