@@ -223,6 +223,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   private void rightClickBlock(BlockPos targetPos) {
     if (rightClickFluidAttempt(targetPos)) {
+      this.setInventorySlotContents(0, fakePlayer.get().getHeldItemMainhand());
       return;
     }
     if (world.isAirBlock(targetPos)) {
@@ -305,21 +306,26 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   private boolean rightClickFluidAttempt(BlockPos targetPos) {
     ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
-    if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
+    if (maybeTool.isEmpty()) {
+      return false;
+    }
+    if (UtilFluid.stackHasFluidHandler(maybeTool)) {
       if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
         ItemStack originalRef = maybeTool.copy();
-        int hack = (maybeTool.getCount() == 1) ? 1 : 0;//HAX: if bucket stack size is 1, it somehow doesnt work so yeah. good enough EH?
-        maybeTool.grow(hack);
+
         boolean success = UtilFluid.interactWithFluidHandler(fakePlayer.get(), this.world, targetPos, this.getCurrentFacing().getOpposite());
         if (success) {
+          ModCyclic.logger.log("Fluid handler success " + fakePlayer.get().getHeldItemMainhand());
           if (UtilFluid.isEmptyOfFluid(originalRef)) { //original was empty.. maybe its full now IDK
-            maybeTool.shrink(1 + hack);
+            //            maybeTool.shrink(1); 
           }
           else {//original had fluid in it. so make sure we drain it now hey
-            UtilFluid.drainOneBucket(maybeTool.splitStack(1));
+            //empty cauldron with full bucket goes here
+            maybeTool = UtilFluid.drainOneBucket(maybeTool);
+            fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
             // drained.setCount(1);
             // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
-            maybeTool.shrink(1 + hack);
+            //            maybeTool.shrink(1);
           }
           this.tryDumpFakePlayerInvo(false);
           return success;
@@ -337,7 +343,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
         else {
           ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, maybeTool);
-          if (drainedStackOrNull != null) {
+          if (!drainedStackOrNull.isEmpty()) {
             maybeTool.shrink(1);
             UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drainedStackOrNull);
           }
