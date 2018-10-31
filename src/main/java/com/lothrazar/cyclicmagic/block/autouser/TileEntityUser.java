@@ -295,6 +295,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
       if (includeMainHand == false &&
           fakePlayer.get().inventory.currentItem == i) {
+        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
         //example: dont push over tools or weapons in certain cases
         continue;
       }
@@ -320,18 +321,19 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     playerHeld = player.getHeldItemMainhand();
     if (success) {
       ModCyclic.logger.log("Fluid handler success " + player.getHeldItemMainhand());
+      //if stack has no fluid, AND size > 1, then keep holding it (do the false version)
+      //else stack has fluid so do true 
       if (UtilFluid.isEmptyOfFluid(playerHeld)) { //original was empty.. maybe its full now IDK
-        ModCyclic.logger.log("EMPTY fluid item stack is empty so push to output stack");
-        this.tryDumpFakePlayerInvo(true);
+        ModCyclic.logger.log("EMPTY falsver  " + playerHeld.getCount());
+        //if theres only 1, then  dump what im holding, else keep it
+        this.tryDumpFakePlayerInvo(false);
         // item stack is empty so push to output stack
       }
-      else {
-        ModCyclic.logger.log(" NOT EMPTY fluid, keep holding it  ");
-        //item stack had  > 1 buckets worth so just do that uch
-        playerHeld = UtilFluid.drainOneBucket(playerHeld);
-        player.setHeldItem(EnumHand.MAIN_HAND, playerHeld);
+      else {//im holding a stack that has fluid, get rid of it
+        ModCyclic.logger.log(" NOT EMPTY   ");
+        this.tryDumpFakePlayerInvo(true);
       }
-      this.tryDumpFakePlayerInvo(false);
+      this.tryDumpFakePlayerInvo(true);
       return success;
     }
     return false;
