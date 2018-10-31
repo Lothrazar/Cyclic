@@ -328,12 +328,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
     for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-      //      if (includeMainHand == false &&
-      //          fakePlayer.get().inventory.currentItem == i) {
-      //        ModCyclic.logger.log("AutoUser IGNORE MAIN HAND " + s.getDisplayName());
-      //        //example: dont push over tools or weapons in certain cases
-      //        continue;
-      //      }
+
       if (s.isEmpty() == false) {
 
         toDrop.add(s.copy());
