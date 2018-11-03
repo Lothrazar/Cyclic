@@ -73,10 +73,11 @@ public class UtilFluid {
   public static ItemStack dumpContainer(World world, BlockPos pos, ItemStack stackIn) {
     //    BlockSourceImpl blocksourceimpl = new BlockSourceImpl(world, pos);
     ItemStack dispensedStack = stackIn.copy();
-    dispensedStack.setCount(1);
+    //    dispensedStack.setCount(1);
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(dispensedStack);
     if (fluidHandler == null) {
-      return null;
+      ModCyclic.logger.log("CONTAINER ret null");
+      return ItemStack.EMPTY;
     }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
     if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
@@ -86,10 +87,11 @@ public class UtilFluid {
         fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
         ItemStack returnMe = fluidHandler.getContainer();
         //        stackIn.deserializeNBT(returnMe.serializeNBT());
+        ModCyclic.logger.log("CONTAINER returNMe" + returnMe);
         return returnMe;
       }
     }
-    return null;
+    return fluidHandler.getContainer();
   }
 
   public static ItemStack drainOneBucket(ItemStack d) {
