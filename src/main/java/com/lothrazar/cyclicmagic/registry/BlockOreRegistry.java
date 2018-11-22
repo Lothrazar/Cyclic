@@ -282,8 +282,8 @@ public class BlockOreRegistry {
     end_coal_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
-        .setBlockCountConfig("blockCountRedstone")
-        .setSpawnChanceConfig("spawnChanceRedstone")
+        .setBlockCountConfig("blockCountCoal")
+        .setSpawnChanceConfig("spawnChanceCoal")
         .setBlockCountDefault(8).setHarvestLevelDefault(coalHarvest)
         .setSpawnChanceDefault(10).setBlockId("end_coal_ore");
     addOre(end_coal_ore);
