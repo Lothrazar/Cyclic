@@ -136,7 +136,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityEnchanter.FLUID_COST = config.getInt(this.getRawName() + "_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
+    FUEL_COST = config.getInt("block_enchanter", Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    TileEntityEnchanter.FLUID_COST = config.getInt("block_enchanter_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
   }
 }

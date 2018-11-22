@@ -45,7 +45,7 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("void_anvil", Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
     enabled = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
