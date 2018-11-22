@@ -54,6 +54,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   public void register() {
     ItemRegistry.register(this, "ender_torch", GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
+    EntityTorchBolt.item = this;
   }
 
   private boolean enabled;
@@ -70,7 +71,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
 
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, ItemStack held, double x, double y, double z) {
-    return new EntityTorchBolt(world, x, y, z);
+    return new EntityTorchBolt(world, x, y, z, false);
   }
 
   @Override
@@ -85,7 +86,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
 
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    this.doThrow(world, player, hand, new EntityTorchBolt(world, player));
+    this.doThrow(world, player, hand, new EntityTorchBolt(world, player, false));
     UtilPlayer.decrStackSize(player, hand);
   }
 
