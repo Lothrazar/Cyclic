@@ -299,5 +299,6 @@
   	,"1.17.5":"zh_tw.lang updated by mcBegins2Snow.  Auto Crafter now stops crafting when full, so it stops consuming power and dropping items on the ground.  Pharos beacon now sets to 20 seconds instead of 8 to avoid Night Vision flickering.  Fixed an issue with Hydrator recipes and ore dictionary when metadata became 32767.  Hydrator no longer processes when full or drops things on the ground.  "
 	,"1.17.6":"Fixed SFX maker not saving selected index on world reload.  ru_RU.lang updated by kellixon.  Fixed Block Placer sometimes stripping metadata out of some modded blocks when placing (Primal Core Yew wood). "
   	,"1.17.7":"Void anvil no longer leaves behind an empty NBT tag behind and cleanly erases it.  More content added to /default/ config for the Uncrafting grinder (will not affect existing config files, PR from mcBegins2Snow).  Rewrite of how Auto User handles fluids: Will no longer drop buckets on the ground when gathering fluid from the world; fixed compatibility with vanilla cauldrons; fixed a dupe bug.  "
+	,"1.17.8":"Fix end coal ore using settings from end redstone ore (josephcsible).  "
   }
 }
