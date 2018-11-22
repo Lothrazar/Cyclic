@@ -59,6 +59,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
   @Override
   public void register() {
     ItemRegistry.register(this, "tool_torch_launcher");
+    EntityTorchBolt.register();
   }
 
   private boolean enabled;

@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.item.torchmagic;
 
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.renderer.entity.Render;
@@ -67,6 +68,12 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     this.fromLauncher = fromLauncher;
   }
 
+  private static boolean registered = false;
+
+  public static void register() {
+    if (!registered)
+      EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
+  }
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
@@ -98,11 +105,13 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     this.setDead();
   }
 
+  @Override
   public void writeEntityToNBT(NBTTagCompound compound) {
     super.writeEntityToNBT(compound);
     compound.setBoolean("fromLauncher", this.fromLauncher);
   }
 
+  @Override
   public void readEntityFromNBT(NBTTagCompound compound) {
     super.readEntityFromNBT(compound);
     this.fromLauncher = compound.getBoolean("fromLauncher");

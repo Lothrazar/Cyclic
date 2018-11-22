@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -53,7 +52,7 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   @Override
   public void register() {
     ItemRegistry.register(this, "ender_torch", GuideCategory.ITEMTHROW);
-    EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
+    EntityTorchBolt.register();
     EntityTorchBolt.item = this;
   }
 
