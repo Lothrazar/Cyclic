@@ -65,7 +65,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final String NBTTARGET = "target";
   private static final String NBTHEIGHT = "h";
   private static final String NBT_LIST = "blacklistIfZero";
-  private static final int MAX_SIZE = 7;//7 means 15x15
+  private static final int MAX_SIZE = 9;//7 means 15x15
   public static final int TOOLSLOT_INDEX = 0;
   public static int TIMER_FULL = 100;
   public static int maxHeight = 10;
@@ -378,7 +378,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;
         }
         size = value;
       break;
