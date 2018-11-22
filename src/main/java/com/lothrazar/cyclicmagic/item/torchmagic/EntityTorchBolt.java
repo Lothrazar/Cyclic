@@ -25,11 +25,14 @@ package com.lothrazar.cyclicmagic.item.torchmagic;
 
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -38,6 +41,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class EntityTorchBolt extends EntityThrowableDispensable {
+
+  public static Item item;
+  protected boolean fromLauncher;
 
   public static class FactoryTorch implements IRenderFactory<EntityTorchBolt> {
 
@@ -51,12 +57,14 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     super(worldIn);
   }
 
-  public EntityTorchBolt(World worldIn, EntityLivingBase ent) {
+  public EntityTorchBolt(World worldIn, EntityLivingBase ent, boolean fromLauncher) {
     super(worldIn, ent);
+    this.fromLauncher = fromLauncher;
   }
 
-  public EntityTorchBolt(World worldIn, double x, double y, double z) {
+  public EntityTorchBolt(World worldIn, double x, double y, double z, boolean fromLauncher) {
     super(worldIn, x, y, z);
+    this.fromLauncher = fromLauncher;
   }
 
   @Override
@@ -84,9 +92,19 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
     if (isValidLocation && isValidBlockstate && isSideSolid && world.isRemote == false) {
       world.setBlockState(offset, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
-    //    else {
-    //      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
-    //    }
+    else {
+      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), this.fromLauncher ? Item.getItemFromBlock(Blocks.TORCH) : item);
+    }
     this.setDead();
+  }
+
+  public void writeEntityToNBT(NBTTagCompound compound) {
+    super.writeEntityToNBT(compound);
+    compound.setBoolean("fromLauncher", this.fromLauncher);
+  }
+
+  public void readEntityFromNBT(NBTTagCompound compound) {
+    super.readEntityFromNBT(compound);
+    this.fromLauncher = compound.getBoolean("fromLauncher");
   }
 }

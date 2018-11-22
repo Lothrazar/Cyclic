@@ -77,7 +77,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
     if (world.isRemote == false) {
-      EntityTorchBolt thing = new EntityTorchBolt(world, player);
+      EntityTorchBolt thing = new EntityTorchBolt(world, player, true);
       thing.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, VELOCITY_DEFAULT, INACCURACY_DEFAULT);
       world.spawnEntity(thing);
     }
