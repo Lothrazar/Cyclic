@@ -117,8 +117,8 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   @SideOnly(Side.CLIENT)
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
     EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-    /* The spawn chunks usually consist of an area of 16×16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5×5 chunks around them
-     * are loaded, limiting their activities to an area of 12×12 chunks.
+    /* The spawn chunks usually consist of an area of 16Ã—16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5Ã—5 chunks around them
+     * are loaded, limiting their activities to an area of 12Ã—12 chunks.
      * 
      * The exact rule includes chunks whose center is less than or equal to 128 blocks away from the world spawn along both axes. In the rare case where the world spawn is located at the exact center
      * of a chunk, 17 chunks will be loaded along that axis, of which 13 activate entities. */
