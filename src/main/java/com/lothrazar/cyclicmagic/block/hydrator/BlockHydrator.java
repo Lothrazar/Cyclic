@@ -186,6 +186,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("block_hydrator", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

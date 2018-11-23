@@ -104,7 +104,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("block_anvil", Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
     String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
     // @formatter:off
     String[] deflist = new String[] {

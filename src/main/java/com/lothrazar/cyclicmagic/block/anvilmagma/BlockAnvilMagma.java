@@ -88,7 +88,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityAnvilMagma.FLUID_COST = config.getInt(this.getRawName() + "_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
+    TileEntityAnvilMagma.FLUID_COST = config.getInt("block_anvil_magma_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
   }
 
   @Override

@@ -113,6 +113,6 @@ public class BlockDeHydrator extends BlockBaseFacing implements IContent, IHasRe
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("dehydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 20, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("dehydrator", Const.ConfigCategory.fuelCost, 20, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

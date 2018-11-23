@@ -93,8 +93,10 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       if (this.updateEnergyIsBurning() == false) {
         return;
       }
-      // non empty
+      // non empty 
       EnchantmentHelper.setEnchantments(Maps.<Enchantment, Integer> newLinkedHashMap(), input);
+      //      if (input.getTagCompound().getSize() == 0)
+      input.setTagCompound(null);
       if (this.getStackInSlot(SLOT_OUT).isEmpty()) {
         this.setInventorySlotContents(SLOT_OUT, input);
         this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
