@@ -20,7 +20,7 @@ public class BlockOreRegistry {
     WorldModule.ores.add(ore);
   }
 
-  private static BlockDimensionOre createOre(int dimension, String name, int harvestLevel, String oreDict) {
+  private static BlockDimensionOre createOre(int dimension, String name, int harvestLevel, String... oreDict) {
     String block = null, dimName = null;
     if (dimension == Const.Dimension.nether) {
       dimName = "nether";
@@ -53,8 +53,8 @@ public class BlockOreRegistry {
   }
 
   private static void createNetherAndEndOres(String name, int harvestLevel, String oreDict) {
-    createOre(Const.Dimension.nether, name, harvestLevel, oreDict);
-    createOre(Const.Dimension.end, name, harvestLevel, oreDict);
+    createOre(Const.Dimension.nether, name, harvestLevel, "ore" + oreDict, "oreNether" + oreDict);
+    createOre(Const.Dimension.end, name, harvestLevel, "ore" + oreDict, "oreEnd" + oreDict);
   }
 
   public static void register() {
@@ -67,34 +67,34 @@ public class BlockOreRegistry {
     final int goldHarvest = emeraldHarvest;
     final int redstoneHarvest = emeraldHarvest;
     // mod ores
-    createNetherAndEndOres("titanium", ironHarvest, "oreTitanium");// RUTLIE ORE
-    createNetherAndEndOres("aquamarine", ironHarvest, "oreAquamarine");
-    createNetherAndEndOres("bauxite", ironHarvest, "oreBauxite");
-    createNetherAndEndOres("boron", ironHarvest, "oreBoron");
-    createNetherAndEndOres("cobalt", ironHarvest, "oreCobalt");
-    createNetherAndEndOres("copper", ironHarvest, "oreCopper");
-    createNetherAndEndOres("dilithium", ironHarvest, "oreDilithium");
-    createNetherAndEndOres("galena", ironHarvest, "oreGalena");
-    createNetherAndEndOres("iridium", ironHarvest, "oreIridium");
-    createNetherAndEndOres("lead", ironHarvest, "oreLead");
-    createNetherAndEndOres("lithium", ironHarvest, "oreLithium");
-    createNetherAndEndOres("magnesium", ironHarvest, "oreMagnesium");
-    createNetherAndEndOres("mithril", ironHarvest, "oreMithril");
-    createNetherAndEndOres("nickel", ironHarvest, "oreNickel");
-    createNetherAndEndOres("nitre", ironHarvest, "oreSaltpeter");
-    createNetherAndEndOres("osmium", ironHarvest, "oreOsmium");
-    createNetherAndEndOres("platinum", ironHarvest, "orePlatinum");
-    createNetherAndEndOres("quartz_black", ironHarvest, "oreQuartzBlack");
-    createNetherAndEndOres("quartz_certus", ironHarvest, "oreCertusQuartz");
-    createNetherAndEndOres("quartz_certus_charged", ironHarvest, "oreChargedCertusQuartz");
-    createNetherAndEndOres("sapphire", ironHarvest, "oreSapphire");
-    createNetherAndEndOres("thorium", ironHarvest, "oreThorium");
-    createNetherAndEndOres("tungsten", ironHarvest, "oreTungsten");
-    createNetherAndEndOres("ruby", ironHarvest, "oreRuby");
-    createNetherAndEndOres("silver", ironHarvest, "oreSilver");
-    createNetherAndEndOres("tin", ironHarvest, "oreTin");
-    createNetherAndEndOres("uranium", ironHarvest, "oreUranium");
-    createNetherAndEndOres("yellorite", ironHarvest, "oreYellorium");
+    createNetherAndEndOres("titanium", ironHarvest, "Titanium");// RUTLIE ORE
+    createNetherAndEndOres("aquamarine", ironHarvest, "Aquamarine");
+    createNetherAndEndOres("bauxite", ironHarvest, "Bauxite");
+    createNetherAndEndOres("boron", ironHarvest, "Boron");
+    createNetherAndEndOres("cobalt", ironHarvest, "Cobalt");
+    createNetherAndEndOres("copper", ironHarvest, "Copper");
+    createNetherAndEndOres("dilithium", ironHarvest, "Dilithium");
+    createNetherAndEndOres("galena", ironHarvest, "Galena");
+    createNetherAndEndOres("iridium", ironHarvest, "Iridium");
+    createNetherAndEndOres("lead", ironHarvest, "Lead");
+    createNetherAndEndOres("lithium", ironHarvest, "Lithium");
+    createNetherAndEndOres("magnesium", ironHarvest, "Magnesium");
+    createNetherAndEndOres("mithril", ironHarvest, "Mithril");
+    createNetherAndEndOres("nickel", ironHarvest, "Nickel");
+    createNetherAndEndOres("nitre", ironHarvest, "Saltpeter");
+    createNetherAndEndOres("osmium", ironHarvest, "Osmium");
+    createNetherAndEndOres("platinum", ironHarvest, "Platinum");
+    createNetherAndEndOres("quartz_black", ironHarvest, "QuartzBlack");
+    createNetherAndEndOres("quartz_certus", ironHarvest, "CertusQuartz");
+    createNetherAndEndOres("quartz_certus_charged", ironHarvest, "ChargedCertusQuartz");
+    createNetherAndEndOres("sapphire", ironHarvest, "Sapphire");
+    createNetherAndEndOres("thorium", ironHarvest, "Thorium");
+    createNetherAndEndOres("tungsten", ironHarvest, "Tungsten");
+    createNetherAndEndOres("ruby", ironHarvest, "Ruby");
+    createNetherAndEndOres("silver", ironHarvest, "Silver");
+    createNetherAndEndOres("tin", ironHarvest, "Tin");
+    createNetherAndEndOres("uranium", ironHarvest, "Uranium");
+    createNetherAndEndOres("yellorite", ironHarvest, "Yellorium");
     //vanilla ores
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore
