@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.compat.jei;
 
+import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.block.dehydrator.ContainerDeHydrator;
 import com.lothrazar.cyclicmagic.block.dehydrator.GuiDeHydrator;
@@ -94,21 +95,27 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
         8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     // Start Custom recipe type: Hydrator
-    registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
-    registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+    if (CyclicContent.hydrator.enabled()) {
+      registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
+      registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
+      registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+    }
     // End Custom recipe type: Hydrator
     // Packager
-    registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
-    registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
-    registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
-    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+    if (CyclicContent.packager.enabled()) {
+      registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
+      registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+    }
     //DEHydrator
-    registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
-    registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
-    registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
-    registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+    if (CyclicContent.dehydrator.enabled()) {
+      registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
+      registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
+      registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+    }
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
@@ -144,8 +151,11 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
 
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
-    registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-    registry.addRecipeCategories(new PackagerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-    registry.addRecipeCategories(new DehydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.hydrator.enabled())
+      registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.packager.enabled())
+      registry.addRecipeCategories(new PackagerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.dehydrator.enabled())
+      registry.addRecipeCategories(new DehydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
   }
 }
