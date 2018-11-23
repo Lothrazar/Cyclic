@@ -82,7 +82,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   }
 
   @Override
-  public String getOreDict() {
-    return "workbench";
+  public String[] getOreDict() {
+    return new String[]{"workbench"};
   }
 }
