@@ -179,7 +179,7 @@ public class BlockOreRegistry {
     nether_redstone_ore
         .setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(Items.REDSTONE)
-        .registerOreDict("oreRedstone");
+        .registerOreDict("oreRedstone", "oreNetherRedstone");
     nether_redstone_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -192,7 +192,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 12);//iron nugget
     nether_iron_ore.setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
-        .registerOreDict("oreIron");
+        .registerOreDict("oreIron", "oreNetherIron");
     nether_iron_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -205,7 +205,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1)
         .registerSmeltingOutput(Items.GOLD_INGOT)
-        .registerOreDict("oreGold");
+        .registerOreDict("oreGold", "oreNetherGold");
     nether_gold_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -217,7 +217,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_coal_ore = new BlockDimensionOre(Items.COAL);
     nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1)
         .registerSmeltingOutput(Items.COAL)
-        .registerOreDict("oreCoal");
+        .registerOreDict("oreCoal", "oreNetherCoal");
     nether_coal_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -229,7 +229,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
-        .registerOreDict("oreLapis");
+        .registerOreDict("oreLapis", "oreNetherLapis");
     nether_lapis_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -241,7 +241,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5)
         .registerSmeltingOutput(Items.EMERALD)
-        .registerOreDict("oreEmerald");
+        .registerOreDict("oreEmerald", "oreNetherEmerald");
     nether_emerald_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -253,7 +253,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8)
         .registerSmeltingOutput(Items.DIAMOND)
-        .registerOreDict("oreDiamond");
+        .registerOreDict("oreDiamond", "oreNetherDiamond");
     nether_diamond_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -266,7 +266,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3)
         .registerSmeltingOutput(Items.REDSTONE)
-        .registerOreDict("oreRedstone");
+        .registerOreDict("oreRedstone", "oreEndRedstone");
     end_redstone_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -278,7 +278,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_coal_ore = new BlockDimensionOre(Items.COAL);
     end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1)
         .registerSmeltingOutput(Items.COAL)
-        .registerOreDict("oreCoal");
+        .registerOreDict("oreCoal", "oreEndCoal");
     end_coal_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -290,7 +290,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5)
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
-        .registerOreDict("oreLapis");
+        .registerOreDict("oreLapis", "oreEndLapis");
     end_lapis_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -302,7 +302,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.EMERALD)
-        .registerOreDict("oreEmerald");
+        .registerOreDict("oreEmerald", "oreEndEmerald");
     end_emerald_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -314,7 +314,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.DIAMOND)
-        .registerOreDict("oreDiamond");
+        .registerOreDict("oreDiamond", "oreEndDiamond");
     end_diamond_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -326,7 +326,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
     end_gold_ore.setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.GOLD_INGOT)
-        .registerOreDict("oreGold");
+        .registerOreDict("oreGold", "oreEndGold");
     end_gold_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -338,7 +338,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
     end_iron_ore.setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
-        .registerOreDict("oreIron");
+        .registerOreDict("oreIron", "oreEndIron");
     end_iron_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
