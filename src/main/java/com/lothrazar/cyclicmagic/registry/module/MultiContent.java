@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.registry.module;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
@@ -572,8 +573,10 @@ public class MultiContent implements IContent {
       GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
     }
     // BOTH cableWirelses AND laser uses this 
-    ItemLocation card_location = new ItemLocation();
-    ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
+    if (cableWireless || CyclicContent.laser.enabled()) {
+      ItemLocation card_location = new ItemLocation();
+      ItemRegistry.register(card_location, "card_location", GuideCategory.ITEM);
+    }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
       ItemBlock ib = new ItemBlockScaffolding(block_fragile);

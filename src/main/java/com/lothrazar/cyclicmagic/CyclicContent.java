@@ -138,6 +138,7 @@ public class CyclicContent {
   public static BlockHydrator hydrator;
   public static BlockPackager packager;
   public static BlockDeHydrator dehydrator;
+  public static BlockLaser laser;
 
   public static void init() {
     content = new ArrayList<IContent>();
@@ -265,7 +266,8 @@ public class CyclicContent {
     content.add(new BlockFishing());
     content.add(new BlockDisenchanter());
     content.add(new BlockFluidTank());
-    content.add(new BlockLaser());
+    laser = new BlockLaser();
+    content.add(laser);
     content.add(new BlockSoundPlayer());
     content.add(new BlockDice());
     content.add(new BlockImbue());
