@@ -301,6 +301,6 @@
   	,"1.17.7":"Void anvil no longer leaves behind an empty NBT tag behind and cleanly erases it.  More content added to /default/ config for the Uncrafting grinder (will not affect existing config files, PR from mcBegins2Snow).  Rewrite of how Auto User handles fluids: Will no longer drop buckets on the ground when gathering fluid from the world; fixed compatibility with vanilla cauldrons; fixed a dupe bug.  "
 	,"1.17.8":"Fix end coal ore using settings from end redstone ore (josephcsible).  Controlled Miner has a larger range of size options.  Fixed broken configuration options for machine energy options (some block names were labeled as 'null').  Throwing torch and torch launcher now drop their respective items if they are not placed.  "
 	,"1.17.9":"Fix startup crash introduced by 1.17.8.  JEI recipe handlers are now properly hidden if their block is disabled.  "
-	,"1.17.10":"Randomizer can no longer move unbreakable blocks (such as bedrock).  Catch and handle errors from 3rd party recipes when autocrafter is scanning recipe list, to prevent game crashes.  "
+	,"1.17.10":"Randomizer can no longer move unbreakable blocks (such as bedrock).  Catch and handle errors from 3rd party recipes when autocrafter is scanning recipe list, to prevent game crashes.  Added a config control to disable GPS Marker. "
   }
 }
