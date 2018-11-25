@@ -52,7 +52,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private int spawnChance = 0;
   private SpawnType spawn = null;
   private ItemStack smeltOut;
-  private String oreDict;
+  private String[] oreDict;
 
   public static enum SpawnType {
     ENDERMITE, SILVERFISH
@@ -107,12 +107,12 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return smeltOut;
   }
 
-  public void registerOreDict(String out) {
+  public void registerOreDict(String... out) {
     oreDict = out;
   }
 
   @Override
-  public String getOreDict() {
+  public String[] getOreDict() {
     return oreDict;
   }
 
