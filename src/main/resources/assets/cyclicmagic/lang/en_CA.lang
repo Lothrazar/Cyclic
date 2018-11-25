@@ -1004,6 +1004,11 @@ splash_potion.effect.swim=Splash Potion of Swim Speed
 lingering_potion.effect.swim=Lingering Potion of Swim Speed
 tipped_arrow.effect.swim=Arrow of Swim Speed
 
+potion.effect.swim2=Potion of Swim Speed II
+splash_potion.effect.swim2=Splash Potion of Swim Speed II
+lingering_potion.effect.swim2=Lingering Potion of Swim Speed II
+tipped_arrow.effect.swim2=Arrow of Swim Speed II
+
 potion.effect.bounce=Potion of Bounce
 splash_potion.effect.bounce=Splash Potion of Bounce
 lingering_potion.effect.bounce=Lingering Potion of Bounce
