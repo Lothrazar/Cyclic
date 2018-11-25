@@ -77,6 +77,11 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityAnvilAuto();
   }

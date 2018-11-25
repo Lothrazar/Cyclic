@@ -41,6 +41,11 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BlockAnvilAuto.Z_AXIS_AABB;
   }

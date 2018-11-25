@@ -68,6 +68,11 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityAnvilMagma();
   }
