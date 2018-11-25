@@ -38,7 +38,7 @@ public class KeyInventoryShiftModule extends BaseEventModule implements IHasConf
 
   @Override
   public void syncConfig(Configuration config) {
-    enableInvoKeys = config.getBoolean("KeybindInventoryShift", Const.ConfigCategory.inventory, true, "Set this to false (and restart your client) to remove the inventory shift keybindings");
+    enableInvoKeys = config.getBoolean("KeybindInventoryShift", Const.ConfigCategory.inventory, false, "Set this to false (and restart your client) to remove the inventory shift keybindings");
     String category = Const.ConfigCategory.inventory;
     cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
         "When true, this blocks the potions moving the inventory over");
