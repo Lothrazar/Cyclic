@@ -234,7 +234,8 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     //now look over any sides that are NOT incoming, try to export
     //Actually shuffle the positions. if we are at a 3 way juncture, spread out where it goes first
     try {
-      tickCableFlow();
+      if (!world.isRemote)
+        tickCableFlow();
     }
     catch (Exception e) {
       // errors from other mods as well as this.
@@ -423,10 +424,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return super.getCapability(capability, facing.getOpposite());
   }
 
+  @Override
   public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }
 
+  @Override
   public void toggleBlacklist(final EnumFacing side) {
     mapBlacklist.put(side, !mapBlacklist.get(side));
   }
