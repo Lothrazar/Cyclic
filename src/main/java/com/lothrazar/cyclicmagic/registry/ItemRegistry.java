@@ -92,14 +92,17 @@ public class ItemRegistry {
     for (Item item : itemList) {
       event.getRegistry().register(item);
       if (item instanceof IHasOreDict) {
-        OreDictionary.registerOre(((IHasOreDict) item).getOreDict(), item);
+        for (String oreName : ((IHasOreDict) item).getOreDict()) {
+          OreDictionary.registerOre(oreName, item);
+        }
       }
       Block blockItem = Block.getBlockFromItem(item);
       if (blockItem != null && blockItem != Blocks.AIR) {
         if (blockItem instanceof IHasOreDict) {
-          String oreName = ((IHasOreDict) blockItem).getOreDict();
-          OreDictionary.registerOre(oreName, blockItem);
-          ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
+          for (String oreName : ((IHasOreDict) blockItem).getOreDict()) {
+            OreDictionary.registerOre(oreName, blockItem);
+            ModCyclic.logger.info("Registered ore dict entry " + oreName + " : " + blockItem);
+          }
         }
         //hacky-ish way to register smelting.. we do not have ability do to this inside block class anymore
         if (blockItem instanceof BlockDimensionOre) {

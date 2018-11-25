@@ -84,6 +84,7 @@ command.gethome.overworld=No home outside the overworld
 command.gethome.yours=Your home bed is at
 command.home.overworld=Can only teleport to your home in the overworld
 command.nbtprint.null=NBT data is empty
+command.nbtprint.oredict=Ore Dictionary: 
 command.recipes.empty=Recipe Empty
 command.recipes.found=Recipe Found
 command.recipes.notfound=Recipe Not Found
