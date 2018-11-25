@@ -150,7 +150,7 @@ public class CyclicContent {
     content = new ArrayList<IContent>();
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
-    content.add(new ItemLocation());  
+    content.add(new ItemLocation());
     content.add(new BlockLibrary());
     content.add(new FluidPoison());
     content.add(new FluidMilk());
@@ -281,7 +281,6 @@ public class CyclicContent {
     content.add(new BlockDropperExact());
     content.add(new BlockFluidPlacer());
     content.add(new BlockWaterCandle());
-
     for (IContent cont : content) {
       ConfigRegistry.register(cont);
     }

@@ -80,11 +80,11 @@ public class EnchantQuickdraw extends BaseEnchant {
     if (event.getEntity() instanceof EntityPlayer) {
       EntityPlayer player = (EntityPlayer) event.getEntity();
       ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
-      if(heldItem.getItem() instanceof ItemBow==false) {
+      if (heldItem.getItem() instanceof ItemBow == false) {
         heldItem = player.getHeldItem(EnumHand.OFF_HAND);
       }
-      if(heldItem.getItem() instanceof ItemBow==false) {
-       return; 
+      if (heldItem.getItem() instanceof ItemBow == false) {
+        return;
       }
       if (getCurrentLevelTool(player) <= 0) {
         return;

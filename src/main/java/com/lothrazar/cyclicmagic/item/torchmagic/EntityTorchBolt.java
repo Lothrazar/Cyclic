@@ -76,6 +76,7 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
       registered = true;
     }
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {

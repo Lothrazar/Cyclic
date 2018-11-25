@@ -138,9 +138,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   }
 
   private boolean recipeMatches(RecipeDeHydrate irecipe) {
-
     this.crafting.setInventorySlotContents(SLOT_RECIPE, this.getStackInSlot(SLOT_RECIPE).copy());
-
     return irecipe.matches(this.crafting, world);
   }
 

@@ -137,7 +137,6 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
-
     if (canEat(player) == false) {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
     }

@@ -92,8 +92,8 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
           }
           try {//no need to literally increase internal growth numbers, just force more  update ticks
             world.scheduleBlockUpdate(current, block, world.rand.nextInt(TICKS) + 20, 1);
-            if ( ! world.isRemote ) {
-            	block.updateTick(world, current, bState, world.rand);
+            if (!world.isRemote) {
+              block.updateTick(world, current, bState, world.rand);
             }
           }
           catch (Exception e) {

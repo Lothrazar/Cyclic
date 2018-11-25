@@ -221,7 +221,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public boolean updateEnergyIsBurning() {
-
     if (this.getEnergyCost() > 0) {
       if (this.hasEnoughEnergy()) {
         this.consumeEnergy();
@@ -270,7 +269,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (this.getEnergyCost() == 0) {
       return true;
     }
-
     return this.getEnergyCurrent() >= this.getEnergyCost();
   }
 

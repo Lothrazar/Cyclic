@@ -23,6 +23,6 @@ public class ItemPebble extends BaseItem implements IHasRecipe, IHasOreDict {
 
   @Override
   public String[] getOreDict() {
-    return new String[]{"rock"};
+    return new String[] { "rock" };
   }
 }
