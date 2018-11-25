@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -42,6 +43,18 @@ public class UtilOreDictionary {
       }
     }
     return false;
+  }
+
+  public static List<String> getOreDictList(final ItemStack stack, boolean strict) {
+    List<String> ores = new ArrayList<>();
+    for (String oreId : OreDictionary.getOreNames()) {
+      for (ItemStack stackCurrent : OreDictionary.getOres(oreId)) {
+        if (OreDictionary.itemMatches(stackCurrent, stack, strict)) {
+          ores.add(oreId);
+        }
+      }
+    }
+    return ores;
   }
 
   public static boolean doesMatchOreDict(final ItemStack stack, final List<String> oreIds) {
