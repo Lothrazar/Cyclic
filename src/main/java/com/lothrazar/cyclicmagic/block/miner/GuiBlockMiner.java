@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.miner;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiBlockMiner extends GuiBaseContainer {

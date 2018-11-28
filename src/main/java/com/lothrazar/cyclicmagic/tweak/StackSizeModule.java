@@ -26,8 +26,8 @@ package com.lothrazar.cyclicmagic.tweak;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.module.BaseModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseModule;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -66,6 +66,7 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     stackMap.put(Items.EGG, MAX);
   }
 
+  @Override
   public void onInit() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       boolean enabled = (enabledMap.get(entry.getKey()) == 1);
@@ -75,10 +76,11 @@ public class StackSizeModule extends BaseModule implements IHasConfig {
     }
   }
 
+  @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.itemsTack;
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
-      String name = entry.getKey().getUnlocalizedName();
+      String name = entry.getKey().getTranslationKey();
       int enabled = config.getBoolean(name, category, true, "Increase stack size to " + entry.getValue()) ? 1 : 0;
       enabledMap.put(entry.getKey(), enabled);
     }

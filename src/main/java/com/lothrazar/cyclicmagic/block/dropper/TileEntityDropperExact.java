@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dropper;
 
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -40,7 +40,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   private int hOffset = 0;
 
   public static enum Fields {
-    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, FUEL;
   }
 
   public TileEntityDropperExact() {
@@ -60,7 +60,6 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
       return;
     }
     //TODO: not like this. find list of slots that are NONEMPTY and then pick one
-
     if (this.updateTimerIsZero()) {
       this.updateCurrentSlot();
       if (slotCurrent > -1 && this.getStackInSlot(slotCurrent).isEmpty() == false) {
@@ -121,6 +120,8 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -138,6 +139,9 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -62,7 +62,7 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
       if (sender instanceof EntityPlayer) {
         // command blocks/server controllers do not have reputation
         EntityPlayer player = (EntityPlayer) sender;
-        int rep = closest.getPlayerReputation(player.getName());
+        int rep = closest.getPlayerReputation(player.getUniqueID());
         UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.reputation") + String.format("%d", rep));
       }
       dX = pos.getX() - closest.getCenter().getX();

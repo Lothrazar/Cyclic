@@ -1,9 +1,9 @@
 {
  	"parent": "cyclicmagic:parent/machine_peat",
     "textures": {
-        "0": "blocks/furnace_top",
+        "0": "cyclicmagic:blocks/hydrator_bottom",
         "1": "blocks/cauldron_inner",
-        "2": "blocks/furnace_top",
+        "2": "cyclicmagic:blocks/hydrator_bottom",
         "3": "cyclicmagic:blocks/peat_baked",
         "4": "cyclicmagic:blocks/peat_baked",
         "particle": "cyclicmagic:blocks/peat_baked"

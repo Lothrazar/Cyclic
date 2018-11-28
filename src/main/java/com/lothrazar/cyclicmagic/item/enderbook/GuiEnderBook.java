@@ -27,10 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import com.lothrazar.cyclicmagic.item.enderbook.ItemEnderBook.BookLocation;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -46,9 +46,6 @@ public class GuiEnderBook extends GuiScreen {
 
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
-  // public final ResourceLocation texture = new
-  // ResourceLocation(ModSamsContent.MODID,
-  // "textures/enderbook/textures/gui/book_ender.png" );
   final int maxNameLen = 20;
 
   public GuiEnderBook(EntityPlayer entityPlayer, ItemStack book) {
@@ -72,13 +69,13 @@ public class GuiEnderBook extends GuiScreen {
     int buttonID = 0, w = 70, h = 20, ypad = 1, delete_w = 20, rowpad = 8;
     buttonIdNew = buttonID;
     buttonID++;
-    ArrayList<BookLocation> list = ItemEnderBook.getLocations(bookStack);
+    ArrayList<BlockPosDim> list = ItemEnderBook.getLocations(bookStack);
     buttonNew = new ButtonWaypointNew(buttonIdNew, this.width / 2 - w, // x
         20, // y
         w, h, buttonIdNew);
-    buttonList.add(buttonNew);
+    addButton(buttonNew);
     ButtonClose buttonClose = new ButtonClose(9999, this.width / 2 - w - 50, 20);
-    buttonList.add(buttonClose);
+    addButton(buttonClose);
     if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
       buttonNew.enabled = false;// also a tooltip?
     }
@@ -89,7 +86,7 @@ public class GuiEnderBook extends GuiScreen {
     txtNew.setFocused(true);
     ButtonWaypointTeleport btn;
     GuiButton del;
-    BookLocation loc;
+    BlockPosDim loc;
     String buttonText;
     int yStart = 45;
     int xStart = (this.width / 10);

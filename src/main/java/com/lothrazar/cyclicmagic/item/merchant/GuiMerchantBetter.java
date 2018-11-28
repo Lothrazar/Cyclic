@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -75,6 +75,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     return (ContainerMerchantBetter) this.inventorySlots;
   }
 
+  @Override
   public void initGui() {
     super.initGui();
     //setup for the validate btns
@@ -97,21 +98,24 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         currCol = i % btnColCount;
         x = this.xBtnStart + currCol * btnW;
         y = this.yBtnStart + currRow * btnH;
-        GuiButtonPurchase slotBtn = (GuiButtonPurchase) this.addButton(new GuiButtonPurchase(lastUnusedButtonId, x, y, btnW, btnH, i, this));
+        GuiButtonPurchase slotBtn = this.addButton(new GuiButtonPurchase(lastUnusedButtonId, x, y, btnW, btnH, i, this));
         merchButtons.add(slotBtn);
         lastUnusedButtonId++;
       }
     }
   }
 
+  @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {}
 
+  @Override
   public void updateScreen() {
     super.updateScreen();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);//try to sync between both containers
     this.validateMerchantButtons();
   }
 
+  @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonPurchase) {
       setAndTryPurchase(((GuiButtonPurchase) button));

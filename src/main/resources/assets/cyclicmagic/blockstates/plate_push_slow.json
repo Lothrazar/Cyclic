@@ -1,9 +1,9 @@
 {
     "variants": {
-        "normal": { "model": "cyclicmagic:plate_push_slow" },
-        "facing=north": { "model": "cyclicmagic:plate_push_slow" },
-        "facing=east":  { "model": "cyclicmagic:plate_push_slow" ,"y":90},
-        "facing=south": { "model": "cyclicmagic:plate_push_slow" ,"y":180},
-        "facing=west":  { "model": "cyclicmagic:plate_push_slow" ,"y":270}
+        "normal": { "model": "cyclicmagic:conveyor_slow_straight" },
+        "facing=north": { "model": "cyclicmagic:conveyor_slow_straight" },
+        "facing=east":  { "model": "cyclicmagic:conveyor_slow_straight" ,"y":90},
+        "facing=south": { "model": "cyclicmagic:conveyor_slow_straight" ,"y":180},
+        "facing=west":  { "model": "cyclicmagic:conveyor_slow_straight" ,"y":270}
     }
 }

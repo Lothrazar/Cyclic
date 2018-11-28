@@ -25,10 +25,11 @@ package com.lothrazar.cyclicmagic.block.exppylon;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -52,6 +53,8 @@ public class GuiPylon extends GuiBaseContainer {
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.fluidBar = new FluidBar(this, 120, 40);
+    fluidBar.setCapacity(TileEntityXpPylon.TANK_FULL);
   }
 
   @Override
@@ -65,26 +68,26 @@ public class GuiPylon extends GuiBaseContainer {
     btnCollect = new ButtonExpPylon(btnId++,
         x, y, w + 12, h, "");
     btnCollect.setTooltip("button.exp_pylon.collect.tooltip");
-    this.buttonList.add(btnCollect);
+    this.addButton(btnCollect);
     y += h + Const.PAD / 2;
     //collect and bottle are done, now the rest
     ButtonExpPylon btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "+" + 10);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(10);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += hSpacing;
     btn = new ButtonExpPylon(btnId++,
         x, y, w / 2, h, "+" + 50);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(50);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += hSpacing;
     btn = new ButtonExpPylon(btnId++,
         x, y, w / 2 + 5, h, "+" + 500);
     btn.setTooltip("button.exp_pylon.deposit.tooltip");
     btn.setValue(500);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x = this.guiLeft + Const.PAD;
     y += h + Const.PAD / 2;
     //START OF - ROW
@@ -140,29 +143,7 @@ public class GuiPylon extends GuiBaseContainer {
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    this.drawFluidBar();
-  }
-
-  private void drawFluidBar() {
-    //??EH MAYBE https://github.com/BuildCraft/BuildCraft/blob/6.1.x/common/buildcraft/core/gui/GuiBuildCraft.java#L121-L162
-    int u = 0, v = 0;
-    int currentFluid = tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()); // ( fluid == null ) ? 0 : fluid.amount;//tile.getCurrentFluid();
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
-    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int x = this.guiLeft + 120, y = this.guiTop + 40;
-    Gui.drawModalRectWithCustomSizedTexture(
-        x, y, u, v,
-        pngWidth / f, h,
-        pngWidth / f, h);
-    h -= 2;// inner texture is 2 smaller, one for each border
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_EXP);
-    float percent = ((float) currentFluid / ((float) TileEntityXpPylon.TANK_FULL));
-    int hpct = (int) (h * percent);
-    Gui.drawModalRectWithCustomSizedTexture(
-        x + 1, y + 1 + h - hpct,
-        u, v,
-        16, hpct,
-        16, h);
+    fluidBar.draw(tile.getCurrentFluidStack());
   }
 
   @Override
@@ -170,7 +151,7 @@ public class GuiPylon extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
+    //    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
     int expHas = fluidHas / TileEntityXpPylon.FLUID_PER_EXP;
     int expFull = TileEntityXpPylon.TANK_FULL / TileEntityXpPylon.FLUID_PER_EXP;
     this.drawString("EXP: " + expHas + " / " + expFull, this.xSize / 2 - 20, 118);

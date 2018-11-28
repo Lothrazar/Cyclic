@@ -21,14 +21,21 @@ compileJava {
 }
 
 minecraft {
+
+
     version = "${mc_version}-${forge_version}"
-    mappings = "snapshot_20170624"
+    mappings = "stable_39"
     runDir = "run"
     makeObfSourceJar = false
     useDepAts = true
     //Makes those replacement changes to the main mod class.
-   // replace '@FINGERPRINT@', project.findProperty('signSHA1')
-   // replaceIn "ModCyclic.java"
+
+    replace '@VERSION@', project.version
+    //Replaces all text that matches the left side with the right.
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    //Makes those replacement changes to the main mod class.
+    //My mod class is set in my project's gradle.properties file.
+    replaceIn "ModCyclic.java"
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
@@ -54,6 +61,30 @@ build.dependsOn signJar
 
 //Defines basic patterns for pulling various dependencies.
 repositories {
+	maven {
+		url "https://maven.mcmoddev.com"
+	}
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+		url 'http://maven.blamejared.com'
+	}
+	maven {
+		url 'https://maven.mcmoddev.com/'
+	}
+	maven {
+        url = "http://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+		url 'http://maven.blamejared.com'
+	}
+	maven {
+        url = "http://minecraft.curseforge.com/api/maven/"
+    }
     maven {
     	name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
@@ -75,18 +106,14 @@ repositories {
 
 dependencies {
 
-  // compile against the JEI API
-  // deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
-  // at runtime, use the full JEI jar
-  // runtime "mezz.jei:jei_${mc_version}:${jei_version}"
-
-  //compile files("lib/Baubles-${baubles_version}.jar")
-  
-  deobfCompile name: "Baubles", version: "${baubles_version}"
-  
-  
-  
+  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
+  deobfCompile "baubles:Baubles:1.12:${baubles_version}"
+  deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
   deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+
+  // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
+  // deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-${mc_version}-${ench_descr_version}:+"
 }
 
 processResources {

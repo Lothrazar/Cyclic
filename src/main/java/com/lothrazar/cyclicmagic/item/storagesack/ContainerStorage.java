@@ -23,13 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
-import com.lothrazar.cyclicmagic.module.ItemModule;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -37,48 +36,40 @@ import net.minecraft.item.ItemStack;
 public class ContainerStorage extends ContainerBase {
 
   final InventoryStorage inventory;
+  private EntityPlayer player;
+  private String stackId;
+  ItemStack bagReference;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
-  final static int pad = 8;
+  final static int pad = Const.PAD;
   final static int hotbar = 9;
-  final static int rows = 6;
+  final static int rows = 7;
   final static int cols = 11;
 
-  public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
+  public ContainerStorage(EntityPlayer par1Player, InventoryStorage invoWand) {
+    this.setScreenSize(ScreenSize.SACK);
+    this.player = par1Player;
+    bagReference = player.getHeldItemMainhand();
+    this.stackId = ItemStorageBag.getId(bagReference);
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
     // start the main container area
     for (l = 0; l < rows; ++l) {
       for (k = 0; k < cols; ++k) {
         x = pad + k * Const.SQ;
-        y = pad + l * Const.SQ;
+        y = 7 + l * Const.SQ;
         slot = k + l * cols;
-        this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemModule.storage_bag));
+        this.addSlotToContainer(new SlotItemRestrictedInverse(
+            invoWand, slot, x, y, MultiContent.storage_bag));
       }
     }
-    int yBase = pad + rows * Const.SQ + 14;
-    // start the players inventory
-    for (l = 0; l < 3; ++l) {
-      for (k = 0; k < hotbar; ++k) {
-        x = pad + (k + 1) * Const.SQ;
-        y = l * Const.SQ + yBase;
-        slot = k + l * hotbar + hotbar;
-        this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
-      }
-    }
-    // players hotbar
-    int yhotbar = yBase + 3 * Const.SQ + pad / 2;
-    for (k = 0; k < hotbar; ++k) {
-      slot = k;
-      x = pad + (k + 1) * Const.SQ;
-      this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
-    }
+    this.bindPlayerInventory(player.inventory);
   }
 
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-    ItemStack wand = UtilPlayer.getPlayerItemIfHeld(player);
+    ItemStack wand = player.getHeldItemMainhand();
     // this will prevent the player from interacting with the item that
     // opened the inventory:
     if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) {
@@ -89,7 +80,19 @@ public class ContainerStorage extends ContainerBase {
 
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return true;//inventory.isUseableByPlayer(playerIn);
+    if (player.getHeldItemMainhand().isEmpty()) {
+      return false;
+    }
+    if (ItemStorageBag.getId(player.getHeldItemMainhand()).equals(stackId) == false) {
+      return false;
+    }
+    //Check if pouch is in main inventory
+    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+      if (player.inventory.getStackInSlot(i) == bagReference) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override

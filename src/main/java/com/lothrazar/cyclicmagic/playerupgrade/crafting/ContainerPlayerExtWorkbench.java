@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -87,10 +87,12 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     slotId++;
     this.addSlotToContainer(new Slot(playerInv, 40, 77, 62) {
 
+      @Override
       public boolean isItemValid(@Nullable ItemStack stack) {
         return super.isItemValid(stack);
       }
 
+      @Override
       @Nullable
       @SideOnly(Side.CLIENT)
       public String getSlotTexture() {
@@ -124,6 +126,10 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     this.onCraftMatrixChanged(craftMatrix);
   }
 
+  public EntityPlayer getPlayer() {
+    return thePlayer;
+  }
+
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
     //i have to assume the recipe will safely validate itself
@@ -134,7 +140,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     catch (Exception e) {
       //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
       //but from another mod there could be an error bubbling up to here
-      ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
+      ModCyclic.logger.error("A recipe has thrown an error unexpectedly");
     }
   }
 
@@ -154,7 +160,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
     ItemStack itemStack = ItemStack.EMPTY;
-    Slot fromSlot = (Slot) this.inventorySlots.get(slotIndex);
+    Slot fromSlot = this.inventorySlots.get(slotIndex);
     //shield is slot 5 now
     int craftOutpt = 0, playerStart = 15, playerEnd = 50, craftStart = 6, craftEnd = 14, armorStart = 1, armorEnd = 5;
     if (fromSlot != null && fromSlot.getHasStack()) {

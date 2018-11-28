@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.crafter;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -82,7 +82,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
-    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -101,7 +100,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-
       else if (!this.mergeItemStack(stackInSlot, 0, TileEntityCrafter.SIZE_INPUT, true)) {
         return ItemStack.EMPTY;
       }

@@ -27,15 +27,15 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilOreDictionary;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Enchantments;
@@ -65,18 +65,20 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
-  private static final int HEIGHT = 32;
+  static final int MAX_HEIGHT = 32;
+  private int height = MAX_HEIGHT;
+  private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int size = MAX_SIZE;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
   private BlockPos targetPos = null;
-  private int size = 9;
   private int needsRedstone = 1;
   private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
 
   public static enum Fields {
-    REDSTONE, RENDERPARTICLES, TIMER;
+    REDSTONE, RENDERPARTICLES, TIMER, FUEL, SIZE, HEIGHT;
   }
 
   public TileEntityForester() {
@@ -98,7 +100,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
-      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, "block_forester");
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getTranslationKey());
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
       }
@@ -110,7 +112,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     if (!isRunning()) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -129,9 +130,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-
-      return isSaplingValid(stack);
-
+    return isSaplingValid(stack);
   }
 
   private void updatePlantSaplings() {
@@ -227,7 +226,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     int minX = this.pos.getX() - this.size;
     int maxX = this.pos.getX() + this.size;
     int minY = this.pos.getY();
-    int maxY = this.pos.getY() + HEIGHT;
+    int maxY = this.pos.getY() + height - 1;
     int minZ = this.pos.getZ() - this.size;
     int maxZ = this.pos.getZ() + this.size;
     //first we see if this column is done by going bottom to top
@@ -252,33 +251,35 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger(NBT_REDST, this.needsRedstone);
     if (uuid != null) {
-      tagCompound.setString(NBTPLAYERID, uuid.toString());
+      tags.setString(NBTPLAYERID, uuid.toString());
     }
-    tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
-    tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
-    tagCompound.setInteger(NBT_SIZE, size);
-    tagCompound.setInteger(NBT_RENDER, renderParticles);
+    tags.setBoolean(NBTMINING, isCurrentlyMining);
+    tags.setFloat(NBTDAMAGE, curBlockDamage);
+    tags.setInteger(NBT_SIZE, size);
+    tags.setInteger("ht", height);
+    tags.setInteger(NBT_RENDER, renderParticles);
     if (targetPos != null) {
-      UtilNBT.setTagBlockPos(tagCompound, targetPos);
+      UtilNBT.setTagBlockPos(tags, targetPos);
     }
-    return super.writeToNBT(tagCompound);
+    return super.writeToNBT(tags);
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    this.size = tagCompound.getInteger(NBT_SIZE);
-    if (tagCompound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    this.needsRedstone = tags.getInteger(NBT_REDST);
+    this.size = tags.getInteger(NBT_SIZE);
+    this.height = tags.getInteger("ht");
+    if (tags.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tags.getString(NBTPLAYERID));
     }
-    this.targetPos = UtilNBT.getTagBlockPos(tagCompound);
-    isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
-    curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
-    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
+    this.targetPos = UtilNBT.getTagBlockPos(tags);
+    isCurrentlyMining = tags.getBoolean(NBTMINING);
+    curBlockDamage = tags.getFloat(NBTDAMAGE);
+    this.renderParticles = tags.getInteger(NBT_RENDER);
   }
 
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -304,6 +305,12 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         return this.renderParticles;
       case TIMER:
         return this.timer;
+      case FUEL:
+        return this.getEnergyCurrent();
+      case SIZE:
+        return size;
+      case HEIGHT:
+        return height;
     }
     return 0;
   }
@@ -319,6 +326,18 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
       case TIMER:
         this.timer = value;
+      break;
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
+      case SIZE:
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
+      break;
+      case HEIGHT:
+        this.height = Math.min(value, MAX_HEIGHT);
       break;
     }
   }
@@ -359,11 +378,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

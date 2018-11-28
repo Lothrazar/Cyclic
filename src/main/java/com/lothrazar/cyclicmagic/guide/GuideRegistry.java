@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
@@ -51,8 +51,8 @@ public class GuideRegistry {
   }
 
   public static GuideItem register(GuideCategory cat, Block block, @Nullable IRecipe recipe, @Nullable List<String> args) {
-    String pageTitle = block.getUnlocalizedName() + ".name";
-    String text = block.getUnlocalizedName() + SUFFIX;
+    String pageTitle = block.getTranslationKey() + ".name";
+    String text = block.getTranslationKey() + SUFFIX;
     return register(cat, Item.getItemFromBlock(block), pageTitle, text, recipe, args);
   }
 
@@ -61,8 +61,8 @@ public class GuideRegistry {
   }
 
   public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
-    String pageTitle = item.getUnlocalizedName() + ".name";
-    String above = item.getUnlocalizedName() + SUFFIX;
+    String pageTitle = item.getTranslationKey() + ".name";
+    String above = item.getTranslationKey() + SUFFIX;
     return register(cat, item, pageTitle, above, recipe, args);
   }
 

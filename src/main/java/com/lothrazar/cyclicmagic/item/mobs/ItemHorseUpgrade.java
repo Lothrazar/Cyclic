@@ -25,17 +25,17 @@ package com.lothrazar.cyclicmagic.item.mobs;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilReflection;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.Const.HorseMeta;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
@@ -77,7 +77,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       return;
     } // just being safe
     Item carrot = stack.getItem();
-    tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
+    tooltip.add(UtilChat.lang(carrot.getTranslationKey(stack) + ".effect"));
   }
 
   @Override
@@ -85,12 +85,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
 
-  public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
+  public static boolean onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     if (ahorse.isDead) {
-      return;
+      return false;
     }
     if (player.getCooldownTracker().hasCooldown(held.getItem())) {
-      return;
+      return false;
     }
     World world = player.getEntityWorld();
     boolean success = false;
@@ -209,11 +209,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       if (player.capabilities.isCreativeMode == false) {
         held.shrink(1);
       }
-      player.getCooldownTracker().setCooldown(heldItem, 5);
+      //player.getCooldownTracker().setCooldown(heldItem, 2);
       UtilParticle.spawnParticle(ahorse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, ahorse.getPosition());
       UtilSound.playSound(player, ahorse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       ahorse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
+    return success;
   }
 
   public static enum HorseUpgradeType {

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;

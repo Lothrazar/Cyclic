@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "blocks/anvil_base",
+        "down": "cyclicmagic:blocks/target_top",
+        "up": "cyclicmagic:blocks/target_top",
+        "north": "cyclicmagic:blocks/target_on",
+        "east": "cyclicmagic:blocks/target_on",
+        "south": "cyclicmagic:blocks/target_on",
+        "west": "cyclicmagic:blocks/target_on"
+    }
+}

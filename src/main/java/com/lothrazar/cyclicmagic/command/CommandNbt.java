@@ -23,8 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,5 +57,11 @@ public class CommandNbt extends BaseCommand implements ICommand {
     else {
       UtilChat.addChatMessage(player, "command.nbtprint.null");
     }
+    List<String> csv = new ArrayList<>();
+    for (String ore : UtilOreDictionary.getOreDictList(held, true)) {
+      csv.add(ore);
+    }
+    if (csv.size() > 0)
+      UtilChat.addChatMessage(player, UtilChat.lang("command.nbtprint.oredict") + String.join(", ", csv));
   }
 }

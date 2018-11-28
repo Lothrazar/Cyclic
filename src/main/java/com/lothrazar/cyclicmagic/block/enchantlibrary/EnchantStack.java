@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -149,7 +149,9 @@ public class EnchantStack {
     if (this.isEmpty()) {
       return "--";
     }
-    return UtilChat.lang(ench.getName()).substring(0, 5);
+    String name = UtilChat.lang(ench.getName());
+    int length = Math.min(10, name.length());
+    return name.substring(0, length);
   }
 
   public ItemStack getRenderIcon() {

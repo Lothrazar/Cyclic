@@ -1,7 +1,0 @@
-{
-    "parent": "block/fire_floor",
-    "textures": {
-        "particle": "cyclicmagic:blocks/fire_layer_0",
-        "fire": "cyclicmagic:blocks/fire_layer_0"
-    }
-}

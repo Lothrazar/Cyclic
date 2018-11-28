@@ -24,15 +24,15 @@
 package com.lothrazar.cyclicmagic.block.harvester;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -42,7 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiHarvester extends GuiBaseContainer {
 
   boolean debugLabels = false;
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private GuiButtonTooltip btnSpray;
 
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
@@ -53,7 +53,6 @@ public class GuiHarvester extends GuiBaseContainer {
     this.fieldPreviewBtn = TileEntityHarvester.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10,
         ContainerHarvester.SLOTY + 3 * Const.SQ + 4, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
-
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(10).setHeight(42).setX(156).setY(8);
   }
@@ -64,16 +63,18 @@ public class GuiHarvester extends GuiBaseContainer {
     int btnId = 20;
     int x = this.guiLeft + Const.PAD + 22;
     int y = this.guiTop + Const.PAD * 3 + 2;
-    btnSize = new GuiButtonToggleSize(btnId++,
-        x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    btnSize = new ButtonTileEntityField(btnId++,
+        x, y, this.tile.getPos(), TileEntityHarvester.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
     int w = 58, h = 20;
     x += 40 + Const.PAD;
     btnSpray = new GuiButtonTooltip(btnId++,
         x, y,
         w, h, "");
     btnSpray.setTooltip("button.harvester.mode.tooltip");
-    this.buttonList.add(btnSpray);
+    this.addButton(btnSpray);
   }
 
   @Override
@@ -105,7 +106,7 @@ public class GuiHarvester extends GuiBaseContainer {
           this.guiLeft + ContainerHarvester.SLOTX_START - 1 + (k - 18) * Const.SQ,
           this.guiTop + 2 * Const.SQ + ContainerHarvester.SLOTY - 1,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    } //, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 
   @SideOnly(Side.CLIENT)

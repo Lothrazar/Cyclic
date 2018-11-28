@@ -24,15 +24,19 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.item.BaseTool;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,12 +52,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPistonWand extends BaseTool implements IHasRecipe {
+public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
 
   private static final int durability = 5000;
 
@@ -113,6 +118,25 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
     }
   }
 
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_push");
+    ModCyclic.instance.events.register(this);
+    LootTableRegistry.registerLoot(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -127,7 +151,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }

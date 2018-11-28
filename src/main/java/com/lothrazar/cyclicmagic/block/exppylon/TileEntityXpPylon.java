@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.block.exppylon;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -44,7 +44,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
   private static final int VRADIUS = 2;
-  private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
+  private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3â€“11 experience points. 
   public static final int TIMER_FULL = 22;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
@@ -90,7 +90,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     if (this.isRunning() == false) {
       return;
     }
-
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
@@ -204,9 +203,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_COLLECT, this.collect);
-
     tags.setInteger(NBT_REDST, this.needsRedstone);
-
     return super.writeToNBT(tags);
   }
 
@@ -216,7 +213,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     timer = tags.getInteger(NBT_TIMER);
     collect = tags.getInteger(NBT_COLLECT);
     needsRedstone = tags.getInteger(NBT_REDST);
-
   }
 
   @Override
@@ -248,6 +244,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
         this.timer = value;
       break;
       case EXP:
+        if (this.tank.getFluid() == null) {
+          this.tank.setFluid(new FluidStack(FluidRegistry.getFluid("xpjuice"), 0));
+        }
         this.tank.setFluidAmount(value);
       break;
       case COLLECT:
@@ -274,7 +273,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   //    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
   //    this.tank.setFluid(fluid);
   //  }
-
 
   @Override
   public void toggleNeedsRedstone() {

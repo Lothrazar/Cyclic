@@ -41,6 +41,7 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
   /**
    * Dispenses the specified ItemStack from a dispenser.
    */
+  @Override
   public final ItemStack dispense(IBlockSource source, ItemStack stack) {
     ItemStack itemstack = this.dispenseStack(source, stack);
     this.playDispenseSound(source);
@@ -99,9 +100,9 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
    */
   public IPosition getDispensePosition(IBlockSource coords) {
     EnumFacing enumfacing = this.getFacing(coords.getBlockState());
-    double d0 = coords.getX() + 0.7D * (double) enumfacing.getFrontOffsetX();
-    double d1 = coords.getY() + 0.7D * (double) enumfacing.getFrontOffsetY();
-    double d2 = coords.getZ() + 0.7D * (double) enumfacing.getFrontOffsetZ();
+    double d0 = coords.getX() + 0.7D * enumfacing.getXOffset();
+    double d1 = coords.getY() + 0.7D * enumfacing.getYOffset();
+    double d2 = coords.getZ() + 0.7D * enumfacing.getZOffset();
     return new PositionImpl(d0, d1, d2);
   }
 
@@ -117,12 +118,12 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
     }
     EntityItem entityitem = new EntityItem(worldIn, d0, d1, d2, stack);
     double d3 = worldIn.rand.nextDouble() * 0.1D + 0.2D;
-    entityitem.motionX = (double) facing.getFrontOffsetX() * d3;
+    entityitem.motionX = facing.getXOffset() * d3;
     entityitem.motionY = 0.20000000298023224D;
-    entityitem.motionZ = (double) facing.getFrontOffsetZ() * d3;
-    entityitem.motionX += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
-    entityitem.motionY += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
-    entityitem.motionZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
+    entityitem.motionZ = facing.getZOffset() * d3;
+    entityitem.motionX += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
+    entityitem.motionY += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
+    entityitem.motionZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * speed;
     worldIn.spawnEntity(entityitem);
   }
 
@@ -141,6 +142,6 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
   }
 
   private int getWorldEventDataFrom(EnumFacing facingIn) {
-    return facingIn.getFrontOffsetX() + 1 + (facingIn.getFrontOffsetZ() + 1) * 3;
+    return facingIn.getXOffset() + 1 + (facingIn.getZOffset() + 1) * 3;
   }
 }

@@ -23,88 +23,89 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.hydrator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.BlockSand;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  private ItemStack[] recipeInput = new ItemStack[4];
+  private static final int FLUID_DEFAULT = 25;
+  public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
+  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
-  private int fluidCost = 25;
-  /**
-   * typically, size 1x1 is shapeless, and 2x2 is not shapeless
-   */
-  private boolean isShapeless;
+  private int fluidCost = FLUID_DEFAULT;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
-    this(new ItemStack[] { in, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }, out, true);
-  }
-
-  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
-    this(in, out, false);
-    this.fluidCost = w;
+    this(new ItemStack[] { in }, out, FLUID_DEFAULT);
   }
 
   public RecipeHydrate(ItemStack[] in, ItemStack out) {
-    this(in, out, false);
+    this(in, out, FLUID_DEFAULT);
   }
 
-  public RecipeHydrate(ItemStack[] in, ItemStack out, boolean shapeless) {
-    this.isShapeless = shapeless;
-    if (in.length == 1) {
-      //redirect to shapeless
-      this.isShapeless = true;
-      this.recipeInput = new ItemStack[] { in[0], ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY };
+  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
+    if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
+      throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    else if (in.length != 4) {
-      throw new IllegalArgumentException("Input array must be length 1 or length 4");
+    for (int i = 0; i < in.length; i++) {
+      if (in[i] != null && in[i].isEmpty() == false)
+        recipeInput.set(i, in[i]);
     }
-    else {
-      this.recipeInput = in;
-    }
-    ModCyclic.logger.info("Hydrator recipe for " + out.getDisplayName() + " is shapeless? " + this.isShapeless);
+    this.fluidCost = w;
     this.resultItem = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getUnlocalizedName()));
-  }
-
-  public boolean isShapeless() {
-    return this.isShapeless;
+    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
-    ItemStack s0 = inv.getStackInSlot(0);
-    ItemStack s1 = inv.getStackInSlot(1);
-    ItemStack s2 = inv.getStackInSlot(2);
-    ItemStack s3 = inv.getStackInSlot(3);
-    if (this.isShapeless()) {
-      ItemStack theRecipeStack = recipeInput[0];
-      return recipeSlotMatches(s0, theRecipeStack) ||
-          recipeSlotMatches(s1, theRecipeStack) ||
-          recipeSlotMatches(s2, theRecipeStack) ||
-          recipeSlotMatches(s3, theRecipeStack);
-    }
-    else {
-      //hacky lame way but easier to read and debug with all these lines
-      return recipeSlotMatches(s0, recipeInput[0]) &&
-          recipeSlotMatches(s1, recipeInput[1]) &&
-          recipeSlotMatches(s2, recipeInput[2]) &&
-          recipeSlotMatches(s3, recipeInput[3]);
+    this.sanityCheckInput();
+    boolean match0 = recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0));
+    boolean match1 = recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1));
+    boolean match2 = recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2));
+    boolean match3 = recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
+    return match0 && match1 && match2 && match3;
+  }
+
+  /**
+   * Clean out errors/bad data. Example: Oak sapling that has metadata zero gets converted to 32767
+   */
+  private void sanityCheckInput() {
+    for (int i = 0; i < recipeInput.size(); i++) {
+      ItemStack s = recipeInput.get(i);
+      if (s.isEmpty()) {
+        continue;
+      }
+      if (s.getMetadata() == 32767) {
+        ItemStack snew = new ItemStack(s.getItem(), 1, 0);
+        snew.setTagCompound(s.getTagCompound());
+        recipeInput.set(i, snew);
+      }
     }
   }
 
-  private boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
-    return OreDictionary.itemMatches(sInvo, sRecipe, false)
-        && sInvo.getCount() >= sRecipe.getCount();
+  public static boolean recipeSlotMatches(ItemStack sInvo, ItemStack sRecipe) {
+    if (sInvo.isEmpty() != sRecipe.isEmpty()) {
+      return false;//empty matching empty
+    }
+    //if item matches, then we are fine. check ore dict as well after that if item doesnt match 
+    return sInvo.getCount() >= sRecipe.getCount() &&
+        (sInvo.isItemEqual(sRecipe)
+            || OreDictionary.itemMatches(sInvo, sRecipe, false));
   }
 
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
@@ -115,45 +116,27 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     //otherwise its allowed to drain empty
     int minimum = (keepOneMinimum) ? 2 : 1;
     //TODO: merge/codeshare between shaped and shapeless!
-    int inputStackToPay = -1, inputCountToPay = -1;
-    if (this.isShapeless()) {
-      //find the one input slot has the thing, and decrement THAT ONE only 
-      final ItemStack theRecipe = recipeInput[0];
-      for (int i = 0; i < recipeInput.length; i++) {
-        //its shapeless so only one thing will have the input
-        if (invoSource.getStackInSlot(i).getCount() >= minimum
-            && invoSource.getStackInSlot(i).getCount() >= theRecipe.getCount() + (minimum - 1)) {
-          inputStackToPay = i;
-          //VALIDATE
-          inputCountToPay = theRecipe.getCount();
-          break;
-        }
+    //  int inputStackToPay = -1, inputCountToPay = -1;
+    //first test before we try to pay
+    for (int i = 0; i < recipeInput.size(); i++) {
+      if (recipeInput.get(i).isEmpty()) {
+        continue; //pay zero
       }
-      if (inputStackToPay < 0 || inputCountToPay <= 0) {
-        return false;
-      }
-      invoSource.decrStackSize(inputStackToPay, inputCountToPay);
-    }
-    else {
-      //first test before we try to pay
-      for (int i = 0; i < recipeInput.length; i++) {
-        if (invoSource.getStackInSlot(i).getCount() < recipeInput[i].getCount() + (minimum - 1)) {
-          return false;//at least one of the stacks cannot pay
-        }
-      }
-      //now actually pay, since they all can
-      for (int i = 0; i < recipeInput.length; i++) {
-        invoSource.decrStackSize(i, recipeInput[i].getCount());
+      if (invoSource.getStackInSlot(i).getCount() < recipeInput.get(i).getCount() + (minimum - 1)) {
+        return false;//at least one of the stacks cannot pay
       }
     }
+    //now actually pay, since they all can
+    for (int i = 0; i < recipeInput.size(); i++) {
+      if (recipeInput.get(i).isEmpty()) {
+        continue; //pay zero
+      }
+      invoSource.decrStackSize(i, recipeInput.get(i).getCount());
+    }
+    //    }
     //pay fluid last. same for shaped and shapeless
     tank.drain(this.getFluidCost(), true);
     return true;
-  }
-
-  public boolean isSlotEmpty(int slot) {
-    ItemStack inv = recipeInput[slot];
-    return inv == null || inv.isEmpty();
   }
 
   @Override
@@ -171,8 +154,8 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
     return resultItem.copy();
   }
 
-  public ItemStack[] getRecipeInput() {
-    return recipeInput.clone();
+  public List<ItemStack> getRecipeInput() {
+    return recipeInput;
   }
 
   public int getFluidCost() {
@@ -181,5 +164,88 @@ public class RecipeHydrate extends net.minecraftforge.registries.IForgeRegistryE
 
   public void setFluidCost(int fluidCost) {
     this.fluidCost = fluidCost;
+  }
+
+  // static init
+  public static void initAllRecipes() {
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    addRecipe(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT) },
+        new ItemStack(Blocks.GRASS, 2)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
+    addRecipe(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE, 1, 0), new ItemStack(Blocks.MOSSY_COBBLESTONE, 1, 0)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+    //GRAVEL JUST FOR FUN EH
+    addRecipe(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
+        new ItemStack(Blocks.GRAVEL)));
+    addRecipe(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new ItemStack(Blocks.GRASS_PATH) },
+        new ItemStack(Blocks.MYCELIUM)));
+    addRecipe(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
+        new ItemStack(Blocks.ICE)));
+    addRecipe(new RecipeHydrate(
+        new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
+        new ItemStack(Blocks.PACKED_ICE)));
+    for (EnumDyeColor col : EnumDyeColor.values()) {
+      addRecipe(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
+    }
+    for (EnumDyeColor col : EnumDyeColor.values()) {
+      if (col.getMetadata() != EnumDyeColor.WHITE.getMetadata())
+        addRecipe(new RecipeHydrate(new ItemStack(Blocks.WOOL, 1, col.getMetadata()), new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata())));
+    }
+    //they didnt use metadata for glazed because of facing direction i guess
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BLACK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLACK.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLUE.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BROWN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BROWN.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.CYAN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.CYAN.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.GREEN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.GREEN.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIGHT_BLUE.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.LIME_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIME.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.MAGENTA_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.MAGENTA.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.ORANGE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.ORANGE.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.PINK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PINK.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.PURPLE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PURPLE.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.RED_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.RED.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
+    }, new ItemStack(Blocks.SPONGE)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
+    }, new ItemStack(Blocks.WEB, 4)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
+    }, new ItemStack(Items.PRISMARINE_SHARD)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
+    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
+    // lava fabricator
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
+    }, new ItemStack(Items.LAVA_BUCKET)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
+    }, new ItemStack(Blocks.WATERLILY, 2)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM)
+    }, new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
+    }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
+    addRecipe(new RecipeHydrate(new ItemStack[] {
+        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
+    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
+  }
+
+  public static void addRecipe(RecipeHydrate rec) {
+    recipes.add(rec);
   }
 }

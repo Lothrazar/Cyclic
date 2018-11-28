@@ -26,10 +26,10 @@ package com.lothrazar.cyclicmagic.creativetab;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import com.lothrazar.cyclicmagic.core.registry.EnchantRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
-import com.lothrazar.cyclicmagic.registry.PotionTypeRegistry;
+import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -58,7 +58,7 @@ public class CreativeTabCyclic extends CreativeTabs {
   }
 
   @Override
-  public ItemStack getTabIconItem() {
+  public ItemStack createIcon() {
     return tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(tabItem);
   }
 

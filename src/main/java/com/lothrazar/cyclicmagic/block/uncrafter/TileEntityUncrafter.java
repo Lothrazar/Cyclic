@@ -26,18 +26,15 @@ package com.lothrazar.cyclicmagic.block.uncrafter;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft.UncraftResultType;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 
 public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
@@ -50,11 +47,11 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_UNCRAFTME = 0;
   public static final int SLOT_ROWS = 4;
   public static final int SLOT_COLS = 5;
-  public static final int TIMER_FULL = 200;
+  public static int TIMER_FULL = 200;
   private int needsRedstone = 1;
 
   public static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, FUEL;
   }
 
   public TileEntityUncrafter() {
@@ -92,7 +89,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     if (stack.isEmpty()) {
       return;
     }
-    this.spawnParticlesAbove();// its processing
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -105,7 +101,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
-            UtilSound.playSoundFromServer(SoundRegistry.uncraft, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
+            //  UtilSound.playSoundFromServer(SoundRegistry.uncraft, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
           }
           //          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
         }
@@ -140,6 +136,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -154,6 +152,9 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;

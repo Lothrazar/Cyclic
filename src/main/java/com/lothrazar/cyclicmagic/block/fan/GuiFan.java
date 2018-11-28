@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fan;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.ButtonTriggerWrapper.ButtonTriggerType;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,11 +37,6 @@ public class GuiFan extends GuiBaseContainer {
 
   private TileEntityFan tile;
   boolean debugLabels = false;
-  //private ButtonIncrementField btnHeightDown;
-  //  private ButtonIncrementField btnHeightUp;
-  private int xRange = 176 - 25;
-  private int yHeightTxtbox = 38;
-  //  private ButtonFan btnTogglePrt;
   private ButtonTileEntityField btnTogglePush;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
@@ -56,69 +51,26 @@ public class GuiFan extends GuiBaseContainer {
     super.initGui();
     int id = 2;
     int w = 18, h = 10;
-    int yOffset = 14;
-    int x = this.guiLeft + xRange;
-    int y = this.guiTop + yHeightTxtbox + yOffset;
+    int x = this.guiLeft + 30;
+    int y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
-    ButtonTileEntityField btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
-        field, -1, w, h);
-    btn.setTooltip("button.fan.range.tooltip");
-    btn.displayString = "-1";
-    this.buttonList.add(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
-    btn = new ButtonTileEntityField(id++, x, y + h + 1, tile.getPos(),
-        field, -5, w, h);
-    btn.setTooltip("button.fan.range.tooltip");
-    btn.displayString = "-5";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
-    y = this.guiTop + yHeightTxtbox - yOffset;
-    btn = new ButtonTileEntityField(id++, x, y, tile.getPos(),
-        field, +1, w, h);
-    btn.setTooltip("button.fan.range.tooltip");
-    btn.displayString = "+1";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_RANGE);
-    btn = new ButtonTileEntityField(id++, x, y - h - 1, tile.getPos(),
-        field, +5, w, h);
-    btn.setTooltip("button.fan.range.tooltip");
-    btn.displayString = "+5";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_RANGE);
+    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
+        field);
+    sliderDelay.setTooltip("button.fan.range.tooltip");
+    this.addButton(sliderDelay);
+    //    
     ///////////////// SPEED BUTTONS
+    y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
-    int xSpeed = this.guiLeft + xRange - 20;
-    y = this.guiTop + yHeightTxtbox + yOffset;
-    btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
-        TileEntityFan.Fields.SPEED.ordinal(), -5, w, h);
-    btn.setTooltip("button.fan.speed.tooltip");
-    btn.displayString = "-5";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
-    btn = new ButtonTileEntityField(id++, xSpeed, y + h + 1, tile.getPos(),
-        field, -1, w, h);
-    btn.setTooltip("button.fan.speed.tooltip");
-    btn.displayString = "-1";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, 1);
-    y = this.guiTop + yHeightTxtbox - yOffset;
-    btn = new ButtonTileEntityField(id++, xSpeed, y, tile.getPos(),
-        field, +1, w, h);
-    btn.setTooltip("button.fan.speed.tooltip");
-    btn.displayString = "+1";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_SPEED);
-    btn = new ButtonTileEntityField(id++, xSpeed, y - h - 1, tile.getPos(),
-        field, +5, w, h);
-    btn.setTooltip("button.fan.speed.tooltip");
-    btn.displayString = "+5";
-    this.addButton(btn);
-    this.registerButtonDisableTrigger(btn, ButtonTriggerType.EQUAL, field, TileEntityFan.MAX_SPEED);
+    GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
+        field);
+    sliderOffset.setTooltip("button.fan.speed.tooltip");
+    this.addButton(sliderOffset);
     //the big push pull toggle button
     w = 70;
     h = 20;
     x = this.guiLeft + 50;
-    y = this.guiTop + 38;
+    y = this.guiTop + 58;
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
@@ -140,12 +92,12 @@ public class GuiFan extends GuiBaseContainer {
     //    btnTogglePrt.updateDisplayStringWith(tile);
     //    btnTogglePush.updateDisplayStringWith(tile);
     btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(TileEntityFan.Fields.PUSHPULL.ordinal()));
-    String display = "" + this.tile.getRange();
-    int x = (display.length() > 1) ? xRange + 2 : xRange + 3;
-    this.drawString(display, x, yHeightTxtbox);
-    display = "" + this.tile.getSpeed();
-    x -= 20;
-    this.drawString(display, x, yHeightTxtbox);
+    //    String display = "" + this.tile.getRange();
+    //    int x = (display.length() > 1) ? xRange + 2 : xRange + 3;
+    //    this.drawString(display, x, yHeightTxtbox);
+    //    display = "" + this.tile.getSpeed();
+    //    x -= 20;
+    //    this.drawString(display, x, yHeightTxtbox);
     //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

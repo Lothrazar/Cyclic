@@ -24,10 +24,11 @@
 package com.lothrazar.cyclicmagic.block.workbench;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
@@ -64,7 +65,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     int cols = TileEntityWorkbench.COLS;
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (getScreenSize().width() / 2 - (Const.SQ * 3) / 2) - 20;//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -89,7 +90,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     catch (Exception e) {
       //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
       //but from another mod there could be an error bubbling up to here
-      ModCyclic.logger.info("A recipe has thrown an error unexpectedly");
+      ModCyclic.logger.error("A recipe has thrown an error unexpectedly");
     }
   }
 
@@ -126,5 +127,12 @@ public class ContainerWorkBench extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
+  }
+
+  @Override
+  public void onContainerClosed(EntityPlayer player) {
+    if (player.inventoryContainer instanceof ContainerPlayer)
+      ((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
+    super.onContainerClosed(player);
   }
 }

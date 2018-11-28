@@ -25,14 +25,13 @@ package com.lothrazar.cyclicmagic.block.collector;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,7 +41,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle, ITileSizeToggle {
+public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable, ITileRedstoneToggle, ITilePreviewToggle {
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(10, new StackWrapper());
   private static final int VRADIUS = 2;
@@ -64,7 +63,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     super(ROWS * COLS);
     this.setSetRenderGlobally(true);
     this.setSlotsForExtract(0, ROWS * COLS);
-
   }
 
   @Override
@@ -77,7 +75,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     if (!this.isRunning()) {
       return;
     }
-    this.spawnParticlesAbove();
     if (!this.updateTimerIsZero()) {
       return;
     }
@@ -204,14 +201,12 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
         this.renderParticles = value % 2;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
     }
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override
@@ -236,14 +231,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;//size zero means a 1x1 area
-    }
   }
 
   @Override

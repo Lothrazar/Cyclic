@@ -23,15 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.block.MachineTESR;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.core.MachineTESR;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -46,10 +48,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IHasConfig {
+public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IContent {
 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
@@ -65,6 +68,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
     return new TileEntityControlledMiner();
   }
 
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -87,7 +91,23 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "block_miner_smart", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    TileEntityControlledMiner.TIMER_FULL = config.getInt("block_miner_smart", Const.ConfigCategory.machineTimer,
+        100, 1, 9000, Const.ConfigText.machineTimer);
+    FUEL_COST = config.getInt("block_miner_smart", Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

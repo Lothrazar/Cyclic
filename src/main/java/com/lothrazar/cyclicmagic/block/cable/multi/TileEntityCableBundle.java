@@ -28,10 +28,7 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 public class TileEntityCableBundle extends TileEntityCableBase {
 
   public TileEntityCableBundle() {
-    super(1, 100, 1000);
-    this.setItemTransport();
-    this.setFluidTransport();
-    this.setPowerTransport();
+    super(true, true, true);
     this.setSlotsForBoth();
   }
 }

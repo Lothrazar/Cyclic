@@ -24,16 +24,18 @@
 package com.lothrazar.cyclicmagic.block.interdiction;
 
 import java.util.List;
-import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -42,18 +44,20 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
+public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, IContent {
 
-  protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
+  private static final double SIZE = 0.875D;
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(1 - SIZE, 1 - SIZE, 1 - SIZE, SIZE, SIZE, SIZE);
 
   public BlockMagnetAnti() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
     this.setTranslucent();
   }
 
@@ -64,34 +68,36 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return BOUNDS;
+    return AABB;
   }
 
-  @Nullable
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-    return NULL_AABB;
+  @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "magnet_anti_block", GuideCategory.BLOCKPLATE);
+    GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
   }
 
-  public boolean isFullCube(IBlockState state) {
-    return false;
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 
-  public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-    return true;
-  }
-
-  public boolean canSpawnInBlock() {
-    return true;
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
         "sbs",
-        "b b",
+        "bdb",
         "sbs",
+        'd', "gemDiamond",
         's', "dyeBlue",
-        'b', new ItemStack(Blocks.NETHER_WART_BLOCK));
+        'b', "glowstone");
   }
 
   @Override
@@ -105,7 +111,8 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
   /**
    * adding this stops fences from connecting
    */
-  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
+  @Override
+  public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing hand) {
     return BlockFaceShape.UNDEFINED;
   }
 }

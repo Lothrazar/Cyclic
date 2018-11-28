@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.scaffolding;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -45,6 +45,7 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
     return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 64), "dirt", "stickWood");
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
     super.neighborChanged(state, worldIn, pos, blockIn, fromPos);

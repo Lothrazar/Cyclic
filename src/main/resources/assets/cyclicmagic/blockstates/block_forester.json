@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:block_forester_north"},
-        "facing=east":  { "model": "cyclicmagic:block_forester_east"},
+        "facing=north": { "model": "cyclicmagic:block_forester_south","y":180},
+        "facing=east":  { "model": "cyclicmagic:block_forester_south","y":270},
         "facing=south": { "model": "cyclicmagic:block_forester_south"},
-        "facing=west":  { "model": "cyclicmagic:block_forester_west" }
+        "facing=west":  { "model": "cyclicmagic:block_forester_south" ,"y":90}
     }
 }

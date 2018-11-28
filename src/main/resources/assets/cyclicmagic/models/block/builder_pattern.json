@@ -1,5 +1,5 @@
 {
-    "parent": "block/cube_all",
+    "parent": "block/block",
     "textures": {
 		"particle":"blocks/redstone_block",
     	"0":"blocks/redstone_block",

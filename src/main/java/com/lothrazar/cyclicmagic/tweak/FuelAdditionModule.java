@@ -26,8 +26,8 @@ package com.lothrazar.cyclicmagic.tweak;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.module.BaseModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseModule;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,6 +38,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@SuppressWarnings("deprecation")
 public class FuelAdditionModule extends BaseModule implements IHasConfig {
 
   private boolean enabled;

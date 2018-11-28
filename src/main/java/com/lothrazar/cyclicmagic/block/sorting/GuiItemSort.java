@@ -25,11 +25,11 @@ package com.lothrazar.cyclicmagic.block.sorting;
 
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -61,33 +61,20 @@ public class GuiItemSort extends GuiBaseContainer {
         getScreenSize().width(), getScreenSize().height(),
         getScreenSize().width(), getScreenSize().height());
     //set locations
-    
-    /*    int fs = TileEntityItemCableSort.FILTER_SIZE;
-    int slot = 1;
-    int y = SLOTY;
-    for (int col = 0; col < EnumFacing.values().length; col++) {
-      y = col * Const.SQ;
-      for (int row = 0; row < fs; row++) {
-        addSlotToContainer(new SlotSingleStack(tile, slot,
-            SLOTX_START + row % fs * Const.SQ + Const.SQ,
-            SLOTY + y));
-        slot++;
-      }
-    }*/
+    /* int fs = TileEntityItemCableSort.FILTER_SIZE; int slot = 1; int y = SLOTY; for (int col = 0; col < EnumFacing.values().length; col++) { y = col * Const.SQ; for (int row = 0; row < fs; row++) {
+     * addSlotToContainer(new SlotSingleStack(tile, slot, SLOTX_START + row % fs * Const.SQ + Const.SQ, SLOTY + y)); slot++; } } */
     int fs = TileEntityItemCableSort.FILTER_SIZE;
-
     for (int col = 0; col < EnumFacing.values().length; col++) {
       y = guiTop + col * Const.SQ + ContainerItemSort.SLOTY - 1;
       for (int row = 0; row < fs; row++) {
         StackWrapper wrap = te.getStackWrapper(slotNum);
         x = guiLeft + ContainerItemSort.SLOTX_START + row % fs * Const.SQ + Const.SQ - 1;//Const.PAD + Const.SQ * row;
-
         wrap.setX(x);
         wrap.setY(y);
         slotNum++;
       }
     }
-    this.renderStackWrappers(te);
+    this.renderStackWrappers(te, false);
   }
 
   @SideOnly(Side.CLIENT)

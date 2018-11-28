@@ -26,27 +26,28 @@ package com.lothrazar.cyclicmagic.block.disenchanter;
 import java.util.Arrays;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilOreDictionary;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
 public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
   public static enum Fields {
-    REDSTONE, TIMER
+    REDSTONE, TIMER, FUEL;
   }
 
-  public static final int TIMER_FULL = 100;
+  public static int TIMER_FULL = 100;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_BOTTLE = 1;
   public static final int SLOT_REDSTONE = 2;
@@ -91,7 +92,6 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (!isInputValid()) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -167,10 +167,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
 
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
 
@@ -182,6 +179,8 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -193,6 +192,9 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case TIMER:
         this.timer = value;
       break;
@@ -202,5 +204,17 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       default:
       break;
     }
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(tagCompound);
   }
 }

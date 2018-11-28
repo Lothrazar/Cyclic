@@ -23,12 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseTool;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -42,8 +45,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
+public class ItemFireExtinguish extends BaseTool implements IHasRecipe, IContent {
 
   private static final int DURABILITY = 256;
   private static final int COOLDOWN = 10;
@@ -51,6 +55,23 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe {
 
   public ItemFireExtinguish() {
     super(DURABILITY);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "fire_killer");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

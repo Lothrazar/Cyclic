@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.core.gui.InventoryBase;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.gui.core.InventoryBase;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -36,15 +36,15 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage extends InventoryBase implements IInventory {
 
-  public static final int INV_SIZE = 66; //6*11
+  public static final int INV_SIZE = 7 * 11; //6*11
   //  private ItemStack[] inv = new ItemStack[INV_SIZE];
-  private final ItemStack internalWand;
+  private final ItemStack internalBag;
   private EntityPlayer thePlayer;
 
-  public InventoryStorage(EntityPlayer player, ItemStack wand) {
+  public InventoryStorage(EntityPlayer player, ItemStack bag) {
     super(INV_SIZE);
-    internalWand = wand;
-    inv = readFromNBT(internalWand);
+    internalBag = bag;
+    inv = readFromNBT(internalBag);
     thePlayer = player;
   }
 
@@ -133,7 +133,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
         thePlayer.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
       }
     }
-    writeToNBT(internalWand, inv);
+    writeToNBT(internalBag, inv);
   }
 
   @Override
@@ -166,7 +166,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
       // 1.7.2+ change to items.getCompoundTagAt(i)
-      NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
+      NBTTagCompound item = items.getCompoundTagAt(i);
       int slot = item.getInteger("Slot");
       if (slot >= 0 && slot < INV_SIZE) {
         inv.set(slot, UtilNBT.itemFromNBT(item));
@@ -205,8 +205,6 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   public static void decrementSlot(ItemStack stack, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryStorage.readFromNBT(stack);
     invv.get(itemSlot).shrink(1);
-    //    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
-    //    invv[itemSlot].stackSize--;
     if (invv.get(itemSlot).getCount() == 0) {
       invv.set(itemSlot, ItemStack.EMPTY);
     }

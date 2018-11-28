@@ -24,11 +24,11 @@
 package com.lothrazar.cyclicmagic.block.builderpattern;
 
 import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,6 +48,7 @@ public class GuiPattern extends GuiBaseContainer {
   private ButtonTileEntityField btnFlipZ;
   private ButtonTileEntityField btnFlipY;
   private ButtonTileEntityField btnFlipX;
+  private ButtonTileEntityField btnRender;
 
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
@@ -56,7 +57,6 @@ public class GuiPattern extends GuiBaseContainer {
     this.xSize = getScreenSize().width();
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(158).setY(4).setHeight(42);
   }
@@ -65,6 +65,13 @@ public class GuiPattern extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 2;
+    int x = this.guiLeft + Const.PAD / 2;
+    int y = this.guiTop + Const.PAD / 2 + 22;
+    btnRender = new ButtonTileEntityField(id++,
+        x,
+        y, this.tile.getPos(), Fields.RENDERPARTICLES.ordinal());
+    btnRender.width = btnRender.height = 18;
+    this.addButton(btnRender);
     /////redstone button
     //button rotation 
     btnRotation = new ButtonTileEntityField(id++,
@@ -125,7 +132,7 @@ public class GuiPattern extends GuiBaseContainer {
     bt.displayString = "<->";
     bt.setTooltip("tile.builder_pattern.flip");
     //24, 12,
-    this.buttonList.add(bt);
+    this.addButton(bt);
   }
 
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
@@ -136,7 +143,7 @@ public class GuiPattern extends GuiBaseContainer {
     btn.displayString = (isUp) ? "+" : "-";
     //15, 10
     btn.setTooltip("tile.builder_pattern." + f.name().toLowerCase() + (isUp ? "up" : "down"));
-    this.buttonList.add(btn);
+    this.addButton(btn);
   }
 
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
@@ -147,6 +154,15 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRotation.displayString = this.tile.getRotationName();
+    int render = tile.getField(Fields.RENDERPARTICLES);
+    if (render == 0) {
+      btnRender.setTextureIndex(-1);
+    }
+    else if (render == 1)
+      btnRender.setTextureIndex(render + 2);
+    else if (render == 2)
+      btnRender.setTextureIndex(render);
+    btnRender.setTooltip(tile.getName() + ".preview" + tile.getField(Fields.RENDERPARTICLES));
     btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
     btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
     btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";

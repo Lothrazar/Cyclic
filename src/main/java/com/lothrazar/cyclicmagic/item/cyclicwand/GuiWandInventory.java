@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +41,7 @@ public class GuiWandInventory extends GuiBaseContainer {
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
   // slot number, as i '3/9'
   int id = 777;
-  final int padding = 4;
+  final int padding = Const.PAD / 2;
   ContainerWand container;
   private EntityPlayer player;
 
@@ -60,13 +60,13 @@ public class GuiWandInventory extends GuiBaseContainer {
     int width = 20;
     width = 50;
     ButtonBuildToggle btn = new ButtonBuildToggle(player, id, x, y, width);
-    this.buttonList.add(btn);
+    this.addButton(btn);
     x += width + padding;
     ButtonWandReset b = new ButtonWandReset(player, id, x, y, width);
     if (ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {
       b.enabled = false;
     }
-    this.buttonList.add(b);
+    this.addButton(b);
   }
 
   @Override
@@ -94,6 +94,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     super.onGuiClosed();
   }
 
+  @Override
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
     this.drawDefaultBackground();//dim the background as normal
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -1,5 +1,5 @@
 {
-    "parent": "block/cube_all",
+    "parent": "block/block",
     "textures": {
      	"0":"blocks/redstone_block",
     	"1":"blocks/quartz_block_top",

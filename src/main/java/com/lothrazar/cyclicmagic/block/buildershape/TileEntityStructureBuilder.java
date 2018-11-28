@@ -26,13 +26,12 @@ package com.lothrazar.cyclicmagic.block.buildershape;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -45,10 +44,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int spotsSkippablePerTrigger = 50;
-  public static final int TIMER_FULL = 100;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static int TIMER_FULL = 25;
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int buildType;
@@ -65,7 +64,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int offsetZ = 0;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ, FUEL;
   }
 
   public enum BuildType {
@@ -201,7 +200,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.needsRedstone;
         case RENDERPARTICLES:
           return this.renderParticles;
-
         case ROTATIONS:
           return this.rotations;
         case OX:
@@ -210,6 +208,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.offsetY;
         case OZ:
           return this.offsetZ;
+        case FUEL:
+          return this.getEnergyCurrent();
       }
     }
     return -1;
@@ -219,10 +219,14 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
+        case FUEL:
+          this.setEnergyCurrent(value);
+        break;
         case TIMER:
           this.timer = value;
         break;
         case BUILDTYPE:
+          //??toggleSizeShape
           if (value >= BuildType.values().length) {
             value = 0;
           }
@@ -244,9 +248,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.needsRedstone = value;
         break;
         case RENDERPARTICLES:
-          this.renderParticles = value;
+          this.renderParticles = value % 2;
         break;
-
         case ROTATIONS:
           this.rotations = Math.max(0, value);
         break;
@@ -363,7 +366,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     }
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL;
-      this.spawnParticlesAbove();
       ItemStack stack = getStackInSlot(0);
       if (stack.isEmpty()) {
         return;
@@ -420,19 +422,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
-  }
-
-  @Override
-  public void toggleSizeShape() {
-    TileEntityStructureBuilder.BuildType old = this.getBuildTypeEnum();
-    TileEntityStructureBuilder.BuildType next = TileEntityStructureBuilder.BuildType.getNextType(old);
-    this.setBuildType(next.ordinal());
-  }
-
-  @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
 
   @Override

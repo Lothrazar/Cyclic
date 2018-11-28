@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.item.merchant;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -70,11 +70,13 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return this.merchantInventory;
   }
 
+  @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
   }
 
+  @Override
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
@@ -89,6 +91,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return UtilEntity.getVillagerCareer(merchant);
   }
 
+  @Override
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.merchantInventory.resetRecipeAndSlots();
     super.onCraftMatrixChanged(inventoryIn);
@@ -98,14 +101,16 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
   }
 
+  @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
     return this.merchant.getCustomer() == playerIn;
   }
 
+  @Override
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
     ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = (Slot) this.inventorySlots.get(index);
+    Slot slot = this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
@@ -136,6 +141,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     return itemstack;
   }
 
+  @Override
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
     this.merchant.setCustomer((EntityPlayer) null);

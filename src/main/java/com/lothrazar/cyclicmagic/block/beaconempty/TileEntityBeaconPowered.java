@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.state.IBlockState;
@@ -201,11 +201,6 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
     else {
       return super.receiveClientEvent(id, type);
     }
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[0];
   }
 
   /**

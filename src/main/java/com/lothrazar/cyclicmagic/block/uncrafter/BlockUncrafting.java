@@ -23,16 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.uncrafter;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseFacingInventory;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.block.MachineTESR;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft.BlacklistType;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.core.MachineTESR;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.BlacklistType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -46,10 +48,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
+public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IContent, IBlockHasTESR {
 
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public static int FUEL_COST = 0;
@@ -58,7 +61,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_UNCRAFTING);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
   }
 
   @SideOnly(Side.CLIENT)
@@ -87,8 +89,24 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
 
   @Override
+  public void register() {
+    BlockRegistry.registerBlock(this, "uncrafting_block", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 200, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    TileEntityUncrafter.TIMER_FULL = config.getInt("uncrafting_block", Const.ConfigCategory.machineTimer,
+        150, 1, 9000, Const.ConfigText.machineTimer);
+    FUEL_COST = config.getInt("uncrafting_block", Const.ConfigCategory.fuelCost, 200, 0, 500000, Const.ConfigText.fuelCost);
     String category = Const.ConfigCategory.uncrafter;
     UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
     UtilUncraft.resetBlacklists();
@@ -97,26 +115,56 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     String[] deflist = new String[] {
         "minecraft:end_crystal",
         "minecraft:magma",
+        "minecraft:elytra",
+        "forge:bucketfilled",
+        "astralsorcery:itemwand",
         "progressiveautomation:WitherDiamond",
         "progressiveautomation:WitherGold",
         "progressiveautomation:WitherIron",
         "progressiveautomation:WitherStone",
         "progressiveautomation:WitherWood",
-        "minecraft:elytra", "techreborn:uumatter",
-        "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special"
+        "techreborn:uumatter",
+        "spectrite:spectrite_arrow",
+        "spectrite:spectrite_arrow_special"
     };
     String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
     //OUTPUT
-    deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "botania:manaTablet",
-        "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem",
-        "harvestcraft:bakewareItem", "harvestcraft:saucepanItem", "harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem",
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal", "minecraft:nether_star", "minecraft:elytra", "techreborn:uumatter"
+    deflist = new String[] {
+        "minecraft:milk_bucket",
+        "minecraft:water_bucket",
+        "minecraft:lava_bucket",
+        "minecraft:nether_star",
+        "minecraft:elytra",
+        "forge:bucketfilled",
+        "abyssalcraft:cloth",
+        "abyssalcraft:transmutationgem",
+        "botania:manatablet",
+        "extrautils2:glasscutter",
+        "harvestcraft:juiceritem",
+        "harvestcraft:mixingbowlitem",
+        "harvestcraft:mortarandpestleitem",
+        "harvestcraft:bakewareitem",
+        "harvestcraft:saucepanitem",
+        "harvestcraft:skilletitem",
+        "harvestcraft:potitem",
+        "harvestcraft:cuttingboarditem",
+        "ic2:forge_hammer",
+        "ic2:cutter",
+        "minecolonies:sceptergold",
+        "mysticalagriculture:infusion_crystal",
+        "mysticalagriculture:master_infusion_crystal",
+        "techreborn:uumatter"
     };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
     //MODNAME
-    deflist = new String[] { "projecte", "resourcefulcrops", "spectrite" };
+    deflist = new String[] {
+        "projecte",
+        "flammpfeil.slashblade",
+        "resourcefulcrops",
+        "spectrite"
+    };
     blacklist = config.getStringList("BlacklistMod", category, deflist, "If a mod id is in this list, then nothing from that mod will be uncrafted ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.MODNAME);
     //CONTAINS

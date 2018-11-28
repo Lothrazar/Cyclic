@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dropper;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -50,21 +50,19 @@ public class GuiDropperExact extends GuiBaseContainer {
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 64,
-        TileEntityDropperExact.Fields.DELAY.ordinal(), true);
+        TileEntityDropperExact.Fields.DELAY.ordinal());
     sliderDelay.setTooltip("dropper.delay");
     this.addButton(sliderDelay);
-
     y += 18;
     //offset
     GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 16,
-        TileEntityDropperExact.Fields.OFFSET.ordinal(), true);
+        TileEntityDropperExact.Fields.OFFSET.ordinal());
     sliderOffset.setTooltip("dropper.offset");
     this.addButton(sliderOffset);
-
     y += 18;
     //stack size
     GuiSliderInteger sliderCount = new GuiSliderInteger(tile, id++, x, y, width, h, 1, 64,
-        TileEntityDropperExact.Fields.DROPCOUNT.ordinal(), true);
+        TileEntityDropperExact.Fields.DROPCOUNT.ordinal());
     sliderCount.setTooltip("dropper.count");
     this.addButton(sliderCount);
   }
@@ -84,8 +82,5 @@ public class GuiDropperExact extends GuiBaseContainer {
             this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    //DRAW ENERGY BAR
-    fuelX = this.guiLeft + 156;
-    fuelY = this.guiTop + 17;
   }
 }

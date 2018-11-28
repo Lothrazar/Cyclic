@@ -6,12 +6,20 @@
             "apply": { "model": "cyclicmagic:cable_none_energy", "x": 90, "uvlock": true }
         },
         {
+            "when": { "down": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 90, "uvlock": true }
+        },
+        {
             "when": { "OR": [ { "down": "cable" }, { "down": "inventory" } ] },
             "apply": { "model": "cyclicmagic:cable_side_energy", "x": 90, "uvlock": true }
         },
         {
             "when": { "up": "none" },
             "apply": { "model": "cyclicmagic:cable_none_energy", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "up": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "x": 270, "uvlock": true }
         },
         {
             "when": { "OR": [ { "up": "cable" }, { "up": "inventory" } ] },
@@ -22,12 +30,20 @@
             "apply": { "model": "cyclicmagic:cable_none_energy" }
         },
         {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked" }
+        },
+        {
             "when": { "OR": [ { "north": "cable" }, { "north": "inventory" } ] },
             "apply": { "model": "cyclicmagic:cable_side_energy" }
         },
         {
             "when": { "south": "none" },
             "apply": { "model": "cyclicmagic:cable_none_energy", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "south": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 180, "uvlock": true }
         },
         {
             "when": { "OR": [ { "south": "cable" }, { "south": "inventory" } ] },
@@ -38,12 +54,20 @@
             "apply": { "model": "cyclicmagic:cable_none_energy", "y": 270, "uvlock": true }
         },
         {
+            "when": { "west": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 270, "uvlock": true }
+        },
+        {
             "when": { "OR": [ { "west": "cable" }, { "west": "inventory" } ] },
             "apply": { "model": "cyclicmagic:cable_side_energy", "y": 270, "uvlock": true }
         },
         {
             "when": { "east": "none" },
             "apply": { "model": "cyclicmagic:cable_none_energy", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "east": "blocked" },
+            "apply": { "model": "cyclicmagic:cable_blocked", "y": 90, "uvlock": true }
         },
         {
             "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },

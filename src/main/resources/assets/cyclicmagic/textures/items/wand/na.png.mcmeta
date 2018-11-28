@@ -1,0 +1,8 @@
+{
+  "animation": {
+    "frames": [
+      {"index":1,"time":40},
+      {"index":0,"time":10}
+    ]
+  }
+}

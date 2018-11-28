@@ -23,10 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.builderpattern;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -70,8 +71,8 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
 
   @Override
   public IMessage onMessage(PacketTilePatternSwap message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().player;
-    TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
+    World world = ModCyclic.proxy.getPlayerEntity(ctx).getEntityWorld();
+    TileEntityPatternBuilder tile = (TileEntityPatternBuilder) world.getTileEntity(message.pos);
     if (tile != null) {
       if (message.type == SwapType.POSITION.ordinal())
         tile.swapTargetSource();

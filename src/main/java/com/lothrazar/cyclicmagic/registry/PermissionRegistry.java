@@ -38,6 +38,9 @@ public class PermissionRegistry {
   }
 
   public static boolean hasPermissionHere(EntityPlayer player, BlockPos pos) {
+    if (player.world.isRemote) {
+      return true;//Do not check permissions on client side! can crash or go crazy
+    }
     return PermissionAPI.hasPermission(player.getGameProfile(), MODIFYBLOCKS, new BlockPosContext(player, pos, null, null));
   }
 }

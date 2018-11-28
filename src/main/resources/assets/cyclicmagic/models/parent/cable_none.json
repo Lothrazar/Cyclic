@@ -1,0 +1,17 @@
+{
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"elements": [
+		{
+			"from": [5.5, 5.5, 5.5],
+			"to": [10.5, 10.5, 10.5],
+			"faces": {
+				"north": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0},
+				"south": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0},
+				"up": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0},
+				"down": {"uv": [6, 6, 10, 10], "texture": "#texture", "tintindex": 0}
+			}
+		}
+	]
+}

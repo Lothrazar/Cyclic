@@ -27,3 +27,4 @@ crash-reports/
 *.launch
 *.lnk
 *.jks
+secret.properties

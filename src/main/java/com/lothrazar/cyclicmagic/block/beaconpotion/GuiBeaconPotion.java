@@ -24,12 +24,11 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBeaconPotion extends GuiBaseContainer {
 
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private ButtonTileEntityField btnEntityType;
 
   public GuiBeaconPotion(InventoryPlayer inventoryPlayer, TileEntityBeaconPotion tileEntity) {
@@ -65,11 +64,12 @@ public class GuiBeaconPotion extends GuiBaseContainer {
     this.addButton(btnEntityType);
     x = 176 - w - Const.PAD / 2;
     id++;
-    btnSize = new GuiButtonToggleSize(id,
+    btnSize = new ButtonTileEntityField(id,
         this.guiLeft + x,
-        this.guiTop + y, this.tile.getPos());
+        this.guiTop + y, this.tile.getPos(), TileEntityBeaconPotion.Fields.RANGE.ordinal());
+    btnSize.width = 44;
     btnSize.width = w;
-    this.buttonList.add(btnSize);
+    this.addButton(btnSize);
   }
 
   @Override
@@ -84,7 +84,7 @@ public class GuiBeaconPotion extends GuiBaseContainer {
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     if (progressBar != null) {
-      progressBar.maxValue = tile.getField(Fields.FUELMAX.ordinal());
+      progressBar.setMaxValue(tile.getField(Fields.FUELMAX.ordinal()));
     }
   }
 

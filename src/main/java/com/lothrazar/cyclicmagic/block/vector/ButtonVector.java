@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.vector;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import net.minecraft.util.math.BlockPos;
 
 public class ButtonVector extends GuiButtonTooltip {

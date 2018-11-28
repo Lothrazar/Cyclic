@@ -25,42 +25,47 @@ package com.lothrazar.cyclicmagic.proxy;
 
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynMining;
-import com.lothrazar.cyclicmagic.core.entity.RenderProjectile.FactoryDynSafe;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.item.magic.EntityEnderEyeUnbreakable;
-import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamite;
-import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteBlockSafe;
-import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamiteMining;
-import com.lothrazar.cyclicmagic.item.magic.dynamite.EntityDynamite.FactoryDyn;
-import com.lothrazar.cyclicmagic.item.magic.energy.EntityHomingProjectile;
-import com.lothrazar.cyclicmagic.item.magic.energy.EntityHomingProjectile.FactoryMissile;
-import com.lothrazar.cyclicmagic.item.magic.fire.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.item.magic.fire.EntityBlazeBolt.FactoryFire;
-import com.lothrazar.cyclicmagic.item.magic.fishing.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.item.magic.fishing.EntityFishingBolt.FactoryFish;
-import com.lothrazar.cyclicmagic.item.magic.ice.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.item.magic.ice.EntitySnowballBolt.FactorySnow;
-import com.lothrazar.cyclicmagic.item.magic.lightning.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.item.magic.lightning.EntityLightningballBolt.FactoryLightning;
-import com.lothrazar.cyclicmagic.item.magic.locate.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.item.magic.locate.EntityDungeonEye.FactoryDungeon;
-import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetEmpty;
-import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetFull;
-import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetEmpty.FactoryBallEmpty;
-import com.lothrazar.cyclicmagic.item.magic.monsterball.EntityMagicNetFull.FactoryBall;
-import com.lothrazar.cyclicmagic.item.magic.shears.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.item.magic.shears.EntityShearingBolt.FactoryShear;
-import com.lothrazar.cyclicmagic.item.magic.torch.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.item.magic.torch.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.entity.RenderProjectile.FactoryDynMining;
+import com.lothrazar.cyclicmagic.entity.RenderProjectile.FactoryDynSafe;
+import com.lothrazar.cyclicmagic.item.boomerang.EntityBoomerang;
+import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite;
+import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamite.FactoryDyn;
+import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteBlockSafe;
+import com.lothrazar.cyclicmagic.item.dynamite.EntityDynamiteMining;
+import com.lothrazar.cyclicmagic.item.endereye.EntityEnderEyeUnbreakable;
+import com.lothrazar.cyclicmagic.item.findspawner.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.item.findspawner.EntityDungeonEye.FactoryDungeon;
+import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt.FactoryFire;
+import com.lothrazar.cyclicmagic.item.fishing.EntityFishingBolt;
+import com.lothrazar.cyclicmagic.item.fishing.EntityFishingBolt.FactoryFish;
+import com.lothrazar.cyclicmagic.item.homingmissile.EntityHomingProjectile;
+import com.lothrazar.cyclicmagic.item.homingmissile.EntityHomingProjectile.FactoryMissile;
+import com.lothrazar.cyclicmagic.item.lightningmagic.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.item.lightningmagic.EntityLightningballBolt.FactoryLightning;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.item.minecart.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.RenderCyclicMinecart;
-import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetEmpty.FactoryBallEmpty;
+import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull;
+import com.lothrazar.cyclicmagic.item.mobcapture.EntityMagicNetFull.FactoryBall;
+import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt.FactoryShear;
+import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
+import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
+import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.registry.module.MultiContent;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -89,12 +94,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
+  public static ParticleRenderer particleRenderer = new ParticleRenderer();
   public static KeyBinding keyShiftUp;
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
   public static KeyBinding keyBarDown;
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
+  public static KeyBinding keyWheel;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
 
   @Override
@@ -128,11 +135,13 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
       keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_RBRACKET, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
-      keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
-      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
-      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
-      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
+    keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_X, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
+    keyWheel = new KeyBinding("key.keyWheel", Keyboard.KEY_R, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyWheel);
+    keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_C, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
   }
 
   private void registerEntities() {
@@ -157,6 +166,8 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new FactoryBallEmpty());
     RenderingRegistry.registerEntityRenderingHandler(EntityHomingProjectile.class, new FactoryMissile());
     RenderingRegistry.registerEntityRenderingHandler(EntityEnderEyeUnbreakable.class, new EntityEnderEyeUnbreakable.FactoryMissile());
+    RenderingRegistry.registerEntityRenderingHandler(EntitySlingshot.class, new EntitySlingshot.FactoryFire());
+    RenderingRegistry.registerEntityRenderingHandler(EntityBoomerang.class, new EntityBoomerang.FactoryFire());
   }
 
   @SideOnly(Side.CLIENT)
@@ -339,6 +350,20 @@ public class ClientProxy extends CommonProxy {
 
     public void setReachDistance(float f) {
       distance = f;
+    }
+  }
+
+  @Override
+  public void initColors() {
+    if (MultiContent.storage_bag != null) {
+      Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
+          (stack, tintIndex) -> {
+            if (tintIndex == 0) {//layer zero is outline, ignore this 
+              return 0xFFFFFFFF;
+            }
+            //layer 1 is overlay 
+            return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
+          }, MultiContent.storage_bag);
     }
   }
 }

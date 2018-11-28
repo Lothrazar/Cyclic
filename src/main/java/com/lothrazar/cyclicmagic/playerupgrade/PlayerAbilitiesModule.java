@@ -23,13 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilFurnace;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
-import com.lothrazar.cyclicmagic.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilFurnace;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -40,6 +38,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
@@ -63,7 +62,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean signSkullName;
   private boolean easyEnderChest;
   private boolean fastLadderClimb;
-  private boolean editableSigns;
   private boolean nameVillagerTag;
   private boolean passThroughClick;
   private boolean armorStandSwap;
@@ -86,7 +84,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       //removed  && entityPlayer.isSneaking() == false
       if (state != null && (state.getBlock() == Blocks.WALL_SIGN || state.getBlock() == Blocks.WALL_BANNER)) {
         // but NOT standing sign or standing banner
-        EnumFacing face = EnumFacing.getFront(state.getBlock().getMetaFromState(state));
+        EnumFacing face = EnumFacing.byIndex(state.getBlock().getMetaFromState(state));
         BlockPos posBehind = pos.offset(face.getOpposite());
         IBlockState stuffBehind = worldObj.getBlockState(posBehind);
         if (stuffBehind != null && stuffBehind.getBlock() != null && worldObj.getTileEntity(posBehind) != null) {
@@ -199,10 +197,9 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     ItemStack held = event.getItemStack();
     if (stardewFurnace) {
       // ignore in creative// left clicking just breaks it anyway
-      if (entityPlayer.capabilities.isCreativeMode) {
-        return;
-      }
-      if (pos == null) {
+      if (entityPlayer.capabilities.isCreativeMode
+          || pos == null
+          || held.getItem() instanceof ItemPickaxe) {
         return;
       }
       int playerSlot = 0;// entityPlayer.inventory.currentItem;
@@ -235,21 +232,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     if (easyEnderChest) {
       if (!held.isEmpty() && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
-      }
-    }
-    if (editableSigns) {
-      if (pos == null) {
-        return;
-      }
-      TileEntity tile = worldObj.getTileEntity(pos);
-      if (held.isEmpty() && tile instanceof TileEntitySign) {
-        TileEntitySign sign = (TileEntitySign) tile;
-        if (worldObj.isRemote == true) {//this method has    @SideOnly(Side.CLIENT) flag
-          sign.setEditable(true);
-        }
-        sign.setPlayer(entityPlayer);
-        //entityPlayer.openEditSign(sign);//NOPE: this does not cause server sync, must go through network with mod instance
-        event.getEntityPlayer().openGui(ModCyclic.instance, ForgeGuiHandler.VANILLA_SIGN, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
       }
     }
   }
@@ -296,7 +278,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
         "Allows you to quickly climb ladders by looking up instead of moving forward");
     config.addCustomCategoryComment(category, "Player Abilities and interactions");
-    editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand by punching it (left click)");
     signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
         "Use a player skull on a sign to name the skull based on the top line");
     category = Const.ConfigCategory.blocks;

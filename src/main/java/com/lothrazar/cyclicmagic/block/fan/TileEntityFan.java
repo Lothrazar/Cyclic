@@ -24,13 +24,13 @@
 package com.lothrazar.cyclicmagic.block.fan;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -87,8 +87,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     pushEntities();
   }
 
+  @Override
   public List<BlockPos> getShape() {
-    //UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
   }
 
@@ -103,16 +103,18 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     switch (getCurrentFacing().getAxis()) {
       case X:
         end = end.add(0, 0, 1);//X means EASTorwest. adding +1z means GO 1 south
-      break;
-      case Y:
+        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Z:
         end = end.add(1, 0, 0);
+        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
+      case Y:
+        start = start.add(1, 0, 0);
+        end = end.add(0, 0, 1);
       default:
       break;
     }
-    end = end.add(0, 1, 0);///and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
     //ok now we have basically teh 3d box we wanted
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
     //EAST and SOUTH are skiping LAST blocks, but shouldnt
@@ -131,29 +133,67 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       case WEST:
         start = start.east();
       break;
+      case DOWN:
+      break;
+      case UP:
       default:
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);
     List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
-    // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
-    double z = this.getPos().getZ() + 0.5;
+    int moved = 0;
+    boolean doPush = (pushIfZero == 0);
+    int direction = 1;
     float SPEED = this.getSpeedCalc();
-    boolean pushIfFalse = (pushIfZero != 0);
-    UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED);
-    return entitiesFound.size();
+    for (Entity entity : entitiesFound) {
+      if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+        continue;//sneak avoid feature
+      }
+      moved++;
+      switch (face) {
+        case NORTH:
+          direction = !doPush ? 1 : -1;
+          entity.motionZ += direction * SPEED;
+        break;
+        case SOUTH:
+          direction = doPush ? 1 : -1;
+          entity.motionZ += direction * SPEED;
+        break;
+        case EAST:
+          direction = doPush ? 1 : -1;
+          entity.motionX += direction * SPEED;
+        break;
+        case WEST:
+          direction = !doPush ? 1 : -1;
+          entity.motionX += direction * SPEED;
+        break;
+        case DOWN:
+          direction = !doPush ? 1 : -1;
+          entity.motionY += direction * SPEED;
+        break;
+        case UP:
+          direction = doPush ? 1 : -1;
+          entity.motionY += direction * SPEED;
+        default:
+        break;
+      }
+    }
+    // center of the block
+    //    double x = this.getPos().getX() + 0.5;
+    //    double y = this.getPos().getY() + 2;//was 0.7; dont move them up, move down. let them fall!
+    //    double z = this.getPos().getZ() + 0.5;
+    // UtilEntity.pullEntityList(x, y, z, pushIfFalse, entitiesFound, SPEED, SPEED, vertical);
+    return moved;
   }
 
   private float getSpeedCalc() {
-    return ((float) this.speed) / 15F;
+    return (this.speed) / 35F;
   }
 
   private void doParticles() {
     List<BlockPos> shape = getShape();
     for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos, 1);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1);
     }
   }
 
@@ -221,6 +261,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     this.world.markBlockRangeForRenderUpdate(pos, pos);
   }
 
+  @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
@@ -283,11 +324,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       value = 1;
     }
     speed = Math.min(value, MAX_SPEED);
-  }
-
-  @Override
-  public void togglePreview() {
-    this.showParticles = (this.showParticles + 1) % 2;
   }
 
   @Override

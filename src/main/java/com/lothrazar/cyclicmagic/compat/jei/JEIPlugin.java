@@ -23,41 +23,41 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.compat.jei;
 
-import java.util.Arrays;
-import java.util.List;
+import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.crafter.ContainerCrafter;
-import com.lothrazar.cyclicmagic.block.hydrator.BlockHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.ContainerDeHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.GuiDeHydrator;
+import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
-import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
+import com.lothrazar.cyclicmagic.block.packager.ContainerPackager;
+import com.lothrazar.cyclicmagic.block.packager.GuiPackager;
+import com.lothrazar.cyclicmagic.block.packager.RecipePackage;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
-import com.lothrazar.cyclicmagic.core.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastWorkbench;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
-import mezz.jei.api.IGuiHelper;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
-import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IGuiItemStackGroup;
-import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
 
-  private static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+  static final String RECIPE_CATEGORY_HYDRATOR = "hydrator";
+  static final String RECIPE_CATEGORY_DEHYDRATOR = "dehydrator";
+  static final String RECIPE_CATEGORY_PACKAGER = "packager";
 
-  @SuppressWarnings("deprecation")
   @Override
   public void register(IModRegistry registry) {
     ////////////////first register all crafting GUI's
@@ -82,106 +82,80 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerHydrator.class, RECIPE_CATEGORY_HYDRATOR,
         0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
         4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
-        9, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerPackager.class, RECIPE_CATEGORY_PACKAGER,
+        0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        6, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
+        8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+        4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right RECIPE_CATEGORY_DEHYDRATOR hotbar =4*9
+    registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerDeHydrator.class, RECIPE_CATEGORY_PACKAGER,
+        0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        1, // @param recipeSlotCount    the number of slots for recipe inputs 
+        8, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
     // Start Custom recipe type: Hydrator
-    registry.addRecipeClickArea(GuiHydrator.class, 55, 8, 40, 26, RECIPE_CATEGORY_HYDRATOR);
-    registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(BlockHydrator.recipesShaped, RECIPE_CATEGORY_HYDRATOR);
-    registry.addRecipes(BlockHydrator.recipesShapeless, RECIPE_CATEGORY_HYDRATOR);
+    if (CyclicContent.hydrator.enabled()) {
+      registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
+      registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
+      registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+    }
     // End Custom recipe type: Hydrator
+    // Packager
+    if (CyclicContent.packager.enabled()) {
+      registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
+      registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+    }
+    //DEHydrator
+    if (CyclicContent.dehydrator.enabled()) {
+      registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
+      registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
+      registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+    }
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
       //YES its deprecated. but new method is NOT in wiki. at all. 
       // i found something similar... and didnt work when i tried
-      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview
-      registry.addDescription(new ItemStack(item), item.getUnlocalizedName() + ".guide");
+      //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview 
+      registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, item.getTranslationKey() + ".guide");
     }
     //end of Info tab
+    //FB Compat
+    if (CompatFastBench.LOADED) {
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs 
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+          36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastPlayerBench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs 
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+          36);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ClientContainerFastWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+          1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+          10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    }
   }
 
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
-    registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-  }
-
-  public static class HydratorFactory implements IRecipeWrapperFactory<RecipeHydrate> {
-
-    @Override
-    public IRecipeWrapper getRecipeWrapper(RecipeHydrate recipe) {
-      return new HydratorWrapper(recipe);
-    }
-  }
-
-  public static class HydratorWrapper implements IRecipeWrapper {
-
-    private RecipeHydrate src;
-
-    public HydratorWrapper(RecipeHydrate source) {
-      this.src = source;
-    }
-
-    public ItemStack getOut() {
-      return src.getRecipeOutput();
-    }
-
-    @Override
-    public void getIngredients(IIngredients ingredients) {
-      ingredients.setInputs(ItemStack.class, Arrays.asList(src.getRecipeInput()));
-      ingredients.setOutput(ItemStack.class, src.getRecipeOutput());
-    }
-  }
-
-  public static class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> {
-
-    private IDrawable gui;
-    private IDrawable icon;
-
-    public HydratorRecipeCategory(IGuiHelper helper) {
-      gui = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/gui/hydrator_recipe.png"), 0, 0, 169, 69, 169, 69);
-      //TOD: block is wrong of course, just POC
-      icon = helper.createDrawable(new ResourceLocation(Const.MODID, "textures/blocks/hydrator.png"), 0, 0, 16, 16, 16, 16);
-    }
-
-    @Override
-    public String getUid() {
-      return RECIPE_CATEGORY_HYDRATOR;
-    }
-
-    @Override
-    public String getTitle() {
-      return UtilChat.lang("tile.block_hydrator.name");
-    }
-
-    @Override
-    public String getModName() {
-      return Const.MODID;
-    }
-
-    @Override
-    public IDrawable getIcon() {
-      return icon;
-    }
-
-    @Override
-    public IDrawable getBackground() {
-      return gui;
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, HydratorWrapper recipeWrapper, IIngredients ingredients) {
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      guiItemStacks.init(0, true, 3, Const.SQ);
-      guiItemStacks.init(1, true, 3, 2 * Const.SQ);
-      guiItemStacks.init(2, true, 3 + Const.SQ, Const.SQ);
-      guiItemStacks.init(3, true, 3 + Const.SQ, 2 * Const.SQ);
-      for (int i = 0; i < TileEntityHydrator.RECIPE_SIZE; i++) {
-        List<ItemStack> input = ingredients.getInputs(ItemStack.class).get(i);
-        if (input != null && input.size() > 0 && input.get(0) != null && input.get(0).isEmpty() == false)
-          guiItemStacks.set(i, input.get(0));
-      }
-      guiItemStacks.init(4, false, 129, 18);
-      guiItemStacks.set(4, recipeWrapper.getOut());
-    }
+    if (CyclicContent.hydrator.enabled())
+      registry.addRecipeCategories(new HydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.packager.enabled())
+      registry.addRecipeCategories(new PackagerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.dehydrator.enabled())
+      registry.addRecipeCategories(new DehydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
   }
 }

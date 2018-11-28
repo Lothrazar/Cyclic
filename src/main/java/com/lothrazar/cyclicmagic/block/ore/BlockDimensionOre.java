@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.ore;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.core.IHasOreDict;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.data.IHasOreDict;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -52,7 +52,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
   private int spawnChance = 0;
   private SpawnType spawn = null;
   private ItemStack smeltOut;
-  private String oreDict;
+  private String[] oreDict;
 
   public static enum SpawnType {
     ENDERMITE, SILVERFISH
@@ -107,12 +107,12 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
     return smeltOut;
   }
 
-  public void registerOreDict(String out) {
+  public void registerOreDict(String... out) {
     oreDict = out;
   }
 
   @Override
-  public String getOreDict() {
+  public String[] getOreDict() {
     return oreDict;
   }
 
@@ -181,7 +181,7 @@ public class BlockDimensionOre extends BlockOre implements IHasOreDict {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
   }
 }

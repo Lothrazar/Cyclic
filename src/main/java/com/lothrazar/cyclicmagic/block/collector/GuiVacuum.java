@@ -23,13 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.collector;
 
-import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiVacuum extends GuiBaseContainer {
 
   ITileStackWrapper te;
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
 
   public GuiVacuum(InventoryPlayer inventoryPlayer, TileEntityVacuum tileEntity) {
     super(new ContainerVacuum(inventoryPlayer, tileEntity), tileEntity);
@@ -55,8 +55,10 @@ public class GuiVacuum extends GuiBaseContainer {
     int id = 2;
     int x = this.guiLeft + 28;
     int y = this.guiTop + 32;
-    btnSize = new GuiButtonToggleSize(id++, x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
+    btnSize = new ButtonTileEntityField(id++, x, y, this.tile.getPos(), TileEntityVacuum.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
   }
 
   @SideOnly(Side.CLIENT)
@@ -97,9 +99,9 @@ public class GuiVacuum extends GuiBaseContainer {
     for (int k = te.getWrapperCount() / 2; k < te.getWrapperCount(); k++) {
       x = this.guiLeft + Const.PAD + (k - 1) * Const.SQ - 1;
       y = this.guiTop + 2 * Const.SQ - 2;
-      Gui.drawModalRectWithCustomSizedTexture(
-          x, y,
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      //      Gui.drawModalRectWithCustomSizedTexture(
+      //          x, y,
+      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       StackWrapper wrap = te.getStackWrapper(slotNum);
       wrap.setX(x);
       wrap.setY(y);

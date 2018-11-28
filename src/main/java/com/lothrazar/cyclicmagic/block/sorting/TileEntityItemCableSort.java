@@ -31,11 +31,11 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
-import com.lothrazar.cyclicmagic.core.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.gui.StackWrapper;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
+import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -96,7 +96,6 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     int start = row * FILTER_SIZE;
     int end = (row + 1) * FILTER_SIZE - 1;
     List<ItemStack> validForSide = new ArrayList<>();
-
     for (int i = start; i < end; i++) {
       if (this.stacksWrapped.get(i).isEmpty() == false) {
         validForSide.add(stacksWrapped.get(i).getStack());

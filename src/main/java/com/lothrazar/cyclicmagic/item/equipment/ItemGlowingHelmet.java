@@ -24,14 +24,14 @@
 package com.lothrazar.cyclicmagic.item.equipment;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.IHasClickToggle;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -87,7 +87,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
-    list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    list.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     String onoff = this.isOn(held) ? "on" : "off";
     list.add(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
     super.addInformation(held, player, list, par4);
@@ -103,12 +103,14 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
         'o', "glowstone");
   }
 
+  @Override
   public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
   }
 
+  @Override
   public boolean isOn(ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     if (tags.hasKey(NBT_STATUS) == false) {

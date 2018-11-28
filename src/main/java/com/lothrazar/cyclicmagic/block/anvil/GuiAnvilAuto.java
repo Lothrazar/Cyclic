@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.anvil;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,11 +36,9 @@ public class GuiAnvilAuto extends GuiBaseContainer {
 
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
-
     this.energyBar = new EnergyBar(this);
-    energyBar.setWidth(10).setX(156);
+    energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
   }
 
   @Override
@@ -56,28 +54,5 @@ public class GuiAnvilAuto extends GuiBaseContainer {
         this.guiLeft + 110 - 1,
         this.guiTop + ContainerAnvilAuto.SLOTY - 1,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    this.drawFluidBar();
-  }
-
-  private void drawFluidBar() {
-    int u = 0, v = 0;
-    int currentFluid = ((TileEntityAnvilAuto) tile).getCurrentFluidStackAmount();
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID);
-    int pngWidth = 36, pngHeight = 124, f = 2, h = pngHeight / f;//f is scale factor. original is too big
-    int fuelWidth = 16;
-    int x = this.guiLeft + this.xSize / 2 - fuelWidth / 2 - 1, y = this.guiTop + fuelWidth;
-    Gui.drawModalRectWithCustomSizedTexture(
-        x, y, u, v,
-        pngWidth / f, h,
-        pngWidth / f, h);
-    h -= 2;// inner texture is 2 smaller, one for each border
-    this.mc.getTextureManager().bindTexture(Const.Res.FLUID_LAVA);
-    float percent = ((float) currentFluid / ((float) TileEntityAnvilAuto.TANK_FULL));
-    int hpct = (int) (h * percent);
-    Gui.drawModalRectWithCustomSizedTexture(
-        x + 1, y + 1 + h - hpct,
-        u, v,
-        fuelWidth, hpct,
-        fuelWidth, h);
   }
 }

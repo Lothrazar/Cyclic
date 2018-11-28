@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:sound_player" },
+        "inventory": { "model": "cyclicmagic:sound_player" }
+    }
+}

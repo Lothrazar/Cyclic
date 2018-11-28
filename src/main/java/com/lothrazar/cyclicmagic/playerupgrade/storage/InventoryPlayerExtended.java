@@ -26,10 +26,10 @@ package com.lothrazar.cyclicmagic.playerupgrade.storage;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.InventoryBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
+import com.lothrazar.cyclicmagic.gui.core.InventoryBase;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -54,6 +54,11 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   public InventoryPlayerExtended(EntityPlayer player) {
     super(IROW * ICOL + 20);//+20 somehow magically fixes bottom row
     this.player = new WeakReference<EntityPlayer>(player);
+  }
+
+  @Override
+  public String getName() {
+    return "Cyclic Extended Player Inventory";
   }
 
   public Container getEventHandler() {
@@ -174,7 +179,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   public void readNBT(NBTTagCompound tags) {
     NBTTagList tagList = tags.getTagList(Const.MODID + ".Inventory", 10);
     for (int i = 0; i < tagList.tagCount(); ++i) {
-      NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      NBTTagCompound nbttagcompound = tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
       ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
       if (!itemstack.isEmpty()) {
@@ -191,8 +196,8 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
         ei.setPickupDelay(40);
         float f1 = world.rand.nextFloat() * 0.5F;
         float f2 = world.rand.nextFloat() * (float) Math.PI * 2.0F;
-        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
-        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
+        ei.motionX = -MathHelper.sin(f2) * f1;
+        ei.motionZ = MathHelper.cos(f2) * f1;
         ei.motionY = 0.20000000298023224D;
         drops.add(ei);
         this.inv.set(i, ItemStack.EMPTY);

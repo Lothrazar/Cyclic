@@ -24,33 +24,55 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFlight extends ItemFood implements IHasRecipe {
+public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent {
 
   public static final int FLY_SECONDS = 2 * 60;
 
   public ItemFlight() {
     super(4, false);
     this.setAlwaysEdible();
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "glowing_chorus");
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -73,7 +95,7 @@ public class ItemFlight extends ItemFood implements IHasRecipe {
   private void setFlying(EntityPlayer player) {
     player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
-    player.capabilities.isFlying = true;
+    //    player.capabilities.isFlying = true;
   }
 
   private void setNonFlying(EntityPlayer player) {
@@ -93,8 +115,13 @@ public class ItemFlight extends ItemFood implements IHasRecipe {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS
     if (flyingTicks > 1) {//it decays at 1 not zero so that we only set flying False once, not constantly. avoids having boolean flag
-      props.setFlyingTimer(props.getFlyingTimer() - 1);
       setFlying(player);
+      //if you are flying but not using it (grounded) dont tick.
+      //this pauses the timer
+      //player.onGround == false ||
+      if (!player.onGround || player.world.getBlockState(player.getPosition().down()).getBlock() == Blocks.AIR) {
+        props.setFlyingTimer(props.getFlyingTimer() - 1);
+      }
     }
     else if (flyingTicks == 1) { //times up! only 1/20 of a second left
       props.setFlyingTimer(0);//skip ahead to zero
@@ -106,7 +133,7 @@ public class ItemFlight extends ItemFood implements IHasRecipe {
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltips, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltips.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 
   @Override

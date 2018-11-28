@@ -1,5 +1,5 @@
 {
   "variants": {
-      
-  "normal": { "model": "cyclicmagic:plate_vector" }
-}}
+	"normal": { "model": "cyclicmagic:plate_vector" }
+  }
+}

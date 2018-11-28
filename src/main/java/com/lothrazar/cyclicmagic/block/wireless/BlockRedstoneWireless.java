@@ -24,13 +24,13 @@
 package com.lothrazar.cyclicmagic.block.wireless;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -193,6 +193,7 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
     if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) {
       return;
     } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
+    //    event.
     World world = event.getWorld();
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();
@@ -202,9 +203,19 @@ public class BlockRedstoneWireless extends BlockBaseHasTile implements IHasRecip
       ItemStack stack = new ItemStack(state.getBlock());
       if (t.getTargetPos() != null)
         UtilNBT.setItemStackBlockPos(stack, t.getTargetPos());
-      //      saveTileDataToStack(stack, t);
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
+      world.setBlockToAir(pos);
     }
+    else if (ent != null && ent instanceof TileEntityWirelessRec) {
+      ItemStack stack = new ItemStack(state.getBlock());
+      UtilItemStack.dropItemStackInWorld(world, pos, stack);
+      world.setBlockToAir(pos);
+    }
+  }
+
+  @Override
+  public int quantityDropped(Random random) {
+    return 0;
   }
 
   //disable regular drops, make my own drop that saves nbt

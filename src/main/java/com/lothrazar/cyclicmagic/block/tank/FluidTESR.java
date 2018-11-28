@@ -36,15 +36,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage> {
+public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
 
   @Override
-  public void render(TileEntityBucketStorage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+  public void render(TileEntityFluidTank te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     FluidStack fluidStack = te.getCurrentFluidStack();
     if (fluidStack == null) {
       return;
     }
-    //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
     GlStateManager.pushMatrix();
     GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
     GL11.glEnable(GL11.GL_CULL_FACE);
@@ -59,7 +58,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
       //so we get range smaller THAN [0,1] -> avoids texture layer fighting
-      double posY = 0.02 + (.95 * ((float) fluidStack.amount / (float) te.getCapacity()));
+      double posY = 0.01 + (.985 * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
@@ -68,15 +67,15 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityBucketStorage
       float alph = 1.0F;
       // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
       // T/B for top and bottom
-      float T = 15.5F / 16F;
-      float B = 0.5F / 16F;
+      float T = 15.9F / 16F;
+      float B = 0.1F / 16F;
       int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-      buffer.pos(B, posY, T).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, T).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
-      buffer.pos(T, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
+      buffer.pos(B, posY, 1).tex(still.getInterpolatedU(S), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(T, posY, 1).tex(still.getInterpolatedU(E), still.getInterpolatedV(S)).color(red, green, blue, alph).endVertex();
+      buffer.pos(1, posY, B).tex(still.getInterpolatedU(E), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
       buffer.pos(B, posY, B).tex(still.getInterpolatedU(S), still.getInterpolatedV(E)).color(red, green, blue, alph).endVertex();
       tess.draw();
       //BOTTOM SIDE

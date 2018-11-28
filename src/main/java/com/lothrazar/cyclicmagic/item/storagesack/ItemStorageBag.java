@@ -24,20 +24,22 @@
 package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
+import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.item.BaseItem;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer.BagDepositReturn;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer.BagDepositReturn;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,9 +47,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,9 +57,44 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemStorageBag extends BaseItem implements IHasRecipe {
 
-  public static enum StorageActionType {
-    NOTHING, DEPOSIT, MERGE;
+  private static final String GUI_ID = "guiID";
 
+  public static enum StoragePickupType {
+    NOTHING, FILTER, EVERYTHING;
+
+    private final static String NBT = "deposit";
+
+    public static int get(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      return tags.getInteger(NBT);
+    }
+
+    public static String getName(ItemStack wand) {
+      try {
+        NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+        return "item.storage_bag.pickup." + StoragePickupType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+      }
+      catch (Exception e) {
+        return "item.storage_bag.pickup." + NOTHING.toString().toLowerCase();
+      }
+    }
+
+    public static void toggle(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      int type = tags.getInteger(NBT);
+      type++;
+      if (type > EVERYTHING.ordinal()) {
+        type = NOTHING.ordinal();
+      }
+      tags.setInteger(NBT, type);
+      wand.setTagCompound(tags);
+    }
+  }
+
+  public static enum StorageActionType {
+    NOTHING, MERGE, DEPOSIT;
+
+    private final static String NBT_COLOUR = "COLOUR";
     private final static String NBT = "build";
     private final static String NBTTIMEOUT = "timeout";
 
@@ -78,9 +115,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
 
     public static int get(ItemStack wand) {
-      if (wand == null) {
-        return 0;
-      }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -99,11 +133,31 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > MERGE.ordinal()) {
+      if (type > DEPOSIT.ordinal()) {
         type = NOTHING.ordinal();
       }
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
+    }
+
+    public static int getColour(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      if (tags.hasKey(NBT_COLOUR) == false) {
+        return EnumDyeColor.BROWN.getColorValue();
+      }
+      return tags.getInteger(NBT_COLOUR);
+    }
+
+    public static void setColour(ItemStack wand, int color) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      //      int type = tags.getInteger(NBT_COLOUR);
+      //      type++;
+      //      if (type > EnumDyeColor.values().length) {
+      //        type = EnumDyeColor.BLACK.getDyeDamage();
+      //      }
+      tags.setInteger(NBT_COLOUR, color);
+      wand.setTagCompound(tags);
+      // TODO Auto-generated method stub
     }
   }
 
@@ -122,7 +176,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
-    super.addInformation(stack, playerIn, tooltip, advanced);
+    tooltip.add(UtilChat.lang(StoragePickupType.getName(stack)));
   }
 
   @Override
@@ -132,12 +186,60 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
 
   @SubscribeEvent
+  public void onEntityItemPickupEvent(EntityItemPickupEvent event) {
+    if (event.getItem().isDead) {
+      return;
+    }
+    ItemStack stackOnGround = event.getItem().getItem();
+    //multiple bags held by player
+    NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
+    for (ItemStack stackIsBag : foundBags) {
+      int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
+      if (pickupType == StoragePickupType.NOTHING.ordinal()) {
+        continue;
+      }
+      if (pickupType == StoragePickupType.FILTER.ordinal()) {
+        // treat bag contents as whtielist
+        boolean doesMatch = false;
+        NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(stackIsBag);
+        for (ItemStack tryMatch : inv) {
+          if (tryMatch.isItemEqualIgnoreDurability(stackOnGround)) {
+            doesMatch = true;
+            break;
+          }
+        }
+        if (!doesMatch) {
+          return;//  filter type an it does not match
+        }
+      }
+      //else type is everything so just go
+      //do the real deposit
+      InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
+      NonNullList<ItemStack> onGround = NonNullList.create();
+      onGround.add(stackOnGround);
+      BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
+      if (ret.stacks.get(0).isEmpty()) {
+        /// we got everything
+        ModCyclic.logger.log("bag return  cancelled ");
+        event.getItem().setDead();
+        event.setCanceled(true);
+      }
+      else {
+        //we got part of it
+        ModCyclic.logger.log("bag return " + ret.stacks.get(0));
+        event.getItem().setItem(ret.stacks.get(0));
+      }
+      break;
+    }
+  }
+
+  @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
       World world = event.getWorld();
-      TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+      TileEntity tile = world.getTileEntity(event.getPos());
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
@@ -164,36 +266,28 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           UtilSound.playSound(player, SoundRegistry.sack_holding);
         }
       }
-      else { //hit something not an invenotry
-        if (StorageActionType.getTimeout(held) > 0) {
-          //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
-          return;
-        }
-        StorageActionType.setTimeout(held);
-        event.setCanceled(true);
-        UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
-        if (!player.getEntityWorld().isRemote) { // server side
-          StorageActionType.toggle(held);
-          UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));
-        }
-      }
+      //      else { //hit something not an invenotry
+      //        if (StorageActionType.getTimeout(held) > 0) {
+      //          //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
+      //          return;
+      //        }
+      //        StorageActionType.setTimeout(held);
+      //        event.setCanceled(true);
+      //        UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
+      //        if (!player.getEntityWorld().isRemote) { // server side
+      //          StorageActionType.toggle(held);
+      //          UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));
+      //        }
+      //      }
     }
-  }
-
-  public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
-    ItemStack wand = player.getHeldItemMainhand();
-    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
-      wand = player.getHeldItemOffhand();
-    }
-    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
-      return null;
-    }
-    return wand;
   }
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    if (!world.isRemote) {
+    ItemStack wand = player.getHeldItem(hand);
+    setIdIfEmpty(wand);
+    if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
+        && hand == EnumHand.MAIN_HAND) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
@@ -201,6 +295,18 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return super.onItemRightClick(world, player, hand);
   }
 
+  private void setIdIfEmpty(ItemStack wand) {
+    if (UtilNBT.getItemStackNBT(wand).hasKey(GUI_ID) == false ||
+        UtilNBT.getItemStackNBT(wand).getString(GUI_ID) == null) {
+      UtilNBT.setItemStackNBTVal(wand, GUI_ID, UUID.randomUUID().toString());
+    }
+  }
+
+  public static String getId(ItemStack wand) {
+    return UtilNBT.getItemStackNBT(wand).getString(GUI_ID);
+  }
+
+  //
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",

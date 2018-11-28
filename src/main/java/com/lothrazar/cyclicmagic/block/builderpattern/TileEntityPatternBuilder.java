@@ -27,13 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -74,8 +74,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int rotation = 0;//enum value of Rotation
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
 
+  enum RenderType {
+    OFF, OUTLINE, PHANTOM, SOLID;
+  }
+
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ, FUEL;
   }
 
   public TileEntityPatternBuilder() {
@@ -165,7 +169,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   @Override
+  public boolean shouldRenderInPass(int pass) {
+    return pass < 2;
+  }
+
+  @Override
   public void update() {
+    // OR maybe projector upgrade
+    //and/or new projector block
     if (isRunning() == false) { // it works ONLY if its powered
       return;
     }
@@ -182,7 +193,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
       int pTarget = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = shapeTarget.get(pTarget);//convertPosSrcToTarget(posSrc);
+      BlockPos posTarget = shapeTarget.get(pTarget);
       if (this.renderParticles == 1) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
@@ -243,6 +254,17 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
   }
 
+  public Map<BlockPos, IBlockState> getShapeFancy(List<BlockPos> sourceShape, List<BlockPos> targetShape) {
+    Map<BlockPos, IBlockState> map = new HashMap<BlockPos, IBlockState>();
+    for (int i = 0; i < targetShape.size(); i++) {
+      BlockPos src = sourceShape.get(i);
+      BlockPos targ = targetShape.get(i);
+      if (world.isAirBlock(targ))//dont render on top of thing
+        map.put(targ, world.getBlockState(src));
+    }
+    return map;
+  }
+
   public List<BlockPos> getTargetShape() {
     List<BlockPos> shapeSrc = getSourceShape();
     List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
@@ -263,11 +285,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
     }
     return shapeTarget;
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
   }
 
   @Override
@@ -356,6 +373,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         return flipY;
       case FLIPZ:
         return flipZ;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -366,6 +385,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       value = MAXIMUM;
     }
     switch (f) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case OFFTARGX:
         this.offsetTargetX = value;
       break;
@@ -397,7 +419,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         this.needsRedstone = value;
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % RenderType.values().length;
       break;
       case ROTATION:
         this.rotation = value % Rotation.values().length;
@@ -412,6 +434,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         flipZ = value % 2;
       break;
     }
+  }
+
+  public RenderType getRenderType() {
+    return RenderType.values()[this.renderParticles];
   }
 
   @Override
@@ -440,12 +466,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public void toggleNeedsRedstone() {
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
-  }
-
-  @Override
-  public void togglePreview() {
-    int val = (this.renderParticles + 1) % 2;
-    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
 
   @Override

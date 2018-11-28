@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "cyclicmagic:blocks/library_top",
+        "down": "cyclicmagic:blocks/library_top",
+        "up": "cyclicmagic:blocks/library_top",
+        "north": "cyclicmagic:blocks/library_base",
+        "east": "cyclicmagic:blocks/library_side",
+        "south": "cyclicmagic:blocks/library_face",
+        "west": "cyclicmagic:blocks/library_side"
+    }
+}

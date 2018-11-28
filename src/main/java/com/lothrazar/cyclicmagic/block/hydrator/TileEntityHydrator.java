@@ -23,39 +23,38 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.hydrator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.core.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import java.util.List;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
+  private int needsRedstone = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, FLUID, RECIPELOCKED, FUEL, FUELMAX;
+    REDSTONE, TIMER, RECIPELOCKED, FUEL;
   }
 
   private int recipeIsLocked = 0;
-  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummy(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
@@ -63,8 +62,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
     this.initEnergy(BlockHydrator.FUEL_COST);
   }
-
-  private int needsRedstone = 1;
 
   @Override
   public int[] getFieldOrdinals() {
@@ -78,22 +75,52 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
-    if (this.isRunning() == false) {
-      return;
+    this.updateLockSlots();
+    if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
+      return;//dont drain power when full  
     }
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
     //ignore timer when filling up water
-    if (this.getCurrentFluid() == 0) {
+    if (this.getCurrentFluidStackAmount() == 0) {
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
-      this.spawnParticlesAbove();
       if (tryProcessRecipe()) {
         this.timer = TIMER_FULL;
       }
     }
+  }
+
+  private void updateLockSlots() {
+    if (this.recipeIsLocked == 1) {
+      List<Integer> slotsImport = new ArrayList<Integer>();
+      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
+        if (this.getStackInSlot(slot).isEmpty() == false) {
+          slotsImport.add(slot);
+        }
+      }
+      this.setSlotsForInsert(slotsImport);
+    }
+    else {//all are free game
+      this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
+    }
+  }
+
+  public boolean tryProcessRecipe() {
+    RecipeHydrate irecipe = findMatchingRecipe();
+    if (irecipe != null) {
+      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()
+          && this.inventoryHasRoom(4, irecipe.getRecipeOutput().copy())) {
+        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+          //only create the output if cost was successfully paid
+          this.sendOutputItem(irecipe.getRecipeOutput().copy());
+        }
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -111,12 +138,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     if (allAir) {
       return null;
     }
-    for (RecipeHydrate irecipe : BlockHydrator.recipesShaped) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
-      }
-    }
-    for (RecipeHydrate irecipe : BlockHydrator.recipesShapeless) {
+    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
       if (irecipe.matches(this.crafting, world)) {
         return irecipe;
       }
@@ -124,20 +146,8 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     return null;
   }
 
-  public boolean tryProcessRecipe() {
-    RecipeHydrate rec = findMatchingRecipe();
-    if (rec != null && this.getCurrentFluid() >= rec.getFluidCost()) {
-      if (rec.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
-        //only create the output if cost was successfully paid
-        this.sendOutputItem(rec.getRecipeOutput());
-      }
-      return true;
-    }
-    return false;
-  }
-
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 3 + 1; i < 8; i++) {
+    for (int i = 4; i < 8; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -150,7 +160,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
-
     compound.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(compound);
   }
@@ -160,24 +169,19 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     this.recipeIsLocked = compound.getInteger("rlock");
-
   }
 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FLUID:
-        //        return this.getCurrentFluid();
       case RECIPELOCKED:
         return this.recipeIsLocked;
-      case FUEL:
-        return this.getEnergyCurrent();
-      case FUELMAX:
-        return this.getEnergyMax();
     }
     return -1;
   }
@@ -185,42 +189,19 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;
       case TIMER:
         this.timer = value;
       break;
-      case FLUID:
-      //        this.setCurrentFluid(value);
-      break;
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
       break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
-      case FUELMAX:
-      break;
     }
-  }
-
-  private int getCurrentFluid() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return 0;
-    }
-    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    return (fluid == null) ? 0 : fluid.amount;
-  }
-
-  @Override
-  public FluidStack getCurrentFluidStack() {
-    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-      return null;
-    }
-    return fluidHandler.getTankProperties()[0].getContents();
   }
 
   @Override
@@ -246,12 +227,11 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
    * 
    * @author Sam
    */
-  public static class ContainerDummy extends Container {
+  public static class ContainerDummyHydrator extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
       return false;
     }
   }
-
 }

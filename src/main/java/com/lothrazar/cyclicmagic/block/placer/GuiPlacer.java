@@ -23,13 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.placer;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPlacer extends GuiBaseContainer {
 
@@ -41,7 +38,6 @@ public class GuiPlacer extends GuiBaseContainer {
     super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityPlacer.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 14 + 3 * Const.SQ, TileEntityPlacer.Fields.TIMER.ordinal(), TileEntityPlacer.TIMER_FULL);
   }
 
   @Override
@@ -52,11 +48,5 @@ public class GuiPlacer extends GuiBaseContainer {
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPlacer.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerPlacer.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-  }
-
-  @SideOnly(Side.CLIENT)
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

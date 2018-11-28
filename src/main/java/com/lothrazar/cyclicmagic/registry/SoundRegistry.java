@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -58,6 +58,9 @@ public class SoundRegistry {
   public static SoundEvent step_height_up;
   public static SoundEvent tool_mode;
   public static SoundEvent warp;
+  public static SoundEvent dcoin;
+  public static SoundEvent doorbell_mikekoenig;
+  public static SoundEvent dice_mikekoenig;
 
   public static void register() {
     //old sounds kept - lothrazar originals
@@ -86,6 +89,16 @@ public class SoundRegistry {
     step_height_up = registerSound("step_height_up");
     tool_mode = registerSound("tool_mode");
     warp = registerSound("warp_echo");
+    dcoin = registerSound("dcoin");
+    //ohter sounds NOT BY ME 
+    // http://soundbible.com/1599-Store-Door-Chime.html
+    //    License: Attribution 3.0 
+    //    Recorded by Mike Koenig 
+    doorbell_mikekoenig = registerSound("doorbell_mikekoenig");
+    //http://soundbible.com/182-Shake-And-Roll-Dice.html
+    //    License: Attribution 3.0 
+    //    Recorded by Mike Koenig 
+    dice_mikekoenig = registerSound("dice_mike_koenig");
   }
 
   private static SoundEvent registerSound(String name) {

@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.disenchanter;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,7 +52,6 @@ public class GuiDisenchanter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-
     int u = 0, v = 0;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
@@ -90,9 +89,6 @@ public class GuiDisenchanter extends GuiBaseContainer {
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    //DRAW ENERGY BAR
-    fuelX = this.guiLeft + 154;
-    fuelY = this.guiTop + 17;
   }
 
   @SideOnly(Side.CLIENT)

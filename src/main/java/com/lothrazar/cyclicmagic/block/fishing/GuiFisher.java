@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fishing;
 
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +40,6 @@ public class GuiFisher extends GuiBaseContainer {
 
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
-
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityFishing.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);

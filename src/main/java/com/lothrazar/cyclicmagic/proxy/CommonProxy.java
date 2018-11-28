@@ -84,4 +84,8 @@ public class CommonProxy {
   }
 
   public void closeSpectatorGui() {}
+
+  public void initColors() {
+    // TODO Auto-generated method stub
+  }
 }

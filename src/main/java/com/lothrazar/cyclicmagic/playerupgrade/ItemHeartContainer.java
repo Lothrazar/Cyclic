@@ -24,25 +24,24 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFishFood;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
@@ -56,39 +55,39 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensio
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, IHasConfig {
 
   private static final int numFood = 2;
-  private static final int numHearts = 1;
+  private int heartChangeOnEat = 1;
   public static int defaultHearts = 10;
   private static int maxHearts = 20;
 
-  public ItemHeartContainer() {
+  public ItemHeartContainer(int heartChangeOnEat) {
     super(numFood, false);
-    this.setAlwaysEdible();
-  }
-
-  private boolean isPlayerMaxHearts(EntityPlayer player) {
-    return UtilEntity.getMaxHealth(player) / 2 >= maxHearts;
+    this.heartChangeOnEat = heartChangeOnEat;
   }
 
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    if (isPlayerMaxHearts(player)) {
-      UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
-      //      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
+    if (canEat(player) == false) {
       return;
     }
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+    int healthChange = 2 * heartChangeOnEat;
     //one heart is 2 health points (half heart = 1 health)
-    int newVal = UtilEntity.incrementMaxHealth(player, 2 * numHearts);
+    int newVal = UtilEntity.incrementMaxHealth(player, healthChange);
     prop.setMaxHealth(newVal);
+    UtilChat.sendStatusMessage(player, (newVal / 2) + "");
     UtilSound.playSound(player, SoundRegistry.heart_container);
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, "gemDiamond", Items.CAKE, "blockEmerald", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+    if (heartChangeOnEat > 0)
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, "gemDiamond", Items.CAKE, "blockEmerald", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+    else
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.STICK, Items.SUGAR, "dirt", Items.CAKE, "cobblestone",
+          new ItemStack(Items.SPIDER_EYE), Items.APPLE, Items.SPIDER_EYE);
   }
 
   @SubscribeEvent
@@ -123,17 +122,25 @@ public class ItemHeartContainer extends ItemFood implements IHasRecipe, IHasConf
 
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
+  }
+
+  private boolean canEat(EntityPlayer player) {
+    //this line is KEY to stop user from eating food at max health
+    // ( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
+    double currentHearts = UtilEntity.getMaxHealth(player) / 2;
+    if (currentHearts + heartChangeOnEat > maxHearts || currentHearts + heartChangeOnEat < 1) {
+      return false;
+    }
+    return true;
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
-    if (isPlayerMaxHearts(playerIn)) {
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
+    if (canEat(player) == false) {
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
     }
     //otherwise continueto normal food process
-    return super.onItemRightClick(worldIn, playerIn, hand);
+    return super.onItemRightClick(worldIn, player, hand);
   }
 }

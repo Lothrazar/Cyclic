@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -41,6 +41,7 @@ public class MaterialRegistry { // thanks for help:
   private static final String MATERIALNAME = "power";
   private static final String GLOWING = "glowing";
   // thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
+  public static ToolMaterial netherToolMaterial;
   public static ToolMaterial sandstoneToolMaterial;
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
@@ -53,6 +54,7 @@ public class MaterialRegistry { // thanks for help:
     registerEmeraldMaterial();
     registerSandstoneMaterials();
     registerGlowingMaterials();
+    registerNetherMaterials();
   }
 
   private static void registerGlowingMaterials() {
@@ -89,8 +91,8 @@ public class MaterialRegistry { // thanks for help:
     MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
-        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity() * 8, //best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.DIAMOND.getEfficiency(),
+        ToolMaterial.DIAMOND.getAttackDamage() * 8, //best draconic evolution sword is 35 base, so this is not that crazy
         ToolMaterial.GOLD.getEnchantability() * 2);
     MaterialRegistry.powerToolMaterial.setRepairItem(MaterialRegistry.powerArmorMaterial.repairMaterial);
   }
@@ -113,19 +115,36 @@ public class MaterialRegistry { // thanks for help:
     MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses(), //was  - 261
-        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity(), //was  - 0.25F
+        ToolMaterial.DIAMOND.getEfficiency(),
+        ToolMaterial.DIAMOND.getAttackDamage(), //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }
 
+  /**
+   * Sandstone is between wood and stone, with stone harvest level
+   */
   private static void registerSandstoneMaterials() {
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",
         ToolMaterial.STONE.getHarvestLevel(),
         (ToolMaterial.STONE.getMaxUses() + ToolMaterial.WOOD.getMaxUses()) / 2,
-        ToolMaterial.STONE.getEfficiencyOnProperMaterial(),
-        (ToolMaterial.STONE.getDamageVsEntity() + ToolMaterial.WOOD.getDamageVsEntity()) / 2,
-        ToolMaterial.STONE.getEnchantability());
+        (ToolMaterial.STONE.getEfficiency() + ToolMaterial.STONE.getEfficiency()) / 2,
+        (ToolMaterial.STONE.getAttackDamage() + ToolMaterial.WOOD.getAttackDamage()) / 2.0F,
+        ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.sandstoneToolMaterial.setRepairItem(new ItemStack(Blocks.SANDSTONE));
+  }
+
+  /**
+   * Netherbrick is between stone and iron, still with stone harvest level
+   */
+  private static void registerNetherMaterials() {
+    MaterialRegistry.netherToolMaterial = EnumHelper.addToolMaterial("nether",
+        ToolMaterial.STONE.getHarvestLevel(),
+        (ToolMaterial.STONE.getMaxUses() + ToolMaterial.IRON.getMaxUses()) / 2,
+        (ToolMaterial.STONE.getEfficiency() + //halfway in between
+            ToolMaterial.IRON.getEfficiency()) / 2,
+        ToolMaterial.IRON.getAttackDamage(),
+        ToolMaterial.GOLD.getEnchantability());
+    MaterialRegistry.netherToolMaterial.setRepairItem(new ItemStack(Items.NETHERBRICK));
   }
 }

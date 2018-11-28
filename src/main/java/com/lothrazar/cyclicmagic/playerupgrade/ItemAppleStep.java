@@ -24,20 +24,22 @@
 package com.lothrazar.cyclicmagic.playerupgrade;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.core.ItemFoodCreative;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
@@ -49,13 +51,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemAppleStep extends ItemFoodCreative implements IHasRecipe, IContent {
 
   public static boolean defaultPlayerStepUp = false;
 
   public ItemAppleStep() {
     super(4, false);
-    this.setAlwaysEdible();
   }
 
   @Override
@@ -64,7 +65,6 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
     boolean previousOn = data.isStepHeightOn();
     data.setStepHeightOn(!previousOn);
     if (previousOn) {
-
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.step_height_down, SoundCategory.PLAYERS, 1.0F);
       data.setForceStepOff(true);
     }
@@ -100,8 +100,10 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
         }
       }
       else if (data.doForceStepOff()) {
+        data.setForceStepOff(false);
         //otherwise, dont automatically force it off. only force it off the once if player is toggling FROM on TO off with my feature
-        player.stepHeight = 0.5F;
+        // EntityLivingBase default constructor uses 0.6 as default, so slabs + path block for example
+        player.stepHeight = 0.6F;
       }
       //else leave it alone (allows other mods to turn it on without me disrupting)
     }
@@ -110,12 +112,26 @@ public class ItemAppleStep extends ItemFood implements IHasRecipe, IHasConfig {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     super.addInformation(stack, player, tooltip, advanced);
   }
 
   @Override
+  public void register() {
+    ItemRegistry.register(this, "food_step");
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("AppleStature", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     defaultPlayerStepUp = config.getBoolean("StepHeightDefault", Const.ConfigCategory.player, false, "Set the players default step height value.  False is just like normal minecraft, true means step height is one full block.   Only applies to new players the first time they join the world.  Regardless of setting this can still be toggled with Apple of Lofty Stature.  ");
   }
 }

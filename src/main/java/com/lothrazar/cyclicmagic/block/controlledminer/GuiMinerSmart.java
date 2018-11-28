@@ -24,14 +24,15 @@
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner.Fields;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,18 +40,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
 
-  private GuiButtonToggleSize btnSize;
+  private ButtonTileEntityField btnSize;
   private ButtonTileEntityField btnWhitelist;
+  ITileStackWrapper te;
 
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
-    //    setScreenSize(ScreenSize.LARGE);
+    te = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
+    this.progressBar = new ProgressBar(this, 10, 72, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(50).setY(12);
-    tile.setEnergyCurrent(50000);
   }
 
   @Override
@@ -58,22 +59,22 @@ public class GuiMinerSmart extends GuiBaseContainer {
     super.initGui();
     //first the main top left type button
     int id = 2, x, y;
-
     btnWhitelist = new ButtonTileEntityField(id++,
         guiLeft + 4, guiTop + Const.PAD + 40,
         tile.getPos(), TileEntityControlledMiner.Fields.LISTTYPE.ordinal(), +1);
     btnWhitelist.width = 18;
-    this.buttonList.add(btnWhitelist);
+    this.addButton(btnWhitelist);
     x = this.guiLeft + Const.PAD * 4;
     y = this.guiTop + Const.PAD * 3 + 2;
-    btnSize = new GuiButtonToggleSize(id++,
-        x, y, this.tile.getPos());
-    this.buttonList.add(btnSize);
-
+    btnSize = new ButtonTileEntityField(id++,
+        x, y, this.tile.getPos(), TileEntityControlledMiner.Fields.SIZE.ordinal());
+    btnSize.width = 44;
+    btnSize.setTooltip("button.size.tooltip");
+    this.addButton(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
-        TileEntityControlledMiner.Fields.HEIGHT.ordinal(), true);
+        TileEntityControlledMiner.Fields.HEIGHT.ordinal());
     sliderDelay.setTooltip("button.miner.height");
     this.addButton(sliderDelay);
   }
@@ -81,17 +82,19 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < ContainerMinerSmart.SLOTID_EQUIP; k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMinerSmart.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
+    int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
     //tool slot
     int size = 26;
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 5, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 5, u, v, size, size, size, size);
-    //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
-//, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    for (int slotNum = 0; slotNum < te.getWrapperCount(); slotNum++) {
+      x = this.guiLeft + 25 + slotNum * Const.SQ;
+      y = this.guiTop + 50;
+      StackWrapper wrap = te.getStackWrapper(slotNum);
+      wrap.setX(x);
+      wrap.setY(y);
+    }
+    this.renderStackWrappers(te);
   }
 
   @SideOnly(Side.CLIENT)
@@ -102,6 +105,5 @@ public class GuiMinerSmart extends GuiBaseContainer {
     int filterType = tile.getField(Fields.LISTTYPE.ordinal());
     btnWhitelist.setTooltip(UtilChat.lang("button.miner.whitelist." + filterType));
     btnWhitelist.setTextureIndex(11 + filterType);
-
   }
 }

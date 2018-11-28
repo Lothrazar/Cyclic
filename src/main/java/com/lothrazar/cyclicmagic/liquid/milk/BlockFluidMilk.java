@@ -24,10 +24,8 @@
 package com.lothrazar.cyclicmagic.liquid.milk;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.core.block.BlockFluidBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclicmagic.block.core.BlockFluidBase;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -51,21 +49,20 @@ public class BlockFluidMilk extends BlockFluidBase {
 
   public static FluidStack stack;
 
-  public BlockFluidMilk() {
-    super(FluidsRegistry.fluid_milk, Material.WATER);
-    FluidsRegistry.fluid_milk.setBlock(this);
-    stack = new FluidStack(FluidsRegistry.fluid_milk, Fluid.BUCKET_VOLUME);
+  public BlockFluidMilk(FluidMilk fluid_milk) {
+    super(fluid_milk, Material.WATER);
+    fluid_milk.setBlock(this);
+    stack = new FluidStack(fluid_milk, Fluid.BUCKET_VOLUME);
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   public void initModel() {
-    Block block = FluidsRegistry.block_milk;
-    Item item = Item.getItemFromBlock(block);
+    Item item = Item.getItemFromBlock(this);
     ModelBakery.registerItemVariants(item);
     final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Const.MODID + ":fluid", stack.getFluid().getName());
     ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
-    ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+    ModelLoader.setCustomStateMapper(this, new StateMapperBase() {
 
       @Override
       protected ModelResourceLocation getModelResourceLocation(IBlockState bs) {

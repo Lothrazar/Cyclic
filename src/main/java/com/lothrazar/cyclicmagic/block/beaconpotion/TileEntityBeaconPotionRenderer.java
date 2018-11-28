@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.BaseMachineTESR;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.BaseMachineTESR;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -43,8 +43,8 @@ public class TileEntityBeaconPotionRenderer extends BaseMachineTESR<TileEntityBe
 
   @Override
   public void render(TileEntityBeaconPotion te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    this.renderBeacon(x, y, z, (double) partialTicks, (double) te.shouldBeamRender(), te.getBeamSegments(),
-        (double) te.getWorld().getTotalWorldTime());
+    this.renderBeacon(x, y, z, partialTicks, te.shouldBeamRender(), te.getBeamSegments(),
+        te.getWorld().getTotalWorldTime());
   }
 
   public void renderBeacon(double x, double y, double z, double partialTicks, double textureScale, List<TileEntityBeaconPotion.BeamSegment> beamSegments, double totalWorldTime) {
@@ -62,6 +62,7 @@ public class TileEntityBeaconPotionRenderer extends BaseMachineTESR<TileEntityBe
     }
   }
 
+  @Override
   public boolean isGlobalRenderer(TileEntityBeaconPotion te) {
     return true;
   }

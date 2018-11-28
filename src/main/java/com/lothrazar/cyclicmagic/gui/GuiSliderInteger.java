@@ -26,9 +26,9 @@ package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.MathHelper;
@@ -51,14 +51,14 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
    */
   public GuiSliderInteger(TileEntityBaseMachineInvo guiResponder, int idIn, int x, int y,
       int widthIn, int heightIn,
-      final int minIn, final int maxIn, int fieldId, boolean plusLabels) {
+      final int minIn, final int maxIn, int fieldId) {
     super(idIn, x, y, widthIn, heightIn, "");
     this.updateDisplay();
     responder = guiResponder;
     this.min = minIn;
     this.max = maxIn;
     this.responderField = fieldId;
-    appendPlusSignLabel = plusLabels;
+    appendPlusSignLabel = (min < 0);//if it can be negative, we should distinguish
     this.setSliderValue(responder.getField(responderField), false);
   }
 

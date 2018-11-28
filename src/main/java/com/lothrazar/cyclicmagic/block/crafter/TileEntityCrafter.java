@@ -28,10 +28,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -44,7 +45,7 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static final int TIMER_FULL = 20;
+  public static int TIMER_FULL = 20;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -52,7 +53,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_OUTPUT = SIZE_INPUT;//20 to 30
 
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, FUEL;
   }
 
   private Container fakeContainer;
@@ -73,7 +74,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     this.initEnergy(BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(0, 9);
     this.setSlotsForExtract(19, 28);
-
   }
 
   @Override
@@ -86,21 +86,22 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.isRunning() == false) {
       return;
     }
-    this.spawnParticlesAbove();
     if (this.updateTimerIsZero() == false) {
       return;
     }
-    
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost()) {
+    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
+        this.isGridEmpty() == false) {
       findRecipe();
-      if (recipe != null && tryPayCost()) {
-        // pay the cost  
-        final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
-        //confirmed this test does actually et the outut: 4x planks 
-        sendOutput(craftingResult);
-        timer = TIMER_FULL;
-        this.consumeEnergy();
+      if (recipe != null && !world.isRemote) {
+        ItemStack craftResult = recipe.getCraftingResult(this.crafter);
+        if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
+          if (tryPayCost()) {
+            sendOutput(craftResult);
+            timer = TIMER_FULL;
+            this.consumeEnergy();
+          }
+        }
       }
     }
   }
@@ -151,7 +152,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     //now we know there is enough everywhere. we validated
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-      //      ModCyclic.logger.info(" PAY cost at  = " + entry);
       Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
       if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
         //example: making cake, dump out empty bucket
@@ -180,33 +180,45 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     recipe = null;//doesnt match
+    ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
     //    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
     for (final IRecipe rec : CraftingManager.REGISTRY) {
       try {
-        // rec.getRecipeSize() <= 9 && 
         if (rec.matches(this.crafter, this.world)) {
           this.recipe = rec;
           return;
         }
       }
       catch (Exception err) {
-        throw new RuntimeException("Caught exception while querying recipe ", err);
+        // if some 3rd party recipe or item has an exception then dont let it crash the game
+        //example: i have seen NPEs. index out of bounds, no such element, 
+        ModCyclic.logger.error("Caught exception while querying recipe ", err);
       }
     }
   }
+
+  public boolean isGridEmpty() {
+    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
+      if (this.getStackInSlot(i).isEmpty() == false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   private void setRecipeInput() {
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
       craftSlot = i - gridStart;
-      //      ModCyclic.logger.info("Crafter set "+craftSlot+"_"+ this.getStackInSlot(i ));
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
 
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -218,13 +230,15 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;
       case TIMER:
         this.timer = value;
       break;
-
     }
   }
 
@@ -257,4 +271,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     return super.writeToNBT(compound);
   }
 
+  public ItemStack getRecipeResult() {
+    if (this.recipe == null) {
+      return ItemStack.EMPTY;
+    }
+    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
+  }
 }

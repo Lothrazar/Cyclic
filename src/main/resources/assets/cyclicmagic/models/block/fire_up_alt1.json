@@ -1,7 +1,0 @@
-{
-    "parent": "cyclicmagic:block/fire_up_alt",
-    "textures": {
-        "particle": "cyclicmagic:blocks/fire_layer_1",
-        "fire": "cyclicmagic:blocks/fire_layer_1"
-    }
-}

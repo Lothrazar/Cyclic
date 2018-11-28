@@ -25,14 +25,14 @@ package com.lothrazar.cyclicmagic.block.uncrafter;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.Const.ScreenSize;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft;
-import com.lothrazar.cyclicmagic.core.util.UtilUncraft.UncraftResultType;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -44,7 +44,6 @@ public class GuiUncrafting extends GuiBaseContainer {
 
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
-
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
@@ -60,7 +59,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     GuiButton helpBtn = new GuiButton(2,
         this.guiLeft + Const.SQ + Const.PAD + 2,
         this.guiTop + ContainerUncrafting.SLOTY_INPUT - 2, 12, 20, "?");
-    this.buttonList.add(helpBtn);
+    this.addButton(helpBtn);
   }
 
   @SideOnly(Side.CLIENT)

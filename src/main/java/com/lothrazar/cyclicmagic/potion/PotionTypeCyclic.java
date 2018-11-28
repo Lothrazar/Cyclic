@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.potion;
 
-import com.lothrazar.cyclicmagic.core.util.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -44,9 +44,6 @@ public class PotionTypeCyclic extends PotionType {
     base = PotionTypes.AWKWARD;
   }
 
-  //  public void addMix(Item item) {
-  //    PotionHelper.addMix(PotionTypes.AWKWARD, item, this);
-  //  }
   public void addMix() {
     PotionHelper.addMix(base, Ingredient.fromStacks(recipeStack), this);
   }

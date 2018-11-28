@@ -24,15 +24,19 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.item.BaseTool;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilNBT;
-import com.lothrazar.cyclicmagic.core.util.UtilSound;
-import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.item.core.BaseTool;
+import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,19 +53,20 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
+public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent {
 
   private static final int COOLDOWN = 20;
   private static final int POTION_TIME = 10 * Const.TICKS_PER_SEC;
   private static final float POWER_UPSCALE = 5.18F;
   private static final float MAX_POWER = 6.7F;
   private static final float VERTICAL_FACTOR = 2.88F;
-  private static final int TICKS_USING = 53000;
+  private static final int TICKS_USING = 53000;//bow has 72000
 
   public enum ActionType {
     FORWARD, REVERSE;
@@ -117,6 +122,24 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
 
   public ItemPlayerLauncher() {
     super(2000);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "tool_launcher", GuideCategory.TRANSPORT);
+    ModCyclic.instance.events.register(this);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -178,7 +201,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.3F);
       if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }
@@ -192,7 +215,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
 
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING;
   }
 
   @Override
@@ -206,9 +229,9 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe {
         "rsq",
         " rs",
         "t r",
-        't', "string",
-        'r', "dustGlowstone",
+        't', "gemDiamond",
+        'r', "glowstone", //why is this not blockGlowstone?
         's', "slimeball",
-        'q', "gemQuartz");
+        'q', "blockQuartz");
   }
 }

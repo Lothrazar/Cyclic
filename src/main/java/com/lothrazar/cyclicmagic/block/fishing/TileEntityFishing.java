@@ -27,12 +27,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
@@ -56,14 +56,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
 
   // currently only used by the thermal fishing rod
   private static final int ENERGY_PER_FISH = 100;
-
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 1;
   public static final float SPEEDFACTOR = 0.00089F;// bigger == faster
   static final int SLOT_TOOL = 0;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, FUEL;
   }
 
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
@@ -269,15 +268,17 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         return;
       }
     }
-    equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
-    //IF enchanted and IF about to break, then spit it out
-    int damageRem = equip.getMaxDamage() - equip.getItemDamage();
-    if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
-      sendOutputItem(equip);
-      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
-    } //otherwise we also make sure if its fullly damanged
-    if (equip.getItemDamage() >= equip.getMaxDamage()) {
-      this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+    else if (equip.getMaxDamage() > 0) { // -1 is unbreakable - EX Mystical Ag Supremium Fishing Rods
+      equip.attemptDamageItem(1, getWorld().rand, null);//does respect unbreaking
+      //IF enchanted and IF about to break, then spit it out
+      int damageRem = equip.getMaxDamage() - equip.getItemDamage();
+      if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
+        sendOutputItem(equip);
+        this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+      } //otherwise we also make sure if its fullly damanged
+      if (equip.getItemDamage() >= equip.getMaxDamage()) {
+        this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
+      }
     }
   }
 
@@ -307,6 +308,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
     }
@@ -316,6 +319,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

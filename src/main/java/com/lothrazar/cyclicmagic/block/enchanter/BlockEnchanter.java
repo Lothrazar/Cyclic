@@ -23,14 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchanter;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,10 +54,11 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IHasConfig {
+public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR, IContent {
 
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.75, 1);
   public static int FUEL_COST = 0;
@@ -116,8 +120,23 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   }
 
   @Override
+  public void register() {
+    FluidsRegistry.registerExp();
+    BlockRegistry.registerBlock(this, "block_enchanter", GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityEnchanter.FLUID_COST = config.getInt(this.getRawName() + "_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
+    enabled = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt("block_enchanter", Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    TileEntityEnchanter.FLUID_COST = config.getInt("block_enchanter_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
   }
 }

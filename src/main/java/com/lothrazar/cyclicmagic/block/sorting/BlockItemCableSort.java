@@ -23,11 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.sorting;
 
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.block.BlockBaseHasTile;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -35,14 +36,38 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockItemCableSort extends BlockBaseHasTile implements IHasRecipe {
 
+  private static final double BOUNDS = 0.0625 * 3.0;
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(BOUNDS, BOUNDS, BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS, 1.0 - BOUNDS);
+
   public BlockItemCableSort() {
-    super(Material.CLAY);
+    super(Material.CLOTH);
+    setSoundType(SoundType.CLOTH);
+    setHardness(0.5F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SORT);
+    this.setTranslucent();
+    setLightOpacity(0);
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return AABB;
+  }
+
+  @Override
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    return AABB;
+  }
+
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
   }
 
   @Override

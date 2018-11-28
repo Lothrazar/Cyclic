@@ -25,16 +25,15 @@ package com.lothrazar.cyclicmagic.block.harvester;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.UtilHarvester;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilParticle;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.util.UtilHarvester;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -46,11 +45,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
-  public final static int TIMER_FULL = 200;
+  public static int TIMER_FULL = 200;
 
   public static enum Fields {
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
@@ -119,6 +118,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     List<BlockPos> shape = getShapeFilled();
     for (BlockPos posCurrent : shape) {
       this.tryHarvestSingle(posCurrent);
+      if (this.isInventoryFull()) {
+        //still might drop items for example if there is room for wheat, but seeds come in
+        //but if that happens, just get item collectors or faster piping .
+        //worth keepin for single cropss like netherwart
+        return;
+      }
     }
   }
 
@@ -138,7 +143,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
 
   private void setOutputItems(List<ItemStack> output) {
-    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory() - 1);
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, 0, this.getSizeInventory());
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {
         UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
@@ -196,7 +201,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         this.needsRedstone = value;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 0;
+        }
+        size = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
@@ -213,14 +221,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
 
   @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-
-  @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
     if (val > 1) {
@@ -232,11 +232,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

@@ -25,11 +25,15 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import java.util.Set;
-import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.core.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
+import com.google.common.collect.Sets;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -37,7 +41,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.IRecipe;
@@ -50,20 +53,38 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemMattock extends ItemTool implements IHasRecipe {
+public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
 
   final static int RADIUS = 1;//radius 2 is 5x5 area square
-  private Set<Material> mats;
+  final static Set<Block> blocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
+  final static Set<Material> materials = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
 
-  public ItemMattock(float attackDamageIn, float attackSpeedIn, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Set<Material> mats) {
-    super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
-    this.mats = mats;
+  public ItemMattock() {
+    super(2, -1, MaterialRegistry.emeraldToolMaterial, blocks);
     this.setMaxDamage(9000);
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "mattock");
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -87,8 +108,8 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   }
 
   @Override
-  public float getStrVsBlock(ItemStack stack, IBlockState state) {
-    return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
   }
 
   /**
@@ -96,6 +117,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
    * https://github.com/thebrightspark/SparksHammers/blob/b84bd178fe2bbe47b13a89ef9435b20f09e429a4/src/main/java/com/brightspark/sparkshammers/util/CommonUtils.java and
    * https://github.com/SlimeKnights/TinkersConstruct
    */
+  @SuppressWarnings("deprecation")
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos posHit, EntityPlayer player) {
     RayTraceResult ray = rayTrace(player.getEntityWorld(), player, false);
@@ -127,7 +149,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
       if (world.isAirBlock(posCurrent)) {
         continue;
       }
-      if (!mats.contains(bsCurrent.getMaterial())) {
+      if (!materials.contains(bsCurrent.getMaterial())) {
         continue;
       }
       Block blockCurrent = bsCurrent.getBlock();
@@ -141,12 +163,12 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
       if (world.isRemote) {//C
         world.playEvent(2001, posCurrent, Block.getStateId(bsCurrent));
         if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true)) {
-          blockCurrent.onBlockDestroyedByPlayer(world, posCurrent, bsCurrent);
+          blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
         }
         stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
         if (stack.getCount() == 0 && stack == player.getHeldItemMainhand()) {
           ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
-          player.setHeldItem(EnumHand.MAIN_HAND, null);
+          player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
         }
         Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, posCurrent, Minecraft.getMinecraft().objectMouseOver.sideHit));
       }
@@ -156,7 +178,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
         if (xpGivenOnDrop >= 0) {
           if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true)) {
             TileEntity tile = world.getTileEntity(posCurrent);
-            blockCurrent.onBlockDestroyedByPlayer(world, posCurrent, bsCurrent);
+            blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
             blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, tile, stack);
             blockCurrent.dropXpOnBlockBreak(world, posCurrent, xpGivenOnDrop);
           }
@@ -170,7 +192,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack held, World player, List<String> list, net.minecraft.client.util.ITooltipFlag par4) {
-    list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    list.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
     super.addInformation(held, player, list, par4);
   }
 

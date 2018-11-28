@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=true":  { "model": "cyclicmagic:target_on" },
+        "powered=false": { "model": "cyclicmagic:target_off" }
+    }
+}

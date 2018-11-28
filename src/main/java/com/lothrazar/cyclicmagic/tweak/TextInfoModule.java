@@ -25,16 +25,17 @@ package com.lothrazar.cyclicmagic.tweak;
 
 import java.text.DecimalFormat;
 import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilChat;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
-import com.lothrazar.cyclicmagic.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -62,7 +63,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
         && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
       // https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
       ItemStack itemStack = event.getItemStack();
-      if (itemStack == null || itemStack.getItem() == null) {
+      if (itemStack.getItem() == null) {
         return;
       }
       if (foodDetails && itemStack.getItem() instanceof ItemFood) {
@@ -85,7 +86,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) {
       return;
     } //if f3 is not pressed
@@ -99,7 +100,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
 
   @SideOnly(Side.CLIENT)
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
     if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
       EntityHorse horse = (EntityHorse) player.getRidingEntity();
       double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
@@ -115,15 +116,15 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
 
   @SideOnly(Side.CLIENT)
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().player;
-    /* The spawn chunks usually consist of an area of 16×16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5×5 chunks around them
-     * are loaded, limiting their activities to an area of 12×12 chunks.
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+    /* The spawn chunks usually consist of an area of 16Ã—16 chunks centered as close as possible to the world spawn point. Entities are only active if all chunks in an area of 5Ã—5 chunks around them
+     * are loaded, limiting their activities to an area of 12Ã—12 chunks.
      * 
      * The exact rule includes chunks whose center is less than or equal to 128 blocks away from the world spawn along both axes. In the rare case where the world spawn is located at the exact center
      * of a chunk, 17 chunks will be loaded along that axis, of which 13 activate entities. */
     BlockPos spawn = player.getEntityWorld().getSpawnPoint();
     BlockPos here = player.getPosition();
-    Chunk chunkHere = player.getEntityWorld().getChunkFromBlockCoords(here);
+    Chunk chunkHere = player.getEntityWorld().getChunk(here);
     int xCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.x) + Const.CHUNK_SIZE / 2;
     int zCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.z) + Const.CHUNK_SIZE / 2;
     //end border

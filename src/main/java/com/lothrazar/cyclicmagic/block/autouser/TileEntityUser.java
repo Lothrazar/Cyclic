@@ -30,19 +30,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.core.block.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilEntity;
-import com.lothrazar.cyclicmagic.core.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.core.util.UtilFluid;
-import com.lothrazar.cyclicmagic.core.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.core.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.core.util.UtilShape;
-import com.lothrazar.cyclicmagic.core.util.UtilString;
-import com.lothrazar.cyclicmagic.core.util.UtilWorld;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.ITileSizeToggle;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilString;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -80,39 +79,40 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_LR = "lr";
-  private static final int MAX_SIZE = 4;//9x9 area 
-  public final static int TIMER_FULL = 120;
+  private static final int MAX_SIZE = 9;//WAS 4 9x9 area 
+  //  public final static int TIMER_FULL = 120;
   public static final int MAX_SPEED = 200;
+  private static final int SLOT_TOOL = 0;
+  private static final int SLOT_OUTPUT_START = 3;
+  private static final int INV_SIZE = 9;
   public static int maxHeight = 10;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int needsRedstone = 1;
   private int renderParticles = 0;
-  private int toolSlot = 0;
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
+  private int tickDelay;
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUEL;
   }
 
   public TileEntityUser() {
-    super(9);
-    timer = TIMER_FULL;
-    speed = SPEED_FUELED;
+    super(INV_SIZE);
+    timer = tickDelay;
     this.initEnergy(BlockUser.FUEL_COST);
-
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2));
-    this.setSlotsForExtract(Arrays.asList(3, 4, 5, 6, 7, 8));
+    this.setSlotsForInsert(0, SLOT_OUTPUT_START - 1);
+    this.setSlotsForExtract(SLOT_OUTPUT_START, INV_SIZE - 1);
   }
 
   @Override
@@ -125,8 +125,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (isRunning() == false) {
       return;
     }
-    this.shiftAllUp(7);
-    this.spawnParticlesAbove();
+    this.shiftAllUp(6);
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
@@ -144,16 +143,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
       tryEquipItem();
       if (triggered) {
-        timer = TIMER_FULL;
+        timer = tickDelay;
         try {
           BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
-            if (this.isInBlacklist(targetPos) == false) {
-              this.rightClickBlock(targetPos);
-            }
-            else {
-              ModCyclic.logger.log("IN BLACKLIST OOOO" + targetPos);
-            }
+            this.rightClickBlock(targetPos);
           }
           interactEntities(targetPos);
         }
@@ -228,25 +222,60 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void rightClickBlock(BlockPos targetPos) {
-    if (rightClickFluidAttempt(targetPos)) {
+    if (this.isInBlacklist(targetPos)) {
       return;
+    }
+    FakePlayer player = fakePlayer.get();
+    ItemStack playerHeld = player.getHeldItemMainhand();
+    //if both block and itemstack are fluid compatible 
+    if (UtilFluid.stackHasFluidHandler(playerHeld) &&
+        UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
+      boolean success = rightClickFluidTank(targetPos);
+      if (success) {
+        // ModCyclic.logger.log("rightClickFluidAttempt : true");
+        syncPlayerTool();
+        return;
+      }
+    }
+    else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
+      if (rightClickFluidAir(targetPos)) {
+        // ModCyclic.logger.log("rightClickFluidAir : true");
+        /// missing piece  
+        syncPlayerTool();
+        return;
+      }
     }
     if (world.isAirBlock(targetPos)) {
       return;
     }
-    //  ItemStack previousHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
+    ItemStack before = fakePlayer.get().getHeldItemMainhand();
+    boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
-    EnumActionResult r = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    if (r != EnumActionResult.SUCCESS) {
+    EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+    //  ModCyclic.logger.log(result + "after block ; HELD= " + fakePlayer.get().getHeldItemMainhand());
+    if (result != EnumActionResult.FAIL) {
+      boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
+      //ModCyclic.logger.log("after block ? equal " + eq);
+      if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
+        syncPlayerTool();
+      }
+      else if (!eq) {
+        //       
+        this.tryDumpFakePlayerInvo(true);
+        syncPlayerTool();
+        //   ModCyclic.logger.log("ELIF sync after " + fakePlayer.get().getHeldItemMainhand());
+      }
+    }
+    else {
       //if its a throwable item, it happens on this line down below, the process right click
-      r = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
+      result = fakePlayer.get().interactionManager.processRightClick(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND);
       if (fakePlayer.get().getHeldItemMainhand().getCount() == 0) {
         //some items from some mods dont handle stack size zero and trigger it to empty, so handle that edge case
-        inv.set(toolSlot, ItemStack.EMPTY);
+        inv.set(SLOT_TOOL, ItemStack.EMPTY);
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
       }
       //if throw has happened, success is true
-      if (r != EnumActionResult.SUCCESS) {
+      if (result != EnumActionResult.SUCCESS) {
         ActionResult<ItemStack> res = fakePlayer.get().getHeldItemMainhand().getItem().onItemRightClick(world, fakePlayer.get(), EnumHand.MAIN_HAND);
         if (res == null || res.getType() != EnumActionResult.SUCCESS) {
           //this item onrightclick would/should/could work for GLASS_BOTTLE...except
@@ -263,22 +292,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
             PotionUtils.addPotionToItemStack(is, PotionTypes.WATER);
             this.tryDumpStacks(Arrays.asList(is));
           }
-          //          else {
-          //            ItemStack currentHeldCopy = fakePlayer.get().getHeldItemMainhand().copy();
-          //            boolean equalsPrevious = ItemStack.areItemStacksEqual(previousHeldCopy, currentHeldCopy);
-          //            //last chance. EX: Pixelmon trees
-          //            // https://github.com/PrinceOfAmber/Cyclic/issues/736
-          //            fakePlayer.get().interactionManager.onBlockClicked(targetPos, EnumFacing.UP);
-          //            //spit out my main hand item ONLY IF i wasnt holding it before ( new aquisition )
-          //            this.tryDumpFakePlayerInvo(!equalsPrevious);
-          //          }
         }
       }
+      //if my hand was empty before operation, then there might be something in it now so drop that
+      //if it wasnt empty before (bonemeal whatever) then dont do that, it might dupe
+      this.tryDumpFakePlayerInvo(wasEmpty);
     }
   }
 
+  private void syncPlayerTool() {
+    this.setInventorySlotContents(SLOT_TOOL, fakePlayer.get().getHeldItemMainhand());
+  }
+
   private void tryDumpStacks(List<ItemStack> toDump) {
-    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(toDump, this, 3, 9);
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(toDump, this, SLOT_OUTPUT_START, INV_SIZE);
     ///only drop now that its full
     BlockPos dropHere = getTargetPos();
     for (ItemStack s : toDrop) {
@@ -293,16 +320,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void tryDumpFakePlayerInvo(boolean includeMainHand) {
+    //   ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
+    int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = 0; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
+    for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-      if (includeMainHand == false &&
-          fakePlayer.get().inventory.currentItem == i) {
-        //example: dont push over tools or weapons in certain cases
-        continue;
-      }
       if (s.isEmpty() == false) {
-        ModCyclic.logger.log("fake Player giving out item stack" + s.getCount() + s.getDisplayName() + "_tryDumpFakePlayerInvo " + includeMainHand);//leaving in release
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -310,44 +333,57 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     tryDumpStacks(toDrop);
   }
 
-  private boolean rightClickFluidAttempt(BlockPos targetPos) {
-    ItemStack maybeTool = fakePlayer.get().getHeldItemMainhand();
-    if (maybeTool != null && !maybeTool.isEmpty() && UtilFluid.stackHasFluidHandler(maybeTool)) {
-      if (UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
-        ItemStack originalRef = maybeTool.copy();
-        int hack = (maybeTool.getCount() == 1) ? 1 : 0;//HAX: if bucket stack size is 1, it somehow doesnt work so yeah. good enough EH?
-        maybeTool.grow(hack);
-        boolean success = UtilFluid.interactWithFluidHandler(fakePlayer.get(), this.world, targetPos, this.getCurrentFacing().getOpposite());
-        if (success) {
-          if (UtilFluid.isEmptyOfFluid(originalRef)) { //original was empty.. maybe its full now IDK
-            maybeTool.shrink(1 + hack);
-          }
-          else {//original had fluid in it. so make sure we drain it now hey
-            UtilFluid.drainOneBucket(maybeTool.splitStack(1));
-            // drained.setCount(1);
-            // UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drained);
-            maybeTool.shrink(1 + hack);
-          }
-          this.tryDumpFakePlayerInvo(false);
-        }
+  /**
+   * Interact with a block that has fluid capabilities
+   * 
+   * @param targetPos
+   * @return
+   */
+  private boolean rightClickFluidTank(BlockPos targetPos) {
+    FakePlayer player = fakePlayer.get();
+    ItemStack playerHeld = player.getHeldItemMainhand();
+    boolean wasFull = UtilFluid.isEmptyOfFluid(playerHeld);
+    // ModCyclic.logger.log("[RCF] start " + player.getHeldItemMainhand() + " " + player.inventory.currentItem);
+    boolean success = UtilFluid.interactWithFluidHandler(player, world, targetPos, this.getCurrentFacing().getOpposite());
+    playerHeld = player.getHeldItemMainhand();
+    // ModCyclic.logger.log("[RCF] after interact " + player.getHeldItemMainhand());
+    if (success) {
+      if (UtilFluid.isEmptyOfFluid(playerHeld)) {
+        this.tryDumpFakePlayerInvo(!wasFull && playerHeld.getCount() == 1);
       }
-      else {//no tank, just open world
-        //dispense stack so either pickup or place liquid
-        if (UtilFluid.isEmptyOfFluid(maybeTool)) {
-          FluidActionResult res = UtilFluid.fillContainer(world, targetPos, maybeTool, this.getCurrentFacing());
-          if (res != FluidActionResult.FAILURE) {
-            maybeTool.shrink(1);
-            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), res.getResult());
-            return true;
-          }
-        }
-        else {
-          ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, maybeTool);
-          if (drainedStackOrNull != null) {
-            maybeTool.shrink(1);
-            UtilItemStack.dropItemStackInWorld(this.world, getCurrentFacingPos(), drainedStackOrNull);
-          }
-        }
+      else {//im holding a stack that has fluid, get rid of it
+        this.tryDumpFakePlayerInvo(true);
+      }
+      return success;
+    }
+    return false;
+  }
+
+  /**
+   * Pickup or place fluid in the world
+   * 
+   * @param targetPos
+   * @return
+   */
+  private boolean rightClickFluidAir(BlockPos targetPos) {
+    FakePlayer player = fakePlayer.get();
+    ItemStack playerHeld = player.getHeldItemMainhand();
+    //item stack does not hve fluid handler
+    //dispense stack so either pickup or place liquid
+    if (UtilFluid.isEmptyOfFluid(playerHeld)) {
+      FluidActionResult res = UtilFluid.fillContainer(world, targetPos, playerHeld, this.getCurrentFacing());
+      if (res != FluidActionResult.FAILURE) {
+        player.setHeldItem(EnumHand.MAIN_HAND, res.getResult());
+        this.tryDumpFakePlayerInvo(true);
+        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), res.getResult());
+        return true;
+      }
+    }
+    else {
+      ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
+      if (!drainedStackOrNull.isItemEqual(playerHeld)) {
+        player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
+        this.tryDumpFakePlayerInvo(true);
         return true;
       }
     }
@@ -358,16 +394,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
    * detect if tool stack is empty or destroyed and reruns equip
    */
   private void validateTool() {
-    ItemStack maybeTool = getStackInSlot(toolSlot);
+    ItemStack maybeTool = getStackInSlot(SLOT_TOOL);
     if (!maybeTool.isEmpty() && maybeTool.getCount() < 0) {
       maybeTool = ItemStack.EMPTY;
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-      inv.set(toolSlot, ItemStack.EMPTY);
+      inv.set(SLOT_TOOL, ItemStack.EMPTY);
     }
   }
 
   private ItemStack tryEquipItem() {
-    ItemStack maybeTool = getStackInSlot(toolSlot);
+    ItemStack maybeTool = getStackInSlot(SLOT_TOOL);
     if (!maybeTool.isEmpty()) {
       //do we need to make it null
       if (maybeTool.getCount() <= 0) {
@@ -378,7 +414,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
     if (maybeTool.isEmpty()) {//null for any reason
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-      inv.set(toolSlot, ItemStack.EMPTY);
+      inv.set(SLOT_TOOL, ItemStack.EMPTY);
     }
     else {
       //so its not null
@@ -407,6 +443,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_SIZE, size);
     compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger("yoff", yOffset);
+    compound.setInteger("tickDelay", tickDelay);
     return super.writeToNBT(compound);
   }
 
@@ -421,13 +458,17 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     size = compound.getInteger(NBT_SIZE);
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
+    tickDelay = compound.getInteger("tickDelay");
+    if (tickDelay < 1) {
+      tickDelay = 1;
+    }
   }
 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
       case SPEED:
-        return getSpeed();
+        return this.tickDelay;
       case TIMER:
         return getTimer();
       case REDSTONE:
@@ -436,11 +477,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
-
       case RENDERPARTICLES:
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -448,6 +490,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
       case Y_OFFSET:
         if (value > 1) {
           value = -1;
@@ -455,13 +500,19 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.yOffset = value;
       break;
       case SPEED:
-        this.setSpeed(value);
+        if (value < 1) {
+          value = 1;
+        }
+        tickDelay = Math.min(value, MAX_SPEED);
+        if (timer > tickDelay) {
+          timer = tickDelay;//progress bar prevent overflow 
+        }
       break;
       case TIMER:
         if (value < 0) {
           value = 0;
         }
-        timer = Math.min(value, TIMER_FULL);
+        timer = value;
       break;
       case REDSTONE:
         this.needsRedstone = value;
@@ -473,13 +524,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        this.size = value;
+        if (value > MAX_SIZE) {
+          value = 1;
+        }
+        size = value;
       break;
-
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
-
     }
   }
 
@@ -512,39 +564,18 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   @Override
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-
-  @Override
   public int getSpeed() {
-    return speed;
-  }
-
-  @Override
-  public void setSpeed(int value) {
-    if (value < 1) {
-      value = 1;
-    }
-    speed = Math.min(value, MAX_SPEED);
+    return 1;
   }
 
   private BlockPos getTargetPos() {
-    BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
+    BlockPos targetPos = UtilWorld.getRandomPos(world.rand, getTargetCenter(), this.size);
     return targetPos;
   }
 
-  public BlockPos getTargetCenter() {
+  private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1).offset(EnumFacing.UP, yOffset);
-  }
-
-  @Override
-  public void togglePreview() {
-    this.renderParticles = (renderParticles + 1) % 2;
   }
 
   @Override

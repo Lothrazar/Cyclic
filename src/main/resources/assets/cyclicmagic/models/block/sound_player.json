@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_directional",
+    "textures": {
+        "particle": "cyclicmagic:blocks/sfx",
+        "down": "cyclicmagic:blocks/sfx",
+        "up": "cyclicmagic:blocks/sfx",
+        "north": "cyclicmagic:blocks/sfx",
+        "east":  "cyclicmagic:blocks/sfx",
+        "south": "cyclicmagic:blocks/sfx",
+        "west":  "cyclicmagic:blocks/sfx"
+    }
+}

@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.storage;
 
-import com.lothrazar.cyclicmagic.core.gui.ContainerBase;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import com.lothrazar.cyclicmagic.core.util.UtilPlayerInventoryFilestorage;
+import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -49,7 +49,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
     }
-    int VROW = 3, VCOL = 9, armorX = -4 - Const.SQ, armorY;
+    int VROW = 3, VCOL = 9, armorX = -5 - 2 * Const.SQ, armorY;
     for (int k = 0; k < ARMOR.length; k++) {
       armorY = Const.PAD + k * Const.SQ;
       final EntityEquipmentSlot slot = ARMOR[k];
@@ -73,7 +73,7 @@ public class ContainerPlayerExtended extends ContainerBase {
       });
     }
     //  extended
-    int xPos, yPos, sl;
+    int xPos, yPos, sl = 0;
     for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
         xPos = pad + j * SQ;
@@ -81,6 +81,30 @@ public class ContainerPlayerExtended extends ContainerBase {
         sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
         this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
       }
+    }
+    //extended armor 
+    for (int k = 0; k < ARMOR.length; k++) {
+      sl++;
+      armorY = Const.PAD + (k) * Const.SQ;
+      final EntityEquipmentSlot slot = ARMOR[k];
+      this.addSlotToContainer(new Slot(inventory, sl, armorX + Const.SQ + 1, armorY) {
+
+        @Override
+        public int getSlotStackLimit() {
+          return 1;
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+          return stack.getItem().isValidArmor(stack, slot, player);
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public String getSlotTexture() {
+          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
+        }
+      });
     }
     //  player inventory
     for (int i = 0; i < Const.ROWS_VANILLA; ++i) {
@@ -116,10 +140,10 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    //    ModCyclic.logger.error("HEYY " + iSlot);
     ItemStack stack = ItemStack.EMPTY;
-    Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    int playerStart = 40, playerEnd = 66, topStart = 4, topEnd = 39, hotbarStart = 67, hotbarEnd = 75, armorStart = 0, armorEnd = 3;
+    Slot slot = this.inventorySlots.get(iSlot);
+    /// the topEnd +4 is for right hand armor
+    int playerStart = 44, playerEnd = 70, topStart = 4, topEnd = 39 + 4, hotbarStart = 71, hotbarEnd = hotbarStart + 8, armorStart = 0, armorEnd = 3;
     if (slot != null && slot.getHasStack()) {
       ItemStack stackInSlot = slot.getStack();
       stack = stackInSlot.copy();
@@ -129,7 +153,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         }
       }
       else if (playerStart <= iSlot && iSlot <= playerEnd) {
-        if (!this.mergeItemStack(stackInSlot, topStart, topEnd, false)) {
+        if (!this.mergeItemStack(stackInSlot, topStart, topEnd + 1, false)) {
           return ItemStack.EMPTY;
         }
       }
@@ -167,7 +191,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     ItemStack itemstack1;
     if (par1ItemStack.isStackable()) {
       while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
-        slot = (Slot) this.inventorySlots.get(k);
+        slot = this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
         if (!itemstack1.isEmpty() && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
           int l = itemstack1.getCount() + par1ItemStack.getCount();
@@ -202,7 +226,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         k = par2;
       }
       while (!par4 && k < par3 || par4 && k >= par2) {
-        slot = (Slot) this.inventorySlots.get(k);
+        slot = this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
         if (itemstack1 == null || itemstack1.isEmpty()) {
           // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);

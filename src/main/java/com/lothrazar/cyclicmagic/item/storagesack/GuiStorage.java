@@ -23,42 +23,78 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.core.util.Const;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.util.ResourceLocation;
+import java.io.IOException;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTexture;
+import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiStorage extends GuiContainer {
+public class GuiStorage extends GuiBaseContainer {
 
-  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
-  static final int texture_width = 212;// 176;
-  static final int texture_height = 212;
+  private GuiButtonTexture buttonToggle;
+  private EntityPlayer player;
+  private GuiButtonTexture buttonTogglePickup;
 
-  public GuiStorage(ContainerStorage containerItem) {
+  public GuiStorage(ContainerStorage containerItem, EntityPlayer player) {
     super(containerItem);
-    this.xSize = texture_width;
-    this.ySize = texture_height;
+    this.player = player;
+    this.setScreenSize(ScreenSize.SACK);
   }
 
   @Override
+  public void initGui() {
+    super.initGui();
+    int y = this.guiTop + 138;
+    int x = this.guiLeft + 194;
+    int id = 75, size = Const.SQ;
+    buttonToggle = new GuiButtonTexture(id++, x, y, size, size);
+    buttonToggle.setTooltip("item.storage_bag.toggle");
+    this.addButton(buttonToggle);
+    y += 20;
+    buttonTogglePickup = new GuiButtonTexture(id++, x, y, size, size);
+    buttonTogglePickup.setTooltip("item.storage_bag.togglepickup");
+    this.addButton(buttonTogglePickup);
+    int i = 0;
+    size = 12;
+    y = this.guiTop;
+    x = this.guiLeft;
+    for (EnumDyeColor color : EnumDyeColor.values()) {
+      GuiButtonTooltip buttonColour = new GuiButtonTooltip(color.getColorValue(), x - size, y + size * i,
+          size, size, color.name().substring(0, 1));
+      buttonColour.setTooltip(UtilChat.lang("colour." + color.getTranslationKey() + ".name"));
+      buttonColour.packedFGColour = color.getColorValue();
+      this.addButton(buttonColour);
+      i++;
+    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    buttonToggle.setTextureIndex(11 + ItemStorageBag.StorageActionType.get(player.getHeldItemMainhand()));
+    buttonTogglePickup.setTextureIndex(11 + ItemStorageBag.StoragePickupType.get(player.getHeldItemMainhand()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 
-  protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-    this.drawDefaultBackground();//dim the background as normal
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(BACKGROUND);
-    int thisX = (this.width - this.xSize) / 2;
-    int thisY = (this.height - this.ySize) / 2;
-    int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
-  }
-
   @Override
-  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    super.drawScreen(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
+  protected void actionPerformed(GuiButton button) throws IOException {
+    if (button.id == this.buttonToggle.id) {
+      ModCyclic.network.sendToServer(new PacketStorageBag(0));
+    }
+    else if (button.id == this.buttonTogglePickup.id) {
+      ModCyclic.network.sendToServer(new PacketStorageBag(1));
+    }
+    else {
+      ItemStorageBag.StorageActionType.setColour(player.getHeldItemMainhand(), button.id);
+      ModCyclic.network.sendToServer(new PacketColorStack(button.id));
+    }
   }
 }
