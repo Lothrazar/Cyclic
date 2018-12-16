@@ -140,14 +140,9 @@ public class GuiEnderBook extends GuiScreen {
     drawDefaultBackground();
     drawCenteredString(fontRenderer, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
     if (btnBack != null) {
-      //      BlockPosDim location = ItemEnderBook.getBackLocation(bookStack);
       btnBack.setTooltipLine(UtilChat.lang("gui.enderbook.back.tooltip") + "[" + ItemEnderBook.BACK_TICKS / 20 + "]");
-      //      btnBack.displayString = UtilChat.lang("button.back") + "(" + ItemEnderBook.getBackTimer(bookStack) + ")";
-
     }
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
-    // no idea why this is sometimes randomly null and only on world start if i
-    // open it too quick??
     if (txtNew != null) {
       txtNew.drawTextBox();
     }

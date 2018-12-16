@@ -108,7 +108,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     return false;
   }
   private void countdownBackTimer(ItemStack stack) {
-    // TODO Auto-generated method stub
+
     int counter = getBackTimer(stack);
     if (counter > 0) {
       UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, counter - 1);
@@ -193,10 +193,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
-    //    String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
-    //    if (csv == null || csv.isEmpty()) {
-    //      return false;
-    //    }
+
     BlockPosDim loc = getLocation(book, slot);
     if (GuiEnderBook.BACK_BTN_ID == slot) {
       loc = getBackLocation(book);

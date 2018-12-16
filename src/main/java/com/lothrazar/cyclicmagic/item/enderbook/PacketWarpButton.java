@@ -74,12 +74,12 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
       success = true;
     }
     if (success) {
-      if (message.slot == 7777) {
+      if (message.slot == GuiEnderBook.BACK_BTN_ID) {
         ItemEnderBook.clearBackTimer(bookStack);
       }
       else
         ItemEnderBook.startBackTimer(bookStack,
-            new BlockPosDim(7777, oldPos,
+            new BlockPosDim(GuiEnderBook.BACK_BTN_ID, oldPos,
                 player.dimension, ""));
     }
     return null;
