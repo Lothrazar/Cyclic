@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -44,6 +45,11 @@ public class ButtonTabToggleInventory extends GuiButtonTooltip {
   public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
     super(51, x, y, 15, 10, "");
     gui = g;
+    if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.getDisplayName() != null &&
+        ClientProxy.keyWheel.getDisplayName().equals("NONE") == false) {
+      this.setTooltip(ClientProxy.keyWheel.getDisplayName()
+          + UtilChat.lang("extended.toolbelt"));
+    }
     if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.getDisplayName() != null &&
         ClientProxy.keyExtraInvo.getDisplayName().equals("NONE") == false) {
       this.displayString = ClientProxy.keyExtraInvo.getDisplayName();
