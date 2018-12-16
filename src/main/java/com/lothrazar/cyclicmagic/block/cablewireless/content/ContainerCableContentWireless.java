@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -84,7 +85,13 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
       if (slot < tile.getSizeInventory()) {
+
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
+          return ItemStack.EMPTY;
+        }
+      }
+      if (stackInSlot.getItem() instanceof ItemLocation) {
+        if (!this.mergeItemStack(stackInSlot, 1, 3, false)) {
           return ItemStack.EMPTY;
         }
       }
