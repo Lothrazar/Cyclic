@@ -82,11 +82,10 @@ public class RenderUtil {
     length = length * (timer / (TileEntityLaser.MAX_TIMER * 1.0));
     GlStateManager.pushMatrix();
     GlStateManager.disableLighting();
+
     GlStateManager.enableBlend();
     GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
-    int alphaTestFunc = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
-    float alphaTestRef = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
-    GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
+
     GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
     GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);
     GlStateManager.rotate((float) (180 * pitch / Math.PI), 0, 0, 1);
@@ -114,9 +113,10 @@ public class RenderUtil {
     }
     tessy.draw();
     GlStateManager.enableTexture2D();
-    GlStateManager.alphaFunc(alphaTestFunc, alphaTestRef);
+
     GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
     GlStateManager.disableBlend();
+
     GlStateManager.enableLighting();
     GlStateManager.popMatrix();
   }
