@@ -77,6 +77,7 @@ public class UtilHarvester {
         "minecraft:pumpkin"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
+        ,"extrautils2:redorchid"
         );
     
     breakSilkTouch = NonNullList.from(""
