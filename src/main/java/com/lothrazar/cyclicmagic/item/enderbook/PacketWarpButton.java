@@ -23,11 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.enderbook;
 
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -55,9 +58,12 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
   @Override
   public IMessage onMessage(PacketWarpButton message, MessageContext ctx) {
     EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;
-    int cost = (int) ItemEnderBook.getExpCostPerTeleport(player, ItemEnderBook.getPlayersBook(player), message.slot);
+    ItemStack bookStack = ItemEnderBook.getPlayersBook(player);
+    BlockPos oldPos = player.getPosition();
+    int cost = ItemEnderBook.getExpCostPerTeleport(player, bookStack, message.slot);
+    boolean success = false;
     if (player.isCreative()) {
-      ItemEnderBook.teleport(player, message.slot);
+      success = ItemEnderBook.teleport(player, message.slot);
     }
     else if (cost > 0 && UtilExperience.getExpTotal(player) < cost) {
       UtilChat.addChatMessage(player, "gui.chatexp");
@@ -65,6 +71,16 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
     else if (ItemEnderBook.teleport(player, message.slot)) {
       //if the teleport worked in non creative, drain it
       UtilExperience.drainExp(player, cost);
+      success = true;
+    }
+    if (success) {
+      if (message.slot == 7777) {
+        ItemEnderBook.clearBackTimer(bookStack);
+      }
+      else
+        ItemEnderBook.startBackTimer(bookStack,
+            new BlockPosDim(7777, oldPos,
+                player.dimension, ""));
     }
     return null;
   }
