@@ -42,7 +42,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -176,35 +175,27 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
-          ItemStack cur = player.inventory.getStackInSlot(slot);
-          if (cur.isEmpty() || cur.getCount() <= 0) {
+          ItemStack stackBuildWith = player.inventory.getStackInSlot(slot);
+          if (stackBuildWith.isEmpty() || stackBuildWith.getCount() <= 0) {
             continue;
           }
           world.setBlockToAir(curPos);
           boolean success = false;
-          boolean ENABLEFANCY = false;//TODO: fix this. doing this makes player set HELD ITEM which is the tool/scepter to NULL. WTF
           ItemStack itemStackHeld = player.getHeldItem(message.hand);
-          if (ENABLEFANCY && cur.onItemUse(player, world, curPos, message.hand, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
-            //then it owrked i guess eh
-            player.setHeldItem(EnumHand.MAIN_HAND, itemStackHeld);
-            success = true;
-            if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
-              player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
+          //TODO: maybe toggle between
+          //place item block gets slabs in top instead of bottom. but tries to do facing stairs
+          // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
+            if (!success) {
+              success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
             }
-          }
-          else {//do it the standard way
-            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
             if (success) {
               UtilPlayer.decrStackSize(player, slot);
             }
-          }
-          if (success) {//same old success method
-            //     UtilSound.playSoundPlaceBlock(world, curPos, newToPlace.getBlock());//fffk doesnt work
-            //do the BREAK particles
+          if (success) {
             world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
-            //     replacedBlock.onBlockDestroyedByPlayer(world, curPos, replaced);
+
             ItemStack held = player.getHeldItem(message.hand);
             if (!held.isEmpty() && held.getItem() instanceof ItemBuildSwapper) {
               UtilItemStack.damageItem(player, held);
