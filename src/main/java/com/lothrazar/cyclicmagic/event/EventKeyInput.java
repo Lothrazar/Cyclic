@@ -27,6 +27,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
@@ -56,13 +57,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 public class EventKeyInput {
 
   @SideOnly(Side.CLIENT)
@@ -184,9 +185,16 @@ public class EventKeyInput {
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
       thePlayer.closeScreen();
     }
-    else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiFastPlayerBench) {
-      thePlayer.closeScreen();
+    else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin)
+        && CompatFastBench.LOADED) {
+      tryCloseFastbench(event, thePlayer);
     }
+  }
+
+  @Optional.Method(modid = "fastbench")
+  private void tryCloseFastbench(GuiScreenEvent.KeyboardInputEvent.Pre event, EntityPlayer thePlayer) {
+    if (event.getGui() instanceof GuiFastPlayerBench)
+      thePlayer.closeScreen();
   }
 
   @SideOnly(Side.CLIENT)
