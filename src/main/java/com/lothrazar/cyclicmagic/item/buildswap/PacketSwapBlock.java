@@ -230,51 +230,60 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     int yMax = pos.getY();
     int zMax = pos.getZ();
     boolean isVertical = (side == EnumFacing.UP || side == EnumFacing.DOWN);
-    int offsetRadius = 0;
+    int offsetH = 0;
+    int offsetW = 0;
     switch (actionType) {
       case SINGLE:
         places.add(pos);
-        offsetRadius = 0;
+        offsetW = offsetH = 0;
       break;
       case X3:
-        offsetRadius = 1;
+        offsetW = offsetH = 1;
       break;
       case X5:
-        offsetRadius = 2;
+        offsetW = offsetH = 2;
       break;
       case X7:
-        offsetRadius = 3;
+        offsetW = offsetH = 3;
       break;
       case X9:
-        offsetRadius = 4;
+        offsetW = offsetH = 4;
+      break;
+      case X19:
+        offsetH = 0;
+        offsetW = 4;
+      break;
+      case X91:
+        offsetH = 4;
+        offsetW = 0;
       break;
       default:
       break;
     }
-    if (offsetRadius > 0) {
+    if (actionType != ActionType.SINGLE) {
       if (isVertical) {
         //then we just go in all horizontal directions
-        xMin -= offsetRadius;
-        xMax += offsetRadius;
-        zMin -= offsetRadius;
-        zMax += offsetRadius;
+        xMin -= offsetH;
+        xMax += offsetH;
+        zMin -= offsetW;
+        zMax += offsetW;
       }
       //we hit a horizontal side
       else if (side == EnumFacing.EAST || side == EnumFacing.WEST) {
         //          WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
         //          EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
         //now we go in a vertical plane
-        zMin -= offsetRadius;
-        zMax += offsetRadius;
-        yMin -= offsetRadius;
-        yMax += offsetRadius;
+        zMin -= offsetH;
+        zMax += offsetH;
+        yMin -= offsetW;
+        yMax += offsetW;
       }
       else {
         //axis hit was north/south, so we go in YZ
-        xMin -= offsetRadius;
-        xMax += offsetRadius;
-        yMin -= offsetRadius;
-        yMax += offsetRadius;
+        xMin -= offsetH;
+        xMax += offsetH;
+        yMin -= offsetW;
+        yMax += offsetW;
       }
       places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
     }
