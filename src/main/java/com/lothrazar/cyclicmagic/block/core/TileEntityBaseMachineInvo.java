@@ -70,6 +70,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_RENDER = "render";
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
+  public static final String NBT_UHASH = "uhash";
+  public static final String NBT_UNAME = "uname";
   protected NonNullList<ItemStack> inv;
   private int energyCost = 0;
   protected int speed = 1;
