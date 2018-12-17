@@ -64,7 +64,6 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
 
   private void playSound(ResourceLocation sound) {
     timer = TIMER_MAX;
-    BlockSoundPlayer.playToEverybody = false;
     if (BlockSoundPlayer.playToEverybody) {
       //      ModCyclic.logger.info("Play sound for everybody ");
       UtilSound.playSound(world, pos, SoundEvent.REGISTRY.getObject(sound), SoundCategory.BLOCKS);
