@@ -75,12 +75,17 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
     setWandType(t);
   }
 
+  @Override
+  public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    return false;
+  }
+
   public enum WandType {
     NORMAL, MATCH;
   }
 
   public enum ActionType {
-    SINGLE, X3, X5, X7, X9;
+    SINGLE, X3, X5, X7, X9, X91, X19;
 
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
@@ -123,7 +128,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > X9.ordinal()) {
+      if (type >= ActionType.values().length) {
         type = SINGLE.ordinal();
       }
       tags.setInteger(NBT, type);

@@ -1,10 +1,14 @@
 package com.lothrazar.cyclicmagic.item.location;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,10 +20,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLocation extends BaseItem implements IHasRecipe {
+public class ItemLocation extends BaseItem implements IHasRecipe, IContent {
+
+  private boolean enabled;
 
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -62,5 +69,20 @@ public class ItemLocation extends BaseItem implements IHasRecipe {
         'o', "dyeLightBlue",
         's', Items.PAPER,
         'r', "stickWood");
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("card_location", Const.ConfigCategory.items, true, Const.ConfigCategory.contentDefaultText + "  WARNING disabling this may cause other blocks to not function (wireless nodes)");
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, "card_location", GuideCategory.ITEM);
+  }
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 }

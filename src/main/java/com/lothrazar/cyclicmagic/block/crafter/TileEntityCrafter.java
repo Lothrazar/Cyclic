@@ -190,7 +190,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         }
       }
       catch (Exception err) {
-        throw new RuntimeException("Caught exception while querying recipe ", err);
+        // if some 3rd party recipe or item has an exception then dont let it crash the game
+        //example: i have seen NPEs. index out of bounds, no such element, 
+        ModCyclic.logger.error("Caught exception while querying recipe ", err);
       }
     }
   }

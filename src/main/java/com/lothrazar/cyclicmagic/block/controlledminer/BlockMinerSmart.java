@@ -106,8 +106,8 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityControlledMiner.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+    TileEntityControlledMiner.TIMER_FULL = config.getInt("block_miner_smart", Const.ConfigCategory.machineTimer,
         100, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("block_miner_smart", Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

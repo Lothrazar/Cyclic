@@ -79,6 +79,7 @@ public class ItemPotionContent implements IContent {
   private PotionTypeCyclic potionTypeButterII;
   private final int SHORT = 1800;
   private final int NORMAL = 3600;
+  private PotionTypeCyclic potionTypeSwimII;
 
   //  private static final int LONG = 9600;
   @Override
@@ -99,6 +100,8 @@ public class ItemPotionContent implements IContent {
     }
     if (ItemPotionContent.enableSwimspeed) {
       potionTypeSwim = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL), "swim", Items.CARROT_ON_A_STICK);
+      potionTypeSwimII = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, SHORT, Const.Potions.II), "swim2", Items.GLOWSTONE_DUST);
+      potionTypeSwimII.base = potionTypeSwim;
     }
     if (ItemPotionContent.enableBounce) {
       potionTypeBounce = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce", Items.SLIME_BALL);
@@ -145,7 +148,6 @@ public class ItemPotionContent implements IContent {
     }
     // wither
     // blindness
-    // saturation
     // glowing
     // ! nausea nah
     // ! absorp ! skipping bc golden apples fill this role

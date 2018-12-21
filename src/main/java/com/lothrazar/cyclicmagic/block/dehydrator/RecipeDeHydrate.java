@@ -125,6 +125,11 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   }
 
   public static void addRecipe(RecipeDeHydrate rec) {
+    if (rec.recipeInput.getMetadata() == 32767) {
+      ItemStack snew = new ItemStack(rec.recipeInput.getItem(), rec.recipeInput.getCount(), 0);
+      snew.setTagCompound(rec.recipeInput.getTagCompound());
+      rec.recipeInput = snew;
+    }
     recipes.add(rec);
   }
 }

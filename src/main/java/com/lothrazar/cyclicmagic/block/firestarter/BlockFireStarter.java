@@ -26,7 +26,7 @@ public class BlockFireStarter extends BlockBaseFacingInventory implements IHasCo
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 250, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("fire_starter", Const.ConfigCategory.fuelCost, 250, 0, 500000, Const.ConfigText.fuelCost);
   }
 
   @Override

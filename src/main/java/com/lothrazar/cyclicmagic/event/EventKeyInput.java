@@ -27,6 +27,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
@@ -41,6 +43,7 @@ import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -54,13 +57,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 public class EventKeyInput {
 
   @SideOnly(Side.CLIENT)
@@ -95,16 +98,21 @@ public class EventKeyInput {
   public void onKeyInput(InputEvent.KeyInputEvent event) {
     EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     int slot = thePlayer.inventory.currentItem;
-    if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
+    //TODO: refactor some of this out to module?
+    if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
     }
-    else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()) {
+    else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
     }
-    else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()) {
+    else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
     }
-    else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()) {
+    else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
@@ -147,11 +155,13 @@ public class EventKeyInput {
     // only for player survival invo
     EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     if (event.getGui() instanceof GuiInventory) {
-      if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
+      if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)
+          && KeyInventoryShiftModule.enableInvoKeys) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
         return;
       }
-      else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)) {
+      else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)
+          && KeyInventoryShiftModule.enableInvoKeys) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
         return;
       }
@@ -159,10 +169,12 @@ public class EventKeyInput {
       if (gui.getSlotUnderMouse() != null) {
         // only becuase it expects actually a column number
         int slot = gui.getSlotUnderMouse().slotNumber % Const.HOTBAR_SIZE;
-        if (ClientProxy.keyShiftUp != null && isGuiKeyDown(ClientProxy.keyShiftUp)) {
+        if (ClientProxy.keyShiftUp != null && isGuiKeyDown(ClientProxy.keyShiftUp)
+            && KeyInventoryShiftModule.enableInvoKeys) {
           ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
         }
-        else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)) {
+        else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)
+            && KeyInventoryShiftModule.enableInvoKeys) {
           ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
         }
       }
@@ -173,6 +185,16 @@ public class EventKeyInput {
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
       thePlayer.closeScreen();
     }
+    else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin)
+        && CompatFastBench.LOADED) {
+      tryCloseFastbench(event, thePlayer);
+    }
+  }
+
+  @Optional.Method(modid = "fastbench")
+  private void tryCloseFastbench(GuiScreenEvent.KeyboardInputEvent.Pre event, EntityPlayer thePlayer) {
+    if (event.getGui() instanceof GuiFastPlayerBench)
+      thePlayer.closeScreen();
   }
 
   @SideOnly(Side.CLIENT)

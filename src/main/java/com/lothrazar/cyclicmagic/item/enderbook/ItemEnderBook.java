@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -56,11 +57,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
+  private static final String KEY_BACKCOUNTER = "backCounter";
   public static String KEY_LOC = "location";
   public static String KEY_LARGEST = "loc_largest";
   public static int maximumSaved = 16;
   public static int expDistRatio = 10;
   public static final int BTNS_PER_COLUMN = 8;
+  private static final String KEY_BACK = "location_back";
+  public static final int BACK_TICKS = 600;
 
   public ItemEnderBook() {
     super();
@@ -83,6 +87,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   }
 
   private static int getLocationsCount(ItemStack itemStack) {
+
     return getLocations(itemStack).size();
   }
 
@@ -90,6 +95,43 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));
+  }
+
+  @Override
+  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    // count down back timer 
+    this.countdownBackTimer(stack);
+  }
+
+  @Override
+  public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    return false;
+  }
+  private void countdownBackTimer(ItemStack stack) {
+
+    int counter = getBackTimer(stack);
+    if (counter > 0) {
+      UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, counter - 1);
+    }
+    else {
+      UtilNBT.getItemStackNBT(stack).setString(KEY_BACK, "");
+    }
+  }
+
+  public static int getBackTimer(ItemStack stack) {
+    return UtilNBT.getItemStackNBTVal(stack, KEY_BACKCOUNTER);
+  }
+
+  public static void clearBackTimer(ItemStack stack) {
+
+    UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, 0);
+    stack.getTagCompound().setString(KEY_BACK, "");
+  }
+  public static void startBackTimer(ItemStack stack, BlockPosDim loc) {
+
+    UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, BACK_TICKS);
+    ModCyclic.logger.log("START bak" + loc.toCSV());
+    stack.getTagCompound().setString(KEY_BACK, loc.toCSV());
   }
 
   public static int getLargestSlot(ItemStack itemStack) {
@@ -126,7 +168,14 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     book.getTagCompound().setString(KEY_LOC + "_" + id, loc.toCSV());
   }
 
-  private static BlockPosDim getLocation(ItemStack stack, int slot) {
+  static BlockPosDim getBackLocation(ItemStack stack) {
+    String csv = stack.getTagCompound().getString(KEY_BACK);
+    if (csv == null || csv.isEmpty()) {
+      return null;
+    }
+    return new BlockPosDim(csv);
+  }
+  static BlockPosDim getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
     if (csv == null || csv.isEmpty()) {
       return null;
@@ -144,11 +193,11 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
-    String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
-    if (csv == null || csv.isEmpty()) {
-      return false;
-    }
+
     BlockPosDim loc = getLocation(book, slot);
+    if (GuiEnderBook.BACK_BTN_ID == slot) {
+      loc = getBackLocation(book);
+    }
     if (player.dimension != loc.dimension) {
       return false;//button was disabled anyway,... but just in case 
     }
@@ -191,6 +240,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
       return 0;
     }
     BlockPos toPos = getLocationPos(book, slot);
+    if (toPos == null) {
+      return 0;
+    }
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return Math.round(distance / expDistRatio);
   }

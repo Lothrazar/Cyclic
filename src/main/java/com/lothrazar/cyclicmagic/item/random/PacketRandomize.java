@@ -106,6 +106,9 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     IBlockState stateHere = null;
     for (BlockPos p : places) {
       stateHere = world.getBlockState(p);
+      if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
+        continue;//skip unbreakable
+      }
       if (stateHere != null
           && world.getTileEntity(p) == null
           && world.isAirBlock(p) == false

@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -29,6 +30,7 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
 
   public BlockVoidAnvil() {
     super(Material.ANVIL);
+    this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_VOID);
     this.setTranslucent();
   }
@@ -39,13 +41,18 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BlockAnvilAuto.Z_AXIS_AABB;
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("void_anvil", Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
     enabled = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 

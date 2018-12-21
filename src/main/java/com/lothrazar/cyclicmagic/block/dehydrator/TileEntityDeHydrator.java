@@ -77,18 +77,21 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       return;
     }
     this.tryShiftInput();
-    if (this.updateEnergyIsBurning() == false) {
-      return;
-    }
     if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
       lastRecipe = null;//all gone 
     }
     if (this.lastRecipe == null) {
       lastRecipe = findMatchingRecipe();
     }
+    if (lastRecipe == null) {
+      return;
+    }
+    if (this.updateEnergyIsBurning() == false) {
+      return;
+    }
     //if we have lava, reduce timer an extra time
     this.tryLavaSpeedup();
-    if (this.lastRecipe != null && this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
+    if (this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
       if (tryProcessRecipe()) {
         if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
           lastRecipe = null;

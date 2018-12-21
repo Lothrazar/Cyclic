@@ -70,6 +70,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_RENDER = "render";
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
+  public static final String NBT_UHASH = "uhash";
+  public static final String NBT_UNAME = "uname";
   protected NonNullList<ItemStack> inv;
   private int energyCost = 0;
   protected int speed = 1;
@@ -196,7 +198,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public void consumeEnergy() {
-    if (this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
+    if (!world.isRemote && this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
       if (this.getEnergyCurrent() >= this.getEnergyCost()) {
         this.energyStorage.extractEnergy(this.getEnergyCost(), false);
       }
@@ -269,8 +271,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (this.getEnergyCost() == 0) {
       return true;
     }
-    //    if (this.world.isRemote == false)
-    //      System.out.println("?" + this.getFuelCurrent());
     return this.getEnergyCurrent() >= this.getEnergyCost();
   }
 

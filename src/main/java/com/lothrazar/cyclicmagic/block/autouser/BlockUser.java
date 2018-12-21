@@ -102,7 +102,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("block_user", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
     maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
   }
 }

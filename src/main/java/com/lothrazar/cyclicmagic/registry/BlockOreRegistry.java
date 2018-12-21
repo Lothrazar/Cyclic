@@ -20,7 +20,7 @@ public class BlockOreRegistry {
     WorldModule.ores.add(ore);
   }
 
-  private static BlockDimensionOre createOre(int dimension, String oreDict, String name, int harvestLevel) {
+  private static BlockDimensionOre createOre(int dimension, String name, int harvestLevel, String... oreDict) {
     String block = null, dimName = null;
     if (dimension == Const.Dimension.nether) {
       dimName = "nether";
@@ -52,6 +52,11 @@ public class BlockOreRegistry {
     return ore;
   }
 
+  private static void createNetherAndEndOres(String name, int harvestLevel, String oreDict) {
+    createOre(Const.Dimension.nether, name, harvestLevel, "ore" + oreDict, "oreNether" + oreDict);
+    createOre(Const.Dimension.end, name, harvestLevel, "ore" + oreDict, "oreEnd" + oreDict);
+  }
+
   public static void register() {
     String oreDict, name;
     final int coalHarvest = 0;
@@ -62,124 +67,40 @@ public class BlockOreRegistry {
     final int goldHarvest = emeraldHarvest;
     final int redstoneHarvest = emeraldHarvest;
     // mod ores
-    oreDict = "oreTitanium";
-    name = "titanium";// RUTLIE ORE
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreAquamarine";
-    name = "aquamarine";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreBauxite";
-    name = "bauxite";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreBoron";
-    name = "boron";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreCobalt";
-    name = "cobalt";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreCopper";
-    name = "copper";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreDilithium";
-    name = "dilithium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreGalena";
-    name = "galena";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreIridium";
-    name = "iridium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreLead";
-    name = "lead";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreLithium";
-    name = "lithium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreMagnesium";
-    name = "magnesium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreMithril";
-    name = "mithril";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreNickel";
-    name = "nickel";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreSaltpeter";
-    name = "nitre";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreOsmium";
-    name = "osmium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "orePlatinum";
-    name = "platinum";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreQuartzBlack";
-    name = "quartz_black";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreCertusQuartz";
-    name = "quartz_certus";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreChargedCertusQuartz";
-    name = "quartz_certus_charged";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreSapphire";
-    name = "sapphire";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreThorium";
-    name = "thorium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreTungsten";
-    name = "tungsten";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreRuby";
-    name = "ruby";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreSilver";
-    name = "silver";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreTin";
-    name = "tin";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreUranium";
-    name = "uranium";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
-    oreDict = "oreYellorium";
-    name = "yellorite";
-    createOre(Const.Dimension.nether, oreDict, name, ironHarvest);
-    createOre(Const.Dimension.end, oreDict, name, ironHarvest);
+    createNetherAndEndOres("titanium", ironHarvest, "Titanium");// RUTLIE ORE
+    createNetherAndEndOres("aquamarine", ironHarvest, "Aquamarine");
+    createNetherAndEndOres("bauxite", ironHarvest, "Bauxite");
+    createNetherAndEndOres("boron", ironHarvest, "Boron");
+    createNetherAndEndOres("cobalt", ironHarvest, "Cobalt");
+    createNetherAndEndOres("copper", ironHarvest, "Copper");
+    createNetherAndEndOres("dilithium", ironHarvest, "Dilithium");
+    createNetherAndEndOres("galena", ironHarvest, "Galena");
+    createNetherAndEndOres("iridium", ironHarvest, "Iridium");
+    createNetherAndEndOres("lead", ironHarvest, "Lead");
+    createNetherAndEndOres("lithium", ironHarvest, "Lithium");
+    createNetherAndEndOres("magnesium", ironHarvest, "Magnesium");
+    createNetherAndEndOres("mithril", ironHarvest, "Mithril");
+    createNetherAndEndOres("nickel", ironHarvest, "Nickel");
+    createNetherAndEndOres("nitre", ironHarvest, "Saltpeter");
+    createNetherAndEndOres("osmium", ironHarvest, "Osmium");
+    createNetherAndEndOres("platinum", ironHarvest, "Platinum");
+    createNetherAndEndOres("quartz_black", ironHarvest, "QuartzBlack");
+    createNetherAndEndOres("quartz_certus", ironHarvest, "CertusQuartz");
+    createNetherAndEndOres("quartz_certus_charged", ironHarvest, "ChargedCertusQuartz");
+    createNetherAndEndOres("sapphire", ironHarvest, "Sapphire");
+    createNetherAndEndOres("thorium", ironHarvest, "Thorium");
+    createNetherAndEndOres("tungsten", ironHarvest, "Tungsten");
+    createNetherAndEndOres("ruby", ironHarvest, "Ruby");
+    createNetherAndEndOres("silver", ironHarvest, "Silver");
+    createNetherAndEndOres("tin", ironHarvest, "Tin");
+    createNetherAndEndOres("uranium", ironHarvest, "Uranium");
+    createNetherAndEndOres("yellorite", ironHarvest, "Yellorium");
     //vanilla ores
     BlockDimensionOre nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore
         .setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(Items.REDSTONE)
-        .registerOreDict("oreRedstone");
+        .registerOreDict("oreRedstone", "oreNetherRedstone");
     nether_redstone_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -192,7 +113,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 12);//iron nugget
     nether_iron_ore.setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
-        .registerOreDict("oreIron");
+        .registerOreDict("oreIron", "oreNetherIron");
     nether_iron_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -205,7 +126,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1)
         .registerSmeltingOutput(Items.GOLD_INGOT)
-        .registerOreDict("oreGold");
+        .registerOreDict("oreGold", "oreNetherGold");
     nether_gold_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -217,7 +138,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_coal_ore = new BlockDimensionOre(Items.COAL);
     nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1)
         .registerSmeltingOutput(Items.COAL)
-        .registerOreDict("oreCoal");
+        .registerOreDict("oreCoal", "oreNetherCoal");
     nether_coal_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -229,7 +150,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2)
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
-        .registerOreDict("oreLapis");
+        .registerOreDict("oreLapis", "oreNetherLapis");
     nether_lapis_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -241,7 +162,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5)
         .registerSmeltingOutput(Items.EMERALD)
-        .registerOreDict("oreEmerald");
+        .registerOreDict("oreEmerald", "oreNetherEmerald");
     nether_emerald_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -253,7 +174,7 @@ public class BlockOreRegistry {
     BlockDimensionOre nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8)
         .registerSmeltingOutput(Items.DIAMOND)
-        .registerOreDict("oreDiamond");
+        .registerOreDict("oreDiamond", "oreNetherDiamond");
     nether_diamond_ore.config.setDimension(Const.Dimension.nether)
         .setBlockToReplace("minecraft:netherrack").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".netherorecustom")
@@ -266,7 +187,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3)
         .registerSmeltingOutput(Items.REDSTONE)
-        .registerOreDict("oreRedstone");
+        .registerOreDict("oreRedstone", "oreEndRedstone");
     end_redstone_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -278,19 +199,19 @@ public class BlockOreRegistry {
     BlockDimensionOre end_coal_ore = new BlockDimensionOre(Items.COAL);
     end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1)
         .registerSmeltingOutput(Items.COAL)
-        .registerOreDict("oreCoal");
+        .registerOreDict("oreCoal", "oreEndCoal");
     end_coal_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
-        .setBlockCountConfig("blockCountRedstone")
-        .setSpawnChanceConfig("spawnChanceRedstone")
+        .setBlockCountConfig("blockCountCoal")
+        .setSpawnChanceConfig("spawnChanceCoal")
         .setBlockCountDefault(8).setHarvestLevelDefault(coalHarvest)
         .setSpawnChanceDefault(10).setBlockId("end_coal_ore");
     addOre(end_coal_ore);
     BlockDimensionOre end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
     end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5)
         .registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()))
-        .registerOreDict("oreLapis");
+        .registerOreDict("oreLapis", "oreEndLapis");
     end_lapis_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -302,7 +223,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
     end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.EMERALD)
-        .registerOreDict("oreEmerald");
+        .registerOreDict("oreEmerald", "oreEndEmerald");
     end_emerald_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone")
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -314,7 +235,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8)
         .registerSmeltingOutput(Items.DIAMOND)
-        .registerOreDict("oreDiamond");
+        .registerOreDict("oreDiamond", "oreEndDiamond");
     end_diamond_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -326,7 +247,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
     end_gold_ore.setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.GOLD_INGOT)
-        .registerOreDict("oreGold");
+        .registerOreDict("oreGold", "oreEndGold");
     end_gold_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")
@@ -338,7 +259,7 @@ public class BlockOreRegistry {
     BlockDimensionOre end_iron_ore = new BlockDimensionOre(Items.IRON_NUGGET, 0, 16);//iron nugget
     end_iron_ore.setSpawnType(SpawnType.ENDERMITE, 2)
         .registerSmeltingOutput(Items.IRON_INGOT)
-        .registerOreDict("oreIron");
+        .registerOreDict("oreIron", "oreEndIron");
     end_iron_ore.config.setDimension(Const.Dimension.end)
         .setBlockToReplace("minecraft:end_stone").setVanilla()
         .setConfigCategory(Const.ConfigCategory.worldGen + ".endorecustom")

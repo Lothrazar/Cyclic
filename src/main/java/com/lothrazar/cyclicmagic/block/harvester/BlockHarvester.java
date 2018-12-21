@@ -99,8 +99,8 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityHarvester.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+    TileEntityHarvester.TIMER_FULL = config.getInt("harvester_block", Const.ConfigCategory.machineTimer,
         150, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("harvester_block", Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

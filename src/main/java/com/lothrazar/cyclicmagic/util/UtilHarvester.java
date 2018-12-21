@@ -77,6 +77,7 @@ public class UtilHarvester {
         "minecraft:pumpkin"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
+        ,"extrautils2:redorchid"
         );
     
     breakSilkTouch = NonNullList.from(""
@@ -316,9 +317,17 @@ public class UtilHarvester {
       }
       world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
       if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
+        //for example: a 3 high block like corn 
         if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
           //TODO: corn still drops a few from multiblock on ground. not the worst.
           world.destroyBlock(posCurrent.up(), false);
+        }
+        if (doesBlockMatch(world, blockCheck, posCurrent.up(2))) {
+          //TODO: corn still drops a few from multiblock on ground. not the worst.
+          world.destroyBlock(posCurrent.up(2), false);
+        }
+        if (world.isAirBlock(posCurrent.down()) && world.isAirBlock(posCurrent.down(2))) {
+          world.destroyBlock(posCurrent, false);
         }
       }
       // we have a blackist of crops to skip the remove-seed step

@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiEnderBook extends GuiScreen {
 
+  public static final int BACK_BTN_ID = 7777;
   private final EntityPlayer entityPlayer;
   private ItemStack bookStack;
   final int maxNameLen = 20;
@@ -57,6 +58,7 @@ public class GuiEnderBook extends GuiScreen {
   GuiButton buttonNew;
   GuiTextField txtNew;
   final int DELETE_OFFSET = 1000;
+  private ButtonWaypointTeleport btnBack;
 
   @Override
   public void initGui() {
@@ -69,21 +71,29 @@ public class GuiEnderBook extends GuiScreen {
     int buttonID = 0, w = 70, h = 20, ypad = 1, delete_w = 20, rowpad = 8;
     buttonIdNew = buttonID;
     buttonID++;
-    ArrayList<BlockPosDim> list = ItemEnderBook.getLocations(bookStack);
+
     buttonNew = new ButtonWaypointNew(buttonIdNew, this.width / 2 - w, // x
         20, // y
         w, h, buttonIdNew);
     addButton(buttonNew);
     ButtonClose buttonClose = new ButtonClose(9999, this.width / 2 - w - 50, 20);
     addButton(buttonClose);
-    if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
-      buttonNew.enabled = false;// also a tooltip?
-    }
-    txtNew = new GuiTextField(buttonID++, this.fontRenderer, buttonNew.x + buttonNew.width + 20, buttonNew.y, w, h);
+    txtNew = new GuiTextField(buttonID++, this.fontRenderer, buttonNew.x + buttonNew.width + 10, buttonNew.y, w, h);
     txtNew.setMaxStringLength(maxNameLen);
     // default to the current biome
     txtNew.setText(entityPlayer.getEntityWorld().getBiome(entityPlayer.getPosition()).getBiomeName());
     txtNew.setFocused(true);
+    btnBack = new ButtonWaypointTeleport(BACK_BTN_ID,
+        txtNew.x + txtNew.width + 8,
+        buttonClose.y, w / 2, h,
+        UtilChat.lang("gui.enderbook.back"), BACK_BTN_ID);
+      this.addButton(btnBack);
+    BlockPosDim location = ItemEnderBook.getBackLocation(bookStack);
+    btnBack.enabled = location != null;
+    if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
+      buttonNew.enabled = false;
+    }
+
     ButtonWaypointTeleport btn;
     GuiButton del;
     BlockPosDim loc;
@@ -92,6 +102,7 @@ public class GuiEnderBook extends GuiScreen {
     int xStart = (this.width / 10);
     int x = xStart;
     int y = yStart;
+    ArrayList<BlockPosDim> list = ItemEnderBook.getLocations(bookStack);
     for (int i = 0; i < list.size(); i++) {
       loc = list.get(i);
       buttonText = (loc.display == null) ? UtilChat.lang("gui.enderbook.go") : loc.display;
@@ -128,9 +139,10 @@ public class GuiEnderBook extends GuiScreen {
   public void drawScreen(int x, int y, float par3) {
     drawDefaultBackground();
     drawCenteredString(fontRenderer, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
+    if (btnBack != null) {
+      btnBack.setTooltipLine(UtilChat.lang("gui.enderbook.back.tooltip") + "[" + ItemEnderBook.BACK_TICKS / 20 + "]");
+    }
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
-    // no idea why this is sometimes randomly null and only on world start if i
-    // open it too quick??
     if (txtNew != null) {
       txtNew.drawTextBox();
     }

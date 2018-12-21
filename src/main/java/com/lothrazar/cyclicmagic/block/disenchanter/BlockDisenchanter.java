@@ -104,8 +104,8 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("UnchantPylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityDisenchanter.TIMER_FULL = config.getInt(this.getRawName(), Const.ConfigCategory.machineTimer,
+    TileEntityDisenchanter.TIMER_FULL = config.getInt("block_disenchanter", Const.ConfigCategory.machineTimer,
         80, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("block_disenchanter", Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

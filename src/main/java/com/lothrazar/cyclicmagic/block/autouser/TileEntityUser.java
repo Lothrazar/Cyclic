@@ -245,7 +245,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return;
       }
     }
-
     if (world.isAirBlock(targetPos)) {
       return;
     }
@@ -258,7 +257,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
       //ModCyclic.logger.log("after block ? equal " + eq);
       if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
-
         syncPlayerTool();
       }
       else if (!eq) {
@@ -325,12 +323,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     //   ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
     int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-
     for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-
       if (s.isEmpty() == false) {
-
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -373,7 +368,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean rightClickFluidAir(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
-
     //item stack does not hve fluid handler
     //dispense stack so either pickup or place liquid
     if (UtilFluid.isEmptyOfFluid(playerHeld)) {
@@ -386,14 +380,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
     else {
-
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
       if (!drainedStackOrNull.isItemEqual(playerHeld)) {
         player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
         this.tryDumpFakePlayerInvo(true);
         return true;
       }
-
     }
     return false;
   }

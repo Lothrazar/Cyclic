@@ -81,6 +81,6 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, 
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(this.getRawName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt("dropper_exact", Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -120,7 +120,8 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     //attept to auto export power to nbrs 
     tryChargeItem();
     //auto export based on checkboxes
-    tryOutputItem();
+    if (!world.isRemote)
+      tryOutputItem();
   }
 
   private void tryOutputItem() {
