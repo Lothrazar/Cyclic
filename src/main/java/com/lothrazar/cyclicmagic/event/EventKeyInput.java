@@ -191,6 +191,7 @@ public class EventKeyInput {
     }
   }
 
+  @SideOnly(Side.CLIENT)
   @Optional.Method(modid = "fastbench")
   private void tryCloseFastbench(GuiScreenEvent.KeyboardInputEvent.Pre event, EntityPlayer thePlayer) {
     if (event.getGui() instanceof GuiFastPlayerBench)
