@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.List;
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -48,19 +49,24 @@ public class UtilItemStack {
         tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp) == false) {
       return stackToExport;
     }
-    IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
-    for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
-      //      i thought i needed this, but bug was on other end
-      // https://github.com/BluSunrize/ImmersiveEngineering/issues/3044
-      //      if (tileTarget instanceof IInventory &&
-      //          ((IInventory) tileTarget).isItemValidForSlot(i, stackToExport) == false) {
-      //        continue;
-      //      }
-      ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false).copy();
-      //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
-      if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {
-        return leftBehindAfterInsert;
+    try {
+      IItemHandler itemHandlerDeposit = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, sideOpp);
+      for (int i = 0; i < itemHandlerDeposit.getSlots(); i++) {
+        //in theory this should never be null, but ive seen external mods have that happen
+        //or other weird things hence the try catch 
+        //https://github.com/Lothrazar/Cyclic/issues/1021
+        ItemStack leftBehindAfterInsert = itemHandlerDeposit.insertItem(i, stackToExport, false);
+        if (leftBehindAfterInsert == null) {
+          continue;//i seen it
+        }
+        //so toExport is 60. leftbehind is 50, this means 10 were deposited. success
+        if (leftBehindAfterInsert.getCount() < stackToExport.getCount()) {
+          return leftBehindAfterInsert.copy();
+        }
       }
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("Error inserting item into capability handler ", e);
     }
     return stackToExport;
   }
