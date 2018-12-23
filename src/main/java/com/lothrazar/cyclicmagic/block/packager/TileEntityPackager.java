@@ -47,7 +47,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   }
 
   public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
-  private RecipePackage lastRecipe = null;
+  private RecipePackager lastRecipe = null;
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
@@ -80,7 +80,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       }
       else {
         //try to look for a new one
-        for (RecipePackage irecipe : RecipePackage.recipes) {
+        for (RecipePackager irecipe : RecipePackager.recipes) {
           if (tryProcessRecipe(irecipe)) {
             //if we have found a recipe that can be processed. save reference to it for next loop
             this.consumeEnergy();
@@ -92,7 +92,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     }
   }
 
-  public boolean tryProcessRecipe(RecipePackage recipe) {
+  public boolean tryProcessRecipe(RecipePackager recipe) {
     boolean process = false;
     //check inventory to see if we can pay costs of the recipe
     //loop over recipe ingredients
