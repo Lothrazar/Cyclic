@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.List;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.packager.TileEntityPackager;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -232,5 +233,10 @@ public class UtilItemStack {
       i = state.getBlock().getMetaFromState(state);
     }
     return new ItemStack(item, 1, i);
+  }
+
+  public static boolean doesTileHaveRoom(TileEntityPackager tileEntityPackager, int inputSize, ItemStack recipeOutput) {
+    // TODO Auto-generated method stub
+    return false;
   }
 }

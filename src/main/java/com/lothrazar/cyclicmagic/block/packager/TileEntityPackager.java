@@ -127,7 +127,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       }
     }
     // done looping inventory but not recipe
-    if (process) {
+    if (process && inventoryHasRoom(INPUT_SIZE, recipe.getRecipeOutput())) {
       for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
         //go 
         this.decrStackSize(entry.getKey(), entry.getValue());
