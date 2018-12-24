@@ -38,7 +38,6 @@ public class EventRegistry {
   private ArrayList<Object> events = new ArrayList<Object>();
 
   public void registerCoreEvents() {
-    //    this.register(new ParticleEventManager());
     this.register(new EventConfigChanged());
     this.register(new EventExtendedInventory());
     this.register(new EventKeyInput());

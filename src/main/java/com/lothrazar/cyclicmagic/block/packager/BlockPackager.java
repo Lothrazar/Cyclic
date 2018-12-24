@@ -52,7 +52,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PACKAGER);
-    RecipePackage.initAllRecipes();
+    RecipePackager.initAllRecipes();
   }
 
   @Override

@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:block_vacuum_south","y":180},
-        "facing=east": { "model":  "cyclicmagic:block_vacuum_south","y":270},
-        "facing=south": { "model": "cyclicmagic:block_vacuum_south"},
-        "facing=west": { "model":  "cyclicmagic:block_vacuum_south","y":90 }
+        "facing=north": { "model": "cyclicmagic:block_vacuum","y":180},
+        "facing=east": { "model":  "cyclicmagic:block_vacuum","y":270},
+        "facing=south": { "model": "cyclicmagic:block_vacuum"},
+        "facing=west": { "model":  "cyclicmagic:block_vacuum","y":90 }
     }
 }

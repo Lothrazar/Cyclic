@@ -90,7 +90,6 @@ public class GuiPassword extends GuiBaseContainer {
     String s;
     int y = 6;
     int xCenter = this.xSize / 2;
-
     if (txtPassword != null) {
       txtPassword.drawTextBox();
     }

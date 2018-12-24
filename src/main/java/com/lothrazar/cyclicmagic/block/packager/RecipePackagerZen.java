@@ -40,9 +40,9 @@ public class RecipePackagerZen {
   @ZenMethod
   public static void removeRecipe(IItemStack output) {
     ItemStack out = RecipeHydrateZen.toStack(output);
-    RecipePackage toRemove = null;
-    for (RecipePackage rec : RecipePackage.recipes) {
-      if (rec.getRecipeOutput().isItemEqual(out)) {
+    RecipePackager toRemove = null;
+    for (RecipePackager rec : RecipePackager.recipes) {
+      if (ItemStack.areItemStacksEqual(out, rec.getRecipeOutput())) {
         toRemove = rec;
         break;
       }
@@ -50,7 +50,7 @@ public class RecipePackagerZen {
     if (toRemove == null)
       ModCyclic.logger.error("Failure: ZenScript: not found packager recipe for " + output.getDisplayName());
     else {
-      RecipePackage.recipes.remove(toRemove);
+      RecipePackager.recipes.remove(toRemove);
       ModCyclic.logger.info("ZenScript: removed packager recipe for " + output.getDisplayName());
     }
   }
@@ -59,13 +59,13 @@ public class RecipePackagerZen {
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack input) {
     ModCyclic.logger.info("ZenScript: added packager recipe for " + output.getDisplayName());
-    RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStack(input)));
+    RecipePackager.addRecipe(new RecipePackager(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStack(input)));
   }
 
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs) {
     ModCyclic.logger.info("ZenScript: added packager recipe for " + output.getDisplayName());
-    RecipePackage.addRecipe(new RecipePackage(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStacks(inputs)));
+    RecipePackager.addRecipe(new RecipePackager(RecipeHydrateZen.toStack(output), RecipeHydrateZen.toStacks(inputs)));
   }
 }

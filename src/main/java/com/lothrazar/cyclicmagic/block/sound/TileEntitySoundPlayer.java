@@ -69,7 +69,6 @@ public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements 
       UtilSound.playSound(world, pos, SoundEvent.REGISTRY.getObject(sound), SoundCategory.BLOCKS);
       return;
     }
-
     //get player by hash
     try {
       if (this.getClaimedHash() != null) {

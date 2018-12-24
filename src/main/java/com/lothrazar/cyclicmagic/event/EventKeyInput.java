@@ -64,6 +64,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 public class EventKeyInput {
 
   @SideOnly(Side.CLIENT)
@@ -191,6 +192,7 @@ public class EventKeyInput {
     }
   }
 
+  @SideOnly(Side.CLIENT)
   @Optional.Method(modid = "fastbench")
   private void tryCloseFastbench(GuiScreenEvent.KeyboardInputEvent.Pre event, EntityPlayer thePlayer) {
     if (event.getGui() instanceof GuiFastPlayerBench)

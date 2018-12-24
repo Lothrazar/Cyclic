@@ -87,7 +87,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   }
 
   private static int getLocationsCount(ItemStack itemStack) {
-
     return getLocations(itemStack).size();
   }
 
@@ -107,8 +106,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
     return false;
   }
-  private void countdownBackTimer(ItemStack stack) {
 
+  private void countdownBackTimer(ItemStack stack) {
     int counter = getBackTimer(stack);
     if (counter > 0) {
       UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, counter - 1);
@@ -123,12 +122,11 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   }
 
   public static void clearBackTimer(ItemStack stack) {
-
     UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, 0);
     stack.getTagCompound().setString(KEY_BACK, "");
   }
-  public static void startBackTimer(ItemStack stack, BlockPosDim loc) {
 
+  public static void startBackTimer(ItemStack stack, BlockPosDim loc) {
     UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, BACK_TICKS);
     ModCyclic.logger.log("START bak" + loc.toCSV());
     stack.getTagCompound().setString(KEY_BACK, loc.toCSV());
@@ -175,6 +173,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     }
     return new BlockPosDim(csv);
   }
+
   static BlockPosDim getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
     if (csv == null || csv.isEmpty()) {
@@ -193,7 +192,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
-
     BlockPosDim loc = getLocation(book, slot);
     if (GuiEnderBook.BACK_BTN_ID == slot) {
       loc = getBackLocation(book);

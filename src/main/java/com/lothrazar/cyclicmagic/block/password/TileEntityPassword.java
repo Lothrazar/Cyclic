@@ -67,7 +67,6 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     super(0);
     setType(ActiveType.TOGGLE);
     setUserPerm(UsersAllowed.ALL);//defaults to same behavior it had before these were added
-
   }
 
   @Override
