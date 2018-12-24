@@ -128,7 +128,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       //now find this many of them
       int neededRemaining = needed;
       for (int i = 0; i < INPUT_SIZE; i++) {
-        if (input.isItemEqual(this.getStackInSlot(i)) == false) {
+        if (UtilItemStack.isItemStackEqualIgnoreCount(input, this.getStackInSlot(i)) == false) {
           continue;
         }
         //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());

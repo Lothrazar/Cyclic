@@ -239,4 +239,29 @@ public class UtilItemStack {
     // TODO Auto-generated method stub
     return false;
   }
+
+  /**
+   * The same as ItemStack::areItemStacksEqual
+   * 
+   * except that it ignores stack size/count
+   * 
+   * @param tthis
+   * @param other
+   * @return
+   */
+  public static boolean isItemStackEqualIgnoreCount(ItemStack tthis, ItemStack other) {
+    if (tthis.getItem() != other.getItem()) {
+      return false;
+    }
+    else if (tthis.getItemDamage() != other.getItemDamage()) {
+      return false;
+    }
+    else if (tthis.getTagCompound() == null && other.getTagCompound() != null) {
+      return false;
+    }
+    else {
+      return (tthis.getTagCompound() == null || tthis.getTagCompound().equals(other.getTagCompound()))
+          && tthis.areCapsCompatible(other);
+    }
+  }
 }

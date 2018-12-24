@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -63,11 +64,11 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
       for (ItemStack recipe : this.getInput()) {
 
         //test equality ignore count 
-        int max = Math.max(recipe.getCount(), invo.getCount());
-        recipe = recipe.copy();
-        recipe.setCount(max);
-        invo.setCount(max);
-        if (ItemStack.areItemStacksEqual(recipe, invo)) {
+        //        int max = Math.max(recipe.getCount(), invo.getCount());
+        //        recipe = recipe.copy();
+        //        recipe.setCount(max);
+        //        invo.setCount(max);
+        if (UtilItemStack.isItemStackEqualIgnoreCount(recipe, invo)) {
           matches++;
           break;
         }
