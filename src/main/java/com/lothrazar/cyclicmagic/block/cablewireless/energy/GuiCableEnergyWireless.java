@@ -94,7 +94,6 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
           //get target
           IBlockState statehere = tile.getWorld().getBlockState(target);
           Block block = statehere.getBlock();
-
           //example: mek/thermal use crazy item stack NBT + Block metadata 
           int meta = block.damageDropped(statehere);
           ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, meta);

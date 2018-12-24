@@ -71,7 +71,6 @@ public class GuiEnderBook extends GuiScreen {
     int buttonID = 0, w = 70, h = 20, ypad = 1, delete_w = 20, rowpad = 8;
     buttonIdNew = buttonID;
     buttonID++;
-
     buttonNew = new ButtonWaypointNew(buttonIdNew, this.width / 2 - w, // x
         20, // y
         w, h, buttonIdNew);
@@ -87,13 +86,12 @@ public class GuiEnderBook extends GuiScreen {
         txtNew.x + txtNew.width + 8,
         buttonClose.y, w / 2, h,
         UtilChat.lang("gui.enderbook.back"), BACK_BTN_ID);
-      this.addButton(btnBack);
+    this.addButton(btnBack);
     BlockPosDim location = ItemEnderBook.getBackLocation(bookStack);
     btnBack.enabled = location != null;
     if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
       buttonNew.enabled = false;
     }
-
     ButtonWaypointTeleport btn;
     GuiButton del;
     BlockPosDim loc;

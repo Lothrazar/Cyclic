@@ -85,7 +85,6 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
       if (slot < tile.getSizeInventory()) {
-
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }

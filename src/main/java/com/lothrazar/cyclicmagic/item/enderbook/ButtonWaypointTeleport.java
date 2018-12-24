@@ -61,6 +61,7 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
     tooltips = new ArrayList<String>();
     tooltips.add(s);
   }
+
   public void addTooltipLine(String s) {
     tooltips.add(s);
   }
@@ -79,7 +80,6 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
       // but even if they dont, send packet anyway. server side has the real
       // source of truth
       ModCyclic.network.sendToServer(new PacketWarpButton(bookSlot));
-
       // we would have to wait until tp finishes and then sendToClient in a new
       // 'particle packet' for this
       // particleAtPlayer(world,mc.thePlayer);

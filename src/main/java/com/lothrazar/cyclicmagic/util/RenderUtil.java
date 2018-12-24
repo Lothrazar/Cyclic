@@ -81,8 +81,6 @@ public class RenderUtil {
     double length = combinedVec.length();
     length = length * (timer / (TileEntityLaser.MAX_TIMER * 1.0));
     GlStateManager.pushMatrix();
-
-
     GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
     GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);
     GlStateManager.rotate((float) (180 * pitch / Math.PI), 0, 0, 1);
@@ -116,7 +114,6 @@ public class RenderUtil {
     GlStateManager.disableBlend();
     GlStateManager.enableLighting();
     GlStateManager.enableTexture2D();
-
     GlStateManager.popMatrix();
   }
 }

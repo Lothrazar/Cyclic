@@ -185,17 +185,16 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //TODO: maybe toggle between
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
-            if (!success) {
-              success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
-            }
-            if (success) {
-              UtilPlayer.decrStackSize(player, slot);
-            }
+          if (!success) {
+            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
+          }
+          if (success) {
+            UtilPlayer.decrStackSize(player, slot);
+          }
           if (success) {
             world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
-
             ItemStack held = player.getHeldItem(message.hand);
             if (!held.isEmpty() && held.getItem() instanceof ItemBuildSwapper) {
               UtilItemStack.damageItem(player, held);

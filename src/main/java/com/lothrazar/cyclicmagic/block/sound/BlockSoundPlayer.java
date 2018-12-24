@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   public static boolean playToEverybody = true;
+
   public BlockSoundPlayer() {
     super(Material.ROCK);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_SOUNDPL);

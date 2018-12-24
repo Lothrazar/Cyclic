@@ -47,7 +47,6 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     //    ShapelessRecipes matches has been copied to here
-
     List<ItemStack> inventory = Lists.newArrayList();
     for (int i = 0; i < inv.getHeight(); ++i) {
       for (int j = 0; j < inv.getWidth(); ++j) {
@@ -57,12 +56,9 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
         }
       }
     }
-
     int matches = 0;
     for (ItemStack invo : inventory) {
-
       for (ItemStack recipe : this.getInput()) {
-
         if (UtilItemStack.isItemStackEqualIgnoreCount(recipe, invo)
             && recipe.getCount() <= invo.getCount()) {
           matches++;
@@ -70,7 +66,6 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
         }
       }
     }
-
     return matches >= input.size();
   }
 

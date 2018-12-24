@@ -96,7 +96,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     //Collections.shuffle(shuffled);
     for (RecipePackager irecipe : RecipePackager.recipes) {
       if (irecipe.matches(this.crafter, this.world)) {
-
         this.lastRecipe = irecipe;
         break;
       }

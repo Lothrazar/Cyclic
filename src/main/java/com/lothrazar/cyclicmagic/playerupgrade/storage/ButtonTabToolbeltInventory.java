@@ -55,7 +55,7 @@ public class ButtonTabToolbeltInventory extends GuiButtonTooltip {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       //      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtWorkbench) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+      ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
       //      }
       //      else {
       //        this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.player));
