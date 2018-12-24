@@ -73,31 +73,30 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     }
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
-
-      this.lastRecipe = null;
-      findRecipe();
       if (this.lastRecipe != null
-          && lastRecipe.matches(this.crafter, this.world)) {
-        if (tryProcessRecipe(lastRecipe)) {
-          this.timer = TIMER_FULL;
-
-          // are we empty? if empty dont consume
-          this.consumeEnergy();
-        }
+          && lastRecipe.matches(this.crafter, this.world)
+          && tryProcessRecipe(lastRecipe)) {
+        this.timer = TIMER_FULL;
+        // are we empty? if empty dont consume
+        this.consumeEnergy();
       }
       else {
+        //no matching recipe found, OR could not process (ingredients not found)
         this.lastRecipe = null;
         findRecipe();
       }
-
     }
   }
 
   private void findRecipe() {
     setRecipeInput();//make sure the 3x3 inventory is linked o the crater
+    //   ArrayList<RecipePackager> shuffled = RecipePackager.recipes;
+    // so we dont get stuck on the same one
+    //also it does not get called too frequently
+    //Collections.shuffle(shuffled);
     for (RecipePackager irecipe : RecipePackager.recipes) {
       if (irecipe.matches(this.crafter, this.world)) {
-        //   ModCyclic.logger.log("match! " + irecipe.getRecipeOutput());
+
         this.lastRecipe = irecipe;
         break;
       }
@@ -110,7 +109,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       if (stack == null) {
         stack = ItemStack.EMPTY;
       }
-
       this.crafter.setInventorySlotContents(slot, stack.copy());
     }
   }

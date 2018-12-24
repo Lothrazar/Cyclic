@@ -63,12 +63,8 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
 
       for (ItemStack recipe : this.getInput()) {
 
-        //test equality ignore count 
-        //        int max = Math.max(recipe.getCount(), invo.getCount());
-        //        recipe = recipe.copy();
-        //        recipe.setCount(max);
-        //        invo.setCount(max);
-        if (UtilItemStack.isItemStackEqualIgnoreCount(recipe, invo)) {
+        if (UtilItemStack.isItemStackEqualIgnoreCount(recipe, invo)
+            && recipe.getCount() <= invo.getCount()) {
           matches++;
           break;
         }
