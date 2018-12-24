@@ -46,7 +46,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     REDSTONE, TIMER, FUEL;
   }
 
-  public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
+  public InventoryCrafting crafter = new InventoryCrafting(new ContainerDummyPackager(), 3, 2);
   private RecipePackager lastRecipe = null;
 
   public TileEntityPackager() {
@@ -73,22 +73,45 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     }
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
-      if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
-        this.timer = TIMER_FULL;
-        // are we empty? if empty dont consume
-        this.consumeEnergy();
-      }
-      else {
-        //try to look for a new one
-        for (RecipePackager irecipe : RecipePackager.recipes) {
-          if (tryProcessRecipe(irecipe)) {
-            //if we have found a recipe that can be processed. save reference to it for next loop
-            this.consumeEnergy();
-            this.timer = TIMER_FULL;
-            lastRecipe = irecipe;
-          }
+
+      this.lastRecipe = null;
+      findRecipe();
+      if (this.lastRecipe != null
+          && lastRecipe.matches(this.crafter, this.world)) {
+        if (tryProcessRecipe(lastRecipe)) {
+          this.timer = TIMER_FULL;
+
+          // are we empty? if empty dont consume
+          this.consumeEnergy();
         }
       }
+      else {
+        this.lastRecipe = null;
+        findRecipe();
+      }
+
+    }
+  }
+
+  private void findRecipe() {
+    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
+    for (RecipePackager irecipe : RecipePackager.recipes) {
+      if (irecipe.matches(this.crafter, this.world)) {
+        //   ModCyclic.logger.log("match! " + irecipe.getRecipeOutput());
+        this.lastRecipe = irecipe;
+        break;
+      }
+    }
+  }
+
+  private void setRecipeInput() {
+    for (int slot = 0; slot < INPUT_SIZE; slot++) {
+      ItemStack stack = this.getStackInSlot(slot);
+      if (stack == null) {
+        stack = ItemStack.EMPTY;
+      }
+
+      this.crafter.setInventorySlotContents(slot, stack.copy());
     }
   }
 

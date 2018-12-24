@@ -46,28 +46,35 @@ public class RecipePackager extends IForgeRegistryEntry.Impl<IRecipe> implements
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     //    ShapelessRecipes matches has been copied to here
+
     List<ItemStack> inventory = Lists.newArrayList();
     for (int i = 0; i < inv.getHeight(); ++i) {
       for (int j = 0; j < inv.getWidth(); ++j) {
         ItemStack itemstack = inv.getStackInRowAndColumn(j, i);
         if (!itemstack.isEmpty()) {
-          inventory.add(itemstack);
+          inventory.add(itemstack.copy());
         }
       }
     }
-    if (inventory.size() != this.input.size()) {
-      return false;
-    }
+
     int matches = 0;
     for (ItemStack invo : inventory) {
-      for (ItemStack recipe : this.input) {
+
+      for (ItemStack recipe : this.getInput()) {
+
+        //test equality ignore count 
+        int max = Math.max(recipe.getCount(), invo.getCount());
+        recipe = recipe.copy();
+        recipe.setCount(max);
+        invo.setCount(max);
         if (ItemStack.areItemStacksEqual(recipe, invo)) {
           matches++;
           break;
         }
       }
     }
-    return matches == input.size();
+
+    return matches >= input.size();
   }
 
   @Override
