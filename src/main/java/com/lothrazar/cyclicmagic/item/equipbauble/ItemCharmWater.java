@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -43,11 +43,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmWater extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmWater extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final int breath = 6;
   private static final int durability = 32;
   private static final int seconds = 60;
+  private static final ItemStack craftItem = new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata());
 
   public ItemCharmWater() {
     super(durability);
@@ -71,11 +72,6 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
-  public IRecipe addRecipe() {
-    return super.addRecipe(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
-  }
-
-  @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
       return;
@@ -88,5 +84,16 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe, IContent {
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
     }
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+  {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
+  public IRecipe addRecipeAndRepair() {
+    return super.addRecipe(craftItem);
   }
 }
