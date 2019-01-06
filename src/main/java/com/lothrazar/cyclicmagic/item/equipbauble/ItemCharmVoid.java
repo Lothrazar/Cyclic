@@ -93,7 +93,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return super.addRecipe(craftItem);
   }
 }

@@ -24,10 +24,8 @@
 package com.lothrazar.cyclicmagic.data;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 
-public interface IHasRecipeAndRepair {
+public interface IHasRecipeAndRepair extends IHasRecipe {
 
-  IRecipe addRecipeAndRepair();
   boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack);
 }

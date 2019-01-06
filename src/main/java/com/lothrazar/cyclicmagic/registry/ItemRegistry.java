@@ -32,7 +32,6 @@ import com.lothrazar.cyclicmagic.block.ore.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
-import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.item.cannon.EntityGolemLaser;
@@ -76,9 +75,6 @@ public class ItemRegistry {
     IRecipe recipe = null;
     if (item instanceof IHasRecipe) {
       recipe = ((IHasRecipe) item).addRecipe();
-    }
-    else if (item instanceof IHasRecipeAndRepair) {
-      recipe = ((IHasRecipeAndRepair) item).addRecipeAndRepair();
     }
     if (cat != null) {
       GuideRegistry.register(cat, item, recipe, null);

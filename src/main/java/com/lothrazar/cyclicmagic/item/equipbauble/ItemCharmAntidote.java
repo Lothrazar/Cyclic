@@ -86,7 +86,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipeAndRepair,
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return super.addRecipe(craftItem);
   }
 }

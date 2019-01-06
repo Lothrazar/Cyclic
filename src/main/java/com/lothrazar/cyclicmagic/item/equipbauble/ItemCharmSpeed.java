@@ -82,7 +82,7 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipeAndRepair, IC
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return this.addRecipe(craftItem);
   }
 }

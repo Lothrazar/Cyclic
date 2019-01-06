@@ -100,7 +100,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return super.addRecipe(craftItem);
   }
 }

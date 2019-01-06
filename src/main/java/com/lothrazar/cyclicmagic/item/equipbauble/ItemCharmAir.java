@@ -103,7 +103,7 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipeAndRepair, ICon
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return super.addRecipe(craftItem);
   }
 }

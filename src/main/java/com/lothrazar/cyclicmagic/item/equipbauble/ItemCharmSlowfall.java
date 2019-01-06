@@ -98,7 +98,7 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipeAndRepair,
   }
 
   @Override
-  public IRecipe addRecipeAndRepair() {
+  public IRecipe addRecipe() {
     return super.addRecipe(craftItem);
   }
 }
