@@ -80,10 +80,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
     UtilItemStack.damageItem(living, stack);
   }
 
-  public IRecipe addRecipeAndRepair(Item craftItem) {
-    return this.addRecipe(new ItemStack(craftItem));
-  }
-
   /**
    * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and update it's contents.
    */

@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -38,9 +38,10 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmBoat extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final int durability = 4096;
+  private static final ItemStack craftItem = new ItemStack(Items.ARMOR_STAND);
 
   public ItemCharmBoat() {
     super(durability);
@@ -93,7 +94,13 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
-  public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.ARMOR_STAND);
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+  {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
+  public IRecipe addRecipeAndRepair() {
+    return super.addRecipe(craftItem);
   }
 }
