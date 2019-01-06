@@ -87,8 +87,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipeAndRepair, IC
   }
 
   @Override
-  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-  {
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
     return par2ItemStack.getItem() == craftItem.getItem();
   }
 

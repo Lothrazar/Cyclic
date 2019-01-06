@@ -87,8 +87,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
-  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-  {
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
     return par2ItemStack.getItem() == craftItem.getItem();
   }
 

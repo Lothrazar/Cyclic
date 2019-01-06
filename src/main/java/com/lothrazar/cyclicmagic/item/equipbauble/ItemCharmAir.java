@@ -97,8 +97,7 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipeAndRepair, ICon
   }
 
   @Override
-  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-  {
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
     return par2ItemStack.getItem() == craftItem.getItem();
   }
 

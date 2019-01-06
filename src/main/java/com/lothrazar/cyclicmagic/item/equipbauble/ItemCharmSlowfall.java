@@ -92,8 +92,7 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipeAndRepair,
   }
 
   @Override
-  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-  {
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
     return par2ItemStack.getItem() == craftItem.getItem();
   }
 
