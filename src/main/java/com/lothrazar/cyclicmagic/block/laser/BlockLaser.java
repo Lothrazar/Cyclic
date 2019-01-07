@@ -54,8 +54,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
 
   public BlockLaser() {
     super(Material.ROCK);
-    //    this.setHardness(3F);
-    //    this.setResistance(5F);
+
     this.setSoundType(SoundType.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_LASER);
   }
@@ -91,7 +90,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserTESR(this));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserTESR());
   }
 
   @Override

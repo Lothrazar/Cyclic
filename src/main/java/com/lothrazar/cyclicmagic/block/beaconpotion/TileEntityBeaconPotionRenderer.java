@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.beaconempty.BeamSegment;
 import com.lothrazar.cyclicmagic.block.core.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,18 +44,19 @@ public class TileEntityBeaconPotionRenderer extends BaseMachineTESR<TileEntityBe
 
   @Override
   public void render(TileEntityBeaconPotion te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+
     this.renderBeacon(x, y, z, partialTicks, te.shouldBeamRender(), te.getBeamSegments(),
         te.getWorld().getTotalWorldTime());
   }
 
-  public void renderBeacon(double x, double y, double z, double partialTicks, double textureScale, List<TileEntityBeaconPotion.BeamSegment> beamSegments, double totalWorldTime) {
+  public void renderBeacon(double x, double y, double z, double partialTicks, double textureScale, List<BeamSegment> beamSegments, double totalWorldTime) {
     GlStateManager.alphaFunc(516, 0.1F);
     this.bindTexture(TEXTURE_BEACON_BEAM);
     if (textureScale > 0.0D) {
       GlStateManager.disableFog();
       int i = 0;
       for (int j = 0; j < beamSegments.size(); ++j) {
-        TileEntityBeaconPotion.BeamSegment tileentitybeacon$beamsegment = beamSegments.get(j);
+        BeamSegment tileentitybeacon$beamsegment = beamSegments.get(j);
         TileEntityBeaconRenderer.renderBeamSegment(x, y, z, partialTicks, textureScale, totalWorldTime, i, tileentitybeacon$beamsegment.getHeight(), tileentitybeacon$beamsegment.getColors());
         i += tileentitybeacon$beamsegment.getHeight();
       }
@@ -64,7 +66,7 @@ public class TileEntityBeaconPotionRenderer extends BaseMachineTESR<TileEntityBe
 
   @Override
   public boolean isGlobalRenderer(TileEntityBeaconPotion te) {
-    return true;
+    return true;//should link to tile entity setSetRenderGlobally
   }
 
   @Override
