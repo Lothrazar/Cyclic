@@ -60,7 +60,7 @@ public class UtilScythe {
     weedsClassCheck = config.getBoolean("tool_harvest_weeds.class_defaults", category, true, "If true this will try an auto-detect blocks that are a weed/bush/tallgrass type by class type, which "
         + "means harvesting many blocks that are not explicitly in the whitelist.  This is useful for handling vanilla and most modded blocks.  If you want more precise control you can turn this false "
         + "which means ONLY the whitelists will be harvested, so you would have to add every block yourself. ");
-    leavesClassCheck = config.getBoolean("tool_harvest_leads.class_defaults", category, true, "If true this will try an auto-detect blocks that are a weed/bush/tallgrass type by class type, which "
+    leavesClassCheck = config.getBoolean("tool_harvest_leaves.class_defaults", category, true, "If true this will try an auto-detect blocks that are a leaf-type by class type, which "
         + "means harvesting many blocks that are not explicitly in the whitelist.  This is useful for handling vanilla and most modded blocks.  If you want more precise control you can turn this false "
         + "which means ONLY the whitelists will be harvested, so you would have to add every block yourself. ");
     blacklistAll = NonNullList.from("", config.getStringList("ScytheBlacklist", category, new String[] {

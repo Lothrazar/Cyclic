@@ -38,7 +38,6 @@ public class TileEntityBeaconRedstoneRenderer extends TileEntitySpecialRenderer<
 
   @Override
   public void render(TileEntityBeaconPowered te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-
     this.renderBeacon(x, y, z, partialTicks, te.shouldBeamRender(), te.getBeamSegments(),
         te.getWorld().getTotalWorldTime());
   }

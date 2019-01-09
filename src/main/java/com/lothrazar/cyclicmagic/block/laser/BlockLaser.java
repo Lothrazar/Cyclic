@@ -54,7 +54,6 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
 
   public BlockLaser() {
     super(Material.ROCK);
-
     this.setSoundType(SoundType.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_LASER);
   }

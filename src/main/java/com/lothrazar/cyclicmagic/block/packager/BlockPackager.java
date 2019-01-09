@@ -92,7 +92,6 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
     FUEL_COST = config.getInt("auto_packager", Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
