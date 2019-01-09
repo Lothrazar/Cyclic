@@ -92,8 +92,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityPackager.TIMER_FULL = config.getInt("auto_packager", Const.ConfigCategory.machineTimer,
-        35, 1, 9000, Const.ConfigText.machineTimer);
+
     FUEL_COST = config.getInt("auto_packager", Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -39,7 +39,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public static final int INPUT_SIZE = 2 * 3;
   public static final int OUTPUT_SIZE = INPUT_SIZE;
-  public static int TIMER_FULL = 40;
+  private static int TIMER_FULL = 1;
   private int needsRedstone = 1;
 
   public static enum Fields {
