@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
@@ -43,12 +43,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmSlowfall extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private final static int seconds = 30;
   private final static int fallDistanceLimit = 6;
   private final static int durability = 64;
   private final static Potion potion = PotionEffectRegistry.SLOWFALL;
+  private static final ItemStack craftItem = new ItemStack(Items.RABBIT_FOOT);
 
   public ItemCharmSlowfall() {
     super(durability);
@@ -91,7 +92,12 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe, IContent
   }
 
   @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.RABBIT_FOOT);
+    return super.addRecipe(craftItem);
   }
 }

@@ -46,6 +46,8 @@ public class UtilScythe {
   private static NonNullList<String> blacklistAll;
   private static ScytheConfig leafConfig = new ScytheConfig();
   private static ScytheConfig brushConfig = new ScytheConfig();
+  private static boolean weedsClassCheck;
+  private static boolean leavesClassCheck;
 
   private static class ScytheConfig {
 
@@ -55,39 +57,39 @@ public class UtilScythe {
 
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-    String[] deflist = new String[] {
+    weedsClassCheck = config.getBoolean("tool_harvest_weeds.class_defaults", category, true, "If true this will try an auto-detect blocks that are a weed/bush/tallgrass type by class type, which "
+        + "means harvesting many blocks that are not explicitly in the whitelist.  This is useful for handling vanilla and most modded blocks.  If you want more precise control you can turn this false "
+        + "which means ONLY the whitelists will be harvested, so you would have to add every block yourself. ");
+    leavesClassCheck = config.getBoolean("tool_harvest_leaves.class_defaults", category, true, "If true this will try an auto-detect blocks that are a leaf-type by class type, which "
+        + "means harvesting many blocks that are not explicitly in the whitelist.  This is useful for handling vanilla and most modded blocks.  If you want more precise control you can turn this false "
+        + "which means ONLY the whitelists will be harvested, so you would have to add every block yourself. ");
+    blacklistAll = NonNullList.from("", config.getStringList("ScytheBlacklist", category, new String[] {
         "terraqueous:pergola", "harvestcraft:*_sapling"
-    };
-    String[] blacklist = config.getStringList("ScytheBlacklist",
-        category, deflist, "Crops & leaves that are blocked from harvesting (Brush Scythe and Tree Scythe). A star is for a wildcard ");
-    blacklistAll = NonNullList.from("",
-        blacklist);
-    //TODO: config it after its decided? maybe? maybe not?
-/* @formatter:off */
-    leafConfig.blockWhitelist = NonNullList.from("",
-        "extratrees:leaves.decorative.0"
-       , "extratrees:leaves.decorative.1"
-       , "extratrees:leaves.decorative.2"
-       , "extratrees:leaves.decorative.3"
-       , "extratrees:leaves.decorative.4"
-       , "extratrees:leaves.decorative.5"
-       , "forestry:leaves.decorative.0"
-       , "forestry:leaves.decorative.1"
-       , "terraqueous:foliage3:5"
-       , "plants2:nether_leaves"
-       , "plants2:crystal_leaves"
-       , "plants2:leaves_0"
-       , "plants2:bush");
-    
-    leafConfig.oreDictWhitelist = NonNullList.from("",
+    }, "Crops & leaves that are blocked from harvesting (Brush Scythe and Tree Scythe). A star is for a wildcard "));
+    leafConfig.blockWhitelist = NonNullList.from("", config.getStringList("tool_harvest_leaves.whitelist", category, new String[] {
+        /* @formatter:off */
+                "extratrees:leaves.decorative.0"
+               , "extratrees:leaves.decorative.1"
+               , "extratrees:leaves.decorative.2"
+               , "extratrees:leaves.decorative.3"
+               , "extratrees:leaves.decorative.4"
+               , "extratrees:leaves.decorative.5"
+               , "forestry:leaves.decorative.0"
+               , "forestry:leaves.decorative.1"
+               , "terraqueous:foliage3:5"
+               , "plants2:nether_leaves"
+               , "plants2:crystal_leaves"
+               , "plants2:leaves_0"
+               , "plants2:bush"
+               /* @formatter:on */
+    }, "Blocks that the Tree Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard "));
+    leafConfig.oreDictWhitelist = NonNullList.from("", config.getStringList("tool_harvest_leaves.whitelist_oredict", category, new String[] {
         "treeLeaves"
-        );
-    brushConfig.oreDictWhitelist = NonNullList.from("",
-        "vine"
-        ,"plant"
-        ,"flowerYellow"
-        ,"stickWood");
-    brushConfig.blockWhitelist = NonNullList.from("",
+    }, "Ore dictionary entries that the Tree Scythe will attempt to harvest as if they are leaves.   "));
+    brushConfig.oreDictWhitelist = NonNullList.from("", config.getStringList("tool_harvest_weeds.whitelist_oredict", category, new String[] {
+        "vine", "plant", "flowerYellow", "stickWood" }, "Ore dictionary entries that the Brush Scythe will attempt to harvest as if they are leaves.  "));
+    brushConfig.blockWhitelist = NonNullList.from("", config.getStringList("tool_harvest_weeds.whitelist", category, new String[] {
+        /* @formatter:off */
         "plants2:cosmetic_0"
         ,"plants2:cosmetic_1"
         ,"plants2:cosmetic_2"
@@ -152,16 +154,11 @@ public class UtilScythe {
         ,"thebetweenlands:swamp_reed_*"
         ,"thebetweenlands:*_mushroom"
         ,"natura:*_vines"
-     ,"nex:plant_thornstalk"
-        );
-   
-    /* @formatter:on */
+        ,"nex:plant_thornstalk"
+        /* @formatter:on */
+    }, "Blocks that the Brush Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard "));
   }
 
-  //TODO:::::::::: brush scythe DOES hit
-  //  <harvestcraft:pampeach>
-  //which has zero ore dict entries. soo.. hmm. 
-  //treescythe <harvestcraft:groundtrap>
   private static boolean doesMatch(Block blockCheck, ScytheConfig type) {
     if (UtilString.isInList(type.blockWhitelist, blockCheck.getRegistryName())) {
       return true;
@@ -224,32 +221,34 @@ public class UtilScythe {
     // (E): an ignore list of ones to skip EXAMPLE: stem
     switch (type) {
       case WEEDS:
-        if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS
-          doBreak = true;
-          if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
-            doBreakAbove = true;
+        if (weedsClassCheck) {
+          if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS 
+            doBreak = true;
+            if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
+              doBreakAbove = true;
+            }
+            if (bsBelow instanceof BlockTallGrass && bsBelow != null && bsBelow.getBlock() instanceof BlockTallGrass) {
+              doBreakBelow = true;
+            }
           }
-          if (bsBelow instanceof BlockTallGrass && bsBelow != null && bsBelow.getBlock() instanceof BlockTallGrass) {
-            doBreakBelow = true;
+          else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS 
+            doBreak = true;
+            if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
+              doBreakAbove = true;
+            }
+            if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
+              doBreakBelow = true;
+            }
           }
-        }
-        else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS
-          doBreak = true;
-          if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
-            doBreakAbove = true;
+          else if (blockCheck instanceof BlockMushroom) {//remove from harvester tile? used by weeds though
+            doBreak = true;
           }
-          if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
-            doBreakBelow = true;
-          }
-        }
-        else if (blockCheck instanceof BlockMushroom) {//remove from harvester tile? used by weeds though
-          doBreak = true;
         }
       break;
       case CROPS:
       break;
       case LEAVES:
-        if (blockCheck instanceof BlockLeaves) {// true for ItemScythe type LEAVES
+        if (blockCheck instanceof BlockLeaves && leavesClassCheck) {
           doBreak = true;
         }
       break;

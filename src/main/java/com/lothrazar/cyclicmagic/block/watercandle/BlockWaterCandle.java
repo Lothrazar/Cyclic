@@ -139,23 +139,25 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   }
 
   private void trySpawn(World world, BlockPos pos, Random rand) throws Exception {
-    EntityLiving monster = findMonsterToSpawn(world, pos, rand);
-    if (monster == null) {
-      return;
-    }
     //if radius is 3, then go be
     float x = pos.getX() + MathHelper.getInt(rand, -1 * RADIUS, RADIUS);
     float y = pos.getY();
     float z = pos.getZ() + MathHelper.getInt(rand, -1 * RADIUS, RADIUS);
+    BlockPos posTarget = new BlockPos(x, y, z);
+    EntityLiving monster = findMonsterToSpawn(world, posTarget, rand);
+    if (monster == null) {
+      return;
+    }
     monster.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner 
     Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null);
-    //  ModCyclic.logger.log(wattest + "?" + canSpawn + " " + monster.getName());
     if (canSpawn == Event.Result.DENY || monster.getCanSpawnHere() == false) {
-      afterSpawnFailure(world, pos);
+      ModCyclic.logger.log("[CANDLE] spawneing " + monster.getName() + "?" + world.isAirBlock(posTarget) + posTarget);
+      afterSpawnFailure(world, posTarget);
     }
     else if (world.spawnEntity(monster)) {
-      afterSpawnSuccess(monster, world, pos, rand);
+      ModCyclic.logger.log("[CANDLE] FAILED TO spawn  " + monster.getName());
+      afterSpawnSuccess(monster, world, posTarget, rand);
     }
   }
 

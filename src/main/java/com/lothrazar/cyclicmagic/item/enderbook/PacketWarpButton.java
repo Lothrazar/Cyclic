@@ -30,7 +30,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -57,6 +59,18 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
 
   @Override
   public IMessage onMessage(PacketWarpButton message, MessageContext ctx) {
+    MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
+    s.addScheduledTask(new Runnable() {
+
+      @Override
+      public void run() {
+        handle(message, ctx);
+      }
+    });
+    return null;
+  }
+
+  protected void handle(PacketWarpButton message, MessageContext ctx) {
     EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).player;
     ItemStack bookStack = ItemEnderBook.getPlayersBook(player);
     BlockPos oldPos = player.getPosition();
@@ -82,6 +96,5 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
             new BlockPosDim(GuiEnderBook.BACK_BTN_ID, oldPos,
                 player.dimension, ""));
     }
-    return null;
   }
 }

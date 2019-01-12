@@ -23,32 +23,26 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.laser;
 
-import com.lothrazar.cyclicmagic.block.core.BaseTESR;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.util.RenderUtil;
 import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
-import net.minecraft.block.Block;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LaserTESR extends BaseTESR<TileEntityLaser> {
-
-  public LaserTESR(Block b) {
-    super(b);
-  }
+public class LaserTESR extends TileEntitySpecialRenderer<TileEntityLaser> {
 
   @Override
   public void render(TileEntityLaser te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    //   super.render(te, x, y, z, partialTicks, destroyStage, alpha);
-    //find laser endpoints and go
     if (te.isRunning() == false) {
       return;
     }
-    float[] color = te.getColor();//new float[] { te.getField(Fields), 0F, 0.5F };
+    float[] color = te.getColor();
     double rotationTime = te.isPulsing() ? 120 : 0;
     double beamWidth = 0.09;
+    //find laser endpoints and go
     BlockPos first = te.getPos();
     BlockPosDim second = null;
     int timer = TileEntityLaser.MAX_TIMER;
@@ -72,6 +66,6 @@ public class LaserTESR extends BaseTESR<TileEntityLaser> {
 
   @Override
   public boolean isGlobalRenderer(TileEntityLaser te) {
-    return true;
+    return true;//should link to tile entity setSetRenderGlobally
   }
 }
