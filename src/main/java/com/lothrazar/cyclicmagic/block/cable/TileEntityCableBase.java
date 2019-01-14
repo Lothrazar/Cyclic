@@ -51,6 +51,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable, IFacingBlacklist {
 
+  private static final int SLOT = 0;
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int TRANSFER_FLUID_PER_TICK = 1000;
   //config
@@ -271,11 +272,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private void moveItems(EnumFacing myFacingDir) {
-    if (this.getStackInSlot(0).isEmpty()) {
+    if (this.getStackInSlot(SLOT).isEmpty()) {
       return;
     }
     EnumFacing themFacingMe = myFacingDir.getOpposite();
-    ItemStack stackToExport = this.getStackInSlot(0).copy();
+    ItemStack stackToExport = this.getStackInSlot(SLOT).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
@@ -284,9 +285,10 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     boolean outputSuccess = false;
     ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
-    if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+    if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
+      //   if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
-      this.setInventorySlotContents(0, leftAfterDeposit);
+      this.setInventorySlotContents(SLOT, leftAfterDeposit);
       outputSuccess = true;
     }
     if (outputSuccess && tileTarget instanceof TileEntityCableBase) {
