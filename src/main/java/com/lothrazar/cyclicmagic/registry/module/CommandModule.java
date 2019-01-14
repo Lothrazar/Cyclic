@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.command.CommandHeal;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
 import com.lothrazar.cyclicmagic.command.CommandHome;
 import com.lothrazar.cyclicmagic.command.CommandNbt;
+import com.lothrazar.cyclicmagic.command.CommandNbtSet;
 import com.lothrazar.cyclicmagic.command.CommandPing;
 import com.lothrazar.cyclicmagic.command.CommandSearchItem;
 import com.lothrazar.cyclicmagic.command.CommandSearchSpawner;
@@ -66,6 +67,9 @@ public class CommandModule extends BaseModule implements IHasConfig {
     }
     if (configToggle.get(CommandHearts.name)) {
       event.registerServerCommand(new CommandHearts(commandNeedsOp.get(CommandHearts.name)));
+    }
+    if (configToggle.get(CommandNbtSet.name)) {
+      event.registerServerCommand(new CommandNbtSet(commandNeedsOp.get(CommandNbtSet.name)));
     }
     if (configToggle.get(CommandHome.name)) {
       event.registerServerCommand(new CommandHome(commandNeedsOp.get(CommandHome.name)));
@@ -106,6 +110,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     category = Const.ConfigCategory.commands;
     config.setCategoryComment(category, "Disable any command that was added");
+    syncCommandConfig(config, CommandNbtSet.name, true, "Debug command to set values on items, currently only sets strings");
     syncCommandConfig(config, CommandNbt.name, false, "Read NBT data from your held item");
     syncCommandConfig(config, CommandEnderChest.name, true, "Opens your ender chest");
     syncCommandConfig(config, CommandGetHome.name, false, "Get where your current spawn is set (by a bed)");
